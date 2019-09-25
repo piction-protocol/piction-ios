@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--QR 코드 스캔-->
+        <scene sceneID="rNa-2e-Q0k">
+            <objects>
+                <viewController storyboardIdentifier="QRCodeScannerViewController" id="7jZ-5R-0D3" customClass="QRCodeScannerViewController" customModule="PictionView" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FYx-Tr-hz0">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cL7-oS-XBA">
+                                <rect key="frame" x="0.0" y="88" width="414" height="676"/>
+                            </containerView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgQrcodeScan" translatesAutoresizingMaskIntoConstraints="NO" id="CK4-EC-eR6">
+                                <rect key="frame" x="96.5" y="315.5" width="221" height="221"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="221" id="U2R-Uv-Y8X"/>
+                                    <constraint firstAttribute="width" constant="221" id="YY7-dl-Cd5"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z6e-Ck-GNG">
+                                <rect key="frame" x="0.0" y="764" width="414" height="132"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="픽션 또는 픽션 파트너 서비스에 있는 크리에이터 QR코드를 인식시켜 주세요." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mn8-D2-ano">
+                                        <rect key="frame" x="68.5" y="44.5" width="277.5" height="43"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="43" id="jAi-hY-AlK"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="textColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="132" id="HWd-mb-wyu"/>
+                                    <constraint firstItem="Mn8-D2-ano" firstAttribute="centerX" secondItem="Z6e-Ck-GNG" secondAttribute="centerX" id="cUo-GL-gUQ"/>
+                                    <constraint firstItem="Mn8-D2-ano" firstAttribute="centerY" secondItem="Z6e-Ck-GNG" secondAttribute="centerY" id="v4v-H4-mdX"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Z6e-Ck-GNG" firstAttribute="top" secondItem="cL7-oS-XBA" secondAttribute="bottom" id="16o-z4-5EI"/>
+                            <constraint firstItem="Z6e-Ck-GNG" firstAttribute="trailing" secondItem="HNa-jl-9fx" secondAttribute="trailing" id="534-FA-X1u"/>
+                            <constraint firstAttribute="bottom" secondItem="Z6e-Ck-GNG" secondAttribute="bottom" id="PzM-xf-7ui"/>
+                            <constraint firstItem="CK4-EC-eR6" firstAttribute="centerY" secondItem="cL7-oS-XBA" secondAttribute="centerY" id="UUC-Kl-qSl"/>
+                            <constraint firstItem="Z6e-Ck-GNG" firstAttribute="leading" secondItem="HNa-jl-9fx" secondAttribute="leading" id="VrC-fW-FWz"/>
+                            <constraint firstItem="CK4-EC-eR6" firstAttribute="centerX" secondItem="FYx-Tr-hz0" secondAttribute="centerX" id="dim-5t-CES"/>
+                            <constraint firstItem="cL7-oS-XBA" firstAttribute="trailing" secondItem="HNa-jl-9fx" secondAttribute="trailing" id="g5Y-fN-U6e"/>
+                            <constraint firstItem="cL7-oS-XBA" firstAttribute="leading" secondItem="HNa-jl-9fx" secondAttribute="leading" id="hSc-yb-JDR"/>
+                            <constraint firstItem="cL7-oS-XBA" firstAttribute="top" secondItem="HNa-jl-9fx" secondAttribute="top" id="zFa-7e-qJ5"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="HNa-jl-9fx"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="QR 코드 스캔" id="HIS-9L-eqI">
+                        <barButtonItem key="leftBarButtonItem" title="취소" id="Q5t-ZD-Q8w"/>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="closeButton" destination="Q5t-ZD-Q8w" id="fW7-Md-ZhW"/>
+                        <outlet property="preview" destination="cL7-oS-XBA" id="1DM-Uf-x02"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RRE-2g-xK1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="995.65217391304361" y="83.705357142857139"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="imgQrcodeScan" width="221" height="221"/>
+    </resources>
+</document>

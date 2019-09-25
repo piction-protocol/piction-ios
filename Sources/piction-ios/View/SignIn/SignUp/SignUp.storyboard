@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zPk-FB-mX1">
+    <device id="retina5_9" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--회원가입-->
+        <scene sceneID="2d8-Xf-eZf">
+            <objects>
+                <viewController storyboardIdentifier="SignUpViewController" id="zPk-FB-mX1" customClass="SignUpViewController" customModule="PictionView" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8IK-Ns-aic">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NTf-Zw-dd7">
+                                <rect key="frame" x="0.0" y="88" width="375" height="724"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="DfG-iz-2Qe">
+                                        <rect key="frame" x="20" y="0.0" width="335" height="676"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ifw-UK-wsb">
+                                                <rect key="frame" x="0.0" y="0.0" width="335" height="149"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgLogoPictionDefaultBl" translatesAutoresizingMaskIntoConstraints="NO" id="u1i-iT-rSX">
+                                                        <rect key="frame" x="57.666666666666686" y="48" width="220" height="57"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="57" id="C7S-u5-OxI"/>
+                                                            <constraint firstAttribute="width" constant="220" id="lyr-Fv-rjK"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstItem="u1i-iT-rSX" firstAttribute="centerX" secondItem="ifw-UK-wsb" secondAttribute="centerX" id="6Rb-BP-4Mz"/>
+                                                    <constraint firstItem="u1i-iT-rSX" firstAttribute="centerY" secondItem="ifw-UK-wsb" secondAttribute="centerY" constant="2" id="ebs-7O-ABV"/>
+                                                    <constraint firstAttribute="height" constant="149" id="jba-j7-MBs"/>
+                                                </constraints>
+                                            </view>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="STW-zL-iwL">
+                                                <rect key="frame" x="0.0" y="149" width="335" height="405"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NG1-bi-svM" customClass="DynamicInputView" customModule="PictionView" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="65"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="title" value="아이디"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="errorPlaceHolder" value="5자 이상 15자 미만"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="returnKeyType">
+                                                                <integer key="value" value="4"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qum-Zc-YXk" customClass="DynamicInputView" customModule="PictionView" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="85" width="335" height="65"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="title" value="이메일"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="returnKeyType">
+                                                                <integer key="value" value="4"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VgF-Q0-TPu" customClass="DynamicInputView" customModule="PictionView" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="170" width="335" height="65"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="title" value="비밀번호"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="errorPlaceHolder" value="6자 이상의 비밀번호"/>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureText" value="YES"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="returnKeyType">
+                                                                <integer key="value" value="4"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uUs-dW-ay6" customClass="DynamicInputView" customModule="PictionView" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="255" width="335" height="65"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="title" value="비밀번호 재입력"/>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureText" value="YES"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="returnKeyType">
+                                                                <integer key="value" value="4"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AFP-1X-eyB" customClass="DynamicInputView" customModule="PictionView" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="340" width="335" height="65"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="returnKeyType">
+                                                                <integer key="value" value="4"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="title" value="닉네임"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="errorPlaceHolder" value="2자 이상의 닉네임"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Mt-6m-aE0">
+                                                <rect key="frame" x="0.0" y="554" width="335" height="70"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="NJ4-jZ-P83">
+                                                        <rect key="frame" x="4" y="0.0" width="327" height="70"/>
+                                                        <subviews>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkboxOff" translatesAutoresizingMaskIntoConstraints="NO" id="5DK-cI-526">
+                                                                <rect key="frame" x="0.0" y="24" width="22" height="22"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="22" id="YXo-vg-bP5"/>
+                                                                    <constraint firstAttribute="height" constant="22" id="z5Z-9g-fgo"/>
+                                                                </constraints>
+                                                            </imageView>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nzo-XV-Q6J">
+                                                                <rect key="frame" x="30" y="26.666666666666629" width="297" height="17"/>
+                                                                <attributedString key="attributedText">
+                                                                    <fragment content="서비스">
+                                                                        <attributes>
+                                                                            <color key="NSColor" red="0.10196078431372549" green="0.5725490196078431" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <font key="NSFont" size="14" name=".AppleSDGothicNeoI-Regular"/>
+                                                                            <integer key="NSUnderline" value="1"/>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                    <fragment content=" ">
+                                                                        <attributes>
+                                                                            <color key="NSColor" red="0.10196078431372549" green="0.5725490196078431" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
+                                                                            <integer key="NSUnderline" value="1"/>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                    <fragment content="이용약관">
+                                                                        <attributes>
+                                                                            <color key="NSColor" red="0.10196078431372549" green="0.5725490196078431" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <font key="NSFont" size="14" name=".AppleSDGothicNeoI-Regular"/>
+                                                                            <integer key="NSUnderline" value="1"/>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                    <fragment content=" ">
+                                                                        <attributes>
+                                                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <font key="NSFont" metaFont="system" size="14"/>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                    <fragment content="및">
+                                                                        <attributes>
+                                                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <font key="NSFont" size="14" name=".AppleSDGothicNeoI-Regular"/>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                    <fragment content=" ">
+                                                                        <attributes>
+                                                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <font key="NSFont" metaFont="system" size="14"/>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                    <fragment content="개인정보">
+                                                                        <attributes>
+                                                                            <color key="NSColor" red="0.10196078431372549" green="0.5725490196078431" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <font key="NSFont" size="14" name=".AppleSDGothicNeoI-Regular"/>
+                                                                            <integer key="NSUnderline" value="1"/>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                    <fragment content=" ">
+                                                                        <attributes>
+                                                                            <color key="NSColor" red="0.10196078431372549" green="0.5725490196078431" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <font key="NSFont" metaFont="system" size="14"/>
+                                                                            <integer key="NSUnderline" value="1"/>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                    <fragment content="처리방침">
+                                                                        <attributes>
+                                                                            <color key="NSColor" red="0.10196078431372549" green="0.5725490196078431" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <font key="NSFont" size="14" name=".AppleSDGothicNeoI-Regular"/>
+                                                                            <integer key="NSUnderline" value="1"/>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                    <fragment content="에">
+                                                                        <attributes>
+                                                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <font key="NSFont" size="14" name=".AppleSDGothicNeoI-Regular"/>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                    <fragment content=" ">
+                                                                        <attributes>
+                                                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <font key="NSFont" metaFont="system" size="14"/>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                    <fragment content="동의합니다">
+                                                                        <attributes>
+                                                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <font key="NSFont" size="14" name=".AppleSDGothicNeoI-Regular"/>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                    <fragment content=".">
+                                                                        <attributes>
+                                                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <font key="NSFont" metaFont="system" size="14"/>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                </attributedString>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lsd-1I-Rgf">
+                                                        <rect key="frame" x="4" y="0.0" width="21" height="70"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="21" id="D6x-Dk-EcK"/>
+                                                        </constraints>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ae-12-QJn">
+                                                        <rect key="frame" x="33" y="25" width="90" height="20"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="90" id="X1y-vX-VPy"/>
+                                                            <constraint firstAttribute="height" constant="20" id="dSf-hG-tUa"/>
+                                                        </constraints>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bcc-wg-phN">
+                                                        <rect key="frame" x="142" y="25" width="100" height="20"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="100" id="eEW-tc-rBF"/>
+                                                            <constraint firstAttribute="height" constant="20" id="ulz-GV-ub5"/>
+                                                        </constraints>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstItem="Bcc-wg-phN" firstAttribute="centerY" secondItem="7Mt-6m-aE0" secondAttribute="centerY" id="0b6-ia-UCO"/>
+                                                    <constraint firstItem="NJ4-jZ-P83" firstAttribute="leading" secondItem="7Mt-6m-aE0" secondAttribute="leading" constant="4" id="5Cr-ti-li5"/>
+                                                    <constraint firstAttribute="height" constant="70" id="7Vb-kN-aui"/>
+                                                    <constraint firstAttribute="bottom" secondItem="NJ4-jZ-P83" secondAttribute="bottom" id="8Un-1D-mRZ"/>
+                                                    <constraint firstItem="Lsd-1I-Rgf" firstAttribute="leading" secondItem="7Mt-6m-aE0" secondAttribute="leading" constant="4" id="I75-v7-zvL"/>
+                                                    <constraint firstAttribute="trailing" secondItem="NJ4-jZ-P83" secondAttribute="trailing" constant="4" id="Qcf-ao-wKF"/>
+                                                    <constraint firstItem="7ae-12-QJn" firstAttribute="centerY" secondItem="7Mt-6m-aE0" secondAttribute="centerY" id="TzZ-jw-1VL"/>
+                                                    <constraint firstItem="Lsd-1I-Rgf" firstAttribute="top" secondItem="7Mt-6m-aE0" secondAttribute="top" id="WJV-uU-4He"/>
+                                                    <constraint firstItem="NJ4-jZ-P83" firstAttribute="top" secondItem="7Mt-6m-aE0" secondAttribute="top" id="aYo-0I-eK9"/>
+                                                    <constraint firstAttribute="bottom" secondItem="Lsd-1I-Rgf" secondAttribute="bottom" id="ayz-Fs-c7V"/>
+                                                    <constraint firstItem="7ae-12-QJn" firstAttribute="leading" secondItem="Lsd-1I-Rgf" secondAttribute="trailing" constant="8" id="j2j-19-nvx"/>
+                                                    <constraint firstItem="Bcc-wg-phN" firstAttribute="leading" secondItem="7ae-12-QJn" secondAttribute="trailing" constant="19" id="wia-Vg-ctd"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X1a-3c-mHh">
+                                                <rect key="frame" x="0.0" y="624" width="335" height="52"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fq0-zc-kkl" customClass="UIButtonExtension" customModule="PictionView" customModuleProvider="target">
+                                                        <rect key="frame" x="4" y="0.0" width="327" height="52"/>
+                                                        <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="52" id="c1r-dd-xad"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                        <state key="normal" title="회원가입">
+                                                            <color key="titleColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </state>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                <real key="value" value="0.0"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="8"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="fq0-zc-kkl" secondAttribute="bottom" id="DKV-zK-2gs"/>
+                                                    <constraint firstItem="fq0-zc-kkl" firstAttribute="top" secondItem="X1a-3c-mHh" secondAttribute="top" id="Fhn-xj-aHG"/>
+                                                    <constraint firstItem="fq0-zc-kkl" firstAttribute="leading" secondItem="X1a-3c-mHh" secondAttribute="leading" constant="4" id="rmF-qG-e6H"/>
+                                                    <constraint firstAttribute="trailing" secondItem="fq0-zc-kkl" secondAttribute="trailing" constant="4" id="wzy-Yx-Vps"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="ifw-UK-wsb" firstAttribute="leading" secondItem="DfG-iz-2Qe" secondAttribute="leading" id="3Sg-q0-PWG"/>
+                                            <constraint firstItem="STW-zL-iwL" firstAttribute="leading" secondItem="DfG-iz-2Qe" secondAttribute="leading" id="9qu-ha-Pjq"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="335" id="MQE-55-efk"/>
+                                            <constraint firstAttribute="trailing" secondItem="STW-zL-iwL" secondAttribute="trailing" id="URm-8e-icM"/>
+                                            <constraint firstAttribute="trailing" secondItem="ifw-UK-wsb" secondAttribute="trailing" id="fTu-Xc-IGb"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="DfG-iz-2Qe" secondAttribute="bottom" constant="20" id="6Wq-Om-P7f"/>
+                                    <constraint firstItem="DfG-iz-2Qe" firstAttribute="top" secondItem="NTf-Zw-dd7" secondAttribute="top" id="8kn-yc-9rd"/>
+                                    <constraint firstItem="DfG-iz-2Qe" firstAttribute="centerX" secondItem="NTf-Zw-dd7" secondAttribute="centerX" id="Gr4-7V-C6r"/>
+                                    <constraint firstItem="DfG-iz-2Qe" firstAttribute="leading" secondItem="NTf-Zw-dd7" secondAttribute="leading" priority="750" constant="16" id="eeA-ep-xPI"/>
+                                    <constraint firstAttribute="trailing" secondItem="DfG-iz-2Qe" secondAttribute="trailing" priority="750" constant="16" id="oH8-18-2ZK"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="NTf-Zw-dd7" secondAttribute="bottom" id="VqO-JH-ikb"/>
+                            <constraint firstItem="NTf-Zw-dd7" firstAttribute="leading" secondItem="W6q-9q-hQq" secondAttribute="leading" id="cAE-HC-PG6"/>
+                            <constraint firstItem="NTf-Zw-dd7" firstAttribute="top" secondItem="W6q-9q-hQq" secondAttribute="top" id="lWG-La-3an"/>
+                            <constraint firstItem="NTf-Zw-dd7" firstAttribute="trailing" secondItem="W6q-9q-hQq" secondAttribute="trailing" id="wKv-fB-4w7"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="W6q-9q-hQq"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="ODd-PX-2DF" appends="YES" id="4hn-D4-Oe3"/>
+                        </connections>
+                    </view>
+                    <navigationItem key="navigationItem" title="회원가입" id="dMj-gN-X85"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="agreeButton" destination="Lsd-1I-Rgf" id="FPq-kQ-tfW"/>
+                        <outlet property="bottomConstraint" destination="VqO-JH-ikb" id="h9l-9a-2Wd"/>
+                        <outlet property="checkboxImageView" destination="5DK-cI-526" id="EEN-CS-MYR"/>
+                        <outlet property="emailInputView" destination="qum-Zc-YXk" id="N79-dd-rrq"/>
+                        <outlet property="loginIdInputView" destination="NG1-bi-svM" id="GSQ-Dl-dxE"/>
+                        <outlet property="nicknameInputView" destination="AFP-1X-eyB" id="P7U-6Q-o8F"/>
+                        <outlet property="passwordCheckInputView" destination="uUs-dW-ay6" id="RXO-7U-I4f"/>
+                        <outlet property="passwordInputView" destination="VgF-Q0-TPu" id="RFF-2A-qTQ"/>
+                        <outlet property="privacyButton" destination="Bcc-wg-phN" id="tdO-kh-NWu"/>
+                        <outlet property="signUpButton" destination="fq0-zc-kkl" id="e1J-Uq-Gqt"/>
+                        <outlet property="termsButton" destination="7ae-12-QJn" id="yF1-f6-yO1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZDn-2n-pOE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="ODd-PX-2DF">
+                    <connections>
+                        <action selector="tapGesture:" destination="zPk-FB-mX1" id="R0y-cE-mhf"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1034.7826086956522" y="50.892857142857139"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="checkboxOff" width="22" height="22"/>
+        <image name="imgLogoPictionDefaultBl" width="847" height="219"/>
+    </resources>
+</document>
