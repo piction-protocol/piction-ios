@@ -1,23 +1,12 @@
-# Piction SDK for iOS
-> Piction의 API를 iOS에서 사용하기 위한 SDK 입니다.
+# Piction for iOS
+> Piction의 iOS 버전입니다.
 
 
 # Installation
-## CocoaPods
+## Use Carthage
 ```
-pod 'PictionSDK', '~> 0.0.1'
+Carthage bootstrap --platform ios --no-use-binaries
 ```
-
-## Carthage
-```
-github "piction-protocol/piction-sdk-ios", ~> 0.0.1
-```
-
-## Swift Package Manager
-```
-.package(url: "https://github.com/piction-protocol/piction-sdk-ios.git", .upToNextMajor(from: "0.0.1"))
-```
-
 
 ## License
 See [LICENSE](https://github.com/piction-protocol/piction-sdk-ios/blob/master/LICENSE) for full license text.
