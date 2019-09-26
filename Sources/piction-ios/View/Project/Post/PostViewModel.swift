@@ -256,8 +256,8 @@ final class PostViewModel: InjectableViewModel {
         }
 
         let footerInfo = postItemSuccess
-            .flatMap { postItem -> Driver<(String, PostModel)> in
-                return Driver.just((self.uri ?? "", postItem))
+            .flatMap { [weak self] postItem -> Driver<(String, PostModel)> in
+                return Driver.just((self?.uri ?? "", postItem))
             }
 
         let fanPassListAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)

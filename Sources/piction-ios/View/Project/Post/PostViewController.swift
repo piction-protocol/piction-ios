@@ -294,7 +294,6 @@ extension PostViewController: WKNavigationDelegate {
         if #available(iOS 13.0, *) {
             setWebviewColor()
         }
-//        webView.stringByEvaluatingJavaScript(from: "document.getElementsByTagName('body')[0].style.fontColor =\"-apple-system\"")
         webView.evaluateJavaScript("document.readyState") { (complete, error) in
             if complete != nil {
                 webView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { [weak self] (height, error) in
