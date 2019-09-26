@@ -19,7 +19,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9u5-uG-nMy">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <containerView key="tableFooterView" opaque="NO" contentMode="scaleToFill" id="NTg-ZH-NDy">
                                     <rect key="frame" x="0.0" y="265" width="375" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -133,7 +133,7 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="197" height="16"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="34.56 PXL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zWA-qX-UbS">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="16"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="82" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="123" id="xdI-gi-cNV"/>
                                                                             </constraints>
@@ -142,7 +142,7 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="label_failed" translatesAutoresizingMaskIntoConstraints="NO" id="v2e-5G-Fm2">
-                                                                            <rect key="frame" x="8" y="0.0" width="189" height="16"/>
+                                                                            <rect key="frame" x="90" y="0.0" width="107" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="16" id="DCz-IU-9g5"/>
                                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="105" id="eQa-e2-4Oz"/>
@@ -191,10 +191,10 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="9u5-uG-nMy" firstAttribute="top" secondItem="8yQ-Bj-Gur" secondAttribute="top" id="CPe-I5-Roh"/>
                             <constraint firstAttribute="trailing" secondItem="9u5-uG-nMy" secondAttribute="trailing" id="Dms-RT-FmC"/>
                             <constraint firstItem="9u5-uG-nMy" firstAttribute="bottom" secondItem="fKI-BZ-qQu" secondAttribute="bottom" id="Ur3-yu-6rb"/>
                             <constraint firstItem="9u5-uG-nMy" firstAttribute="leading" secondItem="8yQ-Bj-Gur" secondAttribute="leading" id="Zom-Uy-F2I"/>
+                            <constraint firstItem="9u5-uG-nMy" firstAttribute="top" secondItem="8yQ-Bj-Gur" secondAttribute="top" id="gGg-Zl-bA4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fKI-BZ-qQu"/>
                     </view>

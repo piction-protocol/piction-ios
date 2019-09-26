@@ -188,7 +188,7 @@ extension MyPageViewController: ViewModelBindable {
                 if #available(iOS 13.0, *) {
                     view.backgroundColor = .secondarySystemBackground
                 } else {
-                    view.backgroundColor = UIColor(r: 250, g: 250, b: 250)
+                    view.backgroundColor = UIColor(r: 242, g: 242, b: 247)
                 }
                 self?.emptyView.addSubview(view)
             })
