@@ -33,6 +33,7 @@ final class ChangeMyInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         KeyboardManager.shared.delegate = self
+        self.navigationController?.configureNavigationBar(transparent: false, shadow: true)
     }
 
     @IBAction func tapGesture(_ sender: Any) {
@@ -58,6 +59,13 @@ extension ChangeMyInfoViewController: ViewModelBindable {
         )
 
         let output = viewModel.build(input: input)
+
+        output
+            .viewWillAppear
+            .drive(onNext: { [weak self] in
+                self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+            })
+            .disposed(by: disposeBag)
 
         output
             .userInfo
@@ -156,7 +164,7 @@ extension ChangeMyInfoViewController: UIImagePickerControllerDelegate, UINavigat
                 cropViewController.aspectRatioLockEnabled = true
                 cropViewController.aspectRatioPickerButtonHidden = true
                 cropViewController.customAspectRatio = CGSize(width: 500, height: 500)
-
+                
                 self?.present(cropViewController, animated: true, completion: nil)
             }
         }
@@ -172,7 +180,10 @@ extension ChangeMyInfoViewController: CropViewControllerDelegate {
         } else {
             self.chosenImage.onNext(image)
         }
-        cropViewController.dismiss(animated: true)
+        let viewController = cropViewController.children.first!
+        viewController.modalTransitionStyle = .coverVertical
+        viewController.presentingViewController?.dismiss(animated: true, completion: nil)
+//        cropViewController.dismiss(animated: true)
     }
 }
 
@@ -273,7 +284,7 @@ extension ChangeMyInfoViewController: UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField === userNameTextField {
-            self.userNameUnderlineView.backgroundColor = UIColor(r: 51, g: 51, b: 51)
+            self.userNameUnderlineView.backgroundColor = UIColor(named: "PictionDarkGray")
         }
     }
 }

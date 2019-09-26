@@ -58,7 +58,7 @@ extension SponsorshipHistoryViewController: ViewModelBindable {
         output
             .viewWillAppear
             .drive(onNext: { [weak self] in
-                self?.navigationController?.navigationBar.prefersLargeTitles = false
+                self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
             })
             .disposed(by: disposeBag)
 

@@ -42,7 +42,7 @@ extension ConfirmDonationViewController: ViewModelBindable {
         output
             .viewWillAppear
             .drive(onNext: { [weak self] in
-                self?.navigationController?.setNavigationBarHidden(true, animated: false)
+                self?.navigationController?.configureNavigationBar(transparent: true, shadow: false)
                 self?.tabBarController?.tabBar.isHidden = true
                 self?.navigationItem.hidesBackButton = true
                 self?.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
@@ -52,7 +52,6 @@ extension ConfirmDonationViewController: ViewModelBindable {
         output
             .viewWillDisappear
             .drive(onNext: { [weak self] in
-                self?.navigationController?.setNavigationBarHidden(false, animated: false)
                 self?.navigationItem.hidesBackButton = false
                 self?.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
                 self?.tabBarController?.tabBar.isHidden = false

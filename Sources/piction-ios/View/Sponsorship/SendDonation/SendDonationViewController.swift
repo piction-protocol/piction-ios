@@ -76,7 +76,7 @@ extension SendDonationViewController: ViewModelBindable {
         output
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
-                self?.navigationController?.navigationBar.prefersLargeTitles = false
+                self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self?.tabBarController?.tabBar.isHidden = true
                 self?.amountTextField.becomeFirstResponder()
             })

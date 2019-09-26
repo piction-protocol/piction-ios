@@ -32,6 +32,11 @@ final class CheckPincodeViewController: UIViewController {
 
     private let signout = PublishSubject<Void>()
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationController?.configureNavigationBar(transparent: true, shadow: false)
+    }
+
     private func errorPopup() {
         let errorCount = UserDefaults.standard.integer(forKey: "pincodeErrorCount") + 1
         UserDefaults.standard.set(errorCount, forKey: "pincodeErrorCount")
@@ -126,7 +131,7 @@ extension CheckPincodeViewController: ViewModelBindable {
         output
             .viewWillAppear
             .drive(onNext: { [weak self] style in
-                self?.navigationController?.setNavigationBarLine(false)
+                self?.navigationController?.configureNavigationBar(transparent: true, shadow: false)
                 self?.pincodeTextField.becomeFirstResponder()
 
                 if style == .change || style == .check {

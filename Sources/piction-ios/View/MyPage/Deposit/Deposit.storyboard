@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina5_9" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,7 +12,7 @@
         <!--픽션 지갑으로 입금-->
         <scene sceneID="bzQ-7l-FNE">
             <objects>
-                <viewController storyboardIdentifier="DepositViewController" id="kbv-LU-C9R" customClass="DepositViewController" customModule="PictionView" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DepositViewController" id="kbv-LU-C9R" customClass="DepositViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Mbo-ya-r1Y">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -39,7 +38,7 @@
                                                                             <constraint firstAttribute="height" constant="29" id="owD-g3-du3"/>
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                                                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <color key="textColor" name="PictionDarkGray"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vBt-ut-phh">
@@ -53,7 +52,7 @@
                                                                     </label>
                                                                 </subviews>
                                                             </stackView>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Foh-Sb-KfR" customClass="UIButtonExtension" customModule="PictionView" customModuleProvider="target">
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Foh-Sb-KfR" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="74" width="327" height="53"/>
                                                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <constraints>
@@ -101,7 +100,7 @@
                                                         </constraints>
                                                     </stackView>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" secondItem="mmM-6o-K86" secondAttribute="bottom" constant="20" id="gIH-L9-eKq"/>
                                                     <constraint firstItem="mmM-6o-K86" firstAttribute="top" secondItem="fvj-h2-PZn" secondAttribute="top" constant="40" id="jJP-ox-P8M"/>
@@ -121,7 +120,7 @@
                                                                     <constraint firstAttribute="height" constant="17" id="cau-zB-DVz"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="textColor" name="PictionDarkGray"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Zkq-Ti-NMR">
@@ -139,7 +138,6 @@
                                                                                 </constraints>
                                                                             </view>
                                                                         </subviews>
-                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="AhC-zO-aUw"/>
                                                                             <constraint firstAttribute="width" constant="4" id="f7y-tB-WZ7"/>
@@ -155,7 +153,7 @@
                                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="695-tb-J0a"/>
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <color key="textColor" name="PictionDarkGray"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                 </subviews>
@@ -178,7 +176,6 @@
                                                                                 </constraints>
                                                                             </view>
                                                                         </subviews>
-                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstItem="w5w-yR-4Gj" firstAttribute="leading" secondItem="wXK-qN-J9M" secondAttribute="leading" id="6Rq-CK-Ucz"/>
                                                                             <constraint firstAttribute="width" constant="4" id="F87-9k-sl2"/>
@@ -192,7 +189,7 @@
                                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="z9u-oc-MKC"/>
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <color key="textColor" name="PictionDarkGray"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                 </subviews>
@@ -203,7 +200,7 @@
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="133" id="1dh-ct-etd"/>
                                                     <constraint firstAttribute="bottom" secondItem="nbq-FR-6FG" secondAttribute="bottom" constant="20" id="CHX-Fv-3KG"/>
@@ -224,7 +221,7 @@
                                                                     <constraint firstAttribute="height" constant="17" id="mKW-Hz-chy"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="textColor" name="PictionDarkGray"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="5Fi-lz-e6h">
@@ -242,7 +239,6 @@
                                                                                 </constraints>
                                                                             </view>
                                                                         </subviews>
-                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="trailing" secondItem="43l-IZ-s9L" secondAttribute="trailing" id="GAh-17-Hhm"/>
                                                                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="43l-IZ-s9L" secondAttribute="bottom" id="O7h-wW-MQ1"/>
@@ -258,7 +254,7 @@
                                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="KtA-HQ-3LT"/>
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <color key="textColor" name="PictionDarkGray"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                 </subviews>
@@ -281,7 +277,6 @@
                                                                                 </constraints>
                                                                             </view>
                                                                         </subviews>
-                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="sa8-yD-pbJ" secondAttribute="bottom" id="6TR-Fj-Hcl"/>
                                                                             <constraint firstAttribute="width" constant="4" id="8NP-Zw-Qsk"/>
@@ -297,7 +292,7 @@
                                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="S1h-PV-IKG"/>
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <color key="textColor" name="PictionDarkGray"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                 </subviews>
@@ -308,7 +303,7 @@
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="173" id="Gfd-jm-UOI"/>
                                                     <constraint firstAttribute="trailing" secondItem="nkU-HY-SZe" secondAttribute="trailing" id="RDZ-sq-QcP"/>
@@ -332,7 +327,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Glo-G5-iQp" firstAttribute="trailing" secondItem="08a-G3-Dnx" secondAttribute="trailing" id="7T2-4o-4sy"/>
                             <constraint firstAttribute="bottom" secondItem="Glo-G5-iQp" secondAttribute="bottom" id="7Vc-iu-sb1"/>
@@ -341,7 +336,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="08a-G3-Dnx"/>
                     </view>
-                    <navigationItem key="navigationItem" title="픽션 지갑으로 입금" id="bwM-eR-m4F"/>
+                    <navigationItem key="navigationItem" title="픽션 지갑으로 입금" largeTitleDisplayMode="never" id="bwM-eR-m4F"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="addressLabel" destination="vBt-ut-phh" id="qt0-bJ-X8X"/>
@@ -355,4 +350,9 @@
             <point key="canvasLocation" x="831.20000000000005" y="-117.48768472906404"/>
         </scene>
     </scenes>
+    <resources>
+        <namedColor name="PictionDarkGray">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

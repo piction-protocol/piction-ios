@@ -80,6 +80,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
         }
 
         titleLabel.text = title
+        titleLabel.textColor = UIColor(named: "PictionDarkGray")
 
         let userPictureWithIC = "\(profileImage ?? "")?w=240&h=240&quality=80&output=webp"
         if let url = URL(string: userPictureWithIC) {
@@ -103,10 +104,15 @@ class ProjectHeaderView: GSKStretchyHeaderView {
     }
 
     private func controlMenuButton(menu: Int) {
-        postButton.backgroundColor = menu == 0 ? .clear : .white
-        postButton.setTitleColor(menu == 0 ? UIColor(r: 51, g: 51, b: 51) : UIColor(r: 191, g: 191, b: 191), for: .normal)
-        seriesButton.backgroundColor = menu == 0 ? .white : .clear
-        seriesButton.setTitleColor(menu == 0 ? UIColor(r: 191, g: 191, b: 191) : UIColor(r: 51, g: 51, b: 51), for: .normal)
+        if #available(iOS 13.0, *) {
+            postButton.backgroundColor = menu == 0 ? .clear : .systemBackground
+            seriesButton.backgroundColor = menu == 0 ? .systemBackground : .clear
+        } else {
+            postButton.backgroundColor = menu == 0 ? .clear : .white
+            seriesButton.backgroundColor = menu == 0 ? .white : .clear
+        }
+        postButton.setTitleColor(menu == 0 ? UIColor(named: "PictionDarkGray") : UIColor(r: 191, g: 191, b: 191), for: .normal)
+        seriesButton.setTitleColor(menu == 0 ? UIColor(r: 191, g: 191, b: 191) : UIColor(named: "PictionDarkGray"), for: .normal)
     }
 }
 

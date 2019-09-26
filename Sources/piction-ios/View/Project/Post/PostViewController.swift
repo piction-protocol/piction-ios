@@ -24,6 +24,7 @@ final class PostViewController: UIViewController {
         didSet {
             postWebView.navigationDelegate = self
             postWebView.scrollView.delegate = self
+            postWebView.isOpaque = false
         }
     }
     @IBOutlet weak var prevPostButton: UIButton!
@@ -61,7 +62,7 @@ final class PostViewController: UIViewController {
     private func openSignInViewController() {
         let vc = SignInViewController.make()
         if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
+            topViewController.openViewController(vc, type: .swipePresent)
         }
     }
 
@@ -79,6 +80,23 @@ final class PostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController?.tabBar.isHidden = true
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if #available(iOS 13.0, *) {
+            if previousTraitCollection?.hasDifferentColorAppearance(comparedTo: traitCollection) ?? false {
+
+                setWebviewColor()
+            }
+        }
+    }
+
+    @available(iOS 13.0, *)
+    private func setWebviewColor() {
+        let fontColor = UIColor(named: "PictionDarkGray")?.hexString ?? "#000000"
+        postWebView.evaluateJavaScript("document.getElementsByTagName('body')[0].style.color =\"\(fontColor)\"")
     }
 
     deinit {
@@ -105,7 +123,7 @@ extension PostViewController: ViewModelBindable {
         output
             .viewWillAppear
             .drive(onNext: { [weak self] in
-                self?.navigationController?.navigationBar.prefersLargeTitles = false
+                self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self?.tabBarController?.tabBar.isHidden = true
             })
             .disposed(by: disposeBag)
@@ -136,7 +154,13 @@ extension PostViewController: ViewModelBindable {
             .prevPostIsEnabled
             .drive(onNext: { [weak self] postItem in
                 self?.prevPostButton.isEnabled = (postItem.id ?? 0) != 0
-                let buttonColor = (postItem.id ?? 0) != 0 ? UIColor(r: 51, g: 51, b: 51) : UIColor(r: 151, g: 151, b: 151)
+                var buttonColor: UIColor {
+                    if #available(iOS 13.0, *) {
+                        return ((postItem.id ?? 0) != 0 ? UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51) : UIColor(r: 151, g: 151, b: 151))
+                    } else {
+                        return (postItem.id ?? 0) != 0 ? UIColor(r: 51, g: 51, b: 51) : UIColor(r: 151, g: 151, b: 151)
+                    }
+                }
                 self?.prevPostButton.setTitleColor(buttonColor, for: .normal)
             })
             .disposed(by: disposeBag)
@@ -145,7 +169,13 @@ extension PostViewController: ViewModelBindable {
             .nextPostIsEnabled
             .drive(onNext: { [weak self] postItem in
                 self?.nextPostButton.isEnabled = (postItem.id ?? 0) != 0
-                let buttonColor = (postItem.id ?? 0) != 0 ? UIColor(r: 51, g: 51, b: 51) : UIColor(r: 151, g: 151, b: 151)
+                var buttonColor: UIColor {
+                    if #available(iOS 13.0, *) {
+                        return ((postItem.id ?? 0) != 0 ? UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51) : UIColor(r: 151, g: 151, b: 151))
+                    } else {
+                        return (postItem.id ?? 0) != 0 ? UIColor(r: 51, g: 51, b: 51) : UIColor(r: 151, g: 151, b: 151)
+                    }
+                }
                 self?.nextPostButton.setTitleColor(buttonColor, for: .normal)
             })
             .disposed(by: disposeBag)
@@ -261,6 +291,10 @@ extension PostViewController: ViewModelBindable {
 extension PostViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        if #available(iOS 13.0, *) {
+            setWebviewColor()
+        }
+//        webView.stringByEvaluatingJavaScript(from: "document.getElementsByTagName('body')[0].style.fontColor =\"-apple-system\"")
         webView.evaluateJavaScript("document.readyState") { (complete, error) in
             if complete != nil {
                 webView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { [weak self] (height, error) in

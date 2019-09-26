@@ -37,7 +37,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let rootView = TabBarController()
             window?.rootViewController = rootView
         }
-        window?.backgroundColor = .white
+        if #available(iOS 13.0, *) {
+            window?.backgroundColor = .systemBackground
+        } else {
+            window?.backgroundColor = .white
+        }
         window?.makeKeyAndVisible()
 
         return true

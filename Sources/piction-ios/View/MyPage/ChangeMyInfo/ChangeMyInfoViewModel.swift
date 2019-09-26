@@ -40,6 +40,7 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
     }
 
     struct Output {
+        let viewWillAppear: Driver<Void>
         let userInfo: Driver<UserViewResponse>
         let pictureBtnAction: Driver<Void>
         let changePicture: Driver<UIImage?>
@@ -181,6 +182,7 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
         let showToast = Driver.merge(changeUserInfoError, uploadPictureError)
 
         return Output(
+            viewWillAppear: input.viewWillAppear,
             userInfo: userInfoSuccess,
             pictureBtnAction: pictureBtnAction,
             changePicture: changePicture,

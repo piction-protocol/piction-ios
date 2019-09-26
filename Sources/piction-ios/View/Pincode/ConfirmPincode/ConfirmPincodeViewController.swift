@@ -25,6 +25,11 @@ final class ConfirmPincodeViewController: UIViewController {
 
     private let changeComplete = PublishSubject<Void>()
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationController?.configureNavigationBar(transparent: true, shadow: false)
+    }
+
     private func errorPopup() {
         let alert = UIAlertController(title: "PIN 재입력", message: "PIN 번호가 일치하지 않습니다.\n 다시 한 번 입력해주세요.", preferredStyle: .alert)
 
@@ -97,7 +102,7 @@ extension ConfirmPincodeViewController: ViewModelBindable {
         output
             .viewWillAppear
             .drive(onNext: { [weak self] in
-                self?.navigationController?.setNavigationBarLine(false)
+                self?.navigationController?.configureNavigationBar(transparent: true, shadow: false)
                 self?.pincodeTextField.becomeFirstResponder()
             })
             .disposed(by: disposeBag)

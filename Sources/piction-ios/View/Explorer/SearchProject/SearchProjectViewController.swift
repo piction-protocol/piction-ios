@@ -76,7 +76,8 @@ extension SearchProjectViewController: ViewModelBindable {
 
         output
             .viewWillAppear
-            .drive(onNext: { _ in
+            .drive(onNext: { [weak self]_ in
+                self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
             })
             .disposed(by: disposeBag)
 

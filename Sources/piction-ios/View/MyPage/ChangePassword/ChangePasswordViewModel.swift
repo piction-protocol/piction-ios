@@ -16,6 +16,7 @@ final class ChangePasswordViewModel: ViewModel {
     init() {}
 
     struct Input {
+        let viewWillAppear: Driver<Void>
         let passwordTextFieldDidInput: Driver<String>
         let newPasswordTextFieldDidInput: Driver<String>
         let passwordCheckTextFieldDidInput: Driver<String>
@@ -27,6 +28,7 @@ final class ChangePasswordViewModel: ViewModel {
     }
 
     struct Output {
+        let viewWillAppear: Driver<Void>
         let activityIndicator: Driver<Bool>
         let passwordVisible: Driver<Void>
         let newPasswordVisible: Driver<Void>
@@ -90,6 +92,7 @@ final class ChangePasswordViewModel: ViewModel {
             .flatMap { _ in Driver.just(()) }
 
         return Output(
+            viewWillAppear: input.viewWillAppear,
             activityIndicator: activityIndicator,
             passwordVisible: input.passwordVisibleBtnDidTap,
             newPasswordVisible: input.newPasswordVisibleBtnDidTap,

@@ -28,13 +28,6 @@ final class TabBarController: UITabBarController {
             let viewController = item.makeViewController()
             let navigationController = UINavigationController(rootViewController: viewController)
             navigationController.navigationBar.prefersLargeTitles = true
-            navigationController.navigationBar.isTranslucent = true
-            navigationController.navigationItem.largeTitleDisplayMode = .always
-
-            UINavigationBar.appearance().setBackgroundImage(UIImage().imageWithColor(color: .white) ,for: UIBarMetrics.default)
-            UINavigationBar.appearance().largeTitleTextAttributes =
-                [NSAttributedString.Key.foregroundColor: UIColor(r: 51, g: 51, b: 51),
-                 NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 34)]
 
             return navigationController
         }

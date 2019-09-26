@@ -65,6 +65,8 @@ extension QRCodeScannerViewController: ViewModelBindable {
         output
             .viewWillAppear
             .drive(onNext: { [weak self] in
+                self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+                
                 if !(self?.captureSession?.isRunning ?? false) {
                     self?.captureSession.startRunning()
                 }

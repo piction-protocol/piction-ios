@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="26q-Yg-Erv">
-    <device id="retina5_9" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="26q-Yg-Erv">
+    <device id="retina5_9" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,7 +12,7 @@
         <!--로그인-->
         <scene sceneID="aaO-QG-TWw">
             <objects>
-                <viewController storyboardIdentifier="SignInViewController" id="26q-Yg-Erv" customClass="SignInViewController" customModule="PictionView" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignInViewController" id="26q-Yg-Erv" customClass="SignInViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2Cj-iE-teB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -35,7 +34,6 @@
                                                         </constraints>
                                                     </imageView>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="pla-g5-mkU" firstAttribute="centerX" secondItem="aXu-tv-phB" secondAttribute="centerX" id="cDf-yu-rHE"/>
                                                     <constraint firstAttribute="height" constant="149" id="fVj-7X-IO1"/>
@@ -45,9 +43,8 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ATa-aO-goW">
                                                 <rect key="frame" x="0.0" y="149" width="335" height="150"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QDA-4m-EQW" customClass="DynamicInputView" customModule="PictionView" customModuleProvider="target">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QDA-4m-EQW" customClass="DynamicInputView" customModule="piction_ios" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="335" height="65"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="아이디"/>
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureText" value="NO"/>
@@ -56,9 +53,8 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4oE-2h-5Xg" customClass="DynamicInputView" customModule="PictionView" customModuleProvider="target">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4oE-2h-5Xg" customClass="DynamicInputView" customModule="piction_ios" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="85" width="335" height="65"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureText" value="YES"/>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="비밀번호"/>
@@ -72,7 +68,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hUY-Jq-qCf">
                                                 <rect key="frame" x="0.0" y="299" width="335" height="77"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BBl-ta-c0c" customClass="UIButtonExtension" customModule="PictionView" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BBl-ta-c0c" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
                                                         <rect key="frame" x="4" y="24" width="327" height="53"/>
                                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
@@ -92,7 +88,6 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </button>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="BBl-ta-c0c" firstAttribute="top" secondItem="hUY-Jq-qCf" secondAttribute="top" constant="24" id="0JN-pr-8fe"/>
                                                     <constraint firstAttribute="trailing" secondItem="BBl-ta-c0c" secondAttribute="trailing" constant="4" id="6M8-Jz-mAW"/>
@@ -117,7 +112,7 @@
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                         <state key="normal" title="회원가입">
-                                                                            <color key="titleColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                            <color key="titleColor" name="PictionDarkGray"/>
                                                                         </state>
                                                                     </button>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFz-WC-gkd">
@@ -135,7 +130,7 @@
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                         <state key="normal" title="비밀번호 찾기">
-                                                                            <color key="titleColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                            <color key="titleColor" name="PictionDarkGray"/>
                                                                         </state>
                                                                     </button>
                                                                 </subviews>
@@ -144,7 +139,6 @@
                                                                 </constraints>
                                                             </stackView>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstItem="hem-kH-foC" firstAttribute="centerY" secondItem="ih7-6a-1Sz" secondAttribute="centerY" id="5cH-YM-dBt"/>
                                                             <constraint firstItem="hem-kH-foC" firstAttribute="centerX" secondItem="ih7-6a-1Sz" secondAttribute="centerX" id="DCh-Gw-eOe"/>
@@ -171,7 +165,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="9AD-PS-vgq" firstAttribute="leading" secondItem="1tc-AD-I96" secondAttribute="leading" id="aRG-BL-5o8"/>
@@ -211,5 +205,8 @@
     </scenes>
     <resources>
         <image name="imgLogoPictionDefaultBl" width="847" height="219"/>
+        <namedColor name="PictionDarkGray">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

@@ -68,17 +68,8 @@ extension SearchSponsorViewController: ViewModelBindable {
 
         output
             .viewWillAppear
-            .drive(onNext: { [weak self] _ in
-                guard let `self` = self else { return }
-                self.navigationController?.navigationBar.prefersLargeTitles = false
-                self.navigationController?.setNavigationBarLine(false)
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .viewWillDisappear
             .drive(onNext: { [weak self] in
-                self?.navigationController?.setNavigationBarLine(true)
+                self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
             })
             .disposed(by: disposeBag)
 

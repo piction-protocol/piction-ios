@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina5_9" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="jfW-sf-3xv" customClass="ProjectHeaderView" customModule="PictionView" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="jfW-sf-3xv" customClass="ProjectHeaderView" customModule="piction_ios" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="649"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -20,7 +19,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                     <color key="backgroundColor" red="0.94867008919999996" green="0.94938892129999997" blue="0.94878143069999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </imageView>
-                <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mUZ-gk-6mM" customClass="VisualEffectView" customModule="PictionView" customModuleProvider="target">
+                <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mUZ-gk-6mM" customClass="VisualEffectView" customModule="piction_ios" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="wUt-sf-0iT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
@@ -52,7 +51,7 @@
                                                     <attributedString key="attributedText">
                                                         <fragment content=" ">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="NSColor" red="0.1803921568627451" green="0.17814017832279205" blue="0.20181131362915039" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" size="24" name="AppleSDGothicNeo-Bold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="7" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
@@ -88,7 +87,7 @@
                                                 <constraint firstItem="9UD-yf-gRK" firstAttribute="leading" secondItem="Jzm-kI-DYR" secondAttribute="leading" id="sH1-ba-jR5"/>
                                             </constraints>
                                         </stackView>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-dummy-userprofile-500-x-500" translatesAutoresizingMaskIntoConstraints="NO" id="asA-dx-qfm" customClass="UIImageViewExtension" customModule="PictionView" customModuleProvider="target">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-dummy-userprofile-500-x-500" translatesAutoresizingMaskIntoConstraints="NO" id="asA-dx-qfm" customClass="UIImageViewExtension" customModule="piction_ios" customModuleProvider="target">
                                             <rect key="frame" x="245" y="0.0" width="50" height="50"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="50" id="jWo-KG-VLW"/>
@@ -108,7 +107,7 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9rs-ac-l7o">
                                     <rect key="frame" x="0.0" y="120" width="295" height="83"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zb3-FI-Y5R" customClass="UIButtonExtension" customModule="PictionView" customModuleProvider="target">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zb3-FI-Y5R" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="295" height="53"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="53" id="dWm-yX-GDg"/>
@@ -169,7 +168,7 @@
                             </constraints>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
                         <constraint firstItem="iA7-Kb-NCg" firstAttribute="top" secondItem="le1-xN-Ewx" secondAttribute="top" constant="20" id="JDX-Ot-dPv"/>
                         <constraint firstAttribute="trailing" secondItem="iA7-Kb-NCg" secondAttribute="trailing" constant="20" id="WOo-BY-4qU"/>
@@ -182,7 +181,7 @@
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X0L-D0-B02">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
-                            <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" name="PictionDarkGray"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="WjO-qr-ADU"/>
                             </constraints>
@@ -201,7 +200,7 @@
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uk4-9z-Egv">
                                                             <rect key="frame" x="0.0" y="0.0" width="187.66666666666666" height="3"/>
-                                                            <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="backgroundColor" name="PictionDarkGray"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="3" id="Rxv-0w-lDd"/>
                                                             </constraints>
@@ -209,14 +208,14 @@
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AUk-Yf-g1T">
                                                             <rect key="frame" x="0.0" y="0.0" width="187.66666666666666" height="51"/>
                                                             <state key="normal" title="포스트">
-                                                                <color key="titleColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="titleColor" name="PictionDarkGray"/>
                                                             </state>
                                                             <connections>
                                                                 <action selector="postBtnDidTap:" destination="jfW-sf-3xv" eventType="touchUpInside" id="OaY-pX-Iiz"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <constraints>
                                                         <constraint firstItem="AUk-Yf-g1T" firstAttribute="leading" secondItem="IGM-N1-hKq" secondAttribute="leading" id="8xT-8O-sMb"/>
                                                         <constraint firstItem="Uk4-9z-Egv" firstAttribute="leading" secondItem="IGM-N1-hKq" secondAttribute="leading" id="KTM-Iv-R5w"/>
@@ -233,14 +232,14 @@
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R6l-YQ-46n">
                                                             <rect key="frame" x="0.0" y="0.0" width="187.33333333333334" height="3"/>
-                                                            <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="backgroundColor" name="PictionDarkGray"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="3" id="si2-3w-DbG"/>
                                                             </constraints>
                                                         </view>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zuZ-fe-55M">
                                                             <rect key="frame" x="0.0" y="0.0" width="187.33333333333334" height="51"/>
-                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                             <state key="normal" title="시리즈">
                                                                 <color key="titleColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
@@ -249,7 +248,7 @@
                                                             </connections>
                                                         </button>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <constraints>
                                                         <constraint firstItem="R6l-YQ-46n" firstAttribute="leading" secondItem="yH2-n6-YSP" secondAttribute="leading" id="Jlb-pX-yym"/>
                                                         <constraint firstItem="zuZ-fe-55M" firstAttribute="top" secondItem="yH2-n6-YSP" secondAttribute="top" id="QlF-qq-cDT"/>
@@ -266,7 +265,7 @@
                                             </constraints>
                                         </stackView>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     <constraints>
                                         <constraint firstItem="yoe-K8-dWK" firstAttribute="leading" secondItem="Zrz-MH-Q4H" secondAttribute="leading" id="cnD-hw-hnF"/>
                                         <constraint firstItem="yoe-K8-dWK" firstAttribute="top" secondItem="Zrz-MH-Q4H" secondAttribute="top" id="kaY-6z-gY2"/>
@@ -290,7 +289,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="uNI-65-gk2" secondAttribute="bottom" id="04D-Ex-OxZ"/>
                 <constraint firstItem="uNI-65-gk2" firstAttribute="leading" secondItem="dZ8-hW-8t3" secondAttribute="leading" id="0NI-6I-5aL"/>
@@ -334,5 +333,8 @@
         <image name="icPeopleGrey" width="24" height="24"/>
         <image name="img-dummy-projectcover-1440-x-450" width="1440" height="450"/>
         <image name="img-dummy-userprofile-500-x-500" width="120" height="120"/>
+        <namedColor name="PictionDarkGray">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

@@ -98,7 +98,7 @@ extension TransactionDetailViewController: ViewModelBindable {
         output
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
-                self?.navigationController?.navigationBar.prefersLargeTitles = false
+                self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
             })
             .disposed(by: disposeBag)
 
@@ -106,7 +106,11 @@ extension TransactionDetailViewController: ViewModelBindable {
             .transactionInfo
             .do(onNext: { [weak self] _ in
                 let view = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_W, height: SCREEN_H))
-                view.backgroundColor = UIColor(r: 250, g: 250, b: 250)
+                if #available(iOS 13.0, *) {
+                    view.backgroundColor = .secondarySystemBackground
+                } else {
+                    view.backgroundColor = UIColor(r: 250, g: 250, b: 250)
+                }
                 self?.emptyView.addSubview(view)
             })
             .drive { $0 }

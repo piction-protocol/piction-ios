@@ -101,7 +101,7 @@ final class ProjectViewController: UIViewController {
     private func openSignInViewController() {
         let vc = SignInViewController.make()
         if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
+            topViewController.openViewController(vc, type: .swipePresent)
         }
     }
 
@@ -191,21 +191,17 @@ extension ProjectViewController: ViewModelBindable {
         output
             .viewWillAppear
             .drive(onNext: { [weak self] in
-                guard let `self` = self else { return }
-                self.navigationController?.navigationBar.prefersLargeTitles = false
-                self.navigationController?.navigationBar.barStyle = .black
-                self.navigationController?.showTransparentNavigationBar()
-                self.navigationController?.setNavigationBarLine(false)
-                self.navigationController?.navigationBar.tintColor = .white
+                self?.navigationController?.configureNavigationBar(transparent: true, shadow: false)
+                self?.navigationController?.navigationBar.barStyle = .black
+                self?.navigationController?.navigationBar.tintColor = .white
             })
             .disposed(by: disposeBag)
 
         output
             .viewWillDisappear
             .drive(onNext: { [weak self] in
+                self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self?.navigationController?.navigationBar.barStyle = .default
-                self?.navigationController?.hideTransparentNavigationBar()
-                self?.navigationController?.setNavigationBarLine(true)
                 self?.navigationController?.navigationBar.tintColor = UIView().tintColor
             })
             .disposed(by: disposeBag)

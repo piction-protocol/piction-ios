@@ -21,7 +21,7 @@ final class CustomEmptyViewController: UIViewController {
     private func openSignInViewController() {
         let vc = SignInViewController.make()
         if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
+            topViewController.openViewController(vc, type: .swipePresent)
         }
     }
 

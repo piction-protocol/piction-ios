@@ -29,6 +29,7 @@ final class UserInfoViewModel: InjectableViewModel {
     }
 
     struct Output {
+        let viewWillAppear: Driver<Void>
         let userInfo: Driver<UserModel>
         let walletInfo: Driver<WalletModel>
         let showToast: Driver<String>
@@ -85,6 +86,7 @@ final class UserInfoViewModel: InjectableViewModel {
         let showToast = Driver.merge(userInfoError, walletInfoError)
 
         return Output(
+            viewWillAppear: input.viewWillAppear,
             userInfo: userInfoSuccess,
             walletInfo: walletInfoSuccess,
             showToast: showToast

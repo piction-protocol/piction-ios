@@ -10,6 +10,7 @@ import UIKit
 
 enum ViewOpenType: Int {
     case present
+    case swipePresent
     case push
 }
 
@@ -25,6 +26,10 @@ extension UIViewController {
     func openViewController(_ childView: UIViewController, type: ViewOpenType) {
         switch type {
         case .present:
+            let navigation = UINavigationController(rootViewController: childView)
+            navigation.modalPresentationStyle = .fullScreen
+            self.present(navigation, animated: true, completion: nil)
+        case .swipePresent:
             let navigation = UINavigationController(rootViewController: childView)
             self.present(navigation, animated: true, completion: nil)
         case .push:

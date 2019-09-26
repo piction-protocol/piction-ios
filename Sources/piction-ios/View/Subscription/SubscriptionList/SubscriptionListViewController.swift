@@ -87,18 +87,7 @@ extension SubscriptionListViewController: ViewModelBindable {
         output
             .viewWillAppear
             .drive(onNext: { [weak self] in
-                self?.navigationController?.setNavigationBarLine(false)
-                self?.navigationController?.navigationBar.prefersLargeTitles = true
-                self?.navigationController?.navigationBar.barStyle = .default
-                self?.navigationController?.navigationBar.tintColor = UIView().tintColor
-                self?.navigationController?.hideTransparentNavigationBar()
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .viewWillDisappear
-            .drive(onNext: { [weak self] in
-                self?.navigationController?.setNavigationBarLine(true)
+                self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
             })
             .disposed(by: disposeBag)
 

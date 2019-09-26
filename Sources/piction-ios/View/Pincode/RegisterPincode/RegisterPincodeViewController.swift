@@ -23,6 +23,11 @@ final class RegisterPincodeViewController: UIViewController {
     @IBOutlet weak var pincode6View: UIView!
     @IBOutlet weak var closeButton: UIBarButtonItem!
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationController?.configureNavigationBar(transparent: true, shadow: false)
+    }
+
     private func openConfirmPincodeViewController(inputPincode: String) {
         let vc = ConfirmPincodeViewController.make(inputPincode: inputPincode)
         if let topViewController = UIApplication.topViewController() {
@@ -62,7 +67,7 @@ extension RegisterPincodeViewController: ViewModelBindable {
         output
             .viewWillAppear
             .drive(onNext: { [weak self] in
-                self?.navigationController?.setNavigationBarLine(false)
+                self?.navigationController?.configureNavigationBar(transparent: true, shadow: false)
                 self?.pincodeTextField.becomeFirstResponder()
             })
             .disposed(by: disposeBag)

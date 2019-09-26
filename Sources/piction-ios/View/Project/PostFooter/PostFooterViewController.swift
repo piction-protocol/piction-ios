@@ -22,6 +22,8 @@ final class PostFooterViewController: UIViewController {
             likeView.layer.shadowRadius = 4
             likeView.layer.shadowOffset = CGSize(width: 0, height: 1)
             likeView.layer.masksToBounds = false
+            likeView.layer.borderColor = UIColor.white.cgColor
+            likeView.layer.borderWidth = 0.5
         }
     }
     @IBOutlet weak var likeImageView: UIImageView!
@@ -39,7 +41,7 @@ final class PostFooterViewController: UIViewController {
     private func openSignInViewController() {
         let vc = SignInViewController.make()
         if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
+            topViewController.openViewController(vc, type: .swipePresent)
         }
     }
 }

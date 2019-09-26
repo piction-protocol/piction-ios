@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DynamicInputView" customModule="PictionView" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DynamicInputView" customModule="piction_ios" customModuleProvider="target">
             <connections>
                 <outlet property="errorContainerView" destination="lol-0T-xiP" id="k9D-R6-4g4"/>
                 <outlet property="errorLabel" destination="lL1-El-s06" id="gH3-4Q-Dbl"/>
@@ -33,10 +31,10 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="xo6-uO-OHa">
                     <rect key="frame" x="0.0" y="0.0" width="335" height="65"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yc3-3l-pCd" customClass="UIViewExtension" customModule="PictionView" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yc3-3l-pCd" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="335" height="65"/>
                             <subviews>
-                                <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bj0-Gx-xyn" customClass="UIViewExtension" customModule="PictionView" customModuleProvider="target">
+                                <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bj0-Gx-xyn" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
                                     <rect key="frame" x="4" y="4" width="327" height="57"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
@@ -51,7 +49,7 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PmZ-HY-oat" customClass="UIViewExtension" customModule="PictionView" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PmZ-HY-oat" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
                                     <rect key="frame" x="4" y="4" width="327" height="57"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="b02-dt-gju">
@@ -65,7 +63,6 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="39" id="1KC-Da-6TZ"/>
                                                             </constraints>
-                                                            <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" returnKeyType="next" textContentType="password"/>
                                                             <userDefinedRuntimeAttributes>
@@ -113,7 +110,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="2yC-7B-9g7" secondAttribute="trailing" constant="16" id="QAI-H2-6ix"/>
                                         <constraint firstItem="b02-dt-gju" firstAttribute="centerY" secondItem="PmZ-HY-oat" secondAttribute="centerY" id="ceC-6E-jdO"/>
@@ -136,7 +133,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
                                 <constraint firstItem="PmZ-HY-oat" firstAttribute="leading" secondItem="Yc3-3l-pCd" secondAttribute="leading" constant="4" id="7Lf-63-X2f"/>
                                 <constraint firstAttribute="bottom" secondItem="PmZ-HY-oat" secondAttribute="bottom" constant="4" id="Hov-sU-gDi"/>
@@ -172,7 +169,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
                                 <constraint firstItem="lL1-El-s06" firstAttribute="leading" secondItem="lol-0T-xiP" secondAttribute="leading" constant="4" id="OGk-lQ-zne"/>
                                 <constraint firstAttribute="bottom" secondItem="lL1-El-s06" secondAttribute="bottom" id="QNf-iH-wH1"/>
@@ -186,7 +183,7 @@
                     </constraints>
                 </stackView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="xo6-uO-OHa" firstAttribute="top" secondItem="mZo-nf-AaU" secondAttribute="top" id="Fdp-tF-lX7"/>
                 <constraint firstAttribute="trailing" secondItem="xo6-uO-OHa" secondAttribute="trailing" id="G5V-lQ-hUf"/>

@@ -45,7 +45,7 @@ extension ProjectInfoViewController: ViewModelBindable {
         output
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
-                self?.navigationController?.navigationBar.prefersLargeTitles = false
+                self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
             })
             .disposed(by: disposeBag)
 

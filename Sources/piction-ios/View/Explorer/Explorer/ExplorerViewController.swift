@@ -61,6 +61,11 @@ final class ExplorerViewController: UIViewController {
         super.viewDidLoad()
 
         searchController = UISearchController(searchResultsController: self.searchResultsController)
+        if #available(iOS 13.0, *) {
+            searchController?.searchBar.backgroundColor = .systemBackground
+        } else {
+            searchController?.searchBar.backgroundColor = .white
+        }        
 
         searchController?.hidesNavigationBarDuringPresentation = true
         searchController?.dimsBackgroundDuringPresentation = false
@@ -136,18 +141,7 @@ extension ExplorerViewController: ViewModelBindable {
         output
             .viewWillAppear
             .drive(onNext: { [weak self] in
-                self?.navigationController?.setNavigationBarLine(false)
-                self?.navigationController?.navigationBar.prefersLargeTitles = true
-                self?.navigationController?.navigationBar.barStyle = .default
-                self?.navigationController?.navigationBar.tintColor = UIView().tintColor
-                self?.navigationController?.hideTransparentNavigationBar()
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .viewWillDisappear
-            .drive(onNext: { [weak self] in
-                self?.navigationController?.setNavigationBarLine(true)
+                self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
             })
             .disposed(by: disposeBag)
 

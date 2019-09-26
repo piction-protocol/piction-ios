@@ -175,18 +175,7 @@ extension MyPageViewController: ViewModelBindable {
         output
             .viewWillAppear
             .drive(onNext: { [weak self] in
-                self?.navigationController?.setNavigationBarLine(false)
-                self?.navigationController?.navigationBar.prefersLargeTitles = true
-                self?.navigationController?.navigationBar.barStyle = .default
-                self?.navigationController?.navigationBar.tintColor = UIView().tintColor
-                self?.navigationController?.hideTransparentNavigationBar()
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .viewWillDisappear
-            .drive(onNext: { [weak self] in
-                self?.navigationController?.setNavigationBarLine(true)
+                self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
             })
             .disposed(by: disposeBag)
 
@@ -196,7 +185,11 @@ extension MyPageViewController: ViewModelBindable {
                 _ = self?.emptyView.subviews.map { $0.removeFromSuperview() }
                 self?.emptyView.frame.size.height = 0
                 let view = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_W, height: SCREEN_H))
-                view.backgroundColor = UIColor(r: 250, g: 250, b: 250)
+                if #available(iOS 13.0, *) {
+                    view.backgroundColor = .secondarySystemBackground
+                } else {
+                    view.backgroundColor = UIColor(r: 250, g: 250, b: 250)
+                }
                 self?.emptyView.addSubview(view)
             })
             .drive { $0 }

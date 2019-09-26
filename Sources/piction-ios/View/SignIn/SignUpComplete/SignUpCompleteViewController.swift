@@ -38,10 +38,18 @@ extension SignUpCompleteViewController: ViewModelBindable {
     func bindViewModel(viewModel: ViewModel) {
 
         let input = SignUpCompleteViewModel.Input(
+            viewWillAppear: rx.viewWillAppear.asDriver(),
             closeBtnDidTap: closeButton.rx.tap.asDriver()
         )
 
         let output = viewModel.build(input: input)
+
+        output
+            .viewWillAppear
+            .drive(onNext: { [weak self] in
+                self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+            })
+            .disposed(by: disposeBag)
 
         output
             .dismissViewController
