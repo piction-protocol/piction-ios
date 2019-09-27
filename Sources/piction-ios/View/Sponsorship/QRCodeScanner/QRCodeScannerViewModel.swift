@@ -53,7 +53,7 @@ final class QRCodeScannerViewModel: ViewModel {
 
         let findPublicAddressError = findPublicAddressAction.error
             .flatMap { _ -> Driver<String> in
-                return Driver.just("픽션 크리에이터 QR코드가 아닙니다.")
+                return Driver.just(LocalizedStrings.msg_not_piction_cp.localized())
             }
 
 

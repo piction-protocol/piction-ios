@@ -187,7 +187,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0m3-iq-ZSB"/>
                     </view>
-                    <navigationItem key="navigationItem" title="마이페이지" id="KX2-uQ-3yL"/>
+                    <navigationItem key="navigationItem" title="마이페이지" id="KX2-uQ-3yL">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="menu_my_info"/>
+                        </userDefinedRuntimeAttributes>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="containerView" destination="LDX-xN-FHw" id="XIA-3v-l8K"/>

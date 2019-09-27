@@ -215,30 +215,30 @@ extension MyPageViewController: ViewModelBindable {
                     break
                 case .pushType(let title):
                     switch title {
-                    case "나의 프로젝트":
+                    case LocalizedStrings.menu_my_project.localized():
                         self?.openMyProjectViewController()
-                    case "거래 내역":
+                    case LocalizedStrings.str_transitions.localized():
                         self?.openTransactionHistoryListViewController()
-                    case "픽션 지갑으로 입금":
+                    case LocalizedStrings.str_deposit.localized():
                         self?.openDepositViewController()
                     default:
                         break
                     }
                 case .presentType(let title, _):
                     switch title {
-                    case "PIN 번호 등록":
+                    case LocalizedStrings.str_create_pin.localized():
                         self?.openRegisterPincodeViewController()
-                    case "PIN 번호 변경":
+                    case LocalizedStrings.str_change_pin.localized():
                          self?.openCheckPincodeViewController()
-                    case "기본정보 변경":
+                    case LocalizedStrings.str_change_basic_info.localized():
                         self?.openChangeMyInfoViewController()
-                    case "비밀번호 변경":
+                    case LocalizedStrings.str_change_pw.localized():
                         self?.openChangePasswordViewController()
-                    case "서비스 이용약관":
+                    case LocalizedStrings.str_terms.localized():
                         self?.openSafariViewController(url: "https://piction.network/terms")
-                    case "개인정보 처리방침":
+                    case LocalizedStrings.str_privacy.localized():
                         self?.openSafariViewController(url: "https://piction.network/privacy")
-                    case "로그아웃":
+                    case LocalizedStrings.str_sign_out.localized():
                         self?.logout.onNext(())
                     default:
                         break

@@ -31,13 +31,13 @@ final class SeriesPostListTableViewCell: ReuseTableViewCell {
 
         if isSubscribing || fanPass?.id == nil {
             subTitleLabel.textColor = UIColor(r: 191, g: 191, b: 191)
-            subTitleLabel.text = date?.toString(format: "YYYY년 M월 d일 hh:ss 발행")
+            subTitleLabel.text = date?.toString(format: LocalizedStrings.str_series_date_format.localized())
         } else {
             subTitleLabel.textColor = UIColor(r: 213, g: 19, b: 21)
             if fanPass?.id != nil {
-                subTitleLabel.text = "구독자 전용"
+                subTitleLabel.text = LocalizedStrings.str_series_subs_only.localized()
             } else {
-                subTitleLabel.text = "\(fanPass?.name) 이상 구독자 전용"
+                subTitleLabel.text = LocalizedStrings.str_series_fanpass_subs_only.localized(with: fanPass?.name ?? "")
             }
         }
     }

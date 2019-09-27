@@ -28,6 +28,7 @@
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgLogoPictionDefaultBl" translatesAutoresizingMaskIntoConstraints="NO" id="u1i-iT-rSX">
                                                         <rect key="frame" x="57.666666666666686" y="48" width="220" height="57"/>
+                                                        <color key="tintColor" name="PictionDarkGray"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="57" id="C7S-u5-OxI"/>
                                                             <constraint firstAttribute="width" constant="220" id="lyr-Fv-rjK"/>
@@ -51,6 +52,8 @@
                                                             <userDefinedRuntimeAttribute type="number" keyPath="returnKeyType">
                                                                 <integer key="value" value="4"/>
                                                             </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedTitleId" value="str_id"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedErrorPlaceHolderId" value="hint_input_id_guide"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qum-Zc-YXk" customClass="DynamicInputView" customModule="piction_ios" customModuleProvider="target">
@@ -60,6 +63,7 @@
                                                             <userDefinedRuntimeAttribute type="number" keyPath="returnKeyType">
                                                                 <integer key="value" value="4"/>
                                                             </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedTitleId" value="str_email"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VgF-Q0-TPu" customClass="DynamicInputView" customModule="piction_ios" customModuleProvider="target">
@@ -71,6 +75,8 @@
                                                             <userDefinedRuntimeAttribute type="number" keyPath="returnKeyType">
                                                                 <integer key="value" value="4"/>
                                                             </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedTitleId" value="str_pw"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedErrorPlaceHolderId" value="hint_need_six_pw"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uUs-dW-ay6" customClass="DynamicInputView" customModule="piction_ios" customModuleProvider="target">
@@ -81,6 +87,7 @@
                                                             <userDefinedRuntimeAttribute type="number" keyPath="returnKeyType">
                                                                 <integer key="value" value="4"/>
                                                             </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedTitleId" value="hint_pw_check"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AFP-1X-eyB" customClass="DynamicInputView" customModule="piction_ios" customModuleProvider="target">
@@ -91,6 +98,8 @@
                                                             </userDefinedRuntimeAttribute>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="닉네임"/>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="errorPlaceHolder" value="2자 이상의 닉네임"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedTitleId" value="str_nick_name"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedErrorPlaceHolderId" value="hint_input_nick_name"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                 </subviews>
@@ -219,6 +228,7 @@
                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                                 <real key="value" value="8"/>
                                                             </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="sign_up"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </button>
                                                 </subviews>
@@ -261,7 +271,11 @@
                             <outletCollection property="gestureRecognizers" destination="ODd-PX-2DF" appends="YES" id="4hn-D4-Oe3"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" title="회원가입" id="dMj-gN-X85"/>
+                    <navigationItem key="navigationItem" title="회원가입" id="dMj-gN-X85">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="sign_up"/>
+                        </userDefinedRuntimeAttributes>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="agreeButton" destination="Lsd-1I-Rgf" id="FPq-kQ-tfW"/>

@@ -39,7 +39,7 @@ extension PostHeaderViewController: ViewModelBindable {
                     self?.profileImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-userprofile-500-x-500"), completed: nil)
                 }
                 self?.seriesNameLabel.isHidden = postItem.series?.name == nil
-                self?.seriesNameLabel.text = "시리즈 · \(postItem.series?.name ?? "")"
+                self?.seriesNameLabel.text = "\(LocalizedStrings.btn_series.localized()) · \(postItem.series?.name ?? "")"
                 self?.writerLabel.text = userInfo.username
                 self?.titleLabel.text = postItem.title
             })

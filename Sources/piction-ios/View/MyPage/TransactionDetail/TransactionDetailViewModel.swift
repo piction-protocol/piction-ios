@@ -40,7 +40,7 @@ final class TransactionDetailViewModel: ViewModel {
         let navigationTitle = input.viewWillAppear
             .flatMap { [weak self] _ -> Driver<String> in
                 guard let `self` = self else { return Driver.empty() }
-                let title = self.transaction.inOut == "IN" ? "입금 상세정보" : "출금 상세정보"
+                let title = self.transaction.inOut == "IN" ? LocalizedStrings.str_deposit_format_detail.localized() : LocalizedStrings.str_withdraw_format_detail.localized()
                 return Driver.just(title)
             }
 
@@ -75,8 +75,8 @@ final class TransactionDetailViewModel: ViewModel {
                         return Driver.empty()
                     }
                     let sponsorshipSection = [
-                        TransactionDetailItemType.header(title: "후원 정보"),
-                        TransactionDetailItemType.list(title: inOut == "IN" ? "후원자" : "후원 대상", description: inOut == "IN" ? "@\(sponsorshipItem.sponsor?.loginId ?? "")" : "@\(sponsorshipItem.creator?.loginId ?? "")", link: ""),
+                        TransactionDetailItemType.header(title: LocalizedStrings.str_sponsor_info.localized()),
+                        TransactionDetailItemType.list(title: inOut == "IN" ? LocalizedStrings.str_sponsor.localized() : LocalizedStrings.str_sponsored_by.localized(), description: inOut == "IN" ? "@\(sponsorshipItem.sponsor?.loginId ?? "")" : "@\(sponsorshipItem.creator?.loginId ?? "")", link: ""),
                         TransactionDetailItemType.footer,
                     ]
                     return Driver.just(sponsorshipSection)
@@ -87,11 +87,11 @@ final class TransactionDetailViewModel: ViewModel {
                     let subscriptionSection = [
                         TransactionDetailItemType.info(transaction: self.transaction),
                         TransactionDetailItemType.footer,
-                        TransactionDetailItemType.header(title: inOut == "IN" ? "FAN PASS 판매 정보" : "FAN PASS 구매 정보"),
-                        TransactionDetailItemType.list(title: "주문번호", description: "\(subscriptionItem.orderNo ?? 0)", link: ""),
-                        TransactionDetailItemType.list(title: "프로젝트", description: "\(subscriptionItem.fanPass?.project?.title ?? "")", link: ""),
+                        TransactionDetailItemType.header(title: inOut == "IN" ? LocalizedStrings.str_fanpass_sales_info.localized() : LocalizedStrings.str_fanpass_purchase_info.localized()),
+                        TransactionDetailItemType.list(title: LocalizedStrings.str_order_no.localized(), description: "\(subscriptionItem.orderNo ?? 0)", link: ""),
+                        TransactionDetailItemType.list(title: LocalizedStrings.menu_project.localized(), description: "\(subscriptionItem.fanPass?.project?.title ?? "")", link: ""),
                         TransactionDetailItemType.list(title: "FAN PASS", description: "\(subscriptionItem.fanPass?.name ?? "")", link: ""),
-                        TransactionDetailItemType.list(title: inOut == "IN" ? "구매자" : "판매자", description: inOut == "IN" ? "\(subscriptionItem.subscriber?.loginId ?? "")" : "\(subscriptionItem.creator?.loginId ?? "")", link: ""),
+                        TransactionDetailItemType.list(title: inOut == "IN" ? LocalizedStrings.str_buyer.localized() : LocalizedStrings.str_seller.localized(), description: inOut == "IN" ? "\(subscriptionItem.subscriber?.loginId ?? "")" : "\(subscriptionItem.creator?.loginId ?? "")", link: ""),
                         TransactionDetailItemType.footer,
                     ]
                     return Driver.just(subscriptionSection)
@@ -111,7 +111,7 @@ final class TransactionDetailViewModel: ViewModel {
                 sections.append(contentsOf: typeSection)
 
                 let transactionSection = [
-                    TransactionDetailItemType.header(title: "트랜잭션 정보"),
+                    TransactionDetailItemType.header(title: LocalizedStrings.str_transaction_info.localized()),
                     TransactionDetailItemType.list(title: "From", description: self.transaction.fromAddress ?? "", link: ""),
                     TransactionDetailItemType.list(title: "To", description: self.transaction.toAddress ?? "", link: ""),
                     TransactionDetailItemType.list(title: "Amount", description: "\((self.transaction.amount ?? 0).commaRepresentation) PXL", link: ""),

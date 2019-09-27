@@ -69,7 +69,7 @@ final class ExplorerViewController: UIViewController {
 
         searchController?.hidesNavigationBarDuringPresentation = true
         searchController?.dimsBackgroundDuringPresentation = false
-        searchController?.searchBar.placeholder = "프로젝트 검색"
+        searchController?.searchBar.placeholder = LocalizedStrings.hint_project_search.localized()
         searchController?.searchResultsUpdater = searchResultsController
 
         navigationItem.searchController = searchController
@@ -107,11 +107,11 @@ final class ExplorerViewController: UIViewController {
     }
 
     private func openErrorPopup() {
-        let alert = UIAlertController(title: "네트워크 오류", message: "서버가 응답하지 않습니다.\n네트워크 환경을 확인해주세요.", preferredStyle: .alert)
+        let alert = UIAlertController(title: LocalizedStrings.popup_title_network_error.localized(), message: LocalizedStrings.msg_api_internal_server_error.localized(), preferredStyle: .alert)
 
-        let cancelButton = UIAlertAction(title: "취소", style: .cancel) { _ in
+        let cancelButton = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel) { _ in
         }
-        let okAction = UIAlertAction(title: "재시도", style: .default, handler: { [weak self] action in
+        let okAction = UIAlertAction(title: LocalizedStrings.retry.localized(), style: .default, handler: { [weak self] action in
             self?.viewModel?.loadTrigger.onNext(())
         })
 

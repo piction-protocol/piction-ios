@@ -107,7 +107,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="115-vF-T2p"/>
                     </view>
-                    <navigationItem key="navigationItem" title="구독" id="S4g-AZ-9MR"/>
+                    <navigationItem key="navigationItem" title="구독" id="S4g-AZ-9MR">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="tab_subscription"/>
+                        </userDefinedRuntimeAttributes>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="collectionView" destination="OQM-hN-oXV" id="5T5-Y7-F6x"/>

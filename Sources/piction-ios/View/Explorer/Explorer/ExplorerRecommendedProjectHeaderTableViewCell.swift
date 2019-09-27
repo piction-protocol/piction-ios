@@ -8,4 +8,9 @@
 import UIKit
 
 final class ExplorerRecommendedProjectHeaderTableViewCell: ReuseTableViewCell {
+    @IBOutlet weak var descriptionLabel: UILabel! {
+        didSet {
+            descriptionLabel.font = UIFont.systemFont(ofSize: 14)
+        }
+    }
 }

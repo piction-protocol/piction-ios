@@ -78,13 +78,13 @@
                                     <constraint firstItem="87P-hZ-2MY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TCN-oM-f4h" secondAttribute="leading" priority="250" id="M39-vp-2c7"/>
                                     <constraint firstAttribute="trailing" secondItem="ULW-oE-7ha" secondAttribute="trailing" id="bDo-Ot-U18"/>
                                     <constraint firstItem="ULW-oE-7ha" firstAttribute="leading" secondItem="TCN-oM-f4h" secondAttribute="leading" id="dSS-dy-fgp"/>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="fsa-TE-6nx"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="120" id="fsa-TE-6nx"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="87P-hZ-2MY" secondAttribute="trailing" priority="250" id="r2U-7d-naU"/>
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y9C-EG-1v5">
                                 <rect key="frame" x="20" y="180" width="374" height="0.5"/>
-                                <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="separatorColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.33000000000000002" id="vu4-OS-V1n"/>
                                 </constraints>

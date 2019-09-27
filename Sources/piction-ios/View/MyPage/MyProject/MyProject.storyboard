@@ -91,7 +91,14 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="나의 프로젝트" largeTitleDisplayMode="never" id="H2y-E1-r7E">
-                        <barButtonItem key="rightBarButtonItem" title="추가" id="LwN-vn-Xd5"/>
+                        <barButtonItem key="rightBarButtonItem" title="추가" id="LwN-vn-Xd5">
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="create"/>
+                            </userDefinedRuntimeAttributes>
+                        </barButtonItem>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="menu_my_project"/>
+                        </userDefinedRuntimeAttributes>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>

@@ -89,7 +89,7 @@ extension SeriesPostViewController: ViewModelBindable {
             .seriesInfo
             .drive(onNext: { [weak self] seriesInfo in
                 self?.seriesTitleLabel.text = seriesInfo.name
-                self?.postCountLabel.text = "\(seriesInfo.postCount ?? 0) 포스트"
+                self?.postCountLabel.text = LocalizedStrings.str_series_posts_count.localized(with: seriesInfo.postCount ?? 0)
             })
             .disposed(by: disposeBag)
 
@@ -108,7 +108,7 @@ extension SeriesPostViewController: ViewModelBindable {
         output
             .isDescending
             .drive(onNext: { [weak self] isDescending in
-                self?.sortButton.setTitle(isDescending ? "정렬 ↓" : "정렬 ↑", for: .normal)
+                self?.sortButton.setTitle(isDescending ? LocalizedStrings.str_sort_with_direction.localized(with: "↓") : LocalizedStrings.str_sort_with_direction.localized(with: "↑"), for: .normal)
             })
             .disposed(by: disposeBag)
 

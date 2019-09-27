@@ -21,10 +21,10 @@ final class SponsorshipListButtonTypeTableViewCell: ReuseTableViewCell {
     func configure(type: SponsorshipListButtonType) {
         if type == .sponsorship {
             iconImageView.image = #imageLiteral(resourceName: "Support")
-            titleLabel.text = "후원하기"
+            titleLabel.text = LocalizedStrings.btn_user_sponsorship.localized()
         } else {
             iconImageView.image = #imageLiteral(resourceName: "Support_record")
-            titleLabel.text = "후원 기록"
+            titleLabel.text = LocalizedStrings.btn_user_sponsorship_history.localized()
         }
     }
 }

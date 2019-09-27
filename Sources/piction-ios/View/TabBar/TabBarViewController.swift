@@ -57,25 +57,25 @@ extension TabBarItem {
         switch self {
         case .home:
             items = (
-                "탐색",
+                LocalizedStrings.tab_explore.localized(),
                 #imageLiteral(resourceName: "icTab1Unselected"),
                 #imageLiteral(resourceName: "icTab1Active")
             )
         case .subscription:
             items = (
-                "구독",
+                LocalizedStrings.tab_subscription.localized(),
                 #imageLiteral(resourceName: "icTab2Unselected"),
                 #imageLiteral(resourceName: "icTab2Active")
             )
         case .sponsorship:
             items = (
-                "후원",
+                LocalizedStrings.tab_sponsorship.localized(),
                 #imageLiteral(resourceName: "icTab3Unselected"),
                 #imageLiteral(resourceName: "icTab3Active")
             )
         case .myPage:
             items = (
-                "마이페이지",
+                LocalizedStrings.menu_my_info.localized(),
                 #imageLiteral(resourceName: "icTab4Unselected"),
                 #imageLiteral(resourceName: "icTab4Unselected")
             )

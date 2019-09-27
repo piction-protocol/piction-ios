@@ -22,7 +22,7 @@ final class TransactionHistoryListTypeTableViewCell: ReuseTableViewCell {
 
         dateLabel.text = dateTitle ? createdAt?.toString(format: "MM.dd") : ""
         amountLabel.text = (inOut == "IN" ? "+" : "-") + amount.commaRepresentation + " PXL"
-        inOutLabel.text = (inOut == "IN" ? "입금 " : "출금 ") + (createdAt?.toString(format: "h:mm") ?? "")
-        statusLabel.text = "완료"
+        inOutLabel.text = (inOut == "IN" ? LocalizedStrings.str_deposit_format.localized() : LocalizedStrings.str_withdraw_format.localized()) + (createdAt?.toString(format: "h:mm") ?? "")
+        statusLabel.text = LocalizedStrings.str_completed.localized()
     }
 }

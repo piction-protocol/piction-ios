@@ -1,0 +1,189 @@
+/* 
+  Localizable.strings
+  piction-ios
+
+  Created by jhseo on 26/09/2019.
+  
+*/
+
+// common
+"confirm" = "Confirm";
+"pass" = "Skip";
+"cancel" = "Cancel";
+"login" = "Sign in";
+"sign_up" = "Sign up";
+"close" = "Close";
+"create" = "Create";
+"continue_go" = "Continue";
+"retry" = "Retry";
+"edit" = "Edit";
+"register" = "Register";
+
+// menu
+"menu_project_info" = "Project detail";
+"menu_my_info" = "My page";
+"menu_project" = "Project";
+"menu_my_project" = "My project";
+
+"tab_explore" = "Explore";
+"tab_sponsorship" = "Sponsorship";
+"tab_subscription" = "Subscription";
+
+// Popup Title
+"popup_title_network_error" = "Network Error";
+"popup_title_pincode_sign_out" = "PIN code failed";
+"popup_title_pincode_create" = "Register PIN";
+"popup_title_pincode_confirm" = "Confirm PIN";
+
+// Popup & Toast
+"msg_api_internal_server_error" = "Not available now.\nPlease try again later.";
+"msg_pincode_error" = "Cannot authenticate PIN code.";
+"msg_pincode_confirm_error" = "PIN 번호가 일치하지 않습니다.\n다시 한 번 입력해주세요.";
+"msg_pincode_error_end" = "Too many wrong attempts. Signing out for your security.";
+"msg_pincode_reg_warning" = "Register PIN code to keep\nyour transactions safe.";
+"msg_not_piction_cp" = "Not valid QR code";
+
+"msg_want_to_unsubscribe" = "Cancel subscription?";
+
+// hint
+"hint_input_id_guide" = "Must be 5-15 characters long";
+"hint_input_nick_name" = "Must be more then 2 characters long";
+"hint_current_pw" = "Current password";
+"hint_need_six_pw" = "Must be more than 6 characters long";
+"hint_pw_check" = "Confirm password";
+"hint_project_search" = "Search project";
+"hint_creator_search" = "Creator's name or ID";
+
+// Button
+"btn_new_post" = "새 포스트";
+"btn_subs" = "Subscribe for free";
+"btn_user_sponsorship" = "Sponsor";
+"btn_user_sponsorship_history" = "후원 기록";
+"btn_save_changed" = "Save";
+"btn_post" = "Posts";
+"btn_series" = "Series";
+"btn_qrcode" = "Scan QR code";
+
+// label
+"str_signup_done" = "Welcome! Pick your creation!";
+
+"str_empty_sponsorship" = "No sponsorship found.\nPick your Creator!";
+
+"str_recently_sponsor" = "최근 후원";
+"str_sponsorship_for" = "Sponsored %@";
+
+"str_input_new_pincode" = "Enter new PIN code.";
+"str_input_pincode" = "Enter PIN code.";
+"str_input_re_pincode" = "Confirm PIN code.";
+"str_pin_warning" = "Be careful not to lose PIN code";
+
+"str_id" = "ID";
+"str_email" = "Email";
+"str_pw" = "Password";
+"str_current_pw" = "Current password";
+"str_new_pw" = "New password";
+"str_pw_check" = "Confirm password";
+"str_nick_name" = "Display name";
+"str_terms" = "Terms";
+"str_privacy" = "Privacy";
+
+"str_recommend_project" = "Featured projects";
+"str_recommend_info" = "Discover the interesting creations on Piction";
+"str_subs_count_plural" = "%d subscribers";
+"str_subs_only" = "Unlock this by becoming subscriber.";
+"str_series_subs_only" = "구독자 전용";
+"str_series_fanpass_subs_only" = "%@ 이상 구독자 전용";
+"str_sort_with_direction" = "정렬 %@";
+
+"str_banner_header" = "News";
+"str_banner_header_info" = "Updates and News from Piction";
+
+"str_project_subscribing" = "Subscribed";
+"str_project_subscrition_complete" = "구독 완료";
+"str_project_cancel_subscrition" = "구독이 취소되었습니다.";
+"str_series_posts_count" = "%d posts";
+
+"str_date_format" = "d/M";
+
+"str_input_sponsorship_amount" = "Pledge";
+"str_for_user" = "님에게";
+"str_sponsorship_amount" = "Pledge";
+"str_fee_free" = "No transaction fee required";
+
+"str_id_with_at" = "@%@";
+"str_creator_sponsorship" = "Sent to @%@.";
+"str_delay_time" = "May take a while depending on network condition.";
+
+"str_project_search_info" = "Search by Project or Creator";
+"str_creator_search_info" = "Search by Creator.";
+
+"str_search_empty" = "No result found.";
+"str_subscription_empty" = "No subscriptions now";
+"str_transaction_empty" = "No transactions now";
+"str_post_empty" = "등록된 포스트가 없습니다.";
+"str_series_empty" = "등록된 시리즈가 없습니다.";
+"str_project_empty" = "등록된 시리즈가 없습니다.";
+
+"str_creator" = "Creator";
+"str_project_synopsis" = "Synopsis";
+
+"str_deposit_guide_1" = "Be careful not to deposit ethereum PXL token.";
+"str_deposit_guide_2" = "This address is for Klaytn Compatible PXL token. Please note that it is impossible to revert transaction from ethereum.";
+
+"str_qrcode_scan" = "Scan QR code";
+"str_qrcode_help" = "Please scan Creator's\n QR code from Piction";
+
+"str_pre_post" = "Previous post";
+"str_next_post" = "Next post";
+"str_need_subs" = "Need to subscribe to membership";
+"str_post_date_format" = "Posted at YYYY-M-d h:mm";
+"str_series_date_format" = "YYYY년 M월 d일 h:mm 발행";
+"str_need_login" = "로그인이 필요합니다.";
+
+"str_completed" = "Completed";
+"str_copy_address" = "Copy address";
+"str_copy_address_complete" = "지갑 주소가 복사되었습니다.";
+"str_attention" = "Be careful";
+"str_piction_address_management" = "Manage Piction wallet";
+"str_transitions" = "Transactions";
+"str_security" = "Security";
+"str_change_pin" = "Change PIN code";
+"str_create_pin" = "Register PIN code";
+"str_user_profile" = "Profile";
+"str_change_basic_info" = "Change profile";
+"str_change_pw" = "Change password";
+"str_sign_out" = "Sign out";
+"str_service_center" = "Acknowledgement";
+"str_year" = "%@";
+"str_deposit_format" = "Deposit ";
+"str_withdraw_format" = "Withdraw ";
+"str_deposit_format_detail" = "Deposit detail";
+"str_withdraw_format_detail" = "Withdraw detail";
+"str_sponsor_info" = "후원 정보";
+"str_sponsor" = "후원자";
+"str_sponsored_by" = "후원 대상";
+"str_fanpass_sales_info" = "FAN PASS 판매 정보";
+"str_fanpass_purchase_info" = "FAN PASS 구매 정보";
+"str_order_no" = "주문번호";
+"str_seller" = "판매자";
+"str_buyer" = "구매자";
+"str_transaction_info" = "트랜잭션 정보";
+
+"str_project_no_post" = "No post";
+"str_project_update_n_now" = "Update now";
+"str_project_update_n_minute" = "Update %d minutes ago";
+"str_project_update_n_hour" = "Update %d hours ago";
+"str_project_update_n_day" = "Update %d days ago";
+"str_project_update_n_month" = "Update %d months ago";
+"str_project_update_n_year" = "Update %d years ago";
+
+"str_deposit" = "Deposit to Piction Wallet";
+"str_wallet_address" = "@%@'s address";
+"str_have_pxl_amount" = "보유 중";
+"str_deposit_pxl_guide" = "How to deposit PXL to Piction Wallet";
+"str_deposit_piction_guide_1" = "Transfer PXL from the exchange which support Klaytn compatible tokens";
+"str_deposit_piction_guide_2" = "Transfer PXL from other wallets which support Klaytn compatible tokens";
+
+"str_authenticate_by_face_id" = "Face ID로 인증합니다.";
+"str_authenticate_by_touch_id" = "Touch ID로 인증합니다.";
+"str_authenticate_type" = "%@로 인증하시겠습니까?";

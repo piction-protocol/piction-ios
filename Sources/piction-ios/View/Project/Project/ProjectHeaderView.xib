@@ -210,6 +210,9 @@
                                                             <state key="normal" title="포스트">
                                                                 <color key="titleColor" name="PictionDarkGray"/>
                                                             </state>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="btn_post"/>
+                                                            </userDefinedRuntimeAttributes>
                                                             <connections>
                                                                 <action selector="postBtnDidTap:" destination="jfW-sf-3xv" eventType="touchUpInside" id="OaY-pX-Iiz"/>
                                                             </connections>
@@ -243,6 +246,9 @@
                                                             <state key="normal" title="시리즈">
                                                                 <color key="titleColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="btn_series"/>
+                                                            </userDefinedRuntimeAttributes>
                                                             <connections>
                                                                 <action selector="seriesBtnDidTap:" destination="jfW-sf-3xv" eventType="touchUpInside" id="9U5-Fl-6Ok"/>
                                                             </connections>

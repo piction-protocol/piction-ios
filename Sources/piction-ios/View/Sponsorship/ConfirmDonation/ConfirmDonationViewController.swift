@@ -25,6 +25,11 @@ final class ConfirmDonationViewController: UIViewController {
     @IBOutlet weak var loginIdLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var confirmButton: UIButton!
+    @IBOutlet weak var descriptionLabel: UILabel! {
+        didSet {
+            descriptionLabel.font = UIFont.systemFont(ofSize: 14)
+        }
+    }
 }
 
 extension ConfirmDonationViewController: ViewModelBindable {
@@ -74,7 +79,11 @@ extension ConfirmDonationViewController: ViewModelBindable {
                     self?.profileImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-userprofile-500-x-500"))
                     self?.profileWideImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-userprofile-500-x-500"))
                 }
-                self?.loginIdLabel.text = "@\(userInfo.loginId ?? "") 님"
+                let loginId = LocalizedStrings.str_id_with_at.localized(with: userInfo.loginId ?? "")
+                let attributedStr = NSMutableAttributedString(string: LocalizedStrings.str_creator_sponsorship.localized(with: userInfo.loginId ?? ""))
+                attributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: 18), range: attributedStr.mutableString.range(of: loginId))
+
+                self?.loginIdLabel.attributedText = attributedStr
             })
             .disposed(by: disposeBag)
 

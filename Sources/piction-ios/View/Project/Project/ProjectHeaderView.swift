@@ -88,17 +88,17 @@ class ProjectHeaderView: GSKStretchyHeaderView {
         }
         writerLabel.text = writerName
         loginIdLabel.text = "@\(writerloginId ?? "")"
-        subscriptionCountLabel.text = "구독자 수 \(subscriptionUserCount ?? 0)"
+        subscriptionCountLabel.text = LocalizedStrings.str_subs_count_plural.localized(with: subscriptionUserCount ?? 0)
     }
 
     func configureSubscription(isWriter: Bool, isSubscribing: Bool) {
         if isSubscribing {
             subscriptionButton.backgroundColor = UIColor(r: 242, g: 242, b: 242)
-            subscriptionButton.setTitle("프로젝트 구독 중", for: .normal)
+            subscriptionButton.setTitle(LocalizedStrings.str_project_subscribing.localized(), for: .normal)
             subscriptionButton.setTitleColor(UIColor(r: 191, g: 191, b: 191), for: .normal)
         } else {
             subscriptionButton.backgroundColor = UIColor(r: 51, g: 51, b: 51)
-            subscriptionButton.setTitle(isWriter ? "새 포스트" : "무료로 구독하기", for: .normal)
+            subscriptionButton.setTitle(isWriter ? LocalizedStrings.btn_new_post.localized() : LocalizedStrings.btn_subs.localized(), for: .normal)
             subscriptionButton.setTitleColor(.white, for: .normal)
         }
     }

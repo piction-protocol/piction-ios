@@ -62,7 +62,7 @@ extension PostFooterViewController: ViewModelBindable {
             .footerInfo
             .drive(onNext: { [weak self] (postItem, seriesPostItems, isLike) in
                 self?.controlLikeButton(isLike: isLike, likeCount: postItem.likeCount ?? 0)
-                self?.dateLabel.text = postItem.createdAt?.toString(format: "YYYY년 M월 d일 h:mm 등록")
+                self?.dateLabel.text = postItem.createdAt?.toString(format: LocalizedStrings.str_post_date_format.localized())
             })
             .disposed(by: disposeBag)
 

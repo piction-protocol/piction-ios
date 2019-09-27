@@ -15,6 +15,6 @@ final class TransactionHistoryYearTypeTableViewCell: ReuseTableViewCell {
 
     func configure(with model: Model) {
 
-        dateLabel.text = "\(model)년"
+        dateLabel.text = LocalizedStrings.str_year.localized(with: model)
     }
 }

@@ -64,16 +64,10 @@
                                 <rect key="frame" x="0.0" y="198" width="375" height="154.33333333333337"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kZs-dh-9yl">
-                                        <rect key="frame" x="28" y="0.0" width="319" height="21.666666666666668"/>
+                                        <rect key="frame" x="185.33333333333334" y="0.0" width="4.6666666666666572" height="21.666666666666668"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@user_id 님" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6r-q8-x9p">
-                                                <rect key="frame" x="0.0" y="0.0" width="97.666666666666671" height="21.666666666666668"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                <color key="textColor" name="PictionDarkGray"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="에게 후원금 송금을 시작합니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9l3-We-klI">
-                                                <rect key="frame" x="97.666666666666671" y="0.0" width="221.33333333333331" height="21.666666666666668"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6r-q8-x9p">
+                                                <rect key="frame" x="0.0" y="0.0" width="4.666666666666667" height="21.666666666666668"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <color key="textColor" name="PictionDarkGray"/>
                                                 <nil key="highlightedColor"/>
@@ -222,6 +216,9 @@
                                             </fragment>
                                         </attributedString>
                                         <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_delay_time"/>
+                                        </userDefinedRuntimeAttributes>
                                     </label>
                                 </subviews>
                             </stackView>
@@ -242,6 +239,7 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="8"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="confirm"/>
                                 </userDefinedRuntimeAttributes>
                             </button>
                         </subviews>
@@ -264,6 +262,7 @@
                     <connections>
                         <outlet property="amountLabel" destination="HIj-4r-U7r" id="xGq-kU-uDk"/>
                         <outlet property="confirmButton" destination="XHs-Bn-41r" id="xVe-9c-v9Q"/>
+                        <outlet property="descriptionLabel" destination="beb-Hd-q0n" id="YJZ-k8-i54"/>
                         <outlet property="loginIdLabel" destination="f6r-q8-x9p" id="5Em-dL-tnv"/>
                         <outlet property="profileImageView" destination="sqq-l0-XDW" id="PBc-g4-iia"/>
                         <outlet property="profileVisualEffectView" destination="6yf-yv-Lr4" id="4zh-FA-oWU"/>

@@ -32,20 +32,20 @@ final class SubscriptionListCollectionViewCell: ReuseCollectionViewCell {
             let diff = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: (lastPublished ?? Date()), to: Date())
 
             if let year = diff.year, year > 0 {
-                return "\(year)년 전"
+                return LocalizedStrings.str_project_update_n_year.localized(with: year)
             } else if let month = diff.month, month > 0 {
-                return "\(month)개월 전"
+                return LocalizedStrings.str_project_update_n_month.localized(with: month)
             } else if let day = diff.day, day > 0 {
-                return "\(day)일 전"
+                return LocalizedStrings.str_project_update_n_day.localized(with: day)
             } else if let hour = diff.hour, hour > 0 {
-                return "\(hour)시간 전"
+                return LocalizedStrings.str_project_update_n_hour.localized(with: hour)
             } else if let minute = diff.minute, minute > 0 {
-                return "\(minute)분 전"
+                return LocalizedStrings.str_project_update_n_minute.localized(with: minute)
             } else {
-                return "방금"
+                return LocalizedStrings.str_project_update_n_now.localized()
             }
         }
 
-        lastPublishedLabel.text = lastPublished == nil ? "포스트 없음" : "\(lashPublishedDateTime) 업데이트"
+        lastPublishedLabel.text = lastPublished == nil ? LocalizedStrings.str_project_no_post.localized() : lashPublishedDateTime
     }
 }

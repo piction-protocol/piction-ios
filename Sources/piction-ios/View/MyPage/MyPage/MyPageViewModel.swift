@@ -58,21 +58,21 @@ final class MyPageViewModel: InjectableViewModel {
         let userMeSuccess = userMeAction.elements
             .flatMap { _ -> Driver<[MyPageBySection]> in
                 let projectItems: [MyPageItemType] = [
-                    MyPageItemType.header(title: "프로젝트"),
-                    MyPageItemType.pushType(title: "나의 프로젝트"),
+                    MyPageItemType.header(title: LocalizedStrings.menu_project.localized()),
+                    MyPageItemType.pushType(title: LocalizedStrings.menu_my_project.localized()),
                     MyPageItemType.underline
                 ]
 
                 let walletItems: [MyPageItemType] = [
-                    MyPageItemType.header(title: "픽션 지갑관리"),
-                    MyPageItemType.pushType(title: "거래 내역"),
-                    MyPageItemType.pushType(title: "픽션 지갑으로 입금"),
+                    MyPageItemType.header(title: LocalizedStrings.str_piction_address_management.localized()),
+                    MyPageItemType.pushType(title: LocalizedStrings.str_transitions.localized()),
+                    MyPageItemType.pushType(title: LocalizedStrings.str_deposit.localized()),
                     MyPageItemType.underline
                 ]
 
                 var securityItems: [MyPageItemType] = [
-                    MyPageItemType.header(title: "보안"),
-                    UserDefaults.standard.string(forKey: "pincode") == nil ? MyPageItemType.presentType(title: "PIN 번호 등록", align: .left) : MyPageItemType.presentType(title: "PIN 번호 변경", align: .left),
+                    MyPageItemType.header(title: LocalizedStrings.str_security.localized()),
+                    UserDefaults.standard.string(forKey: "pincode") == nil ? MyPageItemType.presentType(title: LocalizedStrings.str_create_pin.localized(), align: .left) : MyPageItemType.presentType(title: LocalizedStrings.str_change_pin.localized(), align: .left),
                     MyPageItemType.underline
                 ]
 
@@ -97,21 +97,21 @@ final class MyPageViewModel: InjectableViewModel {
                 }
 
                 let myInfoItems: [MyPageItemType] = [
-                    MyPageItemType.header(title: "회원 정보"),
-                    MyPageItemType.presentType(title: "기본정보 변경", align: .left),
-                    MyPageItemType.presentType(title: "비밀번호 변경", align: .left),
+                    MyPageItemType.header(title: LocalizedStrings.str_user_profile.localized()),
+                    MyPageItemType.presentType(title: LocalizedStrings.str_change_basic_info.localized(), align: .left),
+                    MyPageItemType.presentType(title: LocalizedStrings.str_change_pw.localized(), align: .left),
                     MyPageItemType.underline
                 ]
 
                 let supportItems: [MyPageItemType] = [
-                    MyPageItemType.header(title: "고객센터"),
-                    MyPageItemType.presentType(title: "서비스 이용약관", align: .left),
-                    MyPageItemType.presentType(title: "개인정보 처리방침", align: .left),
+                    MyPageItemType.header(title: LocalizedStrings.str_service_center.localized()),
+                    MyPageItemType.presentType(title: LocalizedStrings.str_terms.localized(), align: .left),
+                    MyPageItemType.presentType(title: LocalizedStrings.str_privacy.localized(), align: .left),
                     MyPageItemType.underline
                 ]
 
                 let logoutItems: [MyPageItemType] = [
-                    MyPageItemType.presentType(title: "로그아웃", align: .center),
+                    MyPageItemType.presentType(title: LocalizedStrings.str_sign_out.localized(), align: .center),
                     MyPageItemType.underline
                 ]
 

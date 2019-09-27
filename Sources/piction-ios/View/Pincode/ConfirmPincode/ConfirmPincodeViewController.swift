@@ -31,9 +31,9 @@ final class ConfirmPincodeViewController: UIViewController {
     }
 
     private func errorPopup() {
-        let alert = UIAlertController(title: "PIN 재입력", message: "PIN 번호가 일치하지 않습니다.\n 다시 한 번 입력해주세요.", preferredStyle: .alert)
+        let alert = UIAlertController(title: LocalizedStrings.popup_title_pincode_confirm.localized(), message: LocalizedStrings.msg_pincode_confirm_error.localized(), preferredStyle: .alert)
 
-        let okAction = UIAlertAction(title: "확인", style: .default, handler: { action in
+        let okAction = UIAlertAction(title: LocalizedStrings.confirm.localized(), style: .default, handler: { action in
         })
         alert.addAction(okAction)
 
@@ -49,17 +49,17 @@ final class ConfirmPincodeViewController: UIViewController {
             switch authContext.biometryType {
             case .faceID:
                 authType = "Face ID"
-                description = "Face ID로 인증합니다."
+                description = LocalizedStrings.str_authenticate_by_face_id.localized()
             case .touchID:
                 authType = "Touch ID"
-                description = "Touch ID로 인증합니다."
+                description = LocalizedStrings.str_authenticate_by_touch_id.localized()
             case .none:
                 break
             }
 
-            let alert = UIAlertController(title: authType, message: "\(authType)로 인증하시겠습니까?", preferredStyle: .alert)
+            let alert = UIAlertController(title: authType, message: LocalizedStrings.str_authenticate_type.localized(with: authType), preferredStyle: .alert)
 
-            let okAction = UIAlertAction(title: "등록", style: .default, handler: { action in
+            let okAction = UIAlertAction(title: LocalizedStrings.register.localized(), style: .default, handler: { action in
                 authContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: description) { [weak self] (success, error) in
                     DispatchQueue.main.async {
                         if success {
@@ -77,7 +77,7 @@ final class ConfirmPincodeViewController: UIViewController {
             })
             alert.addAction(okAction)
 
-            let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler : nil)
+            let cancelAction = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel, handler : nil)
             alert.addAction(cancelAction)
 
             present(alert, animated: false, completion: nil)

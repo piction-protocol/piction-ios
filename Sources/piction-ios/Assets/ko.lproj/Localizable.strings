@@ -1,0 +1,189 @@
+/* 
+  Localizable.strings
+  piction-ios
+
+  Created by jhseo on 26/09/2019.
+  
+*/
+
+// common
+"confirm" = "확인";
+"pass" = "건너뛰기";
+"cancel" = "취소";
+"login" = "로그인";
+"sign_up" = "회원가입";
+"close" = "닫기";
+"create" = "생성";
+"continue_go" = "계속";
+"retry" = "재시도";
+"edit" = "편집";
+"register" = "등록";
+
+// menu
+"menu_project_info" = "프로젝트 정보";
+"menu_my_info" = "마이페이지";
+"menu_project" = "프로젝트";
+"menu_my_project" = "나의 프로젝트";
+
+"tab_explore" = "탐색";
+"tab_sponsorship" = "후원";
+"tab_subscription" = "구독";
+
+// Popup Title
+"popup_title_network_error" = "네트워크 오류";
+"popup_title_pincode_sign_out" = "PIN 입력 실패";
+"popup_title_pincode_create" = "PIN 등록";
+"popup_title_pincode_confirm" = "PIN 재입력";
+
+// Popup & Toast
+"msg_api_internal_server_error" = "서버에서 오류가 발생하였습니다.\n잠시 후 다시 시도해주세요.";
+"msg_pincode_error" = "PIN 번호가 일치하지 않습니다.";
+"msg_pincode_confirm_error" = "PIN 번호가 일치하지 않습니다.\n다시 한 번 입력해주세요.";
+"msg_pincode_error_end" = "10회 동안 PIN 번호를 잘못 입력하였으므로 보안을 위해 자동으로 로그아웃됩니다.";
+"msg_pincode_reg_warning" = "픽션 내 콘텐츠의 안전한 거래를 위해\nPIN 등록을 권장합니다.";
+"msg_not_piction_cp" = "픽션 크리에이터 QR코드가 아닙니다";
+
+"msg_want_to_unsubscribe" = "구독을 해지하시겠습니까?";
+
+// hint
+"hint_input_id_guide" = "5자 이상 15자 미만";
+"hint_input_nick_name" = "2자 이상의 닉네임";
+"hint_current_pw" = "현재 사용 중인 비밀번호";
+"hint_need_six_pw" = "6자 이상의 비밀번호";
+"hint_pw_check" = "비밀번호 재입력";
+"hint_project_search" = "프로젝트 검색";
+"hint_creator_search" = "크리에이터 닉네임 또는 아이디";
+
+// Button
+"btn_new_post" = "새 포스트";
+"btn_subs" = "무료로 구독하기";
+"btn_user_sponsorship" = "후원하기";
+"btn_user_sponsorship_history" = "후원 기록";
+"btn_save_changed" = "변경사항 저장";
+"btn_qrcode" = "QR코드로 선택하기";
+"btn_post" = "포스트";
+"btn_series" = "시리즈";
+
+// label
+"str_signup_done" = "픽션 회원가입이 완료되었습니다.";
+
+"str_empty_sponsorship" = "아직 후원기록이 없습니다.\n지금 바로 크리에이터를 후원해보세요!";
+
+"str_recently_sponsor" = "최근 후원";
+"str_sponsorship_for" = "%@님에게 후원하였습니다.";
+
+"str_input_new_pincode" = "새 PIN 번호를 입력하세요.";
+"str_input_pincode" = "PIN 번호를 입력하세요.";
+"str_input_re_pincode" = "다시 한번 입력해주세요.";
+"str_pin_warning" = "PIN 번호를 잃어버리면\n앱을 삭제 후 재설치 해야합니다.";
+
+"str_id" = "아이디";
+"str_email" = "이메일";
+"str_pw" = "비밀번호";
+"str_current_pw" = "현재 비밀번호";
+"str_new_pw" = "새 비밀번호";
+"str_pw_check" = "비밀번호 확인";
+"str_nick_name" = "닉네임";
+"str_terms" = "서비스 이용약관";
+"str_privacy" = "개인정보 처리방침";
+
+"str_recommend_project" = "추천 프로젝트";
+"str_recommend_info" = "만화부터 일러스트, 소설, 동영상까지. 픽션의 다양한 프로젝트를 만나보세요.";
+"str_subs_count_plural" = "구독자 수 %d";
+"str_subs_only" = "구독자 전용 포스트입니다.";
+"str_series_subs_only" = "구독자 전용";
+"str_series_fanpass_subs_only" = "%@ 이상 구독자 전용";
+"str_sort_with_direction" = "정렬 %@";
+
+"str_banner_header" = "공지 & 이벤트";
+"str_banner_header_info" = "픽션의 최신 정보와 특별한 혜택을 알려드립니다.";
+
+"str_project_subscribing" = "프로젝트 구독 중";
+"str_project_subscrition_complete" = "구독 완료";
+"str_project_cancel_subscrition" = "구독이 취소되었습니다.";
+"str_series_posts_count" = "%d 포스트";
+
+"str_date_format" = "M월 d일";
+
+"str_creator" = "크리에이터";
+"str_project_synopsis" = "시놉시스";
+
+"str_deposit_guide_1" = "해당 주소는 Klaytn 네트워크 상에서 동작하는 지갑 주소입니다. 이더리움 네트워크 상의 PXL 토큰은 주소로 다른 암호화폐 입금 시 발생하는 오류 손실은 복구해드리지 않습니다.";
+"str_deposit_guide_2" = "이 주소는 PXL 토큰만 입금 가능합니다. 해당 지갑 주소로 다른 암호 화폐 입금 시 발생하는 오류 및 손실은 복구해 드리지 않습니다.";
+
+"str_input_sponsorship_amount" = "후원 금액 입력";
+"str_for_user" = "님에게";
+"str_sponsorship_amount" = "후원 금액";
+"str_fee_free" = "후원 기능 송금 수수료 무료";
+
+"str_id_with_at" = "@%@ 님";
+"str_creator_sponsorship" = "@%@ 님에게 후원금 송금을 시작합니다.";
+"str_delay_time" = "네트워크 상태에 따라\n 출금에 30초~1분 정도 소요됩니다.";
+
+"str_project_search_info" = "프로젝트 제목 또는\n닉네임으로 검색하세요.";
+"str_creator_search_info" = "후원하고 싶은\n크리에이터를검색하세요.";
+
+"str_search_empty" = "검색 결과가 없습니다.";
+"str_subscription_empty" = "아직 구독 중인 \n프로젝트가 없습니다.";
+"str_transaction_empty" = "거래 내역이 없습니다.";
+"str_post_empty" = "등록된 포스트가 없습니다.";
+"str_series_empty" = "등록된 시리즈가 없습니다.";
+"str_project_empty" = "등록된 시리즈가 없습니다.";
+
+"str_qrcode_scan" = "QR 코드 스캔";
+"str_qrcode_help" = "픽션 또는 픽션 파트너 서비스에 있는\n크리에이터 QR코드를 인식시켜 주세요";
+
+"str_pre_post" = "이전 포스트";
+"str_next_post" = "다음 포스트";
+"str_need_subs" = "멤버십을 구독해야\n볼 수 있는 포스트입니다.";
+"str_post_date_format" = "YYYY년 M월 d일 h:mm 등록";
+"str_series_date_format" = "YYYY년 M월 d일 h:mm 발행";
+"str_need_login" = "로그인이 필요합니다.";
+
+"str_completed" = "완료";
+"str_copy_address" = "주소 복사";
+"str_copy_address_complete" = "지갑 주소가 복사되었습니다.";
+"str_attention" = "주의사항";
+"str_piction_address_management" = "픽션 지갑 관리";
+"str_transitions" = "거래 내역";
+"str_security" = "보안";
+"str_change_pin" = "PIN 번호 변경";
+"str_create_pin" = "PIN 번호 등록";
+"str_user_profile" = "회원 정보";
+"str_change_basic_info" = "기본정보 변경";
+"str_change_pw" = "비밀번호 변경";
+"str_sign_out" = "로그아웃";
+"str_service_center" = "고객센터";
+"str_year" = "%@년";
+"str_deposit_format" = "입금 ";
+"str_withdraw_format" = "출금 ";
+"str_deposit_format_detail" = "입금 상세정보";
+"str_withdraw_format_detail" = "출금 상세정보";
+"str_sponsor_info" = "후원 정보";
+"str_sponsor" = "후원자";
+"str_sponsored_by" = "후원 대상";
+"str_fanpass_sales_info" = "FAN PASS 판매 정보";
+"str_fanpass_purchase_info" = "FAN PASS 구매 정보";
+"str_order_no" = "주문번호";
+"str_seller" = "판매자";
+"str_buyer" = "구매자";
+"str_transaction_info" = "트랜잭션 정보";
+
+"str_project_no_post" = "포스트 없음";
+"str_project_update_n_now" = "방금 업데이트";
+"str_project_update_n_minute" = "%d분 전 업데이트";
+"str_project_update_n_hour" = "%d시간 전 업데이트";
+"str_project_update_n_day" = "%d일 전 업데이트";
+"str_project_update_n_month" = "%d개월 전 업데이트";
+"str_project_update_n_year" = "%d년 전 업데이트";
+
+"str_deposit" = "픽션 지갑으로 입금";
+"str_wallet_address" = "@%@의 지갑주소";
+"str_have_pxl_amount" = "보유 중";
+"str_deposit_pxl_guide" = "픽션 계정으로 PXL을 입금하는 방법";
+"str_deposit_piction_guide_1" = "Klaytn 네트워크 기반 PXL 출금이 가능한 거래소에서 이 지갑 주소로 송금.";
+"str_deposit_piction_guide_2" = "외부 Klaytn 지갑에 보유한 PXL을 이 지갑 주소로 송금.";
+
+"str_authenticate_by_face_id" = "Face ID로 인증합니다.";
+"str_authenticate_by_touch_id" = "Touch ID로 인증합니다.";
+"str_authenticate_type" = "%@로 인증하시겠습니까?";

@@ -106,9 +106,9 @@ final class ProjectViewController: UIViewController {
     }
 
     private func openCancelSubscriptionPopup() {
-        let alertController = UIAlertController(title: nil, message: "구독을 해제하시겠습니까?", preferredStyle: .alert)
-        let cancelButton = UIAlertAction(title: "취소", style: .cancel)
-        let confirmButton = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+        let alertController = UIAlertController(title: nil, message: LocalizedStrings.msg_want_to_unsubscribe.localized(), preferredStyle: .alert)
+        let cancelButton = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel)
+        let confirmButton = UIAlertAction(title: LocalizedStrings.confirm.localized(), style: .default) { [weak self] _ in
             self?.cancelSubscription.onNext(())
         }
 
@@ -352,7 +352,7 @@ extension ProjectViewController: ProjectHeaderViewProtocol {
 
 extension ProjectViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let editAction = UIContextualAction(style: .normal, title: "편집", handler: { [weak self] (action, view, completionHandler) in
+        let editAction = UIContextualAction(style: .normal, title: LocalizedStrings.edit.localized(), handler: { [weak self] (action, view, completionHandler) in
             print("success")
             guard let section = self?.viewModel?.sections[indexPath.row] else { completionHandler(false)
                 return

@@ -43,15 +43,15 @@ final class CheckPincodeViewController: UIViewController {
 
         var message: String {
             if errorCount >= 10 {
-                return "10회 동안 PIN 번호를 잘못 입력하였으므로 보안을 위해 자동으로 로그아웃됩니다."
+                return LocalizedStrings.msg_pincode_error_end.localized()
             } else {
-                return "PIN 번호가 일치하지 않습니다.\n(\(errorCount)/10)"
+                return "\(LocalizedStrings.msg_pincode_error.localized())\n(\(errorCount)/10)"
             }
         }
 
-        let alert = UIAlertController(title: "PIN 입력 실패", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: LocalizedStrings.popup_title_pincode_sign_out.localized(), message: message, preferredStyle: .alert)
 
-        let okAction = UIAlertAction(title: "확인", style: .default, handler: { [weak self] action in
+        let okAction = UIAlertAction(title: LocalizedStrings.confirm.localized(), style: .default, handler: { [weak self] action in
             if errorCount >= 10 {
                 self?.signout.onNext(())
             }
@@ -89,9 +89,9 @@ final class CheckPincodeViewController: UIViewController {
             var description = ""
             switch authContext.biometryType {
             case .faceID:
-                description = "Face ID로 인증합니다."
+                description = LocalizedStrings.str_authenticate_by_face_id.localized()
             case .touchID:
-                description = "Touch ID로 인증합니다."
+                description = LocalizedStrings.str_authenticate_by_touch_id.localized()
             case .none:
                 break
             }

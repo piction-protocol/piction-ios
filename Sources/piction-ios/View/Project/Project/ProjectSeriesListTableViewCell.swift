@@ -38,6 +38,6 @@ final class ProjectSeriesListTableViewCell: ReuseTableViewCell {
             }
         }
         seriesLabel.text = seriesName
-        postCountLabel.text = "\(String(postCount ?? 0)) 포스트"
+        postCountLabel.text = LocalizedStrings.str_series_posts_count.localized(with: postCount ?? 0)
     }
 }

@@ -242,7 +242,7 @@ final class ProjectViewModel: InjectableViewModel {
         let subscriptionSuccess = subscriptionAction.elements
             .flatMap { [weak self] response -> Driver<String> in
                 self?.updater.refreshContent.onNext(())
-                return Driver.just("구독 완료")
+                return Driver.just(LocalizedStrings.str_project_subscrition_complete.localized())
             }
 
         let subscriptionError = subscriptionAction.error
@@ -274,7 +274,7 @@ final class ProjectViewModel: InjectableViewModel {
         let cancelSubscriptionSuccess = cancelSubscriptionAction.elements
             .flatMap { [weak self] response -> Driver<String> in
                 self?.updater.refreshContent.onNext(())
-                return Driver.just("구독이 취소되었습니다.")
+                return Driver.just(LocalizedStrings.str_project_cancel_subscrition.localized())
             }
 
         let cancelSubscriptionError = cancelSubscriptionAction.error

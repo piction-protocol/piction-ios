@@ -27,27 +27,10 @@ final class SponsorshipHistoryTableViewCell: ReuseTableViewCell {
             profileImageView.image = #imageLiteral(resourceName: "img-dummy-userprofile-500-x-500")
         }
 
-        var message = ""
-
-//        switch status {
-//        case "SUCCESS":
-//            statusImageView.image = nil
-//            message = "후원하였습니다."
-//        case "PENDING":
-//            statusImageView.image = #imageLiteral(resourceName: "label_pending")
-//            message = "송금하고 있습니다."
-//        case "FAILED":
-//            statusImageView.image = #imageLiteral(resourceName: "label_failed")
-//            message = "송금이 실패했습니다."
-//        default:
-//            break
-//        }
-
         statusImageView.image = nil
-        message = "후원하였습니다."
 
         amountLabel.text = "\(amount.commaRepresentation) PXL"
-        messageLabel.text = "\(creatorName ?? "")님에게 \(message)"
+        messageLabel.text =  LocalizedStrings.str_sponsorship_for.localized(with: creatorName ?? "")
         dateLabel.text = createdAt?.toString(format: "hh:mm")
     }
 }

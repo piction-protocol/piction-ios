@@ -51,6 +51,7 @@
                                                             <userDefinedRuntimeAttribute type="number" keyPath="returnKeyType">
                                                                 <integer key="value" value="4"/>
                                                             </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedTitleId" value="str_id"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4oE-2h-5Xg" customClass="DynamicInputView" customModule="piction_ios" customModuleProvider="target">
@@ -61,6 +62,7 @@
                                                             <userDefinedRuntimeAttribute type="number" keyPath="returnKeyType">
                                                                 <integer key="value" value="9"/>
                                                             </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedTitleId" value="str_pw"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                 </subviews>
@@ -85,6 +87,7 @@
                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                                 <real key="value" value="8"/>
                                                             </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="login"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </button>
                                                 </subviews>
@@ -114,6 +117,9 @@
                                                                         <state key="normal" title="회원가입">
                                                                             <color key="titleColor" name="PictionDarkGray"/>
                                                                         </state>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="sign_up"/>
+                                                                        </userDefinedRuntimeAttributes>
                                                                     </button>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFz-WC-gkd">
                                                                         <rect key="frame" x="73" y="15" width="1" height="20"/>
@@ -179,7 +185,14 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="로그인" id="bUR-ev-6au">
-                        <barButtonItem key="leftBarButtonItem" title="닫기" id="Qru-11-ZMS"/>
+                        <barButtonItem key="leftBarButtonItem" title="닫기" id="Qru-11-ZMS">
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="close"/>
+                            </userDefinedRuntimeAttributes>
+                        </barButtonItem>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="login"/>
+                        </userDefinedRuntimeAttributes>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>

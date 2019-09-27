@@ -210,7 +210,7 @@ extension PostViewController: ViewModelBindable {
             .drive(onNext: { [weak self] userInfo in
                 guard let `self` = self else { return }
                 var buttonTitle: String {
-                    return userInfo.loginId == nil ? "로그인" : "무료로 구독하기"
+                    return userInfo.loginId == nil ? LocalizedStrings.login.localized() : LocalizedStrings.btn_subs.localized()
                 }
                 self.subscriptionButton.setTitle(buttonTitle, for: .normal)
                 self.subscriptionView.isHidden = false

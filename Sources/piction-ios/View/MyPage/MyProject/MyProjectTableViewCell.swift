@@ -17,7 +17,7 @@ final class MyProjectTableViewCell: ReuseTableViewCell {
     typealias Model = ProjectModel
 
     func configure(with model: Model) {
-        let (wideThumbnail, title, subscriptionCount) = (model.wideThumbnail, model.title, model.subscriptionUserCount)
+        let (wideThumbnail, title, subscriptionUserCount) = (model.wideThumbnail, model.title, model.subscriptionUserCount)
 
         let wideThumbnailWithIC = "\(wideThumbnail ?? "")?w=720&h=360&quality=80&output=webp"
         if let url = URL(string: wideThumbnailWithIC) {
@@ -27,6 +27,6 @@ final class MyProjectTableViewCell: ReuseTableViewCell {
         }
 
         titleLabel.text = title
-        subscriptionCountLabel.text = "구독자 수 \(subscriptionCount ?? 0)"
+        subscriptionCountLabel.text = LocalizedStrings.str_subs_count_plural.localized(with: subscriptionUserCount ?? 0)
     }
 }

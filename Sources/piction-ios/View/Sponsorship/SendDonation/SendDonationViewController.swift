@@ -20,7 +20,20 @@ final class SendDonationViewController: UIViewController {
     @IBOutlet weak var amountTextField: UITextField!
     @IBOutlet weak var amountUnderlineView: UIView!
     @IBOutlet weak var sendButton: UIButton!
-    @IBOutlet weak var sendButtonDescriptionLabel: UILabel!
+    @IBOutlet weak var sendButtonDescriptionLabel: UILabel! {
+            didSet {
+                let buttonText = LocalizedStrings.str_sponsorship_amount.localized()+"\n"+LocalizedStrings.str_fee_free.localized()
+                let attributedStr = NSMutableAttributedString(string: buttonText)
+                attributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: 18), range: attributedStr.mutableString.range(of: LocalizedStrings.str_sponsorship_amount.localized()))
+                attributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 12), range: attributedStr.mutableString.range(of: LocalizedStrings.str_fee_free.localized()))
+
+                let paragraphStyle = NSMutableParagraphStyle()
+                paragraphStyle.alignment = .center
+                paragraphStyle.lineSpacing = 4
+                attributedStr.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: buttonText.count))
+                sendButtonDescriptionLabel.attributedText = attributedStr
+            }
+        }
     @IBOutlet weak var profileImageView: UIImageViewExtension!
 
     @IBOutlet weak var amountUnderlineHeightConstraint: NSLayoutConstraint!
@@ -104,7 +117,7 @@ extension SendDonationViewController: ViewModelBindable {
         output
             .walletInfo
             .drive(onNext: { [weak self] walletInfo in
-                self?.pxlLabel.text = "\(walletInfo.amount.commaRepresentation) PXL 보유 중"
+                self?.pxlLabel.text = "\(walletInfo.amount.commaRepresentation) PXL " + LocalizedStrings.str_have_pxl_amount.localized()
             })
             .disposed(by: disposeBag)
 

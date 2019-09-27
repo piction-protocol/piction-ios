@@ -43,7 +43,7 @@ extension DepositViewController: ViewModelBindable {
         output
             .userInfo
             .drive(onNext: { [weak self] userInfo in
-                self?.idLabel.text = "@\(userInfo.loginId ?? "")의 지갑주소"
+                self?.idLabel.text = LocalizedStrings.str_wallet_address.localized(with: userInfo.loginId ?? "")
             })
             .disposed(by: disposeBag)
 
@@ -59,7 +59,7 @@ extension DepositViewController: ViewModelBindable {
             .copyAddress
             .drive(onNext: { address in
                 UIPasteboard.general.string = "\(address)"
-                Toast.showToast("지갑 주소가 복사되었습니다.")
+                Toast.showToast(LocalizedStrings.str_copy_address_complete.localized())
             })
             .disposed(by: disposeBag)
     }

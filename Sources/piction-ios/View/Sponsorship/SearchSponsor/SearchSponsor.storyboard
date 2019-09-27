@@ -27,6 +27,9 @@
                                         <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="크리에이터 닉네임 또는 아이디" translatesAutoresizingMaskIntoConstraints="NO" id="gLa-qA-SKe">
                                             <rect key="frame" x="20" y="0.0" width="335" height="44.666666666666664"/>
                                             <textInputTraits key="textInputTraits"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="hint_creator_search"/>
+                                            </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <outlet property="delegate" destination="WX3-eD-m33" id="fGn-9a-5qb"/>
                                             </connections>
@@ -134,7 +137,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Nwu-bY-YlI"/>
                     </view>
-                    <navigationItem key="navigationItem" title="후원하기" largeTitleDisplayMode="never" id="ZVG-vo-X8u"/>
+                    <navigationItem key="navigationItem" title="후원하기" largeTitleDisplayMode="never" id="ZVG-vo-X8u">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="btn_user_sponsorship"/>
+                        </userDefinedRuntimeAttributes>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="emptyView" destination="pwD-kL-G8k" id="VdW-K6-Omi"/>

@@ -39,16 +39,16 @@ final class ProjectPostListTableViewCell: ReuseTableViewCell {
             thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360")
         }
         seriesLabel.isHidden = seriesName == nil
-        seriesLabel.text = "시리즈 · \(seriesName ?? "")"
+        seriesLabel.text = "\(LocalizedStrings.btn_series.localized()) · \(seriesName ?? "")"
 
         titleLabel.text = title
-        dateLabel.text = date?.toString(format: "M월 d일")
+        dateLabel.text = date?.toString(format: LocalizedStrings.str_date_format.localized())
 
         likeStackView.isHidden = (likeCount ?? 0) == 0
         likeLabel.text = "\(likeCount ?? 0)"
         
         if (fanPassId != nil) && !isSubscribing {
-            lockMessageLabel.text = "구독자 전용 포스트입니다."
+            lockMessageLabel.text = LocalizedStrings.str_subs_only.localized()
             thumbnailView.isHidden = false
             maskImage.isHidden = false
             lockView.isHidden = false

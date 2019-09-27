@@ -48,26 +48,26 @@ enum CustomEmptyViewStyle {
         switch self {
         case .defaultLogin,
              .sponsorshipListLogin:
-            return "로그인이 필요합니다."
+            return LocalizedStrings.str_need_login.localized()
         case .projectPostListEmpty:
-            return "등록된 포스트가 없습니다."
+            return LocalizedStrings.str_post_empty.localized()
         case .projectSeriesListEmpty:
-            return "등록된 시리즈가 없습니다."
+            return LocalizedStrings.str_series_empty.localized()
         case .sponsorshipListEmpty:
-            return "아직 후원 기록이 없습니다.\n지금 바로 크리에이터를 후원해보세요!"
+            return LocalizedStrings.str_empty_sponsorship.localized()
         case .subscriptionListEmpty:
-            return "아직 구독 중인\n프로젝트가 없습니다."
+            return LocalizedStrings.str_subscription_empty.localized()
         case .searchProjectListEmpty,
              .searchSponsorEmpty:
-            return "검색 결과가 없습니다."
+            return LocalizedStrings.str_search_empty.localized()
         case .transactionListEmpty:
-            return "거래 내역이 없습니다."
+            return LocalizedStrings.str_transaction_empty.localized()
         case .myProjectListEmpty:
-            return "등록된 프로젝트가 없습니다."
+            return LocalizedStrings.str_project_empty.localized()
         case .searchProjectGuide:
-            return "프로젝트 제목 또는\n닉네임으로 검색하세요."
+            return LocalizedStrings.str_project_search_info.localized()
         case .searchSponsorGuide:
-            return "후원하고 싶은\n크리에이터를 검색하세요."
+            return LocalizedStrings.str_creator_search_info.localized()
         }
     }
 
@@ -75,9 +75,9 @@ enum CustomEmptyViewStyle {
         switch self {
         case .defaultLogin,
              .sponsorshipListLogin:
-            return "로그인"
+            return LocalizedStrings.login.localized()
         case .searchSponsorGuide:
-            return "QR 코드로 선택하기"
+            return LocalizedStrings.btn_qrcode.localized()
         case .projectPostListEmpty,
              .projectSeriesListEmpty,
              .sponsorshipListEmpty,

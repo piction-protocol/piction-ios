@@ -153,8 +153,6 @@
 		4323FABD233A165A00243655 /* ExplorerRecommendedProjectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9BE233A165600243655 /* ExplorerRecommendedProjectTableViewCell.swift */; };
 		4323FABE233A165A00243655 /* ExplorerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9BF233A165600243655 /* ExplorerViewModel.swift */; };
 		4323FABF233A165A00243655 /* ExplorerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9BF233A165600243655 /* ExplorerViewModel.swift */; };
-		4323FAC0233A165A00243655 /* Explorer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9C0233A165600243655 /* Explorer.storyboard */; };
-		4323FAC1233A165B00243655 /* Explorer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9C0233A165600243655 /* Explorer.storyboard */; };
 		4323FAC2233A165B00243655 /* SubscriptionList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9C3233A165600243655 /* SubscriptionList.storyboard */; };
 		4323FAC3233A165B00243655 /* SubscriptionList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9C3233A165600243655 /* SubscriptionList.storyboard */; };
 		4323FAC4233A165B00243655 /* SubscriptionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9C4233A165600243655 /* SubscriptionListViewController.swift */; };
@@ -379,8 +377,6 @@
 		4323FB9F233A166400243655 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA51233A165600243655 /* SignInViewController.swift */; };
 		4323FBA2233A166400243655 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA55233A165600243655 /* Assets.xcassets */; };
 		4323FBA3233A166400243655 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA55233A165600243655 /* Assets.xcassets */; };
-		4323FBA4233A166400243655 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA56233A165600243655 /* LaunchScreen.storyboard */; };
-		4323FBA5233A166400243655 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA56233A165600243655 /* LaunchScreen.storyboard */; };
 		4323FBA6233A166400243655 /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA59233A165600243655 /* ImagePickerManager.swift */; };
 		4323FBA7233A166400243655 /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA59233A165600243655 /* ImagePickerManager.swift */; };
 		4323FBA8233A166400243655 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA5A233A165600243655 /* Updater.swift */; };
@@ -391,6 +387,16 @@
 		4323FBAF233AEED000243655 /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323FBAD233AEEC300243655 /* RxRelay.framework */; };
 		4323FBB0233AF1A100243655 /* PictionSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F967233A022A00243655 /* PictionSDK.framework */; };
 		4323FBB1233AF1A100243655 /* RxPictionSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F966233A022A00243655 /* RxPictionSDK.framework */; };
+		4323FBC3233C876D00243655 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FBC2233C876D00243655 /* Localization.swift */; };
+		4323FBC4233C876D00243655 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FBC2233C876D00243655 /* Localization.swift */; };
+		4356F4F7233D9CBB000710FC /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4356F4F6233D9CBB000710FC /* LocalizedStrings.swift */; };
+		4356F4F8233D9CBB000710FC /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4356F4F6233D9CBB000710FC /* LocalizedStrings.swift */; };
+		4356F501233DE0D2000710FC /* Explorer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4356F500233DE0D2000710FC /* Explorer.storyboard */; };
+		4356F502233DE0D2000710FC /* Explorer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4356F500233DE0D2000710FC /* Explorer.storyboard */; };
+		4356F507233DE798000710FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4356F506233DE798000710FC /* LaunchScreen.storyboard */; };
+		4356F508233DE798000710FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4356F506233DE798000710FC /* LaunchScreen.storyboard */; };
+		4356F51B233DF184000710FC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4356F51E233DF184000710FC /* Localizable.strings */; };
+		4356F51C233DF184000710FC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4356F51E233DF184000710FC /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -482,7 +488,6 @@
 		4323F9BD233A165600243655 /* ExplorerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplorerViewController.swift; sourceTree = "<group>"; };
 		4323F9BE233A165600243655 /* ExplorerRecommendedProjectTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplorerRecommendedProjectTableViewCell.swift; sourceTree = "<group>"; };
 		4323F9BF233A165600243655 /* ExplorerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplorerViewModel.swift; sourceTree = "<group>"; };
-		4323F9C0233A165600243655 /* Explorer.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Explorer.storyboard; sourceTree = "<group>"; };
 		4323F9C3233A165600243655 /* SubscriptionList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SubscriptionList.storyboard; sourceTree = "<group>"; };
 		4323F9C4233A165600243655 /* SubscriptionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionListViewController.swift; sourceTree = "<group>"; };
 		4323F9C5233A165600243655 /* SubscriptionListCollectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionListCollectionHeaderView.swift; sourceTree = "<group>"; };
@@ -595,12 +600,17 @@
 		4323FA50233A165600243655 /* SignInViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		4323FA51233A165600243655 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		4323FA55233A165600243655 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4323FA57233A165600243655 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4323FA59233A165600243655 /* ImagePickerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
 		4323FA5A233A165600243655 /* Updater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
 		4323FA5B233A165600243655 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		4323FBAD233AEEC300243655 /* RxRelay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxRelay.framework; path = Carthage/Build/iOS/RxRelay.framework; sourceTree = "<group>"; };
+		4323FBC2233C876D00243655 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		432CAC7822B725F00007EE03 /* piction-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "piction-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4356F4F6233D9CBB000710FC /* LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
+		4356F500233DE0D2000710FC /* Explorer.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Explorer.storyboard; sourceTree = "<group>"; };
+		4356F506233DE798000710FC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4356F51F233DF190000710FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4356F520233DF197000710FC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -739,6 +749,7 @@
 		4323F999233A165600243655 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				4323FBC1233C875800243655 /* Localization */,
 				4323F99A233A165600243655 /* VisualEffectView */,
 				4323F99C233A165600243655 /* KeyboardManager */,
 			);
@@ -865,7 +876,7 @@
 				4323F9BD233A165600243655 /* ExplorerViewController.swift */,
 				4323F9BE233A165600243655 /* ExplorerRecommendedProjectTableViewCell.swift */,
 				4323F9BF233A165600243655 /* ExplorerViewModel.swift */,
-				4323F9C0233A165600243655 /* Explorer.storyboard */,
+				4356F500233DE0D2000710FC /* Explorer.storyboard */,
 			);
 			path = Explorer;
 			sourceTree = "<group>";
@@ -1250,8 +1261,9 @@
 		4323FA54233A165600243655 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				4356F506233DE798000710FC /* LaunchScreen.storyboard */,
 				4323FA55233A165600243655 /* Assets.xcassets */,
-				4323FA56233A165600243655 /* LaunchScreen.storyboard */,
+				4356F51E233DF184000710FC /* Localizable.strings */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -1264,6 +1276,15 @@
 				4323FA5B233A165600243655 /* Toast.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		4323FBC1233C875800243655 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				4323FBC2233C876D00243655 /* Localization.swift */,
+				4356F4F6233D9CBB000710FC /* LocalizedStrings.swift */,
+			);
+			path = Localization;
 			sourceTree = "<group>";
 		};
 		43FC8931229E60B90074C3D6 /* Frameworks */ = {
@@ -1390,8 +1411,8 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				English,
+				ko,
 				en,
-				Base,
 			);
 			mainGroup = OBJ_5;
 			productRefGroup = OBJ_117 /* Products */;
@@ -1431,17 +1452,18 @@
 				4323FB49233A166000243655 /* ChangeMyInfo.storyboard in Resources */,
 				4323FB71233A166200243655 /* ConfirmDonation.storyboard in Resources */,
 				4323F93B2339FDEC00243655 /* input.xcfilelist in Resources */,
+				4356F51C233DF184000710FC /* Localizable.strings in Resources */,
 				4323FB81233A166300243655 /* SendDonation.storyboard in Resources */,
 				4323FB0F233A165E00243655 /* CustomEmptyView.storyboard in Resources */,
 				4323FB2D233A165F00243655 /* MyProject.storyboard in Resources */,
-				4323FBA5233A166400243655 /* LaunchScreen.storyboard in Resources */,
 				4323FB99233A166400243655 /* SignUp.storyboard in Resources */,
-				4323FAC1233A165B00243655 /* Explorer.storyboard in Resources */,
 				4323FAE1233A165C00243655 /* ProjectInfo.storyboard in Resources */,
 				4323FB61233A166100243655 /* SearchSponsor.storyboard in Resources */,
 				4323FA99233A165900243655 /* CheckPincode.storyboard in Resources */,
+				4356F502233DE0D2000710FC /* Explorer.storyboard in Resources */,
 				4323FBA3233A166400243655 /* Assets.xcassets in Resources */,
 				4323FAD9233A165C00243655 /* Post.storyboard in Resources */,
+				4356F508233DE798000710FC /* LaunchScreen.storyboard in Resources */,
 				4323FAEB233A165C00243655 /* SeriesPost.storyboard in Resources */,
 				4323FB83233A166300243655 /* SponsorshipList.storyboard in Resources */,
 				4323F9392339FDEC00243655 /* output.xcfilelist in Resources */,
@@ -1476,17 +1498,18 @@
 				4323FB48233A166000243655 /* ChangeMyInfo.storyboard in Resources */,
 				4323FB70233A166200243655 /* ConfirmDonation.storyboard in Resources */,
 				4323F93A2339FDEC00243655 /* input.xcfilelist in Resources */,
+				4356F51B233DF184000710FC /* Localizable.strings in Resources */,
 				4323FB80233A166300243655 /* SendDonation.storyboard in Resources */,
 				4323FB0E233A165E00243655 /* CustomEmptyView.storyboard in Resources */,
 				4323FB2C233A165F00243655 /* MyProject.storyboard in Resources */,
-				4323FBA4233A166400243655 /* LaunchScreen.storyboard in Resources */,
 				4323FB98233A166400243655 /* SignUp.storyboard in Resources */,
-				4323FAC0233A165A00243655 /* Explorer.storyboard in Resources */,
 				4323FAE0233A165C00243655 /* ProjectInfo.storyboard in Resources */,
 				4323FB60233A166100243655 /* SearchSponsor.storyboard in Resources */,
 				4323FA98233A165900243655 /* CheckPincode.storyboard in Resources */,
+				4356F501233DE0D2000710FC /* Explorer.storyboard in Resources */,
 				4323FBA2233A166400243655 /* Assets.xcassets in Resources */,
 				4323FAD8233A165B00243655 /* Post.storyboard in Resources */,
+				4356F507233DE798000710FC /* LaunchScreen.storyboard in Resources */,
 				4323FAEA233A165C00243655 /* SeriesPost.storyboard in Resources */,
 				4323FB82233A166300243655 /* SponsorshipList.storyboard in Resources */,
 				4323F9382339FDEC00243655 /* output.xcfilelist in Resources */,
@@ -1563,6 +1586,7 @@
 				4323FA71233A165700243655 /* Collection+Extension.swift in Sources */,
 				4323FB6D233A166200243655 /* QRCodeScannerViewController.swift in Sources */,
 				4323FAC9233A165B00243655 /* SubscriptionListCollectionView.swift in Sources */,
+				4323FBC4233C876D00243655 /* Localization.swift in Sources */,
 				4323FB8D233A166300243655 /* SponsorshipListItemTypeTableViewCell.swift in Sources */,
 				4323FB0D233A165E00243655 /* CustomEmptyViewController.swift in Sources */,
 				4323FAE7233A165C00243655 /* SeriesPostViewModel.swift in Sources */,
@@ -1578,6 +1602,7 @@
 				4323FAA7233A165900243655 /* RegisterPincodeViewModel.swift in Sources */,
 				4323FB45233A166000243655 /* ChangePasswordViewModel.swift in Sources */,
 				4323FA8F233A165800243655 /* KeyboardManager.swift in Sources */,
+				4356F4F8233D9CBB000710FC /* LocalizedStrings.swift in Sources */,
 				4323FB73233A166200243655 /* ConfirmDonationViewController.swift in Sources */,
 				4323FB7D233A166200243655 /* SendDonationViewModel.swift in Sources */,
 				4323FAAB233A165A00243655 /* TabBarViewController.swift in Sources */,
@@ -1701,6 +1726,7 @@
 				4323FA70233A165700243655 /* Collection+Extension.swift in Sources */,
 				4323FB6C233A166200243655 /* QRCodeScannerViewController.swift in Sources */,
 				4323FAC8233A165B00243655 /* SubscriptionListCollectionView.swift in Sources */,
+				4323FBC3233C876D00243655 /* Localization.swift in Sources */,
 				4323FB8C233A166300243655 /* SponsorshipListItemTypeTableViewCell.swift in Sources */,
 				4323FB0C233A165E00243655 /* CustomEmptyViewController.swift in Sources */,
 				4323FAE6233A165C00243655 /* SeriesPostViewModel.swift in Sources */,
@@ -1716,6 +1742,7 @@
 				4323FAA6233A165900243655 /* RegisterPincodeViewModel.swift in Sources */,
 				4323FB44233A166000243655 /* ChangePasswordViewModel.swift in Sources */,
 				4323FA8E233A165800243655 /* KeyboardManager.swift in Sources */,
+				4356F4F7233D9CBB000710FC /* LocalizedStrings.swift in Sources */,
 				4323FB72233A166200243655 /* ConfirmDonationViewController.swift in Sources */,
 				4323FB7C233A166200243655 /* SendDonationViewModel.swift in Sources */,
 				4323FAAA233A165A00243655 /* TabBarViewController.swift in Sources */,
@@ -1816,12 +1843,13 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		4323FA56233A165600243655 /* LaunchScreen.storyboard */ = {
+		4356F51E233DF184000710FC /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4323FA57233A165600243655 /* Base */,
+				4356F51F233DF190000710FC /* ko */,
+				4356F520233DF197000710FC /* en */,
 			);
-			name = LaunchScreen.storyboard;
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -2148,6 +2176,7 @@
 		OBJ_3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -2175,6 +2204,7 @@
 		OBJ_4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
