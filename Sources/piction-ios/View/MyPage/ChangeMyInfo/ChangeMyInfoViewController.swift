@@ -176,7 +176,7 @@ extension ChangeMyInfoViewController: CropViewControllerDelegate {
         let imgData = NSData(data: image.jpegData(compressionQuality: 1)!)
         print(imgData.count)
         if imgData.count > (1048576 * 10) {
-            Toast.showToast("이미지가 10MB를 초과합니다")
+            Toast.showToast(LocalizedStrings.str_image_size_exceeded.localized())
         } else {
             self.chosenImage.onNext(image)
         }
@@ -190,11 +190,11 @@ extension ChangeMyInfoViewController: CropViewControllerDelegate {
 extension ChangeMyInfoViewController {
     private func profileImagePopup() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let cancelButton = UIAlertAction(title: "취소", style: .cancel)
-        let deleteButton = UIAlertAction(title: "프로필 삭제", style: .destructive) { [weak self] _ in
+        let cancelButton = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel)
+        let deleteButton = UIAlertAction(title: LocalizedStrings.str_delete_profile_image.localized(), style: .destructive) { [weak self] _ in
             self?.chosenImage.onNext(nil)
         }
-        let updateButton = UIAlertAction(title: "프로필 변경", style: .destructive) { [weak self] _ in
+        let updateButton = UIAlertAction(title: LocalizedStrings.str_change_profile_image.localized(), style: .destructive) { [weak self] _ in
             let picker = UIImagePickerController()
             picker.delegate = self
             picker.allowsEditing = false
@@ -221,23 +221,23 @@ extension ChangeMyInfoViewController {
     }
 
     private func warningPopup() {
-        let alert = UIAlertController(title: nil, message: "변경된 내용이 저장되지 않습니다.\n계속하시겠습니까?", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: LocalizedStrings.msg_title_confirm.localized(), preferredStyle: .alert)
 
-        let okAction = UIAlertAction(title: "확인", style: .default, handler: { [weak self] action in
+        let okAction = UIAlertAction(title: LocalizedStrings.confirm.localized(), style: .default, handler: { [weak self] action in
             self?.dismiss(animated: true)
         })
         alert.addAction(okAction)
 
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler : nil)
+        let cancelAction = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel, handler : nil)
         alert.addAction(cancelAction)
 
         present(alert, animated: false, completion: nil)
     }
 
     private func checkPasswordPopup() {
-        let alert = UIAlertController(title: "인증", message: "변경된 내용을 저장하기 위해 비밀번호를 입력해주세요.", preferredStyle: .alert)
+        let alert = UIAlertController(title: LocalizedStrings.authenticates.localized(), message: LocalizedStrings.msg_title_confirm_password.localized(), preferredStyle: .alert)
 
-        let okAction = UIAlertAction(title: "확인", style: .default, handler: { [weak self] action in
+        let okAction = UIAlertAction(title: LocalizedStrings.confirm.localized(), style: .default, handler: { [weak self] action in
 
             let inputPassword = alert.textFields?.first?.text ?? ""
 
@@ -245,7 +245,7 @@ extension ChangeMyInfoViewController {
         })
         alert.addAction(okAction)
 
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler : nil)
+        let cancelAction = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel, handler : nil)
         alert.addAction(cancelAction)
 
         alert.addTextField(configurationHandler: configurationPasswordTextField)

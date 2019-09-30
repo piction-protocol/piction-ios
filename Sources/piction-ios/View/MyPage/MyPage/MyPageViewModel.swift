@@ -165,7 +165,7 @@ final class MyPageViewModel: InjectableViewModel {
                 }
                 self?.updater.refreshSession.onNext(())
                 print(accessToken)
-                return Driver.just("로그아웃 되었습니다.")
+                return Driver.just(LocalizedStrings.str_sign_out_success.localized())
             }
 
         let embedUserInfoViewController = userMeAction.elements

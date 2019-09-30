@@ -18,6 +18,7 @@
 "retry" = "Retry";
 "edit" = "Edit";
 "register" = "Register";
+"authenticates" = "인증";
 
 // menu
 "menu_project_info" = "Project detail";
@@ -42,6 +43,9 @@
 "msg_pincode_error_end" = "Too many wrong attempts. Signing out for your security.";
 "msg_pincode_reg_warning" = "Register PIN code to keep\nyour transactions safe.";
 "msg_not_piction_cp" = "Not valid QR code";
+
+"msg_title_confirm" = "변경된 내용이 저장되지 않습니다.\n계속하시겠습니까?";
+"msg_title_confirm_password" = "Please confirm password to update.";
 
 "msg_want_to_unsubscribe" = "Cancel subscription?";
 
@@ -187,3 +191,10 @@
 "str_authenticate_by_face_id" = "Face ID로 인증합니다.";
 "str_authenticate_by_touch_id" = "Touch ID로 인증합니다.";
 "str_authenticate_type" = "%@로 인증하시겠습니까?";
+
+"str_sign_out_success" = "로그아웃 되었습니다.";
+
+"str_image_size_exceeded" = "이미지가 10MB를 초과합니다";
+
+"str_delete_profile_image" = "프로필 삭제";
+"str_change_profile_image" = "프로필 변경";

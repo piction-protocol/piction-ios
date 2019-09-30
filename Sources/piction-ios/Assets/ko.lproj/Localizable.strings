@@ -18,6 +18,7 @@
 "retry" = "재시도";
 "edit" = "편집";
 "register" = "등록";
+"authenticates" = "인증";
 
 // menu
 "menu_project_info" = "프로젝트 정보";
@@ -42,6 +43,9 @@
 "msg_pincode_error_end" = "10회 동안 PIN 번호를 잘못 입력하였으므로 보안을 위해 자동으로 로그아웃됩니다.";
 "msg_pincode_reg_warning" = "픽션 내 콘텐츠의 안전한 거래를 위해\nPIN 등록을 권장합니다.";
 "msg_not_piction_cp" = "픽션 크리에이터 QR코드가 아닙니다";
+
+"msg_title_confirm" = "변경된 내용이 저장되지 않습니다.\n계속하시겠습니까?";
+"msg_title_confirm_password" = "변경된 내용을 저장하기 위해 비밀번호를 입력해주세요.";
 
 "msg_want_to_unsubscribe" = "구독을 해지하시겠습니까?";
 
@@ -187,3 +191,10 @@
 "str_authenticate_by_face_id" = "Face ID로 인증합니다.";
 "str_authenticate_by_touch_id" = "Touch ID로 인증합니다.";
 "str_authenticate_type" = "%@로 인증하시겠습니까?";
+
+"str_sign_out_success" = "로그아웃 되었습니다.";
+
+"str_image_size_exceeded" = "이미지가 10MB를 초과합니다";
+
+"str_delete_profile_image" = "프로필 삭제";
+"str_change_profile_image" = "프로필 변경";

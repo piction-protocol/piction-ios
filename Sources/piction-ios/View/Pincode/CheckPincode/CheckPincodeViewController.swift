@@ -136,7 +136,7 @@ extension CheckPincodeViewController: ViewModelBindable {
 
                 if style == .change || style == .check {
                     self?.closeButton.isEnabled = true
-                    self?.closeButton.title = "취소"
+                    self?.closeButton.title = LocalizedStrings.cancel.localized()
                 }
                 if UserDefaults.standard.bool(forKey: "isEnabledAuthBio") {
                     self?.auth()

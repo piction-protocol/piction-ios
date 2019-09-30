@@ -64,7 +64,7 @@ final class SendDonationViewController: UIViewController {
     private func errorPopup(message: String) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
 
-        let okAction = UIAlertAction(title: "확인", style: .default, handler: { action in
+        let okAction = UIAlertAction(title: LocalizedStrings.confirm.localized(), style: .default, handler: { action in
         })
         alert.addAction(okAction)
 

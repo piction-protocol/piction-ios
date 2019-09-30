@@ -117,8 +117,7 @@ extension MyProjectViewController: ViewModelBindable {
 
 extension MyProjectViewController {
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let editAction = UIContextualAction(style: .normal, title: "편집", handler: { [weak self] (action, view, completionHandler) in
-                print("success")
+        let editAction = UIContextualAction(style: .normal, title: LocalizedStrings.edit.localized(), handler: { [weak self] (action, view, completionHandler) in
                 if let item = self?.viewModel?.projectList[indexPath.row] {
                     self?.openCreateProjectViewController(uri: item.uri ?? "")
                     completionHandler(true)

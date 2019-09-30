@@ -19,6 +19,7 @@ enum LocalizedStrings {
     case retry
     case edit
     case register
+    case authenticates
 
     // menu
     case menu_project_info
@@ -43,6 +44,9 @@ enum LocalizedStrings {
     case msg_pincode_error_end
     case msg_pincode_reg_warning
     case msg_not_piction_cp
+
+    case msg_title_confirm
+    case msg_title_confirm_password
 
     case msg_want_to_unsubscribe
 
@@ -188,6 +192,13 @@ enum LocalizedStrings {
     case str_authenticate_by_face_id
     case str_authenticate_by_touch_id
     case str_authenticate_type
+
+    case str_sign_out_success
+
+    case str_image_size_exceeded
+
+    case str_delete_profile_image
+    case str_change_profile_image
 }
 
 extension LocalizedStrings {

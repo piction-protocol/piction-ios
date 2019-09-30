@@ -39,7 +39,7 @@ final class QRCodeScannerViewController: UIViewController {
     private func openErrorPopup(message: String) {
         let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
 
-        let okAction = UIAlertAction(title: "확인", style: .default, handler: { [weak self] _ in
+        let okAction = UIAlertAction(title: LocalizedStrings.confirm.localized(), style: .default, handler: { [weak self] _ in
             self?.captureSession.startRunning()
         })
 
