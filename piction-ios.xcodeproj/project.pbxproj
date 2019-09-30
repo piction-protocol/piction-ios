@@ -157,8 +157,6 @@
 		4323FAC3233A165B00243655 /* SubscriptionList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9C3233A165600243655 /* SubscriptionList.storyboard */; };
 		4323FAC4233A165B00243655 /* SubscriptionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9C4233A165600243655 /* SubscriptionListViewController.swift */; };
 		4323FAC5233A165B00243655 /* SubscriptionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9C4233A165600243655 /* SubscriptionListViewController.swift */; };
-		4323FAC6233A165B00243655 /* SubscriptionListCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9C5233A165600243655 /* SubscriptionListCollectionHeaderView.swift */; };
-		4323FAC7233A165B00243655 /* SubscriptionListCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9C5233A165600243655 /* SubscriptionListCollectionHeaderView.swift */; };
 		4323FAC8233A165B00243655 /* SubscriptionListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9C6233A165600243655 /* SubscriptionListCollectionView.swift */; };
 		4323FAC9233A165B00243655 /* SubscriptionListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9C6233A165600243655 /* SubscriptionListCollectionView.swift */; };
 		4323FACA233A165B00243655 /* SubscriptionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9C7233A165600243655 /* SubscriptionListViewModel.swift */; };
@@ -490,7 +488,6 @@
 		4323F9BF233A165600243655 /* ExplorerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplorerViewModel.swift; sourceTree = "<group>"; };
 		4323F9C3233A165600243655 /* SubscriptionList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SubscriptionList.storyboard; sourceTree = "<group>"; };
 		4323F9C4233A165600243655 /* SubscriptionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionListViewController.swift; sourceTree = "<group>"; };
-		4323F9C5233A165600243655 /* SubscriptionListCollectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionListCollectionHeaderView.swift; sourceTree = "<group>"; };
 		4323F9C6233A165600243655 /* SubscriptionListCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionListCollectionView.swift; sourceTree = "<group>"; };
 		4323F9C7233A165600243655 /* SubscriptionListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionListViewModel.swift; sourceTree = "<group>"; };
 		4323F9C8233A165600243655 /* SubscriptionListCollectionFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionListCollectionFooterView.swift; sourceTree = "<group>"; };
@@ -812,9 +809,9 @@
 		4323F9A5233A165600243655 /* CheckPincode */ = {
 			isa = PBXGroup;
 			children = (
-				4323F9A6233A165600243655 /* CheckPincode.storyboard */,
-				4323F9A7233A165600243655 /* CheckPincodeViewModel.swift */,
 				4323F9A8233A165600243655 /* CheckPincodeViewController.swift */,
+				4323F9A7233A165600243655 /* CheckPincodeViewModel.swift */,
+				4323F9A6233A165600243655 /* CheckPincode.storyboard */,
 			);
 			path = CheckPincode;
 			sourceTree = "<group>";
@@ -822,8 +819,8 @@
 		4323F9A9233A165600243655 /* ConfirmPincode */ = {
 			isa = PBXGroup;
 			children = (
-				4323F9AA233A165600243655 /* ConfirmPincodeViewModel.swift */,
 				4323F9AB233A165600243655 /* ConfirmPincodeViewController.swift */,
+				4323F9AA233A165600243655 /* ConfirmPincodeViewModel.swift */,
 				4323F9AC233A165600243655 /* ConfirmPincode.storyboard */,
 			);
 			path = ConfirmPincode;
@@ -859,10 +856,10 @@
 		4323F9B4233A165600243655 /* SearchProject */ = {
 			isa = PBXGroup;
 			children = (
-				4323F9B5233A165600243655 /* SearchProject.storyboard */,
-				4323F9B6233A165600243655 /* SearchProjectViewModel.swift */,
 				4323F9B7233A165600243655 /* SearchProjectViewController.swift */,
+				4323F9B6233A165600243655 /* SearchProjectViewModel.swift */,
 				4323F9B8233A165600243655 /* SearchProjectTableViewCell.swift */,
+				4323F9B5233A165600243655 /* SearchProject.storyboard */,
 			);
 			path = SearchProject;
 			sourceTree = "<group>";
@@ -870,12 +867,12 @@
 		4323F9B9233A165600243655 /* Explorer */ = {
 			isa = PBXGroup;
 			children = (
+				4323F9BD233A165600243655 /* ExplorerViewController.swift */,
+				4323F9BF233A165600243655 /* ExplorerViewModel.swift */,
 				4323F9BA233A165600243655 /* ExplorerRecommendedProjectHeaderTableViewCell.swift */,
+				4323F9BE233A165600243655 /* ExplorerRecommendedProjectTableViewCell.swift */,
 				4323F9BB233A165600243655 /* ExplorerNoticeHeaderTableViewCell.swift */,
 				4323F9BC233A165600243655 /* ExplorerNoticeTableViewCell.swift */,
-				4323F9BD233A165600243655 /* ExplorerViewController.swift */,
-				4323F9BE233A165600243655 /* ExplorerRecommendedProjectTableViewCell.swift */,
-				4323F9BF233A165600243655 /* ExplorerViewModel.swift */,
 				4356F500233DE0D2000710FC /* Explorer.storyboard */,
 			);
 			path = Explorer;
@@ -892,12 +889,11 @@
 		4323F9C2233A165600243655 /* SubscriptionList */ = {
 			isa = PBXGroup;
 			children = (
-				4323F9C3233A165600243655 /* SubscriptionList.storyboard */,
 				4323F9C4233A165600243655 /* SubscriptionListViewController.swift */,
-				4323F9C5233A165600243655 /* SubscriptionListCollectionHeaderView.swift */,
-				4323F9C6233A165600243655 /* SubscriptionListCollectionView.swift */,
 				4323F9C7233A165600243655 /* SubscriptionListViewModel.swift */,
+				4323F9C6233A165600243655 /* SubscriptionListCollectionView.swift */,
 				4323F9C8233A165600243655 /* SubscriptionListCollectionFooterView.swift */,
+				4323F9C3233A165600243655 /* SubscriptionList.storyboard */,
 			);
 			path = SubscriptionList;
 			sourceTree = "<group>";
@@ -905,14 +901,14 @@
 		4323F9C9233A165600243655 /* Project */ = {
 			isa = PBXGroup;
 			children = (
-				4323F9CA233A165600243655 /* CreatePost */,
+				4323F9DF233A165600243655 /* Project */,
+				4323F9D6233A165600243655 /* ProjectInfo */,
+				4323F9EC233A165600243655 /* CreateProject */,
 				4323F9CE233A165600243655 /* Post */,
 				4323F9D2233A165600243655 /* PostHeader */,
-				4323F9D6233A165600243655 /* ProjectInfo */,
-				4323F9DA233A165600243655 /* SeriesPost */,
-				4323F9DF233A165600243655 /* Project */,
 				4323F9E8233A165600243655 /* PostFooter */,
-				4323F9EC233A165600243655 /* CreateProject */,
+				4323F9DA233A165600243655 /* SeriesPost */,
+				4323F9CA233A165600243655 /* CreatePost */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -920,8 +916,8 @@
 		4323F9CA233A165600243655 /* CreatePost */ = {
 			isa = PBXGroup;
 			children = (
-				4323F9CB233A165600243655 /* CreatePostViewModel.swift */,
 				4323F9CC233A165600243655 /* CreatePostViewController.swift */,
+				4323F9CB233A165600243655 /* CreatePostViewModel.swift */,
 				4323F9CD233A165600243655 /* CreatePost.storyboard */,
 			);
 			path = CreatePost;
@@ -930,8 +926,8 @@
 		4323F9CE233A165600243655 /* Post */ = {
 			isa = PBXGroup;
 			children = (
-				4323F9CF233A165600243655 /* PostViewModel.swift */,
 				4323F9D0233A165600243655 /* PostViewController.swift */,
+				4323F9CF233A165600243655 /* PostViewModel.swift */,
 				4323F9D1233A165600243655 /* Post.storyboard */,
 			);
 			path = Post;
@@ -940,9 +936,9 @@
 		4323F9D2233A165600243655 /* PostHeader */ = {
 			isa = PBXGroup;
 			children = (
-				4323F9D3233A165600243655 /* PostHeader.storyboard */,
-				4323F9D4233A165600243655 /* PostHeaderViewModel.swift */,
 				4323F9D5233A165600243655 /* PostHeaderViewController.swift */,
+				4323F9D4233A165600243655 /* PostHeaderViewModel.swift */,
+				4323F9D3233A165600243655 /* PostHeader.storyboard */,
 			);
 			path = PostHeader;
 			sourceTree = "<group>";
@@ -950,9 +946,9 @@
 		4323F9D6233A165600243655 /* ProjectInfo */ = {
 			isa = PBXGroup;
 			children = (
-				4323F9D7233A165600243655 /* ProjectInfo.storyboard */,
 				4323F9D8233A165600243655 /* ProjectInfoViewController.swift */,
 				4323F9D9233A165600243655 /* ProjectInfoViewModel.swift */,
+				4323F9D7233A165600243655 /* ProjectInfo.storyboard */,
 			);
 			path = ProjectInfo;
 			sourceTree = "<group>";
@@ -960,10 +956,10 @@
 		4323F9DA233A165600243655 /* SeriesPost */ = {
 			isa = PBXGroup;
 			children = (
+				4323F9DE233A165600243655 /* SeriesPostViewController.swift */,
 				4323F9DB233A165600243655 /* SeriesPostViewModel.swift */,
 				4323F9DC233A165600243655 /* SeriesPostListTableViewCell.swift */,
 				4323F9DD233A165600243655 /* SeriesPost.storyboard */,
-				4323F9DE233A165600243655 /* SeriesPostViewController.swift */,
 			);
 			path = SeriesPost;
 			sourceTree = "<group>";
@@ -971,14 +967,14 @@
 		4323F9DF233A165600243655 /* Project */ = {
 			isa = PBXGroup;
 			children = (
-				4323F9E0233A165600243655 /* ProjectHeaderView.xib */,
+				4323F9E7233A165600243655 /* ProjectViewController.swift */,
 				4323F9E1233A165600243655 /* ProjectViewModel.swift */,
-				4323F9E2233A165600243655 /* ProjectSeriesHeaderTableViewCell.swift */,
-				4323F9E3233A165600243655 /* ProjectPostListTableViewCell.swift */,
+				4323F9E0233A165600243655 /* ProjectHeaderView.xib */,
 				4323F9E4233A165600243655 /* ProjectHeaderView.swift */,
+				4323F9E3233A165600243655 /* ProjectPostListTableViewCell.swift */,
+				4323F9E2233A165600243655 /* ProjectSeriesHeaderTableViewCell.swift */,
 				4323F9E5233A165600243655 /* ProjectSeriesListTableViewCell.swift */,
 				4323F9E6233A165600243655 /* Project.storyboard */,
-				4323F9E7233A165600243655 /* ProjectViewController.swift */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -987,8 +983,8 @@
 			isa = PBXGroup;
 			children = (
 				4323F9E9233A165600243655 /* PostFooterViewController.swift */,
-				4323F9EA233A165600243655 /* PostFooter.storyboard */,
 				4323F9EB233A165600243655 /* PostFooterViewModel.swift */,
+				4323F9EA233A165600243655 /* PostFooter.storyboard */,
 			);
 			path = PostFooter;
 			sourceTree = "<group>";
@@ -996,9 +992,9 @@
 		4323F9EC233A165600243655 /* CreateProject */ = {
 			isa = PBXGroup;
 			children = (
-				4323F9ED233A165600243655 /* CreateProject.storyboard */,
-				4323F9EE233A165600243655 /* CreateProjectViewModel.swift */,
 				4323F9EF233A165600243655 /* CreateProjectViewController.swift */,
+				4323F9EE233A165600243655 /* CreateProjectViewModel.swift */,
+				4323F9ED233A165600243655 /* CreateProject.storyboard */,
 			);
 			path = CreateProject;
 			sourceTree = "<group>";
@@ -1034,14 +1030,14 @@
 		4323F9F8233A165600243655 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
-				4323F9F9233A165600243655 /* Deposit */,
-				4323F9FD233A165600243655 /* TransactionDetail */,
-				4323FA05233A165600243655 /* MyProject */,
 				4323FA0A233A165600243655 /* MyPage */,
-				4323FA13233A165600243655 /* ChangePassword */,
-				4323FA17233A165600243655 /* ChangeMyInfo */,
-				4323FA1B233A165600243655 /* TransactionHistory */,
 				4323FA23233A165600243655 /* UserInfo */,
+				4323FA05233A165600243655 /* MyProject */,
+				4323FA1B233A165600243655 /* TransactionHistory */,
+				4323F9FD233A165600243655 /* TransactionDetail */,
+				4323F9F9233A165600243655 /* Deposit */,
+				4323FA17233A165600243655 /* ChangeMyInfo */,
+				4323FA13233A165600243655 /* ChangePassword */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -1059,13 +1055,13 @@
 		4323F9FD233A165600243655 /* TransactionDetail */ = {
 			isa = PBXGroup;
 			children = (
-				4323F9FE233A165600243655 /* TransactionDetailHeaderTypeTableViewCell.swift */,
 				4323F9FF233A165600243655 /* TransactionDetailViewController.swift */,
-				4323FA00233A165600243655 /* TransactionDetailItemTypeTableViewCell.swift */,
-				4323FA01233A165600243655 /* TransactionDetail.storyboard */,
-				4323FA02233A165600243655 /* TransactionDetailInfoTypeTableViewCell.swift */,
 				4323FA03233A165600243655 /* TransactionDetailViewModel.swift */,
+				4323F9FE233A165600243655 /* TransactionDetailHeaderTypeTableViewCell.swift */,
+				4323FA00233A165600243655 /* TransactionDetailItemTypeTableViewCell.swift */,
+				4323FA02233A165600243655 /* TransactionDetailInfoTypeTableViewCell.swift */,
 				4323FA04233A165600243655 /* TransactionDetailFooterTypeTableViewCell.swift */,
+				4323FA01233A165600243655 /* TransactionDetail.storyboard */,
 			);
 			path = TransactionDetail;
 			sourceTree = "<group>";
@@ -1073,10 +1069,10 @@
 		4323FA05233A165600243655 /* MyProject */ = {
 			isa = PBXGroup;
 			children = (
-				4323FA06233A165600243655 /* MyProjectTableViewCell.swift */,
-				4323FA07233A165600243655 /* MyProjectViewModel.swift */,
-				4323FA08233A165600243655 /* MyProject.storyboard */,
 				4323FA09233A165600243655 /* MyProjectViewController.swift */,
+				4323FA07233A165600243655 /* MyProjectViewModel.swift */,
+				4323FA06233A165600243655 /* MyProjectTableViewCell.swift */,
+				4323FA08233A165600243655 /* MyProject.storyboard */,
 			);
 			path = MyProject;
 			sourceTree = "<group>";
@@ -1084,14 +1080,14 @@
 		4323FA0A233A165600243655 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				4323FA11233A165600243655 /* MyPageViewController.swift */,
+				4323FA12233A165600243655 /* MyPageViewModel.swift */,
 				4323FA0B233A165600243655 /* MyPagePushTypeTableViewCell.swift */,
 				4323FA0C233A165600243655 /* MyPageSwitchTypeTableViewCell.swift */,
 				4323FA0D233A165600243655 /* MyPagePresentTypeTableViewCell.swift */,
 				4323FA0E233A165600243655 /* MyPageHeaderTypeTableViewCell.swift */,
-				4323FA0F233A165600243655 /* MyPage.storyboard */,
 				4323FA10233A165600243655 /* MyPageUnderlineTypeTableViewCell.swift */,
-				4323FA11233A165600243655 /* MyPageViewController.swift */,
-				4323FA12233A165600243655 /* MyPageViewModel.swift */,
+				4323FA0F233A165600243655 /* MyPage.storyboard */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -1100,8 +1096,8 @@
 			isa = PBXGroup;
 			children = (
 				4323FA14233A165600243655 /* ChangePasswordViewController.swift */,
-				4323FA15233A165600243655 /* ChangePassword.storyboard */,
 				4323FA16233A165600243655 /* ChangePasswordViewModel.swift */,
+				4323FA15233A165600243655 /* ChangePassword.storyboard */,
 			);
 			path = ChangePassword;
 			sourceTree = "<group>";
@@ -1109,9 +1105,9 @@
 		4323FA17233A165600243655 /* ChangeMyInfo */ = {
 			isa = PBXGroup;
 			children = (
+				4323FA1A233A165600243655 /* ChangeMyInfoViewController.swift */,
 				4323FA18233A165600243655 /* ChangeMyInfoViewModel.swift */,
 				4323FA19233A165600243655 /* ChangeMyInfo.storyboard */,
-				4323FA1A233A165600243655 /* ChangeMyInfoViewController.swift */,
 			);
 			path = ChangeMyInfo;
 			sourceTree = "<group>";
@@ -1119,13 +1115,13 @@
 		4323FA1B233A165600243655 /* TransactionHistory */ = {
 			isa = PBXGroup;
 			children = (
-				4323FA1C233A165600243655 /* TransactionHistoryListTypeTableViewCell.swift */,
-				4323FA1D233A165600243655 /* TransactionHistory.storyboard */,
-				4323FA1E233A165600243655 /* TransactionHistoryFooterTypeTableViewCell.swift */,
-				4323FA1F233A165600243655 /* TransactionHistoryViewModel.swift */,
-				4323FA20233A165600243655 /* TransactionHistoryHeaderTypeTableViewCell.swift */,
 				4323FA21233A165600243655 /* TransactionHistoryViewController.swift */,
+				4323FA1F233A165600243655 /* TransactionHistoryViewModel.swift */,
+				4323FA1C233A165600243655 /* TransactionHistoryListTypeTableViewCell.swift */,
+				4323FA1E233A165600243655 /* TransactionHistoryFooterTypeTableViewCell.swift */,
+				4323FA20233A165600243655 /* TransactionHistoryHeaderTypeTableViewCell.swift */,
 				4323FA22233A165600243655 /* TransactionHistoryYearTypeTableViewCell.swift */,
+				4323FA1D233A165600243655 /* TransactionHistory.storyboard */,
 			);
 			path = TransactionHistory;
 			sourceTree = "<group>";
@@ -1143,12 +1139,12 @@
 		4323FA27233A165600243655 /* Sponsorship */ = {
 			isa = PBXGroup;
 			children = (
+				4323FA3E233A165600243655 /* SponsorshipList */,
 				4323FA28233A165600243655 /* SearchSponsor */,
 				4323FA2D233A165600243655 /* QRCodeScanner */,
+				4323FA3A233A165600243655 /* SendDonation */,
 				4323FA31233A165600243655 /* ConfirmDonation */,
 				4323FA35233A165600243655 /* SponsorshipHistory */,
-				4323FA3A233A165600243655 /* SendDonation */,
-				4323FA3E233A165600243655 /* SponsorshipList */,
 			);
 			path = Sponsorship;
 			sourceTree = "<group>";
@@ -1156,10 +1152,10 @@
 		4323FA28233A165600243655 /* SearchSponsor */ = {
 			isa = PBXGroup;
 			children = (
-				4323FA29233A165600243655 /* SearchSponsor.storyboard */,
-				4323FA2A233A165600243655 /* SearchSponsorTableViewCell.swift */,
-				4323FA2B233A165600243655 /* SearchSponsorViewModel.swift */,
 				4323FA2C233A165600243655 /* SearchSponsorViewController.swift */,
+				4323FA2B233A165600243655 /* SearchSponsorViewModel.swift */,
+				4323FA2A233A165600243655 /* SearchSponsorTableViewCell.swift */,
+				4323FA29233A165600243655 /* SearchSponsor.storyboard */,
 			);
 			path = SearchSponsor;
 			sourceTree = "<group>";
@@ -1167,9 +1163,9 @@
 		4323FA2D233A165600243655 /* QRCodeScanner */ = {
 			isa = PBXGroup;
 			children = (
-				4323FA2E233A165600243655 /* QRCodeScanner.storyboard */,
-				4323FA2F233A165600243655 /* QRCodeScannerViewModel.swift */,
 				4323FA30233A165600243655 /* QRCodeScannerViewController.swift */,
+				4323FA2F233A165600243655 /* QRCodeScannerViewModel.swift */,
+				4323FA2E233A165600243655 /* QRCodeScanner.storyboard */,
 			);
 			path = QRCodeScanner;
 			sourceTree = "<group>";
@@ -1177,9 +1173,9 @@
 		4323FA31233A165600243655 /* ConfirmDonation */ = {
 			isa = PBXGroup;
 			children = (
+				4323FA34233A165600243655 /* ConfirmDonationViewController.swift */,
 				4323FA32233A165600243655 /* ConfirmDonationViewModel.swift */,
 				4323FA33233A165600243655 /* ConfirmDonation.storyboard */,
-				4323FA34233A165600243655 /* ConfirmDonationViewController.swift */,
 			);
 			path = ConfirmDonation;
 			sourceTree = "<group>";
@@ -1187,10 +1183,10 @@
 		4323FA35233A165600243655 /* SponsorshipHistory */ = {
 			isa = PBXGroup;
 			children = (
-				4323FA36233A165600243655 /* SponsorshipHistory.storyboard */,
 				4323FA37233A165600243655 /* SponsorshipHistoryViewController.swift */,
 				4323FA38233A165600243655 /* SponsorshipHistoryViewModel.swift */,
 				4323FA39233A165600243655 /* SponsorshipHistoryTableViewCell.swift */,
+				4323FA36233A165600243655 /* SponsorshipHistory.storyboard */,
 			);
 			path = SponsorshipHistory;
 			sourceTree = "<group>";
@@ -1198,8 +1194,8 @@
 		4323FA3A233A165600243655 /* SendDonation */ = {
 			isa = PBXGroup;
 			children = (
-				4323FA3B233A165600243655 /* SendDonationViewModel.swift */,
 				4323FA3C233A165600243655 /* SendDonationViewController.swift */,
+				4323FA3B233A165600243655 /* SendDonationViewModel.swift */,
 				4323FA3D233A165600243655 /* SendDonation.storyboard */,
 			);
 			path = SendDonation;
@@ -1208,12 +1204,12 @@
 		4323FA3E233A165600243655 /* SponsorshipList */ = {
 			isa = PBXGroup;
 			children = (
-				4323FA3F233A165600243655 /* SponsorshipList.storyboard */,
-				4323FA40233A165600243655 /* SponsorshipListHeaderTypeTableViewCell.swift */,
 				4323FA41233A165600243655 /* SponsorshipListViewController.swift */,
 				4323FA42233A165600243655 /* SponsorshipListViewModel.swift */,
+				4323FA40233A165600243655 /* SponsorshipListHeaderTypeTableViewCell.swift */,
 				4323FA43233A165600243655 /* SponsorshipListButtonTypeTableViewCell.swift */,
 				4323FA44233A165600243655 /* SponsorshipListItemTypeTableViewCell.swift */,
+				4323FA3F233A165600243655 /* SponsorshipList.storyboard */,
 			);
 			path = SponsorshipList;
 			sourceTree = "<group>";
@@ -1221,9 +1217,9 @@
 		4323FA45233A165600243655 /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
-				4323FA46233A165600243655 /* SignUpComplete */,
-				4323FA4A233A165600243655 /* SignUp */,
 				4323FA4E233A165600243655 /* SignIn */,
+				4323FA4A233A165600243655 /* SignUp */,
+				4323FA46233A165600243655 /* SignUpComplete */,
 			);
 			path = SignIn;
 			sourceTree = "<group>";
@@ -1231,9 +1227,9 @@
 		4323FA46233A165600243655 /* SignUpComplete */ = {
 			isa = PBXGroup;
 			children = (
+				4323FA49233A165600243655 /* SignUpCompleteViewController.swift */,
 				4323FA47233A165600243655 /* SignUpCompleteViewModel.swift */,
 				4323FA48233A165600243655 /* SignUpComplete.storyboard */,
-				4323FA49233A165600243655 /* SignUpCompleteViewController.swift */,
 			);
 			path = SignUpComplete;
 			sourceTree = "<group>";
@@ -1251,9 +1247,9 @@
 		4323FA4E233A165600243655 /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
-				4323FA4F233A165600243655 /* SignIn.storyboard */,
-				4323FA50233A165600243655 /* SignInViewModel.swift */,
 				4323FA51233A165600243655 /* SignInViewController.swift */,
+				4323FA50233A165600243655 /* SignInViewModel.swift */,
+				4323FA4F233A165600243655 /* SignIn.storyboard */,
 			);
 			path = SignIn;
 			sourceTree = "<group>";
@@ -1668,7 +1664,6 @@
 				4323FAD5233A165B00243655 /* PostViewModel.swift in Sources */,
 				4323FACB233A165B00243655 /* SubscriptionListViewModel.swift in Sources */,
 				4323FAF9233A165D00243655 /* ProjectSeriesListTableViewCell.swift in Sources */,
-				4323FAC7233A165B00243655 /* SubscriptionListCollectionHeaderView.swift in Sources */,
 				4323FABD233A165A00243655 /* ExplorerRecommendedProjectTableViewCell.swift in Sources */,
 				4323FADF233A165C00243655 /* PostHeaderViewController.swift in Sources */,
 				4323FB25233A165F00243655 /* TransactionDetailViewModel.swift in Sources */,
@@ -1808,7 +1803,6 @@
 				4323FAD4233A165B00243655 /* PostViewModel.swift in Sources */,
 				4323FACA233A165B00243655 /* SubscriptionListViewModel.swift in Sources */,
 				4323FAF8233A165D00243655 /* ProjectSeriesListTableViewCell.swift in Sources */,
-				4323FAC6233A165B00243655 /* SubscriptionListCollectionHeaderView.swift in Sources */,
 				4323FABC233A165A00243655 /* ExplorerRecommendedProjectTableViewCell.swift in Sources */,
 				4323FADE233A165C00243655 /* PostHeaderViewController.swift in Sources */,
 				4323FB24233A165F00243655 /* TransactionDetailViewModel.swift in Sources */,

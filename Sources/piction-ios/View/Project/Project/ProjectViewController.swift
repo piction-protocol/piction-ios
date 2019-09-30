@@ -353,7 +353,6 @@ extension ProjectViewController: ProjectHeaderViewProtocol {
 extension ProjectViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let editAction = UIContextualAction(style: .normal, title: LocalizedStrings.edit.localized(), handler: { [weak self] (action, view, completionHandler) in
-            print("success")
             guard let section = self?.viewModel?.sections[indexPath.row] else { completionHandler(false)
                 return
             }
