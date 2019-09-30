@@ -200,7 +200,6 @@ extension ProjectViewController: ViewModelBindable {
         output
             .viewWillDisappear
             .drive(onNext: { [weak self] in
-                self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self?.navigationController?.navigationBar.barStyle = .default
                 self?.navigationController?.navigationBar.tintColor = UIView().tintColor
             })

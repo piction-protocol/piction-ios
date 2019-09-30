@@ -170,7 +170,7 @@
                                                 </stackView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O5d-td-jlX">
                                                     <rect key="frame" x="20" y="227.66666666666666" width="335" height="0.33333333333334281"/>
-                                                    <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="separatorColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="0.33000000000000002" id="DLh-PO-sgb"/>
                                                     </constraints>
@@ -329,7 +329,7 @@
                         <viewLayoutGuide key="safeArea" id="GnQ-mt-Wvr"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="fHn-Rs-49J">
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="fHn-Rs-49J">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="icInfo" id="9mq-jx-KNx"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>

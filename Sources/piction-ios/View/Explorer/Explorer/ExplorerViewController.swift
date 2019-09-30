@@ -61,11 +61,6 @@ final class ExplorerViewController: UIViewController {
         super.viewDidLoad()
 
         searchController = UISearchController(searchResultsController: self.searchResultsController)
-        if #available(iOS 13.0, *) {
-            searchController?.searchBar.backgroundColor = .systemBackground
-        } else {
-            searchController?.searchBar.backgroundColor = .white
-        }        
 
         searchController?.hidesNavigationBarDuringPresentation = true
         searchController?.dimsBackgroundDuringPresentation = false
