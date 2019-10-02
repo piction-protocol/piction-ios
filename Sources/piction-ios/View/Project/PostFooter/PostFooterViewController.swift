@@ -43,6 +43,7 @@ final class PostFooterViewController: UIViewController {
     @IBOutlet weak var seriesPostCountLabel: UILabel!
 
     @IBOutlet weak var seriesAllPostButton: UIButton!
+    @IBOutlet weak var footerView: UIView!
 
     weak var delegate: PostFooterViewDelegate?
 
@@ -107,10 +108,11 @@ extension PostFooterViewController: ViewModelBindable {
                     self?.seriesAllPostButton.isHidden = false
                     self?.seriesPostTitleStackView.isHidden = false
                     self?.setSeriesPostTitle(postItem: postItem, seriesItems: seriesPostItems)
+                    self?.footerView.frame.size.height = 230
                 } else {
                     self?.seriesAllPostButton.isHidden = true
                     self?.seriesPostTitleStackView.isHidden = true
-                    self?.tableView.tableFooterView = UIView()
+                    self?.footerView.frame.size.height = 0
                 }
                 return Driver.just(seriesPostItems)
             }

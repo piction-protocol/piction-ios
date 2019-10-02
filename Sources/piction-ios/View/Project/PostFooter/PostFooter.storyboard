@@ -37,7 +37,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rcm-io-YXX" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
-                                                    <rect key="frame" x="147.5" y="55" width="80" height="49.5"/>
+                                                    <rect key="frame" x="147.5" y="55" width="80" height="55"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icFavoriteOff" translatesAutoresizingMaskIntoConstraints="NO" id="B0J-zg-bnC">
                                                             <rect key="frame" x="20" y="12" width="40" height="40"/>
@@ -56,7 +56,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EI4-9g-Zi3">
-                                                            <rect key="frame" x="0.0" y="0.0" width="80" height="49.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="80" height="55"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="-30" maxX="0.0" maxY="0.0"/>
                                                             <state key="normal">
                                                                 <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -88,10 +88,10 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GSp-zE-ewu">
-                                                    <rect key="frame" x="0.0" y="144.5" width="375" height="133.5"/>
+                                                    <rect key="frame" x="0.0" y="150" width="375" height="128"/>
                                                     <subviews>
                                                         <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="UGy-wY-jfs">
-                                                            <rect key="frame" x="20" y="73.5" width="335" height="60"/>
+                                                            <rect key="frame" x="20" y="68" width="335" height="60"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ghB-f8-lBr">
                                                                     <rect key="frame" x="0.0" y="0.0" width="335" height="59.5"/>
@@ -162,7 +162,7 @@
                                     </constraints>
                                 </view>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="GWH-ob-WUg">
-                                    <rect key="frame" x="0.0" y="394" width="375" height="230"/>
+                                    <rect key="frame" x="0.0" y="394" width="375" height="133.5"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qnT-xq-ylp">
@@ -249,13 +249,14 @@
                     <size key="freeformSize" width="375" height="728"/>
                     <connections>
                         <outlet property="dateLabel" destination="fA3-oO-TnS" id="BI5-t8-QIC"/>
+                        <outlet property="footerView" destination="GWH-ob-WUg" id="qZO-u2-ely"/>
                         <outlet property="likeButton" destination="EI4-9g-Zi3" id="Amr-Vo-lzO"/>
                         <outlet property="likeCountLabel" destination="wXy-IU-MpP" id="J0e-bN-tDf"/>
                         <outlet property="likeImageView" destination="B0J-zg-bnC" id="SaU-v9-ZNM"/>
                         <outlet property="likeView" destination="Rcm-io-YXX" id="DYB-72-Ktn"/>
                         <outlet property="seriesAllPostButton" destination="qnT-xq-ylp" id="iCn-Oj-vn8"/>
                         <outlet property="seriesPostCountLabel" destination="NEY-XA-6Ek" id="BYK-AK-XoV"/>
-                        <outlet property="seriesPostTitleStackView" destination="UGy-wY-jfs" id="rLV-0v-qfN"/>
+                        <outlet property="seriesPostTitleStackView" destination="UGy-wY-jfs" id="hLm-M6-GcP"/>
                         <outlet property="seriesTitleLabel" destination="uY3-l3-VvI" id="36G-N7-Zhb"/>
                         <outlet property="tableView" destination="hmF-gJ-6YD" id="FOy-PC-Tcd"/>
                     </connections>
