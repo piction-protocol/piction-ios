@@ -203,6 +203,6 @@ enum LocalizedStrings {
 
 extension LocalizedStrings {
     public func localized(with argument: CVarArg = []) -> String {
-        return String(format: String(describing: self).localized, argument)
+        return String.localizedStringWithFormat(String(describing: self).localized, argument)
     }
 }
