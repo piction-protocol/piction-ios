@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import ViewModelBindable
+import SafariServices
 
 final class SignInViewController: UIViewController {
     var disposeBag = DisposeBag()
@@ -93,6 +94,14 @@ extension SignInViewController: ViewModelBindable {
         output
             .openFindPassword
             .drive(onNext: { _ in
+                let infoDictionary: [AnyHashable: Any] = Bundle.main.infoDictionary!
+                guard let appID: String = infoDictionary["CFBundleIdentifier"] as? String else { return }
+                let isStaging = appID == "com.pictionnetwork.piction-test" ? "staging." : ""
+
+                if let url = URL(string: "https://\(isStaging)piction.network/forgot_password") {
+                    let safariViewController = SFSafariViewController(url: url)
+                    self.present(safariViewController, animated: true, completion: nil)
+                }
             })
             .disposed(by: disposeBag)
 
