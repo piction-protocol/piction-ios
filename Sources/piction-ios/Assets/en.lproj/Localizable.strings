@@ -173,7 +173,7 @@
 "str_buyer" = "구매자";
 "str_transaction_info" = "트랜잭션 정보";
 
-"str_project_no_post" = "No post";
+"str_project_no_post" = "No posts";
 "str_project_update_n_now" = "Update now";
 "str_project_update_n_minute" = "Update %d minutes ago";
 "str_project_update_n_hour" = "Update %d hours ago";
