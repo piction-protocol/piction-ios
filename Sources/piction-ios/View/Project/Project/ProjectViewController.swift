@@ -363,11 +363,17 @@ extension ProjectViewController: GSKStretchyHeaderViewStretchDelegate {
 
 extension ProjectViewController: ProjectHeaderViewDelegate {
     func postBtnDidTap() {
-        self.changeMenu.onNext(0)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.stretchyHeader?.controlMenuButton(menu: 0)
+            self.changeMenu.onNext(0)
+        }
     }
 
     func seriesBtnDidTap() {
-        self.changeMenu.onNext(1)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.stretchyHeader?.controlMenuButton(menu: 1)
+            self.changeMenu.onNext(1)
+        }
     }
 
     func subscriptionBtnDidTap() {

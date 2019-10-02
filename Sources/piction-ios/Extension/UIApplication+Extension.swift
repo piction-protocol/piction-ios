@@ -24,4 +24,16 @@ extension UIApplication {
         }
         return controller
     }
+
+    class func dismissAllPresentedController(_ completion: (() -> Swift.Void)? = nil) {
+        if let window = UIApplication.shared.keyWindow,
+            let rootView = window.rootViewController as? TabBarController,
+            let selectedView = rootView.selectedViewController?.children.last,
+            let controller = selectedView.presentedViewController {
+
+            controller.dismiss(animated: false, completion: completion)
+        } else {
+            completion?()
+        }
+    }
 }

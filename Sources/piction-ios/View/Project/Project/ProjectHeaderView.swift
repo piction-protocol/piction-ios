@@ -46,12 +46,10 @@ class ProjectHeaderView: GSKStretchyHeaderView {
     @IBOutlet var naviViewImageHeight: NSLayoutConstraint!
 
     @IBAction func postBtnDidTap(_ sender: Any) {
-        controlMenuButton(menu: 0)
         delegate?.postBtnDidTap()
     }
 
     @IBAction func seriesBtnDidTap(_ sender: Any) {
-        controlMenuButton(menu: 1)
         delegate?.seriesBtnDidTap()
     }
 
@@ -108,7 +106,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
         }
     }
 
-    private func controlMenuButton(menu: Int) {
+    func controlMenuButton(menu: Int) {
         if #available(iOS 13.0, *) {
             postButton.backgroundColor = menu == 0 ? .clear : .systemBackground
             seriesButton.backgroundColor = menu == 0 ? .systemBackground : .clear

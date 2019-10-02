@@ -399,6 +399,12 @@
 		43F1865B2343024A0050BA67 /* PostFooterSeriesPostListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F186592342FEAC0050BA67 /* PostFooterSeriesPostListTableViewCell.swift */; };
 		43F1865F23442ECD0050BA67 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 43F1866223442ECD0050BA67 /* Localizable.stringsdict */; };
 		43F1866023442ECD0050BA67 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 43F1866223442ECD0050BA67 /* Localizable.stringsdict */; };
+		43F1866523444E070050BA67 /* DeepLinking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F1866423444E070050BA67 /* DeepLinking.swift */; };
+		43F1866623444E070050BA67 /* DeepLinking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F1866423444E070050BA67 /* DeepLinking.swift */; };
+		43F1866823444E470050BA67 /* DeepLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F1866723444E470050BA67 /* DeepLinkManager.swift */; };
+		43F1866923444E470050BA67 /* DeepLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F1866723444E470050BA67 /* DeepLinkManager.swift */; };
+		43F1866B23444E800050BA67 /* DeepLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F1866A23444E800050BA67 /* DeepLinks.swift */; };
+		43F1866C23444E800050BA67 /* DeepLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F1866A23444E800050BA67 /* DeepLinks.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -614,6 +620,9 @@
 		4356F520233DF197000710FC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		43F186592342FEAC0050BA67 /* PostFooterSeriesPostListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFooterSeriesPostListTableViewCell.swift; sourceTree = "<group>"; };
 		43F1866123442ECD0050BA67 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		43F1866423444E070050BA67 /* DeepLinking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinking.swift; sourceTree = "<group>"; };
+		43F1866723444E470050BA67 /* DeepLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkManager.swift; sourceTree = "<group>"; };
+		43F1866A23444E800050BA67 /* DeepLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinks.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -752,6 +761,7 @@
 		4323F999233A165600243655 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				43F1866323444DF30050BA67 /* DeepLinking */,
 				4323FBC1233C875800243655 /* Localization */,
 				4323F99A233A165600243655 /* VisualEffectView */,
 				4323F99C233A165600243655 /* KeyboardManager */,
@@ -1291,6 +1301,16 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
+		43F1866323444DF30050BA67 /* DeepLinking */ = {
+			isa = PBXGroup;
+			children = (
+				43F1866423444E070050BA67 /* DeepLinking.swift */,
+				43F1866723444E470050BA67 /* DeepLinkManager.swift */,
+				43F1866A23444E800050BA67 /* DeepLinks.swift */,
+			);
+			path = DeepLinking;
+			sourceTree = "<group>";
+		};
 		43FC8931229E60B90074C3D6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1651,6 +1671,7 @@
 				4323FB37233A165F00243655 /* MyPageHeaderTypeTableViewCell.swift in Sources */,
 				4323FB97233A166400243655 /* SignUpViewModel.swift in Sources */,
 				4323FB47233A166000243655 /* ChangeMyInfoViewModel.swift in Sources */,
+				43F1866C23444E800050BA67 /* DeepLinks.swift in Sources */,
 				4323FAFF233A165D00243655 /* PostFooterViewController.swift in Sources */,
 				4323FB33233A165F00243655 /* MyPageSwitchTypeTableViewCell.swift in Sources */,
 				4323FB23233A165F00243655 /* TransactionDetailInfoTypeTableViewCell.swift in Sources */,
@@ -1660,10 +1681,12 @@
 				4323FAD1233A165B00243655 /* CreatePostViewController.swift in Sources */,
 				4323FA93233A165900243655 /* InputAppliable.swift in Sources */,
 				4323FA9D233A165900243655 /* CheckPincodeViewController.swift in Sources */,
+				43F1866623444E070050BA67 /* DeepLinking.swift in Sources */,
 				4323FAB5233A165A00243655 /* ExplorerRecommendedProjectHeaderTableViewCell.swift in Sources */,
 				4323FB89233A166300243655 /* SponsorshipListViewModel.swift in Sources */,
 				43F1865B2343024A0050BA67 /* PostFooterSeriesPostListTableViewCell.swift in Sources */,
 				4323FB17233A165E00243655 /* DepositViewModel.swift in Sources */,
+				43F1866923444E470050BA67 /* DeepLinkManager.swift in Sources */,
 				4323FA7F233A165800243655 /* String+Extension.swift in Sources */,
 				4323FB4B233A166000243655 /* ChangeMyInfoViewController.swift in Sources */,
 				4323FA5F233A165600243655 /* ViewControllerAssembly.swift in Sources */,
@@ -1791,6 +1814,7 @@
 				4323FB36233A165F00243655 /* MyPageHeaderTypeTableViewCell.swift in Sources */,
 				4323FB96233A166400243655 /* SignUpViewModel.swift in Sources */,
 				4323FB46233A166000243655 /* ChangeMyInfoViewModel.swift in Sources */,
+				43F1866B23444E800050BA67 /* DeepLinks.swift in Sources */,
 				4323FAFE233A165D00243655 /* PostFooterViewController.swift in Sources */,
 				4323FB32233A165F00243655 /* MyPageSwitchTypeTableViewCell.swift in Sources */,
 				4323FB22233A165F00243655 /* TransactionDetailInfoTypeTableViewCell.swift in Sources */,
@@ -1800,10 +1824,12 @@
 				4323FAD0233A165B00243655 /* CreatePostViewController.swift in Sources */,
 				4323FA92233A165900243655 /* InputAppliable.swift in Sources */,
 				4323FA9C233A165900243655 /* CheckPincodeViewController.swift in Sources */,
+				43F1866523444E070050BA67 /* DeepLinking.swift in Sources */,
 				4323FAB4233A165A00243655 /* ExplorerRecommendedProjectHeaderTableViewCell.swift in Sources */,
 				4323FB88233A166300243655 /* SponsorshipListViewModel.swift in Sources */,
 				43F1865A2342FEAC0050BA67 /* PostFooterSeriesPostListTableViewCell.swift in Sources */,
 				4323FB16233A165E00243655 /* DepositViewModel.swift in Sources */,
+				43F1866823444E470050BA67 /* DeepLinkManager.swift in Sources */,
 				4323FA7E233A165800243655 /* String+Extension.swift in Sources */,
 				4323FB4A233A166000243655 /* ChangeMyInfoViewController.swift in Sources */,
 				4323FA5E233A165600243655 /* ViewControllerAssembly.swift in Sources */,

@@ -182,7 +182,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Sa7-0e-9Mt"/>
                     </view>
-                    <navigationItem key="navigationItem" title="후원 금액 입력" id="0FI-d4-hgP">
+                    <navigationItem key="navigationItem" title="후원 금액 입력" largeTitleDisplayMode="never" id="0FI-d4-hgP">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_input_sponsorship_amount"/>
                         </userDefinedRuntimeAttributes>

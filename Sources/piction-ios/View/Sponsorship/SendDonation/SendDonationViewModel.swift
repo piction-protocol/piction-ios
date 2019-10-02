@@ -40,6 +40,7 @@ final class SendDonationViewModel: InjectableViewModel {
         let openCheckPincodeViewController: Driver<Void>
         let openConfirmDonationViewController: Driver<(String, Int)>
         let openErrorPopup: Driver<String>
+        let popToViewController: Driver<String>
     }
 
     func build(input: Input) -> Output {
@@ -60,6 +61,14 @@ final class SendDonationViewModel: InjectableViewModel {
                     return Driver.empty()
                 }
                 return Driver.just(user)
+            }
+
+        let popToViewController = userInfoAction.error
+            .flatMap { response -> Driver<String> in
+                guard let errorMsg = response as? ErrorType else {
+                    return Driver.empty()
+                }
+                return Driver.just(errorMsg.message)
             }
 
         let walletInfoAction = viewWillAppear
@@ -132,7 +141,8 @@ final class SendDonationViewModel: InjectableViewModel {
             enableSendButton: enableSendButton,
             openCheckPincodeViewController: openCheckPincodeViewController,
             openConfirmDonationViewController: sendAmountSuccess,
-            openErrorPopup: sendAmountError
+            openErrorPopup: sendAmountError,
+            popToViewController: popToViewController
         )
     }
 }

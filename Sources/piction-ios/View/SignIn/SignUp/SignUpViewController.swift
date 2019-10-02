@@ -91,6 +91,7 @@ extension SignUpViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+                self?.tabBarController?.tabBar.isHidden = true
             })
             .disposed(by: disposeBag)
 

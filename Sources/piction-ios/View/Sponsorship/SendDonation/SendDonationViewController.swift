@@ -166,6 +166,14 @@ extension SendDonationViewController: ViewModelBindable {
                 self?.errorPopup(message: message)
             })
             .disposed(by: disposeBag)
+
+        output
+            .popToViewController
+            .drive(onNext: { [weak self] message in
+                self?.navigationController?.popViewController(animated: true)
+                Toast.showToast(message)
+            })
+            .disposed(by: disposeBag)
     }
 }
 

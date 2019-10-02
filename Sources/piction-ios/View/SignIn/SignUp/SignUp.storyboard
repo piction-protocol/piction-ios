@@ -271,7 +271,7 @@
                             <outletCollection property="gestureRecognizers" destination="ODd-PX-2DF" appends="YES" id="4hn-D4-Oe3"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" title="회원가입" id="dMj-gN-X85">
+                    <navigationItem key="navigationItem" title="회원가입" largeTitleDisplayMode="never" id="dMj-gN-X85">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="sign_up"/>
                         </userDefinedRuntimeAttributes>
