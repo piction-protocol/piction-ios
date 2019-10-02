@@ -18,7 +18,7 @@ final class ConfirmDonationViewController: UIViewController {
     @IBOutlet weak var profileWideImageView: UIImageView!
     @IBOutlet weak var profileVisualEffectView: VisualEffectView! {
         didSet {
-            profileVisualEffectView.blurRadius = 0.5
+            profileVisualEffectView.blurRadius = 5
         }
     }
     @IBOutlet weak var profileImageView: UIImageView!
