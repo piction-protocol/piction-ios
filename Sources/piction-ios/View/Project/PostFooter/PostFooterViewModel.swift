@@ -20,7 +20,7 @@ final class PostFooterViewModel: InjectableViewModel {
 
     private let updater: UpdaterProtocol
     private let uri: String
-    private let postItem: PostModel
+    let postItem: PostModel
 
     init(dependency: Dependency) {
         (updater, uri, postItem) = dependency
@@ -29,12 +29,16 @@ final class PostFooterViewModel: InjectableViewModel {
     struct Input {
         let viewWillAppear: Driver<Void>
         let likeBtnDidTap: Driver<Void>
+        let selectedIndexPath: Driver<IndexPath>
+        let seriesAllPostBtnDidTap: Driver<Void>
     }
 
     struct Output {
-        let footerInfo: Driver<(PostModel, PostIndexModel, Bool)>
+        let footerInfo: Driver<(PostModel, [PostIndexModel], Bool)>
         let addLike: Driver<Bool>
+        let selectSeriesPostItem: Driver<IndexPath>
         let openSignInViewController: Driver<Void>
+        let openSeriesPostViewController: Driver<(String, Int)>
     }
 
     func build(input: Input) -> Output {
@@ -76,8 +80,8 @@ final class PostFooterViewModel: InjectableViewModel {
             }
 
         let seriesPostItemsSuccess = seriesPostItemsAction.elements
-            .flatMap { response -> Driver<PostIndexModel> in
-                guard let postItems = try? response.map(to: PostIndexModel.self) else {
+            .flatMap { response -> Driver<[PostIndexModel]> in
+                guard let postItems = try? response.map(to: [PostIndexModel].self) else {
                     return Driver.empty()
                 }
                 return Driver.just(postItems)
@@ -85,15 +89,15 @@ final class PostFooterViewModel: InjectableViewModel {
 
         let emptySeriesPostsItems = Driver.merge(viewWillAppear, refreshContent, refreshSession)
             .filter { self.postItem.series == nil }
-            .flatMap { _ -> Driver<PostIndexModel> in
-                let items = PostIndexModel.from([:])!
-                return Driver.just(items)
+            .flatMap { _ -> Driver<[PostIndexModel]> in
+                return Driver.just([])
             }
 
         let seriesPostItems = Driver.merge(seriesPostItemsSuccess, emptySeriesPostsItems)
 
         let footerInfo = Driver.combineLatest(seriesPostItems, isLikeInfo)
-            .flatMap { [weak self] (seriesPostItems, isLike) -> Driver<(PostModel, PostIndexModel, Bool)> in
+            .flatMap { [weak self] (seriesPostItems, isLike) -> Driver<(PostModel, [PostIndexModel], Bool)> in
+                        print(seriesPostItems)
                 guard let `self` = self else { return Driver.empty() }
                 return Driver.just((self.postItem, seriesPostItems, isLike))
             }
@@ -132,10 +136,21 @@ final class PostFooterViewModel: InjectableViewModel {
             .filter { $0.loginId == nil }
             .flatMap { _ in Driver.just(()) }
 
+        let openSeriesPostViewController = input.seriesAllPostBtnDidTap
+            .flatMap { [weak self] _ -> Driver<(String, Int)> in
+                guard let `self` = self else { return Driver.empty() }
+
+                return Driver.just((self.uri, self.postItem.series?.id ?? 0))
+            }
+
+        let selectSeriesPostItem = input.selectedIndexPath
+
         return Output(
             footerInfo: footerInfo,
             addLike: addLike.isExecuting,
-            openSignInViewController: openSignInViewController
+            selectSeriesPostItem: selectSeriesPostItem,
+            openSignInViewController: openSignInViewController,
+            openSeriesPostViewController: openSeriesPostViewController
         )
     }
 }

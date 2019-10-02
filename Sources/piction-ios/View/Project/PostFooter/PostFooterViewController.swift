@@ -10,6 +10,13 @@ import UIKit
 import RxSwift
 import RxCocoa
 import ViewModelBindable
+import RxDataSources
+import PictionSDK
+
+protocol PostFooterViewDelegate: class {
+    func loadComplete()
+    func reloadPost(postId: Int)
+}
 
 final class PostFooterViewController: UIViewController {
     var disposeBag = DisposeBag()
@@ -30,6 +37,14 @@ final class PostFooterViewController: UIViewController {
     @IBOutlet weak var likeCountLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
 
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var seriesPostTitleStackView: UIStackView!
+    @IBOutlet weak var seriesTitleLabel: UILabel!
+    @IBOutlet weak var seriesPostCountLabel: UILabel!
+
+    @IBOutlet weak var seriesAllPostButton: UIButton!
+
+    weak var delegate: PostFooterViewDelegate?
 
     private func controlLikeButton(isLike: Bool, likeCount: Int) {
         self.likeCountLabel.textColor = isLike ? UIColor(r: 26, g: 146, b: 255) : UIColor(r: 191, g: 191, b: 191)
@@ -44,25 +59,70 @@ final class PostFooterViewController: UIViewController {
             topViewController.openViewController(vc, type: .swipePresent)
         }
     }
+
+    private func openSeriesPostViewController(uri: String, seriesId: Int) {
+        let vc = SeriesPostViewController.make(uri: uri, seriesId: seriesId)
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.openViewController(vc, type: .push)
+        }
+    }
+
+    private func setSeriesPostTitle(postItem: PostModel, seriesItems: [PostIndexModel]) {
+        seriesTitleLabel.text = postItem.series?.name
+        seriesPostCountLabel.text = LocalizedStrings.str_series_posts_count.localized(with: postItem.series?.postCount ?? 0)
+    }
+
+    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, PostIndexModel>> {
+        return RxTableViewSectionedReloadDataSource<SectionModel<String, PostIndexModel>>(
+            configureCell: { dataSource, tableView, indexPath, model in
+                let current = self.viewModel?.postItem.id == model.post?.id
+                let cell: PostFooterSeriesPostListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                cell.configure(with: model, current: current)
+                return cell
+        })
+    }
 }
 
 extension PostFooterViewController: ViewModelBindable {
     typealias ViewModel = PostFooterViewModel
 
     func bindViewModel(viewModel: ViewModel) {
+        let dataSource = configureDataSource()
 
         let input = PostFooterViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
-            likeBtnDidTap: likeButton.rx.tap.asDriver().throttle(1, latest: true)
+            likeBtnDidTap: likeButton.rx.tap.asDriver().throttle(1, latest: true),
+            selectedIndexPath: tableView.rx.itemSelected.asDriver(),
+            seriesAllPostBtnDidTap: seriesAllPostButton.rx.tap.asDriver()
         )
 
         let output = viewModel.build(input: input)
 
         output
             .footerInfo
-            .drive(onNext: { [weak self] (postItem, seriesPostItems, isLike) in
+            .flatMap { [weak self] (postItem, seriesPostItems, isLike) -> Driver<[PostIndexModel]> in
                 self?.controlLikeButton(isLike: isLike, likeCount: postItem.likeCount ?? 0)
                 self?.dateLabel.text = postItem.createdAt?.toString(format: LocalizedStrings.str_post_date_format.localized())
+                if seriesPostItems.count > 0 {
+                    self?.seriesAllPostButton.isHidden = false
+                    self?.seriesPostTitleStackView.isHidden = false
+                    self?.setSeriesPostTitle(postItem: postItem, seriesItems: seriesPostItems)
+                } else {
+                    self?.seriesAllPostButton.isHidden = true
+                    self?.seriesPostTitleStackView.isHidden = true
+                    self?.tableView.tableFooterView = UIView()
+                }
+                return Driver.just(seriesPostItems)
+            }
+            .drive { $0 }
+            .map { [SectionModel(model: "", items: $0)] }
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+
+        output
+            .footerInfo
+            .drive(onNext: { [weak self] _ in
+                self?.delegate?.loadComplete()
             })
             .disposed(by: disposeBag)
 
@@ -76,9 +136,25 @@ extension PostFooterViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
+            .selectSeriesPostItem
+            .drive(onNext: { [weak self] indexPath in
+                if let postId = dataSource[indexPath].post?.id {
+                    self?.delegate?.reloadPost(postId: postId)
+                }
+            })
+            .disposed(by: disposeBag)
+
+        output
             .openSignInViewController
             .drive(onNext: { [weak self] uri in
                 self?.openSignInViewController()
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .openSeriesPostViewController
+            .drive(onNext: { [weak self] (uri, seriesId) in
+                self?.openSeriesPostViewController(uri: uri, seriesId: seriesId)
             })
             .disposed(by: disposeBag)
     }

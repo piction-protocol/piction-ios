@@ -29,6 +29,7 @@ final class PostViewModel: InjectableViewModel {
     struct Input {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
+        let loadPost: Driver<Int>
         let prevPostBtnDidTap: Driver<Void>
         let nextPostBtnDidTap: Driver<Void>
         let subscriptionBtnDidTap: Driver<Void>
@@ -70,7 +71,7 @@ final class PostViewModel: InjectableViewModel {
                     return Driver.just("")
                 }
 
-                let content = "<style type=\"text/css\"> body { font: -apple-system-body; margin: 220px 16px 278px 16px; line-height: 28px; max-width: \(SCREEN_W); } p { margin: 0px; word-wrap: break-word; } img{ max-height: 100%; width: calc(100% + 32px); max-width: \(SCREEN_W); margin-left: -16px; margin-right: -16px; !important; width: auto; height: auto; } iframe{ width: 100%; height: 30%; max-height: 100%; width: calc(100% + 32px); max-width: \(SCREEN_W); margin-left: -16px; margin-right: -16px; } </style><meta name=\"viewport\" content=\"initial-scale=1.0\" /><body>\(postItem.content ?? "")</body>"
+                let content = "<style type=\"text/css\"> body { font: -apple-system-body; margin: 220px 16px 728px 16px; line-height: 28px; max-width: \(SCREEN_W); } p { margin: 0px; word-wrap: break-word; } img{ max-height: 100%; width: calc(100% + 32px); max-width: \(SCREEN_W); margin-left: -16px; margin-right: -16px; !important; width: auto; height: auto; } iframe{ width: 100%; height: 30%; max-height: 100%; width: calc(100% + 32px); max-width: \(SCREEN_W); margin-left: -16px; margin-right: -16px; } </style><meta name=\"viewport\" content=\"initial-scale=1.0\" /><body>\(postItem.content ?? "")</body>"
                 print(postItem.content)
                 return Driver.just(content)
             }
@@ -153,7 +154,12 @@ final class PostViewModel: InjectableViewModel {
                 return Driver.just((self?.uri ?? "", postItem.id ?? 0))
             }
 
-        let changePost = Driver.merge(prevPostBtnDidTap, nextPostBtnDidTap)
+        let loadPost = input.loadPost
+            .flatMap { [weak self] postId -> Driver<(String, Int)> in
+                Driver.just((self?.uri ?? "", postId))
+            }
+
+        let changePost = Driver.merge(loadPost, prevPostBtnDidTap, nextPostBtnDidTap)
             .flatMap { [weak self] (uri, postId) -> Driver<Void> in
                 guard let `self` = self else { return Driver.empty() }
                 self.uri = uri

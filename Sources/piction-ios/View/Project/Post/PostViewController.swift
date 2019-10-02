@@ -31,6 +31,8 @@ final class PostViewController: UIViewController {
     @IBOutlet weak var nextPostButton: UIButton!
     @IBOutlet weak var shareBarButton: UIBarButtonItem!
 
+    private let loadPost = PublishSubject<Int>()
+
     var headerViewController: PostHeaderViewController?
     var footerViewController: PostFooterViewController?
 
@@ -48,15 +50,18 @@ final class PostViewController: UIViewController {
     }
 
     private func embedPostFooterViewController(height: CGFloat) {
-        let posY = height - 278
-        let containerView = UIView(frame: CGRect(x: 0, y: posY, width: SCREEN_W, height: 278))
-        containerView.tag = 1001
-        embed(footerViewController!, to: containerView)
-        self.postWebView.scrollView.addSubview(containerView)
+        if let footerViewController = self.footerViewController {
+            let posY = height - 728
+            let containerView = UIView(frame: CGRect(x: 0, y: posY, width: SCREEN_W, height: 728))
+            containerView.tag = 1001
+            embed(footerViewController, to: containerView)
+            self.postWebView.scrollView.addSubview(containerView)
+        }
     }
 
     private func makePostFooterViewController(uri: String, postItem: PostModel) {
         footerViewController = PostFooterViewController.make(uri: uri, postItem: postItem)
+        footerViewController?.delegate = self
     }
 
     private func openSignInViewController() {
@@ -112,6 +117,7 @@ extension PostViewController: ViewModelBindable {
         let input = PostViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
+            loadPost: loadPost.asDriver(onErrorDriveWith: .empty()),
             prevPostBtnDidTap: prevPostButton.rx.tap.asDriver().throttle(1, latest: true),
             nextPostBtnDidTap: nextPostButton.rx.tap.asDriver().throttle(1, latest: true),
             subscriptionBtnDidTap: subscriptionButton.rx.tap.asDriver(),
@@ -330,5 +336,18 @@ extension PostViewController: WKNavigationDelegate {
 extension PostViewController: UIScrollViewDelegate {
     func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
         scrollView.pinchGestureRecognizer?.isEnabled = false
+    }
+}
+
+extension PostViewController: PostFooterViewDelegate {
+    func loadComplete() {
+        if let footerViewController = self.footerViewController {
+            if let contentHeight = footerViewController.tableView?.contentSize.height {
+                postWebView.evaluateJavaScript("document.body.style.marginBottom =\"\(contentHeight)px\"")
+            }
+        }
+    }
+    func reloadPost(postId: Int) {
+        loadPost.onNext(postId)
     }
 }
