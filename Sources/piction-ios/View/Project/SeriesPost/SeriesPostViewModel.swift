@@ -35,12 +35,14 @@ final class SeriesPostViewModel: InjectableViewModel {
     }
     struct Input {
         let viewWillAppear: Driver<Void>
+        let viewWillDisappear: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
         let sortBtnDidTap: Driver<Void>
     }
 
     struct Output {
         let viewWillAppear: Driver<Void>
+        let viewWillDisappear: Driver<Void>
         let seriesInfo: Driver<SeriesModel>
         let seriesThumbnail: Driver<[String]>
         let contentList: Driver<ContentsBySection>
@@ -236,6 +238,7 @@ final class SeriesPostViewModel: InjectableViewModel {
 
         return Output(
             viewWillAppear: input.viewWillAppear,
+            viewWillDisappear: input.viewWillDisappear,
             seriesInfo: loadSeriesInfoSuccess,
             seriesThumbnail: loadSeriesThumbnailSuccess,
             contentList: contentList,
