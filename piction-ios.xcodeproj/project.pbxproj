@@ -157,8 +157,8 @@
 		4323FAC3233A165B00243655 /* SubscriptionList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9C3233A165600243655 /* SubscriptionList.storyboard */; };
 		4323FAC4233A165B00243655 /* SubscriptionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9C4233A165600243655 /* SubscriptionListViewController.swift */; };
 		4323FAC5233A165B00243655 /* SubscriptionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9C4233A165600243655 /* SubscriptionListViewController.swift */; };
-		4323FAC8233A165B00243655 /* SubscriptionListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9C6233A165600243655 /* SubscriptionListCollectionView.swift */; };
-		4323FAC9233A165B00243655 /* SubscriptionListCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9C6233A165600243655 /* SubscriptionListCollectionView.swift */; };
+		4323FAC8233A165B00243655 /* SubscriptionListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9C6233A165600243655 /* SubscriptionListCollectionViewCell.swift */; };
+		4323FAC9233A165B00243655 /* SubscriptionListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9C6233A165600243655 /* SubscriptionListCollectionViewCell.swift */; };
 		4323FACA233A165B00243655 /* SubscriptionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9C7233A165600243655 /* SubscriptionListViewModel.swift */; };
 		4323FACB233A165B00243655 /* SubscriptionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9C7233A165600243655 /* SubscriptionListViewModel.swift */; };
 		4323FACC233A165B00243655 /* SubscriptionListCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9C8233A165600243655 /* SubscriptionListCollectionFooterView.swift */; };
@@ -492,7 +492,7 @@
 		4323F9BF233A165600243655 /* ExplorerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplorerViewModel.swift; sourceTree = "<group>"; };
 		4323F9C3233A165600243655 /* SubscriptionList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SubscriptionList.storyboard; sourceTree = "<group>"; };
 		4323F9C4233A165600243655 /* SubscriptionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionListViewController.swift; sourceTree = "<group>"; };
-		4323F9C6233A165600243655 /* SubscriptionListCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionListCollectionView.swift; sourceTree = "<group>"; };
+		4323F9C6233A165600243655 /* SubscriptionListCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionListCollectionViewCell.swift; sourceTree = "<group>"; };
 		4323F9C7233A165600243655 /* SubscriptionListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionListViewModel.swift; sourceTree = "<group>"; };
 		4323F9C8233A165600243655 /* SubscriptionListCollectionFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionListCollectionFooterView.swift; sourceTree = "<group>"; };
 		4323F9CB233A165600243655 /* CreatePostViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePostViewModel.swift; sourceTree = "<group>"; };
@@ -897,7 +897,7 @@
 			children = (
 				4323F9C4233A165600243655 /* SubscriptionListViewController.swift */,
 				4323F9C7233A165600243655 /* SubscriptionListViewModel.swift */,
-				4323F9C6233A165600243655 /* SubscriptionListCollectionView.swift */,
+				4323F9C6233A165600243655 /* SubscriptionListCollectionViewCell.swift */,
 				4323F9C8233A165600243655 /* SubscriptionListCollectionFooterView.swift */,
 				4323F9C3233A165600243655 /* SubscriptionList.storyboard */,
 			);
@@ -1591,7 +1591,7 @@
 				4323FB27233A165F00243655 /* TransactionDetailFooterTypeTableViewCell.swift in Sources */,
 				4323FA71233A165700243655 /* Collection+Extension.swift in Sources */,
 				4323FB6D233A166200243655 /* QRCodeScannerViewController.swift in Sources */,
-				4323FAC9233A165B00243655 /* SubscriptionListCollectionView.swift in Sources */,
+				4323FAC9233A165B00243655 /* SubscriptionListCollectionViewCell.swift in Sources */,
 				4323FBC4233C876D00243655 /* Localization.swift in Sources */,
 				4323FB8D233A166300243655 /* SponsorshipListItemTypeTableViewCell.swift in Sources */,
 				4323FB0D233A165E00243655 /* CustomEmptyViewController.swift in Sources */,
@@ -1731,7 +1731,7 @@
 				4323FB26233A165F00243655 /* TransactionDetailFooterTypeTableViewCell.swift in Sources */,
 				4323FA70233A165700243655 /* Collection+Extension.swift in Sources */,
 				4323FB6C233A166200243655 /* QRCodeScannerViewController.swift in Sources */,
-				4323FAC8233A165B00243655 /* SubscriptionListCollectionView.swift in Sources */,
+				4323FAC8233A165B00243655 /* SubscriptionListCollectionViewCell.swift in Sources */,
 				4323FBC3233C876D00243655 /* Localization.swift in Sources */,
 				4323FB8C233A166300243655 /* SponsorshipListItemTypeTableViewCell.swift in Sources */,
 				4323FB0C233A165E00243655 /* CustomEmptyViewController.swift in Sources */,

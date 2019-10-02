@@ -1,5 +1,5 @@
 //
-//  SubscriptionListCollectionView.swift
+//  SubscriptionListCollectionViewCell.swift
 //  PictionSDK
 //
 //  Created by jhseo on 08/08/2019.
