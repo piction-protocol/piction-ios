@@ -42,7 +42,7 @@ final class SeriesPostViewModel: InjectableViewModel {
     struct Output {
         let viewWillAppear: Driver<Void>
         let seriesInfo: Driver<SeriesModel>
-        let coverImage: Driver<String>
+        let seriesThumbnail: Driver<[String]>
         let contentList: Driver<ContentsBySection>
         let isDescending: Driver<Bool>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
@@ -162,6 +162,23 @@ final class SeriesPostViewModel: InjectableViewModel {
                 return Driver.just(seriesInfo)
             }
 
+        let loadSeriesThumbnailAction = initialLoad
+            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
+                guard let `self` = self else { return Driver.empty() }
+                let response = PictionSDK.rx.requestAPI(SeriesAPI.getThumbnails(uri: self.uri, seriesId: self.seriesId))
+                return Action.makeDriver(response)
+            }
+
+        let loadSeriesThumbnailSuccess = loadSeriesThumbnailAction.elements
+            .flatMap { response -> Driver<[String]> in
+                guard let seriesThumbnail = try? response.mapJSON() else {
+                    return Driver.empty()
+                }
+                let test = seriesThumbnail as! [String]
+
+                return Driver.just(test)
+            }
+
         let loadSeriesPostsAction = Driver.merge(initialLoad, loadNext)
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
                 guard let `self` = self else { return Driver.empty() }
@@ -204,23 +221,6 @@ final class SeriesPostViewModel: InjectableViewModel {
                 return Driver.empty()
             }
 
-        let coverImage = contentList
-            .flatMap { [weak self] postList -> Driver<String> in
-                guard let `self` = self else { return Driver.empty() }
-                
-                for section in self.sections {
-                    switch section {
-                    case .seriesPostList(let post, _, _):
-                        if post.cover != nil {
-                            return Driver.just(post.cover ?? "")
-                        }
-                    default:
-                        return Driver.just("")
-                    }
-                }
-                return Driver.just("")
-            }
-
         let selectPostItem = input.selectedIndexPath
             .flatMap { [weak self] indexPath -> Driver<(String, Int)> in
                 guard let `self` = self else { return Driver.empty() }
@@ -237,7 +237,7 @@ final class SeriesPostViewModel: InjectableViewModel {
         return Output(
             viewWillAppear: input.viewWillAppear,
             seriesInfo: loadSeriesInfoSuccess,
-            coverImage: coverImage,
+            seriesThumbnail: loadSeriesThumbnailSuccess,
             contentList: contentList,
             isDescending: isDescending,
             embedEmptyViewController: embedPostEmptyView,

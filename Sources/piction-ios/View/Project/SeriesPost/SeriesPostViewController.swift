@@ -19,6 +19,8 @@ final class SeriesPostViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     @IBOutlet weak var coverImageView: UIImageView!
+    @IBOutlet weak var coverMaskImage: VisualEffectView!
+
     @IBOutlet weak var seriesTitleLabel: UILabel!
     @IBOutlet weak var postCountLabel: UILabel!
     @IBOutlet weak var sortButton: UIButton!
@@ -94,13 +96,15 @@ extension SeriesPostViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .coverImage
-            .drive(onNext: { [weak self] coverImage in
+            .seriesThumbnail
+            .drive(onNext: { [weak self] thumbnails in
+                self?.coverMaskImage.blurRadius = 5
+                guard let coverImage = thumbnails[safe: 0] else { return }
                 let coverImageWithIC = "\(coverImage)?w=656&h=246&quality=80&output=webp"
                 if let url = URL(string: coverImageWithIC) {
-                    self?.coverImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-post-960-x-360"))
+                    self?.coverImageView.sd_setImageWithFade(with: url, placeholderImage: UIImage())
                 } else {
-                    self?.coverImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360")
+                    self?.coverImageView.image = nil
                 }
             })
             .disposed(by: disposeBag)

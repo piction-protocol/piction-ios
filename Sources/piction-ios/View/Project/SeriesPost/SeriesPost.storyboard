@@ -30,9 +30,18 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nJG-de-Z4K">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="121"/>
                                                     <subviews>
-                                                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-dummy-projectcover-1440-x-450" translatesAutoresizingMaskIntoConstraints="NO" id="HSe-gO-t7m">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HSe-gO-t7m">
                                                             <rect key="frame" x="0.0" y="0.0" width="375" height="121"/>
+                                                            <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                         </imageView>
+                                                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nEd-aE-KdR" customClass="VisualEffectView" customModule="piction_ios" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="121"/>
+                                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="82E-Zc-Nxz">
+                                                                <rect key="frame" x="0.0" y="0.0" width="375" height="121"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            </view>
+                                                            <blurEffect style="regular"/>
+                                                        </visualEffectView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="42q-6d-MKs">
                                                             <rect key="frame" x="20" y="35" width="335" height="51"/>
                                                             <subviews>
@@ -42,7 +51,7 @@
                                                                         <constraint firstAttribute="height" constant="27" id="KJA-lT-KdC"/>
                                                                     </constraints>
                                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                                                    <color key="textColor" name="PictionDarkGray"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aRF-4a-p1K">
@@ -51,7 +60,7 @@
                                                                         <constraint firstAttribute="height" constant="20" id="k04-qF-dgq"/>
                                                                     </constraints>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                    <color key="textColor" name="PictionDarkGray"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
@@ -63,11 +72,15 @@
                                                     <constraints>
                                                         <constraint firstItem="HSe-gO-t7m" firstAttribute="top" secondItem="nJG-de-Z4K" secondAttribute="top" id="6ym-z1-fLM"/>
                                                         <constraint firstAttribute="trailing" secondItem="42q-6d-MKs" secondAttribute="trailing" constant="20" id="EAJ-Ol-cT9"/>
+                                                        <constraint firstAttribute="trailing" secondItem="nEd-aE-KdR" secondAttribute="trailing" id="Poa-aJ-enV"/>
                                                         <constraint firstItem="42q-6d-MKs" firstAttribute="centerY" secondItem="nJG-de-Z4K" secondAttribute="centerY" id="SA0-OZ-5Ks"/>
+                                                        <constraint firstAttribute="bottom" secondItem="nEd-aE-KdR" secondAttribute="bottom" id="ShH-Sa-x3f"/>
                                                         <constraint firstAttribute="bottom" secondItem="HSe-gO-t7m" secondAttribute="bottom" id="V7w-Pu-ZFP"/>
+                                                        <constraint firstItem="nEd-aE-KdR" firstAttribute="top" secondItem="nJG-de-Z4K" secondAttribute="top" id="Zi4-e8-nfO"/>
                                                         <constraint firstAttribute="width" secondItem="nJG-de-Z4K" secondAttribute="height" multiplier="375:121" id="a2L-Kj-hMd"/>
                                                         <constraint firstItem="HSe-gO-t7m" firstAttribute="leading" secondItem="nJG-de-Z4K" secondAttribute="leading" id="bGN-Pj-0fY"/>
                                                         <constraint firstAttribute="trailing" secondItem="HSe-gO-t7m" secondAttribute="trailing" id="ccF-KO-V7q"/>
+                                                        <constraint firstItem="nEd-aE-KdR" firstAttribute="leading" secondItem="nJG-de-Z4K" secondAttribute="leading" id="dXg-fz-D0N"/>
                                                         <constraint firstItem="42q-6d-MKs" firstAttribute="leading" secondItem="nJG-de-Z4K" secondAttribute="leading" constant="20" id="dvR-K3-q8d"/>
                                                     </constraints>
                                                 </view>
@@ -153,7 +166,7 @@
                                                 </stackView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KuL-MG-Sdd">
                                                     <rect key="frame" x="20" y="79.666666666666671" width="335" height="0.3333333333333286"/>
-                                                    <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="separatorColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="0.33000000000000002" id="FS9-4K-j2c"/>
                                                     </constraints>
@@ -191,6 +204,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="coverImageView" destination="HSe-gO-t7m" id="geo-bb-cMw"/>
+                        <outlet property="coverMaskImage" destination="nEd-aE-KdR" id="TJe-qJ-2ZO"/>
                         <outlet property="emptyView" destination="07O-UW-Rh9" id="aEQ-Sq-aj4"/>
                         <outlet property="postCountLabel" destination="aRF-4a-p1K" id="j06-xB-jCk"/>
                         <outlet property="seriesTitleLabel" destination="wDA-v3-5gL" id="0Q4-1u-4gu"/>
@@ -204,7 +218,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="img-dummy-projectcover-1440-x-450" width="1440" height="450"/>
         <namedColor name="PictionDarkGray">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
