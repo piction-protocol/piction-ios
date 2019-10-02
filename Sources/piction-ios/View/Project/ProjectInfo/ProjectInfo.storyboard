@@ -148,7 +148,6 @@
                         <viewLayoutGuide key="safeArea" id="S1v-yY-xMp"/>
                     </view>
                     <navigationItem key="navigationItem" title="프로젝트 정보" largeTitleDisplayMode="never" id="ffg-lJ-vZR">
-                        <barButtonItem key="rightBarButtonItem" title="        " id="fWn-QF-Oxj"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="menu_project_info"/>
                         </userDefinedRuntimeAttributes>
@@ -157,7 +156,6 @@
                     <connections>
                         <outlet property="loginIdLabel" destination="atd-s0-iQu" id="gnh-HI-DjV"/>
                         <outlet property="sendDonationButton" destination="L9l-mB-dB1" id="DaC-Qh-yk2"/>
-                        <outlet property="shareBarButton" destination="fWn-QF-Oxj" id="QBZ-6N-91w"/>
                         <outlet property="synopsisLabel" destination="hJM-3c-wRC" id="ffG-eA-iib"/>
                         <outlet property="thumbnailImageView" destination="YUs-ga-7JQ" id="sja-F5-gBU"/>
                         <outlet property="writerLabel" destination="gka-gI-r9w" id="1ZJ-dG-mdt"/>

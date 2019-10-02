@@ -19,7 +19,6 @@ final class ProjectInfoViewController: UIViewController {
     @IBOutlet weak var loginIdLabel: UILabel!
     @IBOutlet weak var synopsisLabel: UILabel!
     @IBOutlet weak var sendDonationButton: UIButton!
-    @IBOutlet weak var shareBarButton: UIBarButtonItem!
 
     private func openSendDonationViewController(loginId: String) {
         let vc = SendDonationViewController.make(loginId: loginId)
@@ -36,8 +35,7 @@ extension ProjectInfoViewController: ViewModelBindable {
 
         let input = ProjectInfoViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
-            sendDonationBtnDidTap: sendDonationButton.rx.tap.asDriver(),
-            shareBarBtnDidTap: shareBarButton.rx.tap.asDriver()
+            sendDonationBtnDidTap: sendDonationButton.rx.tap.asDriver()
         )
 
         let output = viewModel.build(input: input)
@@ -66,35 +64,6 @@ extension ProjectInfoViewController: ViewModelBindable {
             .openSendDonationViewController
             .drive(onNext: { [weak self] loginId in
                 self?.openSendDonationViewController(loginId: loginId)
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .shareProject
-            .drive(onNext: { url in
-                let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: [])
-
-                activityViewController.excludedActivityTypes = [
-                    UIActivity.ActivityType.print,
-                    UIActivity.ActivityType.assignToContact,
-                    UIActivity.ActivityType.saveToCameraRoll,
-                    UIActivity.ActivityType.addToReadingList,
-                    UIActivity.ActivityType.postToFlickr,
-                    UIActivity.ActivityType.postToVimeo,
-                    UIActivity.ActivityType.openInIBooks
-                ]
-
-                if let topController = UIApplication.topViewController() {
-                    if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad {
-                        activityViewController.modalPresentationStyle = .popover
-                        if let popover = activityViewController.popoverPresentationController {
-                            popover.permittedArrowDirections = .up
-                            popover.sourceView = topController.view
-                            popover.sourceRect = CGRect(x: SCREEN_W, y: 64, width: 0, height: 0)
-                        }
-                    }
-                    topController.present(activityViewController, animated: true, completion: nil)
-                }
             })
             .disposed(by: disposeBag)
     }

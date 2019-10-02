@@ -10,15 +10,16 @@ import Foundation
 import PictionSDK
 import GSKStretchyHeaderView
 
-protocol ProjectHeaderViewProtocol: class {
+protocol ProjectHeaderViewDelegate: class {
     func postBtnDidTap()
     func seriesBtnDidTap()
     func subscriptionBtnDidTap()
+    func shareBtnDidTap()
 }
 
 class ProjectHeaderView: GSKStretchyHeaderView {
 
-    weak var delegate: ProjectHeaderViewProtocol?
+    weak var delegate: ProjectHeaderViewDelegate?
 
     @IBOutlet weak var subscriptionButton: UIButtonExtension!
     @IBOutlet weak var thumbnailImageView: UIImageView! {
@@ -56,6 +57,10 @@ class ProjectHeaderView: GSKStretchyHeaderView {
 
     @IBAction func subscriptionBtnDidTap(_ sender: Any) {
         delegate?.subscriptionBtnDidTap()
+    }
+
+    @IBAction func shareBtnDidTap(_ sender: Any) {
+        delegate?.shareBtnDidTap()
     }
 
     override func awakeFromNib() {

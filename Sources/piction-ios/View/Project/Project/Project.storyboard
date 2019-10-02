@@ -232,13 +232,19 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gAP-MI-v2B">
                                                     <rect key="frame" x="16" y="14" width="343" height="140"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jc4-EX-SU8">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jc4-EX-SU8">
                                                             <rect key="frame" x="10" y="0.0" width="333" height="130"/>
                                                             <color key="backgroundColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="jc4-EX-SU8" secondAttribute="height" multiplier="335:125.5" id="GuB-1c-xIy"/>
+                                                            </constraints>
                                                         </imageView>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-dummy-post-960-x-360" translatesAutoresizingMaskIntoConstraints="NO" id="ukT-et-A0U">
                                                             <rect key="frame" x="0.0" y="10" width="333" height="130"/>
                                                             <color key="backgroundColor" red="0.94867008919999996" green="0.94938892129999997" blue="0.94878143069999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="ukT-et-A0U" secondAttribute="height" multiplier="335:125.5" id="soo-Ng-2aQ"/>
+                                                            </constraints>
                                                         </imageView>
                                                     </subviews>
                                                     <constraints>

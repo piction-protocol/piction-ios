@@ -124,6 +124,32 @@ final class ProjectViewController: UIViewController {
         embed(vc, to: emptyView)
     }
 
+    private func openSharePopup(url: String) {
+        let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: [])
+
+        activityViewController.excludedActivityTypes = [
+            UIActivity.ActivityType.print,
+            UIActivity.ActivityType.assignToContact,
+            UIActivity.ActivityType.saveToCameraRoll,
+            UIActivity.ActivityType.addToReadingList,
+            UIActivity.ActivityType.postToFlickr,
+            UIActivity.ActivityType.postToVimeo,
+            UIActivity.ActivityType.openInIBooks
+        ]
+
+        if let topController = UIApplication.topViewController() {
+            if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad {
+                activityViewController.modalPresentationStyle = .popover
+                if let popover = activityViewController.popoverPresentationController {
+                    popover.permittedArrowDirections = .up
+                    popover.sourceView = topController.view
+                    popover.sourceRect = CGRect(x: SCREEN_W, y: 64, width: 0, height: 0)
+                }
+            }
+            topController.present(activityViewController, animated: true, completion: nil)
+        }
+    }
+
     private func configureDataSource() -> RxTableViewSectionedReloadDataSource<ContentsBySection> {
         let dataSource = RxTableViewSectionedReloadDataSource<ContentsBySection>(
             configureCell: { dataSource, tableView, indexPath, model in
@@ -335,7 +361,7 @@ extension ProjectViewController: GSKStretchyHeaderViewStretchDelegate {
     }
 }
 
-extension ProjectViewController: ProjectHeaderViewProtocol {
+extension ProjectViewController: ProjectHeaderViewDelegate {
     func postBtnDidTap() {
         self.changeMenu.onNext(0)
     }
@@ -346,6 +372,18 @@ extension ProjectViewController: ProjectHeaderViewProtocol {
 
     func subscriptionBtnDidTap() {
         self.subscription.onNext(())
+    }
+
+    func shareBtnDidTap() {
+        guard let uri = self.viewModel?.uri else { return }
+        guard let title = stretchyHeader?.titleLabel.text else { return }
+        let infoDictionary: [AnyHashable: Any] = Bundle.main.infoDictionary!
+        guard let appID: String = infoDictionary["CFBundleIdentifier"] as? String else { return }
+        let isStaging = appID == "com.pictionnetwork.piction-test" ? "staging." : ""
+
+        let url = "{\(title)} - https://\(isStaging)piction.network/project/\(uri)"
+
+        self.openSharePopup(url: url)
     }
 }
 
