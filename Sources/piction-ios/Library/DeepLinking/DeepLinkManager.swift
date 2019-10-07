@@ -178,6 +178,10 @@ struct DeepLinkManager {
     }
 
     static func showProjectInfo(with deepLink: ProjectInfoDeepLink) -> Bool {
+        let projectVC = ProjectViewController.make(uri: deepLink.uri ?? "")
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.navigationController?.pushViewController(projectVC, animated: false)
+        }
         let vc = ProjectInfoViewController.make(uri: deepLink.uri ?? "")
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .push)

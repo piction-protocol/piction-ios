@@ -178,8 +178,9 @@ final class ProjectViewController: UIViewController {
 
     override var preferredContentSize: CGSize {
         get {
-            self.tableView.layoutIfNeeded()
-            return self.tableView.contentSize
+            guard let tableView = self.tableView else { return .zero }
+            tableView.layoutIfNeeded()
+            return tableView.contentSize
         }
         set {}
     }
