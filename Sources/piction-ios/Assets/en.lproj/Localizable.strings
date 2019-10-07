@@ -132,8 +132,8 @@
 "str_creator" = "Creator";
 "str_project_synopsis" = "Synopsis";
 
-"str_deposit_guide_1" = "Be careful not to deposit ethereum PXL token.";
-"str_deposit_guide_2" = "This address is for Klaytn Compatible PXL token. Please note that it is impossible to revert transaction from ethereum.";
+"str_deposit_guide_1" = "▪︎ Be careful not to deposit ethereum PXL token.";
+"str_deposit_guide_2" = "▪︎ This address is for Klaytn Compatible PXL token. Please note that it is impossible to revert transaction from ethereum.";
 
 "str_qrcode_scan" = "Scan QR code";
 "str_qrcode_help" = "Please scan Creator's\n QR code from Piction";
@@ -186,8 +186,8 @@
 "str_wallet_address" = "@%@'s address";
 "str_have_pxl_amount" = "보유 중";
 "str_deposit_pxl_guide" = "How to deposit PXL to Piction Wallet";
-"str_deposit_piction_guide_1" = "Transfer PXL from the exchange which support Klaytn compatible tokens";
-"str_deposit_piction_guide_2" = "Transfer PXL from other wallets which support Klaytn compatible tokens";
+"str_deposit_piction_guide_1" = "▪︎ Transfer PXL from the exchange which support Klaytn compatible tokens";
+"str_deposit_piction_guide_2" = "▪︎ Transfer PXL from other wallets which support Klaytn compatible tokens";
 
 "str_authenticate_by_face_id" = "Face ID로 인증합니다.";
 "str_authenticate_by_touch_id" = "Touch ID로 인증합니다.";

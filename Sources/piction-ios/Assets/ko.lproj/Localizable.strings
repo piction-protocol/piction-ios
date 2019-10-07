@@ -113,8 +113,8 @@
 "str_creator" = "크리에이터";
 "str_project_synopsis" = "시놉시스";
 
-"str_deposit_guide_1" = "해당 주소는 Klaytn 네트워크 상에서 동작하는 지갑 주소입니다. 이더리움 네트워크 상의 PXL 토큰은 주소로 다른 암호화폐 입금 시 발생하는 오류 손실은 복구해드리지 않습니다.";
-"str_deposit_guide_2" = "이 주소는 PXL 토큰만 입금 가능합니다. 해당 지갑 주소로 다른 암호 화폐 입금 시 발생하는 오류 및 손실은 복구해 드리지 않습니다.";
+"str_deposit_guide_1" = "▪︎ 해당 주소는 Klaytn 네트워크 상에서 동작하는 지갑 주소입니다. 이더리움 네트워크 상의 PXL 토큰은 주소로 다른 암호화폐 입금 시 발생하는 오류 손실은 복구해드리지 않습니다.";
+"str_deposit_guide_2" = "▪︎ 이 주소는 PXL 토큰만 입금 가능합니다. 해당 지갑 주소로 다른 암호 화폐 입금 시 발생하는 오류 및 손실은 복구해 드리지 않습니다.";
 
 "str_input_sponsorship_amount" = "후원 금액 입력";
 "str_for_user" = "님에게";
@@ -186,8 +186,8 @@
 "str_wallet_address" = "@%@의 지갑주소";
 "str_have_pxl_amount" = "보유 중";
 "str_deposit_pxl_guide" = "픽션 계정으로 PXL을 입금하는 방법";
-"str_deposit_piction_guide_1" = "Klaytn 네트워크 기반 PXL 출금이 가능한 거래소에서 이 지갑 주소로 송금.";
-"str_deposit_piction_guide_2" = "외부 Klaytn 지갑에 보유한 PXL을 이 지갑 주소로 송금.";
+"str_deposit_piction_guide_1" = "▪︎ Klaytn 네트워크 기반 PXL 출금이 가능한 거래소에서 이 지갑 주소로 송금.";
+"str_deposit_piction_guide_2" = "▪︎ 외부 Klaytn 지갑에 보유한 PXL을 이 지갑 주소로 송금.";
 
 "str_authenticate_by_face_id" = "Face ID로 인증합니다.";
 "str_authenticate_by_touch_id" = "Touch ID로 인증합니다.";
