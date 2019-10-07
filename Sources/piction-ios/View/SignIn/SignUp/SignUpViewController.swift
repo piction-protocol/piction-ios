@@ -46,6 +46,48 @@ final class SignUpViewController: UIViewController {
             nicknameInputView.delegate = self
         }
     }
+    @IBOutlet weak var agreementTextView: UITextView! {
+        didSet {
+            let attributedStr: NSMutableAttributedString = NSMutableAttributedString(string: LocalizedStrings.str_agreement_text.localized())
+
+            let infoDictionary: [AnyHashable: Any] = Bundle.main.infoDictionary!
+            guard let appID: String = infoDictionary["CFBundleIdentifier"] as? String else { return }
+            var urlScheme: String {
+                let isStaging = appID == "com.pictionnetwork.piction-test"
+
+                if isStaging {
+                    return "piction-test"
+                } else {
+                    return "piction"
+                }
+            }
+
+            guard let termsURL = URL(string: "\(urlScheme)://terms") else { return }
+            guard let privacyURL = URL(string: "\(urlScheme)://privacy") else { return }
+
+            attributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 14), range: attributedStr.mutableString.range(of: LocalizedStrings.str_agreement_text.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(r: 191, g: 191, b: 191), range: attributedStr.mutableString.range(of: LocalizedStrings.str_agreement_text.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(r: 191, g: 191, b: 191), range: attributedStr.mutableString.range(of: LocalizedStrings.str_agreement_text.localized()))
+
+            attributedStr.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: attributedStr.mutableString.range(of: LocalizedStrings.str_terms.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(r: 26, g: 146, b: 255), range: attributedStr.mutableString.range(of: LocalizedStrings.str_terms.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.link, value: termsURL, range: attributedStr.mutableString.range(of: LocalizedStrings.str_terms.localized()))
+
+            attributedStr.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: attributedStr.mutableString.range(of: LocalizedStrings.str_privacy.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(r: 26, g: 146, b: 255), range: attributedStr.mutableString.range(of: LocalizedStrings.str_privacy.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.link, value: privacyURL, range: attributedStr.mutableString.range(of: LocalizedStrings.str_privacy.localized()))
+
+
+            agreementTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            let fittingSize = CGSize(width: agreementTextView.bounds.width, height: CGFloat.greatestFiniteMagnitude)
+            let size = agreementTextView.sizeThatFits(fittingSize)
+            let topOffset = (agreementTextView.bounds.size.height - size.height * agreementTextView.zoomScale) / 2
+            let positiveTopOffset = max(0, topOffset)
+            agreementTextView.contentInset.top = positiveTopOffset
+
+            agreementTextView.attributedText = attributedStr
+        }
+    }
 
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
 
@@ -80,9 +122,7 @@ extension SignUpViewController: ViewModelBindable {
             passwordTextFieldDidInput: passwordInputView.inputTextField.rx.text.orEmpty.asDriver(),
             passwordCheckTextFieldDidInput: passwordCheckInputView.inputTextField.rx.text.orEmpty.asDriver(),
             nicknameTextFieldDidInput: nicknameInputView.inputTextField.rx.text.orEmpty.asDriver(),
-            agreeBtnDidTap: agreeButton.rx.tap.asDriver(),
-            termsBtnDidTap: termsButton.rx.tap.asDriver(),
-            privacyBtnDidTap: privacyButton.rx.tap.asDriver()
+            agreeBtnDidTap: agreeButton.rx.tap.asDriver()
         )
 
         let output = viewModel.build(input: input)
@@ -129,24 +169,6 @@ extension SignUpViewController: ViewModelBindable {
                 } else {
                     self?.view.hideToastActivity()
                 }
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .openTermsView
-            .drive(onNext: { [weak self] in
-                guard let url = URL(string: "https://piction.network/terms") else { return }
-                let safariViewController = SFSafariViewController(url: url)
-                self?.present(safariViewController, animated: true, completion: nil)
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .openPrivacyView
-            .drive(onNext: { [weak self] in
-                guard let url = URL(string: "https://piction.network/privacy") else { return }
-                let safariViewController = SFSafariViewController(url: url)
-                self?.present(safariViewController, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
 

@@ -88,6 +88,7 @@
 "str_new_pw" = "새 비밀번호";
 "str_pw_check" = "비밀번호 확인";
 "str_nick_name" = "닉네임";
+"str_agreement_text" = "서비스 이용약관 및 개인정보 처리방침에 동의합니다.";
 "str_terms" = "서비스 이용약관";
 "str_privacy" = "개인정보 처리방침";
 

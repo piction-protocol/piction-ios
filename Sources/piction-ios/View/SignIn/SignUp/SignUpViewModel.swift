@@ -31,16 +31,12 @@ final class SignUpViewModel: InjectableViewModel {
         let passwordCheckTextFieldDidInput: Driver<String>
         let nicknameTextFieldDidInput: Driver<String>
         let agreeBtnDidTap: Driver<Void>
-        let termsBtnDidTap: Driver<Void>
-        let privacyBtnDidTap: Driver<Void>
     }
 
     struct Output {
         let viewWillAppear: Driver<Void>
         let signUpBtnEnable: Driver<Void>
         let openSignUpComplete: Driver<Void>
-        let openTermsView: Driver<Void>
-        let openPrivacyView: Driver<Void>
         let activityIndicator: Driver<Bool>
         let errorMsg: Driver<ErrorModel>
     }
@@ -101,15 +97,10 @@ final class SignUpViewModel: InjectableViewModel {
 
         let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
 
-        let openTermsView = input.termsBtnDidTap
-        let openPrivacyView = input.privacyBtnDidTap
-
         return Output(
             viewWillAppear: viewWillAppear,
             signUpBtnEnable: input.agreeBtnDidTap,
             openSignUpComplete: sessionCreateSuccess,
-            openTermsView: openTermsView,
-            openPrivacyView: openPrivacyView,
             activityIndicator: activityIndicator,
             errorMsg: errorMsg
         )

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 struct DeepLinkManager {
     static func executeDeepLink(with url: URL) -> Bool {
@@ -32,7 +33,9 @@ struct DeepLinkManager {
                 TransactionDeepLink.self,
                 WalletDeepLink.self,
                 MyinfoDeepLink.self,
-                PasswordDeepLink.self
+                PasswordDeepLink.self,
+                TermsDeepLink.self,
+                PrivacyDeepLink.self
             ]
         )
 
@@ -83,6 +86,8 @@ struct DeepLinkManager {
         case let link as WalletDeepLink: return showWallet(with: link)
         case let link as MyinfoDeepLink: return showMyinfo(with: link)
         case let link as PasswordDeepLink: return showPassword(with: link)
+        case let link as TermsDeepLink: return showTerms(with: link)
+        case let link as PrivacyDeepLink: return showPrivacy(with: link)
         default: fatalError("Unsupported DeepLink: \(type(of: deepLink))")
         }
     }
@@ -294,6 +299,28 @@ struct DeepLinkManager {
         let vc = ChangePasswordViewController.make()
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .present)
+            return true
+        }
+        return false
+    }
+
+    static func showTerms(with deepLink: TermsDeepLink) -> Bool {
+        guard let url = URL(string: "https://piction.network/terms") else { return false }
+
+        if let topViewController = UIApplication.topViewController() {
+           let safariViewController = SFSafariViewController(url: url)
+            topViewController.present(safariViewController, animated: true)
+            return true
+        }
+        return false
+    }
+
+    static func showPrivacy(with deepLink: PrivacyDeepLink) -> Bool {
+        guard let url = URL(string: "https://piction.network/privacy") else { return false }
+
+        if let topViewController = UIApplication.topViewController() {
+           let safariViewController = SFSafariViewController(url: url)
+            topViewController.present(safariViewController, animated: true)
             return true
         }
         return false

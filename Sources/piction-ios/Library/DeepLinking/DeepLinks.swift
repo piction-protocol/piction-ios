@@ -285,3 +285,21 @@ struct PasswordDeepLink: DeepLink {
 
     init(values: DeepLinkValues) {}
 }
+
+// 이용약관
+// piction://terms
+struct TermsDeepLink: DeepLink {
+    static let template = DeepLinkTemplate()
+        .term("terms")
+
+    init(values: DeepLinkValues) {}
+}
+
+// 비밀번호 변경
+// piction://privacy
+struct PrivacyDeepLink: DeepLink {
+    static let template = DeepLinkTemplate()
+        .term("privacy")
+
+    init(values: DeepLinkValues) {}
+}

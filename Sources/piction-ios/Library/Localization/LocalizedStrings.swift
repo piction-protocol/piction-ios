@@ -89,6 +89,7 @@ enum LocalizedStrings {
     case str_new_pw
     case str_pw_check
     case str_nick_name
+    case str_agreement_text
     case str_terms
     case str_privacy
 

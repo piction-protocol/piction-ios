@@ -48,8 +48,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     internal func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        UIApplication.dismissAllPresentedController {
+        if let topViewController = UIApplication.topViewController(), topViewController.isKind(of: SignUpViewController.self) {
             _ = DeepLinkManager.executeDeepLink(with: url)
+        } else {
+            UIApplication.dismissAllPresentedController {
+                _ = DeepLinkManager.executeDeepLink(with: url)
+            }
         }
         return true
     }

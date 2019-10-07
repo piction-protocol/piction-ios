@@ -88,6 +88,7 @@
 "str_new_pw" = "New password";
 "str_pw_check" = "Confirm password";
 "str_nick_name" = "Display name";
+"str_agreement_text" = "I agree to Terms of service and Privacy Statement.";
 "str_terms" = "Terms";
 "str_privacy" = "Privacy";
 
