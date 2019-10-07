@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>str_subs_count_plural</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@subscriber@</string>
+		<key>subscriber</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>No subscribers</string>
+			<key>one</key>
+			<string>%d subscriber</string>
+			<key>other</key>
+			<string>%d subscribers</string>
+		</dict>
+	</dict>
+	<key>str_series_posts_count</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@post@</string>
+		<key>post</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>No posts</string>
+			<key>one</key>
+			<string>%d post</string>
+			<key>other</key>
+			<string>%d posts</string>
+		</dict>
+	</dict>
+	<key>str_project_update_n_minute</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@minute@</string>
+		<key>minute</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Update %d minute ago</string>
+			<key>other</key>
+			<string>Update %d minutes ago</string>
+		</dict>
+	</dict>
+	<key>str_project_update_n_hour</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@hour@</string>
+		<key>hour</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Update %d hour ago</string>
+			<key>other</key>
+			<string>Update %d hours ago</string>
+		</dict>
+	</dict>
+	<key>str_project_update_n_day</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@day@</string>
+		<key>day</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Update %d day ago</string>
+			<key>other</key>
+			<string>Update %d days ago</string>
+		</dict>
+	</dict>
+	<key>str_project_update_n_month</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@month@</string>
+		<key>month</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Update %d month ago</string>
+			<key>other</key>
+			<string>Update %d months ago</string>
+		</dict>
+	</dict>
+	<key>str_project_update_n_year</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@year@</string>
+		<key>year</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Update %d year ago</string>
+			<key>other</key>
+			<string>Update %d years ago</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

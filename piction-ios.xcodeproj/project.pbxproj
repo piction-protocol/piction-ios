@@ -623,6 +623,7 @@
 		43F1866423444E070050BA67 /* DeepLinking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinking.swift; sourceTree = "<group>"; };
 		43F1866723444E470050BA67 /* DeepLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkManager.swift; sourceTree = "<group>"; };
 		43F1866A23444E800050BA67 /* DeepLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinks.swift; sourceTree = "<group>"; };
+		43F18670234ACECE0050BA67 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ko; path = ko.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1888,6 +1889,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				43F1866123442ECD0050BA67 /* en */,
+				43F18670234ACECE0050BA67 /* ko */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";
