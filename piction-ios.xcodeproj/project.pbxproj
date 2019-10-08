@@ -375,8 +375,6 @@
 		4323FB9F233A166400243655 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA51233A165600243655 /* SignInViewController.swift */; };
 		4323FBA2233A166400243655 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA55233A165600243655 /* Assets.xcassets */; };
 		4323FBA3233A166400243655 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA55233A165600243655 /* Assets.xcassets */; };
-		4323FBA6233A166400243655 /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA59233A165600243655 /* ImagePickerManager.swift */; };
-		4323FBA7233A166400243655 /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA59233A165600243655 /* ImagePickerManager.swift */; };
 		4323FBA8233A166400243655 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA5A233A165600243655 /* Updater.swift */; };
 		4323FBA9233A166400243655 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA5A233A165600243655 /* Updater.swift */; };
 		4323FBAA233A166400243655 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA5B233A165600243655 /* Toast.swift */; };
@@ -623,7 +621,6 @@
 		4323FA50233A165600243655 /* SignInViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		4323FA51233A165600243655 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		4323FA55233A165600243655 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4323FA59233A165600243655 /* ImagePickerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
 		4323FA5A233A165600243655 /* Updater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
 		4323FA5B233A165600243655 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		4323FBAD233AEEC300243655 /* RxRelay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxRelay.framework; path = Carthage/Build/iOS/RxRelay.framework; sourceTree = "<group>"; };
@@ -1671,7 +1668,6 @@
 				4323FAB9233A165A00243655 /* ExplorerNoticeTableViewCell.swift in Sources */,
 				4323FAB7233A165A00243655 /* ExplorerNoticeHeaderTableViewCell.swift in Sources */,
 				4323FA8B233A165800243655 /* AppDelegate.swift in Sources */,
-				4323FBA7233A166400243655 /* ImagePickerManager.swift in Sources */,
 				4323FAED233A165C00243655 /* SeriesPostViewController.swift in Sources */,
 				4323FA95233A165900243655 /* Injectable.swift in Sources */,
 				4323FB0B233A165E00243655 /* CustomEmptyViewModel.swift in Sources */,
@@ -1815,7 +1811,6 @@
 				4323FAB8233A165A00243655 /* ExplorerNoticeTableViewCell.swift in Sources */,
 				4323FAB6233A165A00243655 /* ExplorerNoticeHeaderTableViewCell.swift in Sources */,
 				4323FA8A233A165800243655 /* AppDelegate.swift in Sources */,
-				4323FBA6233A166400243655 /* ImagePickerManager.swift in Sources */,
 				4323FAEC233A165C00243655 /* SeriesPostViewController.swift in Sources */,
 				4323FA94233A165900243655 /* Injectable.swift in Sources */,
 				4323FB0A233A165E00243655 /* CustomEmptyViewModel.swift in Sources */,

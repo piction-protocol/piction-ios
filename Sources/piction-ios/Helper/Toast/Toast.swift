@@ -12,10 +12,9 @@ import ToastSwiftFramework
 class Toast {
     class func showToast(_ message: String) {
         if let window = UIApplication.shared.keyWindow {
-//            //let posY = KeyboardStateUtil.sharedInstance.isVisible ? SCREEN_H - KeyboardStateUtil.sharedInstance.keyboardHeight! - 50 : SCREEN_H - 100
-//
+
             let toastView = UIView(frame: CGRect(x: 0, y: SCREEN_H - 100, width: SCREEN_W, height: 50))
-//
+
             if toastView.superview == nil {
                 window.addSubview(toastView)
             }

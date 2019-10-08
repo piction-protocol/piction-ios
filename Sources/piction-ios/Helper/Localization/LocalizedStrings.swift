@@ -43,6 +43,8 @@ enum LocalizedStrings {
     case msg_pincode_confirm_error
     case msg_pincode_error_end
     case msg_pincode_reg_warning
+
+    case msg_creator_not_found
     case msg_not_piction_cp
 
     case msg_title_confirm
