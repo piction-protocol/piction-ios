@@ -10,7 +10,8 @@ github "wordpress-mobile/AztecEditor-iOS"
 github "Automattic/Gridicons-iOS" "0.18"
 github "TimOliver/TOCropViewController"
 github "tid-kijyun/Kanna" ~> 4.0.0
-
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseAnalyticsBinary.json"
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseMessagingBinary.json"
 
 github "sunshinejr/Moya-ModelMapper" "9.0.0"
 github "kishikawakatsumi/KeychainAccess" "v3.2.0"

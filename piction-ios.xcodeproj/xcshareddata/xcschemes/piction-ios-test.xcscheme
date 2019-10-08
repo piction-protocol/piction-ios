@@ -65,7 +65,7 @@
             BlueprintIdentifier = "4317A34422E172A200A5C725"
             BuildableName = "piction-ios-test.app"
             BlueprintName = "piction-ios-test"
-            ReferencedContainer = "container:Piction-iOS.xcodeproj">
+            ReferencedContainer = "container:piction-ios.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
