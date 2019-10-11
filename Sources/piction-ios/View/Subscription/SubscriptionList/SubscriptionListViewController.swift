@@ -60,6 +60,17 @@ final class SubscriptionListViewController: UIViewController {
             return UICollectionReusableView()
         })
     }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            let width = (view.frame.size.width - 54) / 2
+            let height = width + 44
+            flowLayout.itemSize = CGSize(width: width, height: height)
+            flowLayout.invalidateLayout()
+        }
+    }
 }
 
 extension SubscriptionListViewController: ViewModelBindable {

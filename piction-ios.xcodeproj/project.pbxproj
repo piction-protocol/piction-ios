@@ -795,9 +795,9 @@
 		4323F995233A165600243655 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				4323F998233A165600243655 /* AppDelegate.swift */,
 				4323F996233A165600243655 /* AppInfo.swift */,
 				4323F997233A165600243655 /* StoryBoard.swift */,
-				4323F998233A165600243655 /* AppDelegate.swift */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -2026,7 +2026,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
-				INFOPLIST_FILE = "piction-ios.xcodeproj/piction-ios-test_Info.plist";
+				INFOPLIST_FILE = "$(PROJECT_DIR)/Sources/SupportingFiles/piction-ios-test_Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2108,7 +2108,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
-				INFOPLIST_FILE = "piction-ios.xcodeproj/piction-ios-test_Info.plist";
+				INFOPLIST_FILE = "$(PROJECT_DIR)/Sources/SupportingFiles/piction-ios-test_Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2194,7 +2194,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = $SDKROOT/usr/include/libxml2;
-				INFOPLIST_FILE = "piction-ios.xcodeproj/piction-ios_Info.plist";
+				INFOPLIST_FILE = "$(PROJECT_DIR)/Sources/SupportingFiles/piction-ios_Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2276,7 +2276,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = $SDKROOT/usr/include/libxml2;
-				INFOPLIST_FILE = "piction-ios.xcodeproj/piction-ios_Info.plist";
+				INFOPLIST_FILE = "$(PROJECT_DIR)/Sources/SupportingFiles/piction-ios_Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

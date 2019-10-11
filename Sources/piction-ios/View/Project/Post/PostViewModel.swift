@@ -71,14 +71,14 @@ final class PostViewModel: InjectableViewModel {
                     return Driver.just("")
                 }
 
-                let content = "<style type=\"text/css\"> body { font: -apple-system-body; margin: 220px 16px 728px 16px; line-height: 28px; max-width: \(SCREEN_W); } p { margin: 0px; word-wrap: break-word; } img{ max-height: 100%; width: calc(100% + 32px); max-width: \(SCREEN_W); margin-left: -16px; margin-right: -16px; !important; width: auto; height: auto; } iframe{ width: 100%; height: 30%; max-height: 100%; width: calc(100% + 32px); max-width: \(SCREEN_W); margin-left: -16px; margin-right: -16px; } </style><meta name=\"viewport\" content=\"initial-scale=1.0\" /><body>\(postItem.content ?? "")</body>"
+                let content = "<style type=\"text/css\"> body { font: -apple-system-body; margin: 220px 20px 728px 20px; line-height: 28px; } p { margin: 0px; word-wrap: break-word; } img { max-height: 100%; width: calc(100% + 40px); margin-left: -20px; margin-right: -20px; !important; } .video { position: relative; padding-bottom: 56.25%; height: 0; } iframe { position: absolute; top: 0; left: 0; width: calc(100% + 40px); margin-left: -20px; margin-right: -20px; height: 100%; }</style><meta name=\"viewport\" content=\"initial-scale=1.0\" /><body>\(postItem.content ?? "")</body>"
                 print(postItem.content)
                 return Driver.just(content)
             }
 
         let postContentError = postContentAction.error
             .flatMap { response -> Driver<String> in
-                let content = "<style type=\"text/css\"> body { font: -apple-system-body; margin: 220px 16px 278px 16px; } </style><meta name=\"viewport\" content=\"initial-scale=1.0\" /><body></body>"
+                let content = "<style type=\"text/css\"> body { font: -apple-system-body; margin: 220px 20px 278px 20px; } </style><meta name=\"viewport\" content=\"initial-scale=1.0\" /><body></body>"
                 return Driver.just(content)
             }
 

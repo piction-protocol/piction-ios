@@ -150,6 +150,11 @@ final class ProjectViewController: UIViewController {
         }
     }
 
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        stretchyHeader?.frame.size.width = view.frame.size.width
+    }
+
     private func configureDataSource() -> RxTableViewSectionedReloadDataSource<ContentsBySection> {
         let dataSource = RxTableViewSectionedReloadDataSource<ContentsBySection>(
             configureCell: { dataSource, tableView, indexPath, model in
@@ -355,7 +360,6 @@ extension ProjectViewController: GSKStretchyHeaderViewStretchDelegate {
         if stretchFactor > 0.1 {
             stretchyHeader?.maskImage.blurRadius = 0
         } else {
-//            print(stretchFactor)
             print((1 - min(1, stretchFactor)) - 90 / 10)
             stretchyHeader?.maskImage.blurRadius = (1 - min(1, stretchFactor) - 0.9) * 50
         }

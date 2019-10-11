@@ -29,7 +29,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
             let color2 = UIColor.clear.cgColor
             gradientLayer.colors = [color1, color2]
             gradientLayer.locations = [0.0, 1.0]
-            gradientLayer.frame = CGRect(x: 0, y: 0, width: SCREEN_W, height: SCREEN_W / 3)
+            gradientLayer.frame = CGRect(x: 0, y: 0, width: SCREEN_H, height: SCREEN_W / 3)
             thumbnailImageView.layer.addSublayer(gradientLayer)
         }
     }
@@ -44,6 +44,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
     @IBOutlet weak var maskImage: VisualEffectView!
     @IBOutlet weak var naviView: UIView!
     @IBOutlet var naviViewImageHeight: NSLayoutConstraint!
+    @IBOutlet weak var projectInfoView: UIView!
 
     @IBAction func postBtnDidTap(_ sender: Any) {
         delegate?.postBtnDidTap()
@@ -64,9 +65,9 @@ class ProjectHeaderView: GSKStretchyHeaderView {
     override func awakeFromNib() {
         super.awakeFromNib()
         minimumContentHeight = DEFAULT_NAVIGATION_HEIGHT + 52
-        maximumContentHeight = SCREEN_W + 274
+        maximumContentHeight = projectInfoView.frame.origin.y + 244 + 52
         naviViewImageHeight.constant = DEFAULT_NAVIGATION_HEIGHT
-        
+
         expansionMode = .topOnly
 
         thumbnailImageView.contentMode = .scaleAspectFill

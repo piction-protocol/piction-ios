@@ -2,11 +2,6 @@
 /.build
 /Packages
 project.xcworkspace
-*.plist
-!PictionSDK_Info.plist
-!RxPictionSDK_Info.plist
-!PictionSDKTests_Info.plist
-!PictionSDKLocal_Info.plist
 /Carthage
 /Product
-/PictionSDK.xcodeproj/xcuserdata
+/piction-ios.xcodeproj/xcuserdata

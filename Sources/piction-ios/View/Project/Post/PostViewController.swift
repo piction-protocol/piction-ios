@@ -43,7 +43,7 @@ final class PostViewController: UIViewController {
             }
         }
         headerViewController = PostHeaderViewController.make(postItem: postItem, userInfo: userInfo)
-        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_W, height: 220))
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 220))
         containerView.tag = 1000
         embed(headerViewController!, to: containerView)
         self.postWebView.scrollView.addSubview(containerView)
@@ -52,7 +52,7 @@ final class PostViewController: UIViewController {
     private func embedPostFooterViewController(height: CGFloat) {
         if let footerViewController = self.footerViewController {
             let posY = height - 728
-            let containerView = UIView(frame: CGRect(x: 0, y: posY, width: SCREEN_W, height: 728))
+            let containerView = UIView(frame: CGRect(x: 0, y: posY, width: view.frame.size.width, height: 728))
             containerView.tag = 1001
             embed(footerViewController, to: containerView)
             self.postWebView.scrollView.addSubview(containerView)
@@ -95,6 +95,17 @@ final class PostViewController: UIViewController {
 
                 setWebviewColor()
             }
+        }
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        if let headerView = headerViewController {
+            headerView.view.frame.size.width = view.frame.size.width
+        }
+        if let footerView = footerViewController {
+            footerView.view.frame.size.width = view.frame.size.width
         }
     }
 
@@ -189,10 +200,11 @@ extension PostViewController: ViewModelBindable {
         output
             .showPostContent
             .drive(onNext: { [weak self] contentItem in
-                let headerView = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_W, height: 100))
+                guard let `self` = self else { return }
+                let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 100))
                 headerView.backgroundColor = UIColor.green
 
-                self?.postWebView.loadHTMLString(contentItem, baseURL: nil)
+                self.postWebView.loadHTMLString(contentItem, baseURL: nil)
             })
             .disposed(by: disposeBag)
 
@@ -258,7 +270,7 @@ extension PostViewController: ViewModelBindable {
                         if let popover = activityViewController.popoverPresentationController {
                             popover.permittedArrowDirections = .up
                             popover.sourceView = topController.view
-                            popover.sourceRect = CGRect(x: SCREEN_W, y: 64, width: 0, height: 0)
+                            popover.sourceRect = CGRect(x: self.view.frame.size.width, y: 64, width: 0, height: 0)
                         }
                     }
                     topController.present(activityViewController, animated: true, completion: nil)

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="26q-Yg-Erv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="26q-Yg-Erv">
     <device id="retina5_9" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,13 +21,13 @@
                                 <rect key="frame" x="0.0" y="88" width="375" height="724"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="R91-QK-pUA">
-                                        <rect key="frame" x="20" y="0.0" width="335" height="426"/>
+                                        <rect key="frame" x="16" y="0.0" width="343" height="426"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aXu-tv-phB">
-                                                <rect key="frame" x="0.0" y="0.0" width="335" height="149"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="343" height="149"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgLogoPictionDefaultBl" translatesAutoresizingMaskIntoConstraints="NO" id="pla-g5-mkU">
-                                                        <rect key="frame" x="57.666666666666686" y="48" width="220" height="57"/>
+                                                        <rect key="frame" x="61.666666666666686" y="48" width="220" height="57"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="57" id="YeW-Lu-HlU"/>
                                                             <constraint firstAttribute="width" constant="220" id="a9T-S5-BU9"/>
@@ -41,10 +41,10 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ATa-aO-goW">
-                                                <rect key="frame" x="0.0" y="149" width="335" height="150"/>
+                                                <rect key="frame" x="0.0" y="149" width="343" height="150"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QDA-4m-EQW" customClass="DynamicInputView" customModule="piction_ios" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="65"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="343" height="65"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="아이디"/>
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureText" value="NO"/>
@@ -55,7 +55,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4oE-2h-5Xg" customClass="DynamicInputView" customModule="piction_ios" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="85" width="335" height="65"/>
+                                                        <rect key="frame" x="0.0" y="85" width="343" height="65"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureText" value="YES"/>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="비밀번호"/>
@@ -68,10 +68,10 @@
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hUY-Jq-qCf">
-                                                <rect key="frame" x="0.0" y="299" width="335" height="77"/>
+                                                <rect key="frame" x="0.0" y="299" width="343" height="77"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BBl-ta-c0c" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
-                                                        <rect key="frame" x="4" y="24" width="327" height="53"/>
+                                                        <rect key="frame" x="4" y="24" width="335" height="53"/>
                                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="53" id="Zu3-0u-XD2"/>
@@ -100,13 +100,13 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0E8-qB-zPt">
-                                                <rect key="frame" x="0.0" y="376" width="335" height="50"/>
+                                                <rect key="frame" x="0.0" y="376" width="343" height="50"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ih7-6a-1Sz">
-                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="343" height="50"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="hem-kH-foC">
-                                                                <rect key="frame" x="80" y="0.0" width="175" height="50"/>
+                                                                <rect key="frame" x="84" y="0.0" width="175" height="50"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gQq-lc-6V6">
                                                                         <rect key="frame" x="0.0" y="5" width="49" height="40"/>
@@ -157,14 +157,11 @@
                                                 </constraints>
                                             </stackView>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="335" id="a7o-pS-Jiz"/>
-                                        </constraints>
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="R91-QK-pUA" secondAttribute="trailing" priority="250" constant="16" id="FKT-ub-phM"/>
-                                    <constraint firstItem="R91-QK-pUA" firstAttribute="leading" secondItem="9AD-PS-vgq" secondAttribute="leading" priority="250" constant="16" id="Qmv-YJ-Msx"/>
+                                    <constraint firstAttribute="trailing" secondItem="R91-QK-pUA" secondAttribute="trailing" constant="16" id="FKT-ub-phM"/>
+                                    <constraint firstItem="R91-QK-pUA" firstAttribute="leading" secondItem="9AD-PS-vgq" secondAttribute="leading" constant="16" id="Qmv-YJ-Msx"/>
                                     <constraint firstItem="R91-QK-pUA" firstAttribute="top" secondItem="9AD-PS-vgq" secondAttribute="top" id="bnH-ke-Qcp"/>
                                     <constraint firstItem="R91-QK-pUA" firstAttribute="centerX" secondItem="9AD-PS-vgq" secondAttribute="centerX" id="jQU-d4-7HE"/>
                                     <constraint firstAttribute="bottom" secondItem="R91-QK-pUA" secondAttribute="bottom" id="rCK-24-BQF"/>
