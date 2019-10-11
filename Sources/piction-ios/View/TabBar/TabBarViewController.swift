@@ -98,19 +98,27 @@ extension TabBarController: UITabBarControllerDelegate {
                 if viewController.children.count == 1 {
                     if topViewController is ExplorerViewController {
                         if let vc = topViewController as? ExplorerViewController {
-                            vc.tableView.setContentOffset(CGPoint.zero, animated: true)
+                            DispatchQueue.main.async {
+                                  vc.tableView.setContentOffset(CGPoint(x: 0, y: -LARGE_NAVIGATION_HEIGHT), animated: true)
+                            }
                         }
                     } else if topViewController is SubscriptionListViewController {
                         if let vc = topViewController as? SubscriptionListViewController {
-                            vc.collectionView.setContentOffset(CGPoint.zero, animated: true)
+                            DispatchQueue.main.async {
+                                vc.collectionView.setContentOffset(CGPoint(x: 0, y: -LARGE_NAVIGATION_HEIGHT), animated: true)
+                            }
                         }
                     } else if topViewController is SponsorshipListViewController {
                         if let vc = topViewController as? SponsorshipListViewController {
-                            vc.tableView.setContentOffset(CGPoint.zero, animated: true)
+                            DispatchQueue.main.async {
+                                vc.tableView.setContentOffset(CGPoint(x: 0, y: -LARGE_NAVIGATION_HEIGHT), animated: true)
+                            }
                         }
                     } else if topViewController is MyPageViewController {
                         if let vc = topViewController as? MyPageViewController {
-                            vc.tableView.setContentOffset(CGPoint.zero, animated: true)
+                            DispatchQueue.main.async {
+                                vc.tableView.setContentOffset(CGPoint(x: 0, y: -LARGE_NAVIGATION_HEIGHT), animated: true)
+                            }
                         }
                     }
                 }
