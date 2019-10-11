@@ -392,7 +392,7 @@ extension ProjectViewController: ProjectHeaderViewDelegate {
         guard let appID: String = infoDictionary["CFBundleIdentifier"] as? String else { return }
         let isStaging = appID == "com.pictionnetwork.piction-test" ? "staging." : ""
 
-        let url = "{\(title)} - https://\(isStaging)piction.network/project/\(uri)"
+        let url = "\(title) - Piction\nhttps://\(isStaging)piction.network/project/\(uri)"
 
         self.openSharePopup(url: url)
     }
