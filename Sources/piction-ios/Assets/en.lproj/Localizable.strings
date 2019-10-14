@@ -42,6 +42,8 @@
 "msg_pincode_confirm_error" = "PIN 번호가 일치하지 않습니다.\n다시 한 번 입력해주세요.";
 "msg_pincode_error_end" = "Too many wrong attempts. Signing out for your security.";
 "msg_pincode_reg_warning" = "Register PIN code to keep\nyour transactions safe.";
+
+"msg_creator_not_found" = "No result found.";
 "msg_not_piction_cp" = "Not valid QR code";
 
 "msg_title_confirm" = "변경된 내용이 저장되지 않습니다.\n계속하시겠습니까?";
