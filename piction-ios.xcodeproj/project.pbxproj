@@ -419,6 +419,8 @@
 		43F1866923444E470050BA67 /* DeepLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F1866723444E470050BA67 /* DeepLinkManager.swift */; };
 		43F1866B23444E800050BA67 /* DeepLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F1866A23444E800050BA67 /* DeepLinks.swift */; };
 		43F1866C23444E800050BA67 /* DeepLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F1866A23444E800050BA67 /* DeepLinks.swift */; };
+		43FE8EEF235429ED0074080B /* piction-ios_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43FE8EED235429EC0074080B /* piction-ios_Info.plist */; };
+		43FE8EF2235429ED0074080B /* piction-ios-test_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43FE8EEE235429EC0074080B /* piction-ios-test_Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -650,9 +652,11 @@
 		43F1866423444E070050BA67 /* DeepLinking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinking.swift; sourceTree = "<group>"; };
 		43F1866723444E470050BA67 /* DeepLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkManager.swift; sourceTree = "<group>"; };
 		43F1866A23444E800050BA67 /* DeepLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinks.swift; sourceTree = "<group>"; };
-		43F1866D23447F5C0050BA67 /* piction-ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "piction-ios.entitlements"; sourceTree = "<group>"; };
-		43F1866E23447F620050BA67 /* piction-ios-test.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "piction-ios-test.entitlements"; sourceTree = "<group>"; };
 		43F18670234ACECE0050BA67 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ko; path = ko.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		43FE8EED235429EC0074080B /* piction-ios_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "piction-ios_Info.plist"; sourceTree = "<group>"; };
+		43FE8EEE235429EC0074080B /* piction-ios-test_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "piction-ios-test_Info.plist"; sourceTree = "<group>"; };
+		43FE8EF323542ABA0074080B /* piction-ios-test.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "piction-ios-test.entitlements"; sourceTree = "<group>"; };
+		43FE8EF423542ABA0074080B /* piction-ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "piction-ios.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1414,6 +1418,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		43FE8EEC235429EC0074080B /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				43FE8EF323542ABA0074080B /* piction-ios-test.entitlements */,
+				43FE8EF423542ABA0074080B /* piction-ios.entitlements */,
+				43FE8EED235429EC0074080B /* piction-ios_Info.plist */,
+				43FE8EEE235429EC0074080B /* piction-ios-test_Info.plist */,
+			);
+			name = SupportingFiles;
+			path = Sources/SupportingFiles;
+			sourceTree = "<group>";
+		};
 		OBJ_117 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1426,9 +1442,8 @@
 		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
-				43F1866E23447F620050BA67 /* piction-ios-test.entitlements */,
-				43F1866D23447F5C0050BA67 /* piction-ios.entitlements */,
 				OBJ_7 /* Sources */,
+				43FE8EEC235429EC0074080B /* SupportingFiles */,
 				4323F9352339FDEC00243655 /* XCFileList */,
 				OBJ_117 /* Products */,
 				43FC8931229E60B90074C3D6 /* Frameworks */,
@@ -1544,6 +1559,7 @@
 				4323FAAD233A165A00243655 /* SearchProject.storyboard in Resources */,
 				4323FB91233A166300243655 /* SignUpComplete.storyboard in Resources */,
 				4323FAC3233A165B00243655 /* SubscriptionList.storyboard in Resources */,
+				43FE8EF2235429ED0074080B /* piction-ios-test_Info.plist in Resources */,
 				4323FADB233A165C00243655 /* PostHeader.storyboard in Resources */,
 				4323FB49233A166000243655 /* ChangeMyInfo.storyboard in Resources */,
 				4323FB71233A166200243655 /* ConfirmDonation.storyboard in Resources */,
@@ -1598,6 +1614,7 @@
 				4356F51B233DF184000710FC /* Localizable.strings in Resources */,
 				4323FB80233A166300243655 /* SendDonation.storyboard in Resources */,
 				4323FB0E233A165E00243655 /* CustomEmptyView.storyboard in Resources */,
+				43FE8EEF235429ED0074080B /* piction-ios_Info.plist in Resources */,
 				4323FB2C233A165F00243655 /* MyProject.storyboard in Resources */,
 				4323FB98233A166400243655 /* SignUp.storyboard in Resources */,
 				4323FAE0233A165C00243655 /* ProjectInfo.storyboard in Resources */,
@@ -2000,7 +2017,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = "piction-ios-test.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/Sources/SupportingFiles/piction-ios-test.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TVSPDRR58A;
@@ -2086,7 +2103,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = "piction-ios-test.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/Sources/SupportingFiles/piction-ios-test.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
@@ -2168,7 +2185,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = "piction-ios.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/Sources/SupportingFiles/piction-ios.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TVSPDRR58A;
@@ -2254,7 +2271,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = "piction-ios.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/Sources/SupportingFiles/piction-ios.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;

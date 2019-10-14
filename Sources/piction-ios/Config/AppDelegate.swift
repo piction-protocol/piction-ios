@@ -301,3 +301,42 @@ extension AppDelegate: MessagingDelegate {
     // [END ios_10_data_message]
 }
 
+
+@available(iOS 13.0, *)
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    var window: UIWindow?
+
+    func scene(_ scene: UIScene,
+               willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+        window?.windowScene = windowScene // <-- Window Scene set to UIWindow
+
+        if UserDefaults.standard.string(forKey: "pincode") != nil {
+            let vc = CheckPincodeViewController.make(style: .initial)
+            window?.rootViewController = vc
+        } else {
+            let rootView = TabBarController()
+            window?.rootViewController = rootView
+        }
+        if #available(iOS 13.0, *) {
+            window?.backgroundColor = .systemBackground
+        } else {
+            window?.backgroundColor = .white
+        }
+        window?.makeKeyAndVisible()
+    }
+
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        if let url = URLContexts.first?.url {
+            if let topViewController = UIApplication.topViewController(), topViewController.isKind(of: SignUpViewController.self) {
+                _ = DeepLinkManager.executeDeepLink(with: url)
+            } else {
+                UIApplication.dismissAllPresentedController {
+                    _ = DeepLinkManager.executeDeepLink(with: url)
+                }
+            }
+        }
+    }
+}
