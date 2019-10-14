@@ -133,7 +133,7 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="197" height="16"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="34.56 PXL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zWA-qX-UbS">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="84" height="16"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="139" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="123" id="xdI-gi-cNV"/>
                                                                             </constraints>
@@ -142,10 +142,10 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="label_failed" translatesAutoresizingMaskIntoConstraints="NO" id="v2e-5G-Fm2">
-                                                                            <rect key="frame" x="92" y="0.0" width="105" height="16"/>
+                                                                            <rect key="frame" x="147" y="0.0" width="50" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="16" id="DCz-IU-9g5"/>
-                                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="105" id="eQa-e2-4Oz"/>
+                                                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="50" id="eQa-e2-4Oz"/>
                                                                             </constraints>
                                                                         </imageView>
                                                                     </subviews>

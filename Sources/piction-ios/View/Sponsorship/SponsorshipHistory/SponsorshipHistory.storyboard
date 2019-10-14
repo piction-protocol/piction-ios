@@ -58,7 +58,7 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="236" height="16"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="34.56 PXL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fFJ-s2-zBO">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="123" height="16"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="178" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="123" id="Ya3-Os-2qZ"/>
                                                                             </constraints>
@@ -67,10 +67,10 @@
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="label_failed" translatesAutoresizingMaskIntoConstraints="NO" id="ZVY-k1-jwT">
-                                                                            <rect key="frame" x="131" y="0.0" width="105" height="16"/>
+                                                                            <rect key="frame" x="186" y="0.0" width="50" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="16" id="TK3-of-SO8"/>
-                                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="105" id="sTp-5h-YtG"/>
+                                                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="50" id="sTp-5h-YtG"/>
                                                                             </constraints>
                                                                         </imageView>
                                                                     </subviews>

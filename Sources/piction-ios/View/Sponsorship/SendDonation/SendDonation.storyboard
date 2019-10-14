@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -60,7 +60,7 @@
                                             </stackView>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1Dz-AS-J5X">
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1Dz-AS-J5X">
                                         <rect key="frame" x="20" y="64" width="335" height="70"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="jql-4n-txA">
@@ -117,7 +117,7 @@
                                                 </constraints>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9if-aR-hTc">
-                                                <rect key="frame" x="0.0" y="57" width="4" height="13"/>
+                                                <rect key="frame" x="0.0" y="57" width="335" height="13"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" name="PictionDarkGray"/>
                                                 <nil key="highlightedColor"/>
@@ -159,9 +159,9 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="4r3-uv-qtR"/>
                                     <constraint firstItem="UlH-es-RU9" firstAttribute="top" secondItem="UOq-M0-fwm" secondAttribute="top" id="MMe-gd-9Zz"/>
-                                    <constraint firstAttribute="trailing" secondItem="UlH-es-RU9" secondAttribute="trailing" priority="250" id="OK7-Ri-ilN"/>
+                                    <constraint firstAttribute="trailing" secondItem="UlH-es-RU9" secondAttribute="trailing" id="OK7-Ri-ilN"/>
                                     <constraint firstAttribute="bottom" secondItem="UlH-es-RU9" secondAttribute="bottom" id="ZE7-xl-WLw"/>
-                                    <constraint firstItem="UlH-es-RU9" firstAttribute="leading" secondItem="UOq-M0-fwm" secondAttribute="leading" priority="250" id="dtm-Dt-oWa"/>
+                                    <constraint firstItem="UlH-es-RU9" firstAttribute="leading" secondItem="UOq-M0-fwm" secondAttribute="leading" id="dtm-Dt-oWa"/>
                                     <constraint firstAttribute="bottom" secondItem="sip-YW-ToI" secondAttribute="bottom" constant="12" id="jNg-GF-Ujm"/>
                                     <constraint firstItem="UlH-es-RU9" firstAttribute="centerX" secondItem="UOq-M0-fwm" secondAttribute="centerX" id="nFk-Ns-Ein"/>
                                     <constraint firstAttribute="trailing" secondItem="sip-YW-ToI" secondAttribute="trailing" constant="20" id="riJ-io-pme"/>

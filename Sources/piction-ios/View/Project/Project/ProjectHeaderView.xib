@@ -40,12 +40,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="295" height="100"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Jzm-kI-DYR">
-                                            <rect key="frame" x="0.0" y="0.0" width="225" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="225" height="84"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9UD-yf-gRK">
-                                                    <rect key="frame" x="0.0" y="0.0" width="225" height="50"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="225" height="34"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="Ple-W5-AtK"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="Ple-W5-AtK"/>
                                                         <constraint firstAttribute="height" relation="lessThanOrEqual" constant="68" id="VhZ-gQ-181"/>
                                                     </constraints>
                                                     <attributedString key="attributedText">
@@ -60,7 +60,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UTR-Ap-zY9">
-                                                    <rect key="frame" x="0.0" y="58" width="225" height="17"/>
+                                                    <rect key="frame" x="0.0" y="42" width="225" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="17" id="R5Z-xk-vyQ"/>
                                                     </constraints>
@@ -69,7 +69,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rJL-1a-642">
-                                                    <rect key="frame" x="0.0" y="83" width="225" height="17"/>
+                                                    <rect key="frame" x="0.0" y="67" width="225" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="17" id="H0N-mL-ltd"/>
                                                     </constraints>
@@ -189,7 +189,6 @@
                         <constraint firstItem="iA7-Kb-NCg" firstAttribute="top" secondItem="le1-xN-Ewx" secondAttribute="top" constant="20" id="JDX-Ot-dPv"/>
                         <constraint firstAttribute="trailing" secondItem="iA7-Kb-NCg" secondAttribute="trailing" constant="20" id="WOo-BY-4qU"/>
                         <constraint firstAttribute="bottom" secondItem="iA7-Kb-NCg" secondAttribute="bottom" constant="21" id="buF-99-wNz"/>
-                        <constraint firstAttribute="height" constant="244.00000000000006" id="w3g-Ke-p7P"/>
                         <constraint firstItem="iA7-Kb-NCg" firstAttribute="leading" secondItem="le1-xN-Ewx" secondAttribute="leading" constant="20" id="yMX-q9-WMb"/>
                     </constraints>
                 </view>
