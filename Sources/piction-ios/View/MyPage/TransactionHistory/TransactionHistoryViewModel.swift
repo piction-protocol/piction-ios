@@ -77,7 +77,7 @@ final class TransactionHistoryViewModel: ViewModel {
 
                 var transactions: [TransactionHistoryItemType] = []
 
-                let yearGroup = self.groupedBy(self.sections, dateComponents: [.year, .month])
+                let yearGroup = self.groupedBy(self.sections, dateComponents: [.year])
 
                 for (index, element) in yearGroup.sorted(by: { $0.0 > $1.0 }).enumerated() {
                     if index != 0 {
