@@ -56,7 +56,7 @@ final class SponsorshipHistoryViewModel: ViewModel {
         let sponsorshipListAction = Driver.merge(initialLoad, loadNext)
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
                 guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(SponsorshipsAPI.get(page: self.page, size: 10))
+                let response = PictionSDK.rx.requestAPI(SponsorshipsAPI.get(page: self.page, size: 15))
                 return Action.makeDriver(response)
         }
 
