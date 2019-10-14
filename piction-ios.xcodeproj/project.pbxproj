@@ -421,6 +421,8 @@
 		43F1866C23444E800050BA67 /* DeepLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F1866A23444E800050BA67 /* DeepLinks.swift */; };
 		43FE8EEF235429ED0074080B /* piction-ios_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43FE8EED235429EC0074080B /* piction-ios_Info.plist */; };
 		43FE8EF2235429ED0074080B /* piction-ios-test_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43FE8EEE235429EC0074080B /* piction-ios-test_Info.plist */; };
+		43FE8EF62354463B0074080B /* AppShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FE8EF52354463B0074080B /* AppShortcut.swift */; };
+		43FE8EF72354463B0074080B /* AppShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FE8EF52354463B0074080B /* AppShortcut.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -657,6 +659,7 @@
 		43FE8EEE235429EC0074080B /* piction-ios-test_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "piction-ios-test_Info.plist"; sourceTree = "<group>"; };
 		43FE8EF323542ABA0074080B /* piction-ios-test.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "piction-ios-test.entitlements"; sourceTree = "<group>"; };
 		43FE8EF423542ABA0074080B /* piction-ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "piction-ios.entitlements"; sourceTree = "<group>"; };
+		43FE8EF52354463B0074080B /* AppShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppShortcut.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -802,6 +805,7 @@
 				4323F998233A165600243655 /* AppDelegate.swift */,
 				4323F996233A165600243655 /* AppInfo.swift */,
 				4323F997233A165600243655 /* StoryBoard.swift */,
+				43FE8EF52354463B0074080B /* AppShortcut.swift */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -1744,6 +1748,7 @@
 				4323FB8F233A166300243655 /* SignUpCompleteViewModel.swift in Sources */,
 				4323FA73233A165700243655 /* UIButton+Extension.swift in Sources */,
 				4323FA97233A165900243655 /* InjectableViewModel.swift in Sources */,
+				43FE8EF72354463B0074080B /* AppShortcut.swift in Sources */,
 				4323FAB3233A165A00243655 /* SearchProjectTableViewCell.swift in Sources */,
 				4323FB11233A165E00243655 /* DynamicInputView.swift in Sources */,
 				4323FA83233A165800243655 /* UIViewController+Rx.swift in Sources */,
@@ -1887,6 +1892,7 @@
 				4323FB8E233A166300243655 /* SignUpCompleteViewModel.swift in Sources */,
 				4323FA72233A165700243655 /* UIButton+Extension.swift in Sources */,
 				4323FA96233A165900243655 /* InjectableViewModel.swift in Sources */,
+				43FE8EF62354463B0074080B /* AppShortcut.swift in Sources */,
 				4323FAB2233A165A00243655 /* SearchProjectTableViewCell.swift in Sources */,
 				4323FB10233A165E00243655 /* DynamicInputView.swift in Sources */,
 				4323FA82233A165800243655 /* UIViewController+Rx.swift in Sources */,
