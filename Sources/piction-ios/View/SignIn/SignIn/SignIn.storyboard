@@ -214,7 +214,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="imgLogoPictionDefaultBl" width="847" height="219"/>
+        <image name="imgLogoPictionDefaultBl" width="220" height="57"/>
         <namedColor name="PictionDarkGray">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
