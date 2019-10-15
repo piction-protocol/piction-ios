@@ -7,66 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		43044FC0234C615900F1BA87 /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43044FBE234C615900F1BA87 /* nanopb.framework */; };
-		43044FC1234C615900F1BA87 /* Protobuf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43044FBF234C615900F1BA87 /* Protobuf.framework */; };
-		43044FC6234C615E00F1BA87 /* GoogleDataTransport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43044FC2234C615E00F1BA87 /* GoogleDataTransport.framework */; };
-		43044FC7234C615E00F1BA87 /* GoogleDataTransportCCTSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43044FC3234C615E00F1BA87 /* GoogleDataTransportCCTSupport.framework */; };
-		43044FC9234C615E00F1BA87 /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43044FC5234C615E00F1BA87 /* GoogleUtilities.framework */; };
-		43044FD0234C616700F1BA87 /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43044FCA234C616700F1BA87 /* FirebaseAnalytics.framework */; };
-		43044FD1234C616700F1BA87 /* FirebaseMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43044FCB234C616700F1BA87 /* FirebaseMessaging.framework */; };
-		43044FD2234C616700F1BA87 /* FIRAnalyticsConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43044FCC234C616700F1BA87 /* FIRAnalyticsConnector.framework */; };
-		43044FD3234C616800F1BA87 /* FirebaseCoreDiagnostics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43044FCD234C616700F1BA87 /* FirebaseCoreDiagnostics.framework */; };
-		43044FD4234C616800F1BA87 /* FirebaseInstanceID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43044FCE234C616700F1BA87 /* FirebaseInstanceID.framework */; };
-		43044FD5234C616800F1BA87 /* FirebaseCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43044FCF234C616700F1BA87 /* FirebaseCore.framework */; };
-		43044FD7234C669300F1BA87 /* GoogleAppMeasurement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43044FC4234C615E00F1BA87 /* GoogleAppMeasurement.framework */; };
-		43044FD9234C677000F1BA87 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43044FD8234C677000F1BA87 /* StoreKit.framework */; };
-		43044FDA234C677E00F1BA87 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43044FD8234C677000F1BA87 /* StoreKit.framework */; };
-		4323F9382339FDEC00243655 /* output.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9362339FDEC00243655 /* output.xcfilelist */; };
-		4323F9392339FDEC00243655 /* output.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9362339FDEC00243655 /* output.xcfilelist */; };
-		4323F93A2339FDEC00243655 /* input.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9372339FDEC00243655 /* input.xcfilelist */; };
-		4323F93B2339FDEC00243655 /* input.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9372339FDEC00243655 /* input.xcfilelist */; };
-		4323F94A2339FE6400243655 /* Swinject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F93C2339FE6200243655 /* Swinject.framework */; };
-		4323F94B2339FE6400243655 /* TOCropViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F93D2339FE6300243655 /* TOCropViewController.framework */; };
-		4323F94C2339FE6400243655 /* RxDataSources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F93E2339FE6300243655 /* RxDataSources.framework */; };
-		4323F94D2339FE6400243655 /* UIScrollView_InfiniteScroll.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F93F2339FE6300243655 /* UIScrollView_InfiniteScroll.framework */; };
-		4323F94E2339FE6400243655 /* Aztec.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9402339FE6300243655 /* Aztec.framework */; };
-		4323F94F2339FE6400243655 /* ToastSwiftFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9412339FE6300243655 /* ToastSwiftFramework.framework */; };
-		4323F9502339FE6400243655 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9422339FE6300243655 /* RxCocoa.framework */; };
-		4323F9512339FE6400243655 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9432339FE6300243655 /* RxSwift.framework */; };
-		4323F9522339FE6400243655 /* GSKStretchyHeaderView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9442339FE6300243655 /* GSKStretchyHeaderView.framework */; };
-		4323F9532339FE6400243655 /* CropViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9452339FE6300243655 /* CropViewController.framework */; };
-		4323F9542339FE6400243655 /* ViewModelBindable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9462339FE6300243655 /* ViewModelBindable.framework */; };
-		4323F9552339FE6400243655 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9472339FE6300243655 /* SDWebImage.framework */; };
-		4323F9562339FE6400243655 /* Gridicons.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9482339FE6300243655 /* Gridicons.framework */; };
-		4323F9572339FE6400243655 /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9492339FE6400243655 /* Kanna.framework */; };
-		4323F9582339FF1A00243655 /* Aztec.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9402339FE6300243655 /* Aztec.framework */; };
-		4323F9592339FF1A00243655 /* CropViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9452339FE6300243655 /* CropViewController.framework */; };
-		4323F95A2339FF1A00243655 /* Gridicons.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9482339FE6300243655 /* Gridicons.framework */; };
-		4323F95B2339FF1B00243655 /* GSKStretchyHeaderView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9442339FE6300243655 /* GSKStretchyHeaderView.framework */; };
-		4323F95C2339FF1B00243655 /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9492339FE6400243655 /* Kanna.framework */; };
-		4323F95D2339FF1B00243655 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9422339FE6300243655 /* RxCocoa.framework */; };
-		4323F95E2339FF1B00243655 /* RxDataSources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F93E2339FE6300243655 /* RxDataSources.framework */; };
-		4323F95F2339FF1B00243655 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9432339FE6300243655 /* RxSwift.framework */; };
-		4323F9602339FF1B00243655 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9472339FE6300243655 /* SDWebImage.framework */; };
-		4323F9612339FF1B00243655 /* Swinject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F93C2339FE6200243655 /* Swinject.framework */; };
-		4323F9622339FF1B00243655 /* ToastSwiftFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9412339FE6300243655 /* ToastSwiftFramework.framework */; };
-		4323F9632339FF1B00243655 /* TOCropViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F93D2339FE6300243655 /* TOCropViewController.framework */; };
-		4323F9642339FF1B00243655 /* UIScrollView_InfiniteScroll.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F93F2339FE6300243655 /* UIScrollView_InfiniteScroll.framework */; };
-		4323F9652339FF1B00243655 /* ViewModelBindable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F9462339FE6300243655 /* ViewModelBindable.framework */; };
-		4323F968233A022A00243655 /* RxPictionSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F966233A022A00243655 /* RxPictionSDK.framework */; };
-		4323F969233A022A00243655 /* PictionSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F967233A022A00243655 /* PictionSDK.framework */; };
-		4323F970233A14E800243655 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F96A233A14E800243655 /* Result.framework */; };
-		4323F971233A14E800243655 /* Moya_ModelMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F96B233A14E800243655 /* Moya_ModelMapper.framework */; };
-		4323F972233A14E800243655 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F96C233A14E800243655 /* Alamofire.framework */; };
-		4323F973233A14E800243655 /* KeychainAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F96D233A14E800243655 /* KeychainAccess.framework */; };
-		4323F974233A14E800243655 /* Mapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F96E233A14E800243655 /* Mapper.framework */; };
-		4323F975233A14E800243655 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F96F233A14E800243655 /* Moya.framework */; };
-		4323F976233A14EE00243655 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F96C233A14E800243655 /* Alamofire.framework */; };
-		4323F977233A14EF00243655 /* KeychainAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F96D233A14E800243655 /* KeychainAccess.framework */; };
-		4323F978233A14EF00243655 /* Mapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F96E233A14E800243655 /* Mapper.framework */; };
-		4323F979233A14EF00243655 /* Moya_ModelMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F96B233A14E800243655 /* Moya_ModelMapper.framework */; };
-		4323F97A233A14EF00243655 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F96F233A14E800243655 /* Moya.framework */; };
-		4323F97B233A14EF00243655 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F96A233A14E800243655 /* Result.framework */; };
 		4323FA5C233A165600243655 /* UIViewController.Container+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F97F233A165600243655 /* UIViewController.Container+Extension.swift */; };
 		4323FA5D233A165600243655 /* UIViewController.Container+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F97F233A165600243655 /* UIViewController.Container+Extension.swift */; };
 		4323FA5E233A165600243655 /* ViewControllerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F980233A165600243655 /* ViewControllerAssembly.swift */; };
@@ -393,10 +333,6 @@
 		4323FBA9233A166400243655 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA5A233A165600243655 /* Updater.swift */; };
 		4323FBAA233A166400243655 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA5B233A165600243655 /* Toast.swift */; };
 		4323FBAB233A166400243655 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA5B233A165600243655 /* Toast.swift */; };
-		4323FBAE233AEEC300243655 /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323FBAD233AEEC300243655 /* RxRelay.framework */; };
-		4323FBAF233AEED000243655 /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323FBAD233AEEC300243655 /* RxRelay.framework */; };
-		4323FBB0233AF1A100243655 /* PictionSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F967233A022A00243655 /* PictionSDK.framework */; };
-		4323FBB1233AF1A100243655 /* RxPictionSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4323F966233A022A00243655 /* RxPictionSDK.framework */; };
 		4323FBC3233C876D00243655 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FBC2233C876D00243655 /* Localization.swift */; };
 		4323FBC4233C876D00243655 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FBC2233C876D00243655 /* Localization.swift */; };
 		4356F4F7233D9CBB000710FC /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4356F4F6233D9CBB000710FC /* LocalizedStrings.swift */; };
@@ -423,6 +359,8 @@
 		43FE8EF2235429ED0074080B /* piction-ios-test_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43FE8EEE235429EC0074080B /* piction-ios-test_Info.plist */; };
 		43FE8EF62354463B0074080B /* AppShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FE8EF52354463B0074080B /* AppShortcut.swift */; };
 		43FE8EF72354463B0074080B /* AppShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FE8EF52354463B0074080B /* AppShortcut.swift */; };
+		96E641433AA6D44A5FDF04AC /* Pods_piction_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A283B9DC4914867FABBAA1DE /* Pods_piction_ios.framework */; };
+		C05A2DE3900B7207203B46C6 /* Pods_piction_ios_test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39BA2EF518F7FB530A38CAFD /* Pods_piction_ios_test.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -439,44 +377,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		43044FBE234C615900F1BA87 /* nanopb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = nanopb.framework; path = Carthage/Build/iOS/nanopb.framework; sourceTree = "<group>"; };
-		43044FBF234C615900F1BA87 /* Protobuf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Protobuf.framework; path = Carthage/Build/iOS/Protobuf.framework; sourceTree = "<group>"; };
-		43044FC2234C615E00F1BA87 /* GoogleDataTransport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleDataTransport.framework; path = Carthage/Build/iOS/GoogleDataTransport.framework; sourceTree = "<group>"; };
-		43044FC3234C615E00F1BA87 /* GoogleDataTransportCCTSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleDataTransportCCTSupport.framework; path = Carthage/Build/iOS/GoogleDataTransportCCTSupport.framework; sourceTree = "<group>"; };
-		43044FC4234C615E00F1BA87 /* GoogleAppMeasurement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleAppMeasurement.framework; path = Carthage/Build/iOS/GoogleAppMeasurement.framework; sourceTree = "<group>"; };
-		43044FC5234C615E00F1BA87 /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleUtilities.framework; path = Carthage/Build/iOS/GoogleUtilities.framework; sourceTree = "<group>"; };
-		43044FCA234C616700F1BA87 /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = Carthage/Build/iOS/FirebaseAnalytics.framework; sourceTree = "<group>"; };
-		43044FCB234C616700F1BA87 /* FirebaseMessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseMessaging.framework; path = Carthage/Build/iOS/FirebaseMessaging.framework; sourceTree = "<group>"; };
-		43044FCC234C616700F1BA87 /* FIRAnalyticsConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FIRAnalyticsConnector.framework; path = Carthage/Build/iOS/FIRAnalyticsConnector.framework; sourceTree = "<group>"; };
-		43044FCD234C616700F1BA87 /* FirebaseCoreDiagnostics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCoreDiagnostics.framework; path = Carthage/Build/iOS/FirebaseCoreDiagnostics.framework; sourceTree = "<group>"; };
-		43044FCE234C616700F1BA87 /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseInstanceID.framework; path = Carthage/Build/iOS/FirebaseInstanceID.framework; sourceTree = "<group>"; };
-		43044FCF234C616700F1BA87 /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCore.framework; path = Carthage/Build/iOS/FirebaseCore.framework; sourceTree = "<group>"; };
-		43044FD8234C677000F1BA87 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS13.1.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
+		253016FC00AF42FB8CD49BCE /* Pods-piction-ios-test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-piction-ios-test.release.xcconfig"; path = "Target Support Files/Pods-piction-ios-test/Pods-piction-ios-test.release.xcconfig"; sourceTree = "<group>"; };
+		39BA2EF518F7FB530A38CAFD /* Pods_piction_ios_test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_piction_ios_test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4317A40622E172A200A5C725 /* piction-ios-test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "piction-ios-test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4323F9362339FDEC00243655 /* output.xcfilelist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcfilelist; path = output.xcfilelist; sourceTree = "<group>"; };
-		4323F9372339FDEC00243655 /* input.xcfilelist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcfilelist; path = input.xcfilelist; sourceTree = "<group>"; };
-		4323F93C2339FE6200243655 /* Swinject.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Swinject.framework; path = Carthage/Build/iOS/Swinject.framework; sourceTree = "<group>"; };
-		4323F93D2339FE6300243655 /* TOCropViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TOCropViewController.framework; path = Carthage/Build/iOS/TOCropViewController.framework; sourceTree = "<group>"; };
-		4323F93E2339FE6300243655 /* RxDataSources.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxDataSources.framework; path = Carthage/Build/iOS/RxDataSources.framework; sourceTree = "<group>"; };
-		4323F93F2339FE6300243655 /* UIScrollView_InfiniteScroll.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIScrollView_InfiniteScroll.framework; path = Carthage/Build/iOS/UIScrollView_InfiniteScroll.framework; sourceTree = "<group>"; };
-		4323F9402339FE6300243655 /* Aztec.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Aztec.framework; path = Carthage/Build/iOS/Aztec.framework; sourceTree = "<group>"; };
-		4323F9412339FE6300243655 /* ToastSwiftFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ToastSwiftFramework.framework; path = Carthage/Build/iOS/ToastSwiftFramework.framework; sourceTree = "<group>"; };
-		4323F9422339FE6300243655 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
-		4323F9432339FE6300243655 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
-		4323F9442339FE6300243655 /* GSKStretchyHeaderView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GSKStretchyHeaderView.framework; path = Carthage/Build/iOS/GSKStretchyHeaderView.framework; sourceTree = "<group>"; };
-		4323F9452339FE6300243655 /* CropViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CropViewController.framework; path = Carthage/Build/iOS/CropViewController.framework; sourceTree = "<group>"; };
-		4323F9462339FE6300243655 /* ViewModelBindable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ViewModelBindable.framework; path = Carthage/Build/iOS/ViewModelBindable.framework; sourceTree = "<group>"; };
-		4323F9472339FE6300243655 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = Carthage/Build/iOS/SDWebImage.framework; sourceTree = "<group>"; };
-		4323F9482339FE6300243655 /* Gridicons.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Gridicons.framework; path = Carthage/Build/iOS/Gridicons.framework; sourceTree = "<group>"; };
-		4323F9492339FE6400243655 /* Kanna.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kanna.framework; path = Carthage/Build/iOS/Kanna.framework; sourceTree = "<group>"; };
-		4323F966233A022A00243655 /* RxPictionSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxPictionSDK.framework; path = Product/RxPictionSDK.framework; sourceTree = "<group>"; };
-		4323F967233A022A00243655 /* PictionSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PictionSDK.framework; path = Product/PictionSDK.framework; sourceTree = "<group>"; };
-		4323F96A233A14E800243655 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
-		4323F96B233A14E800243655 /* Moya_ModelMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Moya_ModelMapper.framework; path = Carthage/Build/iOS/Moya_ModelMapper.framework; sourceTree = "<group>"; };
-		4323F96C233A14E800243655 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
-		4323F96D233A14E800243655 /* KeychainAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KeychainAccess.framework; path = Carthage/Build/iOS/KeychainAccess.framework; sourceTree = "<group>"; };
-		4323F96E233A14E800243655 /* Mapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mapper.framework; path = Carthage/Build/iOS/Mapper.framework; sourceTree = "<group>"; };
-		4323F96F233A14E800243655 /* Moya.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Moya.framework; path = Carthage/Build/iOS/Moya.framework; sourceTree = "<group>"; };
 		4323F97F233A165600243655 /* UIViewController.Container+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController.Container+Extension.swift"; sourceTree = "<group>"; };
 		4323F980233A165600243655 /* ViewControllerAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerAssembly.swift; sourceTree = "<group>"; };
 		4323F981233A165600243655 /* ViewModelAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModelAssembly.swift; sourceTree = "<group>"; };
@@ -640,7 +543,6 @@
 		4323FA55233A165600243655 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4323FA5A233A165600243655 /* Updater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
 		4323FA5B233A165600243655 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
-		4323FBAD233AEEC300243655 /* RxRelay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxRelay.framework; path = Carthage/Build/iOS/RxRelay.framework; sourceTree = "<group>"; };
 		4323FBC2233C876D00243655 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		432CAC7822B725F00007EE03 /* piction-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "piction-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4356F4F6233D9CBB000710FC /* LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
@@ -660,6 +562,10 @@
 		43FE8EF323542ABA0074080B /* piction-ios-test.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "piction-ios-test.entitlements"; sourceTree = "<group>"; };
 		43FE8EF423542ABA0074080B /* piction-ios.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "piction-ios.entitlements"; sourceTree = "<group>"; };
 		43FE8EF52354463B0074080B /* AppShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppShortcut.swift; sourceTree = "<group>"; };
+		5801D77C0DACAB5508705265 /* Pods-piction-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-piction-ios.debug.xcconfig"; path = "Target Support Files/Pods-piction-ios/Pods-piction-ios.debug.xcconfig"; sourceTree = "<group>"; };
+		664B7EC521723C586AC0509D /* Pods-piction-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-piction-ios.release.xcconfig"; path = "Target Support Files/Pods-piction-ios/Pods-piction-ios.release.xcconfig"; sourceTree = "<group>"; };
+		A053F16EAA8B183FEC3E33BF /* Pods-piction-ios-test.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-piction-ios-test.debug.xcconfig"; path = "Target Support Files/Pods-piction-ios-test/Pods-piction-ios-test.debug.xcconfig"; sourceTree = "<group>"; };
+		A283B9DC4914867FABBAA1DE /* Pods_piction_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_piction_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -667,42 +573,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43044FD9234C677000F1BA87 /* StoreKit.framework in Frameworks */,
-				43044FC0234C615900F1BA87 /* nanopb.framework in Frameworks */,
-				43044FC1234C615900F1BA87 /* Protobuf.framework in Frameworks */,
-				43044FD0234C616700F1BA87 /* FirebaseAnalytics.framework in Frameworks */,
-				43044FD1234C616700F1BA87 /* FirebaseMessaging.framework in Frameworks */,
-				43044FD2234C616700F1BA87 /* FIRAnalyticsConnector.framework in Frameworks */,
-				43044FD3234C616800F1BA87 /* FirebaseCoreDiagnostics.framework in Frameworks */,
-				43044FD4234C616800F1BA87 /* FirebaseInstanceID.framework in Frameworks */,
-				43044FD5234C616800F1BA87 /* FirebaseCore.framework in Frameworks */,
-				43044FD7234C669300F1BA87 /* GoogleAppMeasurement.framework in Frameworks */,
-				43044FC6234C615E00F1BA87 /* GoogleDataTransport.framework in Frameworks */,
-				43044FC7234C615E00F1BA87 /* GoogleDataTransportCCTSupport.framework in Frameworks */,
-				43044FC9234C615E00F1BA87 /* GoogleUtilities.framework in Frameworks */,
-				4323F94E2339FE6400243655 /* Aztec.framework in Frameworks */,
-				4323F9532339FE6400243655 /* CropViewController.framework in Frameworks */,
-				4323F9562339FE6400243655 /* Gridicons.framework in Frameworks */,
-				4323F9522339FE6400243655 /* GSKStretchyHeaderView.framework in Frameworks */,
-				4323F9572339FE6400243655 /* Kanna.framework in Frameworks */,
-				4323F9502339FE6400243655 /* RxCocoa.framework in Frameworks */,
-				4323F94C2339FE6400243655 /* RxDataSources.framework in Frameworks */,
-				4323FBAE233AEEC300243655 /* RxRelay.framework in Frameworks */,
-				4323F9512339FE6400243655 /* RxSwift.framework in Frameworks */,
-				4323F9552339FE6400243655 /* SDWebImage.framework in Frameworks */,
-				4323F94A2339FE6400243655 /* Swinject.framework in Frameworks */,
-				4323F94F2339FE6400243655 /* ToastSwiftFramework.framework in Frameworks */,
-				4323F94B2339FE6400243655 /* TOCropViewController.framework in Frameworks */,
-				4323F94D2339FE6400243655 /* UIScrollView_InfiniteScroll.framework in Frameworks */,
-				4323F9542339FE6400243655 /* ViewModelBindable.framework in Frameworks */,
-				4323F972233A14E800243655 /* Alamofire.framework in Frameworks */,
-				4323F973233A14E800243655 /* KeychainAccess.framework in Frameworks */,
-				4323F974233A14E800243655 /* Mapper.framework in Frameworks */,
-				4323F975233A14E800243655 /* Moya.framework in Frameworks */,
-				4323F971233A14E800243655 /* Moya_ModelMapper.framework in Frameworks */,
-				4323F970233A14E800243655 /* Result.framework in Frameworks */,
-				4323F969233A022A00243655 /* PictionSDK.framework in Frameworks */,
-				4323F968233A022A00243655 /* RxPictionSDK.framework in Frameworks */,
+				C05A2DE3900B7207203B46C6 /* Pods_piction_ios_test.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -710,43 +581,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43044FDA234C677E00F1BA87 /* StoreKit.framework in Frameworks */,
-				4323F9582339FF1A00243655 /* Aztec.framework in Frameworks */,
-				4323F9592339FF1A00243655 /* CropViewController.framework in Frameworks */,
-				4323F95A2339FF1A00243655 /* Gridicons.framework in Frameworks */,
-				4323F95B2339FF1B00243655 /* GSKStretchyHeaderView.framework in Frameworks */,
-				4323F95C2339FF1B00243655 /* Kanna.framework in Frameworks */,
-				4323F95D2339FF1B00243655 /* RxCocoa.framework in Frameworks */,
-				4323F95E2339FF1B00243655 /* RxDataSources.framework in Frameworks */,
-				4323FBAF233AEED000243655 /* RxRelay.framework in Frameworks */,
-				4323F95F2339FF1B00243655 /* RxSwift.framework in Frameworks */,
-				4323F9602339FF1B00243655 /* SDWebImage.framework in Frameworks */,
-				4323F9612339FF1B00243655 /* Swinject.framework in Frameworks */,
-				4323F9622339FF1B00243655 /* ToastSwiftFramework.framework in Frameworks */,
-				4323F9632339FF1B00243655 /* TOCropViewController.framework in Frameworks */,
-				4323F9642339FF1B00243655 /* UIScrollView_InfiniteScroll.framework in Frameworks */,
-				4323F9652339FF1B00243655 /* ViewModelBindable.framework in Frameworks */,
-				4323F976233A14EE00243655 /* Alamofire.framework in Frameworks */,
-				4323F977233A14EF00243655 /* KeychainAccess.framework in Frameworks */,
-				4323F978233A14EF00243655 /* Mapper.framework in Frameworks */,
-				4323F97A233A14EF00243655 /* Moya.framework in Frameworks */,
-				4323F979233A14EF00243655 /* Moya_ModelMapper.framework in Frameworks */,
-				4323F97B233A14EF00243655 /* Result.framework in Frameworks */,
-				4323FBB0233AF1A100243655 /* PictionSDK.framework in Frameworks */,
-				4323FBB1233AF1A100243655 /* RxPictionSDK.framework in Frameworks */,
+				96E641433AA6D44A5FDF04AC /* Pods_piction_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4323F9352339FDEC00243655 /* XCFileList */ = {
+		212468BF375FADCC8C392E13 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				4323F9362339FDEC00243655 /* output.xcfilelist */,
-				4323F9372339FDEC00243655 /* input.xcfilelist */,
+				5801D77C0DACAB5508705265 /* Pods-piction-ios.debug.xcconfig */,
+				664B7EC521723C586AC0509D /* Pods-piction-ios.release.xcconfig */,
+				A053F16EAA8B183FEC3E33BF /* Pods-piction-ios-test.debug.xcconfig */,
+				253016FC00AF42FB8CD49BCE /* Pods-piction-ios-test.release.xcconfig */,
 			);
-			path = XCFileList;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		4323F97D233A165600243655 /* piction-ios */ = {
@@ -1382,42 +1232,8 @@
 		43FC8931229E60B90074C3D6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				43044FD8234C677000F1BA87 /* StoreKit.framework */,
-				43044FCC234C616700F1BA87 /* FIRAnalyticsConnector.framework */,
-				43044FCA234C616700F1BA87 /* FirebaseAnalytics.framework */,
-				43044FCF234C616700F1BA87 /* FirebaseCore.framework */,
-				43044FCD234C616700F1BA87 /* FirebaseCoreDiagnostics.framework */,
-				43044FCE234C616700F1BA87 /* FirebaseInstanceID.framework */,
-				43044FCB234C616700F1BA87 /* FirebaseMessaging.framework */,
-				43044FC4234C615E00F1BA87 /* GoogleAppMeasurement.framework */,
-				43044FC2234C615E00F1BA87 /* GoogleDataTransport.framework */,
-				43044FC3234C615E00F1BA87 /* GoogleDataTransportCCTSupport.framework */,
-				43044FC5234C615E00F1BA87 /* GoogleUtilities.framework */,
-				43044FBE234C615900F1BA87 /* nanopb.framework */,
-				43044FBF234C615900F1BA87 /* Protobuf.framework */,
-				4323FBAD233AEEC300243655 /* RxRelay.framework */,
-				4323F96C233A14E800243655 /* Alamofire.framework */,
-				4323F96D233A14E800243655 /* KeychainAccess.framework */,
-				4323F96E233A14E800243655 /* Mapper.framework */,
-				4323F96B233A14E800243655 /* Moya_ModelMapper.framework */,
-				4323F96F233A14E800243655 /* Moya.framework */,
-				4323F96A233A14E800243655 /* Result.framework */,
-				4323F967233A022A00243655 /* PictionSDK.framework */,
-				4323F966233A022A00243655 /* RxPictionSDK.framework */,
-				4323F9402339FE6300243655 /* Aztec.framework */,
-				4323F9452339FE6300243655 /* CropViewController.framework */,
-				4323F9482339FE6300243655 /* Gridicons.framework */,
-				4323F9442339FE6300243655 /* GSKStretchyHeaderView.framework */,
-				4323F9492339FE6400243655 /* Kanna.framework */,
-				4323F9422339FE6300243655 /* RxCocoa.framework */,
-				4323F93E2339FE6300243655 /* RxDataSources.framework */,
-				4323F9432339FE6300243655 /* RxSwift.framework */,
-				4323F9472339FE6300243655 /* SDWebImage.framework */,
-				4323F93C2339FE6200243655 /* Swinject.framework */,
-				4323F9412339FE6300243655 /* ToastSwiftFramework.framework */,
-				4323F93D2339FE6300243655 /* TOCropViewController.framework */,
-				4323F93F2339FE6300243655 /* UIScrollView_InfiniteScroll.framework */,
-				4323F9462339FE6300243655 /* ViewModelBindable.framework */,
+				A283B9DC4914867FABBAA1DE /* Pods_piction_ios.framework */,
+				39BA2EF518F7FB530A38CAFD /* Pods_piction_ios_test.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1448,9 +1264,9 @@
 			children = (
 				OBJ_7 /* Sources */,
 				43FE8EEC235429EC0074080B /* SupportingFiles */,
-				4323F9352339FDEC00243655 /* XCFileList */,
 				OBJ_117 /* Products */,
 				43FC8931229E60B90074C3D6 /* Frameworks */,
+				212468BF375FADCC8C392E13 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1469,10 +1285,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4317A40322E172A200A5C725 /* Build configuration list for PBXNativeTarget "piction-ios-test" */;
 			buildPhases = (
+				E4AE755F0770527CE171FC98 /* [CP] Check Pods Manifest.lock */,
 				4317A34522E172A200A5C725 /* Sources */,
 				4317A3D122E172A200A5C725 /* Frameworks */,
 				4317A3E622E172A200A5C725 /* Resources */,
-				4323FBAC233A20C800243655 /* ShellScript */,
+				55E58BDDDC2631E8F5568046 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1487,11 +1304,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 432CAC8A22B725F30007EE03 /* Build configuration list for PBXNativeTarget "piction-ios" */;
 			buildPhases = (
+				5DE1F0F26EA8E740F78086AB /* [CP] Check Pods Manifest.lock */,
 				432CAC7422B725F00007EE03 /* Sources */,
 				432CAC7522B725F00007EE03 /* Frameworks */,
 				432CAC7622B725F00007EE03 /* Resources */,
 				4323F90F2339B3C500243655 /* Embed Frameworks */,
-				4323F97C233A154F00243655 /* ShellScript */,
+				056DC58C2BF0E19CD8C00EB1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1567,7 +1385,6 @@
 				4323FADB233A165C00243655 /* PostHeader.storyboard in Resources */,
 				4323FB49233A166000243655 /* ChangeMyInfo.storyboard in Resources */,
 				4323FB71233A166200243655 /* ConfirmDonation.storyboard in Resources */,
-				4323F93B2339FDEC00243655 /* input.xcfilelist in Resources */,
 				4356F51C233DF184000710FC /* Localizable.strings in Resources */,
 				4323FB81233A166300243655 /* SendDonation.storyboard in Resources */,
 				4323FB0F233A165E00243655 /* CustomEmptyView.storyboard in Resources */,
@@ -1582,7 +1399,6 @@
 				4356F508233DE798000710FC /* LaunchScreen.storyboard in Resources */,
 				4323FAEB233A165C00243655 /* SeriesPost.storyboard in Resources */,
 				4323FB83233A166300243655 /* SponsorshipList.storyboard in Resources */,
-				4323F9392339FDEC00243655 /* output.xcfilelist in Resources */,
 				4323FAEF233A165C00243655 /* ProjectHeaderView.xib in Resources */,
 				4323FB5F233A166100243655 /* UserInfo.storyboard in Resources */,
 			);
@@ -1614,7 +1430,6 @@
 				4323FADA233A165C00243655 /* PostHeader.storyboard in Resources */,
 				4323FB48233A166000243655 /* ChangeMyInfo.storyboard in Resources */,
 				4323FB70233A166200243655 /* ConfirmDonation.storyboard in Resources */,
-				4323F93A2339FDEC00243655 /* input.xcfilelist in Resources */,
 				4356F51B233DF184000710FC /* Localizable.strings in Resources */,
 				4323FB80233A166300243655 /* SendDonation.storyboard in Resources */,
 				4323FB0E233A165E00243655 /* CustomEmptyView.storyboard in Resources */,
@@ -1630,7 +1445,6 @@
 				4356F507233DE798000710FC /* LaunchScreen.storyboard in Resources */,
 				4323FAEA233A165C00243655 /* SeriesPost.storyboard in Resources */,
 				4323FB82233A166300243655 /* SponsorshipList.storyboard in Resources */,
-				4323F9382339FDEC00243655 /* output.xcfilelist in Resources */,
 				4323FAEE233A165C00243655 /* ProjectHeaderView.xib in Resources */,
 				4323FB5E233A166100243655 /* UserInfo.storyboard in Resources */,
 			);
@@ -1639,41 +1453,83 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4323F97C233A154F00243655 /* ShellScript */ = {
+		056DC58C2BF0E19CD8C00EB1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"$(SRCROOT)/XCFileList/input.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-piction-ios/Pods-piction-ios-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-piction-ios/Pods-piction-ios-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-piction-ios/Pods-piction-ios-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
-		4323FBAC233A20C800243655 /* ShellScript */ = {
+		55E58BDDDC2631E8F5568046 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"$(SRCROOT)/XCFileList/input.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-piction-ios-test/Pods-piction-ios-test-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-piction-ios-test/Pods-piction-ios-test-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-piction-ios-test/Pods-piction-ios-test-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5DE1F0F26EA8E740F78086AB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-piction-ios-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E4AE755F0770527CE171FC98 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-piction-ios-test-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1992,6 +1848,7 @@
 /* Begin XCBuildConfiguration section */
 		4317A40422E172A200A5C725 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A053F16EAA8B183FEC3E33BF /* Pods-piction-ios-test.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2027,11 +1884,11 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TVSPDRR58A;
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/Framework",
 					"$(PROJECT_DIR)/Product",
 				);
@@ -2059,10 +1916,7 @@
 				MACOSX_DEPLOYMENT_TARGET = "";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = (
-					"$(OTHER_LDFLAGS)",
-					"-ObjC",
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pictionnetwork.piction-test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2078,6 +1932,7 @@
 		};
 		4317A40522E172A200A5C725 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 253016FC00AF42FB8CD49BCE /* Pods-piction-ios-test.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -2114,11 +1969,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = TVSPDRR58A;
+				ENABLE_BITCODE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/Framework",
 					"$(PROJECT_DIR)/Product",
 				);
@@ -2141,10 +1996,7 @@
 				MACOSX_DEPLOYMENT_TARGET = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = (
-					"$(OTHER_LDFLAGS)",
-					"-ObjC",
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pictionnetwork.piction-test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2160,8 +2012,8 @@
 		};
 		432CAC8B22B725F30007EE03 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5801D77C0DACAB5508705265 /* Pods-piction-ios.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2195,11 +2047,11 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TVSPDRR58A;
+				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/Framework",
 					"$(PROJECT_DIR)/Product",
 				);
@@ -2246,8 +2098,8 @@
 		};
 		432CAC8C22B725F30007EE03 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 664B7EC521723C586AC0509D /* Pods-piction-ios.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2282,11 +2134,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = TVSPDRR58A;
+				ENABLE_BITCODE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/Framework",
 					"$(PROJECT_DIR)/Product",
 				);

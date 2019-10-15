@@ -3,9 +3,9 @@
 
 
 # Installation
-## Use Carthage
+## Using CocoaPods
 ```
-Carthage bootstrap --platform ios --no-use-binaries
+pod install
 ```
 
 ## License

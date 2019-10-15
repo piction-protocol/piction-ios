@@ -10,7 +10,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 import PictionSDK
-import RxPictionSDK
 
 final class CreatePostViewModel: InjectableViewModel {
     typealias Dependency = (

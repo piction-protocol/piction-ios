@@ -163,10 +163,6 @@
                                 </connections>
                             </tableViewCell>
                         </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="cJU-0K-2OI" id="FKl-bT-rCb"/>
-                            <outlet property="delegate" destination="cJU-0K-2OI" id="KIW-uD-RyI"/>
-                        </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="거래 내역" largeTitleDisplayMode="never" id="ak5-SD-b64">
                         <userDefinedRuntimeAttributes>

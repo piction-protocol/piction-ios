@@ -60,6 +60,9 @@ extension MyProjectViewController: ViewModelBindable {
     func bindViewModel(viewModel: ViewModel) {
         let dataSource = configureDataSource()
 
+        tableView.dataSource = nil
+        tableView.delegate = nil
+
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
 

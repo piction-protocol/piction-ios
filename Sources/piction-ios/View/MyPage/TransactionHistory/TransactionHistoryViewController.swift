@@ -100,6 +100,12 @@ extension TransactionHistoryViewController: ViewModelBindable {
             return self?.viewModel?.shouldInfiniteScroll ?? false
         }
 
+        tableView.dataSource = nil
+        tableView.delegate = nil
+
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+
         let input = TransactionHistoryViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
             refreshControlDidRefresh: refreshControl!.rx.controlEvent(.valueChanged).asDriver(),

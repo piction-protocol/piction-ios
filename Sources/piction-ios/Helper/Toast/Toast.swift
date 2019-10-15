@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import ToastSwiftFramework
-//
+import Toast_Swift
+
 class Toast {
     class func showToast(_ message: String) {
         if let window = UIApplication.shared.keyWindow {
