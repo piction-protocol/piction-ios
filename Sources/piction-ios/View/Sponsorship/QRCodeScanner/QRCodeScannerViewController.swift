@@ -47,6 +47,16 @@ final class QRCodeScannerViewController: UIViewController {
 
         present(alert, animated: false, completion: nil)
     }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        previewLayer.frame.size = view.frame.size
+
+        if view.frame.size.width != UIScreen.main.bounds.size.width {
+            openErrorPopup(message: LocalizedStrings.popup_title_notsupport_multiwindow.localized())
+        }
+    }
 }
 
 extension QRCodeScannerViewController: ViewModelBindable {

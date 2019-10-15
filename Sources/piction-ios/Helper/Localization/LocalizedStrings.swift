@@ -36,6 +36,7 @@ enum LocalizedStrings {
     case popup_title_pincode_sign_out
     case popup_title_pincode_create
     case popup_title_pincode_confirm
+    case popup_title_notsupport_multiwindow
 
     // Popup & Toast
     case msg_api_internal_server_error

@@ -35,6 +35,7 @@
 "popup_title_pincode_sign_out" = "PIN 입력 실패";
 "popup_title_pincode_create" = "PIN 등록";
 "popup_title_pincode_confirm" = "PIN 재입력";
+"popup_title_notsupport_multiwindow" = "QR 코드 스캐너는 멀티윈도우를 지원하지 않습니다.";
 
 // Popup & Toast
 "msg_api_internal_server_error" = "서버에서 오류가 발생하였습니다.\n잠시 후 다시 시도해주세요.";

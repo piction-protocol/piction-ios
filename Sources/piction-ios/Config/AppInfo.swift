@@ -8,8 +8,8 @@
 
 import UIKit
 
-let SCREEN_W = UIApplication.shared.keyWindow?.bounds.size.width ?? UIScreen.main.bounds.size.width
-let SCREEN_H = UIApplication.shared.keyWindow?.bounds.size.height ?? UIScreen.main.bounds.size.height
+let SCREEN_W = UIScreen.main.bounds.size.width
+let SCREEN_H = UIScreen.main.bounds.size.height
 let STATUS_HEIGHT: CGFloat = UIApplication.shared.statusBarFrame.size.height
 let DEFAULT_NAVIGATION_HEIGHT: CGFloat = STATUS_HEIGHT + 44
 let LARGE_NAVIGATION_HEIGHT: CGFloat = STATUS_HEIGHT + 96
