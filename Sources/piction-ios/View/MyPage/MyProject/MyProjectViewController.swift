@@ -48,7 +48,7 @@ final class MyProjectViewController: UITableViewController {
                 cell.configure(with: model)
                 return cell
         }, canEditRowAtIndexPath: { (_, _) in
-            return true
+            return FEATURE_EDITOR
         })
     }
 }
@@ -79,6 +79,8 @@ extension MyProjectViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+                self?.createProjectButton.isEnabled = FEATURE_EDITOR
+                self?.createProjectButton.title = FEATURE_EDITOR ? LocalizedStrings.create.localized() : ""
             })
             .disposed(by: disposeBag)
         

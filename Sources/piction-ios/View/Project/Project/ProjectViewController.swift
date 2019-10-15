@@ -176,7 +176,7 @@ final class ProjectViewController: UIViewController {
                     return cell
                 }
         }, canEditRowAtIndexPath: { [weak self] (_, _) in
-            return self?.viewModel?.isWriter ?? false
+            return (self?.viewModel?.isWriter ?? false && FEATURE_EDITOR)
         })
         return dataSource
     }

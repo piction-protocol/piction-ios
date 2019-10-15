@@ -97,13 +97,26 @@ class ProjectHeaderView: GSKStretchyHeaderView {
 
     func configureSubscription(isWriter: Bool, isSubscribing: Bool) {
         if isSubscribing {
+            subscriptionButton.isHidden = false
             subscriptionButton.backgroundColor = UIColor(r: 242, g: 242, b: 242)
             subscriptionButton.setTitle(LocalizedStrings.str_project_subscribing.localized(), for: .normal)
             subscriptionButton.setTitleColor(UIColor(r: 191, g: 191, b: 191), for: .normal)
         } else {
-            subscriptionButton.backgroundColor = UIColor(r: 51, g: 51, b: 51)
-            subscriptionButton.setTitle(isWriter ? LocalizedStrings.btn_new_post.localized() : LocalizedStrings.btn_subs.localized(), for: .normal)
-            subscriptionButton.setTitleColor(.white, for: .normal)
+            if isWriter {
+                if FEATURE_EDITOR {
+                    subscriptionButton.isHidden = false
+                    subscriptionButton.backgroundColor = UIColor(r: 51, g: 51, b: 51)
+                    subscriptionButton.setTitle(LocalizedStrings.btn_new_post.localized(), for: .normal)
+                    subscriptionButton.setTitleColor(.white, for: .normal)
+                } else {
+                    subscriptionButton.isHidden = true
+                }
+            } else {
+                subscriptionButton.isHidden = false
+                subscriptionButton.backgroundColor = UIColor(r: 51, g: 51, b: 51)
+                subscriptionButton.setTitle(LocalizedStrings.btn_subs.localized(), for: .normal)
+                subscriptionButton.setTitleColor(.white, for: .normal)
+            }
         }
     }
 
