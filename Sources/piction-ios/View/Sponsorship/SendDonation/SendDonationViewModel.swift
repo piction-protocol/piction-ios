@@ -92,7 +92,7 @@ final class SendDonationViewModel: InjectableViewModel {
             .withLatestFrom(latestSendInfo)
             .flatMap { (userInfo, walletInfo, sendAmount) -> Driver<Action<ResponseData>> in
                 if UserDefaults.standard.string(forKey: "pincode") == nil {
-                    let response = PictionSDK.rx.requestAPI(SponsorshipsAPI.sponsorship(creatorId: userInfo.loginId ?? "", amount: Int(sendAmount) ?? 0))
+                    let response = PictionSDK.rx.requestAPI(SponsorshipsAPI.sponsorship(creatorId: userInfo.loginId ?? "", amount: Double(sendAmount) ?? 0))
                     return Action.makeDriver(response)
                 } else {
                     return Driver.empty()
@@ -111,7 +111,7 @@ final class SendDonationViewModel: InjectableViewModel {
         let sendAmountWithPincodeAction = input.authSuccessWithPincode
             .withLatestFrom(latestSendInfo)
             .flatMap { (userInfo, walletInfo, sendAmount) -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(SponsorshipsAPI.sponsorship(creatorId: userInfo.loginId ?? "", amount: Int(sendAmount) ?? 0))
+                let response = PictionSDK.rx.requestAPI(SponsorshipsAPI.sponsorship(creatorId: userInfo.loginId ?? "", amount: Double(sendAmount) ?? 0))
                 return Action.makeDriver(response)
             }
 

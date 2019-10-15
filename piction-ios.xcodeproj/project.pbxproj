@@ -349,6 +349,8 @@
 		43E5436A2355930D00F2EC45 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E543682355930D00F2EC45 /* SceneDelegate.swift */; };
 		43E54372235598E600F2EC45 /* piction-ios_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43E5436C235598E500F2EC45 /* piction-ios_Info.plist */; };
 		43E54375235598F900F2EC45 /* piction-ios-test_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43E54371235598E500F2EC45 /* piction-ios-test_Info.plist */; };
+		43E543782355AFDB00F2EC45 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E543772355AFDB00F2EC45 /* Double+Extension.swift */; };
+		43E543792355AFDD00F2EC45 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E543772355AFDB00F2EC45 /* Double+Extension.swift */; };
 		43F1865A2342FEAC0050BA67 /* PostFooterSeriesPostListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F186592342FEAC0050BA67 /* PostFooterSeriesPostListTableViewCell.swift */; };
 		43F1865B2343024A0050BA67 /* PostFooterSeriesPostListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F186592342FEAC0050BA67 /* PostFooterSeriesPostListTableViewCell.swift */; };
 		43F1865F23442ECD0050BA67 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 43F1866223442ECD0050BA67 /* Localizable.stringsdict */; };
@@ -558,6 +560,7 @@
 		43E5436D235598E500F2EC45 /* piction-ios.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "piction-ios.entitlements"; sourceTree = "<group>"; };
 		43E5436F235598E500F2EC45 /* piction-ios-test.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "piction-ios-test.entitlements"; sourceTree = "<group>"; };
 		43E54371235598E500F2EC45 /* piction-ios-test_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "piction-ios-test_Info.plist"; sourceTree = "<group>"; };
+		43E543772355AFDB00F2EC45 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		43F186592342FEAC0050BA67 /* PostFooterSeriesPostListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFooterSeriesPostListTableViewCell.swift; sourceTree = "<group>"; };
 		43F1866123442ECD0050BA67 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		43F1866423444E070050BA67 /* DeepLinking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinking.swift; sourceTree = "<group>"; };
@@ -648,6 +651,7 @@
 				4323F992233A165600243655 /* UICollectionView+Extension.swift */,
 				4323F993233A165600243655 /* UIViewController+Rx.swift */,
 				4323F994233A165600243655 /* UITableView+Extension.swift */,
+				43E543772355AFDB00F2EC45 /* Double+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1680,6 +1684,7 @@
 				4323FA81233A165800243655 /* UICollectionView+Extension.swift in Sources */,
 				4323FA65233A165700243655 /* Container+Extension.swift in Sources */,
 				4323FB57233A166100243655 /* TransactionHistoryViewController.swift in Sources */,
+				43E543792355AFDD00F2EC45 /* Double+Extension.swift in Sources */,
 				4323FA6B233A165700243655 /* UIColor+Extension.swift in Sources */,
 				4323FB5B233A166100243655 /* UserInfoViewController.swift in Sources */,
 				4323FBA9233A166400243655 /* Updater.swift in Sources */,
@@ -1825,6 +1830,7 @@
 				4323FA80233A165800243655 /* UICollectionView+Extension.swift in Sources */,
 				4323FA64233A165700243655 /* Container+Extension.swift in Sources */,
 				4323FB56233A166100243655 /* TransactionHistoryViewController.swift in Sources */,
+				43E543782355AFDB00F2EC45 /* Double+Extension.swift in Sources */,
 				4323FA6A233A165700243655 /* UIColor+Extension.swift in Sources */,
 				4323FB5A233A166100243655 /* UserInfoViewController.swift in Sources */,
 				4323FBA8233A166400243655 /* Updater.swift in Sources */,
