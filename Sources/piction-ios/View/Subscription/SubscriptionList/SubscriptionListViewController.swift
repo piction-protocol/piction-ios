@@ -20,11 +20,7 @@ final class SubscriptionListViewController: UIViewController {
     var emptyView = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_W, height: 0))
     private var refreshControl = UIRefreshControl()
 
-    @IBOutlet weak var collectionView: UICollectionView! {
-        didSet {
-            collectionView.refreshControl = refreshControl
-        }
-    }
+    @IBOutlet weak var collectionView: UICollectionView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,6 +108,7 @@ extension SubscriptionListViewController: ViewModelBindable {
             .subscriptionList
             .do(onNext: { [weak self] _ in
                 _ = self?.emptyView.subviews.map { $0.removeFromSuperview() }
+                self?.collectionView.refreshControl = self?.refreshControl
             })
             .drive { $0 }
             .map { [SectionModel(model: "", items: $0)] }
@@ -129,6 +126,7 @@ extension SubscriptionListViewController: ViewModelBindable {
         output
             .embedEmptyViewController
             .drive(onNext: { [weak self] style in
+                self?.collectionView.refreshControl = nil
                 self?.collectionView.contentOffset = CGPoint(x: 0, y: -LARGE_NAVIGATION_HEIGHT)
                 self?.embedCustomEmptyViewController(style: style)
             })

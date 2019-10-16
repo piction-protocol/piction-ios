@@ -28,6 +28,7 @@ final class SponsorshipListViewModel: InjectableViewModel {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
+        let refreshControlDidRefresh: Driver<Void>
     }
 
     struct Output {
@@ -36,6 +37,7 @@ final class SponsorshipListViewModel: InjectableViewModel {
         let sponsorshipList: Driver<[SponsorshipListBySection]>
         let selectedIndexPath: Driver<IndexPath>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
+        let isFetching: Driver<Bool>
     }
 
     func build(input: Input) -> Output {
@@ -49,7 +51,9 @@ final class SponsorshipListViewModel: InjectableViewModel {
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
         let refreshAmount = updater.refreshAmount.asDriver(onErrorDriveWith: .empty())
 
-        let initialLoad = Driver.merge(viewWillAppear, refreshSession, refreshContent, refreshAmount)
+        let refreshControlDidRefresh = input.refreshControlDidRefresh
+
+        let initialLoad = Driver.merge(viewWillAppear, refreshSession, refreshContent, refreshAmount, refreshControlDidRefresh)
             .flatMap { [weak self] _ -> Driver<Void> in
                 guard let `self` = self else { return Driver.empty() }
                 self.sections = []
@@ -115,12 +119,19 @@ final class SponsorshipListViewModel: InjectableViewModel {
 
         let embedEmptyViewController = Driver.merge(embedEmptyView, embedEmptyLoginView)
 
+        let refreshAction = input.refreshControlDidRefresh
+            .withLatestFrom(sponsorshipList)
+            .flatMap { _ -> Driver<Action<Void>> in
+                return Action.makeDriver(Driver.just(()))
+            }
+
         return Output(
             viewWillAppear: input.viewWillAppear,
             viewWillDisappear: viewWillDisappear, 
             sponsorshipList: sponsorshipList,
             selectedIndexPath: selectedIndexPath,
-            embedEmptyViewController: embedEmptyViewController
+            embedEmptyViewController: embedEmptyViewController,
+            isFetching: refreshAction.isExecuting
         )
     }
 }

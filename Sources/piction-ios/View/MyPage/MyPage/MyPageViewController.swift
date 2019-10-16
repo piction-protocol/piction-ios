@@ -51,6 +51,7 @@ final class MyPageViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var emptyView: UIView!
     private var emptyHeight: CGFloat = 0
+    private var refreshControl = UIRefreshControl()
 
     private let logout = PublishSubject<Void>()
 
@@ -167,7 +168,8 @@ extension MyPageViewController: ViewModelBindable {
             viewWillAppear: rx.viewWillAppear.asDriver(),
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
             selectedIndexPath: tableView.rx.itemSelected.asDriver(),
-            logout: logout.asDriver(onErrorDriveWith: .empty())
+            logout: logout.asDriver(onErrorDriveWith: .empty()),
+            refreshControlDidRefresh: refreshControl.rx.controlEvent(.valueChanged).asDriver()
         )
 
         let output = viewModel.build(input: input)
@@ -191,6 +193,7 @@ extension MyPageViewController: ViewModelBindable {
                     view.backgroundColor = UIColor(r: 242, g: 242, b: 247)
                 }
                 self?.emptyView.addSubview(view)
+                self?.tableView.refreshControl = self?.refreshControl
             })
             .drive { $0 }
             .map { $0 }
@@ -251,6 +254,7 @@ extension MyPageViewController: ViewModelBindable {
         output
             .embedEmptyViewController
             .drive(onNext: { [weak self] style in
+                self?.tableView.refreshControl = nil
                 _ = self?.containerView.subviews.map { $0.removeFromSuperview() }
                 self?.containerView.frame.size.height = 0
                 self?.embedCustomEmptyViewController(style: style)
@@ -264,6 +268,11 @@ extension MyPageViewController: ViewModelBindable {
             .drive(onNext: { message in
                 Toast.showToast(message)
             })
+            .disposed(by: disposeBag)
+
+        output
+            .isFetching
+            .drive(refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
     }
 }

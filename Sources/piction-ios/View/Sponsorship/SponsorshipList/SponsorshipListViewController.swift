@@ -47,6 +47,8 @@ final class SponsorshipListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptyView: UIView!
 
+    private var refreshControl = UIRefreshControl()
+
     private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
         _ = emptyView.subviews.map { $0.removeFromSuperview() }
         if style == .sponsorshipListEmpty {
@@ -101,7 +103,8 @@ extension SponsorshipListViewController: ViewModelBindable {
         let input = SponsorshipListViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
-            selectedIndexPath: tableView.rx.itemSelected.asDriver()
+            selectedIndexPath: tableView.rx.itemSelected.asDriver(),
+            refreshControlDidRefresh: refreshControl.rx.controlEvent(.valueChanged).asDriver()
         )
 
         let output = viewModel.build(input: input)
@@ -120,6 +123,7 @@ extension SponsorshipListViewController: ViewModelBindable {
             .do(onNext: { [weak self] _ in
                 _ = self?.emptyView.subviews.map { $0.removeFromSuperview() }
                 self?.emptyView.frame.size.height = 0
+                self?.tableView.refreshControl = self?.refreshControl
             })
             .drive { $0 }
             .map { $0 }
@@ -144,8 +148,14 @@ extension SponsorshipListViewController: ViewModelBindable {
             .embedEmptyViewController
             .drive(onNext: { [weak self] style in
                 guard let `self` = self else { return }
+                self.tableView.refreshControl = nil
                 self.embedCustomEmptyViewController(style: style)
             })
+            .disposed(by: disposeBag)
+
+        output
+            .isFetching
+            .drive(refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
     }
 }

@@ -29,6 +29,7 @@ final class MyPageViewModel: InjectableViewModel {
         let viewWillDisappear: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
         let logout: Driver<Void>
+        let refreshControlDidRefresh: Driver<Void>
     }
 
     struct Output {
@@ -39,6 +40,7 @@ final class MyPageViewModel: InjectableViewModel {
         let embedUserInfoViewController: Driver<Void>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let showToast: Driver<String>
+        let isFetching: Driver<Bool>
     }
 
     func build(input: Input) -> Output {
@@ -49,7 +51,9 @@ final class MyPageViewModel: InjectableViewModel {
 
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
 
-        let userMeAction = Driver.merge(viewWillAppear, refreshSession)
+        let refreshControlDidRefresh = input.refreshControlDidRefresh
+
+        let userMeAction = Driver.merge(viewWillAppear, refreshSession, refreshControlDidRefresh)
             .flatMap { _ -> Driver<Action<ResponseData>> in
                 let response = PictionSDK.rx.requestAPI(UsersAPI.me)
                 return Action.makeDriver(response)
@@ -173,6 +177,12 @@ final class MyPageViewModel: InjectableViewModel {
 
         let showToast = Driver.merge(signOutSuccess, signOutError)
 
+        let refreshAction = input.refreshControlDidRefresh
+        .withLatestFrom(myPageList)
+        .flatMap { _ -> Driver<Action<Void>> in
+            return Action.makeDriver(Driver.just(()))
+        }
+
         return Output(
             viewWillAppear: input.viewWillAppear,
             viewWillDisappear: viewWillDisappear,
@@ -180,7 +190,8 @@ final class MyPageViewModel: InjectableViewModel {
             selectedIndexPath: input.selectedIndexPath,
             embedUserInfoViewController: embedUserInfoViewController,
             embedEmptyViewController: embedEmptyViewController,
-            showToast: showToast
+            showToast: showToast,
+            isFetching: refreshAction.isExecuting
         )
     }
 }
