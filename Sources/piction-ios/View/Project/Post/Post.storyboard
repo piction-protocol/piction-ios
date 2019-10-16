@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RGu-Q3-94L">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RGu-Q3-94L">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,6 +12,7 @@
         <!--Table View Controller-->
         <scene sceneID="xqa-Qv-5zO">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SSS-2E-eVk" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController hidesBottomBarWhenPushed="YES" id="RGu-Q3-94L" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="tC4-La-nwi">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -322,7 +323,6 @@
                         <outlet property="writerLabel" destination="yJp-EP-KXU" id="H97-dW-Isr"/>
                     </connections>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SSS-2E-eVk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="753.62318840579712" y="-92.410714285714278"/>
         </scene>
@@ -335,12 +335,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="koI-sV-IVB">
-                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <gestureRecognizers/>
                                 <wkWebViewConfiguration key="configuration" allowsInlineMediaPlayback="YES">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" audio="YES" video="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="xHZ-lU-vNE" appends="YES" id="aNy-gN-rBU"/>
+                                </connections>
                             </wkWebView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZiD-ey-720">
                                 <rect key="frame" x="0.0" y="380" width="414" height="310"/>
@@ -405,14 +409,14 @@
                                 <items>
                                     <barButtonItem width="100" id="xFd-Am-xYT">
                                         <view key="customView" contentMode="scaleToFill" id="bQl-LA-AUu">
-                                            <rect key="frame" x="20" y="10.5" width="166" height="33"/>
+                                            <rect key="frame" x="20" y="10.5" width="100" height="33"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zbu-4I-4gs">
-                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="33"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="33"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="33" id="1b8-zB-ecP"/>
-                                                        <constraint firstAttribute="width" constant="150" id="F1r-xT-aWh"/>
+                                                        <constraint firstAttribute="width" constant="100" id="F1r-xT-aWh"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="tintColor" name="PictionDarkGray"/>
@@ -436,14 +440,14 @@
                                     <barButtonItem systemItem="flexibleSpace" id="ebB-P9-1bv"/>
                                     <barButtonItem width="100" id="woe-ZJ-c72">
                                         <view key="customView" contentMode="scaleToFill" id="LBT-hY-17x">
-                                            <rect key="frame" x="194" y="10.5" width="200" height="33"/>
+                                            <rect key="frame" x="294" y="10.5" width="100" height="33"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" enabled="NO" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rz0-gr-T2C">
-                                                    <rect key="frame" x="50" y="0.0" width="150" height="33"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="33"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="33" id="Grb-yM-ZKF"/>
-                                                        <constraint firstAttribute="width" constant="150" id="pRM-so-09X"/>
+                                                        <constraint firstAttribute="width" constant="100" id="pRM-so-09X"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="tintColor" name="PictionDarkGray"/>
@@ -475,17 +479,17 @@
                             <constraint firstItem="koI-sV-IVB" firstAttribute="leading" secondItem="eIB-Ts-LbD" secondAttribute="leading" id="7gi-Sh-Bd4"/>
                             <constraint firstItem="koI-sV-IVB" firstAttribute="trailing" secondItem="eIB-Ts-LbD" secondAttribute="trailing" id="Mie-xP-rwy"/>
                             <constraint firstItem="ZiD-ey-720" firstAttribute="leading" secondItem="eIB-Ts-LbD" secondAttribute="leading" id="SHJ-N8-gQt"/>
+                            <constraint firstItem="koI-sV-IVB" firstAttribute="top" secondItem="WQi-79-bE1" secondAttribute="top" id="UJy-wi-a0d"/>
                             <constraint firstItem="ZiD-ey-720" firstAttribute="centerX" secondItem="WQi-79-bE1" secondAttribute="centerX" id="ZXu-IN-uyK"/>
                             <constraint firstItem="ZiD-ey-720" firstAttribute="centerY" secondItem="WQi-79-bE1" secondAttribute="centerY" constant="87" id="g56-ss-sSK"/>
                             <constraint firstItem="eIB-Ts-LbD" firstAttribute="trailing" secondItem="ZiD-ey-720" secondAttribute="trailing" id="hOq-IW-OOC"/>
-                            <constraint firstItem="koI-sV-IVB" firstAttribute="top" secondItem="eIB-Ts-LbD" secondAttribute="top" id="m1g-pq-eWk"/>
                             <constraint firstAttribute="bottom" secondItem="koI-sV-IVB" secondAttribute="bottom" id="rY6-Fp-xZn"/>
                             <constraint firstItem="a0Z-xY-o70" firstAttribute="trailing" secondItem="eIB-Ts-LbD" secondAttribute="trailing" id="wRK-nx-Igf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eIB-Ts-LbD"/>
                     </view>
                     <toolbarItems>
-                        <barButtonItem image="icChevronLeftBlack" id="f4w-Bm-YAi">
+                        <barButtonItem image="icChevronLeftBlack" style="done" id="f4w-Bm-YAi">
                             <color key="tintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                         <barButtonItem title="이전 포스트" id="D09-FE-Ygf">
@@ -511,9 +515,15 @@
                         <outlet property="shareBarButton" destination="Fr8-1K-Ymg" id="GA4-4h-y8J"/>
                         <outlet property="subscriptionButton" destination="Lyf-Ue-cna" id="nw7-TC-AT6"/>
                         <outlet property="subscriptionView" destination="ZiD-ey-720" id="ijL-Vh-wHw"/>
+                        <outlet property="toolBar" destination="a0Z-xY-o70" id="hZT-oq-68x"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P3e-5E-6nJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer cancelsTouchesInView="NO" id="xHZ-lU-vNE">
+                    <connections>
+                        <action selector="tapGesture:" destination="WcH-KM-erN" id="q6U-Fk-jKZ"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2344.9275362318845" y="-92.410714285714278"/>
         </scene>

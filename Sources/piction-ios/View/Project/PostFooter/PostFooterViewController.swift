@@ -75,8 +75,8 @@ final class PostFooterViewController: UIViewController {
 
     private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, PostIndexModel>> {
         return RxTableViewSectionedReloadDataSource<SectionModel<String, PostIndexModel>>(
-            configureCell: { dataSource, tableView, indexPath, model in
-                let current = self.viewModel?.postItem.id == model.post?.id
+            configureCell: { [weak self] dataSource, tableView, indexPath, model in
+                let current = self?.viewModel?.postItem.id == model.post?.id
                 let cell: PostFooterSeriesPostListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
                 cell.configure(with: model, current: current)
                 return cell
@@ -108,7 +108,7 @@ extension PostFooterViewController: ViewModelBindable {
                     self?.seriesAllPostButton.isHidden = false
                     self?.seriesPostTitleStackView.isHidden = false
                     self?.setSeriesPostTitle(postItem: postItem, seriesItems: seriesPostItems)
-                    self?.footerView.frame.size.height = 230
+                    self?.footerView.frame.size.height = 174
                 } else {
                     self?.seriesAllPostButton.isHidden = true
                     self?.seriesPostTitleStackView.isHidden = true

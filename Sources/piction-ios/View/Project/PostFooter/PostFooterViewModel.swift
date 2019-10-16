@@ -73,7 +73,7 @@ final class PostFooterViewModel: InjectableViewModel {
 //                if self.postItem.series?.id == 0 {
 //                    return Action.makeDriver(Action<ResponseData>.Element)
 //                } else {
-                let response = PictionSDK.rx.requestAPI(SeriesAPI.getPreviousAndNextPosts(uri: self.uri, seriesId: self.postItem.series?.id ?? 0, postId: self.postItem.id ?? 0, count: 5))
+                let response = PictionSDK.rx.requestAPI(SeriesAPI.getPreviousAndNextPosts(uri: self.uri, seriesId: self.postItem.series?.id ?? 0, postId: self.postItem.id ?? 0, count: 2))
                     return Action.makeDriver(response)
 //                }
             }
