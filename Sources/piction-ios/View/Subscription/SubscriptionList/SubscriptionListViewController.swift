@@ -18,8 +18,13 @@ final class SubscriptionListViewController: UIViewController {
     var disposeBag = DisposeBag()
 
     var emptyView = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_W, height: 0))
+    private var refreshControl = UIRefreshControl()
 
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView! {
+        didSet {
+            collectionView.refreshControl = refreshControl
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,7 +95,8 @@ extension SubscriptionListViewController: ViewModelBindable {
             viewWillAppear: rx.viewWillAppear.asDriver(),
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
             selectedIndexPath:
-            collectionView.rx.itemSelected.asDriver()
+            collectionView.rx.itemSelected.asDriver(),
+            refreshControlDidRefresh: refreshControl.rx.controlEvent(.valueChanged).asDriver()
         )
 
         let output = viewModel.build(input: input)
@@ -133,6 +139,11 @@ extension SubscriptionListViewController: ViewModelBindable {
             .drive(onNext: { [weak self] project in
                 self?.openProjectViewController(uri: project.uri ?? "")
             })
+            .disposed(by: disposeBag)
+
+        output
+            .isFetching
+            .drive(refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
     }
 }

@@ -32,6 +32,7 @@ final class SubscriptionListViewModel: InjectableViewModel {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
+        let refreshControlDidRefresh: Driver<Void>
     }
 
     struct Output {
@@ -40,6 +41,7 @@ final class SubscriptionListViewModel: InjectableViewModel {
         let subscriptionList: Driver<[ProjectModel]>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let openProjectViewController: Driver<ProjectModel>
+        let isFetching: Driver<Bool>
     }
 
     func build(input: Input) -> Output {
@@ -48,8 +50,9 @@ final class SubscriptionListViewModel: InjectableViewModel {
 
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
+        let refreshControlDidRefresh = input.refreshControlDidRefresh
 
-        let initialLoad = Driver.merge(viewWillAppear, refreshSession, refreshContent)
+        let initialLoad = Driver.merge(viewWillAppear, refreshSession, refreshContent, refreshControlDidRefresh)
             .flatMap { [weak self] _ -> Driver<Void> in
                 guard let `self` = self else { return Driver.empty() }
                 self.page = 1
@@ -126,12 +129,19 @@ final class SubscriptionListViewModel: InjectableViewModel {
 
         let subscriptionList = Driver.merge(subscriptionListSuccess, subscriptionListError)
 
+        let refreshAction = input.refreshControlDidRefresh
+            .withLatestFrom(subscriptionList)
+            .flatMap { _ -> Driver<Action<Void>> in
+                return Action.makeDriver(Driver.just(()))
+            }
+
         return Output(
             viewWillAppear: input.viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
             subscriptionList: subscriptionList,
             embedEmptyViewController: embedEmptyViewController,
-            openProjectViewController: openProjectViewController
+            openProjectViewController: openProjectViewController,
+            isFetching: refreshAction.isExecuting
         )
     }
 }
