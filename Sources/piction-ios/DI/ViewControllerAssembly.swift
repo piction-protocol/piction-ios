@@ -13,9 +13,15 @@ import PictionSDK
 final class ViewControllerAssembly: Assembly {
     func assemble(container: Container) {
 
-        container.register(ExplorerViewController.self) { resolver in
-            let vc = Storyboard.Explorer.instantiate(ExplorerViewController.self)
-            vc.viewModel = resolver.resolve(ExplorerViewModel.self)!
+        container.register(HomeViewController.self) { resolver in
+            let vc = Storyboard.Home.instantiate(HomeViewController.self)
+            vc.viewModel = resolver.resolve(HomeViewModel.self)!
+            return vc
+        }
+
+        container.register(ExploreViewController.self) { resolver in
+            let vc = Storyboard.Explore.instantiate(ExploreViewController.self)
+            vc.viewModel = resolver.resolve(ExploreViewModel.self)!
             return vc
         }
 

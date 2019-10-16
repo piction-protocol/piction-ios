@@ -1,5 +1,5 @@
 //
-//  ExplorerRecommendedProjectTableViewCell.swift
+//  HomeRecommendedProjectTableViewCell.swift
 //  PictionView
 //
 //  Created by jhseo on 12/07/2019.
@@ -9,7 +9,7 @@
 import UIKit
 import PictionSDK
 
-final class ExplorerRecommendedProjectTableViewCell: ReuseTableViewCell {
+final class HomeRecommendedProjectTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subscriptionCountLabel: UILabel!

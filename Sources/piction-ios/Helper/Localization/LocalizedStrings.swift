@@ -27,6 +27,7 @@ enum LocalizedStrings {
     case menu_project
     case menu_my_project
 
+    case tab_home
     case tab_explore
     case tab_sponsorship
     case tab_subscription

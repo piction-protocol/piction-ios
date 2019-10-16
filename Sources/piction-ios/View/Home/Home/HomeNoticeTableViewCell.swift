@@ -1,5 +1,5 @@
 //
-//  ExplorerNoticeTableViewCell.swift
+//  HomeNoticeTableViewCell.swift
 //  PictionView
 //
 //  Created by jhseo on 12/07/2019.
@@ -9,7 +9,7 @@
 import UIKit
 import PictionSDK
 
-final class ExplorerNoticeTableViewCell: ReuseTableViewCell {
+final class HomeNoticeTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
 
     typealias Model = BannerModel

@@ -96,10 +96,16 @@ extension TabBarController: UITabBarControllerDelegate {
             let topViewController = UIApplication.topViewController()
             if previousViewController == tabBarController.selectedViewController?.children.last  {
                 if viewController.children.count == 1 {
-                    if topViewController is ExplorerViewController {
-                        if let vc = topViewController as? ExplorerViewController {
+                    if topViewController is HomeViewController {
+                        if let vc = topViewController as? HomeViewController {
                             DispatchQueue.main.async {
                                   vc.tableView.setContentOffset(CGPoint(x: 0, y: -LARGE_NAVIGATION_HEIGHT), animated: true)
+                            }
+                        }
+                    } else if topViewController is ExploreViewController {
+                        if let vc = topViewController as? ExploreViewController {
+                            DispatchQueue.main.async {
+                                  vc.collectionView.setContentOffset(CGPoint(x: 0, y: -LARGE_NAVIGATION_HEIGHT), animated: true)
                             }
                         }
                     } else if topViewController is SubscriptionListViewController {
@@ -129,13 +135,14 @@ extension TabBarController: UITabBarControllerDelegate {
 }
 
 enum TabBarItem: Int {
+    case home
     case explore
     case subscription
     case sponsorship
     case myPage
 
     static var all: [TabBarItem] {
-        return [.explore, .subscription, .sponsorship, .myPage]
+        return [.home, .explore, .subscription, .sponsorship, .myPage]
     }
 }
 
@@ -144,6 +151,12 @@ extension TabBarItem {
         let items: (String, UIImage?, UIImage?)
 
         switch self {
+        case .home:
+            items = (
+                LocalizedStrings.tab_home.localized(),
+                #imageLiteral(resourceName: "icTab1Unselected"),
+                #imageLiteral(resourceName: "icTab1Active")
+            )
         case .explore:
             items = (
                 LocalizedStrings.tab_explore.localized(),
@@ -183,8 +196,10 @@ extension TabBarItem {
         let viewController: UIViewController
 
         switch self {
+        case .home:
+            viewController = HomeViewController.make()
         case .explore:
-            viewController = ExplorerViewController.make()
+            viewController = ExploreViewController.make()
         case .subscription:
             viewController = SubscriptionListViewController.make()
         case .sponsorship:

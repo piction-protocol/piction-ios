@@ -15,6 +15,7 @@ struct DeepLinkManager {
         let recognizer = DeepLinkRecognizer(deepLinkTypes: [
                 LoginDeepLink.self,
                 SignupDeepLink.self,
+                HomeDeepLink.self,
                 HomeExploreDeepLink.self,
                 SearchDeepLink.self,
                 ProjectDeepLink.self,
@@ -67,6 +68,7 @@ struct DeepLinkManager {
         switch deepLink {
         case let link as LoginDeepLink: return showLogin(with: link)
         case let link as SignupDeepLink: return showSignup(with: link)
+        case let link as HomeDeepLink: return showHome(with: link)
         case let link as HomeExploreDeepLink: return showHomeExplore(with: link)
         case let link as SearchDeepLink: return showSearch(with: link)
         case let link as ProjectDeepLink: return showProject(with: link)
@@ -110,9 +112,9 @@ struct DeepLinkManager {
         return false
     }
 
-    static func showHomeExplore(with deepLink: HomeExploreDeepLink) -> Bool {
+    static func showHome(with deepLink: HomeDeepLink) -> Bool {
         if let tabBarController = UIApplication.topViewController()?.tabBarController as? TabBarController {
-            tabBarController.moveToSelectTab(.explore, toRoot: true)
+            tabBarController.moveToSelectTab(.home, toRoot: true)
             return true
         }
         return false
@@ -120,16 +122,24 @@ struct DeepLinkManager {
 
     static func showSearch(with deepLink: SearchDeepLink) -> Bool {
         if let tabBarController = UIApplication.topViewController()?.tabBarController as? TabBarController {
-            tabBarController.moveToSelectTab(.explore, toRoot: true)
+            tabBarController.moveToSelectTab(.home, toRoot: true)
 
             if let topViewController = UIApplication.topViewController() {
-                if topViewController is ExplorerViewController {
-                    if let vc = topViewController as? ExplorerViewController {
+                if topViewController is HomeViewController {
+                    if let vc = topViewController as? HomeViewController {
                         vc.openSearchBar()
                         return true
                     }
                 }
             }
+        }
+        return false
+    }
+
+    static func showHomeExplore(with deepLink: HomeExploreDeepLink) -> Bool {
+        if let tabBarController = UIApplication.topViewController()?.tabBarController as? TabBarController {
+            tabBarController.moveToSelectTab(.explore, toRoot: true)
+            return true
         }
         return false
     }

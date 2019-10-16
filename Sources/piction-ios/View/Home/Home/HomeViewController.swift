@@ -14,21 +14,21 @@ import RxDataSources
 import SafariServices
 import PictionSDK
 
-enum ExplorerBySection {
-    case Section(title: String, items: [ExplorerItemType])
+enum HomeBySection {
+    case Section(title: String, items: [HomeItemType])
 }
 
-extension ExplorerBySection: SectionModelType {
-    typealias Item = ExplorerItemType
+extension HomeBySection: SectionModelType {
+    typealias Item = HomeItemType
 
-    var items: [ExplorerItemType] {
+    var items: [HomeItemType] {
         switch self {
         case .Section(_, items: let items):
             return items.map { $0 }
         }
     }
 
-    init(original: ExplorerBySection, items: [Item]) {
+    init(original: HomeBySection, items: [Item]) {
         switch original {
         case .Section(title: let title, _):
             self = .Section(title: title, items: items)
@@ -36,7 +36,7 @@ extension ExplorerBySection: SectionModelType {
     }
 }
 
-enum ExplorerItemType {
+enum HomeItemType {
     case recommendedHeader
     case recommendedProject(project: ProjectModel)
     case noticeHeader
@@ -44,7 +44,7 @@ enum ExplorerItemType {
 }
 
 
-final class ExplorerViewController: UIViewController {
+final class HomeViewController: UIViewController {
     var disposeBag = DisposeBag()
 
     let searchResultsController = SearchProjectViewController.make()
@@ -79,22 +79,22 @@ final class ExplorerViewController: UIViewController {
         }
     }
 
-    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<ExplorerBySection> {
-        return RxTableViewSectionedReloadDataSource<ExplorerBySection>(
+    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<HomeBySection> {
+        return RxTableViewSectionedReloadDataSource<HomeBySection>(
             configureCell: { dataSource, tableView, indexPath, model in
                 switch dataSource[indexPath] {
                 case .recommendedHeader:
-                    let cell: ExplorerRecommendedProjectHeaderTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    let cell: HomeRecommendedProjectHeaderTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
                     return cell
                 case .recommendedProject(let project):
-                    let cell: ExplorerRecommendedProjectTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    let cell: HomeRecommendedProjectTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
                     cell.configure(with: project)
                     return cell
                 case .noticeHeader:
-                    let cell: ExplorerNoticeHeaderTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    let cell: HomeNoticeHeaderTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
                     return cell
                 case .notice(let notice):
-                    let cell: ExplorerNoticeTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    let cell: HomeNoticeTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
                     cell.configure(with: notice)
                     return cell
                 }
@@ -123,13 +123,13 @@ final class ExplorerViewController: UIViewController {
     }
 }
 
-extension ExplorerViewController: ViewModelBindable {
-    typealias ViewModel = ExplorerViewModel
+extension HomeViewController: ViewModelBindable {
+    typealias ViewModel = HomeViewModel
 
     func bindViewModel(viewModel: ViewModel) {
         let dataSource = configureDataSource()
 
-        let input = ExplorerViewModel.Input(
+        let input = HomeViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
             selectedIndexPath:

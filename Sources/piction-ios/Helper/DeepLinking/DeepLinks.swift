@@ -35,6 +35,29 @@ struct SignupDeepLink: DeepLink {
 }
 
 /**
+*  홈
+*/
+
+// 홈
+// piction://home
+struct HomeDeepLink: DeepLink {
+    static let template = DeepLinkTemplate()
+        .term("home")
+
+    init(values: DeepLinkValues) {}
+}
+
+
+// 검색
+// piction://search
+struct SearchDeepLink: DeepLink {
+    static let template = DeepLinkTemplate()
+        .term("search")
+
+    init(values: DeepLinkValues) {}
+}
+
+/**
 *  탐색
 */
 
@@ -47,14 +70,6 @@ struct HomeExploreDeepLink: DeepLink {
     init(values: DeepLinkValues) {}
 }
 
-// 검색
-// piction://search
-struct SearchDeepLink: DeepLink {
-    static let template = DeepLinkTemplate()
-        .term("search")
-
-    init(values: DeepLinkValues) {}
-}
 
 /**
 *  프로젝트 상세

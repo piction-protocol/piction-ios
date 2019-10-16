@@ -11,8 +11,14 @@ import PictionSDK
 
 final class ViewModelAssembly: Assembly {
     func assemble(container: Container) {
-        container.register(ExplorerViewModel.self) { resolver in
-            return ExplorerViewModel()
+        container.register(HomeViewModel.self) { resolver in
+            return HomeViewModel()
+        }
+
+        container.register(ExploreViewModel.self) { resolver in
+            return ExploreViewModel(dependency: (
+                resolver.resolve(Updater.self)!)
+            )
         }
 
         container.register(SignInViewModel.self) { resolver in

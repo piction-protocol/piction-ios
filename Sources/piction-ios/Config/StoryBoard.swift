@@ -10,7 +10,8 @@
 import UIKit
 
 public enum Storyboard: String {
-    case Explorer
+    case Home
+    case Explore
     case SignIn
     case SignUp
     case SignUpComplete

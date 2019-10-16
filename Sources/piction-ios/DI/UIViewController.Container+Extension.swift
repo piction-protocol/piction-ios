@@ -10,9 +10,15 @@ import Swinject
 import UIKit
 import PictionSDK
 
-extension ExplorerViewController {
-    static func make() -> ExplorerViewController {
-        return Container.shared.resolve(ExplorerViewController.self)!
+extension HomeViewController {
+    static func make() -> HomeViewController {
+        return Container.shared.resolve(HomeViewController.self)!
+    }
+}
+
+extension ExploreViewController {
+    static func make() -> ExploreViewController {
+        return Container.shared.resolve(ExploreViewController.self)!
     }
 }
 

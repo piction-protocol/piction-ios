@@ -26,6 +26,7 @@
 "menu_project" = "프로젝트";
 "menu_my_project" = "나의 프로젝트";
 
+"tab_home" = "홈";
 "tab_explore" = "탐색";
 "tab_sponsorship" = "후원";
 "tab_subscription" = "구독";
