@@ -12,6 +12,7 @@ import PictionSDK
 final class PostFooterSeriesPostListTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var numberLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var currentImageContainerView: UIView!
 
     typealias Model = PostIndexModel
 
@@ -25,8 +26,11 @@ final class PostFooterSeriesPostListTableViewCell: ReuseTableViewCell {
         let (number, title) = (model.index, model.post?.title)
 
         if current {
-            numberLabel.text = "->"
+            numberLabel.isHidden = true
+            currentImageContainerView.isHidden = false
         } else {
+            currentImageContainerView.isHidden = true
+            numberLabel.isHidden = false
             numberLabel.text = "#\((number ?? 0) + 1)"
         }
 
