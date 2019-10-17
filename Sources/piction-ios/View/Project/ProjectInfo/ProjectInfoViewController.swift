@@ -26,6 +26,20 @@ final class ProjectInfoViewController: UIViewController {
             topViewController.openViewController(vc, type: .push)
         }
     }
+
+    private func openSignInViewController() {
+        let vc = SignInViewController.make()
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.openViewController(vc, type: .swipePresent)
+        }
+    }
+
+    private func openTagResultProjectViewController(tag: String) {
+        let vc = TagResultProjectViewController.make(tag: tag)
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.openViewController(vc, type: .push)
+        }
+    }
 }
 
 extension ProjectInfoViewController: ViewModelBindable {
@@ -64,6 +78,13 @@ extension ProjectInfoViewController: ViewModelBindable {
             .openSendDonationViewController
             .drive(onNext: { [weak self] loginId in
                 self?.openSendDonationViewController(loginId: loginId)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .openSignInViewController
+            .drive(onNext: { [weak self] in
+                self?.openSignInViewController()
             })
             .disposed(by: disposeBag)
     }
