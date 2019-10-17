@@ -223,13 +223,13 @@ final class PostViewModel: InjectableViewModel {
 
         let userInfo = Driver.merge(userInfoSuccess, userInfoError)
 
-        let SubscriptionInfoAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
+        let subscriptionInfoAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
                 let response = PictionSDK.rx.requestAPI(FanPassAPI.isSubscription(uri: self?.uri ?? ""))
                 return Action.makeDriver(response)
             }
 
-        let SubscriptionInfoSuccess = SubscriptionInfoAction.elements
+        let subscriptionInfoSuccess = subscriptionInfoAction.elements
             .flatMap { response -> Driver<SubscriptionModel> in
                 guard let isSubscribing = try? response.map(to: SubscriptionModel.self) else {
                     return Driver.empty()
@@ -237,17 +237,18 @@ final class PostViewModel: InjectableViewModel {
                 return Driver.just(isSubscribing)
             }
 
-        let SubscriptionInfoError = SubscriptionInfoAction.error
+        let subscriptionInfoError = subscriptionInfoAction.error
             .flatMap { _ in Driver.just(SubscriptionModel.from([:])!)}
 
-        let subscriptionInfo = Driver.merge(SubscriptionInfoSuccess, SubscriptionInfoError)
+        let subscriptionInfo = Driver.merge(subscriptionInfoSuccess, subscriptionInfoError)
 
         let needSubscription = Driver.zip(postItemSuccess, subscriptionInfo, userInfo, writerInfo)
             .flatMap { (postItem, subscriptionInfo, currentUser, writerInfo) -> Driver<Bool> in
 
-                if postItem.fanPass == nil
-                    || (subscriptionInfo.fanPass != nil)
-                    || ((currentUser.loginId ?? "") == (writerInfo.loginId ?? "")) {
+                if (postItem.fanPass == nil
+                    || (subscriptionInfo.fanPass != nil
+                    && (postItem.fanPass != nil && subscriptionInfo.fanPass != nil && (postItem.fanPass?.level ?? 0 <= subscriptionInfo.fanPass?.level ?? 0)))
+                    || (currentUser.loginId ?? "" == writerInfo.loginId ?? "")) {
                     return Driver.just(false)
                 }
                 return Driver.just(true)
@@ -319,7 +320,7 @@ final class PostViewModel: InjectableViewModel {
         let sharePost = input.shareBarBtnDidTap
             .flatMap { [weak self] _ -> Driver<String> in
                 guard let `self` = self else { return Driver.empty() }
-                var infoDictionary: [AnyHashable: Any] = Bundle.main.infoDictionary!
+                let infoDictionary: [AnyHashable: Any] = Bundle.main.infoDictionary!
                 let appID: String = infoDictionary["CFBundleIdentifier"] as! String
                 let isStaging = appID == "com.pictionnetwork.piction-test" ? "staging." : ""
 
