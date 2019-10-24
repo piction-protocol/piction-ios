@@ -17,3 +17,18 @@ let TAB_HEIGHT: CGFloat = 83
 
 let FEATURE_EDITOR = false
 
+final class AppInfo {
+    static var isStaging: Bool {
+        let infoDictionary: [AnyHashable: Any] = Bundle.main.infoDictionary!
+        guard let appID: String = infoDictionary["CFBundleIdentifier"] as? String else { return false }
+        return appID == "com.pictionnetwork.piction-test"
+    }
+
+    static var urlScheme: String {
+        if isStaging {
+            return "piction-test"
+        } else {
+            return "piction"
+        }
+    }
+}

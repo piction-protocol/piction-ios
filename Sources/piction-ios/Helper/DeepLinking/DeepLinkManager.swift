@@ -41,11 +41,7 @@ struct DeepLinkManager {
         )
 
         var replaceUrlString: String {
-            let infoDictionary: [AnyHashable: Any] = Bundle.main.infoDictionary!
-            guard let appID: String = infoDictionary["CFBundleIdentifier"] as? String else { return "" }
-            let isStaging = appID == "com.pictionnetwork.piction-test"
-
-            if isStaging {
+            if AppInfo.isStaging {
                 return url.absoluteString.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "piction://", with: "piction-test://", options: NSString.CompareOptions.literal, range: nil)
             } else {
                 return url.absoluteString.trimmingCharacters(in: .whitespacesAndNewlines)

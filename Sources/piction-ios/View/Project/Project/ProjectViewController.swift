@@ -388,11 +388,9 @@ extension ProjectViewController: ProjectHeaderViewDelegate {
     func shareBtnDidTap() {
         guard let uri = self.viewModel?.uri else { return }
         guard let title = stretchyHeader?.titleLabel.text else { return }
-        let infoDictionary: [AnyHashable: Any] = Bundle.main.infoDictionary!
-        guard let appID: String = infoDictionary["CFBundleIdentifier"] as? String else { return }
-        let isStaging = appID == "com.pictionnetwork.piction-test" ? "staging." : ""
+        let stagingPath = AppInfo.isStaging ? "staging." : ""
 
-        let url = "\(title) - Piction\nhttps://\(isStaging)piction.network/project/\(uri)"
+        let url = "\(title) - Piction\nhttps://\(stagingPath)piction.network/project/\(uri)"
 
         self.openSharePopup(url: url)
     }

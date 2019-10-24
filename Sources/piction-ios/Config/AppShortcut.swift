@@ -74,35 +74,23 @@ class AppShortcuts {
     class func performShortcut(window: UIWindow, shortcut: UIApplicationShortcutItem) {
         sync()
 
-        var urlScheme: String {
-            let infoDictionary: [AnyHashable: Any] = Bundle.main.infoDictionary!
-            guard let appID: String = infoDictionary["CFBundleIdentifier"] as? String else { return "" }
-            let isStaging = appID == "com.pictionnetwork.piction-test"
-
-            if isStaging {
-                return "piction-test"
-            } else {
-                return "piction"
-            }
-        }
-
         switch AppShortcutType(rawValue: shortcut.type) ?? .home {
         case .home:
             break
         case .explore:
-            if let url = URL(string: "\(urlScheme)://home-explore") {
+            if let url = URL(string: "\(AppInfo.urlScheme)://home-explore") {
                 _ = DeepLinkManager.executeDeepLink(with: url)
             }
         case .subscription:
-            if let url = URL(string: "\(urlScheme)://my-subscription") {
+            if let url = URL(string: "\(AppInfo.urlScheme)://my-subscription") {
                 _ = DeepLinkManager.executeDeepLink(with: url)
             }
         case .sponsorship:
-            if let url = URL(string: "\(urlScheme)://home-donation") {
+            if let url = URL(string: "\(AppInfo.urlScheme)://home-donation") {
                 _ = DeepLinkManager.executeDeepLink(with: url)
             }
         case .mypage:
-            if let url = URL(string: "\(urlScheme)://mypage") {
+            if let url = URL(string: "\(AppInfo.urlScheme)://mypage") {
                 _ = DeepLinkManager.executeDeepLink(with: url)
             }
         }
