@@ -47,6 +47,7 @@ final class SearchSponsorViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        KeyboardManager.shared.delegate = self
         self.searchBar.becomeFirstResponder()
     }
 }
@@ -111,5 +112,21 @@ extension SearchSponsorViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
+    }
+}
+
+extension SearchSponsorViewController: KeyboardManagerDelegate {
+    func keyboardManager(_ keyboardManager: KeyboardManager, keyboardWillChangeFrame endFrame: CGRect?, duration: TimeInterval, animationCurve: UIView.AnimationOptions) {
+        guard let endFrame = endFrame else { return }
+
+        if endFrame.origin.y >= SCREEN_H {
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        } else {
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height - (UIApplication.topViewController()?.tabBarController?.tabBar.frame.size.height ?? 0), right: 0)
+        }
+
+        UIView.animate(withDuration: duration, animations: {
+            self.view.layoutIfNeeded()
+        })
     }
 }
