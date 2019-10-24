@@ -259,7 +259,7 @@ final class PostViewModel: InjectableViewModel {
             .withLatestFrom(userInfo)
             .flatMap { userInfo -> Driver<UserModel> in
                 return Driver.just(userInfo)
-        }
+            }
 
         let footerInfo = postItemSuccess
             .flatMap { [weak self] postItem -> Driver<(String, PostModel)> in
@@ -320,11 +320,9 @@ final class PostViewModel: InjectableViewModel {
         let sharePost = input.shareBarBtnDidTap
             .flatMap { [weak self] _ -> Driver<String> in
                 guard let `self` = self else { return Driver.empty() }
-                let infoDictionary: [AnyHashable: Any] = Bundle.main.infoDictionary!
-                let appID: String = infoDictionary["CFBundleIdentifier"] as! String
-                let isStaging = appID == "com.pictionnetwork.piction-test" ? "staging." : ""
+                let stagingPath = AppInfo.isStaging ? "staging." : ""
 
-                let url = "https://\(isStaging)piction.network/project/\(self.uri)/posts/\(self.postId)"
+                let url = "https://\(stagingPath)piction.network/project/\(self.uri)/posts/\(self.postId)"
                 return Driver.just(url)
             }
 

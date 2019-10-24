@@ -22,7 +22,7 @@ final class PostFooterViewController: UIViewController {
     var disposeBag = DisposeBag()
 
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var likeView: UIViewExtension! {
+    @IBOutlet weak var likeView: UIView! {
         didSet {
             likeView.layer.shadowOpacity = 1
             likeView.layer.shadowColor = UIColor(r: 0, g: 0, b: 0, a: 0.1).cgColor

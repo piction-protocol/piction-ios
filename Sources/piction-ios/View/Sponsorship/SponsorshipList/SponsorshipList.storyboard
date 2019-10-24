@@ -137,7 +137,7 @@
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="123" id="xdI-gi-cNV"/>
                                                                             </constraints>
-                                                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                                             <color key="textColor" name="PictionDarkGray"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>

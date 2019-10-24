@@ -60,8 +60,6 @@ final class CreatePostViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let updater = self.updater
-
         let isModify = input.viewWillAppear
             .flatMap { [weak self] _ -> Driver<Bool> in
                 guard let `self` = self else { return Driver.empty() }

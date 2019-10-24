@@ -36,8 +36,6 @@ extension String {
 
         let youtubeIds = self.getYoutubeId()
 
-        var htmlString = self
-
         return "https://img.youtube.com/vi/\(youtubeIds.first ?? "")/maxresdefault.jpg"
     }
 

@@ -12,7 +12,6 @@
         <!--Table View Controller-->
         <scene sceneID="xqa-Qv-5zO">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SSS-2E-eVk" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController hidesBottomBarWhenPushed="YES" id="RGu-Q3-94L" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="tC4-La-nwi">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -323,6 +322,7 @@
                         <outlet property="writerLabel" destination="yJp-EP-KXU" id="H97-dW-Isr"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SSS-2E-eVk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="753.62318840579712" y="-92.410714285714278"/>
         </scene>

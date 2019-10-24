@@ -26,11 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let rootView = TabBarController()
             window?.rootViewController = rootView
         }
-        if #available(iOS 13.0, *) {
-            window?.backgroundColor = .systemBackground
-        } else {
-            window?.backgroundColor = .white
-        }
+        window?.backgroundColor = .systemBackground
         window?.makeKeyAndVisible()
     }
 

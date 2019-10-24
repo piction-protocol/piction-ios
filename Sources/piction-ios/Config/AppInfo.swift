@@ -13,7 +13,6 @@ let SCREEN_H = UIScreen.main.bounds.size.height
 let STATUS_HEIGHT: CGFloat = UIApplication.shared.statusBarFrame.size.height
 let DEFAULT_NAVIGATION_HEIGHT: CGFloat = STATUS_HEIGHT + 44
 let LARGE_NAVIGATION_HEIGHT: CGFloat = STATUS_HEIGHT + 96
-let TAB_HEIGHT: CGFloat = 83
 
 let FEATURE_EDITOR = false
 
