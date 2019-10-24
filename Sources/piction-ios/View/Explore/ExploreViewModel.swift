@@ -72,7 +72,7 @@ final class ExploreViewModel: InjectableViewModel {
         let projectListAction = Driver.merge(initialLoad, loadNext)
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
                 guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.all(page: self.page, size: 10))
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.all(page: self.page, size: 20))
                 return Action.makeDriver(response)
             }
 

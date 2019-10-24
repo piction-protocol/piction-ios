@@ -183,7 +183,7 @@ final class SeriesPostViewModel: InjectableViewModel {
         let loadSeriesPostsAction = Driver.merge(initialLoad, loadNext)
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
                 guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(SeriesAPI.allSeriesPosts(uri: self.uri, seriesId: self.seriesId, page: self.page, size: 10, isDescending: self.isDescending))
+                let response = PictionSDK.rx.requestAPI(SeriesAPI.allSeriesPosts(uri: self.uri, seriesId: self.seriesId, page: self.page, size: 20, isDescending: self.isDescending))
                 return Action.makeDriver(response)
             }
 
