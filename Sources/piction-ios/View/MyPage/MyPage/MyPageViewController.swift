@@ -188,7 +188,7 @@ extension MyPageViewController: ViewModelBindable {
                 self?.emptyView.frame.size.height = 0
                 let view = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_W, height: SCREEN_H))
                 if #available(iOS 13.0, *) {
-                    view.backgroundColor = .secondarySystemBackground
+                    view.backgroundColor = .groupTableViewBackground
                 } else {
                     view.backgroundColor = UIColor(r: 242, g: 242, b: 247)
                 }
