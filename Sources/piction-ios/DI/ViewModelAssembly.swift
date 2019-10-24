@@ -201,5 +201,9 @@ final class ViewModelAssembly: Assembly {
                 seriesId: seriesId)
             )
         }
+
+        container.register(TagResultProjectViewModel.self) { (resolver, tag: String) in
+            return TagResultProjectViewModel(tag: tag)
+        }
     }
 }

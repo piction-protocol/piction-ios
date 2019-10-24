@@ -213,3 +213,9 @@ extension SeriesPostViewController {
         return Container.shared.resolve(SeriesPostViewController.self, arguments: uri, seriesId)!
     }
 }
+
+extension TagResultProjectViewController {
+    static func make(tag: String) -> TagResultProjectViewController {
+        return Container.shared.resolve(TagResultProjectViewController.self, argument: tag)!
+    }
+}

@@ -216,5 +216,11 @@ final class ViewControllerAssembly: Assembly {
             vc.viewModel = resolver.resolve(SeriesPostViewModel.self, arguments: uri, seriesId)!
             return vc
         }
+
+        container.register(TagResultProjectViewController.self) { (resolver, tag: String) in
+            let vc = Storyboard.TagResultProject.instantiate(TagResultProjectViewController.self)
+            vc.viewModel = resolver.resolve(TagResultProjectViewModel.self, argument: tag)!
+            return vc
+        }
     }
 }

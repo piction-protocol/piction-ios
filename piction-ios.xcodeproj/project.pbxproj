@@ -369,6 +369,16 @@
 		43E543872356F5CE00F2EC45 /* Explore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43E5437E2356F5CD00F2EC45 /* Explore.storyboard */; };
 		43E543882356F5CE00F2EC45 /* ExploreListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5437F2356F5CD00F2EC45 /* ExploreListViewController.swift */; };
 		43E543892356F5CE00F2EC45 /* ExploreListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5437F2356F5CD00F2EC45 /* ExploreListViewController.swift */; };
+		43E5438C2357138F00F2EC45 /* TagResultProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5438B2357138F00F2EC45 /* TagResultProjectViewController.swift */; };
+		43E5438D2357139000F2EC45 /* TagResultProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5438B2357138F00F2EC45 /* TagResultProjectViewController.swift */; };
+		43E5438F235713A400F2EC45 /* TagResultProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5438E235713A400F2EC45 /* TagResultProjectViewModel.swift */; };
+		43E54390235713A400F2EC45 /* TagResultProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5438E235713A400F2EC45 /* TagResultProjectViewModel.swift */; };
+		43E54392235713C300F2EC45 /* TagResultProjectListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E54391235713C300F2EC45 /* TagResultProjectListCollectionViewCell.swift */; };
+		43E54393235713C300F2EC45 /* TagResultProjectListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E54391235713C300F2EC45 /* TagResultProjectListCollectionViewCell.swift */; };
+		43E54395235713D700F2EC45 /* TagResultProject.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43E54394235713D700F2EC45 /* TagResultProject.storyboard */; };
+		43E54396235713D700F2EC45 /* TagResultProject.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43E54394235713D700F2EC45 /* TagResultProject.storyboard */; };
+		43E54398235714F800F2EC45 /* TagResultProjectListCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E54397235714F800F2EC45 /* TagResultProjectListCollectionFooterView.swift */; };
+		43E54399235714F800F2EC45 /* TagResultProjectListCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E54397235714F800F2EC45 /* TagResultProjectListCollectionFooterView.swift */; };
 		43F1865A2342FEAC0050BA67 /* PostFooterSeriesPostListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F186592342FEAC0050BA67 /* PostFooterSeriesPostListTableViewCell.swift */; };
 		43F1865B2343024A0050BA67 /* PostFooterSeriesPostListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F186592342FEAC0050BA67 /* PostFooterSeriesPostListTableViewCell.swift */; };
 		43F1865F23442ECD0050BA67 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 43F1866223442ECD0050BA67 /* Localizable.stringsdict */; };
@@ -588,6 +598,11 @@
 		43E5437D2356F5CD00F2EC45 /* ExploreListCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreListCollectionViewCell.swift; sourceTree = "<group>"; };
 		43E5437E2356F5CD00F2EC45 /* Explore.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Explore.storyboard; sourceTree = "<group>"; };
 		43E5437F2356F5CD00F2EC45 /* ExploreListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreListViewController.swift; sourceTree = "<group>"; };
+		43E5438B2357138F00F2EC45 /* TagResultProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagResultProjectViewController.swift; sourceTree = "<group>"; };
+		43E5438E235713A400F2EC45 /* TagResultProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagResultProjectViewModel.swift; sourceTree = "<group>"; };
+		43E54391235713C300F2EC45 /* TagResultProjectListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagResultProjectListCollectionViewCell.swift; sourceTree = "<group>"; };
+		43E54394235713D700F2EC45 /* TagResultProject.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TagResultProject.storyboard; sourceTree = "<group>"; };
+		43E54397235714F800F2EC45 /* TagResultProjectListCollectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagResultProjectListCollectionFooterView.swift; sourceTree = "<group>"; };
 		43F186592342FEAC0050BA67 /* PostFooterSeriesPostListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFooterSeriesPostListTableViewCell.swift; sourceTree = "<group>"; };
 		43F1866123442ECD0050BA67 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		43F1866423444E070050BA67 /* DeepLinking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinking.swift; sourceTree = "<group>"; };
@@ -804,6 +819,7 @@
 			isa = PBXGroup;
 			children = (
 				43DB225F23580B2900E69C0F /* TagList */,
+				43E5438A2357135500F2EC45 /* TagResultProject */,
 				4323F9B4233A165600243655 /* SearchProject */,
 				4323F9B9233A165600243655 /* Home */,
 			);
@@ -1297,6 +1313,18 @@
 			path = Explore;
 			sourceTree = "<group>";
 		};
+		43E5438A2357135500F2EC45 /* TagResultProject */ = {
+			isa = PBXGroup;
+			children = (
+				43E5438B2357138F00F2EC45 /* TagResultProjectViewController.swift */,
+				43E5438E235713A400F2EC45 /* TagResultProjectViewModel.swift */,
+				43E54391235713C300F2EC45 /* TagResultProjectListCollectionViewCell.swift */,
+				43E54397235714F800F2EC45 /* TagResultProjectListCollectionFooterView.swift */,
+				43E54394235713D700F2EC45 /* TagResultProject.storyboard */,
+			);
+			path = TagResultProject;
+			sourceTree = "<group>";
+		};
 		43F1866323444DF30050BA67 /* DeepLinking */ = {
 			isa = PBXGroup;
 			children = (
@@ -1476,6 +1504,7 @@
 				4356F508233DE798000710FC /* LaunchScreen.storyboard in Resources */,
 				43E54375235598F900F2EC45 /* piction-ios-test_Info.plist in Resources */,
 				4323FAEB233A165C00243655 /* SeriesPost.storyboard in Resources */,
+				43E54396235713D700F2EC45 /* TagResultProject.storyboard in Resources */,
 				4323FB83233A166300243655 /* SponsorshipList.storyboard in Resources */,
 				4323FAEF233A165C00243655 /* ProjectHeaderView.xib in Resources */,
 				4323FB5F233A166100243655 /* UserInfo.storyboard in Resources */,
@@ -1524,6 +1553,7 @@
 				4323FAD8233A165B00243655 /* Post.storyboard in Resources */,
 				4356F507233DE798000710FC /* LaunchScreen.storyboard in Resources */,
 				4323FAEA233A165C00243655 /* SeriesPost.storyboard in Resources */,
+				43E54395235713D700F2EC45 /* TagResultProject.storyboard in Resources */,
 				4323FB82233A166300243655 /* SponsorshipList.storyboard in Resources */,
 				4323FAEE233A165C00243655 /* ProjectHeaderView.xib in Resources */,
 				4323FB5E233A166100243655 /* UserInfo.storyboard in Resources */,
@@ -1620,6 +1650,7 @@
 			files = (
 				4323FB55233A166100243655 /* TransactionHistoryHeaderTypeTableViewCell.swift in Sources */,
 				4323FACD233A165B00243655 /* SubscriptionListCollectionFooterView.swift in Sources */,
+				43E54390235713A400F2EC45 /* TagResultProjectViewModel.swift in Sources */,
 				4323FB5D233A166100243655 /* UserInfoViewModel.swift in Sources */,
 				4323FAAF233A165A00243655 /* SearchProjectViewModel.swift in Sources */,
 				4323FB3F233A166000243655 /* MyPageViewModel.swift in Sources */,
@@ -1629,6 +1660,7 @@
 				4323FAB9233A165A00243655 /* HomeNoticeTableViewCell.swift in Sources */,
 				4323FAB7233A165A00243655 /* HomeNoticeHeaderTableViewCell.swift in Sources */,
 				4323FA8B233A165800243655 /* AppDelegate.swift in Sources */,
+				43E54399235714F800F2EC45 /* TagResultProjectListCollectionFooterView.swift in Sources */,
 				4323FAED233A165C00243655 /* SeriesPostViewController.swift in Sources */,
 				4323FA95233A165900243655 /* Injectable.swift in Sources */,
 				4323FB0B233A165E00243655 /* CustomEmptyViewModel.swift in Sources */,
@@ -1699,6 +1731,7 @@
 				4323FB51233A166100243655 /* TransactionHistoryFooterTypeTableViewCell.swift in Sources */,
 				4323FB1D233A165E00243655 /* TransactionDetailViewController.swift in Sources */,
 				4323FACF233A165B00243655 /* CreatePostViewModel.swift in Sources */,
+				43E5438D2357139000F2EC45 /* TagResultProjectViewController.swift in Sources */,
 				4323FAB1233A165A00243655 /* SearchProjectViewController.swift in Sources */,
 				4323FB37233A165F00243655 /* MyPageHeaderTypeTableViewCell.swift in Sources */,
 				4323FB97233A166400243655 /* SignUpViewModel.swift in Sources */,
@@ -1729,6 +1762,7 @@
 				4323FA5D233A165600243655 /* UIViewController.Container+Extension.swift in Sources */,
 				4323FAD5233A165B00243655 /* PostViewModel.swift in Sources */,
 				4323FACB233A165B00243655 /* SubscriptionListViewModel.swift in Sources */,
+				43E54393235713C300F2EC45 /* TagResultProjectListCollectionViewCell.swift in Sources */,
 				4323FAF9233A165D00243655 /* ProjectSeriesListTableViewCell.swift in Sources */,
 				4323FABD233A165A00243655 /* HomeRecommendedProjectTableViewCell.swift in Sources */,
 				4323FADF233A165C00243655 /* PostHeaderViewController.swift in Sources */,
@@ -1773,6 +1807,7 @@
 			files = (
 				4323FB54233A166100243655 /* TransactionHistoryHeaderTypeTableViewCell.swift in Sources */,
 				4323FACC233A165B00243655 /* SubscriptionListCollectionFooterView.swift in Sources */,
+				43E5438F235713A400F2EC45 /* TagResultProjectViewModel.swift in Sources */,
 				4323FB5C233A166100243655 /* UserInfoViewModel.swift in Sources */,
 				4323FAAE233A165A00243655 /* SearchProjectViewModel.swift in Sources */,
 				4323FB3E233A166000243655 /* MyPageViewModel.swift in Sources */,
@@ -1782,6 +1817,7 @@
 				4323FAB8233A165A00243655 /* HomeNoticeTableViewCell.swift in Sources */,
 				4323FAB6233A165A00243655 /* HomeNoticeHeaderTableViewCell.swift in Sources */,
 				4323FA8A233A165800243655 /* AppDelegate.swift in Sources */,
+				43E54398235714F800F2EC45 /* TagResultProjectListCollectionFooterView.swift in Sources */,
 				4323FAEC233A165C00243655 /* SeriesPostViewController.swift in Sources */,
 				4323FA94233A165900243655 /* Injectable.swift in Sources */,
 				4323FB0A233A165E00243655 /* CustomEmptyViewModel.swift in Sources */,
@@ -1852,6 +1888,7 @@
 				4323FB50233A166100243655 /* TransactionHistoryFooterTypeTableViewCell.swift in Sources */,
 				4323FB1C233A165E00243655 /* TransactionDetailViewController.swift in Sources */,
 				4323FACE233A165B00243655 /* CreatePostViewModel.swift in Sources */,
+				43E5438C2357138F00F2EC45 /* TagResultProjectViewController.swift in Sources */,
 				4323FAB0233A165A00243655 /* SearchProjectViewController.swift in Sources */,
 				4323FB36233A165F00243655 /* MyPageHeaderTypeTableViewCell.swift in Sources */,
 				4323FB96233A166400243655 /* SignUpViewModel.swift in Sources */,
@@ -1882,6 +1919,7 @@
 				4323FA5C233A165600243655 /* UIViewController.Container+Extension.swift in Sources */,
 				4323FAD4233A165B00243655 /* PostViewModel.swift in Sources */,
 				4323FACA233A165B00243655 /* SubscriptionListViewModel.swift in Sources */,
+				43E54392235713C300F2EC45 /* TagResultProjectListCollectionViewCell.swift in Sources */,
 				4323FAF8233A165D00243655 /* ProjectSeriesListTableViewCell.swift in Sources */,
 				4323FABC233A165A00243655 /* HomeRecommendedProjectTableViewCell.swift in Sources */,
 				4323FADE233A165C00243655 /* PostHeaderViewController.swift in Sources */,
