@@ -25,6 +25,7 @@ enum LocalizedStrings {
     case menu_project_info
     case menu_my_info
     case menu_project
+    case menu_tag
     case menu_my_project
 
     case tab_home
@@ -61,7 +62,9 @@ enum LocalizedStrings {
     case hint_current_pw
     case hint_need_six_pw
     case hint_pw_check
+    case hint_project_and_tag_search
     case hint_project_search
+    case hint_tag_search
     case hint_creator_search
 
     // Button
@@ -133,6 +136,7 @@ enum LocalizedStrings {
 
     case str_project_search_info
     case str_creator_search_info
+    case str_tag_search_info
 
     case str_search_empty
     case str_subscription_empty

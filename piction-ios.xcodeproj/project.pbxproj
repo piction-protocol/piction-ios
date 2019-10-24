@@ -87,12 +87,12 @@
 		4323FAA9233A165A00243655 /* RegisterPincode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9B0233A165600243655 /* RegisterPincode.storyboard */; };
 		4323FAAA233A165A00243655 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9B2233A165600243655 /* TabBarViewController.swift */; };
 		4323FAAB233A165A00243655 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9B2233A165600243655 /* TabBarViewController.swift */; };
-		4323FAAC233A165A00243655 /* SearchProject.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9B5233A165600243655 /* SearchProject.storyboard */; };
-		4323FAAD233A165A00243655 /* SearchProject.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9B5233A165600243655 /* SearchProject.storyboard */; };
-		4323FAAE233A165A00243655 /* SearchProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9B6233A165600243655 /* SearchProjectViewModel.swift */; };
-		4323FAAF233A165A00243655 /* SearchProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9B6233A165600243655 /* SearchProjectViewModel.swift */; };
-		4323FAB0233A165A00243655 /* SearchProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9B7233A165600243655 /* SearchProjectViewController.swift */; };
-		4323FAB1233A165A00243655 /* SearchProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9B7233A165600243655 /* SearchProjectViewController.swift */; };
+		4323FAAC233A165A00243655 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9B5233A165600243655 /* Search.storyboard */; };
+		4323FAAD233A165A00243655 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9B5233A165600243655 /* Search.storyboard */; };
+		4323FAAE233A165A00243655 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9B6233A165600243655 /* SearchViewModel.swift */; };
+		4323FAAF233A165A00243655 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9B6233A165600243655 /* SearchViewModel.swift */; };
+		4323FAB0233A165A00243655 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9B7233A165600243655 /* SearchViewController.swift */; };
+		4323FAB1233A165A00243655 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9B7233A165600243655 /* SearchViewController.swift */; };
 		4323FAB2233A165A00243655 /* SearchProjectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9B8233A165600243655 /* SearchProjectTableViewCell.swift */; };
 		4323FAB3233A165A00243655 /* SearchProjectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9B8233A165600243655 /* SearchProjectTableViewCell.swift */; };
 		4323FAB4233A165A00243655 /* HomeRecommendedProjectHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9BA233A165600243655 /* HomeRecommendedProjectHeaderTableViewCell.swift */; };
@@ -452,9 +452,9 @@
 		4323F9AF233A165600243655 /* RegisterPincodeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterPincodeViewModel.swift; sourceTree = "<group>"; };
 		4323F9B0233A165600243655 /* RegisterPincode.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = RegisterPincode.storyboard; sourceTree = "<group>"; };
 		4323F9B2233A165600243655 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		4323F9B5233A165600243655 /* SearchProject.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SearchProject.storyboard; sourceTree = "<group>"; };
-		4323F9B6233A165600243655 /* SearchProjectViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchProjectViewModel.swift; sourceTree = "<group>"; };
-		4323F9B7233A165600243655 /* SearchProjectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchProjectViewController.swift; sourceTree = "<group>"; };
+		4323F9B5233A165600243655 /* Search.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
+		4323F9B6233A165600243655 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		4323F9B7233A165600243655 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		4323F9B8233A165600243655 /* SearchProjectTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchProjectTableViewCell.swift; sourceTree = "<group>"; };
 		4323F9BA233A165600243655 /* HomeRecommendedProjectHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRecommendedProjectHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		4323F9BB233A165600243655 /* HomeNoticeHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeNoticeHeaderTableViewCell.swift; sourceTree = "<group>"; };
@@ -587,6 +587,7 @@
 		43DB226323580B5300E69C0F /* TagListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListViewModel.swift; sourceTree = "<group>"; };
 		43DB226623580B5D00E69C0F /* TagList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TagList.storyboard; sourceTree = "<group>"; };
 		43DB226923580B6F00E69C0F /* TagListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListTableViewCell.swift; sourceTree = "<group>"; };
+		43DB22912359ADBE00E69C0F /* SearchTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagTableViewCell.swift; sourceTree = "<group>"; };
 		43E543682355930D00F2EC45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		43E5436C235598E500F2EC45 /* piction-ios_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "piction-ios_Info.plist"; sourceTree = "<group>"; };
 		43E5436D235598E500F2EC45 /* piction-ios.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "piction-ios.entitlements"; sourceTree = "<group>"; };
@@ -820,21 +821,22 @@
 			children = (
 				43DB225F23580B2900E69C0F /* TagList */,
 				43E5438A2357135500F2EC45 /* TagResultProject */,
-				4323F9B4233A165600243655 /* SearchProject */,
+				4323F9B4233A165600243655 /* Search */,
 				4323F9B9233A165600243655 /* Home */,
 			);
 			path = Home;
 			sourceTree = "<group>";
 		};
-		4323F9B4233A165600243655 /* SearchProject */ = {
+		4323F9B4233A165600243655 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				4323F9B7233A165600243655 /* SearchProjectViewController.swift */,
-				4323F9B6233A165600243655 /* SearchProjectViewModel.swift */,
+				4323F9B7233A165600243655 /* SearchViewController.swift */,
+				4323F9B6233A165600243655 /* SearchViewModel.swift */,
 				4323F9B8233A165600243655 /* SearchProjectTableViewCell.swift */,
-				4323F9B5233A165600243655 /* SearchProject.storyboard */,
+				43DB22912359ADBE00E69C0F /* SearchTagTableViewCell.swift */,
+				4323F9B5233A165600243655 /* Search.storyboard */,
 			);
-			path = SearchProject;
+			path = Search;
 			sourceTree = "<group>";
 		};
 		4323F9B9233A165600243655 /* Home */ = {
@@ -1483,7 +1485,7 @@
 				43F1866023442ECD0050BA67 /* Localizable.stringsdict in Resources */,
 				4323FAA9233A165A00243655 /* RegisterPincode.storyboard in Resources */,
 				4323FB13233A165E00243655 /* DynamicInputView.xib in Resources */,
-				4323FAAD233A165A00243655 /* SearchProject.storyboard in Resources */,
+				4323FAAD233A165A00243655 /* Search.storyboard in Resources */,
 				4323FB91233A166300243655 /* SignUpComplete.storyboard in Resources */,
 				4323FAC3233A165B00243655 /* SubscriptionList.storyboard in Resources */,
 				4323FADB233A165C00243655 /* PostHeader.storyboard in Resources */,
@@ -1533,7 +1535,7 @@
 				43F1865F23442ECD0050BA67 /* Localizable.stringsdict in Resources */,
 				4323FAA8233A165900243655 /* RegisterPincode.storyboard in Resources */,
 				4323FB12233A165E00243655 /* DynamicInputView.xib in Resources */,
-				4323FAAC233A165A00243655 /* SearchProject.storyboard in Resources */,
+				4323FAAC233A165A00243655 /* Search.storyboard in Resources */,
 				4323FB90233A166300243655 /* SignUpComplete.storyboard in Resources */,
 				4323FAC2233A165B00243655 /* SubscriptionList.storyboard in Resources */,
 				4323FADA233A165C00243655 /* PostHeader.storyboard in Resources */,
@@ -1652,7 +1654,7 @@
 				4323FACD233A165B00243655 /* SubscriptionListCollectionFooterView.swift in Sources */,
 				43E54390235713A400F2EC45 /* TagResultProjectViewModel.swift in Sources */,
 				4323FB5D233A166100243655 /* UserInfoViewModel.swift in Sources */,
-				4323FAAF233A165A00243655 /* SearchProjectViewModel.swift in Sources */,
+				4323FAAF233A165A00243655 /* SearchViewModel.swift in Sources */,
 				4323FB3F233A166000243655 /* MyPageViewModel.swift in Sources */,
 				4323FB7F233A166300243655 /* SendDonationViewController.swift in Sources */,
 				4323FB07233A165D00243655 /* CreateProjectViewModel.swift in Sources */,
@@ -1732,7 +1734,7 @@
 				4323FB1D233A165E00243655 /* TransactionDetailViewController.swift in Sources */,
 				4323FACF233A165B00243655 /* CreatePostViewModel.swift in Sources */,
 				43E5438D2357139000F2EC45 /* TagResultProjectViewController.swift in Sources */,
-				4323FAB1233A165A00243655 /* SearchProjectViewController.swift in Sources */,
+				4323FAB1233A165A00243655 /* SearchViewController.swift in Sources */,
 				4323FB37233A165F00243655 /* MyPageHeaderTypeTableViewCell.swift in Sources */,
 				4323FB97233A166400243655 /* SignUpViewModel.swift in Sources */,
 				4323FB47233A166000243655 /* ChangeMyInfoViewModel.swift in Sources */,
@@ -1748,6 +1750,7 @@
 				4323FA9D233A165900243655 /* CheckPincodeViewController.swift in Sources */,
 				43F1866623444E070050BA67 /* DeepLinking.swift in Sources */,
 				4323FAB5233A165A00243655 /* HomeRecommendedProjectHeaderTableViewCell.swift in Sources */,
+				43DB22932359ADBF00E69C0F /* SearchTagTableViewCell.swift in Sources */,
 				4323FB89233A166300243655 /* SponsorshipListViewModel.swift in Sources */,
 				43F1865B2343024A0050BA67 /* PostFooterSeriesPostListTableViewCell.swift in Sources */,
 				4323FB17233A165E00243655 /* DepositViewModel.swift in Sources */,
@@ -1809,7 +1812,7 @@
 				4323FACC233A165B00243655 /* SubscriptionListCollectionFooterView.swift in Sources */,
 				43E5438F235713A400F2EC45 /* TagResultProjectViewModel.swift in Sources */,
 				4323FB5C233A166100243655 /* UserInfoViewModel.swift in Sources */,
-				4323FAAE233A165A00243655 /* SearchProjectViewModel.swift in Sources */,
+				4323FAAE233A165A00243655 /* SearchViewModel.swift in Sources */,
 				4323FB3E233A166000243655 /* MyPageViewModel.swift in Sources */,
 				4323FB7E233A166300243655 /* SendDonationViewController.swift in Sources */,
 				4323FB06233A165D00243655 /* CreateProjectViewModel.swift in Sources */,
@@ -1889,7 +1892,7 @@
 				4323FB1C233A165E00243655 /* TransactionDetailViewController.swift in Sources */,
 				4323FACE233A165B00243655 /* CreatePostViewModel.swift in Sources */,
 				43E5438C2357138F00F2EC45 /* TagResultProjectViewController.swift in Sources */,
-				4323FAB0233A165A00243655 /* SearchProjectViewController.swift in Sources */,
+				4323FAB0233A165A00243655 /* SearchViewController.swift in Sources */,
 				4323FB36233A165F00243655 /* MyPageHeaderTypeTableViewCell.swift in Sources */,
 				4323FB96233A166400243655 /* SignUpViewModel.swift in Sources */,
 				4323FB46233A166000243655 /* ChangeMyInfoViewModel.swift in Sources */,
@@ -1905,6 +1908,7 @@
 				4323FA9C233A165900243655 /* CheckPincodeViewController.swift in Sources */,
 				43F1866523444E070050BA67 /* DeepLinking.swift in Sources */,
 				4323FAB4233A165A00243655 /* HomeRecommendedProjectHeaderTableViewCell.swift in Sources */,
+				43DB22922359ADBE00E69C0F /* SearchTagTableViewCell.swift in Sources */,
 				4323FB88233A166300243655 /* SponsorshipListViewModel.swift in Sources */,
 				43F1865A2342FEAC0050BA67 /* PostFooterSeriesPostListTableViewCell.swift in Sources */,
 				4323FB16233A165E00243655 /* DepositViewModel.swift in Sources */,

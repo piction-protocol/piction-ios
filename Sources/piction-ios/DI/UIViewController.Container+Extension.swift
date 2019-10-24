@@ -118,9 +118,9 @@ extension PostFooterViewController {
     }
 }
 
-extension SearchProjectViewController {
-    static func make() -> SearchProjectViewController {
-        return Container.shared.resolve(SearchProjectViewController.self)!
+extension SearchViewController {
+    static func make() -> SearchViewController {
+        return Container.shared.resolve(SearchViewController.self)!
     }
 }
 

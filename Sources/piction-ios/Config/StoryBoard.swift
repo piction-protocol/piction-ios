@@ -30,7 +30,7 @@ public enum Storyboard: String {
     case Post
     case PostHeader
     case PostFooter
-    case SearchProject
+    case Search
     case CreateProject
     case CreatePost
     case SponsorshipList

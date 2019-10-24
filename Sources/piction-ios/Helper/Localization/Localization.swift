@@ -74,6 +74,16 @@ extension UITextField: IBLocalizable {
         }
    }
 }
+extension UISegmentedControl {
+    @IBInspectable var localized: Bool {
+        get { return true }
+        set {
+            for index in 0 ..< numberOfSegments {
+                setTitle(titleForSegment(at: index)?.localized ?? "", forSegmentAt: index)
+            }
+        }
+    }
+}
 extension DynamicInputView {
     @IBInspectable var localizedTitleId: String? {
         get { return nil }

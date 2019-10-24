@@ -18,7 +18,8 @@ enum CustomEmptyViewStyle {
     case sponsorshipListLogin
     case subscriptionListEmpty
     case searchProjectGuide
-    case searchProjectListEmpty
+    case searchTagGuide
+    case searchListEmpty
     case transactionListEmpty
     case myProjectListEmpty
     case searchSponsorEmpty
@@ -30,7 +31,7 @@ enum CustomEmptyViewStyle {
              .projectPostListEmpty,
              .projectSeriesListEmpty,
              .subscriptionListEmpty,
-             .searchProjectListEmpty,
+             .searchListEmpty,
              .transactionListEmpty,
              .myProjectListEmpty,
              .searchSponsorEmpty:
@@ -39,7 +40,8 @@ enum CustomEmptyViewStyle {
              .sponsorshipListLogin:
             return #imageLiteral(resourceName: "icStartup")
         case .searchProjectGuide,
-             .searchSponsorGuide:
+             .searchSponsorGuide,
+             .searchTagGuide:
             return #imageLiteral(resourceName: "imgSearchNull")
         }
     }
@@ -57,7 +59,7 @@ enum CustomEmptyViewStyle {
             return LocalizedStrings.str_empty_sponsorship.localized()
         case .subscriptionListEmpty:
             return LocalizedStrings.str_subscription_empty.localized()
-        case .searchProjectListEmpty,
+        case .searchListEmpty,
              .searchSponsorEmpty:
             return LocalizedStrings.str_search_empty.localized()
         case .transactionListEmpty:
@@ -68,6 +70,8 @@ enum CustomEmptyViewStyle {
             return LocalizedStrings.str_project_search_info.localized()
         case .searchSponsorGuide:
             return LocalizedStrings.str_creator_search_info.localized()
+        case .searchTagGuide:
+            return LocalizedStrings.str_tag_search_info.localized()
         }
     }
 
@@ -82,11 +86,12 @@ enum CustomEmptyViewStyle {
              .projectSeriesListEmpty,
              .sponsorshipListEmpty,
              .subscriptionListEmpty,
-             .searchProjectListEmpty,
+             .searchListEmpty,
              .transactionListEmpty,
              .myProjectListEmpty,
              .searchSponsorEmpty,
-             .searchProjectGuide:
+             .searchProjectGuide,
+             .searchTagGuide:
             return nil
         }
     }

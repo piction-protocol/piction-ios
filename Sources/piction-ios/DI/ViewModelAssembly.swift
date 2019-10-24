@@ -115,8 +115,8 @@ final class ViewModelAssembly: Assembly {
             )
         }
 
-        container.register(SearchProjectViewModel.self) { resolver in
-            return SearchProjectViewModel()
+        container.register(SearchViewModel.self) { resolver in
+            return SearchViewModel()
         }
 
         container.register(CreateProjectViewModel.self) { (resolver, uri: String) in

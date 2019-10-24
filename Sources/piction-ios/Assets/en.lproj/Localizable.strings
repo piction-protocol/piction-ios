@@ -24,6 +24,7 @@
 "menu_project_info" = "Project detail";
 "menu_my_info" = "My page";
 "menu_project" = "Project";
+"menu_tag" = "Tag";
 "menu_my_project" = "My project";
 
 "tab_explore" = "홈";
@@ -60,7 +61,9 @@
 "hint_current_pw" = "Current password";
 "hint_need_six_pw" = "Must be more than 6 characters long";
 "hint_pw_check" = "Confirm password";
+"hint_project_and_tag_search" = "Search Project, Tag";
 "hint_project_search" = "Search project";
+"hint_tag_search" = "Search Tag";
 "hint_creator_search" = "Creator's name or ID";
 
 // Button
@@ -126,6 +129,7 @@
 
 "str_project_search_info" = "Search by Project or Creator";
 "str_creator_search_info" = "Search by Creator.";
+"str_tag_search_info" = "테그로 검색하세요.";
 
 "str_search_empty" = "No result found.";
 "str_subscription_empty" = "No subscriptions now";

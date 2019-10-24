@@ -121,9 +121,9 @@ final class ViewControllerAssembly: Assembly {
             return vc
         }
 
-        container.register(SearchProjectViewController.self) { resolver in
-            let vc = Storyboard.SearchProject.instantiate(SearchProjectViewController.self)
-            vc.viewModel = resolver.resolve(SearchProjectViewModel.self)!
+        container.register(SearchViewController.self) { resolver in
+            let vc = Storyboard.Search.instantiate(SearchViewController.self)
+            vc.viewModel = resolver.resolve(SearchViewModel.self)!
             return vc
         }
 
