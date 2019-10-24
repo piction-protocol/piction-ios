@@ -52,6 +52,7 @@
 "msg_title_confirm_password" = "Please confirm password to update.";
 
 "msg_want_to_unsubscribe" = "Cancel subscription?";
+"msg_already_sign_in" = "이미 로그인 되어있습니다.";
 
 // hint
 "hint_input_id_guide" = "Must be 5-15 characters long";

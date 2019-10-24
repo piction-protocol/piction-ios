@@ -85,6 +85,17 @@ extension SignInViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
+            .userInfo
+            .drive(onNext: { [weak self] userInfo in
+                if userInfo.loginId != "" {
+                    self?.dismiss(animated: true, completion: {
+                        Toast.showToast(LocalizedStrings.msg_already_sign_in.localized())
+                    })
+                }
+            })
+            .disposed(by: disposeBag)
+
+        output
             .openSignUpViewController
             .drive(onNext: { [weak self] in
                 self?.openSignUpViewController()
@@ -94,11 +105,9 @@ extension SignInViewController: ViewModelBindable {
         output
             .openFindPassword
             .drive(onNext: { _ in
-                let infoDictionary: [AnyHashable: Any] = Bundle.main.infoDictionary!
-                guard let appID: String = infoDictionary["CFBundleIdentifier"] as? String else { return }
-                let isStaging = appID == "com.pictionnetwork.piction-test" ? "staging." : ""
+                let stagingPath = AppInfo.isStaging ? "staging." : ""
 
-                if let url = URL(string: "https://\(isStaging)piction.network/forgot_password") {
+                if let url = URL(string: "https://\(stagingPath)piction.network/forgot_password") {
                     let safariViewController = SFSafariViewController(url: url)
                     self.present(safariViewController, animated: true, completion: nil)
                 }

@@ -35,6 +35,7 @@ final class SignUpViewModel: InjectableViewModel {
 
     struct Output {
         let viewWillAppear: Driver<Void>
+        let userInfo: Driver<UserModel>
         let signUpBtnEnable: Driver<Void>
         let openSignUpComplete: Driver<Void>
         let activityIndicator: Driver<Bool>
@@ -42,7 +43,21 @@ final class SignUpViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let viewWillAppear = input.viewWillAppear
+        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+
+        let userInfoAction = viewWillAppear
+            .flatMap { _ -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(UsersAPI.me)
+                return Action.makeDriver(response)
+            }
+
+        let userInfoSuccess = userInfoAction.elements
+            .flatMap { response -> Driver<UserModel> in
+                guard let userInfo = try? response.map(to: UserModel.self) else {
+                    return Driver.empty()
+                }
+                return Driver.just(userInfo)
+            }
 
         let signUpInfo = Driver.combineLatest(input.loginIdTextFieldDidInput, input.emailTextFieldDidInput, input.passwordTextFieldDidInput, input.passwordCheckTextFieldDidInput, input.nicknameTextFieldDidInput) { (loginId: $0, email: $1, password: $2, passwordCheck: $3, username: $4) }
 
@@ -98,7 +113,8 @@ final class SignUpViewModel: InjectableViewModel {
         let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
 
         return Output(
-            viewWillAppear: viewWillAppear,
+            viewWillAppear: input.viewWillAppear,
+            userInfo: userInfoSuccess,
             signUpBtnEnable: input.agreeBtnDidTap,
             openSignUpComplete: sessionCreateSuccess,
             activityIndicator: activityIndicator,

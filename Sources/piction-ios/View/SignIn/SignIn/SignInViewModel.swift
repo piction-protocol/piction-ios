@@ -34,6 +34,7 @@ final class SignInViewModel: InjectableViewModel {
 
     struct Output {
         let viewWillAppear: Driver<Void>
+        let userInfo: Driver<UserModel>
         let activityIndicator: Driver<Bool>
         let openSignUpViewController: Driver<Void>
         let openFindPassword: Driver<Void>
@@ -43,7 +44,21 @@ final class SignInViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let viewWillAppear = input.viewWillAppear
+        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+
+        let userInfoAction = viewWillAppear
+            .flatMap { _ -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(UsersAPI.me)
+                return Action.makeDriver(response)
+            }
+
+        let userInfoSuccess = userInfoAction.elements
+            .flatMap { response -> Driver<UserModel> in
+                guard let userInfo = try? response.map(to: UserModel.self) else {
+                    return Driver.empty()
+                }
+                return Driver.just(userInfo)
+            }
 
         let signInInfo = Driver.combineLatest(input.loginIdTextFieldDidInput, input.passwordTextFieldDidInput) { (loginId: $0, password: $1) }
 
@@ -117,7 +132,8 @@ final class SignInViewModel: InjectableViewModel {
         let dismissViewController = Driver.merge(signInSuccess, closeAction)
 
         return Output(
-            viewWillAppear: viewWillAppear,
+            viewWillAppear: input.viewWillAppear,
+            userInfo: userInfoSuccess,
             activityIndicator: activityIndicator,
             openSignUpViewController: openSignUpViewController,
             openFindPassword: openFindPassword,

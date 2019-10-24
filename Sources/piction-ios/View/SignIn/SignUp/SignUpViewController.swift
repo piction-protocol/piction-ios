@@ -50,20 +50,8 @@ final class SignUpViewController: UIViewController {
         didSet {
             let attributedStr: NSMutableAttributedString = NSMutableAttributedString(string: LocalizedStrings.str_agreement_text.localized())
 
-            let infoDictionary: [AnyHashable: Any] = Bundle.main.infoDictionary!
-            guard let appID: String = infoDictionary["CFBundleIdentifier"] as? String else { return }
-            var urlScheme: String {
-                let isStaging = appID == "com.pictionnetwork.piction-test"
-
-                if isStaging {
-                    return "piction-test"
-                } else {
-                    return "piction"
-                }
-            }
-
-            guard let termsURL = URL(string: "\(urlScheme)://terms") else { return }
-            guard let privacyURL = URL(string: "\(urlScheme)://privacy") else { return }
+            guard let termsURL = URL(string: "\(AppInfo.urlScheme)://terms") else { return }
+            guard let privacyURL = URL(string: "\(AppInfo.urlScheme)://privacy") else { return }
 
             attributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 14), range: attributedStr.mutableString.range(of: LocalizedStrings.str_agreement_text.localized()))
             attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(r: 191, g: 191, b: 191), range: attributedStr.mutableString.range(of: LocalizedStrings.str_agreement_text.localized()))
@@ -132,6 +120,17 @@ extension SignUpViewController: ViewModelBindable {
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self?.tabBarController?.tabBar.isHidden = true
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .userInfo
+            .drive(onNext: { [weak self] userInfo in
+                if userInfo.loginId != "" {
+                    self?.dismiss(animated: true, completion: {
+                        Toast.showToast(LocalizedStrings.msg_already_sign_in.localized())
+                    })
+                }
             })
             .disposed(by: disposeBag)
 
