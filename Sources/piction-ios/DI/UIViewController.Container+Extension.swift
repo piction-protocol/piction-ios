@@ -16,6 +16,12 @@ extension HomeViewController {
     }
 }
 
+extension TagListViewController {
+    static func make() -> TagListViewController {
+        return Container.shared.resolve(TagListViewController.self)!
+    }
+}
+
 extension ExploreViewController {
     static func make() -> ExploreViewController {
         return Container.shared.resolve(ExploreViewController.self)!

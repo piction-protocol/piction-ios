@@ -19,6 +19,12 @@ final class ViewControllerAssembly: Assembly {
             return vc
         }
 
+        container.register(TagListViewController.self) { resolver in
+            let vc = Storyboard.TagList.instantiate(TagListViewController.self)
+            vc.viewModel = resolver.resolve(TagListViewModel.self)!
+            return vc
+        }
+
         container.register(ExploreViewController.self) { resolver in
             let vc = Storyboard.Explore.instantiate(ExploreViewController.self)
             vc.viewModel = resolver.resolve(ExploreViewModel.self)!

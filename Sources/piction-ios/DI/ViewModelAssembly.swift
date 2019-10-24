@@ -15,6 +15,10 @@ final class ViewModelAssembly: Assembly {
             return HomeViewModel()
         }
 
+        container.register(TagListViewModel.self) { resolver in
+            return TagListViewModel()
+        }
+
         container.register(ExploreViewModel.self) { resolver in
             return ExploreViewModel(dependency: (
                 resolver.resolve(Updater.self)!)
