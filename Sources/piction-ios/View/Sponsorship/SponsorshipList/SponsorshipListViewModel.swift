@@ -62,7 +62,7 @@ final class SponsorshipListViewModel: InjectableViewModel {
 
         let sponsorshipListAction = initialLoad
             .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(SponsorshipsAPI.get(page: 1, size: 5))
+                let response = PictionSDK.rx.requestAPI(SponsorshipsAPI.get(page: 1, size: UI_USER_INTERFACE_IDIOM() == .pad ? 10 : 5))
                 return Action.makeDriver(response)
             }
 

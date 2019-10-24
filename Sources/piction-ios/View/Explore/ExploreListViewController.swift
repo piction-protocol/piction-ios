@@ -70,7 +70,8 @@ final class ExploreViewController: UIViewController {
         super.viewWillLayoutSubviews()
 
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            let width = (view.frame.size.width - 54) / 2
+            let cellCount: CGFloat = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad && view.frame.size.width == UIScreen.main.bounds.size.width ? 4 : 2
+            let width = (view.frame.size.width - 40 - (cellCount - 1) * 7) / cellCount 
             let height = width + 44
             flowLayout.itemSize = CGSize(width: width, height: height)
             flowLayout.invalidateLayout()
