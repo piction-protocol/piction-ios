@@ -24,7 +24,7 @@ class UIViewExtension: UIView, BorderLineConfigurable {
 
     // MARK: - BorderLineConfigurable
     @IBInspectable
-    var borderColor: UIColor = UIColor.white {
+    var borderColor: UIColor = UIColor.clear {
         didSet {
             layer.borderColor = borderColor.cgColor
         }
@@ -35,42 +35,6 @@ class UIViewExtension: UIView, BorderLineConfigurable {
         didSet {
             layer.borderWidth = borderWidth
         }
-    }
-
-    @IBInspectable
-    var cornerRadius: CGFloat = 1.0 {
-        didSet {
-            layer.cornerRadius = cornerRadius
-            layer.masksToBounds = cornerRadius > 0
-        }
-    }
-
-    // MARK: - private method
-    private func configure() {
-        layer.borderColor = borderColor.cgColor
-        layer.borderWidth = borderWidth
-        layer.cornerRadius = cornerRadius
-        layer.masksToBounds = cornerRadius > 0
-    }
-}
-
-@IBDesignable
-class MessageView: UIView {
-
-    // MARK: - Initializations
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configure()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configure()
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        configureRadius()
     }
 
     @IBInspectable
@@ -108,16 +72,25 @@ class MessageView: UIView {
         }
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        configureRadius()
+    }
+
     // MARK: - private method
     private func configure() {
-        layer.cornerRadius = cornerRadius
-        layer.masksToBounds = cornerRadius > 0
+        layer.borderColor = borderColor.cgColor
+        layer.borderWidth = borderWidth
         configureRadius()
     }
 
     private func configureRadius() {
         guard cornerRadius > 0 else { return }
-
+        guard topLeftRadius || topRightRadius || bottomLeftRadius || bottomRightRadius else {
+            layer.cornerRadius = cornerRadius
+            layer.masksToBounds = cornerRadius > 0
+            return
+        }
         var corners = UIRectCorner()
         if topLeftRadius {
             corners.insert(.topLeft)

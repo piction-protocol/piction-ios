@@ -20,6 +20,7 @@ enum LocalizedStrings {
     case edit
     case register
     case authenticates
+    case more
 
     // menu
     case menu_project_info
@@ -103,6 +104,11 @@ enum LocalizedStrings {
 
     case str_recommend_project
     case str_recommend_info
+    case str_trending
+    case str_trending_info
+    case str_subscription_project
+    case str_popular_tag
+    case str_project_count
     case str_subs_count_plural
     case str_subs_only
     case str_series_subs_only

@@ -1,15 +1,15 @@
 //
-//  HomeNoticeTableViewCell.swift
-//  PictionView
+//  NoticeSectionCollectionViewCell.swift
+//  piction-ios
 //
-//  Created by jhseo on 12/07/2019.
+//  Created by jhseo on 17/10/2019.
 //  Copyright © 2019 Piction Network. All rights reserved.
 //
 
 import UIKit
 import PictionSDK
 
-final class HomeNoticeTableViewCell: ReuseTableViewCell {
+final class NoticeSectionCollectionViewCell: ReuseCollectionViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
 
     typealias Model = BannerModel

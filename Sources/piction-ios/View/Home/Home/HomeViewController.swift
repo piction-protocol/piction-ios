@@ -11,7 +11,6 @@ import RxSwift
 import RxCocoa
 import ViewModelBindable
 import RxDataSources
-import SafariServices
 import PictionSDK
 
 enum HomeBySection {
@@ -37,17 +36,17 @@ extension HomeBySection: SectionModelType {
 }
 
 enum HomeItemType {
-    case recommendedHeader
-    case recommendedProject(project: ProjectModel)
-    case noticeHeader
-    case notice(notice: BannerModel)
+    case header(model: HomeHeaderType)
+    case trending(model: [ProjectModel])
+    case subscription(projects: [ProjectModel], posts: [PostModel])
+    case popularTag(tags: [TagModel], thumbnails: [String])
+    case notice(model: [BannerModel])
 }
-
 
 final class HomeViewController: UIViewController {
     var disposeBag = DisposeBag()
 
-    let searchResultsController = SearchProjectViewController.make()
+    let searchResultsController = SearchViewController.make()
     var searchController: UISearchController?
     private var refreshControl = UIRefreshControl()
 
@@ -64,38 +63,51 @@ final class HomeViewController: UIViewController {
 
         searchController?.hidesNavigationBarDuringPresentation = true
         searchController?.dimsBackgroundDuringPresentation = false
-        searchController?.searchBar.placeholder = LocalizedStrings.hint_project_search.localized()
         searchController?.searchResultsUpdater = searchResultsController
 
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
+
+        searchController?.isActive = true
+
+        searchController?.searchBar.placeholder = LocalizedStrings.hint_project_and_tag_search.localized()
     }
 
-    private func openProjectViewController(uri: String) {
-        let vc = ProjectViewController.make(uri: uri)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+//        tableView.layoutIfNeeded()
+        tableView.reloadData()
     }
 
     private func configureDataSource() -> RxTableViewSectionedReloadDataSource<HomeBySection> {
         return RxTableViewSectionedReloadDataSource<HomeBySection>(
             configureCell: { dataSource, tableView, indexPath, model in
                 switch dataSource[indexPath] {
-                case .recommendedHeader:
-                    let cell: HomeRecommendedProjectHeaderTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                case .header(let info):
+                    let cell: HomeHeaderTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.configure(with: info)
                     return cell
-                case .recommendedProject(let project):
-                    let cell: HomeRecommendedProjectTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    cell.configure(with: project)
+                case .trending(let projects):
+                    let cell: HomeTrendingSectionTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.configure(with: projects)
+                    cell.layoutSubviews()
                     return cell
-                case .noticeHeader:
-                    let cell: HomeNoticeHeaderTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                case .subscription(let projects, let posts):
+                    let cell: HomeSubscriptionSectionTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.configure(projects: projects, posts: posts)
+                    cell.layoutSubviews()
                     return cell
-                case .notice(let notice):
-                    let cell: HomeNoticeTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    cell.configure(with: notice)
+                case .popularTag(let tags, let thumbnails):
+                    let cell: HomePopularTagSectionTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.configure(tags: tags, thumbnails: thumbnails)
+                    cell.layoutSubviews()
+                    return cell
+                case .notice(let notices):
+                    let cell: HomeNoticeSectionTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.configure(with: notices)
+                    cell.layoutSubviews()
                     return cell
                 }
             })
@@ -118,6 +130,8 @@ final class HomeViewController: UIViewController {
 
     func openSearchBar() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//        DispatchQueue.main.async {
+//            self.searchController?.isActive = true
             self.searchController?.searchBar.becomeFirstResponder()
         }
     }
@@ -132,8 +146,6 @@ extension HomeViewController: ViewModelBindable {
         let input = HomeViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
-            selectedIndexPath:
-            tableView.rx.itemSelected.asDriver(),
             refreshControlDidRefresh: refreshControl.rx.controlEvent(.valueChanged).asDriver()
         )
 
@@ -147,7 +159,7 @@ extension HomeViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .projectList
+            .sectionList
             .do(onNext: { [weak self] _ in
                 self?.navigationItem.hidesSearchBarWhenScrolling = true
             })
@@ -157,22 +169,9 @@ extension HomeViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .openProjectViewController
-            .drive(onNext: { [weak self] indexPath in
-                self?.searchController?.isActive = false
-                switch dataSource[indexPath] {
-                case .recommendedProject(let project):
-                    self?.openProjectViewController(uri: project.uri ?? "")
-                case .notice(let notice):
-                    guard let url = URL(string: notice.link ?? "") else { return }
-                    let safariViewController = SFSafariViewController(url: url)
-                    self?.present(safariViewController, animated: true, completion: nil)
-                default:
-                    return
-                }
-//                if let item: ProjectModel = try? self?.table.rx.model(at: indexPath) {
-//                    self?.openProjectViewController(uri: item.uri ?? "")
-//                }
+           .sectionList
+            .drive(onNext: { [weak self] _ in
+                self?.tableView.layoutIfNeeded()
             })
             .disposed(by: disposeBag)
 

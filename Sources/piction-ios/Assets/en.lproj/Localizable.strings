@@ -19,6 +19,7 @@
 "edit" = "Edit";
 "register" = "Register";
 "authenticates" = "인증";
+"more" = "더보기";
 
 // menu
 "menu_project_info" = "Project detail";
@@ -27,7 +28,7 @@
 "menu_tag" = "Tag";
 "menu_my_project" = "My project";
 
-"tab_explore" = "홈";
+"tab_home" = "홈";
 "tab_explore" = "Explore";
 "tab_sponsorship" = "Sponsorship";
 "tab_subscription" = "Subscription";
@@ -102,6 +103,11 @@
 
 "str_recommend_project" = "Featured projects";
 "str_recommend_info" = "Discover the interesting creations on Piction";
+"str_trending" = "TRENDING";
+"str_trending_info" = "현재 주목받는 프로젝트를 만나보세요.";
+"str_subscription_project" = "구독 프로젝트";
+"str_popular_tag" = "인기 태그";
+"str_project_count" = "%d 프로젝트";
 "str_subs_count_plural" = "%d subscribers";
 "str_subs_only" = "Unlock this by becoming subscriber.";
 "str_series_subs_only" = "구독자 전용";

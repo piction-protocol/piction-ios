@@ -19,6 +19,7 @@
 "edit" = "편집";
 "register" = "등록";
 "authenticates" = "인증";
+"more" = "더보기";
 
 // menu
 "menu_project_info" = "프로젝트 정보";
@@ -102,6 +103,11 @@
 
 "str_recommend_project" = "추천 프로젝트";
 "str_recommend_info" = "만화부터 일러스트, 소설, 동영상까지. 픽션의 다양한 프로젝트를 만나보세요.";
+"str_trending" = "TRENDING";
+"str_trending_info" = "현재 주목받는 프로젝트를 만나보세요.";
+"str_subscription_project" = "구독 프로젝트";
+"str_popular_tag" = "인기 태그";
+"str_project_count" = "%d 프로젝트";
 "str_subs_count_plural" = "구독자 수 %d";
 "str_subs_only" = "구독자 전용 포스트입니다.";
 "str_series_subs_only" = "구독자 전용";

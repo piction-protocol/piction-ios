@@ -12,7 +12,9 @@ import PictionSDK
 final class ViewModelAssembly: Assembly {
     func assemble(container: Container) {
         container.register(HomeViewModel.self) { resolver in
-            return HomeViewModel()
+            return HomeViewModel(dependency: (
+                resolver.resolve(Updater.self)!)
+            )
         }
 
         container.register(TagListViewModel.self) { resolver in
