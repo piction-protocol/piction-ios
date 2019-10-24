@@ -31,6 +31,7 @@ final class PostFooterViewController: UIViewController {
             likeView.layer.masksToBounds = false
             likeView.layer.borderColor = UIColor.white.cgColor
             likeView.layer.borderWidth = 0.5
+            likeView.layer.cornerRadius = 40
         }
     }
     @IBOutlet weak var likeImageView: UIImageView!

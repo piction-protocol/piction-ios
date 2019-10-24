@@ -251,7 +251,8 @@ extension PostViewController: ViewModelBindable {
 
         output
             .sharePost
-            .drive(onNext: { url in
+            .drive(onNext: { [weak self] url in
+                guard let `self` = self else { return }
                 let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: [])
 
                 activityViewController.excludedActivityTypes = [

@@ -36,7 +36,7 @@
                                                     <color key="textColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rcm-io-YXX" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rcm-io-YXX">
                                                     <rect key="frame" x="147.5" y="55" width="80" height="80"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icFavoriteOff" translatesAutoresizingMaskIntoConstraints="NO" id="B0J-zg-bnC">
@@ -78,14 +78,6 @@
                                                         <constraint firstItem="wXy-IU-MpP" firstAttribute="top" secondItem="B0J-zg-bnC" secondAttribute="bottom" constant="1" id="ww9-3E-L60"/>
                                                         <constraint firstAttribute="bottom" secondItem="wXy-IU-MpP" secondAttribute="bottom" constant="12" id="zqD-35-sog"/>
                                                     </constraints>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                            <real key="value" value="0.0"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="40"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GSp-zE-ewu">
                                                     <rect key="frame" x="0.0" y="175" width="375" height="78"/>
@@ -210,6 +202,7 @@
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icPostCurrent" translatesAutoresizingMaskIntoConstraints="NO" id="3d3-rb-AkL">
                                                                     <rect key="frame" x="0.0" y="15" width="28" height="28"/>
+                                                                    <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="28" id="Y9d-EG-eId"/>
                                                                         <constraint firstAttribute="height" constant="28" id="hbs-L8-9Js"/>
