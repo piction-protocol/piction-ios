@@ -13,11 +13,12 @@ final class ExploreListCollectionViewCell: ReuseCollectionViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var nicknameLabel: UILabel!
+    @IBOutlet weak var updateLabel: UILabel!
 
     typealias Model = ProjectModel
 
     func configure(with model: Model) {
-        let (thumbnail, title, nickname) = (model.thumbnail, model.title, model.user?.username)
+        let (thumbnail, title, nickname, lastPublishedAt) = (model.thumbnail, model.title, model.user?.username, model.lastPublishedAt)
 
         let thumbnailWithIC = "\(thumbnail ?? "")?w=720&h=720&quality=80&output=webp"
         if let url = URL(string: thumbnailWithIC) {
@@ -28,5 +29,17 @@ final class ExploreListCollectionViewCell: ReuseCollectionViewCell {
 
         titleLabel.text = title
         nicknameLabel.text = nickname
+
+        if let lastPublishedAt = lastPublishedAt {
+            let diff = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: lastPublishedAt, to: Date())
+
+            if let day = diff.day, day > 0 {
+                updateLabel.isHidden = true
+            } else {
+                updateLabel.isHidden = false
+            }
+        } else {
+            updateLabel.isHidden = true
+        }
     }
 }
