@@ -28,6 +28,8 @@ final class CreateProjectViewController: UIViewController {
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var deleteWideThumbnailButton: UIButton!
     @IBOutlet weak var deleteThumbnailButton: UIButton!
+    @IBOutlet weak var privateProjectCheckBoxButton: UIButton!
+    @IBOutlet weak var privateProjectCheckBoxImageView: UIImageView!
 
     private let chosenThumbnailImage = PublishSubject<UIImage>()
     private let chosenWideThumbnailImage = PublishSubject<UIImage>()
@@ -41,6 +43,11 @@ final class CreateProjectViewController: UIViewController {
 
     @IBAction func tapGesture(_ sender: Any) {
         view.endEditing(true)
+    }
+
+    private func controlStatusCheckBox(_ status: String) {
+        self.privateProjectCheckBoxImageView.image = status == "HIDDEN" ? #imageLiteral(resourceName: "ic-check") : UIImage()
+        self.privateProjectCheckBoxImageView.backgroundColor = status == "HIDDEN" ? UIColor(r: 26, g: 146, b: 255) : UIColor.clear
     }
 }
 
@@ -60,6 +67,7 @@ extension CreateProjectViewController: ViewModelBindable {
             thumbnailImageDidPick: chosenThumbnailImage.asDriver(onErrorDriveWith: .empty()),
             deleteWideThumbnailBtnDidTap: deleteWideThumbnailButton.rx.tap.asDriver(),
             deleteThumbnailBtnDidTap: deleteThumbnailButton.rx.tap.asDriver(),
+            privateProjectCheckBoxBtnDidTap: privateProjectCheckBoxButton.rx.tap.asDriver(),
             inputSynopsis: synopsisTextField.rx.text.orEmpty.asDriver(),
             saveBtnDidTap: saveBarButton.rx.tap.asDriver()
         )
@@ -104,6 +112,8 @@ extension CreateProjectViewController: ViewModelBindable {
                 }
 
                 self?.synopsisTextField.text = projectInfo.synopsis
+
+                self?.controlStatusCheckBox(projectInfo.status ?? "PUBLIC")
             })
             .disposed(by: disposeBag)
 
@@ -155,6 +165,13 @@ extension CreateProjectViewController: ViewModelBindable {
                 } else {
                     self?.thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
                 }
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .statusChanged
+            .drive(onNext: { [weak self] status in
+                self?.controlStatusCheckBox(status)
             })
             .disposed(by: disposeBag)
 

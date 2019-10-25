@@ -25,6 +25,7 @@ final class CreateProjectViewModel: InjectableViewModel {
     private let synopsis = PublishSubject<String>()
     private let wideThumbnailImageId = PublishSubject<String?>()
     private let thumbnailImageId = PublishSubject<String?>()
+    private let status = PublishSubject<String>()
 
     init(dependency: Dependency) {
         (updater, uri) = dependency
@@ -40,6 +41,7 @@ final class CreateProjectViewModel: InjectableViewModel {
         let thumbnailImageDidPick: Driver<UIImage>
         let deleteWideThumbnailBtnDidTap: Driver<Void>
         let deleteThumbnailBtnDidTap: Driver<Void>
+        let privateProjectCheckBoxBtnDidTap: Driver<Void>
         let inputSynopsis: Driver<String>
         let saveBtnDidTap: Driver<Void>
     }
@@ -53,6 +55,7 @@ final class CreateProjectViewModel: InjectableViewModel {
         let openThumbnailImagePicker: Driver<Void>
         let changeWideThumbnail: Driver<UIImage?>
         let changeThumbnail: Driver<UIImage?>
+        let statusChanged: Driver<String>
         let popViewController: Driver<Void>
         let activityIndicator: Driver<Bool>
         let showToast: Driver<String>
@@ -92,6 +95,7 @@ final class CreateProjectViewModel: InjectableViewModel {
                 self?.thumbnailImageId.onNext("")
                 self?.wideThumbnailImageId.onNext("")
                 self?.synopsis.onNext(project.synopsis ?? "")
+                self?.status.onNext(project.status ?? "PUBLIC")
 
                 print(project)
                 return Driver.just(project)
@@ -180,19 +184,31 @@ final class CreateProjectViewModel: InjectableViewModel {
                 return Driver.just(nil)
             }
 
+        let statusChanged = input.privateProjectCheckBoxBtnDidTap
+            .withLatestFrom(status.asDriver(onErrorDriveWith: .empty()))
+            .flatMap { [weak self] status -> Driver<String> in
+                if status == "PUBLIC" {
+                    self?.status.onNext("HIDDEN")
+                    return Driver.just("HIDDEN")
+                } else {
+                    self?.status.onNext("PUBLIC")
+                    return Driver.just("PUBLIC")
+                }
+            }
+
         let thumbnailImage = Driver.merge(changeThumbnail, deleteThumbnail)
 
-        let changeProjectInfo = Driver.combineLatest(projectTitleChanged, projectIdChanged, wideThumbnailImageId.asDriver(onErrorJustReturn: nil), thumbnailImageId.asDriver(onErrorJustReturn: nil), synopsisChanged) { (title: $0, id: $1, wideThumbnailImageId: $2, thumbnailImageId: $3, synopsis: $4) }
+        let changeProjectInfo = Driver.combineLatest(projectTitleChanged, projectIdChanged, wideThumbnailImageId.asDriver(onErrorJustReturn: nil), thumbnailImageId.asDriver(onErrorJustReturn: nil), synopsisChanged, statusChanged) { (title: $0, id: $1, wideThumbnailImageId: $2, thumbnailImageId: $3, synopsis: $4, status: $5) }
 
         let saveButtonAction = input.saveBtnDidTap
             .withLatestFrom(changeProjectInfo)
             .flatMap { [weak self] changeProjectInfo -> Driver<Action<ResponseData>> in
                 guard let `self` = self else { return Driver.empty() }
                 if self.uri == "" {
-                    let response = PictionSDK.rx.requestAPI(ProjectsAPI.create(uri: changeProjectInfo.id, title: changeProjectInfo.title, synopsis: changeProjectInfo.synopsis, thumbnail: changeProjectInfo.thumbnailImageId, wideThumbnail: changeProjectInfo.wideThumbnailImageId, tags: [], status: "PUBLIC"))
+                    let response = PictionSDK.rx.requestAPI(ProjectsAPI.create(uri: changeProjectInfo.id, title: changeProjectInfo.title, synopsis: changeProjectInfo.synopsis, thumbnail: changeProjectInfo.thumbnailImageId, wideThumbnail: changeProjectInfo.wideThumbnailImageId, tags: [], status: changeProjectInfo.status))
                     return Action.makeDriver(response)
                 } else {
-                    let response = PictionSDK.rx.requestAPI(ProjectsAPI.update(uri: changeProjectInfo.id, title: changeProjectInfo.title, synopsis: changeProjectInfo.synopsis, thumbnail: changeProjectInfo.thumbnailImageId, wideThumbnail: changeProjectInfo.wideThumbnailImageId, tags: [], status: "PUBLIC"))
+                    let response = PictionSDK.rx.requestAPI(ProjectsAPI.update(uri: changeProjectInfo.id, title: changeProjectInfo.title, synopsis: changeProjectInfo.synopsis, thumbnail: changeProjectInfo.thumbnailImageId, wideThumbnail: changeProjectInfo.wideThumbnailImageId, tags: [], status: changeProjectInfo.status))
                     return Action.makeDriver(response)
                 }
             }
@@ -232,6 +248,7 @@ final class CreateProjectViewModel: InjectableViewModel {
             openThumbnailImagePicker: input.thumbnailBtnDidTap,
             changeWideThumbnail: wideThumbnailImage,
             changeThumbnail: thumbnailImage,
+            statusChanged: statusChanged,
             popViewController: changeProjectInfoSuccess,
             activityIndicator: activityIndicator,
             showToast: showToast
