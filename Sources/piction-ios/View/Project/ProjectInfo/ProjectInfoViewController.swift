@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import ViewModelBindable
+import RxDataSources
 
 final class ProjectInfoViewController: UIViewController {
     var disposeBag = DisposeBag()
@@ -19,6 +20,9 @@ final class ProjectInfoViewController: UIViewController {
     @IBOutlet weak var loginIdLabel: UILabel!
     @IBOutlet weak var synopsisLabel: UILabel!
     @IBOutlet weak var sendDonationButton: UIButton!
+    @IBOutlet weak var synopsisStackView: UIStackView!
+    @IBOutlet weak var tagStackView: UIStackView!
+    @IBOutlet weak var tagCollectionView: UICollectionView!
 
     private func openSendDonationViewController(loginId: String) {
         let vc = SendDonationViewController.make(loginId: loginId)
@@ -40,15 +44,26 @@ final class ProjectInfoViewController: UIViewController {
             topViewController.openViewController(vc, type: .push)
         }
     }
+
+    private func configureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>> {
+        return RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>>(
+            configureCell: { dataSource, collectionView, indexPath, model in
+                let cell: ProjectInfoTagCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+                cell.configure(with: model)
+                return cell
+        })
+    }
 }
 
 extension ProjectInfoViewController: ViewModelBindable {
     typealias ViewModel = ProjectInfoViewModel
 
     func bindViewModel(viewModel: ViewModel) {
+        let dataSource = configureDataSource()
 
         let input = ProjectInfoViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
+            selectedIndexPath: tagCollectionView.rx.itemSelected.asDriver(),
             sendDonationBtnDidTap: sendDonationButton.rx.tap.asDriver()
         )
 
@@ -70,7 +85,24 @@ extension ProjectInfoViewController: ViewModelBindable {
                 }
                 self?.writerLabel.text = projectInfo.user?.username
                 self?.loginIdLabel.text = "@\(projectInfo.user?.loginId ?? "")"
+                self?.synopsisStackView.isHidden = projectInfo.synopsis == ""
                 self?.synopsisLabel.text = projectInfo.synopsis ?? ""
+                self?.tagStackView.isHidden = projectInfo.tags?.count == 0
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .projectInfo
+            .drive { $0 }
+            .map { [SectionModel(model: "tags", items: $0.tags ?? [])] }
+            .bind(to: tagCollectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+
+        output
+            .selectedIndexPath
+            .drive(onNext: { [weak self] indexPath in
+                let tag = dataSource[indexPath]
+                self?.openTagResultProjectViewController(tag: tag)
             })
             .disposed(by: disposeBag)
 

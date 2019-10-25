@@ -62,12 +62,11 @@ final class ProjectViewModel: InjectableViewModel {
 
     func build(input: Input) -> Output {
 
-        let viewWillAppear = input.viewWillAppear
-        let viewWillDisappear = input.viewWillDisappear
+        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+
         let contentOffset = input.contentOffset
 
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
-
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
 
         let updateSelectedProjectMenu = input.changeMenu
@@ -385,8 +384,8 @@ final class ProjectViewModel: InjectableViewModel {
         let showToast = Driver.merge(subscriptionSuccess, cancelSubscriptionSuccess, subscriptionError, cancelSubscriptionError)
 
         return Output(
-            viewWillAppear: viewWillAppear,
-            viewWillDisappear: viewWillDisappear,
+            viewWillAppear: input.viewWillAppear,
+            viewWillDisappear: input.viewWillDisappear,
             projectInfo: loadProjectInfo,
             subscriptionInfo: subscriptionInfo,
             openCancelSubscriptionPopup: openCancelSubscriptionPopup,

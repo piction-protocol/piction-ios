@@ -26,12 +26,14 @@ final class ProjectInfoViewModel: InjectableViewModel {
 
     struct Input {
         let viewWillAppear: Driver<Void>
+        let selectedIndexPath: Driver<IndexPath>
         let sendDonationBtnDidTap: Driver<Void>
     }
 
     struct Output {
         let viewWillAppear: Driver<Void>
         let projectInfo: Driver<ProjectModel>
+        let selectedIndexPath: Driver<IndexPath>
         let openSendDonationViewController: Driver<String>
         let openSignInViewController: Driver<Void>
     }
@@ -91,6 +93,7 @@ final class ProjectInfoViewModel: InjectableViewModel {
         return Output(
             viewWillAppear: input.viewWillAppear,
             projectInfo: projectInfoSuccess,
+            selectedIndexPath: input.selectedIndexPath,
             openSendDonationViewController: openSendDonationViewController,
             openSignInViewController: openSignInViewController
         )
