@@ -43,6 +43,7 @@ final class CreatePostViewModel: InjectableViewModel {
         let deleteCoverImageBtnDidTap: Driver<Void>
         let forAllCheckBtnDidTap: Driver<Void>
         let forSubscriptionCheckBtnDidTap: Driver<Void>
+        let forPrivateCheckBtnDidTap: Driver<Void>
         let saveBtnDidTap: Driver<Void>
     }
 
@@ -53,7 +54,7 @@ final class CreatePostViewModel: InjectableViewModel {
         let uploadContentImage: Driver<(String, UIImage)>
         let openCoverImagePicker: Driver<Void>
         let changeCoverImage: Driver<UIImage?>
-        let statusChanged: Driver<Int?>
+        let statusChanged: Driver<String>
         let popViewController: Driver<Void>
         let activityIndicator: Driver<Bool>
         let showToast: Driver<String>
@@ -215,22 +216,29 @@ final class CreatePostViewModel: InjectableViewModel {
             }
 
         let checkforAll = input.forAllCheckBtnDidTap
-            .flatMap { [weak self] status -> Driver<Int?> in
+            .flatMap { [weak self] _ -> Driver<String> in
                 self?.status.onNext("PUBLIC")
                 self?.fanPassId.onNext(nil)
-                return Driver.just(nil)
+                return Driver.just("PUBLIC")
             }
 
         let checkforSubscription = input.forSubscriptionCheckBtnDidTap
             .withLatestFrom(loadFanPassSuccess)
-            .flatMap { [weak self] fanPassInfo -> Driver<Int?> in
+            .flatMap { [weak self] fanPassInfo -> Driver<String> in
                 self?.status.onNext("FAN_PASS")
                 let fanPassId = fanPassInfo[safe: 0]?.id ?? nil
                 self?.fanPassId.onNext(fanPassId)
-                return Driver.just(fanPassId)
+                return Driver.just("FAN_PASS")
             }
 
-        let statusChanged = Driver.merge(checkforAll, checkforSubscription)
+        let checkforPrivate = input.forPrivateCheckBtnDidTap
+            .flatMap { [weak self] _ -> Driver<String> in
+                self?.status.onNext("PRIVATE")
+                self?.fanPassId.onNext(nil)
+                return Driver.just("PRIVATE")
+            }
+
+        let statusChanged = Driver.merge(checkforAll, checkforSubscription, checkforPrivate)
 
         let changePostInfo = Driver.combineLatest(postTitleChanged, postContentChanged, coverImageId.asDriver(onErrorDriveWith: .empty()), fanPassId.asDriver(onErrorDriveWith: .empty()), status.asDriver(onErrorDriveWith: .empty()), publishedAt.asDriver(onErrorDriveWith: .empty())) { (title: $0, content: $1, coverImageId: $2, fanPassId: $3, status: $4, publishedAt: $5) }
 
@@ -255,10 +263,10 @@ final class CreatePostViewModel: InjectableViewModel {
 //                content = content.replacingOccurrences(of: "<p><video ", with: "<div class=\"video\">  <iframe frameborder=\"0\" allowfullscreen=\"true\"")
 //                content = content.replacingOccurrences(of: "</video></p>", with: "</iframe> </div>")
                 if self.postId == 0 {
-                    let response = PictionSDK.rx.requestAPI(PostsAPI.create(uri: self.uri, title: changePostInfo.title, content: content, cover: changePostInfo.coverImageId, seriesId: nil, fanPassId: changePostInfo.fanPassId, status: changePostInfo.fanPassId != nil ? "FAN_PASS" : "PUBLIC", publishedAt: Date().millisecondsSince1970))
+                    let response = PictionSDK.rx.requestAPI(PostsAPI.create(uri: self.uri, title: changePostInfo.title, content: content, cover: changePostInfo.coverImageId, seriesId: nil, fanPassId: changePostInfo.fanPassId, status: changePostInfo.status, publishedAt: Date().millisecondsSince1970))
                     return Action.makeDriver(response)
                 } else {
-                    let response = PictionSDK.rx.requestAPI(PostsAPI.update(uri: self.uri, postId: self.postId, title: changePostInfo.title, content: content, cover: changePostInfo.coverImageId, seriesId: nil, fanPassId: changePostInfo.fanPassId, status: changePostInfo.fanPassId != nil ? "FAN_PASS" : "PUBLIC", publishedAt: changePostInfo.publishedAt))
+                    let response = PictionSDK.rx.requestAPI(PostsAPI.update(uri: self.uri, postId: self.postId, title: changePostInfo.title, content: content, cover: changePostInfo.coverImageId, seriesId: nil, fanPassId: changePostInfo.fanPassId, status: changePostInfo.status, publishedAt: changePostInfo.publishedAt))
                     return Action.makeDriver(response)
                 }
             }

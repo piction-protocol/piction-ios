@@ -32,6 +32,8 @@ final class CreatePostViewController: UIViewController {
     @IBOutlet weak var forAllCheckboxImageView: UIImageView!
     @IBOutlet weak var forSubscriptionCheckboxButton: UIButton!
     @IBOutlet weak var forSubscriptionCheckboxImageView: UIImageView!
+    @IBOutlet weak var forPrivateCheckboxButton: UIButton!
+    @IBOutlet weak var forPrivateCheckboxImageView: UIImageView!
     @IBOutlet weak var saveBarButton: UIBarButtonItem!
 
     private let chosenCoverImage = PublishSubject<UIImage>()
@@ -124,17 +126,31 @@ final class CreatePostViewController: UIViewController {
         ])
     }
 
-    private func controlRequiredFanPass(_ fanPassId: Int?) {
-        if fanPassId != nil {
-            self.forAllCheckboxImageView.image = UIImage()
-            self.forAllCheckboxImageView.backgroundColor = UIColor.white
-            self.forSubscriptionCheckboxImageView.image = #imageLiteral(resourceName: "ic-check")
-            self.forSubscriptionCheckboxImageView.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-        } else {
-            self.forSubscriptionCheckboxImageView.image = UIImage()
-            self.forSubscriptionCheckboxImageView.backgroundColor = UIColor.white
+    private func controlStatusCheckBox(_ status: String) {
+        switch status {
+        case "PUBLIC":
             self.forAllCheckboxImageView.image = #imageLiteral(resourceName: "ic-check")
             self.forAllCheckboxImageView.backgroundColor = UIColor(r: 26, g: 146, b: 255)
+            self.forSubscriptionCheckboxImageView.image = UIImage()
+            self.forSubscriptionCheckboxImageView.backgroundColor = UIColor.clear
+            self.forPrivateCheckboxImageView.image = UIImage()
+            self.forPrivateCheckboxImageView.backgroundColor = UIColor.clear
+        case "PRIVATE":
+            self.forAllCheckboxImageView.image = UIImage()
+            self.forAllCheckboxImageView.backgroundColor = UIColor.clear
+            self.forSubscriptionCheckboxImageView.image = UIImage()
+            self.forSubscriptionCheckboxImageView.backgroundColor = UIColor.clear
+            self.forPrivateCheckboxImageView.image = #imageLiteral(resourceName: "ic-check")
+            self.forPrivateCheckboxImageView.backgroundColor = UIColor(r: 26, g: 146, b: 255)
+        case "FAN_PASS":
+            self.forAllCheckboxImageView.image = UIImage()
+            self.forAllCheckboxImageView.backgroundColor = UIColor.clear
+            self.forSubscriptionCheckboxImageView.image = #imageLiteral(resourceName: "ic-check")
+            self.forSubscriptionCheckboxImageView.backgroundColor = UIColor(r: 26, g: 146, b: 255)
+            self.forPrivateCheckboxImageView.image = UIImage()
+            self.forPrivateCheckboxImageView.backgroundColor = UIColor.clear
+        default:
+            break
         }
     }
 
@@ -159,6 +175,7 @@ extension CreatePostViewController: ViewModelBindable {
             deleteCoverImageBtnDidTap: deleteCoverImageButton.rx.tap.asDriver(),
             forAllCheckBtnDidTap: forAllCheckboxButton.rx.tap.asDriver(),
             forSubscriptionCheckBtnDidTap: forSubscriptionCheckboxButton.rx.tap.asDriver(),
+            forPrivateCheckBtnDidTap: forPrivateCheckboxButton.rx.tap.asDriver(),
             saveBtnDidTap: saveBarButton.rx.tap.asDriver()
         )
 
@@ -191,7 +208,7 @@ extension CreatePostViewController: ViewModelBindable {
                 } else {
                     self?.coverImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360")
                 }
-                self?.controlRequiredFanPass(postInfo.fanPass?.id)
+                self?.controlStatusCheckBox(postInfo.status ?? "PUBLIC")
             })
             .disposed(by: disposeBag)
 
@@ -234,8 +251,8 @@ extension CreatePostViewController: ViewModelBindable {
 
         output
             .statusChanged
-            .drive(onNext: { [weak self] fanPassId in
-                self?.controlRequiredFanPass(fanPassId)
+            .drive(onNext: { [weak self] status in
+                self?.controlStatusCheckBox(status)
             })
             .disposed(by: disposeBag)
 
