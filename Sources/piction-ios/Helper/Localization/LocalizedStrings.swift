@@ -117,6 +117,7 @@ enum LocalizedStrings {
     case str_series_subs_only
     case str_series_fanpass_subs_only
     case str_sort_with_direction
+    case str_private_only
 
     case str_banner_header
     case str_banner_header_info

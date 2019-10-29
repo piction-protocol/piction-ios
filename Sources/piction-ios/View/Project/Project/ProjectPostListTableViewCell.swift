@@ -30,7 +30,7 @@ final class ProjectPostListTableViewCell: ReuseTableViewCell {
     }
 
     func configure(with model: Model, isSubscribing: Bool) {
-        let (thumbnail, seriesName, title, date, likeCount, fanPassId) = (model.cover, model.series?.name, model.title, model.createdAt, model.likeCount, model.fanPass?.id)
+        let (thumbnail, seriesName, title, date, likeCount, fanPassId, status) = (model.cover, model.series?.name, model.title, model.createdAt, model.likeCount, model.fanPass?.id, model.status)
 
         let coverImageWithIC = "\(thumbnail ?? "")?w=656&h=246&quality=80&output=webp"
         if let url = URL(string: coverImageWithIC) {
@@ -46,18 +46,27 @@ final class ProjectPostListTableViewCell: ReuseTableViewCell {
 
         likeStackView.isHidden = (likeCount ?? 0) == 0
         likeLabel.text = "\(likeCount ?? 0)"
-        
-        if (fanPassId != nil) && !isSubscribing {
-            lockMessageLabel.text = LocalizedStrings.str_subs_only.localized()
+
+        if status == "PRIVATE" {
+            lockMessageLabel.text = LocalizedStrings.str_private_only.localized()
             thumbnailView.isHidden = false
             maskImage.isHidden = false
             lockView.isHidden = false
             maskImage.blurRadius = thumbnail == nil ? 0 : 5
             lockView.backgroundColor = thumbnail == nil ? UIColor(r: 51, g: 51, b: 51, a: 0.2) : .clear
         } else {
-            thumbnailView.isHidden = thumbnail == nil
-            maskImage.isHidden = true
-            lockView.isHidden = true
+            if (fanPassId != nil) && !isSubscribing {
+                lockMessageLabel.text = LocalizedStrings.str_subs_only.localized()
+                thumbnailView.isHidden = false
+                maskImage.isHidden = false
+                lockView.isHidden = false
+                maskImage.blurRadius = thumbnail == nil ? 0 : 5
+                lockView.backgroundColor = thumbnail == nil ? UIColor(r: 51, g: 51, b: 51, a: 0.2) : .clear
+            } else {
+                thumbnailView.isHidden = thumbnail == nil
+                maskImage.isHidden = true
+                lockView.isHidden = true
+            }
         }
     }
 }

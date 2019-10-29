@@ -367,6 +367,13 @@ extension ProjectViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
+            .openUpdateProjectViewController
+            .drive(onNext: { [weak self] uri in
+                self?.openCreateProjectViewController(uri: uri)
+            })
+            .disposed(by: disposeBag)
+
+        output
             .openSubscriptionUserViewController
             .drive(onNext: { [weak self] uri in
                 self?.openSubscriptionUserViewController(uri: uri)

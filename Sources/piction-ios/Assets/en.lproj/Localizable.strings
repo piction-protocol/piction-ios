@@ -116,6 +116,7 @@
 "str_series_subs_only" = "구독자 전용";
 "str_series_fanpass_subs_only" = "%@ 이상 구독자 전용";
 "str_sort_with_direction" = "정렬 %@";
+"str_private_only" = "비공개 포스트입니다.";
 
 "str_banner_header" = "News";
 "str_banner_header_info" = "Updates and News from Piction";

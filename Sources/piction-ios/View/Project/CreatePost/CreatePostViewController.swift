@@ -15,6 +15,7 @@ import Gridicons
 import CropViewController
 import AVKit
 import SafariServices
+import PictionSDK
 
 final class CreatePostViewController: UIViewController {
     var disposeBag = DisposeBag()
@@ -25,6 +26,7 @@ final class CreatePostViewController: UIViewController {
     @IBOutlet weak var postContentTextView: UITextView!
     @IBOutlet weak var contentView: UIView!
 
+    @IBOutlet weak var selectSeriesButton: UIButton!
     @IBOutlet weak var coverImageButton: UIButton!
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var deleteCoverImageButton: UIButton!
@@ -38,6 +40,7 @@ final class CreatePostViewController: UIViewController {
 
     private let chosenCoverImage = PublishSubject<UIImage>()
     private let chosenContentImage = PublishSubject<UIImage>()
+    private let chosenSeriesId = PublishSubject<SeriesModel?>()
 
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
 
@@ -154,6 +157,14 @@ final class CreatePostViewController: UIViewController {
         }
     }
 
+    func openSeriesListViewController(uri: String, seriesId: Int? = nil) {
+        let vc = SeriesListViewController.make(uri: uri, seriesId: seriesId)
+        vc.delegate = self
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.openViewController(vc, type: .swipePresent)
+        }
+    }
+
     @IBAction func tapGesture(_ sender: Any) {
         view.endEditing(true)
     }
@@ -167,6 +178,9 @@ extension CreatePostViewController: ViewModelBindable {
 
         let input = CreatePostViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
+            viewWillDisappear: rx.viewWillDisappear.asDriver(),
+            selectSeriesBtnDidTap: selectSeriesButton.rx.tap.asDriver(),
+            seriesChanged: chosenSeriesId.asDriver(onErrorDriveWith: .empty()),
             inputPostTitle: postTitleTextField.rx.text.orEmpty.asDriver(),
             inputContent: richTextView.rx.text.orEmpty.map { _ in self.editorView.getHTML() }.asDriver(onErrorDriveWith: .empty()),
             contentImageDidPick: chosenContentImage.asDriver(onErrorDriveWith: .empty()),
@@ -185,6 +199,14 @@ extension CreatePostViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+                self?.tabBarController?.tabBar.isHidden = true
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .viewWillDisappear
+            .drive(onNext: { [weak self] in
+                self?.tabBarController?.tabBar.isHidden = false
             })
             .disposed(by: disposeBag)
 
@@ -209,6 +231,8 @@ extension CreatePostViewController: ViewModelBindable {
                     self?.coverImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360")
                 }
                 self?.controlStatusCheckBox(postInfo.status ?? "PUBLIC")
+
+                self?.selectSeriesButton.setTitle(postInfo.series?.name ?? "시리즈 선택", for: .normal)
             })
             .disposed(by: disposeBag)
 
@@ -257,6 +281,20 @@ extension CreatePostViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
+            .seriesChanged
+            .drive(onNext: { [weak self] series in
+                self?.selectSeriesButton.setTitle(series?.name ?? "시리즈 선택", for: .normal)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .openSeriesListViewController
+            .drive(onNext: { [weak self] (uri, seriesId) in
+                self?.openSeriesListViewController(uri: uri, seriesId: seriesId)
+            })
+            .disposed(by: disposeBag)
+
+        output
             .popViewController
             .drive(onNext: { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
@@ -280,6 +318,12 @@ extension CreatePostViewController: ViewModelBindable {
                 }
             })
             .disposed(by: disposeBag)
+    }
+}
+
+extension CreatePostViewController: SeriesListDelegate {
+    func selectSeries(with series: SeriesModel?) {
+        self.chosenSeriesId.onNext(series)
     }
 }
 

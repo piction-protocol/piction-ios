@@ -28,6 +28,7 @@ final class CreatePostViewModel: InjectableViewModel {
     private let status = PublishSubject<String>()
     private let fanPassId = PublishSubject<Int?>()
     private let publishedAt = PublishSubject<Int64>()
+    private let seriesId = PublishSubject<Int?>()
 
     init(dependency: Dependency) {
         (updater, uri, postId) = dependency
@@ -35,6 +36,9 @@ final class CreatePostViewModel: InjectableViewModel {
 
     struct Input {
         let viewWillAppear: Driver<Void>
+        let viewWillDisappear: Driver<Void>
+        let selectSeriesBtnDidTap: Driver<Void>
+        let seriesChanged: Driver<SeriesModel?>
         let inputPostTitle: Driver<String>
         let inputContent: Driver<String>
         let contentImageDidPick: Driver<UIImage>
@@ -49,24 +53,21 @@ final class CreatePostViewModel: InjectableViewModel {
 
     struct Output {
         let viewWillAppear: Driver<Void>
+        let viewWillDisappear: Driver<Void>
         let isModify: Driver<Bool>
+        let openSeriesListViewController: Driver<(String, Int?)>
         let loadPostInfo: Driver<(PostModel, String)>
         let uploadContentImage: Driver<(String, UIImage)>
         let openCoverImagePicker: Driver<Void>
         let changeCoverImage: Driver<UIImage?>
         let statusChanged: Driver<String>
+        let seriesChanged: Driver<SeriesModel?>
         let popViewController: Driver<Void>
         let activityIndicator: Driver<Bool>
         let showToast: Driver<String>
     }
 
     func build(input: Input) -> Output {
-        let isModify = input.viewWillAppear
-            .flatMap { [weak self] _ -> Driver<Bool> in
-                guard let `self` = self else { return Driver.empty() }
-                return Driver.just(self.postId != 0)
-            }
-
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
             .flatMap { [weak self] _ -> Driver<Void> in
                 self?.title.onNext("")
@@ -75,8 +76,15 @@ final class CreatePostViewModel: InjectableViewModel {
                 self?.publishedAt.onNext(0)
                 self?.fanPassId.onNext(nil)
                 self?.status.onNext("PUBLIC")
+                self?.seriesId.onNext(nil)
 
                 return Driver.just(())
+            }
+
+        let isModify = input.viewWillAppear
+            .flatMap { [weak self] _ -> Driver<Bool> in
+                guard let `self` = self else { return Driver.empty() }
+                return Driver.just(self.postId != 0)
             }
 
         let loadPostAction = viewWillAppear
@@ -97,6 +105,7 @@ final class CreatePostViewModel: InjectableViewModel {
                 self?.publishedAt.onNext(post.publishedAt?.millisecondsSince1970 ?? 0)
                 self?.fanPassId.onNext(post.fanPass?.id)
                 self?.status.onNext(post.status ?? "PUBLIC")
+                self?.seriesId.onNext(post.series?.id)
                 return Driver.just(post)
             }
 
@@ -240,7 +249,13 @@ final class CreatePostViewModel: InjectableViewModel {
 
         let statusChanged = Driver.merge(checkforAll, checkforSubscription, checkforPrivate)
 
-        let changePostInfo = Driver.combineLatest(postTitleChanged, postContentChanged, coverImageId.asDriver(onErrorDriveWith: .empty()), fanPassId.asDriver(onErrorDriveWith: .empty()), status.asDriver(onErrorDriveWith: .empty()), publishedAt.asDriver(onErrorDriveWith: .empty())) { (title: $0, content: $1, coverImageId: $2, fanPassId: $3, status: $4, publishedAt: $5) }
+        let seriesChanged = input.seriesChanged
+            .flatMap { [weak self] series -> Driver<SeriesModel?> in
+                self?.seriesId.onNext(series?.id)
+                return Driver.just(series)
+            }
+
+        let changePostInfo = Driver.combineLatest(postTitleChanged, postContentChanged, coverImageId.asDriver(onErrorDriveWith: .empty()), fanPassId.asDriver(onErrorDriveWith: .empty()), status.asDriver(onErrorDriveWith: .empty()), publishedAt.asDriver(onErrorDriveWith: .empty()), seriesId.asDriver(onErrorDriveWith: .empty())) { (title: $0, content: $1, coverImageId: $2, fanPassId: $3, status: $4, publishedAt: $5, seriesId: $6) }
 
         let saveButtonAction = input.saveBtnDidTap
             .withLatestFrom(changePostInfo)
@@ -263,10 +278,10 @@ final class CreatePostViewModel: InjectableViewModel {
 //                content = content.replacingOccurrences(of: "<p><video ", with: "<div class=\"video\">  <iframe frameborder=\"0\" allowfullscreen=\"true\"")
 //                content = content.replacingOccurrences(of: "</video></p>", with: "</iframe> </div>")
                 if self.postId == 0 {
-                    let response = PictionSDK.rx.requestAPI(PostsAPI.create(uri: self.uri, title: changePostInfo.title, content: content, cover: changePostInfo.coverImageId, seriesId: nil, fanPassId: changePostInfo.fanPassId, status: changePostInfo.status, publishedAt: Date().millisecondsSince1970))
+                    let response = PictionSDK.rx.requestAPI(PostsAPI.create(uri: self.uri, title: changePostInfo.title, content: content, cover: changePostInfo.coverImageId, seriesId: changePostInfo.seriesId, fanPassId: changePostInfo.fanPassId, status: changePostInfo.status, publishedAt: Date().millisecondsSince1970))
                     return Action.makeDriver(response)
                 } else {
-                    let response = PictionSDK.rx.requestAPI(PostsAPI.update(uri: self.uri, postId: self.postId, title: changePostInfo.title, content: content, cover: changePostInfo.coverImageId, seriesId: nil, fanPassId: changePostInfo.fanPassId, status: changePostInfo.status, publishedAt: changePostInfo.publishedAt))
+                    let response = PictionSDK.rx.requestAPI(PostsAPI.update(uri: self.uri, postId: self.postId, title: changePostInfo.title, content: content, cover: changePostInfo.coverImageId, seriesId: changePostInfo.seriesId, fanPassId: changePostInfo.fanPassId, status: changePostInfo.status, publishedAt: changePostInfo.publishedAt))
                     return Action.makeDriver(response)
                 }
             }
@@ -287,6 +302,12 @@ final class CreatePostViewModel: InjectableViewModel {
                 return Driver.just(errorMsg?.message ?? "")
             }
 
+        let openSeriesListViewController = input.selectSeriesBtnDidTap
+            .withLatestFrom(seriesId.asDriver(onErrorDriveWith: .empty()))
+            .flatMap { [weak self] seriesId -> Driver<(String, Int?)> in
+                return Driver.just((self?.uri ?? "", seriesId))
+            }
+
         let showActivityIndicator = Driver.merge(input.coverImageDidPick, input.contentImageDidPick)
             .flatMap { _ in Driver.just(true) }
 
@@ -299,12 +320,15 @@ final class CreatePostViewModel: InjectableViewModel {
 
         return Output(
             viewWillAppear: input.viewWillAppear,
+            viewWillDisappear: input.viewWillDisappear,
             isModify: isModify,
+            openSeriesListViewController: openSeriesListViewController,
             loadPostInfo: loadPostInfo,
             uploadContentImage: contentImage,
             openCoverImagePicker: input.coverImageBtnDidTap,
             changeCoverImage: coverImage,
             statusChanged: statusChanged,
+            seriesChanged: seriesChanged,
             popViewController: changePostInfoSuccess,
             activityIndicator: activityIndicator,
             showToast: showToast
