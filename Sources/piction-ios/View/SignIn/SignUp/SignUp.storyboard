@@ -119,12 +119,12 @@
                                                                 </constraints>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nzo-XV-Q6J">
-                                                                <rect key="frame" x="30" y="27.333333333333375" width="305" height="15.666666666666668"/>
+                                                                <rect key="frame" x="30" y="26.666666666666629" width="305" height="17"/>
                                                                 <attributedString key="attributedText">
                                                                     <fragment content=" ">
                                                                         <attributes>
                                                                             <color key="NSColor" red="0.10196078431372549" green="0.5725490196078431" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            <font key="NSFont" size="14" name=".AppleSDGothicNeoI-Regular"/>
+                                                                            <font key="NSFont" metaFont="system" size="14"/>
                                                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                             <integer key="NSUnderline" value="1"/>
                                                                         </attributes>
@@ -147,7 +147,7 @@
                                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="E0j-9c-Kdq">
                                                                 <rect key="frame" x="30" y="0.0" width="313" height="30"/>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                                <color key="textColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                             </textView>
@@ -171,15 +171,15 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X1a-3c-mHh">
                                                 <rect key="frame" x="0.0" y="624" width="343" height="52"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fq0-zc-kkl" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
+                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fq0-zc-kkl" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
                                                         <rect key="frame" x="4" y="0.0" width="335" height="52"/>
-                                                        <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="52" id="c1r-dd-xad"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                         <state key="normal" title="회원가입">
-                                                            <color key="titleColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="titleColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">

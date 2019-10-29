@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -33,6 +33,9 @@
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HSe-gO-t7m">
                                                             <rect key="frame" x="0.0" y="0.0" width="375" height="121"/>
                                                             <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="HSe-gO-t7m" secondAttribute="height" multiplier="375:121" id="qXC-1j-ky3"/>
+                                                            </constraints>
                                                         </imageView>
                                                         <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nEd-aE-KdR" customClass="VisualEffectView" customModule="piction_ios" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="375" height="121"/>
@@ -40,6 +43,9 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="121"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             </view>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="nEd-aE-KdR" secondAttribute="height" multiplier="375:121" id="Ign-0U-b5L"/>
+                                                            </constraints>
                                                             <blurEffect style="regular"/>
                                                         </visualEffectView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="42q-6d-MKs">
@@ -77,7 +83,6 @@
                                                         <constraint firstAttribute="bottom" secondItem="nEd-aE-KdR" secondAttribute="bottom" id="ShH-Sa-x3f"/>
                                                         <constraint firstAttribute="bottom" secondItem="HSe-gO-t7m" secondAttribute="bottom" id="V7w-Pu-ZFP"/>
                                                         <constraint firstItem="nEd-aE-KdR" firstAttribute="top" secondItem="nJG-de-Z4K" secondAttribute="top" id="Zi4-e8-nfO"/>
-                                                        <constraint firstAttribute="width" secondItem="nJG-de-Z4K" secondAttribute="height" multiplier="375:121" id="a2L-Kj-hMd"/>
                                                         <constraint firstItem="HSe-gO-t7m" firstAttribute="leading" secondItem="nJG-de-Z4K" secondAttribute="leading" id="bGN-Pj-0fY"/>
                                                         <constraint firstAttribute="trailing" secondItem="HSe-gO-t7m" secondAttribute="trailing" id="ccF-KO-V7q"/>
                                                         <constraint firstItem="nEd-aE-KdR" firstAttribute="leading" secondItem="nJG-de-Z4K" secondAttribute="leading" id="dXg-fz-D0N"/>
@@ -136,7 +141,7 @@
                                                                 <constraint firstAttribute="width" constant="50" id="rg0-Q9-HaS"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                                            <color key="textColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="gAE-Rf-fyA">
@@ -157,7 +162,7 @@
                                                                         <constraint firstAttribute="height" constant="15" id="QGD-El-XHj"/>
                                                                     </constraints>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                    <color key="textColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
@@ -166,7 +171,7 @@
                                                 </stackView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KuL-MG-Sdd">
                                                     <rect key="frame" x="20" y="79.666666666666671" width="335" height="0.3333333333333286"/>
-                                                    <color key="backgroundColor" systemColor="separatorColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="0.33000000000000002" id="FS9-4K-j2c"/>
                                                     </constraints>
