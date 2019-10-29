@@ -20,6 +20,7 @@
 "register" = "등록";
 "authenticates" = "인증";
 "more" = "더보기";
+"delete" = "삭제";
 
 // menu
 "menu_project_info" = "프로젝트 정보";
@@ -39,6 +40,7 @@
 "popup_title_pincode_create" = "PIN 등록";
 "popup_title_pincode_confirm" = "PIN 재입력";
 "popup_title_notsupport_multiwindow" = "QR 코드 스캐너는 멀티윈도우를 지원하지 않습니다.";
+"popup_title_delete_post" = "포스트를 삭제하시겠습니까?";
 
 // Popup & Toast
 "msg_api_internal_server_error" = "서버에서 오류가 발생하였습니다.\n잠시 후 다시 시도해주세요.";
@@ -46,6 +48,7 @@
 "msg_pincode_confirm_error" = "PIN 번호가 일치하지 않습니다.\n다시 한 번 입력해주세요.";
 "msg_pincode_error_end" = "10회 동안 PIN 번호를 잘못 입력하였으므로 보안을 위해 자동으로 로그아웃됩니다.";
 "msg_pincode_reg_warning" = "픽션 내 콘텐츠의 안전한 거래를 위해\nPIN 등록을 권장합니다.";
+"msg_delete_post_success" = "포스트가 삭제되었습니다.";
 
 "msg_creator_not_found" = "크리에이터를 찾을 수 없습니다.";
 "msg_not_piction_cp" = "픽션 크리에이터 QR코드가 아닙니다";

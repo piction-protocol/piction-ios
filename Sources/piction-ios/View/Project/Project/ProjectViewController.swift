@@ -55,6 +55,7 @@ final class ProjectViewController: UIViewController {
     private let changeMenu = BehaviorSubject<Int>(value: 0)
     private let subscription = PublishSubject<Void>()
     private let cancelSubscription = PublishSubject<Void>()
+    private let deletePost = PublishSubject<(String, Int)>()
     private let subscriptionUser = PublishSubject<Void>()
 
     @IBOutlet weak var tableView: UITableView! {
@@ -225,6 +226,7 @@ extension ProjectViewController: ViewModelBindable {
             selectedIndexPath: tableView.rx.itemSelected.asDriver(),
             contentOffset: tableView.rx.contentOffset.asDriver()
             subscriptionUser: subscriptionUser.asDriver(onErrorDriveWith: .empty()),
+            deletePost: deletePost.asDriver(onErrorDriveWith: .empty())
         )
 
         let output = viewModel.build(input: input)
@@ -429,6 +431,23 @@ extension ProjectViewController: UITableViewDelegate {
                 completionHandler(false)
             }
         })
-        return UISwipeActionsConfiguration(actions: [editAction])
+
+        let deleteAction = UIContextualAction(style: .destructive, title: LocalizedStrings.delete.localized(), handler: { [weak self] (action, view, completionHandler) in
+            guard let section = self?.viewModel?.sections[indexPath.row] else { completionHandler(false)
+                return
+            }
+
+            switch section {
+            case .postList(let post, _):
+                self?.openDeletePopup(uri: self?.viewModel?.uri ?? "", postId: post.id ?? 0)
+                completionHandler(true)
+            case .seriesList:
+                completionHandler(false)
+            default:
+                completionHandler(false)
+            }
+        })
+
+        return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
     }
 }
