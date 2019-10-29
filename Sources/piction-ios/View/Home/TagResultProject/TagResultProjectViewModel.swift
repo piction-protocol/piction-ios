@@ -36,6 +36,7 @@ final class TagResultProjectViewModel: ViewModel {
         let navigationTitle: Driver<String>
         let tagResultProjectList: Driver<[ProjectModel]>
         let openProjectViewController: Driver<ProjectModel>
+        let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let isFetching: Driver<Bool>
     }
 
@@ -108,12 +109,21 @@ final class TagResultProjectViewModel: ViewModel {
                 return Action.makeDriver(Driver.just(()))
             }
 
+        let embedEmptyView = tagResultProjectListSuccess
+            .flatMap { items -> Driver<CustomEmptyViewStyle> in
+                if (items.count == 0) {
+                    return Driver.just(.searchListEmpty)
+                }
+                return Driver.empty()
+            }
+
         return Output(
             viewWillAppear: input.viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
             navigationTitle: navigationTitle,
             tagResultProjectList: tagResultProjectList,
             openProjectViewController: openProjectViewController,
+            embedEmptyViewController: embedEmptyView,
             isFetching: refreshAction.isExecuting
         )
     }

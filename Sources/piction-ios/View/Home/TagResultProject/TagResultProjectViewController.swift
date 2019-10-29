@@ -120,6 +120,7 @@ extension TagResultProjectViewController: ViewModelBindable {
             .tagResultProjectList
             .do(onNext: { [weak self] _ in
                 _ = self?.emptyView.subviews.map { $0.removeFromSuperview() }
+                self?.emptyView.frame.size.height = 0
             })
             .drive { $0 }
             .map { [SectionModel(model: "", items: $0)] }
@@ -138,6 +139,14 @@ extension TagResultProjectViewController: ViewModelBindable {
             .openProjectViewController
             .drive(onNext: { [weak self] project in
                 self?.openProjectViewController(uri: project.uri ?? "")
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .embedEmptyViewController
+            .drive(onNext: { [weak self] style in
+                guard let `self` = self else { return }
+                self.embedCustomEmptyViewController(style: style)
             })
             .disposed(by: disposeBag)
 
