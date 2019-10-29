@@ -40,8 +40,8 @@ final class ProjectViewModel: InjectableViewModel {
         let infoBtnDidTap: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
         let updateProject: Driver<Void>
+        let seriesList: Driver<Void>
         let subscriptionUser: Driver<Void>
-        let contentOffset: Driver<CGPoint>
         let deletePost: Driver<(String, Int)>
     }
 
@@ -59,8 +59,8 @@ final class ProjectViewModel: InjectableViewModel {
         let openSeriesPostViewController: Driver<(String, Int)>
         let openProjectInfoViewController: Driver<String>
         let openUpdateProjectViewController: Driver<String>
+        let openSeriesListViewController: Driver<String>
         let openSubscriptionUserViewController: Driver<String>
-        let contentOffset: Driver<CGPoint>
         let activityIndicator: Driver<Bool>
         let showToast: Driver<String>
     }
@@ -68,8 +68,6 @@ final class ProjectViewModel: InjectableViewModel {
     func build(input: Input) -> Output {
 
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
-
-        let contentOffset = input.contentOffset
 
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
@@ -418,6 +416,10 @@ final class ProjectViewModel: InjectableViewModel {
                 return Driver.just(self?.uri ?? "")
             }
 
+        let openSeriesListViewController = input.seriesList
+            .flatMap { [weak self] _ -> Driver<String> in
+                return Driver.just(self?.uri ?? "")
+            }
 
         let openSubscriptionUserViewController = input.subscriptionUser
             .flatMap { [weak self] _ -> Driver<String> in
@@ -438,8 +440,8 @@ final class ProjectViewModel: InjectableViewModel {
             openSeriesPostViewController: selectSeriesItem,
             openProjectInfoViewController: openProjectInfoViewController,
             openUpdateProjectViewController: openUpdateProjectViewController,
+            openSeriesListViewController: openSeriesListViewController,
             openSubscriptionUserViewController: openSubscriptionUserViewController,
-            contentOffset: contentOffset,
             activityIndicator: activityIndicator,
             showToast: showToast
         )

@@ -57,6 +57,7 @@ final class ProjectViewController: UIViewController {
     private let cancelSubscription = PublishSubject<Void>()
     private let deletePost = PublishSubject<(String, Int)>()
     private let updateProject = PublishSubject<Void>()
+    private let seriesList = PublishSubject<Void>()
     private let subscriptionUser = PublishSubject<Void>()
 
     @IBOutlet weak var tableView: UITableView! {
@@ -145,6 +146,13 @@ final class ProjectViewController: UIViewController {
         let vc = CreateProjectViewController.make(uri: uri)
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .push)
+        }
+    }
+
+    func openSeriesListViewController(uri: String, seriesId: Int? = nil) {
+        let vc = SeriesListViewController.make(uri: uri, seriesId: seriesId)
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.openViewController(vc, type: .swipePresent)
         }
     }
 
@@ -245,8 +253,8 @@ extension ProjectViewController: ViewModelBindable {
             changeMenu: changeMenu.asDriver(onErrorDriveWith: .empty()),
             infoBtnDidTap: infoBarButton.rx.tap.asDriver(),
             selectedIndexPath: tableView.rx.itemSelected.asDriver(),
-            contentOffset: tableView.rx.contentOffset.asDriver()
             updateProject: updateProject.asDriver(onErrorDriveWith: .empty()),
+            seriesList: seriesList.asDriver(onErrorDriveWith: .empty()),
             subscriptionUser: subscriptionUser.asDriver(onErrorDriveWith: .empty()),
             deletePost: deletePost.asDriver(onErrorDriveWith: .empty())
         )
@@ -374,6 +382,13 @@ extension ProjectViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
+            .openSeriesListViewController
+            .drive(onNext: { [weak self] uri in
+                self?.openSeriesListViewController(uri: uri)
+            })
+            .disposed(by: disposeBag)
+
+        output
             .openSubscriptionUserViewController
             .drive(onNext: { [weak self] uri in
                 self?.openSubscriptionUserViewController(uri: uri)
@@ -440,6 +455,43 @@ extension ProjectViewController: ProjectHeaderViewDelegate {
         let url = "\(title) - Piction\nhttps://\(stagingPath)piction.network/project/\(uri)"
 
         self.openSharePopup(url: url)
+    }
+
+    func managementBtnDidTap() {
+        let alertController = UIAlertController(
+        title: nil,
+        message: nil,
+        preferredStyle: UIAlertController.Style.actionSheet)
+
+        let updateProjectAction = UIAlertAction(
+            title: "프로젝트 관리",
+            style: UIAlertAction.Style.default,
+            handler: { [weak self] action in
+                self?.updateProject.onNext(())
+            })
+
+        let seriesListAction = UIAlertAction(
+            title: "시리즈 관리",
+            style: UIAlertAction.Style.default,
+            handler: { [weak self] action in
+                self?.seriesList.onNext(())
+            })
+
+        let cancelAction = UIAlertAction(
+            title: "취소",
+            style:UIAlertAction.Style.cancel,
+            handler:{ action in
+            })
+
+        alertController.addAction(updateProjectAction)
+        alertController.addAction(seriesListAction)
+        alertController.addAction(cancelAction)
+
+        present(alertController, animated: true, completion: nil)
+    }
+
+    func subscriptionUserBtnDidTap() {
+        self.subscriptionUser.onNext(())
     }
 }
 

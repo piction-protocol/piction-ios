@@ -220,6 +220,12 @@ extension TagResultProjectViewController {
     }
 }
 
+extension SeriesListViewController {
+    static func make(uri: String, seriesId: Int?) -> SeriesListViewController {
+        return Container.shared.resolve(SeriesListViewController.self, arguments: uri, seriesId)!
+    }
+}
+
 extension SubscriptionUserViewController {
     static func make(uri: String) -> SubscriptionUserViewController {
         return Container.shared.resolve(SubscriptionUserViewController.self, argument: uri)!

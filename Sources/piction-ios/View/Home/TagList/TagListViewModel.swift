@@ -47,7 +47,7 @@ final class TagListViewModel: ViewModel {
         let embedEmptyView = tagListSuccess
             .flatMap { items -> Driver<CustomEmptyViewStyle> in
                 if (items.count == 0) {
-                    return Driver.just(.sponsorshipListEmpty)
+                    return Driver.just(.searchListEmpty)
                 }
                 return Driver.empty()
             }

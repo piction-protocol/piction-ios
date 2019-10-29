@@ -223,6 +223,12 @@ final class ViewControllerAssembly: Assembly {
             return vc
         }
 
+        container.register(SeriesListViewController.self) { (resolver, uri: String, seriesId: Int?) in
+            let vc = Storyboard.SeriesList.instantiate(SeriesListViewController.self)
+            vc.viewModel = resolver.resolve(SeriesListViewModel.self, arguments: uri, seriesId)!
+            return vc
+        }
+
         container.register(SubscriptionUserViewController.self) { (resolver, uri: String) in
             let vc = Storyboard.SubscriptionUser.instantiate(SubscriptionUserViewController.self)
             vc.viewModel = resolver.resolve(SubscriptionUserViewModel.self, argument: uri)!
