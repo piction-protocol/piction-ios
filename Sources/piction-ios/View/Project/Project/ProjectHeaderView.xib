@@ -87,7 +87,7 @@
                                                 <constraint firstItem="9UD-yf-gRK" firstAttribute="leading" secondItem="Jzm-kI-DYR" secondAttribute="leading" id="sH1-ba-jR5"/>
                                             </constraints>
                                         </stackView>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="f1e-AB-jja">
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="f1e-AB-jja">
                                             <rect key="frame" x="245" y="0.0" width="50" height="100"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-dummy-userprofile-500-x-500" translatesAutoresizingMaskIntoConstraints="NO" id="asA-dx-qfm" customClass="UIImageViewExtension" customModule="piction_ios" customModuleProvider="target">
@@ -105,13 +105,14 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4JV-GN-PgD">
-                                                    <rect key="frame" x="0.0" y="50" width="50" height="50"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4JV-GN-PgD">
+                                                    <rect key="frame" x="0.0" y="60" width="50" height="40"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="50" id="KMD-Zj-0uE"/>
+                                                        <constraint firstAttribute="height" constant="40" id="KMD-Zj-0uE"/>
                                                         <constraint firstAttribute="width" constant="50" id="vXP-DY-E7h"/>
                                                     </constraints>
-                                                    <state key="normal" title="공유"/>
+                                                    <color key="tintColor" name="PictionDarkGray"/>
+                                                    <state key="normal" image="icToonviewOptionSend"/>
                                                     <connections>
                                                         <action selector="shareBtnDidTap:" destination="jfW-sf-3xv" eventType="touchUpInside" id="bFv-yt-tCY"/>
                                                     </connections>
@@ -354,6 +355,7 @@
     </objects>
     <resources>
         <image name="icPeopleGrey" width="24" height="24"/>
+        <image name="icToonviewOptionSend" width="40" height="40"/>
         <image name="img-dummy-projectcover-1440-x-450" width="1440" height="450"/>
         <image name="img-dummy-userprofile-500-x-500" width="120" height="120"/>
         <namedColor name="PictionDarkGray">
