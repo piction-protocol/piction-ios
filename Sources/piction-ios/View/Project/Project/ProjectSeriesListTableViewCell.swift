@@ -17,6 +17,12 @@ final class ProjectSeriesListTableViewCell: ReuseTableViewCell {
 
     typealias Model = SeriesModel
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450")
+        backgroundThumbnailImageView.image = nil
+    }
+
     func configure(with model: Model) {
         let (thumbnails, seriesName, postCount) = (model.thumbnails, model.name, model.postCount)
 
@@ -32,9 +38,9 @@ final class ProjectSeriesListTableViewCell: ReuseTableViewCell {
         if let backgroundThumbnail = thumbnails?[safe: 1] {
             let coverImageWithIC = "\(backgroundThumbnail)?w=656&h=246&quality=80&output=webp"
             if let url = URL(string: coverImageWithIC) {
-                backgroundThumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450"), completed: nil)
+                backgroundThumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: nil, completed: nil)
             } else {
-                backgroundThumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450")
+                backgroundThumbnailImageView.image = nil
             }
         }
         seriesLabel.text = seriesName

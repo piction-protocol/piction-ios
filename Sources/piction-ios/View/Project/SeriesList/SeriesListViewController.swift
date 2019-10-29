@@ -24,13 +24,15 @@ final class SeriesListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var closeButton: UIBarButtonItem!
-    @IBOutlet weak var createButton: UIBarButtonItem!
+    @IBOutlet weak var createButton: UIButton!
+    @IBOutlet weak var reorderButton: UIBarButtonItem!
 
     weak var delegate: SeriesListDelegate?
 
     private let updateSeries = PublishSubject<(String, SeriesModel?)>()
     private let contextualAction = PublishSubject<(UIContextualAction.Style, IndexPath)>()
     private let deleteConfirm = PublishSubject<Int>()
+    private let reorderItems = PublishSubject<[Int]>()
 
     private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
         _ = emptyView.subviews.map { $0.removeFromSuperview() }
@@ -46,7 +48,9 @@ final class SeriesListViewController: UIViewController {
                 cell.configure(with: model)
                 return cell
         }, canEditRowAtIndexPath: { (_, _) in
-            return FEATURE_EDITOR
+            return true
+        }, canMoveRowAtIndexPath: { (dataSource, indexPath) in
+            return true
         })
     }
 
@@ -122,10 +126,12 @@ extension SeriesListViewController: ViewModelBindable {
             viewWillAppear: rx.viewWillAppear.asDriver(),
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
             selectedIndexPath: tableView.rx.itemSelected.asDriver(),
+            reorderBtnDidTap: reorderButton.rx.tap.asDriver(),
             createBtnDidTap: createButton.rx.tap.asDriver(),
             contextualAction: contextualAction.asDriver(onErrorDriveWith: .empty()),
             deleteConfirm: deleteConfirm.asDriver(onErrorDriveWith: .empty()),
             updateSeries: updateSeries.asDriver(onErrorDriveWith: .empty()),
+            reorderItems: reorderItems.asDriver(onErrorDriveWith: .empty()),
             closeBtnDidTap: closeButton.rx.tap.asDriver()
         )
 
@@ -136,6 +142,7 @@ extension SeriesListViewController: ViewModelBindable {
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self?.tableView.allowsSelection = self?.delegate != nil
+                self?.tableView.allowsSelectionDuringEditing = self?.delegate != nil
             })
             .disposed(by: disposeBag)
 
@@ -182,10 +189,31 @@ extension SeriesListViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
+            .changeEditMode
+            .drive(onNext: { [weak self] _ in
+                guard let isEditing = self?.tableView.isEditing else { return }
+
+                if isEditing {
+                    guard let models = dataSource.sectionModels[safe: 0]?.items else { return }
+                    let reorderItems = models.map { $0.id ?? 0 }
+                    self?.reorderItems.onNext(reorderItems)
+                }
+
+                self?.reorderButton.title = isEditing ? "정렬" : "완료"
+                self?.tableView.setEditing(!isEditing, animated: true)
+            })
+            .disposed(by: disposeBag)
+
+        output
             .openUpdateSeriesPopup
             .drive(onNext: { [weak self] indexPath in
-                guard let indexPath = indexPath else { return }
-                let series = dataSource[indexPath]
+                var series: SeriesModel? {
+                    if let indexPath = indexPath {
+                        return dataSource[indexPath]
+                    } else {
+                        return nil
+                    }
+                }
                 self?.openUpdateSeriesPopup(series: series)
             })
             .disposed(by: disposeBag)
@@ -220,6 +248,14 @@ extension SeriesListViewController: ViewModelBindable {
                 self?.dismiss(animated: true)
             })
             .disposed(by: disposeBag)
+
+        tableView.rx.itemMoved
+            .subscribe(onNext: { [weak self] _ in
+//                guard let models = dataSource.sectionModels[safe: 0]?.items else { return }
+//                let reorderItems = models.map { $0.id ?? 0 }
+//                self?.reorderItems.onNext(reorderItems)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -245,5 +281,13 @@ extension SeriesListViewController: UITableViewDelegate {
             return nil
         }
         return indexPath
+    }
+
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
+    }
+
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
     }
 }

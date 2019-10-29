@@ -30,10 +30,12 @@ final class SeriesListViewModel: InjectableViewModel {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
+        let reorderBtnDidTap: Driver<Void>
         let createBtnDidTap: Driver<Void>
         let contextualAction: Driver<(UIContextualAction.Style, IndexPath)>
         let deleteConfirm: Driver<Int>
         let updateSeries: Driver<(String, SeriesModel?)>
+        let reorderItems: Driver<[Int]>
         let closeBtnDidTap: Driver<Void>
     }
 
@@ -44,6 +46,7 @@ final class SeriesListViewModel: InjectableViewModel {
         let openUpdateSeriesPopup: Driver<IndexPath?>
         let openDeleteConfirmPopup: Driver<IndexPath>
         let selectedIndexPath: Driver<IndexPath>
+        let changeEditMode: Driver<Void>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let showToast: Driver<String>
         let dismissViewController: Driver<Void>
@@ -132,7 +135,22 @@ final class SeriesListViewModel: InjectableViewModel {
                 return Driver.empty()
             }
 
-        let showToast = Driver.merge(updateSeriesSuccess, deleteSeriesSuccess)
+        let reorderItemsAction = input.reorderItems
+            .flatMap { [weak self] ids -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(SeriesAPI.sort(uri: self?.uri ?? "", ids: ids))
+                return Action.makeDriver(response)
+            }
+
+        let reorderItemsSuccess = reorderItemsAction.elements
+            .flatMap { [weak self] response -> Driver<String> in
+                guard let _ = try? response.map(to: [SeriesModel].self) else {
+                    return Driver.empty()
+                }
+                self?.updater.refreshContent.onNext(())
+                return Driver.just("")
+            }
+
+        let showToast = Driver.merge(updateSeriesSuccess, deleteSeriesSuccess, reorderItemsSuccess)
 
         return Output(
             viewWillAppear: input.viewWillAppear,
@@ -141,6 +159,7 @@ final class SeriesListViewModel: InjectableViewModel {
             openUpdateSeriesPopup: openUpdateSeriesPopup,
             openDeleteConfirmPopup: openDeleteConfirmPopup,
             selectedIndexPath: input.selectedIndexPath,
+            changeEditMode: input.reorderBtnDidTap,
             embedEmptyViewController: embedEmptyView,
             showToast: showToast,
             dismissViewController: input.closeBtnDidTap

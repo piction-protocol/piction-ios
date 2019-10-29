@@ -56,7 +56,7 @@ class UIImageViewExtension: UIImageView, BorderLineConfigurable {
 }
 
 extension UIImageView {
-    public func sd_setImageWithFade(with url: URL, placeholderImage placeholder: UIImage, completed completedBlock: SDExternalCompletionBlock? = nil) {
+    public func sd_setImageWithFade(with url: URL, placeholderImage placeholder: UIImage?, completed completedBlock: SDExternalCompletionBlock? = nil) {
 
         self.sd_setImage(with: url, placeholderImage: placeholder) {  (image, error, cacheType, url) in
             if let downLoadedImage = image {
