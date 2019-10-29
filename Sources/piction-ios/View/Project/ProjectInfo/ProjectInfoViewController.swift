@@ -61,6 +61,9 @@ extension ProjectInfoViewController: ViewModelBindable {
     func bindViewModel(viewModel: ViewModel) {
         let dataSource = configureDataSource()
 
+        tagCollectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+
         let input = ProjectInfoViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
             selectedIndexPath: tagCollectionView.rx.itemSelected.asDriver(),
@@ -119,5 +122,16 @@ extension ProjectInfoViewController: ViewModelBindable {
                 self?.openSignInViewController()
             })
             .disposed(by: disposeBag)
+    }
+}
+
+extension ProjectInfoViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if let cell = collectionView.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? ProjectInfoTagCollectionViewCell {
+            let text = cell.tagLabel.text ?? ""
+            let cellWidth = text.size(withAttributes:[.font: UIFont.systemFont(ofSize: 14.0)]).width + 30.0
+            return CGSize(width: cellWidth, height: 30.0)
+        }
+        return .zero
     }
 }
