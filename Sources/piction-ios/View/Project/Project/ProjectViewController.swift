@@ -55,6 +55,7 @@ final class ProjectViewController: UIViewController {
     private let changeMenu = BehaviorSubject<Int>(value: 0)
     private let subscription = PublishSubject<Void>()
     private let cancelSubscription = PublishSubject<Void>()
+    private let subscriptionUser = PublishSubject<Void>()
 
     @IBOutlet weak var tableView: UITableView! {
         didSet {
@@ -95,6 +96,13 @@ final class ProjectViewController: UIViewController {
         let vc = CreatePostViewController.make(uri: uri, postId: postId)
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .push)
+        }
+    }
+
+    private func openSubscriptionUserViewController(uri: String) {
+        let vc = SubscriptionUserViewController.make(uri: uri)
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.openViewController(vc, type: .swipePresent)
         }
     }
 
@@ -216,6 +224,7 @@ extension ProjectViewController: ViewModelBindable {
             infoBtnDidTap: infoBarButton.rx.tap.asDriver(),
             selectedIndexPath: tableView.rx.itemSelected.asDriver(),
             contentOffset: tableView.rx.contentOffset.asDriver()
+            subscriptionUser: subscriptionUser.asDriver(onErrorDriveWith: .empty()),
         )
 
         let output = viewModel.build(input: input)
@@ -330,6 +339,13 @@ extension ProjectViewController: ViewModelBindable {
             .openProjectInfoViewController
             .drive(onNext: { [weak self] uri in
                 self?.openProjectInfoViewController(uri: uri)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .openSubscriptionUserViewController
+            .drive(onNext: { [weak self] uri in
+                self?.openSubscriptionUserViewController(uri: uri)
             })
             .disposed(by: disposeBag)
 

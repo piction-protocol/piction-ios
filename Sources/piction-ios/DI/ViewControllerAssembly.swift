@@ -222,5 +222,11 @@ final class ViewControllerAssembly: Assembly {
             vc.viewModel = resolver.resolve(TagResultProjectViewModel.self, argument: tag)!
             return vc
         }
+
+        container.register(SubscriptionUserViewController.self) { (resolver, uri: String) in
+            let vc = Storyboard.SubscriptionUser.instantiate(SubscriptionUserViewController.self)
+            vc.viewModel = resolver.resolve(SubscriptionUserViewModel.self, argument: uri)!
+            return vc
+        }
     }
 }

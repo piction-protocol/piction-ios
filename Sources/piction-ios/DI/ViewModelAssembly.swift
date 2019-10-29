@@ -207,5 +207,9 @@ final class ViewModelAssembly: Assembly {
         container.register(TagResultProjectViewModel.self) { (resolver, tag: String) in
             return TagResultProjectViewModel(tag: tag)
         }
+
+        container.register(SubscriptionUserViewModel.self) { (resolver, uri: String) in
+            return SubscriptionUserViewModel(uri: uri)
+        }
     }
 }

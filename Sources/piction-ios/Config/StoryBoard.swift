@@ -45,6 +45,7 @@ public enum Storyboard: String {
     case ConfirmPincode
     case QRCodeScanner
     case TagResultProject
+    case SubscriptionUser
 
     public func instantiate<VC: UIViewController>(_ viewController: VC.Type) -> VC {
         guard

@@ -346,6 +346,7 @@
                 <outlet property="seriesButton" destination="zuZ-fe-55M" id="cvT-Uc-5nT"/>
                 <outlet property="subscriptionButton" destination="zb3-FI-Y5R" id="Vm0-zh-PrC"/>
                 <outlet property="subscriptionCountLabel" destination="6KZ-Qy-nnM" id="K7P-Uw-ak6"/>
+                <outlet property="subscriptionUserButton" destination="94I-FC-Zf3" id="g6S-IH-FNJ"/>
                 <outlet property="thumbnailImageView" destination="1k4-fI-Xqy" id="e5I-qw-nQM"/>
                 <outlet property="titleLabel" destination="9UD-yf-gRK" id="ygm-vb-wZf"/>
                 <outlet property="writerLabel" destination="UTR-Ap-zY9" id="uge-ft-Nld"/>

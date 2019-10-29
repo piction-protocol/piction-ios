@@ -39,6 +39,7 @@ final class ProjectViewModel: InjectableViewModel {
         let changeMenu: Driver<Int>
         let infoBtnDidTap: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
+        let subscriptionUser: Driver<Void>
         let contentOffset: Driver<CGPoint>
     }
 
@@ -55,6 +56,7 @@ final class ProjectViewModel: InjectableViewModel {
         let openPostViewController: Driver<(String, Int)>
         let openSeriesPostViewController: Driver<(String, Int)>
         let openProjectInfoViewController: Driver<String>
+        let openSubscriptionUserViewController: Driver<String>
         let contentOffset: Driver<CGPoint>
         let activityIndicator: Driver<Bool>
         let showToast: Driver<String>
@@ -129,31 +131,16 @@ final class ProjectViewModel: InjectableViewModel {
         let isSubscribingError = isSubscribingAction.error
             .flatMap { _ in Driver.just(false) }
 
-        let loadPostAction = Driver.merge(selectPostMenu, loadNext)
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
+        let openProjectInfoViewController = input.infoBtnDidTap
+            .flatMap { [weak self] _ -> Driver<String> in
                 guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(PostsAPI.all(uri: self.uri, isRequiredFanPass: nil, page: self.page, size: 20))
-                return Action.makeDriver(response)
-            }
-
-        let loadPostSuccess = loadPostAction.elements
-            .flatMap { response -> Driver<PageViewResponse<PostModel>> in
-                guard let pageList = try? response.map(to: PageViewResponse<PostModel>.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(pageList)
+                return Driver.just(self.uri)
             }
 
         let loadProjectInfoAction = Driver.merge(selectPostMenu, selectSeriesMenu, loadNext)
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
                 let response = PictionSDK.rx.requestAPI(ProjectsAPI.get(uri: self?.uri ?? ""))
                 return Action.makeDriver(response)
-            }
-
-        let openProjectInfoViewController = input.infoBtnDidTap
-            .flatMap { [weak self] _ -> Driver<String> in
-                guard let `self` = self else { return Driver.empty() }
-                return Driver.just(self.uri)
             }
 
         let loadProjectInfoSuccess = loadProjectInfoAction.elements
@@ -176,7 +163,7 @@ final class ProjectViewModel: InjectableViewModel {
                 return Action.makeDriver(response)
             }
 
-        let userInfoAction = Driver.merge(selectPostMenu, selectSeriesMenu, loadNext)
+        let userInfoAction = Driver.merge(viewWillAppear, refreshSession)
             .flatMap { _ -> Driver<Action<ResponseData>> in
                 let response = PictionSDK.rx.requestAPI(UsersAPI.me)
                 return Action.makeDriver(response)
@@ -210,7 +197,7 @@ final class ProjectViewModel: InjectableViewModel {
 
         let subscriptionInfo = Driver.combineLatest(isWriter, isSubscribingForInfo)
 
-        let fanPassListAction = Driver.merge(viewWillAppear)
+        let fanPassListAction = viewWillAppear
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
                 let response = PictionSDK.rx.requestAPI(FanPassAPI.projectAll(uri: self?.uri ?? ""))
                 return Action.makeDriver(response)
@@ -383,6 +370,11 @@ final class ProjectViewModel: InjectableViewModel {
 
         let showToast = Driver.merge(subscriptionSuccess, cancelSubscriptionSuccess, subscriptionError, cancelSubscriptionError)
 
+        let openSubscriptionUserViewController = input.subscriptionUser
+            .flatMap { [weak self] _ -> Driver<String> in
+                return Driver.just(self?.uri ?? "")
+            }
+
         return Output(
             viewWillAppear: input.viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
@@ -396,6 +388,7 @@ final class ProjectViewModel: InjectableViewModel {
             openPostViewController: selectPostItem,
             openSeriesPostViewController: selectSeriesItem,
             openProjectInfoViewController: openProjectInfoViewController,
+            openSubscriptionUserViewController: openSubscriptionUserViewController,
             contentOffset: contentOffset,
             activityIndicator: activityIndicator,
             showToast: showToast
