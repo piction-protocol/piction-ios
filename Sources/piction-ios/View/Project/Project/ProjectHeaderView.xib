@@ -65,7 +65,7 @@
                                                         <constraint firstAttribute="height" constant="17" id="R5Z-xk-vyQ"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rJL-1a-642">
@@ -74,7 +74,7 @@
                                                         <constraint firstAttribute="height" constant="17" id="H0N-mL-ltd"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -124,55 +124,108 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9rs-ac-l7o">
                                     <rect key="frame" x="0.0" y="120" width="295" height="83"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zb3-FI-Y5R" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lr1-RG-rur">
                                             <rect key="frame" x="0.0" y="0.0" width="295" height="53"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="53" id="dWm-yX-GDg"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                            <state key="normal" title=" ">
-                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </state>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                    <real key="value" value="0.0"/>
-                                                </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <real key="value" value="8"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                            <connections>
-                                                <action selector="subscriptionBtnDidTap:" destination="jfW-sf-3xv" eventType="touchUpInside" id="t0X-8y-ok0"/>
-                                            </connections>
-                                        </button>
-                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Fxt-Oq-o1Z">
-                                            <rect key="frame" x="133" y="63" width="29" height="20"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icPeopleGrey" translatesAutoresizingMaskIntoConstraints="NO" id="4cO-2f-odO">
-                                                    <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zb3-FI-Y5R" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="295" height="53"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="20" id="G1z-E6-JIj"/>
-                                                        <constraint firstAttribute="height" constant="20" id="vxZ-6j-39W"/>
+                                                        <constraint firstAttribute="height" constant="53" id="dWm-yX-GDg"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" id="nQ6-Tn-amY"/>
                                                     </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6KZ-Qy-nnM">
-                                                    <rect key="frame" x="25" y="1.6666666666666288" width="4" height="17"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                    <state key="normal" title=" ">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="0.0"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="8"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="subscriptionBtnDidTap:" destination="jfW-sf-3xv" eventType="touchUpInside" id="t0X-8y-ok0"/>
+                                                    </connections>
+                                                </button>
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Vv-YC-J7I" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="53"/>
+                                                    <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="17" id="J1r-OT-FHP"/>
+                                                        <constraint firstAttribute="width" constant="80" id="5eV-q9-fPM"/>
+                                                        <constraint firstAttribute="height" constant="53" id="aGf-ZZ-Cx0"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                    <state key="normal" title="관리">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="0.0"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="8"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="managementBtnDidTap:" destination="jfW-sf-3xv" eventType="touchUpInside" id="vjH-dJ-9mV"/>
+                                                        <action selector="subscriptionBtnDidTap:" destination="jfW-sf-3xv" eventType="touchUpInside" id="G83-kp-VpM"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="20" id="BYJ-sg-j7s"/>
-                                            </constraints>
                                         </stackView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4yo-ZQ-vmL">
+                                            <rect key="frame" x="113" y="63" width="69" height="20"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Fxt-Oq-o1Z">
+                                                    <rect key="frame" x="0.0" y="0.0" width="69" height="20"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icPeopleGrey" translatesAutoresizingMaskIntoConstraints="NO" id="4cO-2f-odO">
+                                                            <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="20" id="G1z-E6-JIj"/>
+                                                                <constraint firstAttribute="height" constant="20" id="vxZ-6j-39W"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6KZ-Qy-nnM">
+                                                            <rect key="frame" x="25" y="1.6666666666666288" width="44" height="17"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="17" id="J1r-OT-FHP"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="BYJ-sg-j7s"/>
+                                                    </constraints>
+                                                </stackView>
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="94I-FC-Zf3">
+                                                    <rect key="frame" x="0.0" y="0.0" width="69" height="20"/>
+                                                    <connections>
+                                                        <action selector="subscriptionUserBtnDidTap:" destination="jfW-sf-3xv" eventType="touchUpInside" id="5wx-FM-oCd"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                            <constraints>
+                                                <constraint firstItem="Fxt-Oq-o1Z" firstAttribute="top" secondItem="4yo-ZQ-vmL" secondAttribute="top" id="1QC-cU-6O3"/>
+                                                <constraint firstItem="94I-FC-Zf3" firstAttribute="leading" secondItem="4yo-ZQ-vmL" secondAttribute="leading" id="Ajz-MX-IuP"/>
+                                                <constraint firstAttribute="trailing" secondItem="94I-FC-Zf3" secondAttribute="trailing" id="ERb-0g-J5i"/>
+                                                <constraint firstAttribute="bottom" secondItem="94I-FC-Zf3" secondAttribute="bottom" id="TsG-Ng-CDy"/>
+                                                <constraint firstItem="Fxt-Oq-o1Z" firstAttribute="leading" secondItem="4yo-ZQ-vmL" secondAttribute="leading" id="UkI-77-tmM"/>
+                                                <constraint firstAttribute="height" constant="20" id="Vtw-PZ-Fgw"/>
+                                                <constraint firstAttribute="bottom" secondItem="Fxt-Oq-o1Z" secondAttribute="bottom" id="WhO-pG-ztC"/>
+                                                <constraint firstAttribute="trailing" secondItem="Fxt-Oq-o1Z" secondAttribute="trailing" id="dEs-In-fb5"/>
+                                                <constraint firstItem="94I-FC-Zf3" firstAttribute="top" secondItem="4yo-ZQ-vmL" secondAttribute="top" id="rIL-a3-hG6"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="zb3-FI-Y5R" secondAttribute="trailing" id="56p-Od-Ai8"/>
-                                        <constraint firstItem="zb3-FI-Y5R" firstAttribute="leading" secondItem="9rs-ac-l7o" secondAttribute="leading" id="JMf-ZP-mp9"/>
+                                        <constraint firstAttribute="trailing" secondItem="lr1-RG-rur" secondAttribute="trailing" id="ar5-cn-aQO"/>
+                                        <constraint firstItem="lr1-RG-rur" firstAttribute="leading" secondItem="9rs-ac-l7o" secondAttribute="leading" id="daY-bq-6ag"/>
                                     </constraints>
                                 </stackView>
                             </subviews>
@@ -261,7 +314,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="187.33333333333334" height="51"/>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                             <state key="normal" title="시리즈">
-                                                                <color key="titleColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="titleColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </state>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="btn_series"/>
@@ -337,6 +390,7 @@
             <viewLayoutGuide key="safeArea" id="dZ8-hW-8t3"/>
             <connections>
                 <outlet property="loginIdLabel" destination="rJL-1a-642" id="1Lf-9V-bsp"/>
+                <outlet property="managementButton" destination="2Vv-YC-J7I" id="aqL-cR-4tJ"/>
                 <outlet property="maskImage" destination="mUZ-gk-6mM" id="sUE-kg-4Yh"/>
                 <outlet property="naviView" destination="uNI-65-gk2" id="Bpn-ZM-apC"/>
                 <outlet property="naviViewImageHeight" destination="Hdg-nL-2zT" id="tdC-sM-PiU"/>

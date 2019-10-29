@@ -33,6 +33,7 @@ final class CreateProjectViewModel: InjectableViewModel {
 
     struct Input {
         let viewWillAppear: Driver<Void>
+        let viewWillDisappear: Driver<Void>
         let inputProjectTitle: Driver<String>
         let inputProjectId: Driver<String>
         let wideThumbnailBtnDidTap: Driver<Void>
@@ -48,6 +49,7 @@ final class CreateProjectViewModel: InjectableViewModel {
 
     struct Output {
         let viewWillAppear: Driver<Void>
+        let viewWillDisappear: Driver<Void>
         let isModify: Driver<Bool>
         let loadProject: Driver<ProjectModel>
         let projectIdChanged: Driver<String>
@@ -64,15 +66,15 @@ final class CreateProjectViewModel: InjectableViewModel {
     func build(input: Input) -> Output {
         let updater = self.updater
 
-        let viewWillAppear = input.viewWillAppear
+        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
-        let isModify = input.viewWillAppear
+        let isModify = viewWillAppear
             .flatMap { [weak self] _ -> Driver<Bool> in
                 guard let `self` = self else { return Driver.empty() }
                 return Driver.just(self.uri != "")
             }
 
-        let loadProjectAction = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let loadProjectAction = viewWillAppear
             .do(onNext: { [weak self] in
                 self?.thumbnailImageId.onNext(nil)
                 self?.wideThumbnailImageId.onNext(nil)
@@ -198,7 +200,7 @@ final class CreateProjectViewModel: InjectableViewModel {
 
         let thumbnailImage = Driver.merge(changeThumbnail, deleteThumbnail)
 
-        let changeProjectInfo = Driver.combineLatest(projectTitleChanged, projectIdChanged, wideThumbnailImageId.asDriver(onErrorJustReturn: nil), thumbnailImageId.asDriver(onErrorJustReturn: nil), synopsisChanged, statusChanged) { (title: $0, id: $1, wideThumbnailImageId: $2, thumbnailImageId: $3, synopsis: $4, status: $5) }
+        let changeProjectInfo = Driver.combineLatest(projectTitleChanged, projectIdChanged, wideThumbnailImageId.asDriver(onErrorJustReturn: nil), thumbnailImageId.asDriver(onErrorJustReturn: nil), synopsisChanged, status.asDriver(onErrorDriveWith: .empty())) { (title: $0, id: $1, wideThumbnailImageId: $2, thumbnailImageId: $3, synopsis: $4, status: $5) }
 
         let saveButtonAction = input.saveBtnDidTap
             .withLatestFrom(changeProjectInfo)
@@ -240,7 +242,8 @@ final class CreateProjectViewModel: InjectableViewModel {
         let showToast = Driver.merge(uploadWideThumbnailError, uploadThumbnailError, changeProjectInfoError)
 
         return Output(
-            viewWillAppear: viewWillAppear,
+            viewWillAppear: input.viewWillAppear,
+            viewWillDisappear: input.viewWillDisappear,
             isModify: isModify,
             loadProject: loadProjectSuccess,
             projectIdChanged: projectIdChanged,

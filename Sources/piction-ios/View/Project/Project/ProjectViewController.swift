@@ -56,6 +56,7 @@ final class ProjectViewController: UIViewController {
     private let subscription = PublishSubject<Void>()
     private let cancelSubscription = PublishSubject<Void>()
     private let deletePost = PublishSubject<(String, Int)>()
+    private let updateProject = PublishSubject<Void>()
     private let subscriptionUser = PublishSubject<Void>()
 
     @IBOutlet weak var tableView: UITableView! {
@@ -107,6 +108,19 @@ final class ProjectViewController: UIViewController {
         }
     }
 
+    private func openDeletePopup(uri: String, postId: Int) {
+        let alertController = UIAlertController(title: nil, message: LocalizedStrings.popup_title_delete_post.localized(), preferredStyle: .alert)
+        let cancelButton = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel)
+        let confirmButton = UIAlertAction(title: LocalizedStrings.confirm.localized(), style: .default) { [weak self] _ in
+            self?.deletePost.onNext((uri, postId))
+        }
+
+        alertController.addAction(confirmButton)
+        alertController.addAction(cancelButton)
+
+        self.present(alertController, animated: true, completion: nil)
+    }
+
     private func openSignInViewController() {
         let vc = SignInViewController.make()
         if let topViewController = UIApplication.topViewController() {
@@ -125,6 +139,13 @@ final class ProjectViewController: UIViewController {
         alertController.addAction(cancelButton)
 
         self.present(alertController, animated: true, completion: nil)
+    }
+
+    private func openCreateProjectViewController(uri: String) {
+        let vc = CreateProjectViewController.make(uri: uri)
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.openViewController(vc, type: .push)
+        }
     }
 
     private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
@@ -225,6 +246,7 @@ extension ProjectViewController: ViewModelBindable {
             infoBtnDidTap: infoBarButton.rx.tap.asDriver(),
             selectedIndexPath: tableView.rx.itemSelected.asDriver(),
             contentOffset: tableView.rx.contentOffset.asDriver()
+            updateProject: updateProject.asDriver(onErrorDriveWith: .empty()),
             subscriptionUser: subscriptionUser.asDriver(onErrorDriveWith: .empty()),
             deletePost: deletePost.asDriver(onErrorDriveWith: .empty())
         )

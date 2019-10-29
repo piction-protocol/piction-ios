@@ -39,8 +39,10 @@ final class ProjectViewModel: InjectableViewModel {
         let changeMenu: Driver<Int>
         let infoBtnDidTap: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
+        let updateProject: Driver<Void>
         let subscriptionUser: Driver<Void>
         let contentOffset: Driver<CGPoint>
+        let deletePost: Driver<(String, Int)>
     }
 
     struct Output {
@@ -56,6 +58,7 @@ final class ProjectViewModel: InjectableViewModel {
         let openPostViewController: Driver<(String, Int)>
         let openSeriesPostViewController: Driver<(String, Int)>
         let openProjectInfoViewController: Driver<String>
+        let openUpdateProjectViewController: Driver<String>
         let openSubscriptionUserViewController: Driver<String>
         let contentOffset: Driver<CGPoint>
         let activityIndicator: Driver<Bool>
@@ -186,6 +189,26 @@ final class ProjectViewModel: InjectableViewModel {
             .flatMap { [weak self] (project, user) -> Driver<Bool> in
                 self?.isWriter = project.user?.loginId == user.loginId
                 return Driver.just(self?.isWriter ?? false)
+            }
+
+        let loadPostAction = Driver.zip(Driver.merge(selectPostMenu, loadNext), isWriter)
+            .flatMap { [weak self] (_, isWriter) -> Driver<Action<ResponseData>> in
+                guard let `self` = self else { return Driver.empty() }
+                if isWriter {
+                    let response = PictionSDK.rx.requestAPI(MyAPI.posts(uri: self.uri, isRequiredFanPass: nil, page: self.page, size: 20))
+                    return Action.makeDriver(response)
+                } else {
+                    let response = PictionSDK.rx.requestAPI(PostsAPI.all(uri: self.uri, isRequiredFanPass: nil, page: self.page, size: 20))
+                    return Action.makeDriver(response)
+                }
+            }
+
+        let loadPostSuccess = loadPostAction.elements
+            .flatMap { response -> Driver<PageViewResponse<PostModel>> in
+                guard let pageList = try? response.map(to: PageViewResponse<PostModel>.self) else {
+                    return Driver.empty()
+                }
+                return Driver.just(pageList)
             }
 
         let isSubscribingForInfo = Driver.merge(isSubscribingSuccess, isSubscribingError)
@@ -359,6 +382,26 @@ final class ProjectViewModel: InjectableViewModel {
 
         let contentList = Driver.merge(postSection, seriesSection)
 
+        let deletePostAction = input.deletePost
+            .flatMap { (uri, postId) -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(PostsAPI.delete(uri: uri, postId: postId))
+                return Action.makeDriver(response)
+            }
+
+        let deletePostSuccess = deletePostAction.elements
+            .flatMap { [weak self] _ -> Driver<String> in
+                self?.updater.refreshContent.onNext(())
+                return Driver.just(LocalizedStrings.msg_delete_post_success.localized())
+            }
+
+        let deletePostError = deletePostAction.error
+            .flatMap { response -> Driver<String> in
+                guard let errorMsg = response as? ErrorType else {
+                    return Driver.empty()
+                }
+                return Driver.just(errorMsg.message)
+            }
+
         let showActivityIndicator = Driver.merge(subscriptionAction, cancelSubscriptionAction)
             .flatMap { _ in Driver.just(true) }
 
@@ -368,7 +411,13 @@ final class ProjectViewModel: InjectableViewModel {
         let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
             .flatMap { status in Driver.just(status) }
 
-        let showToast = Driver.merge(subscriptionSuccess, cancelSubscriptionSuccess, subscriptionError, cancelSubscriptionError)
+        let showToast = Driver.merge(subscriptionSuccess, cancelSubscriptionSuccess, subscriptionError, cancelSubscriptionError, deletePostSuccess, deletePostSuccess, deletePostError)
+
+        let openUpdateProjectViewController = input.updateProject
+            .flatMap { [weak self] _ -> Driver<String> in
+                return Driver.just(self?.uri ?? "")
+            }
+
 
         let openSubscriptionUserViewController = input.subscriptionUser
             .flatMap { [weak self] _ -> Driver<String> in
@@ -388,6 +437,7 @@ final class ProjectViewModel: InjectableViewModel {
             openPostViewController: selectPostItem,
             openSeriesPostViewController: selectSeriesItem,
             openProjectInfoViewController: openProjectInfoViewController,
+            openUpdateProjectViewController: openUpdateProjectViewController,
             openSubscriptionUserViewController: openSubscriptionUserViewController,
             contentOffset: contentOffset,
             activityIndicator: activityIndicator,

@@ -39,6 +39,7 @@ final class CreateProjectViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         KeyboardManager.shared.delegate = self
+        self.tabBarController?.tabBar.isHidden = true
     }
 
     @IBAction func tapGesture(_ sender: Any) {
@@ -59,6 +60,7 @@ extension CreateProjectViewController: ViewModelBindable {
 
         let input = CreateProjectViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
+            viewWillDisappear: rx.viewWillDisappear.asDriver(),
             inputProjectTitle: projectTitleTextField.rx.text.orEmpty.asDriver(),
             inputProjectId: projectIdTextField.rx.text.orEmpty.asDriver(),
             wideThumbnailBtnDidTap: wideThumbnailButton.rx.tap.asDriver(),
@@ -78,6 +80,14 @@ extension CreateProjectViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+                self?.tabBarController?.tabBar.isHidden = true
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .viewWillDisappear
+            .drive(onNext: { [weak self] in
+                self?.tabBarController?.tabBar.isHidden = false
             })
             .disposed(by: disposeBag)
 

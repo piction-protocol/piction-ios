@@ -15,6 +15,7 @@ protocol ProjectHeaderViewDelegate: class {
     func seriesBtnDidTap()
     func subscriptionBtnDidTap()
     func shareBtnDidTap()
+    func managementBtnDidTap()
     func subscriptionUserBtnDidTap()
 }
 
@@ -22,7 +23,8 @@ class ProjectHeaderView: GSKStretchyHeaderView {
 
     weak var delegate: ProjectHeaderViewDelegate?
 
-    @IBOutlet weak var subscriptionButton: UIButtonExtension!
+    @IBOutlet weak var subscriptionButton: UIButton!
+    @IBOutlet weak var managementButton: UIButton!
     @IBOutlet weak var thumbnailImageView: UIImageView! {
         didSet {
             let gradientLayer = CAGradientLayer()
@@ -62,6 +64,10 @@ class ProjectHeaderView: GSKStretchyHeaderView {
 
     @IBAction func shareBtnDidTap(_ sender: Any) {
         delegate?.shareBtnDidTap()
+    }
+
+    @IBAction func managementBtnDidTap(_ sender: Any) {
+        delegate?.managementBtnDidTap()
     }
 
     @IBAction func subscriptionUserBtnDidTap(_ sender: Any) {
@@ -104,6 +110,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
     func configureSubscription(isWriter: Bool, isSubscribing: Bool) {
         if isSubscribing {
             subscriptionUserButton.isHidden = true
+            managementButton.isHidden = true
             subscriptionButton.isHidden = false
             subscriptionButton.backgroundColor = UIColor(r: 242, g: 242, b: 242)
             subscriptionButton.setTitle(LocalizedStrings.str_project_subscribing.localized(), for: .normal)
@@ -112,15 +119,18 @@ class ProjectHeaderView: GSKStretchyHeaderView {
             if isWriter {
                 if FEATURE_EDITOR {
                     subscriptionUserButton.isHidden = false
+                    managementButton.isHidden = false
                     subscriptionButton.isHidden = false
                     subscriptionButton.backgroundColor = UIColor(r: 51, g: 51, b: 51)
                     subscriptionButton.setTitle(LocalizedStrings.btn_new_post.localized(), for: .normal)
                     subscriptionButton.setTitleColor(.white, for: .normal)
                 } else {
+                    managementButton.isHidden = true
                     subscriptionButton.isHidden = true
                 }
             } else {
                 subscriptionUserButton.isHidden = true
+                managementButton.isHidden = true
                 subscriptionButton.isHidden = false
                 subscriptionButton.backgroundColor = UIColor(r: 51, g: 51, b: 51)
                 subscriptionButton.setTitle(LocalizedStrings.btn_subs.localized(), for: .normal)

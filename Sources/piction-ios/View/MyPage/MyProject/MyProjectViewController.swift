@@ -105,7 +105,9 @@ extension MyProjectViewController: ViewModelBindable {
         output
             .openProjectViewController
             .drive(onNext: { [weak self] indexPath in
-                let uri = dataSource[indexPath].uri ?? ""
+                let project = dataSource[indexPath]
+                guard (project.status ?? "PUBLIC") != "DEPRECATED" else { return }
+                let uri = project.uri ?? ""
                 self?.openProjectViewController(uri: uri)
             })
             .disposed(by: disposeBag)
