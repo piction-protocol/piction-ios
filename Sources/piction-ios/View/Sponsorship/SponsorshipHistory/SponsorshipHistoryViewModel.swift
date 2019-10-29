@@ -22,19 +22,21 @@ final class SponsorshipHistoryViewModel: ViewModel {
 
     struct Input {
         let viewWillAppear: Driver<Void>
+        let refreshControlDidRefresh: Driver<Void>
     }
 
     struct Output {
         let viewWillAppear: Driver<Void>
         let sponsorshipList: Driver<[SponsorshipModel]>
+        let isFetching: Driver<Bool>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
     }
 
     func build(input: Input) -> Output {
 
-        let viewWillAppear = input.viewWillAppear
+        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
-        let initialLoad = input.viewWillAppear
+        let initialLoad = Driver.merge(viewWillAppear, input.refreshControlDidRefresh)
             .flatMap { [weak self] _ -> Driver<Void> in
                 guard let `self` = self else { return Driver.empty() }
                 self.page = 1
@@ -55,7 +57,7 @@ final class SponsorshipHistoryViewModel: ViewModel {
         let sponsorshipListAction = Driver.merge(initialLoad, loadNext)
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
                 guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(SponsorshipsAPI.get(page: self.page, size: 15))
+                let response = PictionSDK.rx.requestAPI(SponsorshipsAPI.get(page: self.page, size: 20))
                 return Action.makeDriver(response)
         }
 
@@ -72,6 +74,12 @@ final class SponsorshipHistoryViewModel: ViewModel {
                 return Driver.just(self.items)
             }
 
+        let refreshAction = input.refreshControlDidRefresh
+            .withLatestFrom(sponsorshipListSuccess)
+            .flatMap { _ -> Driver<Action<Void>> in
+                return Action.makeDriver(Driver.just(()))
+            }
+
         let embedEmptyView = sponsorshipListSuccess
             .flatMap { items -> Driver<CustomEmptyViewStyle> in
                 if (items.count == 0) {
@@ -81,8 +89,9 @@ final class SponsorshipHistoryViewModel: ViewModel {
             }
 
         return Output(
-            viewWillAppear: viewWillAppear,
+            viewWillAppear: input.viewWillAppear,
             sponsorshipList: sponsorshipListSuccess,
+            isFetching: refreshAction.isExecuting,
             embedEmptyViewController: embedEmptyView
         )
     }

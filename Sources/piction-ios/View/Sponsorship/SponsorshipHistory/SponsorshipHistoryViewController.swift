@@ -16,8 +16,14 @@ import PictionSDK
 final class SponsorshipHistoryViewController: UIViewController {
     var disposeBag = DisposeBag()
 
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptyView: UIView!
+    private var refreshControl = UIRefreshControl()
+
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.refreshControl = refreshControl
+        }
+    }
 
     private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
         _ = emptyView.subviews.map { $0.removeFromSuperview() }
@@ -50,7 +56,8 @@ extension SponsorshipHistoryViewController: ViewModelBindable {
         }
 
         let input = SponsorshipHistoryViewModel.Input(
-            viewWillAppear: rx.viewWillAppear.asDriver()
+            viewWillAppear: rx.viewWillAppear.asDriver(),
+            refreshControlDidRefresh: refreshControl.rx.controlEvent(.valueChanged).asDriver()
         )
 
         let output = viewModel.build(input: input)
@@ -87,6 +94,11 @@ extension SponsorshipHistoryViewController: ViewModelBindable {
                 guard let `self` = self else { return }
                 self.embedCustomEmptyViewController(style: style)
             })
+            .disposed(by: disposeBag)
+
+        output
+            .isFetching
+            .drive(refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
 
 //        output
