@@ -92,7 +92,10 @@ final class HomeViewModel: InjectableViewModel {
 
         let subscriptionPost1Action = subscriptionProjectList
             .flatMap { list -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(PostsAPI.all(uri: list[safe: 0]?.uri ?? "", isRequiredFanPass: true, page: 1, size: 1))
+                guard let uri = list[safe: 0]?.uri else {
+                    return Driver.empty()
+                }
+                let response = PictionSDK.rx.requestAPI(PostsAPI.all(uri: uri, isRequiredFanPass: true, page: 1, size: 1))
                 return Action.makeDriver(response)
             }
 
@@ -107,11 +110,18 @@ final class HomeViewModel: InjectableViewModel {
         let subscriptionPost1Error = subscriptionPost1Action.error
             .flatMap { _ in Driver.just(PostModel.from([:])!) }
 
-        let subscriptionPost1Item = Driver.merge(subscriptionPost1Success, subscriptionPost1Error)
+        let subscriptionPost1NotExist = subscriptionProjectList
+            .filter { ($0[safe: 0]?.uri ?? "") == ""}
+            .flatMap { _ in Driver.just(PostModel.from([:])!) }
+
+        let subscriptionPost1Item = Driver.merge(subscriptionPost1Success, subscriptionPost1Error, subscriptionPost1NotExist)
 
         let subscriptionPost2Action = subscriptionProjectList
             .flatMap { list -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(PostsAPI.all(uri: list[safe: 1]?.uri ?? "", isRequiredFanPass: true, page: 1, size: 1))
+                guard let uri = list[safe: 1]?.uri else {
+                    return Driver.empty()
+                }
+                let response = PictionSDK.rx.requestAPI(PostsAPI.all(uri: uri, isRequiredFanPass: true, page: 1, size: 1))
                 return Action.makeDriver(response)
             }
 
@@ -126,11 +136,18 @@ final class HomeViewModel: InjectableViewModel {
         let subscriptionPost2Error = subscriptionPost2Action.error
             .flatMap { _ in Driver.just(PostModel.from([:])!) }
 
-        let subscriptionPost2Item = Driver.merge(subscriptionPost2Success, subscriptionPost2Error)
+        let subscriptionPost2NotExist = subscriptionProjectList
+            .filter { ($0[safe: 1]?.uri ?? "") == ""}
+            .flatMap { _ in Driver.just(PostModel.from([:])!) }
+
+        let subscriptionPost2Item = Driver.merge(subscriptionPost2Success, subscriptionPost2Error, subscriptionPost2NotExist)
 
         let subscriptionPost3Action = subscriptionProjectList
             .flatMap { list -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(PostsAPI.all(uri: list[safe: 2]?.uri ?? "", isRequiredFanPass: true, page: 1, size: 1))
+                guard let uri = list[safe: 2]?.uri else {
+                    return Driver.empty()
+                }
+                let response = PictionSDK.rx.requestAPI(PostsAPI.all(uri: uri, isRequiredFanPass: true, page: 1, size: 1))
                 return Action.makeDriver(response)
             }
 
@@ -145,11 +162,18 @@ final class HomeViewModel: InjectableViewModel {
         let subscriptionPost3Error = subscriptionPost3Action.error
             .flatMap { _ in Driver.just(PostModel.from([:])!) }
 
-        let subscriptionPost3Item = Driver.merge(subscriptionPost3Success, subscriptionPost3Error)
+        let subscriptionPost3NotExist = subscriptionProjectList
+            .filter { ($0[safe: 2]?.uri ?? "") == ""}
+            .flatMap { _ in Driver.just(PostModel.from([:])!) }
+
+        let subscriptionPost3Item = Driver.merge(subscriptionPost3Success, subscriptionPost3Error, subscriptionPost3NotExist)
 
         let subscriptionPost4Action = subscriptionProjectList
             .flatMap { list -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(PostsAPI.all(uri: list[safe: 3]?.uri ?? "", isRequiredFanPass: true, page: 1, size: 1))
+                guard let uri = list[safe: 3]?.uri else {
+                    return Driver.empty()
+                }
+                let response = PictionSDK.rx.requestAPI(PostsAPI.all(uri: uri, isRequiredFanPass: true, page: 1, size: 1))
                 return Action.makeDriver(response)
             }
 
@@ -164,7 +188,11 @@ final class HomeViewModel: InjectableViewModel {
         let subscriptionPost4Error = subscriptionPost4Action.error
             .flatMap { _ in Driver.just(PostModel.from([:])!) }
 
-        let subscriptionPost4Item = Driver.merge(subscriptionPost4Success, subscriptionPost4Error)
+        let subscriptionPost4NotExist = subscriptionProjectList
+            .filter { ($0[safe: 3]?.uri ?? "") == ""}
+            .flatMap { _ in Driver.just(PostModel.from([:])!) }
+
+        let subscriptionPost4Item = Driver.merge(subscriptionPost4Success, subscriptionPost4Error, subscriptionPost4NotExist)
 
         let subscriptionPostList = Driver.combineLatest(subscriptionPost1Item, subscriptionPost2Item, subscriptionPost3Item, subscriptionPost4Item)
             .flatMap { (post1, post2, post3, post4) -> Driver<[PostModel]> in
@@ -197,7 +225,10 @@ final class HomeViewModel: InjectableViewModel {
 
         let popularTagThumbnail1Action = popularTagList
             .flatMap { tag -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.all(page: 1, size: 1, tagName: tag[safe: 0]?.name ?? ""))
+                guard let tagName = tag[safe: 0]?.name else {
+                    return Driver.empty()
+                }
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.all(page: 1, size: 1, tagName: tagName))
                 return Action.makeDriver(response)
             }
 
@@ -212,11 +243,18 @@ final class HomeViewModel: InjectableViewModel {
         let popularTagThumbnail1Error = popularTagThumbnail1Action.error
             .flatMap { _ in Driver.just("") }
 
-        let popularTagThumbnail1Item = Driver.merge(popularTagThumbnail1Success, popularTagThumbnail1Error)
+        let popularTagThumbnail1NotExist = popularTagList
+            .filter { ($0[safe: 0]?.name ?? "") == ""}
+            .flatMap { _ in Driver.just("") }
+
+        let popularTagThumbnail1Item = Driver.merge(popularTagThumbnail1Success, popularTagThumbnail1Error, popularTagThumbnail1NotExist)
 
         let popularTagThumbnail2Action = popularTagList
             .flatMap { tag -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.all(page: 1, size: 1, tagName: tag[safe: 1]?.name ?? ""))
+                guard let tagName = tag[safe: 1]?.name else {
+                    return Driver.empty()
+                }
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.all(page: 1, size: 1, tagName: tagName))
                 return Action.makeDriver(response)
             }
 
@@ -231,11 +269,18 @@ final class HomeViewModel: InjectableViewModel {
         let popularTagThumbnail2Error = popularTagThumbnail2Action.error
             .flatMap { _ in Driver.just("") }
 
-        let popularTagThumbnail2Item = Driver.merge(popularTagThumbnail2Success, popularTagThumbnail2Error)
+        let popularTagThumbnail2NotExist = popularTagList
+            .filter { ($0[safe: 1]?.name ?? "") == ""}
+            .flatMap { _ in Driver.just("") }
+
+        let popularTagThumbnail2Item = Driver.merge(popularTagThumbnail2Success, popularTagThumbnail2Error, popularTagThumbnail2NotExist)
 
         let popularTagThumbnail3Action = popularTagList
             .flatMap { tag -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.all(page: 1, size: 1, tagName: tag[safe: 2]?.name ?? ""))
+                guard let tagName = tag[safe: 2]?.name else {
+                    return Driver.empty()
+                }
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.all(page: 1, size: 1, tagName: tagName))
                 return Action.makeDriver(response)
             }
 
@@ -250,11 +295,18 @@ final class HomeViewModel: InjectableViewModel {
         let popularTagThumbnail3Error = popularTagThumbnail3Action.error
             .flatMap { _ in Driver.just("") }
 
-        let popularTagThumbnail3Item = Driver.merge(popularTagThumbnail3Success, popularTagThumbnail3Error)
+        let popularTagThumbnail3NotExist = popularTagList
+            .filter { ($0[safe: 2]?.name ?? "") == ""}
+            .flatMap { _ in Driver.just("") }
+
+        let popularTagThumbnail3Item = Driver.merge(popularTagThumbnail3Success, popularTagThumbnail3Error, popularTagThumbnail3NotExist)
 
         let popularTagThumbnail4Action = popularTagList
             .flatMap { tag -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.all(page: 1, size: 1, tagName: tag[safe: 3]?.name ?? ""))
+                guard let tagName = tag[safe: 3]?.name else {
+                    return Driver.empty()
+                }
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.all(page: 1, size: 1, tagName: tagName))
                 return Action.makeDriver(response)
             }
 
@@ -266,16 +318,21 @@ final class HomeViewModel: InjectableViewModel {
                 return Driver.just(projects.content?.first?.thumbnail ?? "")
             }
 
-        let popularTagThumbnail4Error = popularTagThumbnail4Action.error
+        let popularTagThumbnail4Error = Driver.merge(popularTagThumbnail4Action.error)
             .flatMap { _ in Driver.just("") }
 
-        let popularTagThumbnail4Item = Driver.merge(popularTagThumbnail4Success, popularTagThumbnail4Error)
+        let popularTagThumbnail4NotExist = popularTagList
+            .filter { ($0[safe: 3]?.name ?? "") == ""}
+            .flatMap { _ in Driver.just("") }
+
+        let popularTagThumbnail4Item = Driver.merge(popularTagThumbnail4Success, popularTagThumbnail4Error, popularTagThumbnail4NotExist)
 
         let popularTagThumbnailList = Driver.combineLatest(popularTagThumbnail1Item, popularTagThumbnail2Item, popularTagThumbnail3Item, popularTagThumbnail4Item)
             .flatMap { (thumbnail1, thumbnail2, thumbnail3, thumbnail4) -> Driver<[String]> in
                 let thumbnailList: [String] = [thumbnail1, thumbnail2, thumbnail3, thumbnail4]
                 return Driver.just(thumbnailList)
             }
+// Temporary code end
 
         let popularTagWithThumbnailList = Driver.combineLatest(popularTagList, popularTagThumbnailList)
             .do(onNext: { _ in
