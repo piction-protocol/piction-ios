@@ -219,3 +219,9 @@ extension TagResultProjectViewController {
         return Container.shared.resolve(TagResultProjectViewController.self, argument: tag)!
     }
 }
+
+extension SubscriptionUserViewController {
+    static func make(uri: String) -> SubscriptionUserViewController {
+        return Container.shared.resolve(SubscriptionUserViewController.self, argument: uri)!
+    }
+}
