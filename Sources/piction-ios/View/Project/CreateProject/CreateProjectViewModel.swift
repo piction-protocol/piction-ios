@@ -26,6 +26,7 @@ final class CreateProjectViewModel: InjectableViewModel {
     private let wideThumbnailImageId = PublishSubject<String?>()
     private let thumbnailImageId = PublishSubject<String?>()
     private let status = PublishSubject<String>()
+    private let tags = PublishSubject<[String]>()
 
     init(dependency: Dependency) {
         (updater, uri) = dependency
@@ -42,6 +43,7 @@ final class CreateProjectViewModel: InjectableViewModel {
         let thumbnailImageDidPick: Driver<UIImage>
         let deleteWideThumbnailBtnDidTap: Driver<Void>
         let deleteThumbnailBtnDidTap: Driver<Void>
+        let inputTags: Driver<[String]>
         let privateProjectCheckBoxBtnDidTap: Driver<Void>
         let inputSynopsis: Driver<String>
         let saveBtnDidTap: Driver<Void>
@@ -60,6 +62,7 @@ final class CreateProjectViewModel: InjectableViewModel {
         let statusChanged: Driver<String>
         let popViewController: Driver<Void>
         let activityIndicator: Driver<Bool>
+        let dismissKeyboard: Driver<Bool>
         let showToast: Driver<String>
     }
 
@@ -198,19 +201,24 @@ final class CreateProjectViewModel: InjectableViewModel {
                 }
             }
 
+        let tagsChanged = Driver.merge(input.inputTags, tags.asDriver(onErrorDriveWith: .empty()))
+            .flatMap { tags -> Driver<[String]> in
+                return Driver.just(tags)
+            }
+
         let thumbnailImage = Driver.merge(changeThumbnail, deleteThumbnail)
 
-        let changeProjectInfo = Driver.combineLatest(projectTitleChanged, projectIdChanged, wideThumbnailImageId.asDriver(onErrorJustReturn: nil), thumbnailImageId.asDriver(onErrorJustReturn: nil), synopsisChanged, status.asDriver(onErrorDriveWith: .empty())) { (title: $0, id: $1, wideThumbnailImageId: $2, thumbnailImageId: $3, synopsis: $4, status: $5) }
+        let changeProjectInfo = Driver.combineLatest(projectTitleChanged, projectIdChanged, wideThumbnailImageId.asDriver(onErrorJustReturn: nil), thumbnailImageId.asDriver(onErrorJustReturn: nil), synopsisChanged, status.asDriver(onErrorDriveWith: .empty()), tagsChanged) { (title: $0, id: $1, wideThumbnailImageId: $2, thumbnailImageId: $3, synopsis: $4, status: $5, tags: $6) }
 
         let saveButtonAction = input.saveBtnDidTap
             .withLatestFrom(changeProjectInfo)
             .flatMap { [weak self] changeProjectInfo -> Driver<Action<ResponseData>> in
                 guard let `self` = self else { return Driver.empty() }
                 if self.uri == "" {
-                    let response = PictionSDK.rx.requestAPI(ProjectsAPI.create(uri: changeProjectInfo.id, title: changeProjectInfo.title, synopsis: changeProjectInfo.synopsis, thumbnail: changeProjectInfo.thumbnailImageId, wideThumbnail: changeProjectInfo.wideThumbnailImageId, tags: [], status: changeProjectInfo.status))
+                    let response = PictionSDK.rx.requestAPI(ProjectsAPI.create(uri: changeProjectInfo.id, title: changeProjectInfo.title, synopsis: changeProjectInfo.synopsis, thumbnail: changeProjectInfo.thumbnailImageId, wideThumbnail: changeProjectInfo.wideThumbnailImageId, tags: changeProjectInfo.tags, status: changeProjectInfo.status))
                     return Action.makeDriver(response)
                 } else {
-                    let response = PictionSDK.rx.requestAPI(ProjectsAPI.update(uri: changeProjectInfo.id, title: changeProjectInfo.title, synopsis: changeProjectInfo.synopsis, thumbnail: changeProjectInfo.thumbnailImageId, wideThumbnail: changeProjectInfo.wideThumbnailImageId, tags: [], status: changeProjectInfo.status))
+                    let response = PictionSDK.rx.requestAPI(ProjectsAPI.update(uri: changeProjectInfo.id, title: changeProjectInfo.title, synopsis: changeProjectInfo.synopsis, thumbnail: changeProjectInfo.thumbnailImageId, wideThumbnail: changeProjectInfo.wideThumbnailImageId, tags: changeProjectInfo.tags, status: changeProjectInfo.status))
                     return Action.makeDriver(response)
                 }
             }
@@ -241,6 +249,8 @@ final class CreateProjectViewModel: InjectableViewModel {
 
         let showToast = Driver.merge(uploadWideThumbnailError, uploadThumbnailError, changeProjectInfoError)
 
+        let dismissKeyboard = saveButtonAction.isExecuting
+
         return Output(
             viewWillAppear: input.viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
@@ -254,6 +264,7 @@ final class CreateProjectViewModel: InjectableViewModel {
             statusChanged: statusChanged,
             popViewController: changeProjectInfoSuccess,
             activityIndicator: activityIndicator,
+            dismissKeyboard: dismissKeyboard,
             showToast: showToast
         )
     }

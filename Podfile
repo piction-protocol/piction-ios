@@ -9,6 +9,7 @@ def ui_pods
   pod 'UIScrollView-InfiniteScroll'
   pod 'GSKStretchyHeaderView'
   pod 'Gridicons'
+  pod "WSTagsField"
 end
 
 def rx_pods

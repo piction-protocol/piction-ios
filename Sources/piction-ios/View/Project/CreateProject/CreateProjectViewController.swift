@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import ViewModelBindable
 import CropViewController
+import WSTagsField
 
 final class CreateProjectViewController: UIViewController {
     var disposeBag = DisposeBag()
@@ -30,9 +31,28 @@ final class CreateProjectViewController: UIViewController {
     @IBOutlet weak var deleteThumbnailButton: UIButton!
     @IBOutlet weak var privateProjectCheckBoxButton: UIButton!
     @IBOutlet weak var privateProjectCheckBoxImageView: UIImageView!
+    @IBOutlet weak var tagsField: WSTagsField! {
+        didSet {
+            tagsField.font = .systemFont(ofSize: 14)
+            tagsField.placeholder = "#태그입력(최대 5개)"
+            tagsField.layoutMargins = UIEdgeInsets(top: 6.5, left: 10, bottom: 6.5, right: 10)
+            tagsField.contentInset = UIEdgeInsets(top: 2.5, left: 0, bottom: 0, right: 0)
+            tagsField.spaceBetweenTags = 5.0
+            tagsField.spaceBetweenLines = 10.0
+            tagsField.tintColor = UIColor(r: 242, g: 242, b: 242)
+            tagsField.textColor = UIColor(r: 51, g: 51, b: 51)
+            tagsField.selectedColor = UIColor(r: 26, g: 146, b: 255)
+            tagsField.fieldTextColor = UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51)
+            tagsField.selectedTextColor = .white
+            tagsField.acceptTagOption = .space
+            tagsField.returnKeyType = .next
+        }
+    }
+    @IBOutlet weak var tagsFieldHeightConstraint: NSLayoutConstraint!
 
     private let chosenThumbnailImage = PublishSubject<UIImage>()
     private let chosenWideThumbnailImage = PublishSubject<UIImage>()
+    private let inputTags = PublishSubject<[String]>()
 
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
 
@@ -40,6 +60,29 @@ final class CreateProjectViewController: UIViewController {
         super.viewDidLoad()
         KeyboardManager.shared.delegate = self
         self.tabBarController?.tabBar.isHidden = true
+
+        tagsField.onShouldAcceptTag = { [weak self] field in
+            let text = field.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            if text.first != "#" {
+                self?.tagsField.addTag("#\(text)")
+            } else {
+                self?.tagsField.addTag("\(text)")
+            }
+            return false
+        }
+
+        tagsField.onDidAddTag = { [weak self] field, tag in
+            self?.inputTags.onNext(self?.tagsField.tags.map { $0.text.replacingOccurrences(of: "#", with: "") } ?? [])
+        }
+
+        tagsField.onDidRemoveTag = { [weak self] field, tag in
+            self?.inputTags.onNext(self?.tagsField.tags.map { $0.text.replacingOccurrences(of: "#", with: "") } ?? [])
+        }
+
+        tagsField.onDidChangeHeightTo = { [weak self] _, height in
+            print("HeightTo", height)
+            self?.tagsFieldHeightConstraint.constant = height + ((height / 30) * 5)
+        }
     }
 
     @IBAction func tapGesture(_ sender: Any) {
@@ -69,6 +112,7 @@ extension CreateProjectViewController: ViewModelBindable {
             thumbnailImageDidPick: chosenThumbnailImage.asDriver(onErrorDriveWith: .empty()),
             deleteWideThumbnailBtnDidTap: deleteWideThumbnailButton.rx.tap.asDriver(),
             deleteThumbnailBtnDidTap: deleteThumbnailButton.rx.tap.asDriver(),
+            inputTags: inputTags.asDriver(onErrorDriveWith: .empty()),
             privateProjectCheckBoxBtnDidTap: privateProjectCheckBoxButton.rx.tap.asDriver(),
             inputSynopsis: synopsisTextField.rx.text.orEmpty.asDriver(),
             saveBtnDidTap: saveBarButton.rx.tap.asDriver()
@@ -124,6 +168,7 @@ extension CreateProjectViewController: ViewModelBindable {
                 self?.synopsisTextField.text = projectInfo.synopsis
 
                 self?.controlStatusCheckBox(projectInfo.status ?? "PUBLIC")
+                projectInfo.tags?.forEach { self?.tagsField.addTag("#\($0)") }
             })
             .disposed(by: disposeBag)
 
@@ -200,6 +245,13 @@ extension CreateProjectViewController: ViewModelBindable {
                 } else {
                     self?.view.hideToastActivity()
                 }
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .dismissKeyboard
+            .drive(onNext: { [weak self] _ in
+                self?.view.endEditing(true)
             })
             .disposed(by: disposeBag)
         
