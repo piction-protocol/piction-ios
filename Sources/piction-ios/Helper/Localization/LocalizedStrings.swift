@@ -128,6 +128,7 @@ enum LocalizedStrings {
     case str_series_posts_count
 
     case str_date_format
+    case str_reservation_datetime_format
 
     case str_creator
     case str_project_synopsis

@@ -104,7 +104,7 @@ extension PostFooterViewController: ViewModelBindable {
             .footerInfo
             .flatMap { [weak self] (postItem, seriesPostItems, isLike) -> Driver<[PostIndexModel]> in
                 self?.controlLikeButton(isLike: isLike, likeCount: postItem.likeCount ?? 0)
-                self?.dateLabel.text = postItem.createdAt?.toString(format: LocalizedStrings.str_post_date_format.localized())
+                self?.dateLabel.text = postItem.publishedAt?.toString(format: LocalizedStrings.str_post_date_format.localized())
                 if seriesPostItems.count > 0 {
                     self?.seriesAllPostButton.isHidden = false
                     self?.seriesPostTitleStackView.isHidden = false

@@ -127,6 +127,7 @@
 "str_series_posts_count" = "%d posts";
 
 "str_date_format" = "d/M";
+"str_reservation_datetime_format" = "예약 : d/M hh:mm:ss";
 
 "str_input_sponsorship_amount" = "Pledge";
 "str_for_user" = "님에게";

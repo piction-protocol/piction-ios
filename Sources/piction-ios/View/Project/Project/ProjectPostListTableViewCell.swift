@@ -30,11 +30,13 @@ final class ProjectPostListTableViewCell: ReuseTableViewCell {
     }
 
     func configure(with model: Model, isSubscribing: Bool) {
-        let (thumbnail, seriesName, title, date, likeCount, fanPassId, status) = (model.cover, model.series?.name, model.title, model.createdAt, model.likeCount, model.fanPass?.id, model.status)
+        let (thumbnail, seriesName, title, publishedAt, likeCount, fanPassId, status) = (model.cover, model.series?.name, model.title, model.publishedAt, model.likeCount, model.fanPass?.id, model.status)
 
-        let coverImageWithIC = "\(thumbnail ?? "")?w=656&h=246&quality=80&output=webp"
-        if let url = URL(string: coverImageWithIC) {
-            thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-post-960-x-360"), completed: nil)
+        if let thumbnail = thumbnail {
+            let coverImageWithIC = "\(thumbnail)?w=656&h=246&quality=80&output=webp"
+            if let url = URL(string: coverImageWithIC) {
+                thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-post-960-x-360"), completed: nil)
+            }
         } else {
             thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360")
         }
@@ -42,7 +44,14 @@ final class ProjectPostListTableViewCell: ReuseTableViewCell {
         seriesLabel.text = "\(LocalizedStrings.btn_series.localized()) · \(seriesName ?? "")"
 
         titleLabel.text = title
-        dateLabel.text = date?.toString(format: LocalizedStrings.str_date_format.localized())
+
+        if let publishedAt = publishedAt {
+            if publishedAt.millisecondsSince1970 > Date().millisecondsSince1970 {
+                dateLabel.text = publishedAt.toString(format: LocalizedStrings.str_reservation_datetime_format.localized())
+            } else {
+                dateLabel.text = publishedAt.toString(format: LocalizedStrings.str_date_format.localized())
+            }
+        }
 
         likeStackView.isHidden = (likeCount ?? 0) == 0
         likeLabel.text = "\(likeCount ?? 0)"

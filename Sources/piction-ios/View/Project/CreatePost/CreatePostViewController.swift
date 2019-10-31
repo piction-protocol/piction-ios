@@ -37,12 +37,18 @@ final class CreatePostViewController: UIViewController {
     @IBOutlet weak var forPrivateCheckboxButton: UIButton!
     @IBOutlet weak var forPrivateCheckboxImageView: UIImageView!
     @IBOutlet weak var saveBarButton: UIBarButtonItem!
+    @IBOutlet weak var publishNowCheckBoxView: UIView!
+    @IBOutlet weak var publishNowCheckBoxButton: UIButton!
+    @IBOutlet weak var publishNowCheckBoxImageView: UIImageViewExtension!
+    @IBOutlet weak var publishDateView: UIView!
+    @IBOutlet weak var publishDateLabel: UILabel!
+    @IBOutlet weak var publishDatePickerButton: UIButton!
+    @IBOutlet weak var publishDatePicker: UIDatePicker!
 
     private let chosenCoverImage = PublishSubject<UIImage>()
     private let chosenContentImage = PublishSubject<UIImage>()
     private let chosenSeriesId = PublishSubject<SeriesModel?>()
-
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    private let chosenDateTime = PublishSubject<Date?>()
 
     fileprivate var mediaErrorMode = false
 
@@ -190,6 +196,10 @@ extension CreatePostViewController: ViewModelBindable {
             forAllCheckBtnDidTap: forAllCheckboxButton.rx.tap.asDriver(),
             forSubscriptionCheckBtnDidTap: forSubscriptionCheckboxButton.rx.tap.asDriver(),
             forPrivateCheckBtnDidTap: forPrivateCheckboxButton.rx.tap.asDriver(),
+            publishNowCheckBtnDidTap: publishNowCheckBoxButton.rx.tap.asDriver(),
+            publishDatePickerBtnDidTap: publishDatePickerButton.rx.tap.asDriver(),
+            publishDatePickerValueChanged: publishDatePicker.rx.date.asDriver(),
+            publishDateChanged: chosenDateTime.asDriver(onErrorDriveWith: .empty()),
             saveBtnDidTap: saveBarButton.rx.tap.asDriver()
         )
 
@@ -200,6 +210,7 @@ extension CreatePostViewController: ViewModelBindable {
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self?.tabBarController?.tabBar.isHidden = true
+                self?.publishDateLabel.text = "\(Date().toString(format: "yyyy.MM.dd. a hh:mm:ss"))"
             })
             .disposed(by: disposeBag)
 
@@ -224,15 +235,25 @@ extension CreatePostViewController: ViewModelBindable {
                 self?.postTitleTextField.text = postInfo.title
                 self?.editorView.setHTML(content)
 
-                let coverImageWithIC = "\(postInfo.cover ?? "")?w=656&h=246&quality=80&output=webp"
-                if let url = URL(string: coverImageWithIC) {
-                    self?.coverImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-post-960-x-360"))
+                if let coverImage = postInfo.cover {
+                    let coverImageWithIC = "\(coverImage)?w=656&h=246&quality=80&output=webp"
+                    if let url = URL(string: coverImageWithIC) {
+                        self?.coverImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-post-960-x-360"))
+                        self?.deleteCoverImageButton.isHidden = false
+                    }
                 } else {
                     self?.coverImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360")
+                    self?.deleteCoverImageButton.isHidden = true
                 }
                 self?.controlStatusCheckBox(postInfo.status ?? "PUBLIC")
 
                 self?.selectSeriesButton.setTitle(postInfo.series?.name ?? "시리즈 선택", for: .normal)
+
+                self?.publishNowCheckBoxView.isHidden = true
+                self?.publishDateView.isHidden = false
+                self?.publishDatePickerButton.isEnabled = false
+                self?.publishDateLabel.text = "\(postInfo.publishedAt?.toString(format: "yyyy.MM.dd. a hh:mm:ss") ?? "")"
+                self?.publishDateLabel.text = UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51)
             })
             .disposed(by: disposeBag)
 
@@ -246,6 +267,7 @@ extension CreatePostViewController: ViewModelBindable {
 
                 let attachment = self.richTextView.replaceWithImage(at: self.richTextView.selectedRange, sourceURL: fileURL, placeHolderImage: image)
                 attachment.alignment = .none
+                self.deleteCoverImageButton.isHidden = false
             })
             .disposed(by: disposeBag)
 
@@ -266,9 +288,11 @@ extension CreatePostViewController: ViewModelBindable {
                 if let image = image {
                     self?.coverImageView.image = image
                     self?.coverImageView.contentMode = .scaleAspectFill
+                    self?.deleteCoverImageButton.isHidden = false
                 } else {
                     self?.coverImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360")
                     self?.coverImageView.contentMode = .scaleAspectFit
+                    self?.deleteCoverImageButton.isHidden = true
                 }
             })
             .disposed(by: disposeBag)
@@ -288,6 +312,55 @@ extension CreatePostViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
+            .publishNowChanged
+            .drive(onNext: { [weak self] _ in
+                if self?.publishDateView.isHidden ?? false {
+                    self?.publishDateView.isHidden = false
+                    self?.publishNowCheckBoxImageView.image = UIImage()
+                    self?.publishNowCheckBoxImageView.backgroundColor = UIColor.clear
+                    self?.chosenDateTime.onNext(Date())
+                } else {
+                    self?.publishDateView.isHidden = true
+                    self?.publishDatePicker.isHidden = true
+                    self?.publishNowCheckBoxImageView.image = #imageLiteral(resourceName: "ic-check")
+                    self?.publishNowCheckBoxImageView.backgroundColor = UIColor(r: 26, g: 146, b: 255)
+                    self?.chosenDateTime.onNext(nil)
+                }
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .openDatePicker
+            .drive(onNext: { [weak self] date in
+                if self?.publishDatePicker.isHidden ?? false {
+                    self?.publishDatePicker.minimumDate = Date()
+                    self?.publishDatePicker.maximumDate = Calendar.current.date(byAdding: .year, value: 1, to: Date())
+//                    self?.publishDatePicker.reloadInputViews()
+                    self?.publishDatePicker.isHidden = false
+                } else {
+                    self?.publishDatePicker.isHidden = true
+                }
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .publishDatePickerValueChanged
+            .drive(onNext: { [weak self] date in
+                self?.chosenDateTime.onNext(date)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .publishDateChanged
+            .drive(onNext: { [weak self] date in
+                guard let date = date else { return }
+                if !(self?.publishDatePicker.isHidden ?? false) {
+                    self?.publishDateLabel.text = date.toString(format: "yyyy.MM.dd. a hh:mm:00")
+                }
+            })
+            .disposed(by: disposeBag)
+
+        output
             .openSeriesListViewController
             .drive(onNext: { [weak self] (uri, seriesId) in
                 self?.openSeriesListViewController(uri: uri, seriesId: seriesId)
@@ -298,6 +371,13 @@ extension CreatePostViewController: ViewModelBindable {
             .popViewController
             .drive(onNext: { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .dismissKeyboard
+            .drive(onNext: { [weak self] _ in
+                self?.view.endEditing(true)
             })
             .disposed(by: disposeBag)
 
@@ -365,7 +445,10 @@ extension CreatePostViewController: CropViewControllerDelegate {
                 self.chosenCoverImage.onNext(image)
             }
         }
-        cropViewController.dismiss(animated: true)
+        let viewController = cropViewController.children.first!
+        viewController.modalTransitionStyle = .coverVertical
+        viewController.presentingViewController?.dismiss(animated: true, completion: nil)
+//        cropViewController.dismiss(animated: true)
     }
 }
 
@@ -374,9 +457,9 @@ extension CreatePostViewController: KeyboardManagerDelegate {
         guard let endFrame = endFrame else { return }
 
         if endFrame.origin.y >= SCREEN_H {
-            bottomConstraint.constant = 0
+            scrollView.contentInset = .zero
         } else {
-            bottomConstraint.constant = endFrame.size.height
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height, right: 0)
         }
 
         UIView.animate(withDuration: duration, animations: {

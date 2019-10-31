@@ -127,6 +127,7 @@
 "str_series_posts_count" = "%d 포스트";
 
 "str_date_format" = "M월 d일";
+"str_reservation_datetime_format" = "예약 : M월 d일 hh:mm:ss";
 
 "str_creator" = "크리에이터";
 "str_project_synopsis" = "시놉시스";
