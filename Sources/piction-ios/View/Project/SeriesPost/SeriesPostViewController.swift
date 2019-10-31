@@ -108,10 +108,11 @@ extension SeriesPostViewController: ViewModelBindable {
             .seriesThumbnail
             .drive(onNext: { [weak self] thumbnails in
                 self?.coverMaskImage.blurRadius = 5
-                guard let coverImage = thumbnails[safe: 0] else { return }
-                let coverImageWithIC = "\(coverImage)?w=656&h=246&quality=80&output=webp"
-                if let url = URL(string: coverImageWithIC) {
-                    self?.coverImageView.sd_setImageWithFade(with: url, placeholderImage: UIImage())
+                if let coverImage = thumbnails[safe: 0] {
+                    let coverImageWithIC = "\(coverImage)?w=656&h=246&quality=80&output=webp"
+                    if let url = URL(string: coverImageWithIC) {
+                        self?.coverImageView.sd_setImageWithFade(with: url, placeholderImage: UIImage())
+                    }
                 } else {
                     self?.coverImageView.image = nil
                 }

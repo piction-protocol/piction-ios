@@ -19,9 +19,11 @@ final class SearchProjectTableViewCell: ReuseTableViewCell {
     func configure(with model: Model) {
         let (thumbnail, title, writer) = (model.thumbnail, model.title, model.user?.username)
 
-        let thumbnailWithIC = "\(thumbnail ?? "")?w=720&h=720&quality=80&output=webp"
-        if let url = URL(string: thumbnailWithIC) {
-            thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-square-500-x-500"), completed: nil)
+        if let thumbnail = thumbnail {
+            let thumbnailWithIC = "\(thumbnail)?w=720&h=720&quality=80&output=webp"
+            if let url = URL(string: thumbnailWithIC) {
+                thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-square-500-x-500"), completed: nil)
+            }
         } else {
             thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
         }

@@ -14,7 +14,7 @@ import PictionSDK
 
 struct PopularTagSectionModel {
     let tag: TagModel
-    let thumbnail: String
+    let thumbnail: String?
 }
 
 final class HomePopularTagSectionTableViewCell: ReuseTableViewCell {

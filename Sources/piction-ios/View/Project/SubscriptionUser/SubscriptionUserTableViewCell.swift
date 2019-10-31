@@ -18,11 +18,13 @@ class SubscriptionUserTableViewCell: ReuseTableViewCell {
     typealias Model = SubscriptionUserModel
 
     func configure(with model: Model) {
-        let (thumbnail, username, loginId, subscriptionDate) = (model.user?.picture, model.user?.username, model.user?.loginId, model.subscriptionDate)
+        let (profileImage, username, loginId, subscriptionDate) = (model.user?.picture, model.user?.username, model.user?.loginId, model.subscriptionDate)
 
-        let userPictureWithIC = "\(thumbnail ?? "")?w=240&h=240&quality=80&output=webp"
-        if let url = URL(string: userPictureWithIC) {
-            profileImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-square-500-x-500"), completed: nil)
+        if let profileImage = profileImage {
+            let userPictureWithIC = "\(profileImage)?w=240&h=240&quality=80&output=webp"
+            if let url = URL(string: userPictureWithIC) {
+                profileImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-square-500-x-500"), completed: nil)
+            }
         } else {
             profileImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
         }

@@ -30,18 +30,18 @@ final class ProjectSeriesListTableViewCell: ReuseTableViewCell {
             let coverImageWithIC = "\(thumbnail)?w=656&h=246&quality=80&output=webp"
             if let url = URL(string: coverImageWithIC) {
                 thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450"), completed: nil)
-            } else {
-                thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450")
             }
+        } else {
+            thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450")
         }
 
         if let backgroundThumbnail = thumbnails?[safe: 1] {
             let coverImageWithIC = "\(backgroundThumbnail)?w=656&h=246&quality=80&output=webp"
             if let url = URL(string: coverImageWithIC) {
                 backgroundThumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: nil, completed: nil)
-            } else {
-                backgroundThumbnailImageView.image = nil
             }
+        } else {
+            backgroundThumbnailImageView.image = nil
         }
         seriesLabel.text = seriesName
         postCountLabel.text = LocalizedStrings.str_series_posts_count.localized(with: postCount ?? 0)

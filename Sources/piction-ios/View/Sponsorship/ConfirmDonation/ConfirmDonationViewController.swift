@@ -73,11 +73,15 @@ extension ConfirmDonationViewController: ViewModelBindable {
         output
             .userInfo
             .drive(onNext: { [weak self] userInfo in
-                let userPictureWithIC = "\(userInfo.picture ?? "")?w=240&h=240&quality=80&output=webp"
-
-                if let url = URL(string: userPictureWithIC) {
-                    self?.profileImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-userprofile-500-x-500"))
-                    self?.profileWideImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-userprofile-500-x-500"))
+                if let profileImage = userInfo.picture {
+                    let userPictureWithIC = "\(profileImage)?w=240&h=240&quality=80&output=webp"
+                    if let url = URL(string: userPictureWithIC) {
+                        self?.profileImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-userprofile-500-x-500"))
+                        self?.profileWideImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-userprofile-500-x-500"))
+                    }
+                } else {
+                    self?.profileImageView.image = #imageLiteral(resourceName: "img-dummy-userprofile-500-x-500")
+                    self?.profileWideImageView.image = #imageLiteral(resourceName: "img-dummy-userprofile-500-x-500")
                 }
                 let loginId = LocalizedStrings.str_id_with_at.localized(with: userInfo.loginId ?? "")
                 let attributedStr = NSMutableAttributedString(string: LocalizedStrings.str_creator_sponsorship.localized(with: userInfo.loginId ?? ""))

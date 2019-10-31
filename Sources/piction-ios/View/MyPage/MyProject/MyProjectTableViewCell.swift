@@ -26,9 +26,11 @@ final class MyProjectTableViewCell: ReuseTableViewCell {
     func configure(with model: Model) {
         let (wideThumbnail, title, subscriptionUserCount, status) = (model.wideThumbnail, model.title, model.subscriptionUserCount, model.status)
 
-        let wideThumbnailWithIC = "\(wideThumbnail ?? "")?w=720&h=360&quality=80&output=webp"
-        if let url = URL(string: wideThumbnailWithIC) {
-            thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450"), completed: nil)
+        if let wideThumbnail = wideThumbnail {
+            let wideThumbnailWithIC = "\(wideThumbnail)?w=720&h=360&quality=80&output=webp"
+            if let url = URL(string: wideThumbnailWithIC) {
+                thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450"), completed: nil)
+            }
         } else {
             thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450")
         }

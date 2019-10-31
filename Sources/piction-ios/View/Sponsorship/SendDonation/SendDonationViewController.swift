@@ -105,10 +105,13 @@ extension SendDonationViewController: ViewModelBindable {
         output
             .userInfo
             .drive(onNext: { [weak self] userInfo in
-                let userPictureWithIC = "\(userInfo.picture ?? "")?w=240&h=240&quality=80&output=webp"
-
-                if let url = URL(string: userPictureWithIC) {
-                    self?.profileImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-userprofile-500-x-500"), completed: nil)
+                if let profileImage = userInfo.picture {
+                    let userPictureWithIC = "\(profileImage)?w=240&h=240&quality=80&output=webp"
+                    if let url = URL(string: userPictureWithIC) {
+                        self?.profileImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-userprofile-500-x-500"), completed: nil)
+                    }
+                } else {
+                    self?.profileImageView.image = #imageLiteral(resourceName: "img-dummy-userprofile-500-x-500")
                 }
                 self?.loginIdLabel.text = "@\(userInfo.loginId ?? "")"
             })

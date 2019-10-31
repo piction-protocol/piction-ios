@@ -41,9 +41,11 @@ final class PopularTagSectionCollectionViewCell: ReuseCollectionViewCell {
         eventLabel.text = label
         eventView.isHidden = label == nil
 
-        let thumbnailWithIC = "\(thumbnail)?w=720&h=720&quality=80&output=webp"
-        if let url = URL(string: thumbnailWithIC) {
-            self.thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-square-500-x-500"), completed: nil)
+        if let thumbnail = thumbnail {
+            let thumbnailWithIC = "\(thumbnail)?w=720&h=720&quality=80&output=webp"
+            if let url = URL(string: thumbnailWithIC) {
+                self.thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-square-500-x-500"), completed: nil)
+            }
         } else {
             self.thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
         }
