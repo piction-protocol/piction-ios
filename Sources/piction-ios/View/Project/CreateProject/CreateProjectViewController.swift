@@ -36,7 +36,7 @@ final class CreateProjectViewController: UIViewController {
             tagsField.font = .systemFont(ofSize: 14)
             tagsField.placeholder = "#태그입력(최대 5개)"
             tagsField.layoutMargins = UIEdgeInsets(top: 6.5, left: 10, bottom: 6.5, right: 10)
-            tagsField.contentInset = UIEdgeInsets(top: 2.5, left: 0, bottom: 0, right: 0)
+            tagsField.contentInset = UIEdgeInsets(top: 2.5, left: 0, bottom: -2.5, right: 0)
             tagsField.spaceBetweenTags = 5.0
             tagsField.spaceBetweenLines = 10.0
             tagsField.tintColor = UIColor(r: 242, g: 242, b: 242)
@@ -46,6 +46,8 @@ final class CreateProjectViewController: UIViewController {
             tagsField.selectedTextColor = .white
             tagsField.acceptTagOption = .space
             tagsField.returnKeyType = .next
+
+            UITextField.appearance().tintColor = UIView().tintColor
         }
     }
     @IBOutlet weak var tagsFieldHeightConstraint: NSLayoutConstraint!
@@ -54,7 +56,8 @@ final class CreateProjectViewController: UIViewController {
     private let chosenWideThumbnailImage = PublishSubject<UIImage>()
     private let inputTags = PublishSubject<[String]>()
 
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+
+    var tagsFieldIsActive: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,10 +66,12 @@ final class CreateProjectViewController: UIViewController {
 
         tagsField.onShouldAcceptTag = { [weak self] field in
             let text = field.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-            if text.first != "#" {
-                self?.tagsField.addTag("#\(text)")
-            } else {
-                self?.tagsField.addTag("\(text)")
+            if text != "" && text != "#" {
+                if text.first != "#" {
+                    self?.tagsField.addTag("#\(text)")
+                } else {
+                    self?.tagsField.addTag("\(text)")
+                }
             }
             return false
         }
@@ -83,6 +88,8 @@ final class CreateProjectViewController: UIViewController {
             print("HeightTo", height)
             self?.tagsFieldHeightConstraint.constant = height + ((height / 30) * 5)
         }
+
+        tagsField.textDelegate = self
     }
 
     @IBAction func tapGesture(_ sender: Any) {
@@ -92,6 +99,12 @@ final class CreateProjectViewController: UIViewController {
     private func controlStatusCheckBox(_ status: String) {
         self.privateProjectCheckBoxImageView.image = status == "HIDDEN" ? #imageLiteral(resourceName: "ic-check") : UIImage()
         self.privateProjectCheckBoxImageView.backgroundColor = status == "HIDDEN" ? UIColor(r: 26, g: 146, b: 255) : UIColor.clear
+    }
+}
+
+extension CreateProjectViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        tagsFieldIsActive = true
     }
 }
 
@@ -141,7 +154,7 @@ extension CreateProjectViewController: ViewModelBindable {
                 self?.navigationItem.title = isModify ? "프로젝트 수정 BETA" : "프로젝트 생성 BETA"
                 self?.saveBarButton.title = isModify ? "수정" : "등록"
                 self?.projectIdTextField.isEnabled = !isModify
-                self?.projectIdTextField.textColor = isModify ? UIColor(r: 191, g: 191, b: 191) : .black
+                self?.projectIdTextField.textColor = isModify ? UIColor(r: 191, g: 191, b: 191) : UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51)
             })
             .disposed(by: disposeBag)
 
@@ -151,18 +164,26 @@ extension CreateProjectViewController: ViewModelBindable {
                 self?.projectTitleTextField.text = projectInfo.title
                 self?.projectIdTextField.text = projectInfo.uri
 
-                let wideThumbnailWithIC = "\(projectInfo.wideThumbnail ?? "")?w=720&h=360&quality=80&output=webp"
-                if let url = URL(string: wideThumbnailWithIC) {
-                    self?.wideThumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450"), completed: nil)
+                if let wideThumbnail = projectInfo.wideThumbnail {
+                    let wideThumbnailWithIC = "\(wideThumbnail)?w=720&h=360&quality=80&output=webp"
+                    if let url = URL(string: wideThumbnailWithIC) {
+                        self?.wideThumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450"), completed: nil)
+                        self?.deleteWideThumbnailButton.isHidden = false
+                    }
                 } else {
                     self?.wideThumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450")
+                    self?.deleteWideThumbnailButton.isHidden = true
                 }
 
-                let thumbnailWithIC = "\(projectInfo.thumbnail ?? "")?w=720&h=720&quality=80&output=webp"
-                if let url = URL(string: thumbnailWithIC) {
-                    self?.thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-square-500-x-500"), completed: nil)
+                if let thumbnail = projectInfo.thumbnail {
+                    let thumbnailWithIC = "\(thumbnail)?w=720&h=720&quality=80&output=webp"
+                    if let url = URL(string: thumbnailWithIC) {
+                        self?.thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-square-500-x-500"), completed: nil)
+                        self?.deleteThumbnailButton.isHidden = false
+                    }
                 } else {
                     self?.thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
+                    self?.deleteThumbnailButton.isHidden = true
                 }
 
                 self?.synopsisTextField.text = projectInfo.synopsis
@@ -206,8 +227,10 @@ extension CreateProjectViewController: ViewModelBindable {
             .drive(onNext: { [weak self] image in
                 if let image = image {
                     self?.wideThumbnailImageView.image = image
+                    self?.deleteWideThumbnailButton.isHidden = false
                 } else {
                     self?.wideThumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450")
+                    self?.deleteWideThumbnailButton.isHidden = true
                 }
             })
             .disposed(by: disposeBag)
@@ -217,8 +240,10 @@ extension CreateProjectViewController: ViewModelBindable {
             .drive(onNext: { [weak self] image in
                 if let image = image {
                     self?.thumbnailImageView.image = image
+                    self?.deleteThumbnailButton.isHidden = false
                 } else {
                     self?.thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
+                    self?.deleteThumbnailButton.isHidden = true
                 }
             })
             .disposed(by: disposeBag)
@@ -303,7 +328,10 @@ extension CreateProjectViewController: CropViewControllerDelegate {
                 self.chosenThumbnailImage.onNext(image)
             }
         }
-        cropViewController.dismiss(animated: true)
+        let viewController = cropViewController.children.first!
+        viewController.modalTransitionStyle = .coverVertical
+        viewController.presentingViewController?.dismiss(animated: true, completion: nil)
+//        cropViewController.dismiss(animated: true)
     }
 }
 
@@ -312,9 +340,13 @@ extension CreateProjectViewController: KeyboardManagerDelegate {
         guard let endFrame = endFrame else { return }
 
         if endFrame.origin.y >= SCREEN_H {
-            bottomConstraint.constant = 0
+            scrollView.contentInset = .zero
+            tagsFieldIsActive = false
         } else {
-            bottomConstraint.constant = endFrame.size.height
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height, right: 0)
+            if tagsFieldIsActive {
+                scrollView.scrollRectToVisible(tagsField.superview!.frame, animated: true)
+            }
         }
 
         UIView.animate(withDuration: duration, animations: {

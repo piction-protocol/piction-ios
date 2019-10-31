@@ -81,6 +81,9 @@ final class CreateProjectViewModel: InjectableViewModel {
             .do(onNext: { [weak self] in
                 self?.thumbnailImageId.onNext(nil)
                 self?.wideThumbnailImageId.onNext(nil)
+                self?.synopsis.onNext("")
+                self?.status.onNext("PUBLIC")
+                self?.tags.onNext([])
             })
             .filter { self.uri != "" }
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
@@ -101,6 +104,7 @@ final class CreateProjectViewModel: InjectableViewModel {
                 self?.wideThumbnailImageId.onNext("")
                 self?.synopsis.onNext(project.synopsis ?? "")
                 self?.status.onNext(project.status ?? "PUBLIC")
+                self?.tags.onNext([])
 
                 print(project)
                 return Driver.just(project)
