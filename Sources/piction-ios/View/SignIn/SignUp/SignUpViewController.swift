@@ -15,11 +15,11 @@ import SafariServices
 final class SignUpViewController: UIViewController {
     var disposeBag = DisposeBag()
 
+    @IBOutlet weak var scrollView: UIScrollView!
+
     @IBOutlet weak var checkboxImageView: UIImageView!
     @IBOutlet weak var agreeButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
-    @IBOutlet weak var termsButton: UIButton!
-    @IBOutlet weak var privacyButton: UIButton!
 
     @IBOutlet weak var loginIdInputView: DynamicInputView! {
         didSet {
@@ -76,8 +76,6 @@ final class SignUpViewController: UIViewController {
             agreementTextView.attributedText = attributedStr
         }
     }
-
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
 
     private func openSignUpComplete() {
         let vc = SignUpCompleteViewController.make()
@@ -198,9 +196,9 @@ extension SignUpViewController: KeyboardManagerDelegate {
         guard let endFrame = endFrame else { return }
 
         if endFrame.origin.y >= SCREEN_H {
-            bottomConstraint.constant = 0
+            scrollView.contentInset = .zero
         } else {
-            bottomConstraint.constant = endFrame.size.height
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height, right: 0)
         }
 
         UIView.animate(withDuration: duration, animations: {

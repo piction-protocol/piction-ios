@@ -244,7 +244,6 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="bottomConstraint" destination="F4Y-OE-zgV" id="yod-MY-Jmi"/>
                         <outlet property="cancelBarButton" destination="nwU-Y3-Gfx" id="qkB-4z-udP"/>
                         <outlet property="emailTextField" destination="aCp-19-iIE" id="gHg-A2-2qb"/>
                         <outlet property="pictureImageButton" destination="F7m-WN-X4u" id="uIo-ac-I7U"/>

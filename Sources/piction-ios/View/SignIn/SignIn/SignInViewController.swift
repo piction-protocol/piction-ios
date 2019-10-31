@@ -20,7 +20,6 @@ final class SignInViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var closeButton: UIBarButtonItem!
     @IBOutlet weak var findPasswordButton: UIButton!
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
 
     @IBOutlet weak var loginIdInputView: DynamicInputView! {
         didSet {
@@ -168,9 +167,9 @@ extension SignInViewController: KeyboardManagerDelegate {
         guard let endFrame = endFrame else { return }
 
         if endFrame.origin.y >= SCREEN_H {
-            bottomConstraint.constant = 0
+            scrollView.contentInset = .zero
         } else {
-            bottomConstraint.constant = endFrame.size.height
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height, right: 0)
         }
 
         UIView.animate(withDuration: duration, animations: {

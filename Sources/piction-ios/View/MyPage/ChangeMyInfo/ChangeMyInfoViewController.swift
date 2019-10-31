@@ -28,8 +28,6 @@ final class ChangeMyInfoViewController: UIViewController {
     private let chosenImage = PublishSubject<UIImage?>()
     private let password = PublishSubject<String>()
 
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
-
     override func viewDidLoad() {
         super.viewDidLoad()
         KeyboardManager.shared.delegate = self
@@ -268,9 +266,9 @@ extension ChangeMyInfoViewController: KeyboardManagerDelegate {
         guard let endFrame = endFrame else { return }
 
         if endFrame.origin.y >= SCREEN_H {
-            bottomConstraint.constant = 0
+            scrollView.contentInset = .zero
         } else {
-            bottomConstraint.constant = endFrame.size.height
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height, right: 0)
         }
 
         UIView.animate(withDuration: duration, animations: {

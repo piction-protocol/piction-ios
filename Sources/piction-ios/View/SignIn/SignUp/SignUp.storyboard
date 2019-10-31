@@ -124,7 +124,7 @@
                                                                     <fragment content=" ">
                                                                         <attributes>
                                                                             <color key="NSColor" red="0.10196078431372549" green="0.5725490196078431" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            <font key="NSFont" metaFont="system" size="14"/>
+                                                                            <font key="NSFont" metaFont="menu" size="14"/>
                                                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                             <integer key="NSUnderline" value="1"/>
                                                                         </attributes>
@@ -239,13 +239,13 @@
                     <connections>
                         <outlet property="agreeButton" destination="Lsd-1I-Rgf" id="FPq-kQ-tfW"/>
                         <outlet property="agreementTextView" destination="E0j-9c-Kdq" id="3KH-tF-lNb"/>
-                        <outlet property="bottomConstraint" destination="VqO-JH-ikb" id="h9l-9a-2Wd"/>
                         <outlet property="checkboxImageView" destination="5DK-cI-526" id="EEN-CS-MYR"/>
                         <outlet property="emailInputView" destination="qum-Zc-YXk" id="N79-dd-rrq"/>
                         <outlet property="loginIdInputView" destination="NG1-bi-svM" id="GSQ-Dl-dxE"/>
                         <outlet property="nicknameInputView" destination="AFP-1X-eyB" id="P7U-6Q-o8F"/>
                         <outlet property="passwordCheckInputView" destination="uUs-dW-ay6" id="RXO-7U-I4f"/>
                         <outlet property="passwordInputView" destination="VgF-Q0-TPu" id="RFF-2A-qTQ"/>
+                        <outlet property="scrollView" destination="NTf-Zw-dd7" id="Yct-aj-gRg"/>
                         <outlet property="signUpButton" destination="fq0-zc-kkl" id="e1J-Uq-Gqt"/>
                     </connections>
                 </viewController>

@@ -193,7 +193,6 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="bottomConstraint" destination="r9e-1e-GxH" id="4Oq-fi-JIo"/>
                         <outlet property="closeButton" destination="Qru-11-ZMS" id="eIh-0O-7N2"/>
                         <outlet property="findPasswordButton" destination="bxJ-Ed-Qrh" id="7OZ-5m-Ciq"/>
                         <outlet property="loginIdInputView" destination="QDA-4m-EQW" id="GIc-oF-Pnq"/>
