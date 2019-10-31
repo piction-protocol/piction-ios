@@ -253,7 +253,7 @@ extension CreatePostViewController: ViewModelBindable {
                 self?.publishDateView.isHidden = false
                 self?.publishDatePickerButton.isEnabled = false
                 self?.publishDateLabel.text = "\(postInfo.publishedAt?.toString(format: "yyyy.MM.dd. a hh:mm:ss") ?? "")"
-                self?.publishDateLabel.text = UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51)
+                self?.publishDateLabel.textColor = UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51)
             })
             .disposed(by: disposeBag)
 
