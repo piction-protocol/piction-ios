@@ -12,13 +12,13 @@
         <!--Series Post View Controller-->
         <scene sceneID="Gbi-0g-dYz">
             <objects>
-                <viewController storyboardIdentifier="SeriesPostViewController" id="TYW-FZ-A6Y" customClass="SeriesPostViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SeriesPostViewController" hidesBottomBarWhenPushed="YES" id="TYW-FZ-A6Y" customClass="SeriesPostViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Xoy-0v-RGL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Kpn-nM-CM6">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="woz-mn-ecX">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="166"/>
@@ -200,7 +200,7 @@
                         <constraints>
                             <constraint firstItem="Kpn-nM-CM6" firstAttribute="leading" secondItem="vax-UI-XAp" secondAttribute="leading" id="FV4-QS-QrA"/>
                             <constraint firstItem="Kpn-nM-CM6" firstAttribute="trailing" secondItem="vax-UI-XAp" secondAttribute="trailing" id="SSF-9v-Xq1"/>
-                            <constraint firstAttribute="bottom" secondItem="Kpn-nM-CM6" secondAttribute="bottom" constant="34" id="gpg-tG-Wga"/>
+                            <constraint firstAttribute="bottom" secondItem="Kpn-nM-CM6" secondAttribute="bottom" id="gpg-tG-Wga"/>
                             <constraint firstItem="Kpn-nM-CM6" firstAttribute="top" secondItem="Xoy-0v-RGL" secondAttribute="top" id="qhE-uA-aon"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vax-UI-XAp"/>

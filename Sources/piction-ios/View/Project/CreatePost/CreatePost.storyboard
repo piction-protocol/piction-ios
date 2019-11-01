@@ -12,7 +12,7 @@
         <!--포스트 생성-->
         <scene sceneID="1Ys-W8-8gg">
             <objects>
-                <viewController storyboardIdentifier="CreatePostViewController" id="iFk-kz-tkN" customClass="CreatePostViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreatePostViewController" hidesBottomBarWhenPushed="YES" id="iFk-kz-tkN" customClass="CreatePostViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0CD-q2-7oh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

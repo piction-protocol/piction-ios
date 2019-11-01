@@ -209,7 +209,7 @@ extension CreatePostViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
-                self?.tabBarController?.tabBar.isHidden = true
+//                self?.tabBarController?.tabBar.isHidden = true
                 self?.publishDateLabel.text = "\(Date().toString(format: "yyyy.MM.dd. a hh:mm:ss"))"
             })
             .disposed(by: disposeBag)
@@ -217,7 +217,7 @@ extension CreatePostViewController: ViewModelBindable {
         output
             .viewWillDisappear
             .drive(onNext: { [weak self] in
-                self?.tabBarController?.tabBar.isHidden = false
+//                self?.tabBarController?.tabBar.isHidden = false
             })
             .disposed(by: disposeBag)
 

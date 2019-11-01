@@ -12,7 +12,7 @@
         <!--후원 금액 입력-->
         <scene sceneID="lpE-Bs-EKk">
             <objects>
-                <viewController storyboardIdentifier="SendDonationViewController" id="Z0E-HW-Iuv" customClass="SendDonationViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SendDonationViewController" hidesBottomBarWhenPushed="YES" id="Z0E-HW-Iuv" customClass="SendDonationViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sb0-Rw-naq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
