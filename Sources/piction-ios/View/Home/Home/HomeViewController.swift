@@ -53,6 +53,8 @@ final class HomeViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.refreshControl = refreshControl
+            tableView.rowHeight = 0
+            tableView.estimatedRowHeight = UITableView.automaticDimension
         }
     }
 
@@ -66,7 +68,7 @@ final class HomeViewController: UIViewController {
         searchController?.searchResultsUpdater = searchResultsController
 
         navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.hidesSearchBarWhenScrolling = true
         definesPresentationContext = true
 
         searchController?.isActive = true
@@ -74,11 +76,10 @@ final class HomeViewController: UIViewController {
         searchController?.searchBar.placeholder = LocalizedStrings.hint_project_and_tag_search.localized()
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
 
-//        tableView.layoutIfNeeded()
-        tableView.reloadData()
+        self.tableView.reloadData()
     }
 
     private func configureDataSource() -> RxTableViewSectionedReloadDataSource<HomeBySection> {
@@ -88,6 +89,7 @@ final class HomeViewController: UIViewController {
                 case .header(let info):
                     let cell: HomeHeaderTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
                     cell.configure(with: info)
+                    cell.layoutSubviews()
                     return cell
                 case .trending(let projects):
                     let cell: HomeTrendingSectionTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
@@ -143,6 +145,9 @@ extension HomeViewController: ViewModelBindable {
     func bindViewModel(viewModel: ViewModel) {
         let dataSource = configureDataSource()
 
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+
         let input = HomeViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
@@ -160,19 +165,9 @@ extension HomeViewController: ViewModelBindable {
 
         output
             .sectionList
-            .do(onNext: { [weak self] _ in
-                self?.navigationItem.hidesSearchBarWhenScrolling = true
-            })
             .drive { $0 }
             .map { [$0] }
             .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-
-        output
-           .sectionList
-            .drive(onNext: { [weak self] _ in
-                self?.tableView.layoutIfNeeded()
-            })
             .disposed(by: disposeBag)
 
         output
@@ -186,5 +181,15 @@ extension HomeViewController: ViewModelBindable {
             .isFetching
             .drive(refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
+    }
+}
+
+extension HomeViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }
