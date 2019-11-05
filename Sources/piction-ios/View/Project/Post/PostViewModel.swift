@@ -27,16 +27,20 @@ final class PostViewModel: InjectableViewModel {
 
     struct Input {
         let viewWillAppear: Driver<Void>
+        let viewDidAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
         let loadPost: Driver<Int>
         let prevPostBtnDidTap: Driver<Void>
         let nextPostBtnDidTap: Driver<Void>
         let subscriptionBtnDidTap: Driver<Void>
         let shareBarBtnDidTap: Driver<Void>
+        let contentOffset: Driver<CGPoint>
+        let willBeginDecelerating: Driver<Void>
     }
 
     struct Output {
         let viewWillAppear: Driver<Void>
+        let viewDidAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
         let prevPostIsEnabled: Driver<PostModel>
         let nextPostIsEnabled: Driver<PostModel>
@@ -45,6 +49,8 @@ final class PostViewModel: InjectableViewModel {
         let headerInfo: Driver<(PostModel, UserModel)>
         let footerInfo: Driver<(String, PostModel)>
         let activityIndicator: Driver<Bool>
+        let contentOffset: Driver<CGPoint>
+        let willBeginDecelerating: Driver<Void>
         let openSignInViewController: Driver<Void>
         let reloadPost: Driver<Void>
         let sharePost: Driver<String>
@@ -70,14 +76,14 @@ final class PostViewModel: InjectableViewModel {
                     return Driver.just("")
                 }
 
-                let content = "<style type=\"text/css\"> body { font: -apple-system-body; margin: 220px 20px 728px 20px; line-height: 28px; } p { margin: 0px; word-wrap: break-word; } img { max-height: 100%; width: calc(100% + 40px); margin-left: -20px; margin-right: -20px; !important; } .video { position: relative; padding-bottom: 56.25%; height: 0; } iframe { position: absolute; top: 0; left: 0; width: calc(100% + 40px); margin-left: -20px; margin-right: -20px; height: 100%; }</style><meta name=\"viewport\" content=\"initial-scale=1.0\" /><body>\(postItem.content ?? "")</body>"
+                let content = "<style type=\"text/css\"> body { font: -apple-system-body; margin: 264px 20px 728px 20px; line-height: 28px; } p { margin: 0px; word-wrap: break-word; } img { max-height: 100%; width: calc(100% + 40px); margin-left: -20px; margin-right: -20px; !important; } .video { position: relative; padding-bottom: 56.25%; height: 0; } iframe { position: absolute; top: 0; left: 0; width: calc(100% + 40px); margin-left: -20px; margin-right: -20px; height: 100%; }</style><meta name=\"viewport\" content=\"initial-scale=1.0\" /><body>\(postItem.content ?? "")</body>"
                 print(postItem.content)
                 return Driver.just(content)
             }
 
         let postContentError = postContentAction.error
             .flatMap { response -> Driver<String> in
-                let content = "<style type=\"text/css\"> body { font: -apple-system-body; margin: 220px 20px 278px 20px; } </style><meta name=\"viewport\" content=\"initial-scale=1.0\" /><body></body>"
+                let content = "<style type=\"text/css\"> body { font: -apple-system-body; margin: 264px 20px 278px 20px; } </style><meta name=\"viewport\" content=\"initial-scale=1.0\" /><body></body>"
                 return Driver.just(content)
             }
 
@@ -199,7 +205,7 @@ final class PostViewModel: InjectableViewModel {
                 return Driver.just(postItem)
             }
 
-        let headerInfo = Driver.combineLatest(postItemSuccess, writerInfo)
+        let headerInfo = Driver.zip(postItemSuccess, writerInfo)
             .flatMap { Driver.just(($0, $1)) }
 
         let userInfoAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
@@ -328,9 +334,19 @@ final class PostViewModel: InjectableViewModel {
 
         let showToast = Driver.merge(subscriptionSuccess, subscriptionError)
 
+        let contentOffset = Driver.combineLatest(input.contentOffset, input.viewDidAppear)
+            .flatMap { (contentOffset, _) -> Driver<CGPoint> in
+                return Driver.just(contentOffset)
+            }
+
+        let willBeginDecelerating = Driver.combineLatest(input.willBeginDecelerating, input.viewDidAppear)
+            .flatMap { _ -> Driver<Void> in
+                return Driver.just(())
+            }
 
         return Output(
             viewWillAppear: input.viewWillAppear,
+            viewDidAppear: input.viewDidAppear,
             viewWillDisappear: input.viewWillDisappear,
             prevPostIsEnabled: prevPostIsEnabled,
             nextPostIsEnabled: nextPostIsEnabled,
@@ -339,6 +355,8 @@ final class PostViewModel: InjectableViewModel {
             headerInfo: headerInfo,
             footerInfo: footerInfo,
             activityIndicator: activityIndicator,
+            contentOffset: contentOffset,
+            willBeginDecelerating: willBeginDecelerating,
             openSignInViewController: openSignInViewController,
             reloadPost: reloadPost,
             sharePost: sharePost,

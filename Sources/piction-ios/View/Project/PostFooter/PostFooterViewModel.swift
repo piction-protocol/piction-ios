@@ -94,7 +94,7 @@ final class PostFooterViewModel: InjectableViewModel {
 
         let seriesPostItems = Driver.merge(seriesPostItemsSuccess, emptySeriesPostsItems)
 
-        let footerInfo = Driver.combineLatest(seriesPostItems, isLikeInfo)
+        let footerInfo = Driver.zip(seriesPostItems, isLikeInfo)
             .flatMap { [weak self] (seriesPostItems, isLike) -> Driver<(PostModel, [PostIndexModel], Bool)> in
                         print(seriesPostItems)
                 guard let `self` = self else { return Driver.empty() }

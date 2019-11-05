@@ -14,6 +14,7 @@ import Swinject
 import WebKit
 import SafariServices
 import PictionSDK
+import RxGesture
 
 final class PostViewController: UIViewController {
     var disposeBag = DisposeBag()
@@ -25,6 +26,7 @@ final class PostViewController: UIViewController {
             postWebView.navigationDelegate = self
             postWebView.scrollView.delegate = self
             postWebView.isOpaque = false
+            postWebView.scrollView.contentInsetAdjustmentBehavior = .never
         }
     }
     @IBOutlet weak var prevPostButton: UIButton!
@@ -37,13 +39,9 @@ final class PostViewController: UIViewController {
     var footerViewController: PostFooterViewController?
 
     private func embedPostHeaderViewController(postItem: PostModel, userInfo: UserModel) {
-        for subview in postWebView.scrollView.subviews {
-            if subview.tag == 1000 || subview.tag == 1001 {
-                subview.removeFromSuperview()
-            }
-        }
+        removeHeaderFooter()
         headerViewController = PostHeaderViewController.make(postItem: postItem, userInfo: userInfo)
-        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 220))
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 264))
         containerView.tag = 1000
         embed(headerViewController!, to: containerView)
         self.postWebView.scrollView.addSubview(containerView)
@@ -71,6 +69,20 @@ final class PostViewController: UIViewController {
         }
     }
 
+    private func removeHeaderFooter() {
+        for subview in postWebView.scrollView.subviews {
+            if subview.tag == 1000 || subview.tag == 1001 {
+                subview.removeFromSuperview()
+            }
+        }
+        if let header = headerViewController {
+            remove(header)
+        }
+        if let footer = footerViewController {
+            remove(footer)
+        }
+    }
+
     func cacheWebview() {
         if postWebView != nil {
             postWebView.stopLoading()
@@ -82,9 +94,13 @@ final class PostViewController: UIViewController {
         URLCache.shared.memoryCapacity = 0
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.tabBarController?.tabBar.isHidden = true
+    func showFullScreen(_ status: Bool = true, animated: Bool = true) {
+        let isScrollTop = postWebView.scrollView.contentOffset.y <= -44
+        let isScrollBottom = (postWebView.scrollView.contentOffset.y + self.view.frame.size.height) >= self.postWebView.scrollView.contentSize.height
+        let fullScreen = (isScrollTop || isScrollBottom) ? false : status
+        self.navigationController?.setNavigationBarHidden(fullScreen, animated: animated)
+        self.navigationController?.setToolbarHidden(fullScreen, animated: animated)
+        self.setNeedsStatusBarAppearanceUpdate()
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -109,6 +125,13 @@ final class PostViewController: UIViewController {
         }
     }
 
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
+    }
+    override var prefersStatusBarHidden: Bool {
+        return self.navigationController?.isNavigationBarHidden ?? false
+    }
+
     @available(iOS 13.0, *)
     private func setWebviewColor() {
         let fontColor = UIColor(named: "PictionDarkGray")?.hexString ?? "#000000"
@@ -127,12 +150,15 @@ extension PostViewController: ViewModelBindable {
 
         let input = PostViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
+            viewDidAppear: rx.viewDidAppear.asDriver(),
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
             loadPost: loadPost.asDriver(onErrorDriveWith: .empty()),
             prevPostBtnDidTap: prevPostButton.rx.tap.asDriver().throttle(1, latest: true),
             nextPostBtnDidTap: nextPostButton.rx.tap.asDriver().throttle(1, latest: true),
             subscriptionBtnDidTap: subscriptionButton.rx.tap.asDriver(),
-            shareBarBtnDidTap: shareBarButton.rx.tap.asDriver()
+            shareBarBtnDidTap: shareBarButton.rx.tap.asDriver(),
+            contentOffset: postWebView.scrollView.rx.contentOffset.asDriver(),
+            willBeginDecelerating: postWebView.scrollView.rx.willBeginDecelerating.asDriver()
         )
 
         let output = viewModel.build(input: input)
@@ -141,14 +167,27 @@ extension PostViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
-                self?.tabBarController?.tabBar.isHidden = true
+
+                self?.postWebView.scrollView.contentInset = UIEdgeInsets(
+                    top: (self?.navigationController?.navigationBar.bounds.size.height ?? 0),
+                    left: 0,
+                    bottom:  self?.navigationController?.toolbar.bounds.size.height ?? 0,
+                    right: 0)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .viewDidAppear
+            .drive(onNext: { [weak self] in
+//                self?.showFullScreen(false, animated: false)
             })
             .disposed(by: disposeBag)
 
         output
             .viewWillDisappear
             .drive(onNext: { [weak self] in
-                self?.tabBarController?.tabBar.isHidden = false
+                self?.navigationController?.setNavigationBarHidden(false, animated: false)
+                self?.navigationController?.setToolbarHidden(true, animated: false)
             })
             .disposed(by: disposeBag)
 
@@ -215,11 +254,8 @@ extension PostViewController: ViewModelBindable {
                 self.subscriptionView.isHidden = true
                 self.postWebView.scrollView.isScrollEnabled = true
                 self.postWebView.loadHTMLString("", baseURL: nil)
-                for subview in self.postWebView.scrollView.subviews {
-                    if subview.tag == 1000 || subview.tag == 1001 {
-                        subview.removeFromSuperview()
-                    }
-                }
+                self.removeHeaderFooter()
+                self.showFullScreen(false)
             })
             .disposed(by: disposeBag)
 
@@ -279,6 +315,25 @@ extension PostViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        output
+            .willBeginDecelerating
+            .drive(onNext: { [weak self] _ in
+                self?.showFullScreen()
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .contentOffset
+            .drive(onNext: { [weak self] offset in
+                print(offset.y)
+                guard let `self` = self else { return }
+                let isScrollTop = offset.y <= -44
+                let isScrollBottom = (offset.y + self.view.frame.size.height) >= self.postWebView.scrollView.contentSize.height
+                if isScrollTop || isScrollBottom {
+                    self.showFullScreen(false)
+                }
+            })
+            .disposed(by: disposeBag)
 
         output
             .activityIndicator
@@ -302,6 +357,16 @@ extension PostViewController: ViewModelBindable {
             .sharePost
             .drive(onNext: { url in
 
+            })
+            .disposed(by: disposeBag)
+
+        view.rx.tapGesture(configuration: { gestureRecognizer, delegate in
+                gestureRecognizer.delegate = self
+                gestureRecognizer.cancelsTouchesInView = false
+            })
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                self?.showFullScreen(!(self?.navigationController?.isNavigationBarHidden ?? false))
             })
             .disposed(by: disposeBag)
     }
@@ -362,5 +427,21 @@ extension PostViewController: PostFooterViewDelegate {
     }
     func reloadPost(postId: Int) {
         loadPost.onNext(postId)
+    }
+}
+
+extension PostViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if (touch.view?.isKind(of: UIControl.self) ?? false) {
+            return false
+        }
+        return true
+    }
+
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer.isKind(of: UITapGestureRecognizer.self) && otherGestureRecognizer.isKind(of: UIPanGestureRecognizer.self) {
+            return false
+        }
+        return true
     }
 }
