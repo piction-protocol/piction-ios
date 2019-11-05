@@ -220,7 +220,7 @@ extension MyPageViewController: ViewModelBindable {
                     switch title {
                     case LocalizedStrings.menu_my_project.localized():
                         self?.openMyProjectViewController()
-                    case LocalizedStrings.str_transitions.localized():
+                    case LocalizedStrings.str_transactions.localized():
                         self?.openTransactionHistoryListViewController()
                     case LocalizedStrings.str_deposit.localized():
                         self?.openDepositViewController()

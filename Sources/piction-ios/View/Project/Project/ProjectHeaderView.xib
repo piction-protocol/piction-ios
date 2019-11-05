@@ -281,7 +281,7 @@
                                                                 <color key="titleColor" name="PictionDarkGray"/>
                                                             </state>
                                                             <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="btn_post"/>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="tab_post"/>
                                                             </userDefinedRuntimeAttributes>
                                                             <connections>
                                                                 <action selector="postBtnDidTap:" destination="jfW-sf-3xv" eventType="touchUpInside" id="OaY-pX-Iiz"/>
@@ -317,7 +317,7 @@
                                                                 <color key="titleColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </state>
                                                             <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="btn_series"/>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="tab_series"/>
                                                             </userDefinedRuntimeAttributes>
                                                             <connections>
                                                                 <action selector="seriesBtnDidTap:" destination="jfW-sf-3xv" eventType="touchUpInside" id="9U5-Fl-6Ok"/>

@@ -62,14 +62,14 @@ final class MyPageViewModel: InjectableViewModel {
         let userMeSuccess = userMeAction.elements
             .flatMap { _ -> Driver<[MyPageBySection]> in
                 let projectItems: [MyPageItemType] = [
-                    MyPageItemType.header(title: LocalizedStrings.menu_project.localized()),
+                    MyPageItemType.header(title: LocalizedStrings.str_project.localized()),
                     MyPageItemType.pushType(title: LocalizedStrings.menu_my_project.localized()),
                     MyPageItemType.underline
                 ]
 
                 let walletItems: [MyPageItemType] = [
                     MyPageItemType.header(title: LocalizedStrings.str_piction_address_management.localized()),
-                    MyPageItemType.pushType(title: LocalizedStrings.str_transitions.localized()),
+                    MyPageItemType.pushType(title: LocalizedStrings.str_transactions.localized()),
                     MyPageItemType.pushType(title: LocalizedStrings.str_deposit.localized()),
                     MyPageItemType.underline
                 ]

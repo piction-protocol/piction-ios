@@ -41,7 +41,7 @@ final class ProjectPostListTableViewCell: ReuseTableViewCell {
             thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360")
         }
         seriesLabel.isHidden = seriesName == nil
-        seriesLabel.text = "\(LocalizedStrings.btn_series.localized()) · \(seriesName ?? "")"
+        seriesLabel.text = "\(LocalizedStrings.tab_series.localized()) · \(seriesName ?? "")"
 
         titleLabel.text = title
 

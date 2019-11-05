@@ -40,7 +40,7 @@ final class TransactionDetailViewModel: ViewModel {
         let navigationTitle = input.viewWillAppear
             .flatMap { [weak self] _ -> Driver<String> in
                 guard let `self` = self else { return Driver.empty() }
-                let title = self.transaction.inOut == "IN" ? LocalizedStrings.str_deposit_format_detail.localized() : LocalizedStrings.str_withdraw_format_detail.localized()
+                let title = self.transaction.inOut == "IN" ? LocalizedStrings.menu_deposit_detail.localized() : LocalizedStrings.menu_withdraw_detail.localized()
                 return Driver.just(title)
             }
 
@@ -75,8 +75,8 @@ final class TransactionDetailViewModel: ViewModel {
                         return Driver.empty()
                     }
                     let sponsorshipSection = [
-                        TransactionDetailItemType.header(title: LocalizedStrings.str_sponsor_info.localized()),
-                        TransactionDetailItemType.list(title: inOut == "IN" ? LocalizedStrings.str_sponsor.localized() : LocalizedStrings.str_sponsored_by.localized(), description: inOut == "IN" ? "@\(sponsorshipItem.sponsor?.loginId ?? "")" : "@\(sponsorshipItem.creator?.loginId ?? "")", link: ""),
+                        TransactionDetailItemType.header(title: LocalizedStrings.str_sponsorship_info.localized()),
+                        TransactionDetailItemType.list(title: inOut == "IN" ? LocalizedStrings.str_sponsoredship_to.localized() : LocalizedStrings.str_sponsorship_user.localized(), description: inOut == "IN" ? "@\(sponsorshipItem.sponsor?.loginId ?? "")" : "@\(sponsorshipItem.creator?.loginId ?? "")", link: ""),
                         TransactionDetailItemType.footer,
                     ]
                     return Driver.just(sponsorshipSection)
@@ -88,8 +88,8 @@ final class TransactionDetailViewModel: ViewModel {
                         TransactionDetailItemType.info(transaction: self.transaction),
                         TransactionDetailItemType.footer,
                         TransactionDetailItemType.header(title: inOut == "IN" ? LocalizedStrings.str_fanpass_sales_info.localized() : LocalizedStrings.str_fanpass_purchase_info.localized()),
-                        TransactionDetailItemType.list(title: LocalizedStrings.str_order_no.localized(), description: "\(subscriptionItem.orderNo ?? 0)", link: ""),
-                        TransactionDetailItemType.list(title: LocalizedStrings.menu_project.localized(), description: "\(subscriptionItem.fanPass?.project?.title ?? "")", link: ""),
+                        TransactionDetailItemType.list(title: LocalizedStrings.str_order_id.localized(), description: "\(subscriptionItem.orderNo ?? 0)", link: ""),
+                        TransactionDetailItemType.list(title: LocalizedStrings.str_project.localized(), description: "\(subscriptionItem.fanPass?.project?.title ?? "")", link: ""),
                         TransactionDetailItemType.list(title: "FAN PASS", description: "\(subscriptionItem.fanPass?.name ?? "")", link: ""),
                         TransactionDetailItemType.list(title: inOut == "IN" ? LocalizedStrings.str_buyer.localized() : LocalizedStrings.str_seller.localized(), description: inOut == "IN" ? "\(subscriptionItem.subscriber?.loginId ?? "")" : "\(subscriptionItem.creator?.loginId ?? "")", link: ""),
                         TransactionDetailItemType.footer,

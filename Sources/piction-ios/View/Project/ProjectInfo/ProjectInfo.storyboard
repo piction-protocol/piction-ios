@@ -160,7 +160,7 @@
                                                 <color key="textColor" name="PictionDarkGray"/>
                                                 <nil key="highlightedColor"/>
                                                 <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="menu_tag"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="menu_tags"/>
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="oJC-gQ-XFS">

@@ -10,11 +10,13 @@
 "confirm" = "확인";
 "pass" = "건너뛰기";
 "cancel" = "취소";
+"continue_go" = "계속";
+
 "login" = "로그인";
 "sign_up" = "회원가입";
+
 "close" = "닫기";
 "create" = "생성";
-"continue_go" = "계속";
 "retry" = "재시도";
 "edit" = "편집";
 "register" = "등록";
@@ -25,14 +27,15 @@
 // menu
 "menu_project_info" = "프로젝트 정보";
 "menu_my_info" = "마이페이지";
-"menu_project" = "프로젝트";
-"menu_tag" = "태그";
+"menu_tags" = "태그";
 "menu_my_project" = "나의 프로젝트";
 
 "tab_home" = "홈";
 "tab_explore" = "탐색";
 "tab_sponsorship" = "후원";
 "tab_subscription" = "구독";
+"tab_post" = "포스트";
+"tab_series" = "시리즈";
 
 // Popup Title
 "popup_title_network_error" = "네트워크 오류";
@@ -77,8 +80,6 @@
 "btn_user_sponsorship_history" = "후원 기록";
 "btn_save_changed" = "변경사항 저장";
 "btn_qrcode" = "QR코드로 선택하기";
-"btn_post" = "포스트";
-"btn_series" = "시리즈";
 
 // label
 "str_signup_done" = "픽션 회원가입이 완료되었습니다.";
@@ -132,9 +133,6 @@
 "str_creator" = "크리에이터";
 "str_project_synopsis" = "시놉시스";
 
-"str_deposit_guide_1" = "▪︎ 해당 주소는 Klaytn 네트워크 상에서 동작하는 지갑 주소입니다. 이더리움 네트워크 상의 PXL 토큰은 주소로 다른 암호화폐 입금 시 발생하는 오류 손실은 복구해드리지 않습니다.";
-"str_deposit_guide_2" = "▪︎ 이 주소는 PXL 토큰만 입금 가능합니다. 해당 지갑 주소로 다른 암호 화폐 입금 시 발생하는 오류 및 손실은 복구해 드리지 않습니다.";
-
 "str_input_sponsorship_amount" = "후원 금액 입력";
 "str_for_user" = "님에게";
 "str_sponsorship_amount" = "후원 금액";
@@ -146,14 +144,14 @@
 
 "str_project_search_info" = "프로젝트 제목 또는\n닉네임으로 검색하세요.";
 "str_creator_search_info" = "후원하고 싶은\n크리에이터를검색하세요.";
-"str_tag_search_info" = "테그로 검색하세요.";
+"str_tag_search_info" = "태그로 검색하세요.";
 
 "str_search_empty" = "검색 결과가 없습니다.";
 "str_subscription_empty" = "아직 구독 중인 \n프로젝트가 없습니다.";
 "str_transaction_empty" = "거래 내역이 없습니다.";
 "str_post_empty" = "등록된 포스트가 없습니다.";
 "str_series_empty" = "등록된 시리즈가 없습니다.";
-"str_project_empty" = "등록된 시리즈가 없습니다.";
+"str_project_empty" = "등록된 프로젝트가 없습니다.";
 
 "str_qrcode_scan" = "QR 코드 스캔";
 "str_qrcode_help" = "픽션 또는 픽션 파트너 서비스에 있는\n크리에이터 QR코드를 인식시켜 주세요";
@@ -170,7 +168,7 @@
 "str_copy_address_complete" = "지갑 주소가 복사되었습니다.";
 "str_attention" = "주의사항";
 "str_piction_address_management" = "픽션 지갑 관리";
-"str_transitions" = "거래 내역";
+"str_transactions" = "거래 내역";
 "str_security" = "보안";
 "str_change_pin" = "PIN 번호 변경";
 "str_create_pin" = "PIN 번호 등록";
@@ -180,20 +178,16 @@
 "str_sign_out" = "로그아웃";
 "str_service_center" = "고객센터";
 "str_year" = "%@년";
+"str_deposit" = "픽션 지갑으로 입금";
+"str_wallet_address" = "@%@의 지갑주소";
+"str_deposit_pxl_guide" = "픽션 계정으로 PXL을 입금하는 방법";
+"str_deposit_guide_1" = "▪︎ Klaytn 네트워크 기반 PXL 출금이 가능한 거래소에서 이 지갑 주소로 송금.";
+"str_deposit_guide_2" = "▪︎ 외부 Klaytn 지갑에 보유한 PXL을 이 지갑 주소로 송금.";
+"str_deposit_guide_3" = "▪︎ 해당 주소는 Klaytn 네트워크 상에서 동작하는 지갑 주소입니다. 이더리움 네트워크 상의 PXL 토큰은 주소로 다른 암호화폐 입금 시 발생하는 오류 손실은 복구해드리지 않습니다.";
+"str_deposit_guide_4_piction" = "▪︎ 이 주소는 PXL 토큰만 입금 가능합니다. 해당 지갑 주소로 다른 암호 화폐 입금 시 발생하는 오류 및 손실은 복구해 드리지 않습니다.";
+"str_have_pxl_amount" = "보유 중";
 "str_deposit_format" = "입금 ";
 "str_withdraw_format" = "출금 ";
-"str_deposit_format_detail" = "입금 상세정보";
-"str_withdraw_format_detail" = "출금 상세정보";
-"str_sponsor_info" = "후원 정보";
-"str_sponsor" = "후원자";
-"str_sponsored_by" = "후원 대상";
-"str_fanpass_sales_info" = "FAN PASS 판매 정보";
-"str_fanpass_purchase_info" = "FAN PASS 구매 정보";
-"str_order_no" = "주문번호";
-"str_seller" = "판매자";
-"str_buyer" = "구매자";
-"str_transaction_info" = "트랜잭션 정보";
-
 "str_project_no_post" = "포스트 없음";
 "str_project_update_n_now" = "방금 업데이트";
 "str_project_update_n_minute" = "%d분 전 업데이트";
@@ -201,13 +195,18 @@
 "str_project_update_n_day" = "%d일 전 업데이트";
 "str_project_update_n_month" = "%d개월 전 업데이트";
 "str_project_update_n_year" = "%d년 전 업데이트";
-
-"str_deposit" = "픽션 지갑으로 입금";
-"str_wallet_address" = "@%@의 지갑주소";
-"str_have_pxl_amount" = "보유 중";
-"str_deposit_pxl_guide" = "픽션 계정으로 PXL을 입금하는 방법";
-"str_deposit_piction_guide_1" = "▪︎ Klaytn 네트워크 기반 PXL 출금이 가능한 거래소에서 이 지갑 주소로 송금.";
-"str_deposit_piction_guide_2" = "▪︎ 외부 Klaytn 지갑에 보유한 PXL을 이 지갑 주소로 송금.";
+"menu_deposit_detail" = "입금 상세정보";
+"menu_withdraw_detail" = "출금 상세정보";
+"str_transaction_info" = "트랜잭션 정보";
+"str_sponsorship_info" = "후원 정보";
+"str_sponsoredship_to" = "후원 대상";
+"str_sponsorship_user" = "후원자";
+"str_order_id" = "주문번호";
+"str_project" = "프로젝트";
+"str_fanpass_sales_info" = "FAN PASS 판매 정보";
+"str_fanpass_purchase_info" = "FAN PASS 구매 정보";
+"str_seller" = "판매자";
+"str_buyer" = "구매자";
 
 "str_authenticate_by_face_id" = "Face ID로 인증합니다.";
 "str_authenticate_by_touch_id" = "Touch ID로 인증합니다.";

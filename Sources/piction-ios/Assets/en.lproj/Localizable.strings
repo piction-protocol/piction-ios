@@ -10,11 +10,13 @@
 "confirm" = "Confirm";
 "pass" = "Skip";
 "cancel" = "Cancel";
+"continue_go" = "Continue";
+
 "login" = "Sign in";
 "sign_up" = "Sign up";
+
 "close" = "Close";
 "create" = "Create";
-"continue_go" = "Continue";
 "retry" = "Retry";
 "edit" = "Edit";
 "register" = "Register";
@@ -25,14 +27,15 @@
 // menu
 "menu_project_info" = "Project detail";
 "menu_my_info" = "My page";
-"menu_project" = "Project";
-"menu_tag" = "Tag";
+"menu_tag" = "Tags";
 "menu_my_project" = "My project";
 
 "tab_home" = "홈";
 "tab_explore" = "Explore";
 "tab_sponsorship" = "Sponsorship";
 "tab_subscription" = "Subscription";
+"tab_post" = "Posts";
+"tab_series" = "Series";
 
 // Popup Title
 "popup_title_network_error" = "Network Error";
@@ -65,9 +68,9 @@
 "hint_current_pw" = "Current password";
 "hint_need_six_pw" = "Must be more than 6 characters long";
 "hint_pw_check" = "Confirm password";
-"hint_project_and_tag_search" = "Search Project, Tag";
-"hint_project_search" = "Search project";
-"hint_tag_search" = "Search Tag";
+"hint_project_and_tag_search" = "Search Projects, Tags";
+"hint_project_search" = "Search projects";
+"hint_tag_search" = "Search Tags";
 "hint_creator_search" = "Creator's name or ID";
 
 // Button
@@ -76,8 +79,6 @@
 "btn_user_sponsorship" = "Sponsor";
 "btn_user_sponsorship_history" = "후원 기록";
 "btn_save_changed" = "Save";
-"btn_post" = "Posts";
-"btn_series" = "Series";
 "btn_qrcode" = "Scan QR code";
 
 // label
@@ -140,20 +141,17 @@
 
 "str_project_search_info" = "Search by Project or Creator";
 "str_creator_search_info" = "Search by Creator.";
-"str_tag_search_info" = "테그로 검색하세요.";
+"str_tag_search_info" = "태그로 검색하세요.";
 
 "str_search_empty" = "No result found.";
 "str_subscription_empty" = "No subscriptions now";
 "str_transaction_empty" = "No transactions now";
 "str_post_empty" = "등록된 포스트가 없습니다.";
 "str_series_empty" = "등록된 시리즈가 없습니다.";
-"str_project_empty" = "등록된 시리즈가 없습니다.";
+"str_project_empty" = "등록된 프로젝트가 없습니다.";
 
 "str_creator" = "Creator";
 "str_project_synopsis" = "Synopsis";
-
-"str_deposit_guide_1" = "▪︎ Be careful not to deposit ethereum PXL token.";
-"str_deposit_guide_2" = "▪︎ This address is for Klaytn Compatible PXL token. Please note that it is impossible to revert transaction from ethereum.";
 
 "str_qrcode_scan" = "Scan QR code";
 "str_qrcode_help" = "Please scan Creator's\n QR code from Piction";
@@ -170,7 +168,7 @@
 "str_copy_address_complete" = "지갑 주소가 복사되었습니다.";
 "str_attention" = "Be careful";
 "str_piction_address_management" = "Manage Piction wallet";
-"str_transitions" = "Transactions";
+"str_transactions" = "Transactions";
 "str_security" = "Security";
 "str_change_pin" = "Change PIN code";
 "str_create_pin" = "Register PIN code";
@@ -180,20 +178,16 @@
 "str_sign_out" = "Sign out";
 "str_service_center" = "Acknowledgement";
 "str_year" = "%@";
+"str_deposit" = "Deposit to Piction Wallet";
+"str_wallet_address" = "@%@'s address";
+"str_deposit_pxl_guide" = "How to deposit PXL to Piction Wallet";
+"str_deposit_guide_1" = "▪︎ Transfer PXL from the exchange which support Klaytn compatible tokens";
+"str_deposit_guide_2" = "▪︎ Transfer PXL from other wallets which support Klaytn compatible tokens";
+"str_deposit_guide_3" = "▪︎ Be careful not to deposit ethereum PXL token.";
+"str_deposit_guide_4_piction" = "▪︎ This address is for Klaytn Compatible PXL token. Please note that it is impossible to revert transaction from ethereum.";
+"str_have_pxl_amount" = "보유 중";
 "str_deposit_format" = "Deposit ";
 "str_withdraw_format" = "Withdraw ";
-"str_deposit_format_detail" = "Deposit detail";
-"str_withdraw_format_detail" = "Withdraw detail";
-"str_sponsor_info" = "후원 정보";
-"str_sponsor" = "후원자";
-"str_sponsored_by" = "후원 대상";
-"str_fanpass_sales_info" = "FAN PASS 판매 정보";
-"str_fanpass_purchase_info" = "FAN PASS 구매 정보";
-"str_order_no" = "주문번호";
-"str_seller" = "판매자";
-"str_buyer" = "구매자";
-"str_transaction_info" = "트랜잭션 정보";
-
 "str_project_no_post" = "No posts";
 "str_project_update_n_now" = "Update now";
 "str_project_update_n_minute" = "Update %d minutes ago";
@@ -201,13 +195,18 @@
 "str_project_update_n_day" = "Update %d days ago";
 "str_project_update_n_month" = "Update %d months ago";
 "str_project_update_n_year" = "Update %d years ago";
-
-"str_deposit" = "Deposit to Piction Wallet";
-"str_wallet_address" = "@%@'s address";
-"str_have_pxl_amount" = "보유 중";
-"str_deposit_pxl_guide" = "How to deposit PXL to Piction Wallet";
-"str_deposit_piction_guide_1" = "▪︎ Transfer PXL from the exchange which support Klaytn compatible tokens";
-"str_deposit_piction_guide_2" = "▪︎ Transfer PXL from other wallets which support Klaytn compatible tokens";
+"menu_deposit_detail" = "Deposit detail";
+"menu_withdraw_detail" = "Withdraw detail";
+"str_transaction_info" = "트랜잭션 정보";
+"str_sponsorship_info" = "후원 정보";
+"str_sponsoredship_to" = "후원 대상";
+"str_sponsorship_user" = "후원자";
+"str_order_id" = "주문번호";
+"str_project" = "Project";
+"str_fanpass_sales_info" = "FAN PASS 판매 정보";
+"str_fanpass_purchase_info" = "FAN PASS 구매 정보";
+"str_seller" = "판매자";
+"str_buyer" = "구매자";
 
 "str_authenticate_by_face_id" = "Face ID로 인증합니다.";
 "str_authenticate_by_touch_id" = "Touch ID로 인증합니다.";

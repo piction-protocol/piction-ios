@@ -166,7 +166,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="거래 내역" largeTitleDisplayMode="never" id="ak5-SD-b64">
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_transitions"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_transactions"/>
                         </userDefinedRuntimeAttributes>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>

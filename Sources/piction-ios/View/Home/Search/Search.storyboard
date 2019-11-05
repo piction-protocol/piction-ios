@@ -26,8 +26,8 @@
                                             <constraint firstAttribute="height" constant="31" id="bqa-ga-UWX"/>
                                         </constraints>
                                         <segments>
-                                            <segment title="menu_project"/>
-                                            <segment title="menu_tag"/>
+                                            <segment title="str_project"/>
+                                            <segment title="menu_tags"/>
                                         </segments>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="localized" value="YES"/>

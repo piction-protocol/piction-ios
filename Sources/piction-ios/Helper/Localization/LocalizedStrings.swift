@@ -26,14 +26,15 @@ enum LocalizedStrings {
     // menu
     case menu_project_info
     case menu_my_info
-    case menu_project
-    case menu_tag
+    case menu_tags
     case menu_my_project
 
     case tab_home
     case tab_explore
     case tab_sponsorship
     case tab_subscription
+    case tab_posts
+    case tab_series
 
     // Popup Title
     case popup_title_network_error
@@ -78,8 +79,6 @@ enum LocalizedStrings {
     case btn_user_sponsorship_history
     case btn_save_changed
     case btn_qrcode
-    case btn_post
-    case btn_series
 
     // label
     case str_signup_done
@@ -133,9 +132,6 @@ enum LocalizedStrings {
     case str_creator
     case str_project_synopsis
 
-    case str_deposit_guide_1
-    case str_deposit_guide_2
-
     case str_input_sponsorship_amount
     case str_for_user
     case str_sponsorship_amount
@@ -171,7 +167,7 @@ enum LocalizedStrings {
     case str_copy_address_complete
     case str_attention
     case str_piction_address_management
-    case str_transitions
+    case str_transactions
     case str_security
     case str_change_pin
     case str_create_pin
@@ -181,20 +177,16 @@ enum LocalizedStrings {
     case str_sign_out
     case str_service_center
     case str_year
+    case str_deposit
+    case str_wallet_address
+    case str_deposit_pxl_guide
+    case str_deposit_guide_1
+    case str_deposit_guide_2
+    case str_deposit_guide_3
+    case str_deposit_guide_4_piction
+    case str_have_pxl_amount
     case str_deposit_format
     case str_withdraw_format
-    case str_deposit_format_detail
-    case str_withdraw_format_detail
-    case str_sponsor_info
-    case str_sponsor
-    case str_sponsored_by
-    case str_fanpass_sales_info
-    case str_fanpass_purchase_info
-    case str_order_no
-    case str_seller
-    case str_buyer
-    case str_transaction_info
-
     case str_project_no_post
     case str_project_update_n_now
     case str_project_update_n_minute
@@ -202,13 +194,18 @@ enum LocalizedStrings {
     case str_project_update_n_day
     case str_project_update_n_month
     case str_project_update_n_year
-
-    case str_deposit
-    case str_wallet_address
-    case str_have_pxl_amount
-    case str_deposit_pxl_guide
-    case str_deposit_piction_guide_1
-    case str_deposit_piction_guide_2
+    case menu_deposit_detail
+    case menu_withdraw_detail
+    case str_transaction_info
+    case str_sponsorship_info
+    case str_sponsoredship_to
+    case str_sponsorship_user
+    case str_fanpass_sales_info
+    case str_fanpass_purchase_info
+    case str_order_id
+    case str_project
+    case str_seller
+    case str_buyer
 
     case str_authenticate_by_face_id
     case str_authenticate_by_touch_id

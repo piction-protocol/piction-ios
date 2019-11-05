@@ -43,7 +43,7 @@ extension PostHeaderViewController: ViewModelBindable {
                     self?.profileImageView.image = #imageLiteral(resourceName: "img-dummy-userprofile-500-x-500")
                 }
                 self?.seriesNameLabel.isHidden = postItem.series?.name == nil
-                self?.seriesNameLabel.text = "\(LocalizedStrings.btn_series.localized()) · \(postItem.series?.name ?? "")"
+                self?.seriesNameLabel.text = "\(LocalizedStrings.tab_series.localized()) · \(postItem.series?.name ?? "")"
                 self?.writerLabel.text = userInfo.username
                 self?.titleLabel.text = postItem.title
             })
