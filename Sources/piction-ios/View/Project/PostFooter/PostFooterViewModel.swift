@@ -96,7 +96,6 @@ final class PostFooterViewModel: InjectableViewModel {
 
         let footerInfo = Driver.zip(seriesPostItems, isLikeInfo)
             .flatMap { [weak self] (seriesPostItems, isLike) -> Driver<(PostModel, [PostIndexModel], Bool)> in
-                        print(seriesPostItems)
                 guard let `self` = self else { return Driver.empty() }
                 return Driver.just((self.postItem, seriesPostItems, isLike))
             }

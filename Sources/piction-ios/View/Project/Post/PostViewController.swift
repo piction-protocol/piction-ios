@@ -39,25 +39,32 @@ final class PostViewController: UIViewController {
     var footerViewController: PostFooterViewController?
 
     private func embedPostHeaderViewController(postItem: PostModel, userInfo: UserModel) {
-        removeHeaderFooter()
+        if let headerView = headerViewController {
+            remove(headerView)
+        }
         headerViewController = PostHeaderViewController.make(postItem: postItem, userInfo: userInfo)
-        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 264))
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 220))
         containerView.tag = 1000
         embed(headerViewController!, to: containerView)
         self.postWebView.scrollView.addSubview(containerView)
     }
 
     private func embedPostFooterViewController(height: CGFloat) {
-        if let footerViewController = self.footerViewController {
-            let posY = height - 728
-            let containerView = UIView(frame: CGRect(x: 0, y: posY, width: view.frame.size.width, height: 728))
+        if let footerView = self.footerViewController {
+            remove(footerView)
+
+            let posY = height - 747
+            let containerView = UIView(frame: CGRect(x: 0, y: posY, width: view.frame.size.width, height: 747))
             containerView.tag = 1001
-            embed(footerViewController, to: containerView)
+            embed(footerView, to: containerView)
             self.postWebView.scrollView.addSubview(containerView)
         }
     }
 
     private func makePostFooterViewController(uri: String, postItem: PostModel) {
+        if let footerView = footerViewController {
+            remove(footerView)
+        }
         footerViewController = PostFooterViewController.make(uri: uri, postItem: postItem)
         footerViewController?.delegate = self
     }
@@ -86,7 +93,7 @@ final class PostViewController: UIViewController {
     func cacheWebview() {
         if postWebView != nil {
             postWebView.stopLoading()
-            postWebView.loadHTMLString("about:blank", baseURL: nil)
+            postWebView.loadHTMLString("", baseURL: nil)
         }
 
         URLCache.shared.removeAllCachedResponses()
@@ -114,14 +121,27 @@ final class PostViewController: UIViewController {
         }
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
 
         if let headerView = headerViewController {
             headerView.view.frame.size.width = view.frame.size.width
         }
         if let footerView = footerViewController {
-            footerView.view.frame.size.width = view.frame.size.width
+            if !postWebView.isLoading {
+                footerView.view.frame.size.width = view.frame.size.width
+                postWebView.evaluateJavaScript("document.body.style.marginBottom =\"747px\"", completionHandler: { (complete, error) in
+                    self.postWebView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { (height, error) in
+
+                        if self.subscriptionView.isHidden {
+                            if let height = height as? CGFloat {
+                                self.embedPostFooterViewController(height: height)
+                                self.loadComplete()
+                            }
+                        }
+                    })
+                })
+            }
         }
     }
 
@@ -169,17 +189,10 @@ extension PostViewController: ViewModelBindable {
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
 
                 self?.postWebView.scrollView.contentInset = UIEdgeInsets(
-                    top: (self?.navigationController?.navigationBar.bounds.size.height ?? 0),
+                    top: (self?.getCurrentNavigationHeight() ?? 0),
                     left: 0,
                     bottom:  self?.navigationController?.toolbar.bounds.size.height ?? 0,
                     right: 0)
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .viewDidAppear
-            .drive(onNext: { [weak self] in
-//                self?.showFullScreen(false, animated: false)
             })
             .disposed(by: disposeBag)
 
@@ -239,11 +252,7 @@ extension PostViewController: ViewModelBindable {
         output
             .showPostContent
             .drive(onNext: { [weak self] contentItem in
-                guard let `self` = self else { return }
-                let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 100))
-                headerView.backgroundColor = UIColor.green
-
-                self.postWebView.loadHTMLString(contentItem, baseURL: nil)
+                self?.postWebView.loadHTMLString(contentItem, baseURL: nil)
             })
             .disposed(by: disposeBag)
 
@@ -253,8 +262,8 @@ extension PostViewController: ViewModelBindable {
                 guard let `self` = self else { return }
                 self.subscriptionView.isHidden = true
                 self.postWebView.scrollView.isScrollEnabled = true
-                self.postWebView.loadHTMLString("", baseURL: nil)
                 self.removeHeaderFooter()
+                self.postWebView.loadHTMLString("", baseURL: nil)
                 self.showFullScreen(false)
             })
             .disposed(by: disposeBag)
@@ -325,7 +334,6 @@ extension PostViewController: ViewModelBindable {
         output
             .contentOffset
             .drive(onNext: { [weak self] offset in
-                print(offset.y)
                 guard let `self` = self else { return }
                 let isScrollTop = offset.y <= -44
                 let isScrollBottom = (offset.y + self.view.frame.size.height) >= self.postWebView.scrollView.contentSize.height

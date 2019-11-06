@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -266,9 +266,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="hmF-gJ-6YD" firstAttribute="top" secondItem="Mfj-FW-by2" secondAttribute="top" id="4bV-Wj-Se6"/>
+                            <constraint firstAttribute="bottom" secondItem="hmF-gJ-6YD" secondAttribute="bottom" id="OyP-OY-p4g"/>
                             <constraint firstItem="Yl5-jf-9P9" firstAttribute="trailing" secondItem="hmF-gJ-6YD" secondAttribute="trailing" id="QJn-0T-NvK"/>
                             <constraint firstItem="hmF-gJ-6YD" firstAttribute="leading" secondItem="Yl5-jf-9P9" secondAttribute="leading" id="Vyr-Ia-zlG"/>
-                            <constraint firstItem="Yl5-jf-9P9" firstAttribute="bottom" secondItem="hmF-gJ-6YD" secondAttribute="bottom" id="fDx-Em-SZK"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Yl5-jf-9P9"/>
                     </view>
@@ -297,7 +297,7 @@
         <image name="icPostCurrent" width="28" height="28"/>
         <image name="right" width="8" height="13"/>
         <namedColor name="PictionDarkGray">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
