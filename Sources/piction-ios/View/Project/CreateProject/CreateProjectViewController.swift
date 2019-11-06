@@ -92,7 +92,7 @@ final class CreateProjectViewController: UIViewController {
 
         tagsField.textDelegate = self
 
-        let config = UIPasteConfiguration(acceptableTypeIdentifiers: [kUTTypeText as String, kUTTypePlainText as String, kUTTypeImage as String])
+        let config = UIPasteConfiguration(acceptableTypeIdentifiers: [kUTTypeImage as String])
         view.pasteConfiguration = config
     }
 
