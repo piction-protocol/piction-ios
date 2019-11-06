@@ -16,6 +16,7 @@ import CropViewController
 import AVKit
 import SafariServices
 import PictionSDK
+import MobileCoreServices
 
 final class CreatePostViewController: UIViewController {
     var disposeBag = DisposeBag()
@@ -133,6 +134,13 @@ final class CreatePostViewController: UIViewController {
             editorView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             editorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
         ])
+
+        let config = UIPasteConfiguration(acceptableTypeIdentifiers: [kUTTypeImage as String])
+        view.pasteConfiguration = config
+    }
+
+    override func paste(itemProviders: [NSItemProvider]) {
+        for itemProvider in itemProviders { loadContent(itemProvider) }
     }
 
     private func controlStatusCheckBox(_ status: String) {
@@ -263,11 +271,8 @@ extension CreatePostViewController: ViewModelBindable {
                 guard let `self` = self else { return }
                 guard let url = URL(string: url) else { return }
 
-                let fileURL = url//self.saveToDisk(image: image)
-
-                let attachment = self.richTextView.replaceWithImage(at: self.richTextView.selectedRange, sourceURL: fileURL, placeHolderImage: image)
+                let attachment = self.richTextView.replaceWithImage(at: self.richTextView.selectedRange, sourceURL: url, placeHolderImage: image)
                 attachment.alignment = .none
-                self.deleteCoverImageButton.isHidden = false
             })
             .disposed(by: disposeBag)
 
@@ -416,17 +421,7 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigatio
 
         if let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             dismiss(animated: true) { [weak self] in
-                let cropViewController = CropViewController(image: chosenImage)
-                cropViewController.delegate = self
-                cropViewController.view.tag = picker.view.tag
-
-                if picker.view.tag != 0 {
-                    cropViewController.aspectRatioLockEnabled = true
-                    cropViewController.aspectRatioPickerButtonHidden = true
-                    cropViewController.customAspectRatio = CGSize(width: 960, height: 360)
-                }
-
-                self?.present(cropViewController, animated: true, completion: nil)
+                self?.openCropViewController(image: chosenImage, tag: picker.view.tag)
             }
         }
     }
@@ -927,7 +922,6 @@ extension CreatePostViewController {
         guard (try? data.write(to: fileURL, options: [.atomic])) != nil else {
             fatalError("Could not write the image to disk.")
         }
-
         return fileURL
     }
 
@@ -1119,8 +1113,11 @@ extension CreatePostViewController: TextViewAttachmentDelegate {
 
         // TODO: start fake upload process
         print("imageAttachment")
-
-        return saveToDisk(image: image)
+        DispatchQueue.main.async {
+            self.richTextView.remove(attachmentID: imageAttachment.identifier)
+        }
+        self.openCropViewController(image: image, tag: 0)
+        return nil
     }
 
     func textView(_ textView: TextView, deletedAttachment attachment: MediaAttachment) {
@@ -1358,5 +1355,66 @@ private extension TextList.Style {
 
     var iconImage: UIImage? {
         return formattingIdentifier.iconImage
+    }
+}
+
+extension CreatePostViewController {
+
+    func openCropViewController(image: UIImage, tag: Int) {
+        let cropViewController = CropViewController(image: image)
+        cropViewController.delegate = self
+        cropViewController.view.tag = tag
+
+        if tag != 0 {
+            cropViewController.aspectRatioLockEnabled = true
+            cropViewController.aspectRatioPickerButtonHidden = true
+            cropViewController.customAspectRatio = CGSize(width: 960, height: 360)
+        }
+        self.present(cropViewController, animated: true, completion: nil)
+    }
+
+    func openAttachImage(image: UIImage) {
+        let alertController = UIAlertController(
+        title: "이미지를 어디에 넣을까요?",
+        message: nil,
+        preferredStyle: UIAlertController.Style.actionSheet)
+
+        let coverImageAction = UIAlertAction(
+            title: "커버 이미지",
+            style: UIAlertAction.Style.default,
+            handler: { [weak self] action in
+                self?.openCropViewController(image: image, tag: 1)
+            })
+
+        let postImageAction = UIAlertAction(
+            title: "포스트 본문",
+            style: UIAlertAction.Style.default,
+            handler: { [weak self] action in
+                self?.openCropViewController(image: image, tag : 0)
+            })
+
+        let cancelAction = UIAlertAction(
+            title: "취소",
+            style:UIAlertAction.Style.cancel,
+            handler:{ action in
+            })
+
+        alertController.addAction(coverImageAction)
+        alertController.addAction(postImageAction)
+        alertController.addAction(cancelAction)
+
+        present(alertController, animated: true, completion: nil)
+    }
+
+    func loadContent(_ itemProvider: NSItemProvider) {
+        if itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) { object, error in
+                if error != nil { print("Error loading image. \(error!.localizedDescription)"); return }
+                DispatchQueue.main.async {
+                    let image = object as! UIImage
+                    self.openAttachImage(image: image)
+                }
+            }
+        }
     }
 }

@@ -12,6 +12,7 @@ import RxCocoa
 import ViewModelBindable
 import CropViewController
 import WSTagsField
+import MobileCoreServices
 
 final class CreateProjectViewController: UIViewController {
     var disposeBag = DisposeBag()
@@ -90,6 +91,13 @@ final class CreateProjectViewController: UIViewController {
         }
 
         tagsField.textDelegate = self
+
+        let config = UIPasteConfiguration(acceptableTypeIdentifiers: [kUTTypeText as String, kUTTypePlainText as String, kUTTypeImage as String])
+        view.pasteConfiguration = config
+    }
+
+    override func paste(itemProviders: [NSItemProvider]) {
+        for itemProvider in itemProviders { loadContent(itemProvider) }
     }
 
     @IBAction func tapGesture(_ sender: Any) {
@@ -298,18 +306,7 @@ extension CreateProjectViewController: UIImagePickerControllerDelegate, UINaviga
 
         if let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             dismiss(animated: true) { [weak self] in
-                let cropViewController = CropViewController(image: chosenImage)
-                cropViewController.delegate = self
-                cropViewController.aspectRatioLockEnabled = true
-                cropViewController.aspectRatioPickerButtonHidden = true
-                cropViewController.view.tag = picker.view.tag
-                if picker.view.tag == 0 {
-                    cropViewController.customAspectRatio = CGSize(width: 1440, height: 450)
-                } else {
-                    cropViewController.customAspectRatio = CGSize(width: 500, height: 500)
-                }
-
-                self?.present(cropViewController, animated: true, completion: nil)
+                self?.openCropViewController(image: chosenImage, tag: picker.view.tag)
             }
         }
     }
@@ -352,5 +349,66 @@ extension CreateProjectViewController: KeyboardManagerDelegate {
         UIView.animate(withDuration: duration, animations: {
             self.view.layoutIfNeeded()
         })
+    }
+}
+
+extension CreateProjectViewController {
+    func openCropViewController(image: UIImage, tag: Int) {
+        let cropViewController = CropViewController(image: image)
+        cropViewController.delegate = self
+        cropViewController.aspectRatioLockEnabled = true
+        cropViewController.aspectRatioPickerButtonHidden = true
+        cropViewController.view.tag = tag
+        if tag == 0 {
+            cropViewController.customAspectRatio = CGSize(width: 1440, height: 450)
+        } else {
+            cropViewController.customAspectRatio = CGSize(width: 500, height: 500)
+        }
+        self.present(cropViewController, animated: true, completion: nil)
+    }
+
+    func openAttachImage(image: UIImage) {
+        let alertController = UIAlertController(
+        title: "이미지를 어디에 넣을까요?",
+        message: nil,
+        preferredStyle: UIAlertController.Style.actionSheet)
+
+        let wideThumbnailAction = UIAlertAction(
+            title: "와이드",
+            style: UIAlertAction.Style.default,
+            handler: { [weak self] action in
+                self?.openCropViewController(image: image, tag: 0)
+            })
+
+        let thumbnailAction = UIAlertAction(
+            title: "1:1",
+            style: UIAlertAction.Style.default,
+            handler: { [weak self] action in
+                self?.openCropViewController(image: image, tag: 1)
+            })
+
+        let cancelAction = UIAlertAction(
+            title: "취소",
+            style:UIAlertAction.Style.cancel,
+            handler:{ action in
+            })
+
+        alertController.addAction(wideThumbnailAction)
+        alertController.addAction(thumbnailAction)
+        alertController.addAction(cancelAction)
+
+        present(alertController, animated: true, completion: nil)
+    }
+
+    func loadContent(_ itemProvider: NSItemProvider) {
+        if itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) { object, error in
+                if error != nil { print("Error loading image. \(error!.localizedDescription)"); return }
+                DispatchQueue.main.async {
+                    let image = object as! UIImage
+                    self.openAttachImage(image: image)
+                }
+            }
+        }
     }
 }
