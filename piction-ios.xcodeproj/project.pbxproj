@@ -391,8 +391,6 @@
 		43DB22932359ADBF00E69C0F /* SearchTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB22912359ADBE00E69C0F /* SearchTagTableViewCell.swift */; };
 		43E543692355930D00F2EC45 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E543682355930D00F2EC45 /* SceneDelegate.swift */; };
 		43E5436A2355930D00F2EC45 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E543682355930D00F2EC45 /* SceneDelegate.swift */; };
-		43E54372235598E600F2EC45 /* piction-ios_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43E5436C235598E500F2EC45 /* piction-ios_Info.plist */; };
-		43E54375235598F900F2EC45 /* piction-ios-test_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43E54371235598E500F2EC45 /* piction-ios-test_Info.plist */; };
 		43E543782355AFDB00F2EC45 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E543772355AFDB00F2EC45 /* Double+Extension.swift */; };
 		43E543792355AFDD00F2EC45 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E543772355AFDB00F2EC45 /* Double+Extension.swift */; };
 		43E543802356F5CD00F2EC45 /* ExploreListCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5437B2356F5CD00F2EC45 /* ExploreListCollectionFooterView.swift */; };
@@ -642,10 +640,6 @@
 		43DB2288235969F300E69C0F /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		43DB22912359ADBE00E69C0F /* SearchTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagTableViewCell.swift; sourceTree = "<group>"; };
 		43E543682355930D00F2EC45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		43E5436C235598E500F2EC45 /* piction-ios_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "piction-ios_Info.plist"; sourceTree = "<group>"; };
-		43E5436D235598E500F2EC45 /* piction-ios.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "piction-ios.entitlements"; sourceTree = "<group>"; };
-		43E5436F235598E500F2EC45 /* piction-ios-test.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "piction-ios-test.entitlements"; sourceTree = "<group>"; };
-		43E54371235598E500F2EC45 /* piction-ios-test_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "piction-ios-test_Info.plist"; sourceTree = "<group>"; };
 		43E543772355AFDB00F2EC45 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		43E5437B2356F5CD00F2EC45 /* ExploreListCollectionFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreListCollectionFooterView.swift; sourceTree = "<group>"; };
 		43E5437C2356F5CD00F2EC45 /* ExploreViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
@@ -712,6 +706,7 @@
 				4323F9A3233A165600243655 /* View */,
 				4323FA54233A165600243655 /* Assets */,
 				4323FA58233A165600243655 /* Utility */,
+				43C41F5F2373B84F00D012A7 /* SupportingFiles */,
 			);
 			path = "piction-ios";
 			sourceTree = "<group>";

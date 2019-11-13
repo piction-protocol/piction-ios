@@ -55,7 +55,7 @@ extension SignUpCompleteViewController: ViewModelBindable {
             .dismissViewController
             .drive(onNext: { [weak self] in
                 self?.dismiss(animated: true, completion: { [weak self] in
-                    if UserDefaults.standard.string(forKey: "pincode") == nil {
+                    if KeychainManager.get(key: "pincode").isEmpty {
                         self?.openRegisterPincode()
                     }
                 })

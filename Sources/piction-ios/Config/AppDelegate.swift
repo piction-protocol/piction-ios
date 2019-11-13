@@ -8,10 +8,10 @@
 
 import UIKit
 import CoreData
-import KeychainAccess
 import SDWebImage
 import Firebase
 import FirebaseMessaging
+import PictionSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,6 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+
+        if !(UserDefaults(suiteName: "group.\(BUNDLEID)")?.bool(forKey: "initialLaunch") ?? false) {
+            UserDefaults(suiteName: "group.\(BUNDLEID)")?.set(true, forKey: "initialLaunch")
+            PictionManager.setToken("")
+            KeychainManager.set(key: "pincode", value: "")
+        }
 
         // urlcache
         let cacheSizeMemory: Int = 4 * 1024 * 1024
@@ -33,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         window = UIWindow(frame: UIScreen.main.bounds)
 
-        if UserDefaults.standard.string(forKey: "pincode") != nil {
+        if !KeychainManager.get(key: "pincode").isEmpty {
             let vc = CheckPincodeViewController.make(style: .initial)
             window?.rootViewController = vc
         } else {

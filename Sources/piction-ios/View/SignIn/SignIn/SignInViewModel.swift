@@ -103,11 +103,12 @@ final class SignInViewModel: InjectableViewModel {
 
         let signInSuccess = signInButtonAction.elements
             .flatMap { [weak self] response -> Driver<Bool> in
-                guard let accessToken = try? response.map(to: AuthenticationViewResponse.self) else {
+                guard let token = try? response.map(to: AuthenticationViewResponse.self) else {
                     return Driver.empty()
                 }
+                KeychainManager.set(key: "AccessToken", value: token.accessToken ?? "")
+                PictionManager.setToken(token.accessToken ?? "")
                 self?.updater.refreshSession.onNext(())
-                print(accessToken)
                 return Driver.just(true)
             }
 

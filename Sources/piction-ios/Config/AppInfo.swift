@@ -8,6 +8,8 @@
 
 import UIKit
 
+let BUNDLEID = Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String ?? ""
+
 let SCREEN_W = UIScreen.main.bounds.size.width
 let SCREEN_H = UIScreen.main.bounds.size.height
 let STATUS_HEIGHT: CGFloat = UIApplication.shared.statusBarFrame.size.height

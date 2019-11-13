@@ -129,7 +129,7 @@ extension SignInViewController: ViewModelBindable {
             .drive(onNext: { [weak self] complete in
                 self?.dismiss(animated: true, completion: { [weak self] in
                     if complete {
-                        if UserDefaults.standard.string(forKey: "pincode") == nil {
+                        if KeychainManager.get(key: "pincode").isEmpty {
                             self?.openRegisterPincode()
                         }
                     }

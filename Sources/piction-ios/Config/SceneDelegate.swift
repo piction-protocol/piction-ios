@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene // <-- Window Scene set to UIWindow
 
-        if UserDefaults.standard.string(forKey: "pincode") != nil {
+        if !KeychainManager.get(key: "pincode").isEmpty {
             let vc = CheckPincodeViewController.make(style: .initial)
             window?.rootViewController = vc
         } else {

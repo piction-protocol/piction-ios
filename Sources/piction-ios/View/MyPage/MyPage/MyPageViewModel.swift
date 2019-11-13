@@ -76,11 +76,11 @@ final class MyPageViewModel: InjectableViewModel {
 
                 var securityItems: [MyPageItemType] = [
                     MyPageItemType.header(title: LocalizedStrings.str_security.localized()),
-                    UserDefaults.standard.string(forKey: "pincode") == nil ? MyPageItemType.presentType(title: LocalizedStrings.str_create_pin.localized(), align: .left) : MyPageItemType.presentType(title: LocalizedStrings.str_change_pin.localized(), align: .left),
+                    KeychainManager.get(key: "pincode").isEmpty ? MyPageItemType.presentType(title: LocalizedStrings.str_create_pin.localized(), align: .left) : MyPageItemType.presentType(title: LocalizedStrings.str_change_pin.localized(), align: .left),
                     MyPageItemType.underline
                 ]
 
-                if UserDefaults.standard.string(forKey: "pincode") != nil {
+                if !KeychainManager.get(key: "pincode").isEmpty {
                     let authContext = LAContext()
                     if authContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) {
                         var description = ""
@@ -167,8 +167,9 @@ final class MyPageViewModel: InjectableViewModel {
                 guard let accessToken = try? response.map(to: AuthenticationViewResponse.self) else {
                     return Driver.empty()
                 }
+                KeychainManager.set(key: "AccessToken", value: "")
+                PictionManager.setToken("")
                 self?.updater.refreshSession.onNext(())
-                print(accessToken)
                 return Driver.just(LocalizedStrings.str_sign_out_success.localized())
             }
 

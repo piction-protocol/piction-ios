@@ -64,7 +64,7 @@ final class ConfirmPincodeViewController: UIViewController {
                     DispatchQueue.main.async {
                         if success {
                             print("인증 성공")
-                            UserDefaults.standard.set(true, forKey: "isEnabledAuthBio")
+                            UserDefaults(suiteName: "group.\(BUNDLEID)")?.set(true, forKey: "isEnabledAuthBio")
                             self?.changeComplete.onNext(())
                         } else {
                             print("인증 실패")
@@ -162,9 +162,9 @@ extension ConfirmPincodeViewController: ViewModelBindable {
                     self?.pincode6View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
 
                     if inputPincode == (self?.viewModel?.inputPincode ?? "") {
-                        UserDefaults.standard.set(inputPincode, forKey: "pincode")
-                        UserDefaults.standard.set(0, forKey: "pincodeErrorCount")
-                        if !UserDefaults.standard.bool(forKey: "isEnabledAuthBio") {
+                        KeychainManager.set(key: "pincode", value: inputPincode)
+                        UserDefaults(suiteName: "group.\(BUNDLEID)")?.set(0, forKey: "pincodeErrorCount")
+                        if !(UserDefaults(suiteName: "group.\(BUNDLEID)")?.bool(forKey: "isEnabledAuthBio") ?? false) {
                             self?.pincodeTextField.text = ""
                             self?.registerAuthBioPopup()
                         } else {

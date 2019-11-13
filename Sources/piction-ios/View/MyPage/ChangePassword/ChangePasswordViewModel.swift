@@ -67,10 +67,9 @@ final class ChangePasswordViewModel: ViewModel {
 
         let changePasswordSuccess = saveButtonAction.elements
             .flatMap { response -> Driver<Void> in
-                guard let accessToken = try? response.map(to: AuthenticationViewResponse.self) else {
+                guard let _ = try? response.map(to: AuthenticationViewResponse.self) else {
                     return Driver.empty()
                 }
-                print(accessToken)
                 return Driver.just(())
             }
 

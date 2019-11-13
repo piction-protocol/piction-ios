@@ -22,7 +22,7 @@ final class MyPageSwitchTypeTableViewCell: ReuseTableViewCell {
 
         titleLabel.text = title
 
-        let isOn = UserDefaults.standard.bool(forKey: key)
+        let isOn = UserDefaults(suiteName: "group.\(BUNDLEID)")?.bool(forKey: key) ?? false
         switchButton.setOn(isOn, animated: false)
         self.key = key
     }
@@ -46,7 +46,7 @@ final class MyPageSwitchTypeTableViewCell: ReuseTableViewCell {
                     DispatchQueue.main.async {
                         if success {
                             print("인증 성공")
-                            UserDefaults.standard.set(sender.isOn, forKey: self.key)
+                            UserDefaults(suiteName: "group.\(BUNDLEID)")?.set(sender.isOn, forKey: self.key)
                         } else {
                             print("인증 실패")
                             self.switchButton.setOn(!sender.isOn, animated: false)

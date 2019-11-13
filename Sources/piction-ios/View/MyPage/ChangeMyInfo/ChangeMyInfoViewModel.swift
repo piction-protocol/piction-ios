@@ -142,11 +142,10 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
 
         let changeUserInfoSuccess = saveButtonAction.elements
             .flatMap { [weak self] response -> Driver<Void> in
-                guard let accessToken = try? response.map(to: AuthenticationViewResponse.self) else {
+                guard let _ = try? response.map(to: AuthenticationViewResponse.self) else {
                     return Driver.empty()
                 }
                 self?.updater.refreshSession.onNext(())
-                print(accessToken)
                 return Driver.just(())
             }
 

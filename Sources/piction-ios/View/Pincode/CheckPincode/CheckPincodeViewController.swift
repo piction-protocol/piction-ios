@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import ViewModelBindable
 import LocalAuthentication
+import PictionSDK
 
 protocol CheckPincodeDelegate: class {
     func authSuccess()
@@ -38,8 +39,8 @@ final class CheckPincodeViewController: UIViewController {
     }
 
     private func errorPopup() {
-        let errorCount = UserDefaults.standard.integer(forKey: "pincodeErrorCount") + 1
-        UserDefaults.standard.set(errorCount, forKey: "pincodeErrorCount")
+        let errorCount = (UserDefaults(suiteName: "group.\(BUNDLEID)")?.integer(forKey: "pincodeErrorCount") ?? 0) + 1
+        UserDefaults(suiteName: "group.\(BUNDLEID)")?.set(errorCount, forKey: "pincodeErrorCount")
 
         var message: String {
             if errorCount >= 10 {
@@ -69,7 +70,7 @@ final class CheckPincodeViewController: UIViewController {
     }
 
     private func authSuccess() {
-        UserDefaults.standard.set(0, forKey: "pincodeErrorCount")
+        UserDefaults(suiteName: "group.\(BUNDLEID)")?.set(0, forKey: "pincodeErrorCount")
         if self.viewModel?.style == .initial {
             self.dismiss(animated: true)
             let rootView = TabBarController()
@@ -138,7 +139,7 @@ extension CheckPincodeViewController: ViewModelBindable {
                     self?.closeButton.isEnabled = true
                     self?.closeButton.title = LocalizedStrings.cancel.localized()
                 }
-                if UserDefaults.standard.bool(forKey: "isEnabledAuthBio") {
+                if UserDefaults(suiteName: "group.\(BUNDLEID)")?.bool(forKey: "isEnabledAuthBio") ?? false {
                     self?.auth()
                 }
             })
@@ -198,7 +199,7 @@ extension CheckPincodeViewController: ViewModelBindable {
                     self?.pincode5View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
                     self?.pincode6View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
                     self?.pincodeTextField.text = ""
-                    if UserDefaults.standard.string(forKey: "pincode") == inputPincode {
+                    if KeychainManager.get(key: "pincode") == inputPincode {
                         self?.authSuccess()
                     } else {
                         self?.errorPopup()
