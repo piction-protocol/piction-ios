@@ -234,8 +234,8 @@ extension CreatePostViewController: ViewModelBindable {
         output
             .isModify
             .drive(onNext: { [weak self] isModify in
-                self?.navigationItem.title = isModify ? "포스트 수정 BETA" : "포스트 생성 BETA"
-                self?.saveBarButton.title = isModify ? "수정" : "등록"
+                self?.navigationItem.title = isModify ? LocalizedStrings.str_modify_post.localized() : LocalizedStrings.str_create_post.localized()
+                self?.saveBarButton.title = isModify ? LocalizedStrings.str_modify.localized() : LocalizedStrings.register.localized()
             })
             .disposed(by: disposeBag)
 
@@ -257,7 +257,7 @@ extension CreatePostViewController: ViewModelBindable {
                 }
                 self?.controlStatusCheckBox(postInfo.status ?? "PUBLIC")
 
-                self?.selectSeriesButton.setTitle(postInfo.series?.name ?? "시리즈 선택", for: .normal)
+                self?.selectSeriesButton.setTitle(postInfo.series?.name ?? LocalizedStrings.str_select_series.localized(), for: .normal)
 
                 self?.publishNowCheckBoxView.isHidden = true
                 self?.publishDateView.isHidden = false
@@ -314,7 +314,7 @@ extension CreatePostViewController: ViewModelBindable {
         output
             .seriesChanged
             .drive(onNext: { [weak self] series in
-                self?.selectSeriesButton.setTitle(series?.name ?? "시리즈 선택", for: .normal)
+                self?.selectSeriesButton.setTitle(series?.name ?? LocalizedStrings.str_select_series.localized(), for: .normal)
             })
             .disposed(by: disposeBag)
 
@@ -434,7 +434,7 @@ extension CreatePostViewController: CropViewControllerDelegate {
         let imgData = NSData(data: image.jpegData(compressionQuality: 1)!)
         print(imgData.count)
         if imgData.count > (1048576 * 10) {
-            Toast.showToast("이미지가 10MB를 초과합니다")
+            Toast.showToast(LocalizedStrings.str_image_size_exceeded.localized())
         } else {
             if cropViewController.view.tag == 0 {
                 self.chosenContentImage.onNext(image)
@@ -1377,26 +1377,26 @@ extension CreatePostViewController {
 
     func openAttachImage(image: UIImage) {
         let alertController = UIAlertController(
-        title: "이미지를 어디에 넣을까요?",
+        title: LocalizedStrings.str_select_image_position.localized(),
         message: nil,
         preferredStyle: UIAlertController.Style.actionSheet)
 
         let coverImageAction = UIAlertAction(
-            title: "커버 이미지",
+            title: LocalizedStrings.str_cover_image.localized(),
             style: UIAlertAction.Style.default,
             handler: { [weak self] action in
                 self?.openCropViewController(image: image, tag: 1)
             })
 
         let postImageAction = UIAlertAction(
-            title: "포스트 본문",
+            title: LocalizedStrings.str_post_content_image.localized(),
             style: UIAlertAction.Style.default,
             handler: { [weak self] action in
                 self?.openCropViewController(image: image, tag : 0)
             })
 
         let cancelAction = UIAlertAction(
-            title: "취소",
+            title: LocalizedStrings.cancel.localized(),
             style:UIAlertAction.Style.cancel,
             handler:{ action in
             })

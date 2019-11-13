@@ -11,7 +11,11 @@ import RxCocoa
 
 final class SignUpCompleteViewModel: ViewModel {
 
-    init() {}
+    let loginId: String
+
+    init(loginId: String) {
+        self.loginId = loginId
+    }
 
     struct Input {
         let viewWillAppear: Driver<Void>

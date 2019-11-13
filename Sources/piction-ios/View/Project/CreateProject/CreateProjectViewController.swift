@@ -35,7 +35,7 @@ final class CreateProjectViewController: UIViewController {
     @IBOutlet weak var tagsField: WSTagsField! {
         didSet {
             tagsField.font = .systemFont(ofSize: 14)
-            tagsField.placeholder = "#태그입력(최대 5개)"
+            tagsField.placeholder = LocalizedStrings.str_create_tag_placeholder.localized()
             tagsField.layoutMargins = UIEdgeInsets(top: 6.5, left: 10, bottom: 6.5, right: 10)
             tagsField.contentInset = UIEdgeInsets(top: 2.5, left: 0, bottom: -2.5, right: 0)
             tagsField.spaceBetweenTags = 5.0
@@ -160,8 +160,8 @@ extension CreateProjectViewController: ViewModelBindable {
         output
             .isModify
             .drive(onNext: { [weak self] isModify in
-                self?.navigationItem.title = isModify ? "프로젝트 수정 BETA" : "프로젝트 생성 BETA"
-                self?.saveBarButton.title = isModify ? "수정" : "등록"
+                self?.navigationItem.title = isModify ? LocalizedStrings.str_modify_project.localized() : LocalizedStrings.str_create_project.localized()
+                self?.saveBarButton.title = isModify ? LocalizedStrings.str_modify.localized() : LocalizedStrings.register.localized()
                 self?.projectIdTextField.isEnabled = !isModify
                 self?.projectIdTextField.textColor = isModify ? UIColor(r: 191, g: 191, b: 191) : UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51)
             })
@@ -205,7 +205,7 @@ extension CreateProjectViewController: ViewModelBindable {
         output
             .projectIdChanged
             .drive(onNext: { [weak self] projectId in
-                self?.projectUrlLabel.text = "프로젝트 주소: https://piction.network/project/\(projectId)"
+                self?.projectUrlLabel.text = "\(LocalizedStrings.str_create_project_uri.localized()): https://piction.network/project/\(projectId)"
             })
             .disposed(by: disposeBag)
 
@@ -318,7 +318,7 @@ extension CreateProjectViewController: CropViewControllerDelegate {
         let imgData = NSData(data: image.jpegData(compressionQuality: 1)!)
         print(imgData.count)
         if imgData.count > (1048576 * 10) {
-            Toast.showToast("이미지가 10MB를 초과합니다")
+            Toast.showToast(LocalizedStrings.str_image_size_exceeded.localized())
         } else {
             if cropViewController.view.tag == 0 {
                 self.chosenWideThumbnailImage.onNext(image)
@@ -370,26 +370,26 @@ extension CreateProjectViewController {
 
     func openAttachImage(image: UIImage) {
         let alertController = UIAlertController(
-        title: "이미지를 어디에 넣을까요?",
+            title: LocalizedStrings.str_create_project_thumbnail_image.localized(),
         message: nil,
         preferredStyle: UIAlertController.Style.actionSheet)
 
         let wideThumbnailAction = UIAlertAction(
-            title: "와이드",
+            title: "1440:450",
             style: UIAlertAction.Style.default,
             handler: { [weak self] action in
                 self?.openCropViewController(image: image, tag: 0)
             })
 
         let thumbnailAction = UIAlertAction(
-            title: "1:1",
+            title: "500:500",
             style: UIAlertAction.Style.default,
             handler: { [weak self] action in
                 self?.openCropViewController(image: image, tag: 1)
             })
 
         let cancelAction = UIAlertAction(
-            title: "취소",
+            title: LocalizedStrings.cancel.localized(),
             style:UIAlertAction.Style.cancel,
             handler:{ action in
             })

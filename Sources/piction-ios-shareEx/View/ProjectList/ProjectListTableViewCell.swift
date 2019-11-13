@@ -42,9 +42,9 @@ final class ProjectListTableViewCell: ReuseTableViewCell {
             lockView.isHidden = false
             maskImage.isHidden = false
             if status == "HIDDEN" {
-                statusLabel.text = "비공개"
+                statusLabel.text = LocalizedStrings.str_post_status_private.localized()
             } else if status == "DEPRECATED" {
-                statusLabel.text = "부적절한 콘텐츠"
+                statusLabel.text = LocalizedStrings.str_post_status_deprecated.localized()
             }
         } else {
             lockView.isHidden = true

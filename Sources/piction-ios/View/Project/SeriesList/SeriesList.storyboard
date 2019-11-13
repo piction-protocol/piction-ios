@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,45 +20,13 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6wa-u2-lFJ">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <view key="tableHeaderView" contentMode="scaleToFill" id="aKS-Xb-W78">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="66"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ld8-S2-DDM" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
-                                            <rect key="frame" x="20" y="10" width="374" height="46"/>
-                                            <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="53" id="7UP-Fn-1bs"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                            <state key="normal" title="시리즈 생성">
-                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </state>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                    <real key="value" value="0.0"/>
-                                                </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                    <real key="value" value="8"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                        </button>
-                                    </subviews>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                    <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="ld8-S2-DDM" secondAttribute="bottom" constant="10" id="FCj-Iw-hym"/>
-                                        <constraint firstItem="ld8-S2-DDM" firstAttribute="leading" secondItem="aKS-Xb-W78" secondAttribute="leading" constant="20" id="OFw-SL-Wb7"/>
-                                        <constraint firstItem="ld8-S2-DDM" firstAttribute="top" secondItem="aKS-Xb-W78" secondAttribute="top" constant="10" id="ROT-3L-huE"/>
-                                        <constraint firstAttribute="trailing" secondItem="ld8-S2-DDM" secondAttribute="trailing" constant="20" id="UC5-ZE-oz0"/>
-                                    </constraints>
-                                </view>
                                 <containerView key="tableFooterView" opaque="NO" contentMode="scaleToFill" id="6j6-4h-bhM">
-                                    <rect key="frame" x="0.0" y="188" width="414" height="44"/>
+                                    <rect key="frame" x="0.0" y="122" width="414" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 </containerView>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SeriesListTableViewCell" rowHeight="66" id="L6m-mM-vG5" customClass="SeriesListTableViewCell" customModule="piction_ios" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="94" width="414" height="66"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="66"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="L6m-mM-vG5" id="Onh-fP-Zih">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="66"/>
@@ -88,28 +56,56 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="55A-IS-lzF">
+                                <rect key="frame" x="0.0" y="832" width="414" height="64"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="ETa-7y-deJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <state key="normal" title="시리즈 추가">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_add_series"/>
+                                </userDefinedRuntimeAttributes>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="6wa-u2-lFJ" firstAttribute="leading" secondItem="ghZ-tf-DyJ" secondAttribute="leading" id="InQ-cv-6br"/>
                             <constraint firstAttribute="bottom" secondItem="6wa-u2-lFJ" secondAttribute="bottom" id="Xn6-vq-NNq"/>
+                            <constraint firstItem="55A-IS-lzF" firstAttribute="leading" secondItem="ghZ-tf-DyJ" secondAttribute="leading" id="cUQ-6O-IHA"/>
+                            <constraint firstAttribute="bottom" secondItem="55A-IS-lzF" secondAttribute="bottom" id="hq5-Vo-Npz"/>
                             <constraint firstItem="6wa-u2-lFJ" firstAttribute="top" secondItem="Sb7-Ui-8tJ" secondAttribute="top" id="vqx-qe-bU0"/>
                             <constraint firstItem="ghZ-tf-DyJ" firstAttribute="trailing" secondItem="6wa-u2-lFJ" secondAttribute="trailing" id="wY1-Ua-D7L"/>
+                            <constraint firstItem="55A-IS-lzF" firstAttribute="trailing" secondItem="ghZ-tf-DyJ" secondAttribute="trailing" id="wpI-ZO-3Cs"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ghZ-tf-DyJ"/>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="시리즈 관리" id="UsQ-Vh-OU2">
-                        <barButtonItem key="leftBarButtonItem" title="닫기" id="d5v-gi-tLv"/>
-                        <barButtonItem key="rightBarButtonItem" title="정렬" id="7Nw-E1-738"/>
+                        <barButtonItem key="leftBarButtonItem" title="닫기" id="d5v-gi-tLv">
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="close"/>
+                            </userDefinedRuntimeAttributes>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="정렬" id="7Nw-E1-738">
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sort"/>
+                            </userDefinedRuntimeAttributes>
+                        </barButtonItem>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_series_management"/>
+                        </userDefinedRuntimeAttributes>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="closeButton" destination="d5v-gi-tLv" id="FwP-xN-ctc"/>
-                        <outlet property="createButton" destination="ld8-S2-DDM" id="Cjm-wd-sMz"/>
+                        <outlet property="createButton" destination="55A-IS-lzF" id="aER-bH-HY8"/>
                         <outlet property="emptyView" destination="6j6-4h-bhM" id="4xR-XP-lCc"/>
-                        <outlet property="reorderButton" destination="7Nw-E1-738" id="7M4-rt-rhq"/>
+                        <outlet property="reorderButton" destination="7Nw-E1-738" id="SC8-NS-hhS"/>
                         <outlet property="tableView" destination="6wa-u2-lFJ" id="Wn7-81-sH0"/>
                     </connections>
                 </viewController>
@@ -120,7 +116,7 @@
     </scenes>
     <resources>
         <namedColor name="PictionDarkGray">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

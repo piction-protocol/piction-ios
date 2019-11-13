@@ -56,19 +56,19 @@ final class SeriesListViewController: UIViewController {
 
     private func openDeleteConfirmPopup(seriesId: Int) {
         let alertController = UIAlertController(
-            title: "시리즈를 삭제하시겠습니까?",
+            title: LocalizedStrings.str_delete_series.localized(),
             message: nil,
             preferredStyle: UIAlertController.Style.alert)
 
             let deleteAction = UIAlertAction(
-                title: "삭제",
+                title: LocalizedStrings.delete.localized(),
                 style: UIAlertAction.Style.destructive,
                 handler: { [weak self] action in
                     self?.deleteConfirm.onNext(seriesId)
                 })
 
             let cancelAction = UIAlertAction(
-                title: "취소",
+                title: LocalizedStrings.cancel.localized(),
                 style:UIAlertAction.Style.cancel,
                 handler:{ action in
                 })
@@ -81,7 +81,7 @@ final class SeriesListViewController: UIViewController {
 
     private func openUpdateSeriesPopup(series: SeriesModel?) {
         let alertController = UIAlertController(
-            title: series == nil ? "새 시리즈 추가" : "시리즈 수정",
+            title: series == nil ? LocalizedStrings.str_add_series.localized() : LocalizedStrings.str_modify_series.localized(),
             message: nil,
             preferredStyle: UIAlertController.Style.alert)
 
@@ -91,7 +91,7 @@ final class SeriesListViewController: UIViewController {
         })
 
         let insertAction = UIAlertAction(
-            title: series == nil ? "생성" : "수정",
+            title: series == nil ? LocalizedStrings.create.localized() : LocalizedStrings.str_modify.localized(),
             style: UIAlertAction.Style.default,
             handler: { [weak self] action in
                 guard let textFields = alertController.textFields else {
@@ -101,7 +101,7 @@ final class SeriesListViewController: UIViewController {
             })
 
         let cancelAction = UIAlertAction(
-            title: "취소",
+            title: LocalizedStrings.cancel.localized(),
             style:UIAlertAction.Style.cancel,
             handler:{ action in
             })
@@ -202,7 +202,7 @@ extension SeriesListViewController: ViewModelBindable {
                     self?.reorderItems.onNext(reorderItems)
                 }
 
-                self?.reorderButton.title = isEditing ? "정렬" : "완료"
+                self?.reorderButton.title = isEditing ? LocalizedStrings.str_sort.localized() : LocalizedStrings.str_completed.localized()
                 self?.tableView.setEditing(!isEditing, animated: true)
             })
             .disposed(by: disposeBag)
@@ -249,14 +249,6 @@ extension SeriesListViewController: ViewModelBindable {
             .dismissViewController
             .drive(onNext: { [weak self] _ in
                 self?.dismiss(animated: true)
-            })
-            .disposed(by: disposeBag)
-
-        tableView.rx.itemMoved
-            .subscribe(onNext: { [weak self] _ in
-//                guard let models = dataSource.sectionModels[safe: 0]?.items else { return }
-//                let reorderItems = models.map { $0.id ?? 0 }
-//                self?.reorderItems.onNext(reorderItems)
             })
             .disposed(by: disposeBag)
     }

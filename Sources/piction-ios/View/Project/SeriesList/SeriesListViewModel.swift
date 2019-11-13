@@ -124,7 +124,7 @@ final class SeriesListViewModel: InjectableViewModel {
         let deleteSeriesSuccess = deleteSeriesAction.elements
             .flatMap { [weak self] _ -> Driver<String> in
                 self?.updater.refreshContent.onNext(())
-                return Driver.just("시리즈가 삭제되었습니다.")
+                return Driver.just(LocalizedStrings.str_deleted_series.localized())
             }
 
         let embedEmptyView = seriesList
