@@ -218,3 +218,61 @@
 
 "str_delete_profile_image" = "프로필 삭제";
 "str_change_profile_image" = "프로필 변경";
+
+"str_post_status_public" = "전체 공개";
+"str_post_status_fanpass" = "멤버십 구독자 공개";
+"str_post_status_private" = "비공개";
+"str_post_status_deprecated" = "부적절한 콘텐츠";
+
+"str_cancel_creation_post" = "포스트 작성을 취소하시겠습니까?";
+
+"str_select_project" = "프로젝트 선택";
+"str_select_series" = "시리즈 선택";
+
+"str_create_post" = "포스트 작성";
+"str_post_title" = "포스트 제목";
+"str_post_content" = "포스트 내용";
+
+"str_login_first" = "Piction앱에서 로그인을 먼저 해주세요.";
+"str_create_project_first" = "Piction앱에서 프로젝트를 생성해주세요.";
+"str_select_project_first" = "프로젝트를 먼저 선택해주세요.";
+
+"str_saving_post" = "포스트를 저장 중 입니다.";
+"str_save_post_complete" = "포스트가 등록되었습니다.";
+
+"str_modify" = "수정";
+
+"str_delete_series" = "시리즈를 삭제하시겠습니까?";
+"str_deleted_series" = "시리즈가 삭제되었습니다.";
+
+"str_add_series" = "시리즈 추가";
+"str_modify_series" = "시리즈 수정";
+"str_sort" = "정렬";
+
+"str_series_management" = "시리즈 관리";
+
+"str_create_project" = "프로젝트 생성";
+"str_modify_project" = "프로젝트 수정";
+"str_project_title" = "프로젝트 제목";
+"str_project_id" = "프로젝트 ID";
+"str_create_project_id_placeholder" = "영문 소문자, 숫자, 대시(-)만 입력가능, 수정 불가";
+"str_create_project_uri" = "프로젝트 주소: ";
+"str_create_project_thumbnail_image" = "프로젝트 대표 이미지";
+"str_create_project_widethumbnail_guide" = "JPG 또는 PNG 파일, 최대 10MB, 권장 사이즈 1440*450px";
+"str_create_project_thumbnail_guide" = "JPG 또는 PNG 파일, 최대 10MB, 권장 사이즈 500*500px";
+"str_create_project_synopsis_guide" = "최대 100자";
+"str_create_tag_placeholder" = "#태그입력(최대 5개)";
+"str_create_project_hidden" = "프로젝트 숨기기";
+"str_create_project_hidden_description" = "픽션에서 프로젝트가 소개되지 않도록 설정합니다.";
+
+"str_modify_post" = "포스트 수정";
+
+"str_select_image_position" = "이미지 위치 선택";
+"str_cover_image" = "커버 이미지";
+"str_create_post_cover_image_guide" = "JPG 또는 PNG 파일, 최대 10MB, 권장 사이즈 960*360px";
+"str_post_content_image" = "포스트 본문";
+"str_setting_post_status" = "공개 설정";
+"str_post_publish_date" = "발행 시간";
+"str_post_publish_now" = "즉시 발행";
+"str_post_publish_guide" = "공개 설정과 관계없이 설정한 시간 이전에는 포스트가 공개되지 않습니다.\n한 번 포스트가 발행된 이후에는 발행 시간을 변경할 수 없습니다.";
+"str_subscription_user_list" = "구독자 목록";

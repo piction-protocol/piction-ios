@@ -84,17 +84,3 @@ extension UISegmentedControl {
         }
     }
 }
-extension DynamicInputView {
-    @IBInspectable var localizedTitleId: String? {
-        get { return nil }
-        set(key) {
-            title = key?.localized ?? ""
-        }
-   }
-    @IBInspectable var localizedErrorPlaceHolderId: String? {
-         get { return nil }
-         set(key) {
-             errorPlaceHolder = key?.localized ?? ""
-         }
-    }
-}

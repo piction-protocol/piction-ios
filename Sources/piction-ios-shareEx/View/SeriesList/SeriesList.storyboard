@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--시리즈 관리-->
+        <scene sceneID="THf-OM-OfH">
+            <objects>
+                <viewController storyboardIdentifier="SeriesListViewController" id="c04-LY-f7h" customClass="SeriesListViewController" customModule="piction_ios_shareEx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="55j-jF-CGv">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3ej-ZH-z20">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <containerView key="tableFooterView" opaque="NO" contentMode="scaleToFill" id="qp6-2j-fbV">
+                                    <rect key="frame" x="0.0" y="122" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                </containerView>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SeriesListTableViewCell" rowHeight="66" id="HIQ-Kp-OF6" customClass="SeriesListTableViewCell" customModule="piction_ios_shareEx" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="66"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HIQ-Kp-OF6" id="u0d-EF-Lws">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="66"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="axP-3d-yYD">
+                                                    <rect key="frame" x="20" y="16" width="374" height="34"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="35" id="0t1-qh-fub"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                    <color key="textColor" name="PictionDarkGray"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="axP-3d-yYD" firstAttribute="top" secondItem="u0d-EF-Lws" secondAttribute="top" constant="16" id="Gzl-df-xxA"/>
+                                                <constraint firstAttribute="trailing" secondItem="axP-3d-yYD" secondAttribute="trailing" constant="20" id="aMS-6E-WDf"/>
+                                                <constraint firstAttribute="bottom" secondItem="axP-3d-yYD" secondAttribute="bottom" constant="16" id="ivS-zl-1GN"/>
+                                                <constraint firstItem="axP-3d-yYD" firstAttribute="leading" secondItem="u0d-EF-Lws" secondAttribute="leading" constant="20" id="whr-2h-jFM"/>
+                                                <constraint firstItem="axP-3d-yYD" firstAttribute="centerY" secondItem="u0d-EF-Lws" secondAttribute="centerY" id="xMT-j0-ULM"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="axP-3d-yYD" id="J3p-Dh-7IQ"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W4h-BC-io4">
+                                <rect key="frame" x="0.0" y="832" width="414" height="64"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="rwI-FS-raL"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <state key="normal" title="시리즈 추가">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_add_series"/>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="3ej-ZH-z20" firstAttribute="leading" secondItem="et8-gc-hgN" secondAttribute="leading" id="1Ad-gg-lmZ"/>
+                            <constraint firstItem="et8-gc-hgN" firstAttribute="trailing" secondItem="3ej-ZH-z20" secondAttribute="trailing" id="4IM-t2-M0Z"/>
+                            <constraint firstItem="W4h-BC-io4" firstAttribute="trailing" secondItem="et8-gc-hgN" secondAttribute="trailing" id="6Rv-Xs-t2Q"/>
+                            <constraint firstAttribute="bottom" secondItem="W4h-BC-io4" secondAttribute="bottom" id="b4k-iS-wE3"/>
+                            <constraint firstItem="W4h-BC-io4" firstAttribute="leading" secondItem="et8-gc-hgN" secondAttribute="leading" id="dg8-xB-04c"/>
+                            <constraint firstAttribute="bottom" secondItem="3ej-ZH-z20" secondAttribute="bottom" id="tzd-Ea-ZUj"/>
+                            <constraint firstItem="3ej-ZH-z20" firstAttribute="top" secondItem="55j-jF-CGv" secondAttribute="top" id="ugg-fI-8bP"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="et8-gc-hgN"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="시리즈 관리" id="8zj-V9-nwI">
+                        <barButtonItem key="leftBarButtonItem" title="닫기" id="JlS-bG-D2R">
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="close"/>
+                            </userDefinedRuntimeAttributes>
+                        </barButtonItem>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_series_management"/>
+                        </userDefinedRuntimeAttributes>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="closeButton" destination="JlS-bG-D2R" id="BwD-6o-0Gg"/>
+                        <outlet property="createButton" destination="W4h-BC-io4" id="Mv6-ze-5yU"/>
+                        <outlet property="emptyView" destination="qp6-2j-fbV" id="bW0-W2-k1W"/>
+                        <outlet property="tableView" destination="3ej-ZH-z20" id="uZc-8s-Zct"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LLD-Ll-RPw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="968.11594202898561" y="99.776785714285708"/>
+        </scene>
+    </scenes>
+    <resources>
+        <namedColor name="PictionDarkGray">
+            <color red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

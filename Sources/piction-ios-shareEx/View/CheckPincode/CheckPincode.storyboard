@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Check Pincode View Controller-->
+        <scene sceneID="emJ-aD-dJQ">
+            <objects>
+                <viewController storyboardIdentifier="CheckPincodeViewController" id="tsX-ue-C65" customClass="CheckPincodeViewController" customModule="piction_ios_shareEx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Hdh-pN-noI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="DKf-LK-f93">
+                                <rect key="frame" x="0.0" y="92" width="414" height="166.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bsQ-hX-e0e">
+                                        <rect key="frame" x="204.5" y="0.0" width="5.5" height="29"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                        <color key="textColor" name="PictionDarkGray"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PIN 번호를 입력하세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNd-2I-gYa">
+                                        <rect key="frame" x="123.5" y="45" width="167.5" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="textColor" name="PictionDarkGray"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_input_pincode"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dKV-bu-JSL">
+                                        <rect key="frame" x="0.0" y="82.5" width="414" height="84"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G6Z-AQ-Rfm">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="84"/>
+                                                <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" secureTextEntry="YES"/>
+                                            </textField>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vtI-2s-zJs">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="84"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="qnm-wn-a2B">
+                                                        <rect key="frame" x="87" y="32" width="240" height="20"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k6Y-As-9sF" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                                <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="20" id="erj-TS-Kau"/>
+                                                                    <constraint firstAttribute="height" constant="20" id="jxB-qT-zeS"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                        <real key="value" value="10"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                        <real key="value" value="0.0"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SYW-jM-PSX" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
+                                                                <rect key="frame" x="44" y="0.0" width="20" height="20"/>
+                                                                <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="20" id="5Hp-7G-LXq"/>
+                                                                    <constraint firstAttribute="width" constant="20" id="ILQ-Vu-CNP"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                        <real key="value" value="10"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                        <real key="value" value="0.0"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f28-Uk-XoG" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
+                                                                <rect key="frame" x="88" y="0.0" width="20" height="20"/>
+                                                                <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="20" id="fCM-9u-6qK"/>
+                                                                    <constraint firstAttribute="width" constant="20" id="ihP-VL-DRV"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                        <real key="value" value="10"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                        <real key="value" value="0.0"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n3F-4t-Sec" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
+                                                                <rect key="frame" x="132" y="0.0" width="20" height="20"/>
+                                                                <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="20" id="7t7-cR-fDc"/>
+                                                                    <constraint firstAttribute="width" constant="20" id="Tp3-ai-CPT"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                        <real key="value" value="10"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                        <real key="value" value="0.0"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hFL-cn-eVm" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
+                                                                <rect key="frame" x="176" y="0.0" width="20" height="20"/>
+                                                                <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="20" id="1my-hj-HmV"/>
+                                                                    <constraint firstAttribute="width" constant="20" id="xGQ-bp-wVQ"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                        <real key="value" value="10"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                        <real key="value" value="0.0"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xyU-i5-HzB" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
+                                                                <rect key="frame" x="220" y="0.0" width="20" height="20"/>
+                                                                <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="20" id="ZN0-zS-qoF"/>
+                                                                    <constraint firstAttribute="width" constant="20" id="jVV-bF-EPt"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                        <real key="value" value="10"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                        <real key="value" value="0.0"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FMp-hw-rAe">
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="84"/>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="qnm-wn-a2B" firstAttribute="centerX" secondItem="vtI-2s-zJs" secondAttribute="centerX" id="0jj-Ky-k4f"/>
+                                                    <constraint firstItem="FMp-hw-rAe" firstAttribute="leading" secondItem="vtI-2s-zJs" secondAttribute="leading" id="3kU-Bh-xnt"/>
+                                                    <constraint firstItem="FMp-hw-rAe" firstAttribute="top" secondItem="vtI-2s-zJs" secondAttribute="top" id="Hf5-S6-1sr"/>
+                                                    <constraint firstItem="qnm-wn-a2B" firstAttribute="centerY" secondItem="vtI-2s-zJs" secondAttribute="centerY" id="Tgl-z1-FIQ"/>
+                                                    <constraint firstAttribute="trailing" secondItem="FMp-hw-rAe" secondAttribute="trailing" id="a42-yD-iPi"/>
+                                                    <constraint firstAttribute="bottom" secondItem="FMp-hw-rAe" secondAttribute="bottom" id="hGT-3Q-nPu"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="G6Z-AQ-Rfm" firstAttribute="top" secondItem="dKV-bu-JSL" secondAttribute="top" id="1dZ-pz-Zmk"/>
+                                            <constraint firstItem="G6Z-AQ-Rfm" firstAttribute="leading" secondItem="dKV-bu-JSL" secondAttribute="leading" id="HlY-Ld-Iyj"/>
+                                            <constraint firstAttribute="height" constant="84" id="Xp8-hO-mrP"/>
+                                            <constraint firstAttribute="bottom" secondItem="G6Z-AQ-Rfm" secondAttribute="bottom" id="eCl-gN-ceh"/>
+                                            <constraint firstAttribute="trailing" secondItem="vtI-2s-zJs" secondAttribute="trailing" id="fKA-Tc-koG"/>
+                                            <constraint firstAttribute="bottom" secondItem="vtI-2s-zJs" secondAttribute="bottom" id="hUa-wD-OIn"/>
+                                            <constraint firstAttribute="trailing" secondItem="G6Z-AQ-Rfm" secondAttribute="trailing" id="imp-gT-W8w"/>
+                                            <constraint firstItem="vtI-2s-zJs" firstAttribute="top" secondItem="dKV-bu-JSL" secondAttribute="top" id="tfO-L9-tQ1"/>
+                                            <constraint firstItem="vtI-2s-zJs" firstAttribute="leading" secondItem="dKV-bu-JSL" secondAttribute="leading" id="uSP-x8-Wul"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="dKV-bu-JSL" secondAttribute="trailing" id="ecZ-Z1-4uk"/>
+                                    <constraint firstItem="dKV-bu-JSL" firstAttribute="leading" secondItem="DKf-LK-f93" secondAttribute="leading" id="k4f-SR-Wsy"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="DKf-LK-f93" secondAttribute="trailing" id="1Ok-Vc-kEq"/>
+                            <constraint firstItem="DKf-LK-f93" firstAttribute="top" secondItem="Hdh-pN-noI" secondAttribute="top" constant="92" id="EF0-TN-yJF"/>
+                            <constraint firstItem="DKf-LK-f93" firstAttribute="leading" secondItem="lKW-Zo-cUU" secondAttribute="leading" id="ZN9-zZ-ot9"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="lKW-Zo-cUU"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="EaA-Ed-pT6">
+                        <barButtonItem key="leftBarButtonItem" enabled="NO" id="ELj-TZ-JHG"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="closeButton" destination="ELj-TZ-JHG" id="MpL-99-Dv4"/>
+                        <outlet property="pincode1View" destination="k6Y-As-9sF" id="gvv-4q-EHd"/>
+                        <outlet property="pincode2View" destination="SYW-jM-PSX" id="n8U-er-1sr"/>
+                        <outlet property="pincode3View" destination="f28-Uk-XoG" id="Xcn-5b-83w"/>
+                        <outlet property="pincode4View" destination="n3F-4t-Sec" id="a1z-e6-8cD"/>
+                        <outlet property="pincode5View" destination="hFL-cn-eVm" id="dJn-Sh-WGQ"/>
+                        <outlet property="pincode6View" destination="xyU-i5-HzB" id="tx1-lZ-HOH"/>
+                        <outlet property="pincodeTextField" destination="G6Z-AQ-Rfm" id="djH-ZU-JcK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wGa-Qv-6QO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2103.1999999999998" y="112.3152709359606"/>
+        </scene>
+    </scenes>
+    <resources>
+        <namedColor name="PictionDarkGray">
+            <color red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

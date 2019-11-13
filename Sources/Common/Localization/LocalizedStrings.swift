@@ -217,6 +217,62 @@ enum LocalizedStrings {
 
     case str_delete_profile_image
     case str_change_profile_image
+
+    case str_post_status_public
+    case str_post_status_fanpass
+    case str_post_status_private
+    case str_post_status_deprecated
+    case str_cancel_creation_post
+    case str_select_project
+    case str_select_series
+
+    case str_create_post
+    case str_post_title
+    case str_post_content
+
+    case str_login_first
+    case str_create_project_first
+    case str_select_project_first
+    case str_saving_post
+    case str_save_post_complete
+
+    case str_modify
+    case str_delete_series
+    case str_deleted_series
+
+    case str_add_series
+    case str_modify_series
+    case str_sort
+
+    case str_series_management
+
+    case str_create_project
+    case str_modify_project
+    case str_project_title
+    case str_project_id
+    case str_create_project_id_placeholder
+    case str_create_project_uri
+    case str_create_project_thumbnail_image
+    case str_create_project_widethumbnail_guide
+    case str_create_project_thumbnail_guide
+    case str_create_project_synopsis_guide
+    case str_create_tag_placeholder
+    case str_create_project_hidden
+    case str_create_project_hidden_description
+
+    case str_modify_post
+
+    case str_select_image_position
+    case str_cover_image
+    case str_create_post_cover_image_guide
+    case str_post_content_image
+    case str_setting_post_status
+
+    case str_post_publish_date
+    case str_post_publish_now
+    case str_post_publish_guide
+
+    case str_subscription_user_list
 }
 
 extension LocalizedStrings {
