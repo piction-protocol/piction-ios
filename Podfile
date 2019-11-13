@@ -51,3 +51,25 @@ target 'piction-ios-test' do
   util_pods
   sdk_pods
 end
+
+target 'piction-ios-shareEx' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for piction-ios-test
+  ui_pods
+  rx_pods
+  util_pods
+  sdk_pods
+end
+
+target 'piction-ios-test-shareEx' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for piction-ios-test
+  ui_pods
+  rx_pods
+  util_pods
+  sdk_pods
+end
