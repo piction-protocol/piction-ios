@@ -9,8 +9,9 @@
 import UIKit
 import CoreData
 import SDWebImage
-import Firebase
+import FirebaseCore
 import FirebaseMessaging
+import FirebaseInstanceID
 import PictionSDK
 
 @UIApplicationMain
@@ -63,10 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // show the dialog at a more appropriate time move this registration accordingly.
         // [START register_for_notifications]
         // fcm token
-//        if let token = Messaging.messaging().fcmToken {
-            registerNotification()
-//            FcmAPI.registerToken(with: token)
-//        }
+        registerNotification()
         // [END register_for_notifications]
 
         AppShortcuts.sync()
@@ -161,6 +159,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        print("fcmToken: \(fcmToken)")
+    }
+
      // [START receive_message]
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
       // If you are receiving a notification message while your app is in the background,
@@ -197,22 +199,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-      print("Unable to register for remote notifications: \(error.localizedDescription)")
+        print("Unable to register for remote notifications: \(error.localizedDescription)")
     }
 
     func application(_ application: UIApplication,
                          didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-            print("APNs token retrieved: \(deviceToken)")
+        print("APNs token retrieved: \(deviceToken)")
 
-            // With swizzling disabled you must set the APNs token here.
-            Messaging.messaging().apnsToken = deviceToken
-
-            InstanceID.instanceID().deleteID(handler: { error in
-                if error != nil {
-    //                print("ERROR: deleteId")
-                }
-            })
-        }
+        // With swizzling disabled you must set the APNs token here.
+        Messaging.messaging().apnsToken = deviceToken
+    }
 }
 
 extension AppDelegate {
@@ -285,20 +281,6 @@ extension AppDelegate: MessagingDelegate {
     // [START refresh_token]
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
         print("Firebase registration token: \(fcmToken)")
-
-//        let dataDict:[String: String] = ["token": fcmToken]
-//        NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
-
-//        FcmAPI.registerToken(with: fcmToken)
-//
-//        FcmAPI.getTopics()
-//            .asObservable()
-//            .subscribe(onNext: { topics in
-//                for topic in topics {
-//                    FCMManager.shared.subscribe(string: topic)
-//                }
-//            })
-//            .disposed(by: self.disposeBag)
 
         // TODO: If necessary send token to application server.
         // Note: This callback is fired at each app startup and whenever a new token is generated.

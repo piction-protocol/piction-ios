@@ -9,18 +9,20 @@ def ui_pods
   pod 'UIScrollView-InfiniteScroll'
   pod 'GSKStretchyHeaderView'
   pod 'Gridicons'
-  pod "WSTagsField"
+  pod 'WSTagsField'
 end
 
 def rx_pods
   pod 'RxDataSources'
+  pod 'RxGesture'
 end
 
 def util_pods
   pod 'Swinject'
   pod 'Kanna'
-  pod 'FirebaseMessaging'
-  pod 'FirebaseCore'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Messaging'
+  pod 'Firebase/RemoteConfig'
   pod 'ViewModelBindable', :git => 'https://github.com/jhseo/ViewModelBindable.git', :commit => '82811d20fd9a802605c38009e356878f251b0124'
 end
 
