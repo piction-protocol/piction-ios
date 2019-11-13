@@ -120,6 +120,7 @@ extension SearchViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+                FirebaseManager.screenName("검색")
             })
             .disposed(by: disposeBag)
 

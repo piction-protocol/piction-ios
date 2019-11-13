@@ -219,6 +219,8 @@ extension CreatePostViewController: ViewModelBindable {
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
 //                self?.tabBarController?.tabBar.isHidden = true
                 self?.publishDateLabel.text = "\(Date().toString(format: "yyyy.MM.dd. a hh:mm:ss"))"
+                let uri = self?.viewModel?.uri ?? ""
+                FirebaseManager.screenName("포스트작성_\(uri)")
             })
             .disposed(by: disposeBag)
 

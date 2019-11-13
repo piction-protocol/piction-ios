@@ -102,6 +102,7 @@ extension SubscriptionListViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
+                FirebaseManager.screenName("구독")
             })
             .disposed(by: disposeBag)
 

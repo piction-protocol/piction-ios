@@ -39,8 +39,10 @@ final class ViewModelAssembly: Assembly {
             )
         }
 
-        container.register(SignUpCompleteViewModel.self) { resolver in
-            return SignUpCompleteViewModel()
+        container.register(SignUpCompleteViewModel.self) { (resolver, loginId: String) in
+            return SignUpCompleteViewModel(
+                loginId: loginId
+            )
         }
 
         container.register(MyPageViewModel.self) { resolver in

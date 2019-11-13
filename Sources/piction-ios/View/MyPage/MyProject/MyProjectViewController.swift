@@ -81,6 +81,7 @@ extension MyProjectViewController: ViewModelBindable {
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self?.createProjectButton.isEnabled = FEATURE_EDITOR
                 self?.createProjectButton.title = FEATURE_EDITOR ? LocalizedStrings.create.localized() : ""
+                FirebaseManager.screenName("마이페이지_나의프로젝트")
             })
             .disposed(by: disposeBag)
         

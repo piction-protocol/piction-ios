@@ -63,6 +63,7 @@ extension TagListViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+                FirebaseManager.screenName("태그")
             })
             .disposed(by: disposeBag)
 

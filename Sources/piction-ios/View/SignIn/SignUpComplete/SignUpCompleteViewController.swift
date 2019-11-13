@@ -48,6 +48,8 @@ extension SignUpCompleteViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+                let loginId = self?.viewModel?.loginId ?? ""
+                FirebaseManager.screenName("회원가입완료_\(loginId)")
             })
             .disposed(by: disposeBag)
 

@@ -76,6 +76,7 @@ extension ChangePasswordViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+                FirebaseManager.screenName("마이페이지_비밀번호변경")
             })
             .disposed(by: disposeBag)
 

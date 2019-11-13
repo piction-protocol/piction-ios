@@ -178,6 +178,7 @@ extension MyPageViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
+                FirebaseManager.screenName("마이페이지")
             })
             .disposed(by: disposeBag)
 

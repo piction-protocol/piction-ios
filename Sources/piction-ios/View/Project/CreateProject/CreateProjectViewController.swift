@@ -146,6 +146,7 @@ extension CreateProjectViewController: ViewModelBindable {
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
 //                self?.tabBarController?.tabBar.isHidden = true
+                FirebaseManager.screenName("프로젝트 생성")
             })
             .disposed(by: disposeBag)
 

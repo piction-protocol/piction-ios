@@ -41,8 +41,8 @@ extension SignUpViewController {
 }
 
 extension SignUpCompleteViewController {
-    static func make() -> SignUpCompleteViewController {
-        return Container.shared.resolve(SignUpCompleteViewController.self)!
+    static func make(loginId: String) -> SignUpCompleteViewController {
+        return Container.shared.resolve(SignUpCompleteViewController.self, argument: loginId)!
     }
 }
 

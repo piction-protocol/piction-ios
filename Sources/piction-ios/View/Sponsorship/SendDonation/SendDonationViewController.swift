@@ -92,6 +92,8 @@ extension SendDonationViewController: ViewModelBindable {
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
 //                self?.tabBarController?.tabBar.isHidden = true
                 self?.amountTextField.becomeFirstResponder()
+                let userId = self?.viewModel?.loginId ?? ""
+                FirebaseManager.screenName("후원_후원하기_후원금액입력_\(userId)")
             })
             .disposed(by: disposeBag)
 

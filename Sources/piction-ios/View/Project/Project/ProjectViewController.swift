@@ -267,6 +267,8 @@ extension ProjectViewController: ViewModelBindable {
                 self?.navigationController?.configureNavigationBar(transparent: true, shadow: false)
                 self?.navigationController?.navigationBar.barStyle = .black
                 self?.navigationController?.navigationBar.tintColor = .white
+                let uri = self?.viewModel?.uri ?? ""
+                FirebaseManager.screenName("프로젝트상세_\(uri)")
             })
             .disposed(by: disposeBag)
 

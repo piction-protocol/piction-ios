@@ -115,6 +115,7 @@ extension SponsorshipListViewController: ViewModelBindable {
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
                 self?.navigationController?.navigationBar.barStyle = .default
                 self?.navigationController?.navigationBar.tintColor = UIView().tintColor
+                FirebaseManager.screenName("후원")
             })
             .disposed(by: disposeBag)
 

@@ -66,6 +66,7 @@ extension SponsorshipHistoryViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+                FirebaseManager.screenName("후원_후원기록")
             })
             .disposed(by: disposeBag)
 

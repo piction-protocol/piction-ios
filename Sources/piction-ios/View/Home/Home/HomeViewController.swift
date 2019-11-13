@@ -160,6 +160,7 @@ extension HomeViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
+                FirebaseManager.screenName("홈")
             })
             .disposed(by: disposeBag)
 

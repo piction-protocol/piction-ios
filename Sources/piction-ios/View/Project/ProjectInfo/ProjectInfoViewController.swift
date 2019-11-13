@@ -76,6 +76,8 @@ extension ProjectInfoViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+                let uri = self?.viewModel?.uri ?? ""
+                FirebaseManager.screenName("프로젝트상세_정보_\(uri)")
             })
             .disposed(by: disposeBag)
 

@@ -143,6 +143,9 @@ extension SeriesListViewController: ViewModelBindable {
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self?.tableView.allowsSelection = self?.delegate != nil
                 self?.tableView.allowsSelectionDuringEditing = self?.delegate != nil
+                let uri = self?.viewModel?.uri ?? ""
+                let seriesId = self?.viewModel?.seriesId ?? 0
+                FirebaseManager.screenName("시리즈목록_\(uri)_\(seriesId)")
             })
             .disposed(by: disposeBag)
 

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Firebase
+import FirebaseAnalytics
 
 class FirebaseManager {
     class func screenName(_ screenName: String) {

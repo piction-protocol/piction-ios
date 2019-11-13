@@ -69,6 +69,7 @@ extension RegisterPincodeViewController: ViewModelBindable {
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: true, shadow: false)
                 self?.pincodeTextField.becomeFirstResponder()
+                FirebaseManager.screenName("새PIN설정")
             })
             .disposed(by: disposeBag)
 

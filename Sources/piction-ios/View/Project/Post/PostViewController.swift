@@ -193,6 +193,9 @@ extension PostViewController: ViewModelBindable {
                     left: 0,
                     bottom:  self?.navigationController?.toolbar.bounds.size.height ?? 0,
                     right: 0)
+                let uri = self?.viewModel?.uri ?? ""
+                let postId = self?.viewModel?.postId ?? 0
+                FirebaseManager.screenName("포스트뷰어_\(uri)_\(postId)")
             })
             .disposed(by: disposeBag)
 

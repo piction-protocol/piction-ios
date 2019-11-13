@@ -43,9 +43,9 @@ final class ViewControllerAssembly: Assembly {
             return vc
         }
 
-        container.register(SignUpCompleteViewController.self) { resolver in
+        container.register(SignUpCompleteViewController.self) { (resolver, loginId: String) in
             let vc = Storyboard.SignUpComplete.instantiate(SignUpCompleteViewController.self)
-            vc.viewModel = resolver.resolve(SignUpCompleteViewModel.self)!
+            vc.viewModel = resolver.resolve(SignUpCompleteViewModel.self, argument: loginId)!
             return vc
         }
 

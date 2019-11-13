@@ -51,6 +51,9 @@ extension ConfirmDonationViewController: ViewModelBindable {
 //                self?.tabBarController?.tabBar.isHidden = true
                 self?.navigationItem.hidesBackButton = true
                 self?.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+
+                let userId = self?.viewModel?.loginId ?? ""
+                FirebaseManager.screenName("후원_후원하기_후원금액입력_후원완료_\(userId)")
             })
             .disposed(by: disposeBag)
 

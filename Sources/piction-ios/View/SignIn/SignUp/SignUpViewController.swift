@@ -77,8 +77,8 @@ final class SignUpViewController: UIViewController {
         }
     }
 
-    private func openSignUpComplete() {
-        let vc = SignUpCompleteViewController.make()
+    private func openSignUpComplete(loginId: String) {
+        let vc = SignUpCompleteViewController.make(loginId: loginId)
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .push)
         }
@@ -118,6 +118,7 @@ extension SignUpViewController: ViewModelBindable {
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self?.tabBarController?.tabBar.isHidden = true
+                FirebaseManager.screenName("회원가입")
             })
             .disposed(by: disposeBag)
 
@@ -154,7 +155,8 @@ extension SignUpViewController: ViewModelBindable {
         output
             .openSignUpComplete
             .drive(onNext: { [weak self] in
-                self?.openSignUpComplete()
+                let loginId = self?.loginIdInputView.inputTextField.text ?? ""
+                self?.openSignUpComplete(loginId: loginId)
             })
             .disposed(by: disposeBag)
 

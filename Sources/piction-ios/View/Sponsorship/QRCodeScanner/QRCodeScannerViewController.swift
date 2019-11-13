@@ -80,6 +80,7 @@ extension QRCodeScannerViewController: ViewModelBindable {
                 if !(self?.captureSession?.isRunning ?? false) {
                     self?.captureSession.startRunning()
                 }
+                FirebaseManager.screenName("후원_후원하기_QR코드인식")
             })
             .disposed(by: disposeBag)
 
