@@ -17,26 +17,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="BAA-VN-PbO">
-                            <rect key="frame" x="0.0" y="306" width="375" height="0.0"/>
+                            <rect key="frame" x="0.0" y="247" width="375" height="0.0"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MyProjectTableViewCell" rowHeight="250" id="iuu-PZ-vgi" customClass="MyProjectTableViewCell" customModule="piction_ios" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="250"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="MyProjectTableViewCell" rowHeight="191" id="iuu-PZ-vgi" customClass="MyProjectTableViewCell" customModule="piction_ios" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="191"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iuu-PZ-vgi" id="s6k-rd-Rh4">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="250"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="191"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U1p-kY-HiY" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
-                                            <rect key="frame" x="20" y="20" width="335" height="168"/>
+                                            <rect key="frame" x="20" y="20" width="335" height="109"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-dummy-projectcover-1440-x-450" translatesAutoresizingMaskIntoConstraints="NO" id="fq2-1a-w8w" customClass="UIImageViewExtension" customModule="piction_ios" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="168"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-dummy-projectcover-1440-x-450" translatesAutoresizingMaskIntoConstraints="NO" id="fq2-1a-w8w" customClass="UIImageViewExtension" customModule="piction_ios" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="109"/>
                                                     <color key="backgroundColor" red="0.94867008919999996" green="0.94938892129999997" blue="0.94878143069999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" secondItem="fq2-1a-w8w" secondAttribute="height" multiplier="335:167.5" id="2P9-II-t6a"/>
+                                                        <constraint firstAttribute="width" secondItem="fq2-1a-w8w" secondAttribute="height" multiplier="327:106" id="2P9-II-t6a"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
@@ -48,18 +48,18 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ewY-Nb-71i" customClass="VisualEffectView" customModule="piction_ios" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="168"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="109"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="wRa-gk-MhJ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="168"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="109"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     </view>
                                                     <blurEffect style="regular"/>
                                                 </visualEffectView>
                                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nC7-zK-hhG">
-                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="168"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="109"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Uwj-rj-bTT">
-                                                            <rect key="frame" x="149.33333333333334" y="59.666666666666671" width="36.333333333333343" height="49"/>
+                                                            <rect key="frame" x="149.33333333333334" y="30" width="36.333333333333343" height="49"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icLockedWh" translatesAutoresizingMaskIntoConstraints="NO" id="Omf-uF-KZQ">
                                                                     <rect key="frame" x="6.3333333333333144" y="0.0" width="24" height="24"/>
@@ -109,7 +109,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="27h-4N-pyM">
-                                            <rect key="frame" x="20" y="204" width="335" height="42"/>
+                                            <rect key="frame" x="20" y="145" width="335" height="42"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ID-R2-SvL">
                                                     <rect key="frame" x="0.0" y="0.0" width="335" height="21"/>
