@@ -140,6 +140,22 @@ extension RegisterPincodeViewController: ViewModelBindable {
                 self?.openRecommendPopup()
             })
             .disposed(by: disposeBag)
+    }
+}
 
+extension RegisterPincodeViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if (string.count == 0) {
+            return true
+        }
+
+        if (textField == self.pincodeTextField) {
+            let cs = CharacterSet(charactersIn: "0123456789")
+            let filtered = string.components(separatedBy: cs).filter {  !$0.isEmpty }
+            let str = filtered.joined(separator: "")
+
+            return (string != str)
+        }
+        return true
     }
 }
