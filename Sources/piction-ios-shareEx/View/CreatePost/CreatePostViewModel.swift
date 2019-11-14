@@ -211,39 +211,61 @@ final class CreatePostViewModel: ViewModel {
         let uploadContentImageAction = uploadCoverImage
             .withLatestFrom(postItems)
             .filter { $0.images.count > 0 }
-            .flatMap { postItems -> Driver<Action<ResponseData>> in
+            .flatMap { postItems -> Driver<[Action<ResponseData>]> in
                 guard let uri = postItems.project?.uri else { return Driver.empty() }
-                guard let contentImage = postItems.images.first else { return Driver.empty() }
 
-                let response = PictionSDK.rx.requestAPI(PostsAPI.uploadContentImage(uri: uri, image: contentImage))
-                return Action.makeDriver(response)
+                var responses: [Driver<Action<ResponseData>>] = []
+                for image in postItems.images {
+                    let response = Action.makeDriver(PictionSDK.rx.requestAPI(PostsAPI.uploadContentImage(uri: uri, image: image)))
+                    responses.append(response)
+                }
+                return Driver.zip(responses)
             }
 
-        let uploadContentImageSuccess = uploadContentImageAction.elements
-            .flatMap { [weak self] response -> Driver<String?> in
+        let uploadContentImageSuccess = uploadContentImageAction
+            .flatMap { [weak self] responses -> Driver<Void> in
                 guard let `self` = self else { return Driver.empty() }
-                guard let storageAttachment = try? response.map(to: StorageAttachmentModel.self) else { return Driver.empty() }
-                self.contentHtml = "<p><img src=\"\(storageAttachment.url ?? "")\"></p>"
-                return Driver.just(storageAttachment.id ?? "")
+                for (index, element) in responses.enumerated() {
+                    switch element {
+                    case .succeeded(let response):
+                        guard let storageAttachment = try? response.map(to: StorageAttachmentModel.self) else { return Driver.empty() }
+                        self.contentHtml += "<p><img src=\"\(storageAttachment.url ?? "")\"></p>"
+
+                        if index >= responses.count - 1 {
+                            return Driver.just(())
+                        }
+                    default:
+                        return Driver.empty()
+                    }
+                }
+                return Driver.empty()
             }
 
-        let uploadContentImageError = uploadContentImageAction.error
-            .flatMap { response -> Driver<String> in
-                let errorMsg = response as? ErrorType
-                return Driver.just(errorMsg?.message ?? "")
+        let uploadContentImageError = uploadContentImageAction
+            .flatMap { responses -> Driver<String> in
+                for response in responses {
+                    switch response {
+                    case .failed(let error):
+                        let errorMsg = error as? ErrorType
+                        return Driver.just(errorMsg?.message ?? "")
+                    default:
+                        return Driver.empty()
+                    }
+                }
+                return Driver.empty()
             }
 
         let uploadContentImageNotExist = input.saveBtnDidTap
             .withLatestFrom(postItems)
             .filter { $0.images.count == 0 }
-            .flatMap { _ in return Driver<String?>.just(nil) }
+            .flatMap { _ in return Driver<Void>.just(()) }
 
         let uploadContentImage = Driver.merge(uploadContentImageSuccess, uploadContentImageNotExist)
 
         let alreadyUploadImage = input.saveBtnDidTap
             .withLatestFrom(postItems)
             .filter { $0.coverId != nil }
-            .flatMap { _ in Driver<String?>.just(nil) }
+            .flatMap { _ in Driver<Void>.just(()) }
 
         let uploadSuccess = Driver.merge(alreadyUploadImage, uploadContentImage)
 
@@ -281,7 +303,7 @@ final class CreatePostViewModel: ViewModel {
 
         let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
 
-        let showToast = Driver.merge(saveBtnDidTap, openSeriesError, uploadCoverImageError, uploadContentImageError, saveError)
+        let showToast = Driver.merge(saveBtnDidTap, openSeriesError, uploadCoverImageError, saveError, uploadContentImageError)
 
         let dismissViewController = Driver.merge(saveSuccess, userMeError, cancelAction, projectListError)
 

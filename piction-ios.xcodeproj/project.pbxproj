@@ -936,10 +936,10 @@
 		430923372372B41500716AF8 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				43EBE1AA2378E88A0081C3B7 /* ProjectList */,
 				43C41F752373EB3500D012A7 /* CheckPincode */,
 				43C41F532373B25A00D012A7 /* EmptyView */,
 				430924202372CB4F00716AF8 /* CreatePost */,
+				43EBE1AA2378E88A0081C3B7 /* ProjectList */,
 				4309241F2372CB4700716AF8 /* SeriesList */,
 				4309234B2372B5A200716AF8 /* ShareEntryViewController.swift */,
 			);
