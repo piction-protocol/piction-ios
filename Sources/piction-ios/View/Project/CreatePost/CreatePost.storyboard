@@ -357,7 +357,7 @@
                                                         <color key="textColor" name="PictionDarkGray"/>
                                                         <nil key="highlightedColor"/>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_publish_date"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_post_publish_date"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w5B-lH-Nal">
@@ -391,7 +391,7 @@
                                                                         <color key="textColor" name="PictionDarkGray"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_publish_now"/>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_post_publish_now"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                 </subviews>

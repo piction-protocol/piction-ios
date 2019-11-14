@@ -223,7 +223,7 @@
 "str_post_status_fanpass" = "멤버십 구독자 공개";
 "str_post_status_private" = "비공개";
 "str_post_status_deprecated" = "부적절한 콘텐츠";
-
+
 "str_cancel_creation_post" = "포스트 작성을 취소하시겠습니까?";
 
 "str_select_project" = "프로젝트 선택";
@@ -256,7 +256,7 @@
 "str_project_title" = "프로젝트 제목";
 "str_project_id" = "프로젝트 ID";
 "str_create_project_id_placeholder" = "영문 소문자, 숫자, 대시(-)만 입력가능, 수정 불가";
-"str_create_project_uri" = "프로젝트 주소: ";
+"str_create_project_uri" = "프로젝트 주소";
 "str_create_project_thumbnail_image" = "프로젝트 대표 이미지";
 "str_create_project_widethumbnail_guide" = "JPG 또는 PNG 파일, 최대 10MB, 권장 사이즈 1440*450px";
 "str_create_project_thumbnail_guide" = "JPG 또는 PNG 파일, 최대 10MB, 권장 사이즈 500*500px";
