@@ -611,7 +611,7 @@ extension CreatePostViewController {
         textView.accessibilityLabel = accessibilityLabel
         textView.font = Constants.defaultContentFont
         textView.keyboardDismissMode = .interactive
-        textView.textColor = UIColor(red: 0x1A/255.0, green: 0x1A/255.0, blue: 0x1A/255.0, alpha: 1)
+        textView.textColor = UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51)
         textView.linkTextAttributes = [.foregroundColor: UIColor(red: 0x01 / 255.0, green: 0x60 / 255.0, blue: 0x87 / 255.0, alpha: 1), NSAttributedString.Key.underlineStyle: NSNumber(value: NSUnderlineStyle.single.rawValue)]
     }
 

@@ -148,7 +148,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="335" height="108.66666666666667"/>
                                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </button>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-dummy-post-960-x-360" translatesAutoresizingMaskIntoConstraints="NO" id="O4y-XD-Lfo">
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-dummy-post-960-x-360" translatesAutoresizingMaskIntoConstraints="NO" id="O4y-XD-Lfo">
                                                                 <rect key="frame" x="0.0" y="0.0" width="335" height="108.66666666666667"/>
                                                             </imageView>
                                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JU9-e1-0Fz">
