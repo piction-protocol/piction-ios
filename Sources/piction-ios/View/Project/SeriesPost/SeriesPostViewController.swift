@@ -40,8 +40,8 @@ final class SeriesPostViewController: UIViewController {
         embed(vc, to: emptyView)
     }
 
-    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<ContentsBySection> {
-        let dataSource = RxTableViewSectionedReloadDataSource<ContentsBySection>(
+    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionType<ContentsSection>> {
+        let dataSource = RxTableViewSectionedReloadDataSource<SectionType<ContentsSection>>(
             configureCell: { dataSource, tableView, indexPath, model in
                 switch dataSource[indexPath] {
                 case .seriesPostList(let post, let isSubscribing, let number):

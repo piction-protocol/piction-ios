@@ -13,37 +13,6 @@ import ViewModelBindable
 import RxDataSources
 import SafariServices
 
-enum MyPageBySection {
-    case Section(title: String, items: [MyPageItemType])
-}
-
-extension MyPageBySection: SectionModelType {
-    typealias Item = MyPageItemType
-
-    var items: [MyPageItemType] {
-        switch self {
-        case .Section(_, items: let items):
-            return items.map { $0 }
-        }
-    }
-
-    init(original: MyPageBySection, items: [Item]) {
-        switch original {
-        case .Section(title: let title, _):
-            self = .Section(title: title, items: items)
-        }
-    }
-}
-
-enum MyPageItemType {
-    case header(title: String)
-    case pushType(title: String)
-    case switchType(title: String, key: String)
-    case presentType(title: String, align: NSTextAlignment)
-    case underline
-}
-
-
 final class MyPageViewController: UIViewController {
     var disposeBag = DisposeBag()
 
@@ -129,8 +98,8 @@ final class MyPageViewController: UIViewController {
         embed(vc, to: emptyView)
     }
 
-    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<MyPageBySection> {
-        return RxTableViewSectionedReloadDataSource<MyPageBySection>(
+    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionType<MyPageSection>> {
+        return RxTableViewSectionedReloadDataSource<SectionType<MyPageSection>>(
             configureCell: { dataSource, tableView, indexPath, model in
                 switch dataSource[indexPath] {
                 case .header(let title):

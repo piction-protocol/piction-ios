@@ -10,6 +10,12 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
+enum SponsorshipListSection {
+    case button(type: SponsorshipListButtonType)
+    case header
+    case list(model: SponsorshipModel)
+}
+
 final class SponsorshipListViewModel: InjectableViewModel {
 
     typealias Dependency = (
@@ -18,7 +24,7 @@ final class SponsorshipListViewModel: InjectableViewModel {
 
     let updater: UpdaterProtocol
 
-    var sections: [SponsorshipListBySection] = []
+    var sections: [SectionType<SponsorshipListSection>] = []
 
     init(dependency: Dependency) {
         (updater) = dependency
@@ -34,7 +40,7 @@ final class SponsorshipListViewModel: InjectableViewModel {
     struct Output {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
-        let sponsorshipList: Driver<[SponsorshipListBySection]>
+        let sponsorshipList: Driver<[SectionType<SponsorshipListSection>]>
         let selectedIndexPath: Driver<IndexPath>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let isFetching: Driver<Bool>
@@ -67,27 +73,27 @@ final class SponsorshipListViewModel: InjectableViewModel {
             }
 
         let sponsorshipListSuccess = sponsorshipListAction.elements
-            .flatMap { [weak self] response -> Driver<[SponsorshipListBySection]> in
+            .flatMap { [weak self] response -> Driver<[SectionType<SponsorshipListSection>]> in
                 guard let `self` = self else { return Driver.empty() }
                 guard let pageList = try? response.map(to: PageViewResponse<SponsorshipModel>.self) else {
                     return Driver.empty()
                 }
-                let headerSection: [SponsorshipListItemType] = [
-                    SponsorshipListItemType.button(type: .sponsorship),
-                    SponsorshipListItemType.button(type: .history),
-                    SponsorshipListItemType.header,
+                let headerSection: [SponsorshipListSection] = [
+                    SponsorshipListSection.button(type: .sponsorship),
+                    SponsorshipListSection.button(type: .history),
+                    SponsorshipListSection.header,
                 ]
-                self.sections.append(SponsorshipListBySection.Section(title: "header", items: headerSection))
+                self.sections.append(SectionType<SponsorshipListSection>.Section(title: "header", items: headerSection))
 
-                let sponsorList: [SponsorshipListItemType] = (pageList.content ?? []).map { .list(model: $0) }
+                let sponsorList: [SponsorshipListSection] = (pageList.content ?? []).map { .list(model: $0) }
 
-                self.sections.append(SponsorshipListBySection.Section(title: "list", items: sponsorList))
+                self.sections.append(SectionType<SponsorshipListSection>.Section(title: "list", items: sponsorList))
 
                 return Driver.just(self.sections)
             }
 
         let sponsorshipListError = sponsorshipListAction.error
-            .flatMap { _ -> Driver<[SponsorshipListBySection]> in
+            .flatMap { _ -> Driver<[SectionType<SponsorshipListSection>]> in
                 return Driver.just([])
             }
 

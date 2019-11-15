@@ -14,35 +14,6 @@ import RxDataSources
 import UIScrollView_InfiniteScroll
 import PictionSDK
 
-enum TransactionHistoryBySection {
-    case Section(title: String, items: [TransactionHistoryItemType])
-}
-
-extension TransactionHistoryBySection: SectionModelType {
-    typealias Item = TransactionHistoryItemType
-
-    var items: [TransactionHistoryItemType] {
-        switch self {
-        case .Section(_, items: let items):
-            return items.map { $0 }
-        }
-    }
-
-    init(original: TransactionHistoryBySection, items: [Item]) {
-        switch original {
-        case .Section(title: let title, _):
-            self = .Section(title: title, items: items)
-        }
-    }
-}
-
-enum TransactionHistoryItemType {
-    case header
-    case year(model: String)
-    case list(model: TransactionModel, dateTitle: Bool)
-    case footer
-}
-
 final class TransactionHistoryViewController: UITableViewController {
     var disposeBag = DisposeBag()
 
@@ -62,8 +33,8 @@ final class TransactionHistoryViewController: UITableViewController {
         }
     }
 
-    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<TransactionHistoryBySection> {
-        let dataSource = RxTableViewSectionedReloadDataSource<TransactionHistoryBySection>(
+    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionType<TransactionHistorySection>> {
+        let dataSource = RxTableViewSectionedReloadDataSource<SectionType<TransactionHistorySection>>(
             configureCell: { (dataSource, tableView, indexPath, model) in
                 switch dataSource[indexPath] {
                 case .header:

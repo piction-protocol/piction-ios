@@ -14,43 +14,14 @@ import RxDataSources
 import SafariServices
 import PictionSDK
 
-enum TransactionDetailBySection {
-    case Section(title: String, items: [TransactionDetailItemType])
-}
-
-extension TransactionDetailBySection: SectionModelType {
-    typealias Item = TransactionDetailItemType
-
-    var items: [TransactionDetailItemType] {
-        switch self {
-        case .Section(_, items: let items):
-            return items.map { $0 }
-        }
-    }
-
-    init(original: TransactionDetailBySection, items: [Item]) {
-        switch original {
-        case .Section(title: let title, _):
-            self = .Section(title: title, items: items)
-        }
-    }
-}
-
-enum TransactionDetailItemType {
-    case info(transaction: TransactionModel)
-    case header(title: String)
-    case list(title: String, description: String, link: String)
-    case footer
-}
-
 final class TransactionDetailViewController: UIViewController {
     var disposeBag = DisposeBag()
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptyView: UIView!
 
-    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<TransactionDetailBySection> {
-        let dataSource = RxTableViewSectionedReloadDataSource<TransactionDetailBySection>(
+    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionType<TransactionDetailSection>> {
+        let dataSource = RxTableViewSectionedReloadDataSource<SectionType<TransactionDetailSection>>(
             configureCell: { dataSource, tableView, indexPath, model in
                 switch dataSource[indexPath] {
                 case .info(let model):

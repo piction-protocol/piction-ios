@@ -15,35 +15,6 @@ import UIScrollView_InfiniteScroll
 import GSKStretchyHeaderView
 import PictionSDK
 
-enum ContentsBySection {
-    case Section(title: String, items: [ContentsItemType])
-}
-
-extension ContentsBySection: SectionModelType {
-    typealias Item = ContentsItemType
-
-    var items: [ContentsItemType] {
-        switch self {
-        case .Section(_, items: let items):
-            return items.map { $0 }
-        }
-    }
-
-    init(original: ContentsBySection, items: [Item]) {
-        switch original {
-        case .Section(title: let title, _):
-            self = .Section(title: title, items: items)
-        }
-    }
-}
-
-enum ContentsItemType {
-    case postList(post: PostModel, isSubscribing: Bool)
-    case seriesPostList(post: PostModel, isSubscribing: Bool, number: Int)
-    case seriesHeader(series: SeriesModel)
-    case seriesList(series: SeriesModel)
-}
-
 final class ProjectViewController: UIViewController {
     var disposeBag = DisposeBag()
 
@@ -193,8 +164,8 @@ final class ProjectViewController: UIViewController {
         stretchyHeader?.frame.size.width = view.frame.size.width
     }
 
-    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<ContentsBySection> {
-        let dataSource = RxTableViewSectionedReloadDataSource<ContentsBySection>(
+    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionType<ContentsSection>> {
+        let dataSource = RxTableViewSectionedReloadDataSource<SectionType<ContentsSection>>(
             configureCell: { dataSource, tableView, indexPath, model in
                 switch dataSource[indexPath] {
                 case .postList(let post, let isSubscribing):

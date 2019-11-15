@@ -12,6 +12,14 @@ import RxDataSources
 import PictionSDK
 import LocalAuthentication
 
+enum MyPageSection {
+    case header(title: String)
+    case pushType(title: String)
+    case switchType(title: String, key: String)
+    case presentType(title: String, align: NSTextAlignment)
+    case underline
+}
+
 final class MyPageViewModel: InjectableViewModel {
 
     typealias Dependency = (
@@ -35,7 +43,7 @@ final class MyPageViewModel: InjectableViewModel {
     struct Output {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
-        let myPageList: Driver<[MyPageBySection]>
+        let myPageList: Driver<[SectionType<MyPageSection>]>
         let selectedIndexPath: Driver<IndexPath>
         let embedUserInfoViewController: Driver<Void>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
@@ -60,24 +68,24 @@ final class MyPageViewModel: InjectableViewModel {
             }
 
         let userMeSuccess = userMeAction.elements
-            .flatMap { _ -> Driver<[MyPageBySection]> in
-                let projectItems: [MyPageItemType] = [
-                    MyPageItemType.header(title: LocalizedStrings.str_project.localized()),
-                    MyPageItemType.pushType(title: LocalizedStrings.menu_my_project.localized()),
-                    MyPageItemType.underline
+            .flatMap { _ -> Driver<[SectionType<MyPageSection>]> in
+                let projectItems: [MyPageSection] = [
+                    MyPageSection.header(title: LocalizedStrings.str_project.localized()),
+                    MyPageSection.pushType(title: LocalizedStrings.menu_my_project.localized()),
+                    MyPageSection.underline
                 ]
 
-                let walletItems: [MyPageItemType] = [
-                    MyPageItemType.header(title: LocalizedStrings.str_piction_address_management.localized()),
-                    MyPageItemType.pushType(title: LocalizedStrings.str_transactions.localized()),
-                    MyPageItemType.pushType(title: LocalizedStrings.str_deposit.localized()),
-                    MyPageItemType.underline
+                let walletItems: [MyPageSection] = [
+                    MyPageSection.header(title: LocalizedStrings.str_piction_address_management.localized()),
+                    MyPageSection.pushType(title: LocalizedStrings.str_transactions.localized()),
+                    MyPageSection.pushType(title: LocalizedStrings.str_deposit.localized()),
+                    MyPageSection.underline
                 ]
 
-                var securityItems: [MyPageItemType] = [
-                    MyPageItemType.header(title: LocalizedStrings.str_security.localized()),
-                    KeychainManager.get(key: "pincode").isEmpty ? MyPageItemType.presentType(title: LocalizedStrings.str_create_pin.localized(), align: .left) : MyPageItemType.presentType(title: LocalizedStrings.str_change_pin.localized(), align: .left),
-                    MyPageItemType.underline
+                var securityItems: [MyPageSection] = [
+                    MyPageSection.header(title: LocalizedStrings.str_security.localized()),
+                    KeychainManager.get(key: "pincode").isEmpty ? MyPageSection.presentType(title: LocalizedStrings.str_create_pin.localized(), align: .left) : MyPageSection.presentType(title: LocalizedStrings.str_change_pin.localized(), align: .left),
+                    MyPageSection.underline
                 ]
 
                 if !KeychainManager.get(key: "pincode").isEmpty {
@@ -94,44 +102,44 @@ final class MyPageViewModel: InjectableViewModel {
                         }
 
                         if description != "" {
-                            let element = MyPageItemType.switchType(title: description, key: "isEnabledAuthBio")
+                            let element = MyPageSection.switchType(title: description, key: "isEnabledAuthBio")
                             securityItems.insert(element, at: 2)
                         }
                     }
                 }
 
-                let myInfoItems: [MyPageItemType] = [
-                    MyPageItemType.header(title: LocalizedStrings.str_user_profile.localized()),
-                    MyPageItemType.presentType(title: LocalizedStrings.str_change_basic_info.localized(), align: .left),
-                    MyPageItemType.presentType(title: LocalizedStrings.str_change_pw.localized(), align: .left),
-                    MyPageItemType.underline
+                let myInfoItems: [MyPageSection] = [
+                    MyPageSection.header(title: LocalizedStrings.str_user_profile.localized()),
+                    MyPageSection.presentType(title: LocalizedStrings.str_change_basic_info.localized(), align: .left),
+                    MyPageSection.presentType(title: LocalizedStrings.str_change_pw.localized(), align: .left),
+                    MyPageSection.underline
                 ]
 
-                let supportItems: [MyPageItemType] = [
-                    MyPageItemType.header(title: LocalizedStrings.str_service_center.localized()),
-                    MyPageItemType.presentType(title: LocalizedStrings.str_terms.localized(), align: .left),
-                    MyPageItemType.presentType(title: LocalizedStrings.str_privacy.localized(), align: .left),
-                    MyPageItemType.underline
+                let supportItems: [MyPageSection] = [
+                    MyPageSection.header(title: LocalizedStrings.str_service_center.localized()),
+                    MyPageSection.presentType(title: LocalizedStrings.str_terms.localized(), align: .left),
+                    MyPageSection.presentType(title: LocalizedStrings.str_privacy.localized(), align: .left),
+                    MyPageSection.underline
                 ]
 
-                let logoutItems: [MyPageItemType] = [
-                    MyPageItemType.presentType(title: LocalizedStrings.str_sign_out.localized(), align: .center),
-                    MyPageItemType.underline
+                let logoutItems: [MyPageSection] = [
+                    MyPageSection.presentType(title: LocalizedStrings.str_sign_out.localized(), align: .center),
+                    MyPageSection.underline
                 ]
 
-                let section: [MyPageBySection] = [
-                    MyPageBySection.Section(title: "project", items: projectItems),
-                    MyPageBySection.Section(title: "wallet", items: walletItems),
-                    MyPageBySection.Section(title: "security", items: securityItems),
-                    MyPageBySection.Section(title: "myInfo", items: myInfoItems),
-                    MyPageBySection.Section(title: "support", items: supportItems),
-                    MyPageBySection.Section(title: "logout", items: logoutItems)
+                let section: [SectionType<MyPageSection>] = [
+                    SectionType<MyPageSection>.Section(title: "project", items: projectItems),
+                    SectionType<MyPageSection>.Section(title: "wallet", items: walletItems),
+                    SectionType<MyPageSection>.Section(title: "security", items: securityItems),
+                    SectionType<MyPageSection>.Section(title: "myInfo", items: myInfoItems),
+                    SectionType<MyPageSection>.Section(title: "support", items: supportItems),
+                    SectionType<MyPageSection>.Section(title: "logout", items: logoutItems)
                 ]
                 return Driver.just(section)
             }
 
         let userMeError = userMeAction.error
-            .flatMap { _ -> Driver<[MyPageBySection]> in
+            .flatMap { _ -> Driver<[SectionType<MyPageSection>]> in
                 return Driver.just([])
             }
 

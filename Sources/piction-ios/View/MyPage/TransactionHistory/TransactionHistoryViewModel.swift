@@ -10,6 +10,13 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
+enum TransactionHistorySection {
+    case header
+    case year(model: String)
+    case list(model: TransactionModel, dateTitle: Bool)
+    case footer
+}
+
 final class TransactionHistoryViewModel: ViewModel {
 
     var page = 0
@@ -28,7 +35,7 @@ final class TransactionHistoryViewModel: ViewModel {
 
     struct Output {
         let viewWillAppear: Driver<Void>
-        let transactionList: Driver<TransactionHistoryBySection>
+        let transactionList: Driver<SectionType<TransactionHistorySection>>
         let isFetching: Driver<Bool>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let activityIndicator: Driver<Bool>
@@ -64,7 +71,7 @@ final class TransactionHistoryViewModel: ViewModel {
             }
 
        let transactionHistorySuccess = transactionHistoryAction.elements
-            .flatMap { [weak self] response -> Driver<TransactionHistoryBySection> in
+            .flatMap { [weak self] response -> Driver<SectionType<TransactionHistorySection>> in
                 guard let `self` = self else { return Driver.empty() }
                 guard let pageList = try? response.map(to: PageViewResponse<TransactionModel>.self) else {
                     return Driver.empty()
@@ -74,7 +81,7 @@ final class TransactionHistoryViewModel: ViewModel {
                 }
                 self.sections.append(contentsOf: pageList.content ?? [])
 
-                var transactions: [TransactionHistoryItemType] = []
+                var transactions: [TransactionHistorySection] = []
 
                 let yearGroup = self.groupedBy(self.sections, dateComponents: [.year])
 
@@ -85,23 +92,23 @@ final class TransactionHistoryViewModel: ViewModel {
                     let dayGroup = self.groupedBy(element.value, dateComponents: [.year, .month, .day])
                     for item in dayGroup.sorted(by: { $0.0 > $1.0 }) {
                         transactions.append(contentsOf: [.header])
-                        let transaction: [TransactionHistoryItemType] = (item.value).enumerated().map { .list(model: $1, dateTitle: $0 == 0) }
+                        let transaction: [TransactionHistorySection] = (item.value).enumerated().map { .list(model: $1, dateTitle: $0 == 0) }
                         transactions.append(contentsOf: transaction)
                         transactions.append(contentsOf: [.footer])
                     }
                 }
 
-                return Driver.just(TransactionHistoryBySection.Section(title: "transacation", items: transactions))
+                return Driver.just(SectionType<TransactionHistorySection>.Section(title: "transacation", items: transactions))
             }
 
         let transactionHistoryError = transactionHistoryAction.error
-            .flatMap { response -> Driver<TransactionHistoryBySection> in
-                return Driver.just(TransactionHistoryBySection.Section(title: "transacation", items: []))
+            .flatMap { response -> Driver<SectionType<TransactionHistorySection>> in
+                return Driver.just(SectionType<TransactionHistorySection>.Section(title: "transacation", items: []))
             }
 
         let refreshAction = input.refreshControlDidRefresh
             .withLatestFrom(transactionHistorySuccess)
-            .flatMap { list -> Driver<Action<TransactionHistoryBySection>> in
+            .flatMap { list -> Driver<Action<SectionType<TransactionHistorySection>>> in
                 return Action.makeDriver(Driver.just(list))
             }
 

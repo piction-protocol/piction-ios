@@ -13,34 +13,6 @@ import ViewModelBindable
 import RxDataSources
 import PictionSDK
 
-enum SponsorshipListBySection {
-    case Section(title: String, items: [SponsorshipListItemType])
-}
-
-extension SponsorshipListBySection: SectionModelType {
-    typealias Item = SponsorshipListItemType
-
-    var items: [SponsorshipListItemType] {
-        switch self {
-        case .Section(_, items: let items):
-            return items.map { $0 }
-        }
-    }
-
-    init(original: SponsorshipListBySection, items: [Item]) {
-        switch original {
-        case .Section(title: let title, _):
-            self = .Section(title: title, items: items)
-        }
-    }
-}
-
-enum SponsorshipListItemType {
-    case button(type: SponsorshipListButtonType)
-    case header
-    case list(model: SponsorshipModel)
-}
-
 final class SponsorshipListViewController: UIViewController {
     var disposeBag = DisposeBag()
 
@@ -74,8 +46,8 @@ final class SponsorshipListViewController: UIViewController {
         }
     }
 
-    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SponsorshipListBySection> {
-        return RxTableViewSectionedReloadDataSource<SponsorshipListBySection>(
+    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionType<SponsorshipListSection>> {
+        return RxTableViewSectionedReloadDataSource<SectionType<SponsorshipListSection>>(
             configureCell: { dataSource, tableView, indexPath, model in
                 switch dataSource[indexPath] {
                 case .button(let type):

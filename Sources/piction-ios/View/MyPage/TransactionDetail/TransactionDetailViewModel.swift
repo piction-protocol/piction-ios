@@ -10,6 +10,13 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
+enum TransactionDetailSection {
+    case info(transaction: TransactionModel)
+    case header(title: String)
+    case list(title: String, description: String, link: String)
+    case footer
+}
+
 enum TransactionType {
     case sponsorship
     case subscription
@@ -32,7 +39,7 @@ final class TransactionDetailViewModel: ViewModel {
         let viewWillAppear: Driver<Void>
         let navigationTitle: Driver<String>
         let selectedIndexPath: Driver<IndexPath>
-        let transactionInfo: Driver<TransactionDetailBySection>
+        let transactionInfo: Driver<SectionType<TransactionDetailSection>>
     }
 
 
@@ -61,12 +68,12 @@ final class TransactionDetailViewModel: ViewModel {
 
         let valueTypeInfo = input.viewWillAppear
             .filter { self.transaction.transactionType == "VALUE_TRANSFER" }
-            .flatMap { _ -> Driver<[TransactionDetailItemType]> in
+            .flatMap { _ -> Driver<[TransactionDetailSection]> in
                 return Driver.just([])
             }
 
         let otherTypeInfo = transactionDetailAction.elements
-            .flatMap { [weak self] response -> Driver<[TransactionDetailItemType]> in
+            .flatMap { [weak self] response -> Driver<[TransactionDetailSection]> in
                 guard let `self` = self else { return Driver.empty() }
                 let inOut = self.transaction.inOut ?? ""
 
@@ -75,9 +82,9 @@ final class TransactionDetailViewModel: ViewModel {
                         return Driver.empty()
                     }
                     let sponsorshipSection = [
-                        TransactionDetailItemType.header(title: LocalizedStrings.str_sponsorship_info.localized()),
-                        TransactionDetailItemType.list(title: inOut == "IN" ? LocalizedStrings.str_sponsoredship_to.localized() : LocalizedStrings.str_sponsorship_user.localized(), description: inOut == "IN" ? "@\(sponsorshipItem.sponsor?.loginId ?? "")" : "@\(sponsorshipItem.creator?.loginId ?? "")", link: ""),
-                        TransactionDetailItemType.footer,
+                        TransactionDetailSection.header(title: LocalizedStrings.str_sponsorship_info.localized()),
+                        TransactionDetailSection.list(title: inOut == "IN" ? LocalizedStrings.str_sponsoredship_to.localized() : LocalizedStrings.str_sponsorship_user.localized(), description: inOut == "IN" ? "@\(sponsorshipItem.sponsor?.loginId ?? "")" : "@\(sponsorshipItem.creator?.loginId ?? "")", link: ""),
+                        TransactionDetailSection.footer,
                     ]
                     return Driver.just(sponsorshipSection)
                 } else if self.transaction.transactionType == "SUBSCRIPTION" {
@@ -85,14 +92,14 @@ final class TransactionDetailViewModel: ViewModel {
                         return Driver.empty()
                     }
                     let subscriptionSection = [
-                        TransactionDetailItemType.info(transaction: self.transaction),
-                        TransactionDetailItemType.footer,
-                        TransactionDetailItemType.header(title: inOut == "IN" ? LocalizedStrings.str_fanpass_sales_info.localized() : LocalizedStrings.str_fanpass_purchase_info.localized()),
-                        TransactionDetailItemType.list(title: LocalizedStrings.str_order_id.localized(), description: "\(subscriptionItem.orderNo ?? 0)", link: ""),
-                        TransactionDetailItemType.list(title: LocalizedStrings.str_project.localized(), description: "\(subscriptionItem.fanPass?.project?.title ?? "")", link: ""),
-                        TransactionDetailItemType.list(title: "FAN PASS", description: "\(subscriptionItem.fanPass?.name ?? "")", link: ""),
-                        TransactionDetailItemType.list(title: inOut == "IN" ? LocalizedStrings.str_buyer.localized() : LocalizedStrings.str_seller.localized(), description: inOut == "IN" ? "\(subscriptionItem.subscriber?.loginId ?? "")" : "\(subscriptionItem.creator?.loginId ?? "")", link: ""),
-                        TransactionDetailItemType.footer,
+                        TransactionDetailSection.info(transaction: self.transaction),
+                        TransactionDetailSection.footer,
+                        TransactionDetailSection.header(title: inOut == "IN" ? LocalizedStrings.str_fanpass_sales_info.localized() : LocalizedStrings.str_fanpass_purchase_info.localized()),
+                        TransactionDetailSection.list(title: LocalizedStrings.str_order_id.localized(), description: "\(subscriptionItem.orderNo ?? 0)", link: ""),
+                        TransactionDetailSection.list(title: LocalizedStrings.str_project.localized(), description: "\(subscriptionItem.fanPass?.project?.title ?? "")", link: ""),
+                        TransactionDetailSection.list(title: "FAN PASS", description: "\(subscriptionItem.fanPass?.name ?? "")", link: ""),
+                        TransactionDetailSection.list(title: inOut == "IN" ? LocalizedStrings.str_buyer.localized() : LocalizedStrings.str_seller.localized(), description: inOut == "IN" ? "\(subscriptionItem.subscriber?.loginId ?? "")" : "\(subscriptionItem.creator?.loginId ?? "")", link: ""),
+                        TransactionDetailSection.footer,
                     ]
                     return Driver.just(subscriptionSection)
                 }
@@ -100,29 +107,29 @@ final class TransactionDetailViewModel: ViewModel {
             }
 
         let transactionInfo = Driver.merge(valueTypeInfo, otherTypeInfo)
-            .flatMap { [weak self] typeSection -> Driver<TransactionDetailBySection> in
+            .flatMap { [weak self] typeSection -> Driver<SectionType<TransactionDetailSection>> in
                 guard let `self` = self else { return Driver.empty() }
 
-                var sections: [TransactionDetailItemType] = [
-                    TransactionDetailItemType.info(transaction: self.transaction),
-                    TransactionDetailItemType.footer
+                var sections: [TransactionDetailSection] = [
+                    TransactionDetailSection.info(transaction: self.transaction),
+                    TransactionDetailSection.footer
                 ]
 
                 sections.append(contentsOf: typeSection)
 
                 let transactionSection = [
-                    TransactionDetailItemType.header(title: LocalizedStrings.str_transaction_info.localized()),
-                    TransactionDetailItemType.list(title: "From", description: self.transaction.fromAddress ?? "", link: ""),
-                    TransactionDetailItemType.list(title: "To", description: self.transaction.toAddress ?? "", link: ""),
-                    TransactionDetailItemType.list(title: "Amount", description: "\((self.transaction.amount ?? 0).commaRepresentation) PXL", link: ""),
-                    TransactionDetailItemType.list(title: "Block #", description: String(self.transaction.blockNumber ?? 0) , link: ""),
-                    TransactionDetailItemType.list(title: "TX HASH", description: self.transaction.transactionHash ?? "", link: self.transaction.txHashWithUrl ?? ""),
-                    TransactionDetailItemType.footer
+                    TransactionDetailSection.header(title: LocalizedStrings.str_transaction_info.localized()),
+                    TransactionDetailSection.list(title: "From", description: self.transaction.fromAddress ?? "", link: ""),
+                    TransactionDetailSection.list(title: "To", description: self.transaction.toAddress ?? "", link: ""),
+                    TransactionDetailSection.list(title: "Amount", description: "\((self.transaction.amount ?? 0).commaRepresentation) PXL", link: ""),
+                    TransactionDetailSection.list(title: "Block #", description: String(self.transaction.blockNumber ?? 0) , link: ""),
+                    TransactionDetailSection.list(title: "TX HASH", description: self.transaction.transactionHash ?? "", link: self.transaction.txHashWithUrl ?? ""),
+                    TransactionDetailSection.footer
                 ]
 
                 sections.append(contentsOf: transactionSection)
 
-                return Driver.just(TransactionDetailBySection.Section(title: "transactionInfo", items: sections))
+                return Driver.just(SectionType<TransactionDetailSection>.Section(title: "transactionInfo", items: sections))
             }
 
         return Output(

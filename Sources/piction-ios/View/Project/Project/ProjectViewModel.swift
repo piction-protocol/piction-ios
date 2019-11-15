@@ -11,6 +11,13 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
+enum ContentsSection {
+    case postList(post: PostModel, isSubscribing: Bool)
+    case seriesPostList(post: PostModel, isSubscribing: Bool, number: Int)
+    case seriesHeader(series: SeriesModel)
+    case seriesList(series: SeriesModel)
+}
+
 final class ProjectViewModel: InjectableViewModel {
 
     typealias Dependency = (
@@ -24,7 +31,7 @@ final class ProjectViewModel: InjectableViewModel {
     var page = 0
     var isWriter: Bool = false
     var shouldInfiniteScroll = true
-    var sections: [ContentsItemType] = []
+    var sections: [ContentsSection] = []
     var loadTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
@@ -53,7 +60,7 @@ final class ProjectViewModel: InjectableViewModel {
         let openCancelSubscriptionPopup: Driver<Void>
         let openSignInViewController: Driver<Void>
         let openCreatePostViewController: Driver<String>
-        let contentList: Driver<ContentsBySection>
+        let contentList: Driver<SectionType<ContentsSection>>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let openPostViewController: Driver<(String, Int)>
         let openSeriesPostViewController: Driver<(String, Int)>
@@ -304,17 +311,17 @@ final class ProjectViewModel: InjectableViewModel {
             }
 
         let postSection = Driver.zip(loadPostSuccess, isSubscribing)
-            .flatMap { [weak self] (postList, isSubscribing) -> Driver<ContentsBySection> in
+            .flatMap { [weak self] (postList, isSubscribing) -> Driver<SectionType<ContentsSection>> in
 
                 if (postList.pageable?.pageNumber ?? 0) >= (postList.totalPages ?? 0) - 1 {
                     self?.shouldInfiniteScroll = false
                 }
 
-                let posts: [ContentsItemType] = (postList.content ?? []).map { .postList(post: $0, isSubscribing: isSubscribing) }
+                let posts: [ContentsSection] = (postList.content ?? []).map { .postList(post: $0, isSubscribing: isSubscribing) }
 
                 self?.sections.append(contentsOf: posts)
 
-                return Driver.just(ContentsBySection.Section(title: "post", items: self?.sections ?? []))
+                return Driver.just(SectionType<ContentsSection>.Section(title: "post", items: self?.sections ?? []))
             }
 
         let loadSeriesActionSuccess = loadSeriesListAction.elements
@@ -327,11 +334,11 @@ final class ProjectViewModel: InjectableViewModel {
             }
 
         let seriesSection = loadSeriesActionSuccess
-            .flatMap { [weak self] seriesList -> Driver<ContentsBySection> in
-                let series: [ContentsItemType] = seriesList.map { .seriesList(series: $0) }
+            .flatMap { [weak self] seriesList -> Driver<SectionType<ContentsSection>> in
+                let series: [ContentsSection] = seriesList.map { .seriesList(series: $0) }
 
                 self?.sections = series
-                return Driver.just(ContentsBySection.Section(title: "series", items: self?.sections ?? []))
+                return Driver.just(SectionType<ContentsSection>.Section(title: "series", items: self?.sections ?? []))
             }
 
         let selectPostItem = input.selectedIndexPath

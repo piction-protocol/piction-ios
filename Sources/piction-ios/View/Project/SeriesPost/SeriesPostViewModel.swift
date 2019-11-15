@@ -25,7 +25,7 @@ final class SeriesPostViewModel: InjectableViewModel {
     var page = 0
     var isWriter: Bool = false
     var shouldInfiniteScroll = true
-    var sections: [ContentsItemType] = []
+    var sections: [ContentsSection] = []
     var loadTrigger = PublishSubject<Void>()
     var isDescending = true
 
@@ -44,7 +44,7 @@ final class SeriesPostViewModel: InjectableViewModel {
         let viewWillDisappear: Driver<Void>
         let seriesInfo: Driver<SeriesModel>
         let seriesThumbnail: Driver<[String]>
-        let contentList: Driver<ContentsBySection>
+        let contentList: Driver<SectionType<ContentsSection>>
         let isDescending: Driver<Bool>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let selectedIndexPath: Driver<(String, Int)>
@@ -196,7 +196,7 @@ final class SeriesPostViewModel: InjectableViewModel {
             }
 
         let contentList = Driver.zip(loadSeriesPostsSuccess, isSubscribing)
-            .flatMap { [weak self] (postList, isSubscribing) -> Driver<ContentsBySection> in
+            .flatMap { [weak self] (postList, isSubscribing) -> Driver<SectionType<ContentsSection>> in
                 guard let `self` = self else { return Driver.empty() }
 
                 if (postList.pageable?.pageNumber ?? 0) >= (postList.totalPages ?? 0) - 1 {
@@ -207,11 +207,11 @@ final class SeriesPostViewModel: InjectableViewModel {
                 let page = self.page - 1
                 let numberOfElements = postList.size ?? 0
 
-                let posts: [ContentsItemType] = (postList.content ?? []).enumerated().map { .seriesPostList(post: $1, isSubscribing: isSubscribing, number: self.isDescending ? totalElements - page * numberOfElements - $0 : page * numberOfElements + ($0 + 1)) }
+                let posts: [ContentsSection] = (postList.content ?? []).enumerated().map { .seriesPostList(post: $1, isSubscribing: isSubscribing, number: self.isDescending ? totalElements - page * numberOfElements - $0 : page * numberOfElements + ($0 + 1)) }
 
                 self.sections.append(contentsOf: posts)
 
-                return Driver.just(ContentsBySection.Section(title: "post", items: self.sections))
+                return Driver.just(SectionType<ContentsSection>.Section(title: "post", items: self.sections))
             }
 
         let embedPostEmptyView = contentList
