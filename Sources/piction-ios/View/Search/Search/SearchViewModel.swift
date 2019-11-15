@@ -10,10 +10,15 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
+enum SearchSection {
+    case project(item: ProjectModel)
+    case tag(item: TagModel)
+}
+
 final class SearchViewModel: ViewModel {
 
     var page = 0
-    var sections: [SearchItemType] = []
+    var sections: [SearchSection] = []
     var shouldInfiniteScroll = true
 
     var loadTrigger = PublishSubject<Void>()
@@ -36,7 +41,7 @@ final class SearchViewModel: ViewModel {
         let viewWillDisappear: Driver<Void>
         let setPlaceHolder: Driver<Int>
         let menuChanged: Driver<Int>
-        let searchList: Driver<SearchBySection>
+        let searchList: Driver<SectionType<SearchSection>>
         let selectedIndexPath: Driver<IndexPath>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
     }
@@ -81,8 +86,8 @@ final class SearchViewModel: ViewModel {
 
         let searchTextIsEmpty = self.searchText.asDriver(onErrorDriveWith: .empty())
             .filter { $0 == "" }
-            .flatMap { _ -> Driver<SearchBySection> in
-                return Driver.just(SearchBySection.Section(title: "project", items: []))
+            .flatMap { _ -> Driver<SectionType<SearchSection>> in
+                return Driver.just(SectionType<SearchSection>.Section(title: "project", items: []))
             }
 
         let searchGuideEmptyView = Driver.merge(viewWillAppear, inputSearchText, menuChange)
@@ -114,7 +119,7 @@ final class SearchViewModel: ViewModel {
             }
 
         let searchProjectActionSuccess = searchProjectAction.elements
-            .flatMap { [weak self] response -> Driver<SearchBySection> in
+            .flatMap { [weak self] response -> Driver<SectionType<SearchSection>> in
                 guard let `self` = self else { return Driver.empty() }
                 guard let pageList = try? response.map(to: PageViewResponse<ProjectModel>.self) else {
                     return Driver.empty()
@@ -122,10 +127,10 @@ final class SearchViewModel: ViewModel {
                 if (pageList.pageable?.pageNumber ?? 0) >= (pageList.totalPages ?? 0) - 1 {
                     self.shouldInfiniteScroll = false
                 }
-                let projects: [SearchItemType] = (pageList.content ?? []).map { .project(item: $0) }
+                let projects: [SearchSection] = (pageList.content ?? []).map { .project(item: $0) }
                 self.sections.append(contentsOf: projects)
 
-                return Driver.just(SearchBySection.Section(title: "project", items: self.sections))
+                return Driver.just(SectionType<SearchSection>.Section(title: "project", items: self.sections))
             }
 
         let searchTagAction = Driver.merge(inputSearchText, loadNext, menuChange)
@@ -141,7 +146,7 @@ final class SearchViewModel: ViewModel {
             }
 
         let searchTagActionSuccess = searchTagAction.elements
-            .flatMap { [weak self] response -> Driver<SearchBySection> in
+            .flatMap { [weak self] response -> Driver<SectionType<SearchSection>> in
                 guard let `self` = self else { return Driver.empty() }
                 guard let pageList = try? response.map(to: PageViewResponse<TagModel>.self) else {
                     return Driver.empty()
@@ -149,10 +154,10 @@ final class SearchViewModel: ViewModel {
                 if (pageList.pageable?.pageNumber ?? 0) >= (pageList.totalPages ?? 0) - 1 {
                     self.shouldInfiniteScroll = false
                 }
-                let tags: [SearchItemType] = (pageList.content ?? []).map { .tag(item: $0) }
+                let tags: [SearchSection] = (pageList.content ?? []).map { .tag(item: $0) }
                 self.sections.append(contentsOf: tags)
 
-                return Driver.just(SearchBySection.Section(title: "tag", items: self.sections))
+                return Driver.just(SectionType<SearchSection>.Section(title: "tag", items: self.sections))
             }
 
         let searchList = Driver.merge(searchProjectActionSuccess, searchTagActionSuccess, searchTextIsEmpty)

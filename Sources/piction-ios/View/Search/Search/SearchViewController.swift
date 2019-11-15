@@ -13,33 +13,6 @@ import ViewModelBindable
 import RxDataSources
 import PictionSDK
 
-enum SearchBySection {
-    case Section(title: String, items: [SearchItemType])
-}
-
-extension SearchBySection: SectionModelType {
-    typealias Item = SearchItemType
-
-    var items: [SearchItemType] {
-        switch self {
-        case .Section(_, items: let items):
-            return items.map { $0 }
-        }
-    }
-
-    init(original: SearchBySection, items: [Item]) {
-        switch original {
-        case .Section(title: let title, _):
-            self = .Section(title: title, items: items)
-        }
-    }
-}
-
-enum SearchItemType {
-    case project(item: ProjectModel)
-    case tag(item: TagModel)
-}
-
 final class SearchViewController: UIViewController {
     var disposeBag = DisposeBag()
 
@@ -54,8 +27,8 @@ final class SearchViewController: UIViewController {
         KeyboardManager.shared.delegate = self
     }
 
-    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SearchBySection> {
-        let dataSource = RxTableViewSectionedReloadDataSource<SearchBySection>(
+    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionType<SearchSection>> {
+        let dataSource = RxTableViewSectionedReloadDataSource<SectionType<SearchSection>>(
             configureCell: { dataSource, tableView, indexPath, model in
                 switch dataSource[indexPath] {
                 case .project(let project):

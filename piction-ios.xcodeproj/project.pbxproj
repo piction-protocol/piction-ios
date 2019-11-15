@@ -347,6 +347,32 @@
 		4356F51C233DF184000710FC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4356F51E233DF184000710FC /* Localizable.strings */; };
 		436CAC6C234C2E1200C84373 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436CAC6B234C2E1200C84373 /* FirebaseManager.swift */; };
 		436CAC6D234C2E1200C84373 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436CAC6B234C2E1200C84373 /* FirebaseManager.swift */; };
+		43722669237E376F0054C777 /* HomeTrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43722668237E376F0054C777 /* HomeTrendingViewController.swift */; };
+		4372266A237E376F0054C777 /* HomeTrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43722668237E376F0054C777 /* HomeTrendingViewController.swift */; };
+		4372266C237E37820054C777 /* HomeTrendingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4372266B237E37820054C777 /* HomeTrendingViewModel.swift */; };
+		4372266D237E37820054C777 /* HomeTrendingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4372266B237E37820054C777 /* HomeTrendingViewModel.swift */; };
+		4372266F237E46840054C777 /* HomeTrending.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4372266E237E46840054C777 /* HomeTrending.storyboard */; };
+		43722670237E46840054C777 /* HomeTrending.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4372266E237E46840054C777 /* HomeTrending.storyboard */; };
+		43722672237E46940054C777 /* HomeSubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43722671237E46940054C777 /* HomeSubscriptionViewController.swift */; };
+		43722673237E46940054C777 /* HomeSubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43722671237E46940054C777 /* HomeSubscriptionViewController.swift */; };
+		43722675237E46A00054C777 /* HomeSubscriptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43722674237E46A00054C777 /* HomeSubscriptionViewModel.swift */; };
+		43722676237E46A00054C777 /* HomeSubscriptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43722674237E46A00054C777 /* HomeSubscriptionViewModel.swift */; };
+		43722678237E46AC0054C777 /* HomeNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43722677237E46AC0054C777 /* HomeNoticeViewController.swift */; };
+		43722679237E46AC0054C777 /* HomeNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43722677237E46AC0054C777 /* HomeNoticeViewController.swift */; };
+		4372267B237E46B50054C777 /* HomeNoticeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4372267A237E46B50054C777 /* HomeNoticeViewModel.swift */; };
+		4372267C237E46B50054C777 /* HomeNoticeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4372267A237E46B50054C777 /* HomeNoticeViewModel.swift */; };
+		4372267E237E46C30054C777 /* HomePopularTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4372267D237E46C30054C777 /* HomePopularTagsViewController.swift */; };
+		4372267F237E46C30054C777 /* HomePopularTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4372267D237E46C30054C777 /* HomePopularTagsViewController.swift */; };
+		43722681237E46CC0054C777 /* HomePopularTagsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43722680237E46CC0054C777 /* HomePopularTagsViewModel.swift */; };
+		43722682237E46CC0054C777 /* HomePopularTagsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43722680237E46CC0054C777 /* HomePopularTagsViewModel.swift */; };
+		43722684237E46E50054C777 /* HomePopularTags.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43722683237E46E50054C777 /* HomePopularTags.storyboard */; };
+		43722685237E46E50054C777 /* HomePopularTags.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43722683237E46E50054C777 /* HomePopularTags.storyboard */; };
+		43722687237E46F20054C777 /* HomeNotice.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43722686237E46F20054C777 /* HomeNotice.storyboard */; };
+		43722688237E46F20054C777 /* HomeNotice.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43722686237E46F20054C777 /* HomeNotice.storyboard */; };
+		4372268A237E46FD0054C777 /* HomeSubscription.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43722689237E46FD0054C777 /* HomeSubscription.storyboard */; };
+		4372268B237E46FD0054C777 /* HomeSubscription.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43722689237E46FD0054C777 /* HomeSubscription.storyboard */; };
+		4372268D237E7F610054C777 /* RxDataSources+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4372268C237E7F610054C777 /* RxDataSources+Extension.swift */; };
+		4372268E237E7F610054C777 /* RxDataSources+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4372268C237E7F610054C777 /* RxDataSources+Extension.swift */; };
 		438E762C2362BCF50062D004 /* DynamicCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E762B2362BCF50062D004 /* DynamicCollectionViewFlowLayout.swift */; };
 		438E762D2362BCF50062D004 /* DynamicCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E762B2362BCF50062D004 /* DynamicCollectionViewFlowLayout.swift */; };
 		438E762F2362BD650062D004 /* ProjectInfoTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E762E2362BD650062D004 /* ProjectInfoTagCollectionViewCell.swift */; };
@@ -455,10 +481,10 @@
 		43C41F772373EB4900D012A7 /* CheckPincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C41F762373EB4900D012A7 /* CheckPincodeViewController.swift */; };
 		43C41F792373EB5400D012A7 /* CheckPincodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C41F782373EB5400D012A7 /* CheckPincodeViewModel.swift */; };
 		43C41F7B2373EB5D00D012A7 /* CheckPincode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C41F7A2373EB5D00D012A7 /* CheckPincode.storyboard */; };
-		43DB225A235808E000E69C0F /* PopularTagSectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB2259235808E000E69C0F /* PopularTagSectionCollectionViewCell.swift */; };
-		43DB225B235808E000E69C0F /* PopularTagSectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB2259235808E000E69C0F /* PopularTagSectionCollectionViewCell.swift */; };
-		43DB225D235808EE00E69C0F /* TrendingSectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB225C235808EE00E69C0F /* TrendingSectionCollectionViewCell.swift */; };
-		43DB225E235808EE00E69C0F /* TrendingSectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB225C235808EE00E69C0F /* TrendingSectionCollectionViewCell.swift */; };
+		43DB225A235808E000E69C0F /* HomePopularTagsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB2259235808E000E69C0F /* HomePopularTagsCollectionViewCell.swift */; };
+		43DB225B235808E000E69C0F /* HomePopularTagsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB2259235808E000E69C0F /* HomePopularTagsCollectionViewCell.swift */; };
+		43DB225D235808EE00E69C0F /* HomeTrendingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB225C235808EE00E69C0F /* HomeTrendingCollectionViewCell.swift */; };
+		43DB225E235808EE00E69C0F /* HomeTrendingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB225C235808EE00E69C0F /* HomeTrendingCollectionViewCell.swift */; };
 		43DB226123580B4600E69C0F /* TagListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB226023580B4600E69C0F /* TagListViewController.swift */; };
 		43DB226223580B4600E69C0F /* TagListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB226023580B4600E69C0F /* TagListViewController.swift */; };
 		43DB226423580B5300E69C0F /* TagListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB226323580B5300E69C0F /* TagListViewModel.swift */; };
@@ -467,18 +493,12 @@
 		43DB226823580B5D00E69C0F /* TagList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43DB226623580B5D00E69C0F /* TagList.storyboard */; };
 		43DB226A23580B6F00E69C0F /* TagListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB226923580B6F00E69C0F /* TagListTableViewCell.swift */; };
 		43DB226B23580B6F00E69C0F /* TagListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB226923580B6F00E69C0F /* TagListTableViewCell.swift */; };
-		43DB22742358103100E69C0F /* NoticeSectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB22732358103100E69C0F /* NoticeSectionCollectionViewCell.swift */; };
-		43DB22752358103100E69C0F /* NoticeSectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB22732358103100E69C0F /* NoticeSectionCollectionViewCell.swift */; };
-		43DB227A235836C800E69C0F /* HomeNoticeSectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB2279235836C800E69C0F /* HomeNoticeSectionTableViewCell.swift */; };
-		43DB227B235836C800E69C0F /* HomeNoticeSectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB2279235836C800E69C0F /* HomeNoticeSectionTableViewCell.swift */; };
+		43DB22742358103100E69C0F /* HomeNoticeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB22732358103100E69C0F /* HomeNoticeCollectionViewCell.swift */; };
+		43DB22752358103100E69C0F /* HomeNoticeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB22732358103100E69C0F /* HomeNoticeCollectionViewCell.swift */; };
 		43DB227D2358423100E69C0F /* HomeTrendingSectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB227C2358423100E69C0F /* HomeTrendingSectionTableViewCell.swift */; };
 		43DB227E2358423100E69C0F /* HomeTrendingSectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB227C2358423100E69C0F /* HomeTrendingSectionTableViewCell.swift */; };
-		43DB22802358510000E69C0F /* HomePopularTagSectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB227F2358510000E69C0F /* HomePopularTagSectionTableViewCell.swift */; };
-		43DB22812358510000E69C0F /* HomePopularTagSectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB227F2358510000E69C0F /* HomePopularTagSectionTableViewCell.swift */; };
-		43DB22832358573F00E69C0F /* HomeSubscriptionSectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB22822358573F00E69C0F /* HomeSubscriptionSectionTableViewCell.swift */; };
-		43DB22842358573F00E69C0F /* HomeSubscriptionSectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB22822358573F00E69C0F /* HomeSubscriptionSectionTableViewCell.swift */; };
-		43DB22862358576D00E69C0F /* SubscriptionSectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB22852358576D00E69C0F /* SubscriptionSectionCollectionViewCell.swift */; };
-		43DB22872358576D00E69C0F /* SubscriptionSectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB22852358576D00E69C0F /* SubscriptionSectionCollectionViewCell.swift */; };
+		43DB22862358576D00E69C0F /* HomeSubscriptionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB22852358576D00E69C0F /* HomeSubscriptionCollectionViewCell.swift */; };
+		43DB22872358576D00E69C0F /* HomeSubscriptionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB22852358576D00E69C0F /* HomeSubscriptionCollectionViewCell.swift */; };
 		43DB2289235969F300E69C0F /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB2288235969F300E69C0F /* UILabel+Extension.swift */; };
 		43DB228A235969F400E69C0F /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB2288235969F300E69C0F /* UILabel+Extension.swift */; };
 		43DB22922359ADBE00E69C0F /* SearchTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB22912359ADBE00E69C0F /* SearchTagTableViewCell.swift */; };
@@ -783,6 +803,19 @@
 		4356F51F233DF190000710FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4356F520233DF197000710FC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		436CAC6B234C2E1200C84373 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		43722668237E376F0054C777 /* HomeTrendingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTrendingViewController.swift; sourceTree = "<group>"; };
+		4372266B237E37820054C777 /* HomeTrendingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTrendingViewModel.swift; sourceTree = "<group>"; };
+		4372266E237E46840054C777 /* HomeTrending.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeTrending.storyboard; sourceTree = "<group>"; };
+		43722671237E46940054C777 /* HomeSubscriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSubscriptionViewController.swift; sourceTree = "<group>"; };
+		43722674237E46A00054C777 /* HomeSubscriptionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSubscriptionViewModel.swift; sourceTree = "<group>"; };
+		43722677237E46AC0054C777 /* HomeNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNoticeViewController.swift; sourceTree = "<group>"; };
+		4372267A237E46B50054C777 /* HomeNoticeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNoticeViewModel.swift; sourceTree = "<group>"; };
+		4372267D237E46C30054C777 /* HomePopularTagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePopularTagsViewController.swift; sourceTree = "<group>"; };
+		43722680237E46CC0054C777 /* HomePopularTagsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePopularTagsViewModel.swift; sourceTree = "<group>"; };
+		43722683237E46E50054C777 /* HomePopularTags.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomePopularTags.storyboard; sourceTree = "<group>"; };
+		43722686237E46F20054C777 /* HomeNotice.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeNotice.storyboard; sourceTree = "<group>"; };
+		43722689237E46FD0054C777 /* HomeSubscription.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeSubscription.storyboard; sourceTree = "<group>"; };
+		4372268C237E7F610054C777 /* RxDataSources+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxDataSources+Extension.swift"; sourceTree = "<group>"; };
 		438E762B2362BCF50062D004 /* DynamicCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		438E762E2362BD650062D004 /* ProjectInfoTagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectInfoTagCollectionViewCell.swift; sourceTree = "<group>"; };
 		438E76322362FAA20062D004 /* SeriesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesListViewController.swift; sourceTree = "<group>"; };
@@ -825,18 +858,18 @@
 		43C41F762373EB4900D012A7 /* CheckPincodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPincodeViewController.swift; sourceTree = "<group>"; };
 		43C41F782373EB5400D012A7 /* CheckPincodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPincodeViewModel.swift; sourceTree = "<group>"; };
 		43C41F7A2373EB5D00D012A7 /* CheckPincode.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CheckPincode.storyboard; sourceTree = "<group>"; };
-		43DB2259235808E000E69C0F /* PopularTagSectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularTagSectionCollectionViewCell.swift; sourceTree = "<group>"; };
-		43DB225C235808EE00E69C0F /* TrendingSectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingSectionCollectionViewCell.swift; sourceTree = "<group>"; };
+		43DB2259235808E000E69C0F /* HomePopularTagsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePopularTagsCollectionViewCell.swift; sourceTree = "<group>"; };
+		43DB225C235808EE00E69C0F /* HomeTrendingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTrendingCollectionViewCell.swift; sourceTree = "<group>"; };
 		43DB226023580B4600E69C0F /* TagListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListViewController.swift; sourceTree = "<group>"; };
 		43DB226323580B5300E69C0F /* TagListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListViewModel.swift; sourceTree = "<group>"; };
 		43DB226623580B5D00E69C0F /* TagList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TagList.storyboard; sourceTree = "<group>"; };
 		43DB226923580B6F00E69C0F /* TagListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListTableViewCell.swift; sourceTree = "<group>"; };
-		43DB22732358103100E69C0F /* NoticeSectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeSectionCollectionViewCell.swift; sourceTree = "<group>"; };
+		43DB22732358103100E69C0F /* HomeNoticeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNoticeCollectionViewCell.swift; sourceTree = "<group>"; };
 		43DB2279235836C800E69C0F /* HomeNoticeSectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNoticeSectionTableViewCell.swift; sourceTree = "<group>"; };
 		43DB227C2358423100E69C0F /* HomeTrendingSectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTrendingSectionTableViewCell.swift; sourceTree = "<group>"; };
 		43DB227F2358510000E69C0F /* HomePopularTagSectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePopularTagSectionTableViewCell.swift; sourceTree = "<group>"; };
 		43DB22822358573F00E69C0F /* HomeSubscriptionSectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSubscriptionSectionTableViewCell.swift; sourceTree = "<group>"; };
-		43DB22852358576D00E69C0F /* SubscriptionSectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionSectionCollectionViewCell.swift; sourceTree = "<group>"; };
+		43DB22852358576D00E69C0F /* HomeSubscriptionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSubscriptionCollectionViewCell.swift; sourceTree = "<group>"; };
 		43DB2288235969F300E69C0F /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		43DB22912359ADBE00E69C0F /* SearchTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagTableViewCell.swift; sourceTree = "<group>"; };
 		43E543682355930D00F2EC45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -1043,6 +1076,7 @@
 				4323F994233A165600243655 /* UITableView+Extension.swift */,
 				43E543772355AFDB00F2EC45 /* Double+Extension.swift */,
 				43DB2288235969F300E69C0F /* UILabel+Extension.swift */,
+				4372268C237E7F610054C777 /* RxDataSources+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1103,6 +1137,7 @@
 		4323F9A3233A165600243655 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				43722667237E37530054C777 /* Search */,
 				4323F9A4233A165600243655 /* Pincode */,
 				4323F9B1233A165600243655 /* TabBar */,
 				4323F9B3233A165600243655 /* Home */,
@@ -1169,10 +1204,11 @@
 		4323F9B3233A165600243655 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				43DB225F23580B2900E69C0F /* TagList */,
-				43E5438A2357135500F2EC45 /* TagResultProject */,
-				4323F9B4233A165600243655 /* Search */,
 				4323F9B9233A165600243655 /* Home */,
+				43722663237E372B0054C777 /* Trending */,
+				43722664237E37310054C777 /* Subscription */,
+				43722666237E373D0054C777 /* PopularTags */,
+				43722665237E37390054C777 /* Notice */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1198,13 +1234,9 @@
 				4323F9BE233A165600243655 /* HomeSectionTableViewCell.swift */,
 				4356F500233DE0D2000710FC /* Home.storyboard */,
 				43DB227C2358423100E69C0F /* HomeTrendingSectionTableViewCell.swift */,
-				43DB225C235808EE00E69C0F /* TrendingSectionCollectionViewCell.swift */,
 				43DB22822358573F00E69C0F /* HomeSubscriptionSectionTableViewCell.swift */,
-				43DB22852358576D00E69C0F /* SubscriptionSectionCollectionViewCell.swift */,
 				43DB227F2358510000E69C0F /* HomePopularTagSectionTableViewCell.swift */,
-				43DB2259235808E000E69C0F /* PopularTagSectionCollectionViewCell.swift */,
 				43DB2279235836C800E69C0F /* HomeNoticeSectionTableViewCell.swift */,
-				43DB22732358103100E69C0F /* NoticeSectionCollectionViewCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1630,6 +1662,60 @@
 				4323FA5B233A165600243655 /* Toast.swift */,
 			);
 			path = Toast;
+			sourceTree = "<group>";
+		};
+		43722663237E372B0054C777 /* Trending */ = {
+			isa = PBXGroup;
+			children = (
+				43722668237E376F0054C777 /* HomeTrendingViewController.swift */,
+				4372266B237E37820054C777 /* HomeTrendingViewModel.swift */,
+				43DB225C235808EE00E69C0F /* HomeTrendingCollectionViewCell.swift */,
+				4372266E237E46840054C777 /* HomeTrending.storyboard */,
+			);
+			path = Trending;
+			sourceTree = "<group>";
+		};
+		43722664237E37310054C777 /* Subscription */ = {
+			isa = PBXGroup;
+			children = (
+				43722671237E46940054C777 /* HomeSubscriptionViewController.swift */,
+				43722674237E46A00054C777 /* HomeSubscriptionViewModel.swift */,
+				43DB22852358576D00E69C0F /* HomeSubscriptionCollectionViewCell.swift */,
+				43722689237E46FD0054C777 /* HomeSubscription.storyboard */,
+			);
+			path = Subscription;
+			sourceTree = "<group>";
+		};
+		43722665237E37390054C777 /* Notice */ = {
+			isa = PBXGroup;
+			children = (
+				43722677237E46AC0054C777 /* HomeNoticeViewController.swift */,
+				4372267A237E46B50054C777 /* HomeNoticeViewModel.swift */,
+				43DB22732358103100E69C0F /* HomeNoticeCollectionViewCell.swift */,
+				43722686237E46F20054C777 /* HomeNotice.storyboard */,
+			);
+			path = Notice;
+			sourceTree = "<group>";
+		};
+		43722666237E373D0054C777 /* PopularTags */ = {
+			isa = PBXGroup;
+			children = (
+				4372267D237E46C30054C777 /* HomePopularTagsViewController.swift */,
+				43722680237E46CC0054C777 /* HomePopularTagsViewModel.swift */,
+				43DB2259235808E000E69C0F /* HomePopularTagsCollectionViewCell.swift */,
+				43722683237E46E50054C777 /* HomePopularTags.storyboard */,
+			);
+			path = PopularTags;
+			sourceTree = "<group>";
+		};
+		43722667237E37530054C777 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				43DB225F23580B2900E69C0F /* TagList */,
+				43E5438A2357135500F2EC45 /* TagResultProject */,
+				4323F9B4233A165600243655 /* Search */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		438E762A2362BCD80062D004 /* DynamicCollectionViewFlowLayout */ = {
@@ -2098,6 +2184,7 @@
 				4323FB43233A166000243655 /* ChangePassword.storyboard in Resources */,
 				4323FB69233A166200243655 /* QRCodeScanner.storyboard in Resources */,
 				4323FB75233A166200243655 /* SponsorshipHistory.storyboard in Resources */,
+				43722688237E46F20054C777 /* HomeNotice.storyboard in Resources */,
 				4323FB9B233A166400243655 /* SignIn.storyboard in Resources */,
 				4323FB19233A165E00243655 /* Deposit.storyboard in Resources */,
 				4323FB01233A165D00243655 /* PostFooter.storyboard in Resources */,
@@ -2119,6 +2206,7 @@
 				4323FAC3233A165B00243655 /* SubscriptionList.storyboard in Resources */,
 				438E76472366B6270062D004 /* SubscriptionUser.storyboard in Resources */,
 				4323FADB233A165C00243655 /* PostHeader.storyboard in Resources */,
+				4372268B237E46FD0054C777 /* HomeSubscription.storyboard in Resources */,
 				4323FB49233A166000243655 /* ChangeMyInfo.storyboard in Resources */,
 				438E763A2362FAB90062D004 /* SeriesList.storyboard in Resources */,
 				4323FB71233A166200243655 /* ConfirmDonation.storyboard in Resources */,
@@ -2128,10 +2216,12 @@
 				4323FB2D233A165F00243655 /* MyProject.storyboard in Resources */,
 				43DB226823580B5D00E69C0F /* TagList.storyboard in Resources */,
 				4323FB99233A166400243655 /* SignUp.storyboard in Resources */,
+				43722685237E46E50054C777 /* HomePopularTags.storyboard in Resources */,
 				4323FAE1233A165C00243655 /* ProjectInfo.storyboard in Resources */,
 				4323FB61233A166100243655 /* SearchSponsor.storyboard in Resources */,
 				4323FA99233A165900243655 /* CheckPincode.storyboard in Resources */,
 				4356F502233DE0D2000710FC /* Home.storyboard in Resources */,
+				43722670237E46840054C777 /* HomeTrending.storyboard in Resources */,
 				4323FBA3233A166400243655 /* Assets.xcassets in Resources */,
 				4323FAD9233A165C00243655 /* Post.storyboard in Resources */,
 				4356F508233DE798000710FC /* LaunchScreen.storyboard in Resources */,
@@ -2151,6 +2241,7 @@
 				438E76392362FAB90062D004 /* SeriesList.storyboard in Resources */,
 				43C41F672373B84F00D012A7 /* GoogleService-Info.plist in Resources */,
 				4323FB42233A166000243655 /* ChangePassword.storyboard in Resources */,
+				43722687237E46F20054C777 /* HomeNotice.storyboard in Resources */,
 				4323FB68233A166200243655 /* QRCodeScanner.storyboard in Resources */,
 				4323FB74233A166200243655 /* SponsorshipHistory.storyboard in Resources */,
 				4323FB9A233A166400243655 /* SignIn.storyboard in Resources */,
@@ -2172,6 +2263,7 @@
 				4323FAC2233A165B00243655 /* SubscriptionList.storyboard in Resources */,
 				4323FADA233A165C00243655 /* PostHeader.storyboard in Resources */,
 				4323FB48233A166000243655 /* ChangeMyInfo.storyboard in Resources */,
+				4372268A237E46FD0054C777 /* HomeSubscription.storyboard in Resources */,
 				4323FB70233A166200243655 /* ConfirmDonation.storyboard in Resources */,
 				4356F51B233DF184000710FC /* Localizable.strings in Resources */,
 				4323FB80233A166300243655 /* SendDonation.storyboard in Resources */,
@@ -2181,10 +2273,12 @@
 				4323FAE0233A165C00243655 /* ProjectInfo.storyboard in Resources */,
 				4323FB60233A166100243655 /* SearchSponsor.storyboard in Resources */,
 				4323FA98233A165900243655 /* CheckPincode.storyboard in Resources */,
+				43722684237E46E50054C777 /* HomePopularTags.storyboard in Resources */,
 				438E76462366B6270062D004 /* SubscriptionUser.storyboard in Resources */,
 				4356F501233DE0D2000710FC /* Home.storyboard in Resources */,
 				43E543862356F5CE00F2EC45 /* Explore.storyboard in Resources */,
 				4323FBA2233A166400243655 /* Assets.xcassets in Resources */,
+				4372266F237E46840054C777 /* HomeTrending.storyboard in Resources */,
 				4323FAD8233A165B00243655 /* Post.storyboard in Resources */,
 				4356F507233DE798000710FC /* LaunchScreen.storyboard in Resources */,
 				4323FAEA233A165C00243655 /* SeriesPost.storyboard in Resources */,
@@ -2397,6 +2491,7 @@
 				4323FB55233A166100243655 /* TransactionHistoryHeaderTypeTableViewCell.swift in Sources */,
 				4323FACD233A165B00243655 /* SubscriptionListCollectionFooterView.swift in Sources */,
 				43E54390235713A400F2EC45 /* TagResultProjectViewModel.swift in Sources */,
+				4372266D237E37820054C777 /* HomeTrendingViewModel.swift in Sources */,
 				4323FB5D233A166100243655 /* UserInfoViewModel.swift in Sources */,
 				4323FAAF233A165A00243655 /* SearchViewModel.swift in Sources */,
 				4323FB3F233A166000243655 /* MyPageViewModel.swift in Sources */,
@@ -2405,7 +2500,7 @@
 				4323FB85233A166300243655 /* SponsorshipListHeaderTypeTableViewCell.swift in Sources */,
 				4323FA8B233A165800243655 /* AppDelegate.swift in Sources */,
 				43E54399235714F800F2EC45 /* TagResultProjectListCollectionFooterView.swift in Sources */,
-				43DB22872358576D00E69C0F /* SubscriptionSectionCollectionViewCell.swift in Sources */,
+				43DB22872358576D00E69C0F /* HomeSubscriptionCollectionViewCell.swift in Sources */,
 				4323FAED233A165C00243655 /* SeriesPostViewController.swift in Sources */,
 				4323FA95233A165900243655 /* Injectable.swift in Sources */,
 				4323FB0B233A165E00243655 /* CustomEmptyViewModel.swift in Sources */,
@@ -2427,7 +2522,6 @@
 				4323FB87233A166300243655 /* SponsorshipListViewController.swift in Sources */,
 				4323FA85233A165800243655 /* UITableView+Extension.swift in Sources */,
 				43E5436A2355930D00F2EC45 /* SceneDelegate.swift in Sources */,
-				43DB22812358510000E69C0F /* HomePopularTagSectionTableViewCell.swift in Sources */,
 				4323FA87233A165800243655 /* AppInfo.swift in Sources */,
 				4323FB95233A166300243655 /* SignUpViewController.swift in Sources */,
 				4323FA77233A165700243655 /* UIImage+Extension.swift in Sources */,
@@ -2468,6 +2562,7 @@
 				4323FB31233A165F00243655 /* MyPagePushTypeTableViewCell.swift in Sources */,
 				4323FB29233A165F00243655 /* MyProjectTableViewCell.swift in Sources */,
 				4323FB8F233A166300243655 /* SignUpCompleteViewModel.swift in Sources */,
+				43722679237E46AC0054C777 /* HomeNoticeViewController.swift in Sources */,
 				438E76302362BD650062D004 /* ProjectInfoTagCollectionViewCell.swift in Sources */,
 				4323FA73233A165700243655 /* UIButton+Extension.swift in Sources */,
 				4323FA97233A165900243655 /* InjectableViewModel.swift in Sources */,
@@ -2479,6 +2574,7 @@
 				4323FB59233A166100243655 /* TransactionHistoryYearTypeTableViewCell.swift in Sources */,
 				4323FB79233A166200243655 /* SponsorshipHistoryViewModel.swift in Sources */,
 				4323FB2B233A165F00243655 /* MyProjectViewModel.swift in Sources */,
+				4372268E237E7F610054C777 /* RxDataSources+Extension.swift in Sources */,
 				4323FB51233A166100243655 /* TransactionHistoryFooterTypeTableViewCell.swift in Sources */,
 				4323FB1D233A165E00243655 /* TransactionDetailViewController.swift in Sources */,
 				43DB227E2358423100E69C0F /* HomeTrendingSectionTableViewCell.swift in Sources */,
@@ -2491,7 +2587,7 @@
 				4323FB47233A166000243655 /* ChangeMyInfoViewModel.swift in Sources */,
 				43F1866C23444E800050BA67 /* DeepLinks.swift in Sources */,
 				4323FAFF233A165D00243655 /* PostFooterViewController.swift in Sources */,
-				43DB22752358103100E69C0F /* NoticeSectionCollectionViewCell.swift in Sources */,
+				43DB22752358103100E69C0F /* HomeNoticeCollectionViewCell.swift in Sources */,
 				4323FB33233A165F00243655 /* MyPageSwitchTypeTableViewCell.swift in Sources */,
 				4323FB23233A165F00243655 /* TransactionDetailInfoTypeTableViewCell.swift in Sources */,
 				4323FB93233A166300243655 /* SignUpCompleteViewController.swift in Sources */,
@@ -2509,6 +2605,7 @@
 				43F1866923444E470050BA67 /* DeepLinkManager.swift in Sources */,
 				4323FA7F233A165800243655 /* String+Extension.swift in Sources */,
 				4323FB4B233A166000243655 /* ChangeMyInfoViewController.swift in Sources */,
+				4372267C237E46B50054C777 /* HomeNoticeViewModel.swift in Sources */,
 				4323FA5F233A165600243655 /* ViewControllerAssembly.swift in Sources */,
 				4323FA9B233A165900243655 /* CheckPincodeViewModel.swift in Sources */,
 				4323FB35233A165F00243655 /* MyPagePresentTypeTableViewCell.swift in Sources */,
@@ -2518,7 +2615,7 @@
 				438E763D2362FD050062D004 /* SeriesListTableViewCell.swift in Sources */,
 				4323FAD5233A165B00243655 /* PostViewModel.swift in Sources */,
 				4323FACB233A165B00243655 /* SubscriptionListViewModel.swift in Sources */,
-				43DB225E235808EE00E69C0F /* TrendingSectionCollectionViewCell.swift in Sources */,
+				43DB225E235808EE00E69C0F /* HomeTrendingCollectionViewCell.swift in Sources */,
 				43E54393235713C300F2EC45 /* TagResultProjectListCollectionViewCell.swift in Sources */,
 				4323FAF9233A165D00243655 /* ProjectSeriesListTableViewCell.swift in Sources */,
 				4323FABD233A165A00243655 /* HomeSectionTableViewCell.swift in Sources */,
@@ -2529,12 +2626,14 @@
 				4323FAF5233A165D00243655 /* ProjectPostListTableViewCell.swift in Sources */,
 				4323FA9F233A165900243655 /* ConfirmPincodeViewModel.swift in Sources */,
 				4323FA67233A165700243655 /* UIApplication+Extension.swift in Sources */,
+				43722676237E46A00054C777 /* HomeSubscriptionViewModel.swift in Sources */,
 				4323FA7D233A165800243655 /* SharedSequence+Extension.swift in Sources */,
 				4323FB2F233A165F00243655 /* MyProjectViewController.swift in Sources */,
 				4323FB9D233A166400243655 /* SignInViewModel.swift in Sources */,
 				438E764A2366B6650062D004 /* SubscriptionUserTableViewCell.swift in Sources */,
 				4323FA81233A165800243655 /* UICollectionView+Extension.swift in Sources */,
 				4323FA65233A165700243655 /* Container+Extension.swift in Sources */,
+				43722673237E46940054C777 /* HomeSubscriptionViewController.swift in Sources */,
 				4323FB57233A166100243655 /* TransactionHistoryViewController.swift in Sources */,
 				43E543892356F5CE00F2EC45 /* ExploreListViewController.swift in Sources */,
 				43E543792355AFDD00F2EC45 /* Double+Extension.swift in Sources */,
@@ -2542,17 +2641,18 @@
 				4323FB5B233A166100243655 /* UserInfoViewController.swift in Sources */,
 				43E543832356F5CE00F2EC45 /* ExploreViewModel.swift in Sources */,
 				4323FBA9233A166400243655 /* Updater.swift in Sources */,
+				4372266A237E376F0054C777 /* HomeTrendingViewController.swift in Sources */,
+				43722682237E46CC0054C777 /* HomePopularTagsViewModel.swift in Sources */,
 				4323FB41233A166000243655 /* ChangePasswordViewController.swift in Sources */,
 				4323FAC5233A165B00243655 /* SubscriptionListViewController.swift in Sources */,
 				43DB226523580B5300E69C0F /* TagListViewModel.swift in Sources */,
 				4323FB53233A166100243655 /* TransactionHistoryViewModel.swift in Sources */,
-				43DB22842358573F00E69C0F /* HomeSubscriptionSectionTableViewCell.swift in Sources */,
 				43DB226B23580B6F00E69C0F /* TagListTableViewCell.swift in Sources */,
 				4323FB67233A166200243655 /* SearchSponsorViewController.swift in Sources */,
 				4323FA89233A165800243655 /* StoryBoard.swift in Sources */,
 				4323FB6B233A166200243655 /* QRCodeScannerViewModel.swift in Sources */,
 				436CAC6D234C2E1200C84373 /* FirebaseManager.swift in Sources */,
-				43DB227B235836C800E69C0F /* HomeNoticeSectionTableViewCell.swift in Sources */,
+				4372267F237E46C30054C777 /* HomePopularTagsViewController.swift in Sources */,
 				4323FAD7233A165B00243655 /* PostViewController.swift in Sources */,
 				4323FB6F233A166200243655 /* ConfirmDonationViewModel.swift in Sources */,
 				4323FB9F233A166400243655 /* SignInViewController.swift in Sources */,
@@ -2560,7 +2660,7 @@
 				4323FB65233A166100243655 /* SearchSponsorViewModel.swift in Sources */,
 				43EBE1A52374087D0081C3B7 /* KeychainManager.swift in Sources */,
 				4323FADD233A165C00243655 /* PostHeaderViewModel.swift in Sources */,
-				43DB225B235808E000E69C0F /* PopularTagSectionCollectionViewCell.swift in Sources */,
+				43DB225B235808E000E69C0F /* HomePopularTagsCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2571,6 +2671,7 @@
 				4323FB54233A166100243655 /* TransactionHistoryHeaderTypeTableViewCell.swift in Sources */,
 				4323FACC233A165B00243655 /* SubscriptionListCollectionFooterView.swift in Sources */,
 				43E5438F235713A400F2EC45 /* TagResultProjectViewModel.swift in Sources */,
+				4372266C237E37820054C777 /* HomeTrendingViewModel.swift in Sources */,
 				4323FB5C233A166100243655 /* UserInfoViewModel.swift in Sources */,
 				4323FAAE233A165A00243655 /* SearchViewModel.swift in Sources */,
 				4323FB3E233A166000243655 /* MyPageViewModel.swift in Sources */,
@@ -2579,7 +2680,7 @@
 				4323FB84233A166300243655 /* SponsorshipListHeaderTypeTableViewCell.swift in Sources */,
 				4323FA8A233A165800243655 /* AppDelegate.swift in Sources */,
 				43E54398235714F800F2EC45 /* TagResultProjectListCollectionFooterView.swift in Sources */,
-				43DB22862358576D00E69C0F /* SubscriptionSectionCollectionViewCell.swift in Sources */,
+				43DB22862358576D00E69C0F /* HomeSubscriptionCollectionViewCell.swift in Sources */,
 				4323FAEC233A165C00243655 /* SeriesPostViewController.swift in Sources */,
 				4323FA94233A165900243655 /* Injectable.swift in Sources */,
 				4323FB0A233A165E00243655 /* CustomEmptyViewModel.swift in Sources */,
@@ -2601,7 +2702,6 @@
 				4323FB86233A166300243655 /* SponsorshipListViewController.swift in Sources */,
 				4323FA84233A165800243655 /* UITableView+Extension.swift in Sources */,
 				43E543692355930D00F2EC45 /* SceneDelegate.swift in Sources */,
-				43DB22802358510000E69C0F /* HomePopularTagSectionTableViewCell.swift in Sources */,
 				4323FA86233A165800243655 /* AppInfo.swift in Sources */,
 				4323FB94233A166300243655 /* SignUpViewController.swift in Sources */,
 				4323FA76233A165700243655 /* UIImage+Extension.swift in Sources */,
@@ -2642,6 +2742,7 @@
 				4323FB30233A165F00243655 /* MyPagePushTypeTableViewCell.swift in Sources */,
 				4323FB28233A165F00243655 /* MyProjectTableViewCell.swift in Sources */,
 				4323FB8E233A166300243655 /* SignUpCompleteViewModel.swift in Sources */,
+				43722678237E46AC0054C777 /* HomeNoticeViewController.swift in Sources */,
 				438E762F2362BD650062D004 /* ProjectInfoTagCollectionViewCell.swift in Sources */,
 				4323FA72233A165700243655 /* UIButton+Extension.swift in Sources */,
 				4323FA96233A165900243655 /* InjectableViewModel.swift in Sources */,
@@ -2653,6 +2754,7 @@
 				4323FB58233A166100243655 /* TransactionHistoryYearTypeTableViewCell.swift in Sources */,
 				4323FB78233A166200243655 /* SponsorshipHistoryViewModel.swift in Sources */,
 				4323FB2A233A165F00243655 /* MyProjectViewModel.swift in Sources */,
+				4372268D237E7F610054C777 /* RxDataSources+Extension.swift in Sources */,
 				4323FB50233A166100243655 /* TransactionHistoryFooterTypeTableViewCell.swift in Sources */,
 				4323FB1C233A165E00243655 /* TransactionDetailViewController.swift in Sources */,
 				43DB227D2358423100E69C0F /* HomeTrendingSectionTableViewCell.swift in Sources */,
@@ -2665,7 +2767,7 @@
 				4323FB46233A166000243655 /* ChangeMyInfoViewModel.swift in Sources */,
 				43F1866B23444E800050BA67 /* DeepLinks.swift in Sources */,
 				4323FAFE233A165D00243655 /* PostFooterViewController.swift in Sources */,
-				43DB22742358103100E69C0F /* NoticeSectionCollectionViewCell.swift in Sources */,
+				43DB22742358103100E69C0F /* HomeNoticeCollectionViewCell.swift in Sources */,
 				4323FB32233A165F00243655 /* MyPageSwitchTypeTableViewCell.swift in Sources */,
 				4323FB22233A165F00243655 /* TransactionDetailInfoTypeTableViewCell.swift in Sources */,
 				4323FB92233A166300243655 /* SignUpCompleteViewController.swift in Sources */,
@@ -2683,6 +2785,7 @@
 				43F1866823444E470050BA67 /* DeepLinkManager.swift in Sources */,
 				4323FA7E233A165800243655 /* String+Extension.swift in Sources */,
 				4323FB4A233A166000243655 /* ChangeMyInfoViewController.swift in Sources */,
+				4372267B237E46B50054C777 /* HomeNoticeViewModel.swift in Sources */,
 				4323FA5E233A165600243655 /* ViewControllerAssembly.swift in Sources */,
 				4323FA9A233A165900243655 /* CheckPincodeViewModel.swift in Sources */,
 				4323FB34233A165F00243655 /* MyPagePresentTypeTableViewCell.swift in Sources */,
@@ -2692,7 +2795,7 @@
 				438E763C2362FD050062D004 /* SeriesListTableViewCell.swift in Sources */,
 				4323FAD4233A165B00243655 /* PostViewModel.swift in Sources */,
 				4323FACA233A165B00243655 /* SubscriptionListViewModel.swift in Sources */,
-				43DB225D235808EE00E69C0F /* TrendingSectionCollectionViewCell.swift in Sources */,
+				43DB225D235808EE00E69C0F /* HomeTrendingCollectionViewCell.swift in Sources */,
 				43E54392235713C300F2EC45 /* TagResultProjectListCollectionViewCell.swift in Sources */,
 				4323FAF8233A165D00243655 /* ProjectSeriesListTableViewCell.swift in Sources */,
 				4323FABC233A165A00243655 /* HomeSectionTableViewCell.swift in Sources */,
@@ -2703,12 +2806,14 @@
 				4323FAF4233A165D00243655 /* ProjectPostListTableViewCell.swift in Sources */,
 				4323FA9E233A165900243655 /* ConfirmPincodeViewModel.swift in Sources */,
 				4323FA66233A165700243655 /* UIApplication+Extension.swift in Sources */,
+				43722675237E46A00054C777 /* HomeSubscriptionViewModel.swift in Sources */,
 				4323FA7C233A165800243655 /* SharedSequence+Extension.swift in Sources */,
 				4323FB2E233A165F00243655 /* MyProjectViewController.swift in Sources */,
 				4323FB9C233A166400243655 /* SignInViewModel.swift in Sources */,
 				438E76492366B6650062D004 /* SubscriptionUserTableViewCell.swift in Sources */,
 				4323FA80233A165800243655 /* UICollectionView+Extension.swift in Sources */,
 				4323FA64233A165700243655 /* Container+Extension.swift in Sources */,
+				43722672237E46940054C777 /* HomeSubscriptionViewController.swift in Sources */,
 				4323FB56233A166100243655 /* TransactionHistoryViewController.swift in Sources */,
 				43E543882356F5CE00F2EC45 /* ExploreListViewController.swift in Sources */,
 				43E543782355AFDB00F2EC45 /* Double+Extension.swift in Sources */,
@@ -2716,17 +2821,18 @@
 				4323FB5A233A166100243655 /* UserInfoViewController.swift in Sources */,
 				43E543822356F5CE00F2EC45 /* ExploreViewModel.swift in Sources */,
 				4323FBA8233A166400243655 /* Updater.swift in Sources */,
+				43722669237E376F0054C777 /* HomeTrendingViewController.swift in Sources */,
+				43722681237E46CC0054C777 /* HomePopularTagsViewModel.swift in Sources */,
 				4323FB40233A166000243655 /* ChangePasswordViewController.swift in Sources */,
 				4323FAC4233A165B00243655 /* SubscriptionListViewController.swift in Sources */,
 				43DB226423580B5300E69C0F /* TagListViewModel.swift in Sources */,
 				4323FB52233A166100243655 /* TransactionHistoryViewModel.swift in Sources */,
-				43DB22832358573F00E69C0F /* HomeSubscriptionSectionTableViewCell.swift in Sources */,
 				43DB226A23580B6F00E69C0F /* TagListTableViewCell.swift in Sources */,
 				4323FB66233A166100243655 /* SearchSponsorViewController.swift in Sources */,
 				4323FA88233A165800243655 /* StoryBoard.swift in Sources */,
 				4323FB6A233A166200243655 /* QRCodeScannerViewModel.swift in Sources */,
 				436CAC6C234C2E1200C84373 /* FirebaseManager.swift in Sources */,
-				43DB227A235836C800E69C0F /* HomeNoticeSectionTableViewCell.swift in Sources */,
+				4372267E237E46C30054C777 /* HomePopularTagsViewController.swift in Sources */,
 				4323FAD6233A165B00243655 /* PostViewController.swift in Sources */,
 				4323FB6E233A166200243655 /* ConfirmDonationViewModel.swift in Sources */,
 				4323FB9E233A166400243655 /* SignInViewController.swift in Sources */,
@@ -2734,7 +2840,7 @@
 				4323FB64233A166100243655 /* SearchSponsorViewModel.swift in Sources */,
 				43EBE1A42374087D0081C3B7 /* KeychainManager.swift in Sources */,
 				4323FADC233A165C00243655 /* PostHeaderViewModel.swift in Sources */,
-				43DB225A235808E000E69C0F /* PopularTagSectionCollectionViewCell.swift in Sources */,
+				43DB225A235808E000E69C0F /* HomePopularTagsCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2999,6 +3105,7 @@
 				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/Sources/piction-ios/SupportingFiles/Staging/piction-ios-test.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = TVSPDRR58A;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3083,6 +3190,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = TVSPDRR58A;
 				ENABLE_BITCODE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -3328,6 +3436,7 @@
 				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/Sources/piction-ios-shareEx/SupportingFiles/Staging/piction-ios-test-shareEx.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = TVSPDRR58A;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -3400,6 +3509,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = TVSPDRR58A;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
