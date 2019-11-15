@@ -160,26 +160,26 @@ extension TabBarItem {
         case .explore:
             items = (
                 LocalizedStrings.tab_explore.localized(),
-                #imageLiteral(resourceName: "icTab1Unselected"),
-                #imageLiteral(resourceName: "icTab1Active")
+                #imageLiteral(resourceName: "icTab2Unselected"),
+                #imageLiteral(resourceName: "icTab2Active")
             )
         case .subscription:
             items = (
                 LocalizedStrings.tab_subscription.localized(),
-                #imageLiteral(resourceName: "icTab2Unselected"),
-                #imageLiteral(resourceName: "icTab2Active")
+                #imageLiteral(resourceName: "icTab3Unselected"),
+                #imageLiteral(resourceName: "icTab3Active")
             )
         case .sponsorship:
             items = (
                 LocalizedStrings.tab_sponsorship.localized(),
-                #imageLiteral(resourceName: "icTab3Unselected"),
-                #imageLiteral(resourceName: "icTab3Active")
+                #imageLiteral(resourceName: "icTab4Unselected"),
+                #imageLiteral(resourceName: "icTab4Active")
             )
         case .myPage:
             items = (
                 LocalizedStrings.menu_my_info.localized(),
-                #imageLiteral(resourceName: "icTab4Unselected"),
-                #imageLiteral(resourceName: "icTab4Unselected")
+                #imageLiteral(resourceName: "icTab5Unselected"),
+                #imageLiteral(resourceName: "icTab5Active")
             )
         }
 
