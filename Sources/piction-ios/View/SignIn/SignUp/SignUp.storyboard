@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zPk-FB-mX1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zPk-FB-mX1">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,13 +21,13 @@
                                 <rect key="frame" x="0.0" y="88" width="375" height="724"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="DfG-iz-2Qe">
-                                        <rect key="frame" x="16" y="0.0" width="343" height="676"/>
+                                        <rect key="frame" x="20" y="0.0" width="335" height="676"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ifw-UK-wsb">
-                                                <rect key="frame" x="0.0" y="0.0" width="343" height="149"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="335" height="149"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgLogoPictionDefaultBl" translatesAutoresizingMaskIntoConstraints="NO" id="u1i-iT-rSX">
-                                                        <rect key="frame" x="61.666666666666686" y="48" width="220" height="57"/>
+                                                        <rect key="frame" x="57.666666666666686" y="48" width="220" height="57"/>
                                                         <color key="tintColor" name="PictionDarkGray"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="57" id="C7S-u5-OxI"/>
@@ -42,10 +42,10 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="STW-zL-iwL">
-                                                <rect key="frame" x="0.0" y="149" width="343" height="405"/>
+                                                <rect key="frame" x="0.0" y="149" width="335" height="405"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NG1-bi-svM" customClass="DynamicInputView" customModule="piction_ios" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="343" height="65"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="65"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="아이디"/>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="errorPlaceHolder" value="5자 이상 15자 미만"/>
@@ -57,7 +57,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qum-Zc-YXk" customClass="DynamicInputView" customModule="piction_ios" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="85" width="343" height="65"/>
+                                                        <rect key="frame" x="0.0" y="85" width="335" height="65"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="이메일"/>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="returnKeyType">
@@ -67,7 +67,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VgF-Q0-TPu" customClass="DynamicInputView" customModule="piction_ios" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="170" width="343" height="65"/>
+                                                        <rect key="frame" x="0.0" y="170" width="335" height="65"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="비밀번호"/>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="errorPlaceHolder" value="6자 이상의 비밀번호"/>
@@ -80,7 +80,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uUs-dW-ay6" customClass="DynamicInputView" customModule="piction_ios" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="255" width="343" height="65"/>
+                                                        <rect key="frame" x="0.0" y="255" width="335" height="65"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="비밀번호 재입력"/>
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureText" value="YES"/>
@@ -91,7 +91,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AFP-1X-eyB" customClass="DynamicInputView" customModule="piction_ios" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="340" width="343" height="65"/>
+                                                        <rect key="frame" x="0.0" y="340" width="335" height="65"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="returnKeyType">
                                                                 <integer key="value" value="4"/>
@@ -105,10 +105,10 @@
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Mt-6m-aE0">
-                                                <rect key="frame" x="0.0" y="554" width="343" height="70"/>
+                                                <rect key="frame" x="0.0" y="554" width="335" height="70"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="NJ4-jZ-P83">
-                                                        <rect key="frame" x="4" y="0.0" width="335" height="70"/>
+                                                        <rect key="frame" x="4" y="0.0" width="327" height="70"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkboxOff" translatesAutoresizingMaskIntoConstraints="NO" id="5DK-cI-526">
                                                                 <rect key="frame" x="0.0" y="24" width="22" height="22"/>
@@ -119,12 +119,12 @@
                                                                 </constraints>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nzo-XV-Q6J">
-                                                                <rect key="frame" x="30" y="26.666666666666629" width="305" height="17"/>
+                                                                <rect key="frame" x="30" y="26.666666666666629" width="297" height="17"/>
                                                                 <attributedString key="attributedText">
                                                                     <fragment content=" ">
                                                                         <attributes>
                                                                             <color key="NSColor" red="0.10196078431372549" green="0.5725490196078431" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                            <font key="NSFont" metaFont="menu" size="14"/>
+                                                                            <font key="NSFont" metaFont="menuBar"/>
                                                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                             <integer key="NSUnderline" value="1"/>
                                                                         </attributes>
@@ -135,7 +135,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yry-YP-Eg9">
-                                                        <rect key="frame" x="0.0" y="20" width="343" height="30"/>
+                                                        <rect key="frame" x="0.0" y="20" width="335" height="30"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lsd-1I-Rgf">
                                                                 <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -145,7 +145,7 @@
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             </button>
                                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="E0j-9c-Kdq">
-                                                                <rect key="frame" x="30" y="0.0" width="313" height="30"/>
+                                                                <rect key="frame" x="30" y="0.0" width="305" height="30"/>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                 <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -169,10 +169,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X1a-3c-mHh">
-                                                <rect key="frame" x="0.0" y="624" width="343" height="52"/>
+                                                <rect key="frame" x="0.0" y="624" width="335" height="52"/>
                                                 <subviews>
                                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fq0-zc-kkl" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
-                                                        <rect key="frame" x="4" y="0.0" width="335" height="52"/>
+                                                        <rect key="frame" x="4" y="0.0" width="327" height="52"/>
                                                         <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="52" id="c1r-dd-xad"/>
@@ -212,8 +212,8 @@
                                     <constraint firstAttribute="bottom" secondItem="DfG-iz-2Qe" secondAttribute="bottom" constant="20" id="6Wq-Om-P7f"/>
                                     <constraint firstItem="DfG-iz-2Qe" firstAttribute="top" secondItem="NTf-Zw-dd7" secondAttribute="top" id="8kn-yc-9rd"/>
                                     <constraint firstItem="DfG-iz-2Qe" firstAttribute="centerX" secondItem="NTf-Zw-dd7" secondAttribute="centerX" id="Gr4-7V-C6r"/>
-                                    <constraint firstItem="DfG-iz-2Qe" firstAttribute="leading" secondItem="NTf-Zw-dd7" secondAttribute="leading" constant="16" id="eeA-ep-xPI"/>
-                                    <constraint firstAttribute="trailing" secondItem="DfG-iz-2Qe" secondAttribute="trailing" constant="16" id="oH8-18-2ZK"/>
+                                    <constraint firstItem="DfG-iz-2Qe" firstAttribute="leading" secondItem="NTf-Zw-dd7" secondAttribute="leading" constant="20" id="eeA-ep-xPI"/>
+                                    <constraint firstAttribute="trailing" secondItem="DfG-iz-2Qe" secondAttribute="trailing" constant="20" id="oH8-18-2ZK"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -263,7 +263,7 @@
         <image name="checkboxOff" width="22" height="22"/>
         <image name="imgLogoPictionDefaultBl" width="220" height="57"/>
         <namedColor name="PictionDarkGray">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
