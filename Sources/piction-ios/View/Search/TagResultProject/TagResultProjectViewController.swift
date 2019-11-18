@@ -77,6 +77,21 @@ final class TagResultProjectViewController: UIViewController {
             flowLayout.invalidateLayout()
         }
     }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        setInfiniteScrollStyle()
+    }
+
+    private func setInfiniteScrollStyle() {
+        if #available(iOS 12.0, *) {
+            if self.traitCollection.userInterfaceStyle == .dark {
+                collectionView.infiniteScrollIndicatorStyle = .white
+            } else {
+                collectionView.infiniteScrollIndicatorStyle = .gray
+            }
+        }
+    }
 }
 
 extension TagResultProjectViewController: ViewModelBindable {
@@ -113,6 +128,7 @@ extension TagResultProjectViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
+                self?.setInfiniteScrollStyle()
                 FirebaseManager.screenName("태그 상세")
             })
             .disposed(by: disposeBag)

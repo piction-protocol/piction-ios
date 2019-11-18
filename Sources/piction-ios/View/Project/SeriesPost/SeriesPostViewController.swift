@@ -57,6 +57,21 @@ final class SeriesPostViewController: UIViewController {
         })
         return dataSource
     }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        setInfiniteScrollStyle()
+    }
+
+    private func setInfiniteScrollStyle() {
+        if #available(iOS 12.0, *) {
+            if self.traitCollection.userInterfaceStyle == .dark {
+                tableView.infiniteScrollIndicatorStyle = .white
+            } else {
+                tableView.infiniteScrollIndicatorStyle = .gray
+            }
+        }
+    }
 }
 
 extension SeriesPostViewController: ViewModelBindable {
@@ -85,6 +100,7 @@ extension SeriesPostViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+                self?.setInfiniteScrollStyle()
 //                self?.tabBarController?.tabBar.isHidden = true
                 let uri = self?.viewModel?.uri ?? ""
                 let seriesId = self?.viewModel?.seriesId ?? 0

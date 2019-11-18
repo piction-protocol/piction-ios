@@ -40,6 +40,21 @@ final class SponsorshipHistoryViewController: UIViewController {
                 return cell
         })
     }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        setInfiniteScrollStyle()
+    }
+
+    private func setInfiniteScrollStyle() {
+        if #available(iOS 12.0, *) {
+            if self.traitCollection.userInterfaceStyle == .dark {
+                tableView.infiniteScrollIndicatorStyle = .white
+            } else {
+                tableView.infiniteScrollIndicatorStyle = .gray
+            }
+        }
+    }
 }
 
 extension SponsorshipHistoryViewController: ViewModelBindable {
@@ -66,6 +81,7 @@ extension SponsorshipHistoryViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+                self?.setInfiniteScrollStyle()
                 FirebaseManager.screenName("후원_후원기록")
             })
             .disposed(by: disposeBag)

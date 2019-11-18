@@ -55,6 +55,21 @@ final class TransactionHistoryViewController: UITableViewController {
             })
         return dataSource
     }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        setInfiniteScrollStyle()
+    }
+
+    private func setInfiniteScrollStyle() {
+        if #available(iOS 12.0, *) {
+            if self.traitCollection.userInterfaceStyle == .dark {
+                tableView.infiniteScrollIndicatorStyle = .white
+            } else {
+                tableView.infiniteScrollIndicatorStyle = .gray
+            }
+        }
+    }
 }
 
 extension TransactionHistoryViewController: ViewModelBindable {
@@ -86,6 +101,7 @@ extension TransactionHistoryViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+                self?.setInfiniteScrollStyle()
                 FirebaseManager.screenName("마이페이지_거래내역")
             })
             .disposed(by: disposeBag)

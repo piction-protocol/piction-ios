@@ -41,6 +41,21 @@ final class SubscriptionUserViewController: UIViewController {
                 return cell
         })
     }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        setInfiniteScrollStyle()
+    }
+
+    private func setInfiniteScrollStyle() {
+        if #available(iOS 12.0, *) {
+            if self.traitCollection.userInterfaceStyle == .dark {
+                tableView.infiniteScrollIndicatorStyle = .white
+            } else {
+                tableView.infiniteScrollIndicatorStyle = .gray
+            }
+        }
+    }
 }
 
 extension SubscriptionUserViewController: ViewModelBindable {
@@ -68,6 +83,7 @@ extension SubscriptionUserViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+                self?.setInfiniteScrollStyle()
                 FirebaseManager.screenName("구독자 목록")
             })
             .disposed(by: disposeBag)

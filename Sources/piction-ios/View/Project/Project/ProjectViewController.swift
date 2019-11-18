@@ -198,6 +198,21 @@ final class ProjectViewController: UIViewController {
         }
         set {}
     }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        setInfiniteScrollStyle()
+    }
+
+    private func setInfiniteScrollStyle() {
+        if #available(iOS 12.0, *) {
+            if self.traitCollection.userInterfaceStyle == .dark {
+                tableView.infiniteScrollIndicatorStyle = .white
+            } else {
+                tableView.infiniteScrollIndicatorStyle = .gray
+            }
+        }
+    }
 }
 
 extension ProjectViewController: ViewModelBindable {
@@ -238,6 +253,7 @@ extension ProjectViewController: ViewModelBindable {
                 self?.navigationController?.configureNavigationBar(transparent: true, shadow: false)
                 self?.navigationController?.navigationBar.barStyle = .black
                 self?.navigationController?.navigationBar.tintColor = .white
+                self?.setInfiniteScrollStyle()
                 let uri = self?.viewModel?.uri ?? ""
                 FirebaseManager.screenName("프로젝트상세_\(uri)")
             })
