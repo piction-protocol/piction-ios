@@ -99,7 +99,7 @@ extension TabBarController: UITabBarControllerDelegate {
                     if topViewController is HomeViewController {
                         if let vc = topViewController as? HomeViewController {
                             DispatchQueue.main.async {
-                                  vc.tableView.setContentOffset(CGPoint(x: 0, y: -LARGE_NAVIGATION_HEIGHT), animated: true)
+                                  vc.scrollView.setContentOffset(CGPoint(x: 0, y: -LARGE_NAVIGATION_HEIGHT), animated: true)
                             }
                         }
                     } else if topViewController is ExploreViewController {

@@ -234,5 +234,29 @@ final class ViewControllerAssembly: Assembly {
             vc.viewModel = resolver.resolve(SubscriptionUserViewModel.self, argument: uri)!
             return vc
         }
+
+        container.register(HomeTrendingViewController.self) { resolver in
+            let vc = Storyboard.HomeTrending.instantiate(HomeTrendingViewController.self)
+            vc.viewModel = resolver.resolve(HomeTrendingViewModel.self)!
+            return vc
+        }
+
+        container.register(HomeSubscriptionViewController.self) { resolver in
+            let vc = Storyboard.HomeSubscription.instantiate(HomeSubscriptionViewController.self)
+            vc.viewModel = resolver.resolve(HomeSubscriptionViewModel.self)!
+            return vc
+        }
+
+        container.register(HomePopularTagsViewController.self) { resolver in
+            let vc = Storyboard.HomePopularTags.instantiate(HomePopularTagsViewController.self)
+            vc.viewModel = resolver.resolve(HomePopularTagsViewModel.self)!
+            return vc
+        }
+
+        container.register(HomeNoticeViewController.self) { resolver in
+            let vc = Storyboard.HomeNotice.instantiate(HomeNoticeViewController.self)
+            vc.viewModel = resolver.resolve(HomeNoticeViewModel.self)!
+            return vc
+        }
     }
 }

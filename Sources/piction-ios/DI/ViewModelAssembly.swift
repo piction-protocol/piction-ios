@@ -221,5 +221,23 @@ final class ViewModelAssembly: Assembly {
         container.register(SubscriptionUserViewModel.self) { (resolver, uri: String) in
             return SubscriptionUserViewModel(uri: uri)
         }
+
+        container.register(HomeTrendingViewModel.self) { resolver in
+            return HomeTrendingViewModel()
+        }
+
+        container.register(HomeSubscriptionViewModel.self) { resolver in
+            return HomeSubscriptionViewModel(dependency: (
+                resolver.resolve(Updater.self)!)
+            )
+        }
+
+        container.register(HomePopularTagsViewModel.self) { resolver in
+            return HomePopularTagsViewModel()
+        }
+
+        container.register(HomeNoticeViewModel.self) { resolver in
+            return HomeNoticeViewModel()
+        }
     }
 }

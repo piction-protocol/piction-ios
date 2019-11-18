@@ -1,5 +1,5 @@
 //
-//  PopularTagSectionCollectionViewCell.swift
+//  HomePopularTagsCollectionViewCell.swift
 //  piction-ios
 //
 //  Created by jhseo on 17/10/2019.
@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
-final class PopularTagSectionCollectionViewCell: ReuseCollectionViewCell {
+final class HomePopularTagsCollectionViewCell: ReuseCollectionViewCell {
     var disposeBag = DisposeBag()
 
     @IBOutlet weak var thumbnailImageView: UIImageView!
@@ -25,7 +25,7 @@ final class PopularTagSectionCollectionViewCell: ReuseCollectionViewCell {
     @IBOutlet weak var eventLabel: UILabel!
     @IBOutlet weak var eventView: UIView!
 
-    typealias Model = PopularTagSectionModel
+    typealias Model = HomePopularTagsModel
 
 
     override func prepareForReuse() {

@@ -1,5 +1,5 @@
 //
-//  NoticeSectionCollectionViewCell.swift
+//  HomeNoticeCollectionViewCell.swift
 //  piction-ios
 //
 //  Created by jhseo on 17/10/2019.
@@ -9,7 +9,7 @@
 import UIKit
 import PictionSDK
 
-final class NoticeSectionCollectionViewCell: ReuseCollectionViewCell {
+final class HomeNoticeCollectionViewCell: ReuseCollectionViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
 
     typealias Model = BannerModel

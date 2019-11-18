@@ -67,3 +67,26 @@ extension UIViewController {
     }
 }
 
+extension UIViewController {
+    func showPopup(
+        title: String? = nil,
+        message: String? = nil,
+        action: String = LocalizedStrings.confirm.localized(),
+        completion: @escaping () -> Void) {
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert)
+
+        let cancelButton = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel)
+        let confirmAction = UIAlertAction(title: action, style: .default, handler: { _ in
+            completion()
+        })
+
+        alert.addAction(cancelButton)
+        alert.addAction(confirmAction)
+
+        self.present(alert, animated: false, completion: nil)
+    }
+}
+

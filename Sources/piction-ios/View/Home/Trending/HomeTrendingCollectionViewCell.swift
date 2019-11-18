@@ -1,5 +1,5 @@
 //
-//  TrendingSectionCollectionViewCell.swift
+//  HomeTrendingCollectionViewCell.swift
 //  piction-ios
 //
 //  Created by jhseo on 17/10/2019.
@@ -9,7 +9,7 @@
 import UIKit
 import PictionSDK
 
-final class TrendingSectionCollectionViewCell: ReuseCollectionViewCell {
+final class HomeTrendingCollectionViewCell: ReuseCollectionViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subscriptionCountLabel: UILabel!

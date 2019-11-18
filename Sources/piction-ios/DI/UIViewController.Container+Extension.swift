@@ -231,3 +231,27 @@ extension SubscriptionUserViewController {
         return Container.shared.resolve(SubscriptionUserViewController.self, argument: uri)!
     }
 }
+
+extension HomeTrendingViewController {
+    static func make() -> HomeTrendingViewController {
+        return Container.shared.resolve(HomeTrendingViewController.self)!
+    }
+}
+
+extension HomeSubscriptionViewController {
+    static func make() -> HomeSubscriptionViewController {
+        return Container.shared.resolve(HomeSubscriptionViewController.self)!
+    }
+}
+
+extension HomePopularTagsViewController {
+    static func make() -> HomePopularTagsViewController {
+        return Container.shared.resolve(HomePopularTagsViewController.self)!
+    }
+}
+
+extension HomeNoticeViewController {
+    static func make() -> HomeNoticeViewController {
+        return Container.shared.resolve(HomeNoticeViewController.self)!
+    }
+}

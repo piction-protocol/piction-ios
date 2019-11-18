@@ -1,5 +1,5 @@
 //
-//  SubscriptionSectionCollectionViewCell.swift
+//  HomeSubscriptionCollectionViewCell.swift
 //  piction-ios
 //
 //  Created by jhseo on 17/10/2019.
@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
-final class SubscriptionSectionCollectionViewCell: ReuseCollectionViewCell {
+final class HomeSubscriptionCollectionViewCell: ReuseCollectionViewCell {
     var disposeBag = DisposeBag()
 
     @IBOutlet weak var thumbnailImageView: UIImageView!
@@ -26,7 +26,7 @@ final class SubscriptionSectionCollectionViewCell: ReuseCollectionViewCell {
     @IBOutlet weak var projectButton: UIButton!
     @IBOutlet weak var postButton: UIButton!
 
-    typealias Model = SubscriptionSectionModel
+    typealias Model = HomeSubscriptionModel
 
     override func prepareForReuse() {
         super.prepareForReuse()

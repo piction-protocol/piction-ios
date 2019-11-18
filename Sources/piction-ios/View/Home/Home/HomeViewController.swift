@@ -13,34 +13,9 @@ import ViewModelBindable
 import RxDataSources
 import PictionSDK
 
-enum HomeBySection {
-    case Section(title: String, items: [HomeItemType])
-}
-
-extension HomeBySection: SectionModelType {
-    typealias Item = HomeItemType
-
-    var items: [HomeItemType] {
-        switch self {
-        case .Section(_, items: let items):
-            return items.map { $0 }
-        }
-    }
-
-    init(original: HomeBySection, items: [Item]) {
-        switch original {
-        case .Section(title: let title, _):
-            self = .Section(title: title, items: items)
-        }
-    }
-}
-
-enum HomeItemType {
-    case header(model: HomeHeaderType)
-    case trending(model: [ProjectModel])
-    case subscription(projects: [ProjectModel], posts: [PostModel])
-    case popularTag(tags: [TagModel], thumbnails: [String])
-    case notice(model: [BannerModel])
+protocol HomeSectionDelegate: class {
+    func loadComplete()
+    func showErrorPopup()
 }
 
 final class HomeViewController: UIViewController {
@@ -50,13 +25,14 @@ final class HomeViewController: UIViewController {
     var searchController: UISearchController?
     private var refreshControl = UIRefreshControl()
 
-    @IBOutlet weak var tableView: UITableView! {
+    @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
-            tableView.refreshControl = refreshControl
-            tableView.rowHeight = 0
-            tableView.estimatedRowHeight = UITableView.automaticDimension
+            scrollView.refreshControl = refreshControl
         }
     }
+    @IBOutlet weak var stackView: UIStackView!
+
+    private var loadCompleted = PublishSubject<Void>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,58 +52,47 @@ final class HomeViewController: UIViewController {
         searchController?.searchBar.placeholder = LocalizedStrings.hint_project_and_tag_search.localized()
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        self.tableView.reloadData()
+    private func embedHomeSection() {
+        embedHomeTrendingViewController()
+        embedHomeSubscriptionViewController()
+        embedHomePopularTagsViewController()
+        embedHomeNoticeViewController()
     }
 
-    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<HomeBySection> {
-        return RxTableViewSectionedReloadDataSource<HomeBySection>(
-            configureCell: { dataSource, tableView, indexPath, model in
-                switch dataSource[indexPath] {
-                case .header(let info):
-                    let cell: HomeHeaderTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    cell.configure(with: info)
-                    cell.layoutSubviews()
-                    return cell
-                case .trending(let projects):
-                    let cell: HomeTrendingSectionTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    cell.configure(with: projects)
-                    cell.layoutSubviews()
-                    return cell
-                case .subscription(let projects, let posts):
-                    let cell: HomeSubscriptionSectionTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    cell.configure(projects: projects, posts: posts)
-                    cell.layoutSubviews()
-                    return cell
-                case .popularTag(let tags, let thumbnails):
-                    let cell: HomePopularTagSectionTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    cell.configure(tags: tags, thumbnails: thumbnails)
-                    cell.layoutSubviews()
-                    return cell
-                case .notice(let notices):
-                    let cell: HomeNoticeSectionTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    cell.configure(with: notices)
-                    cell.layoutSubviews()
-                    return cell
-                }
-            })
+    private func removeHomeSection() {
+        _ = stackView.arrangedSubviews.map { $0.removeFromSuperview() }
     }
 
-    private func openErrorPopup() {
-        let alert = UIAlertController(title: LocalizedStrings.popup_title_network_error.localized(), message: LocalizedStrings.msg_api_internal_server_error.localized(), preferredStyle: .alert)
+    private func embedHomeTrendingViewController() {
+        let vc = HomeTrendingViewController.make()
+        vc.delegate = self
+        self.addChild(vc)
+        self.stackView.addArrangedSubview(vc.view)
+        vc.didMove(toParent: self)
+    }
 
-        let cancelButton = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel) { _ in
-        }
-        let okAction = UIAlertAction(title: LocalizedStrings.retry.localized(), style: .default, handler: { [weak self] action in
-            self?.viewModel?.loadTrigger.onNext(())
-        })
+    private func embedHomeSubscriptionViewController() {
+        let vc = HomeSubscriptionViewController.make()
+        vc.delegate = self
+        self.addChild(vc)
+        self.stackView.addArrangedSubview(vc.view)
+        vc.didMove(toParent: self)
+    }
 
-        alert.addAction(cancelButton)
-        alert.addAction(okAction)
+    private func embedHomePopularTagsViewController() {
+        let vc = HomePopularTagsViewController.make()
+        vc.delegate = self
+        self.addChild(vc)
+        self.stackView.addArrangedSubview(vc.view)
+        vc.didMove(toParent: self)
+    }
 
-        present(alert, animated: false, completion: nil)
+    private func embedHomeNoticeViewController() {
+        let vc = HomeNoticeViewController.make()
+        vc.delegate = self
+        self.addChild(vc)
+        self.stackView.addArrangedSubview(vc.view)
+        vc.didMove(toParent: self)
     }
 
     func openSearchBar() {
@@ -143,14 +108,10 @@ extension HomeViewController: ViewModelBindable {
     typealias ViewModel = HomeViewModel
 
     func bindViewModel(viewModel: ViewModel) {
-        let dataSource = configureDataSource()
-
-        tableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
-
         let input = HomeViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
+            loadComplete: loadCompleted.asDriver(onErrorDriveWith: .empty()),
             refreshControlDidRefresh: refreshControl.rx.controlEvent(.valueChanged).asDriver()
         )
 
@@ -165,16 +126,10 @@ extension HomeViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .sectionList
-            .drive { $0 }
-            .map { [$0] }
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-
-        output
-            .openErrorPopup
+            .embedHomeSection
             .drive(onNext: { [weak self] in
-                self?.openErrorPopup()
+                self?.removeHomeSection()
+                self?.embedHomeSection()
             })
             .disposed(by: disposeBag)
 
@@ -182,15 +137,28 @@ extension HomeViewController: ViewModelBindable {
             .isFetching
             .drive(refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
+
+        output
+            .activityIndicator
+            .drive(onNext: { status in
+                Toast.loadingActivity(status)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
-extension HomeViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+extension HomeViewController: HomeSectionDelegate {
+    func loadComplete() {
+        self.loadCompleted.onNext(())
     }
 
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+    func showErrorPopup() {
+        Toast.loadingActivity(false)
+        showPopup(
+            title: LocalizedStrings.popup_title_network_error.localized(),
+            message: LocalizedStrings.msg_api_internal_server_error.localized(),
+            action: LocalizedStrings.retry.localized()) { [weak self] in
+            self?.viewModel?.loadTrigger.onNext(())
+        }
     }
 }

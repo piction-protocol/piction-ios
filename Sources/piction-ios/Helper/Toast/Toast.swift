@@ -28,4 +28,14 @@ class Toast {
             })
         }
     }
+
+    class func loadingActivity(_ status: Bool) {
+        if let window = UIApplication.shared.keyWindow {
+            if status {
+                window.makeToastActivity(.center)
+            } else {
+                window.hideToastActivity()
+            }
+        }
+    }
 }
