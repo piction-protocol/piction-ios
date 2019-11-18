@@ -138,11 +138,7 @@ extension TransactionHistoryViewController: ViewModelBindable {
         output
             .activityIndicator
             .drive(onNext: { [weak self] status in
-                if status {
-                    self?.view.makeToastActivity(.center)
-                } else {
-                    self?.view.hideToastActivity()
-                }
+                Toast.loadingActivity(status)
             })
             .disposed(by: disposeBag)
     }
