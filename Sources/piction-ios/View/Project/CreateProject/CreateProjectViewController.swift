@@ -273,7 +273,7 @@ extension CreateProjectViewController: ViewModelBindable {
 
         output
             .activityIndicator
-            .drive(onNext: { [weak self] status in
+            .drive(onNext: { status in
                 Toast.loadingActivity(status)
             })
             .disposed(by: disposeBag)
