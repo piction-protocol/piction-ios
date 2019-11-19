@@ -97,7 +97,6 @@ final class ProjectViewModel: InjectableViewModel {
                 guard let `self` = self, self.shouldInfiniteScroll else {
                     return Driver.empty()
                 }
-                self.page = self.page + 1
                 return Driver.just(())
             }
 
@@ -107,7 +106,7 @@ final class ProjectViewModel: InjectableViewModel {
         let selectPostMenu = Driver.merge(updateSelectedProjectMenu, refreshMenu)
             .filter { $0 == 0 }
             .flatMap { [weak self] _ -> Driver<Void> in
-                self?.page = 1
+                self?.page = 0
                 self?.sections = []
                 self?.shouldInfiniteScroll = true
                 return Driver.just(())
@@ -200,10 +199,10 @@ final class ProjectViewModel: InjectableViewModel {
             .flatMap { [weak self] (_, isWriter) -> Driver<Action<ResponseData>> in
                 guard let `self` = self else { return Driver.empty() }
                 if isWriter {
-                    let response = PictionSDK.rx.requestAPI(MyAPI.posts(uri: self.uri, isRequiredFanPass: nil, page: self.page, size: 20))
+                    let response = PictionSDK.rx.requestAPI(MyAPI.posts(uri: self.uri, isRequiredFanPass: nil, page: self.page + 1, size: 20))
                     return Action.makeDriver(response)
                 } else {
-                    let response = PictionSDK.rx.requestAPI(PostsAPI.all(uri: self.uri, isRequiredFanPass: nil, page: self.page, size: 20))
+                    let response = PictionSDK.rx.requestAPI(PostsAPI.all(uri: self.uri, isRequiredFanPass: nil, page: self.page + 1, size: 20))
                     return Action.makeDriver(response)
                 }
             }
@@ -215,6 +214,9 @@ final class ProjectViewModel: InjectableViewModel {
                 }
                 return Driver.just(pageList)
             }
+
+        let loadSuccess = Driver.merge(loadPostAction.elements, loadSeriesListAction.elements)
+            .flatMap { _ in Driver.just("") }
 
         let isSubscribingForInfo = Driver.merge(isSubscribingSuccess, isSubscribingError)
 
@@ -312,16 +314,17 @@ final class ProjectViewModel: InjectableViewModel {
 
         let postSection = Driver.zip(loadPostSuccess, isSubscribing)
             .flatMap { [weak self] (postList, isSubscribing) -> Driver<SectionType<ContentsSection>> in
-
+                guard let `self` = self else { return Driver.empty() }
                 if (postList.pageable?.pageNumber ?? 0) >= (postList.totalPages ?? 0) - 1 {
-                    self?.shouldInfiniteScroll = false
+                    self.shouldInfiniteScroll = false
                 }
+                self.page = self.page + 1
 
                 let posts: [ContentsSection] = (postList.content ?? []).map { .postList(post: $0, isSubscribing: isSubscribing) }
 
-                self?.sections.append(contentsOf: posts)
+                self.sections.append(contentsOf: posts)
 
-                return Driver.just(SectionType<ContentsSection>.Section(title: "post", items: self?.sections ?? []))
+                return Driver.just(SectionType<ContentsSection>.Section(title: "post", items: self.sections))
             }
 
         let loadSeriesActionSuccess = loadSeriesListAction.elements
@@ -407,10 +410,10 @@ final class ProjectViewModel: InjectableViewModel {
                 return Driver.just(errorMsg.message)
             }
 
-        let showActivityIndicator = Driver.merge(subscriptionAction, cancelSubscriptionAction)
+        let showActivityIndicator = Driver.merge(loadProjectInfoAction,  subscriptionAction, cancelSubscriptionAction)
             .flatMap { _ in Driver.just(true) }
 
-        let hideActivityIndicator = Driver.merge(subscriptionSuccess, subscriptionError, cancelSubscriptionSuccess, cancelSubscriptionError)
+        let hideActivityIndicator = Driver.merge(loadSuccess, subscriptionSuccess, subscriptionError, cancelSubscriptionSuccess, cancelSubscriptionError)
             .flatMap { _ in Driver.just(false) }
 
         let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)

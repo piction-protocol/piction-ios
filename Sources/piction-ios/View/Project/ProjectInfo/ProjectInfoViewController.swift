@@ -20,6 +20,7 @@ final class ProjectInfoViewController: UIViewController {
     @IBOutlet weak var loginIdLabel: UILabel!
     @IBOutlet weak var synopsisLabel: UILabel!
     @IBOutlet weak var sendDonationButton: UIButton!
+    @IBOutlet weak var creatorInfoStackView: UIStackView!
     @IBOutlet weak var synopsisStackView: UIStackView!
     @IBOutlet weak var tagStackView: UIStackView!
     @IBOutlet weak var tagCollectionView: UICollectionView!
@@ -97,6 +98,7 @@ extension ProjectInfoViewController: ViewModelBindable {
                 self?.synopsisStackView.isHidden = projectInfo.synopsis == ""
                 self?.synopsisLabel.text = projectInfo.synopsis ?? ""
                 self?.tagStackView.isHidden = projectInfo.tags?.count == 0
+                self?.creatorInfoStackView.isHidden = projectInfo.user == nil
             })
             .disposed(by: disposeBag)
 
@@ -126,6 +128,26 @@ extension ProjectInfoViewController: ViewModelBindable {
             .openSignInViewController
             .drive(onNext: { [weak self] in
                 self?.openSignInViewController()
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .showErrorPopup
+            .drive(onNext: { [weak self] in
+                Toast.loadingActivity(false)
+                self?.showPopup(
+                    title: LocalizedStrings.popup_title_network_error.localized(),
+                    message: LocalizedStrings.msg_api_internal_server_error.localized(),
+                    action: LocalizedStrings.retry.localized()) { [weak self] in
+                        self?.viewModel?.loadRetryTrigger.onNext(())
+                    }
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .activityIndicator
+            .drive(onNext: { status in
+                Toast.loadingActivity(status)
             })
             .disposed(by: disposeBag)
     }

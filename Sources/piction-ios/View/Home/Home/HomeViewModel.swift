@@ -19,7 +19,7 @@ final class HomeViewModel: InjectableViewModel {
 
     let updater: UpdaterProtocol
 
-    var loadTrigger = PublishSubject<Void>()
+    var loadRetryTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
         (updater) = dependency
@@ -46,9 +46,9 @@ final class HomeViewModel: InjectableViewModel {
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
 
-        let loadNext = loadTrigger.asDriver(onErrorDriveWith: .empty())
+        let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
-        let embedHomeSection = Driver.merge(viewWillAppear, refreshSession, refreshContent, input.refreshControlDidRefresh, loadNext)
+        let embedHomeSection = Driver.merge(viewWillAppear, refreshSession, refreshContent, input.refreshControlDidRefresh, loadRetry)
 
         let refreshAction = input.refreshControlDidRefresh
             .withLatestFrom(input.loadComplete)

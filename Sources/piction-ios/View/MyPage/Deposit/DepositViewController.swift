@@ -14,6 +14,7 @@ import ViewModelBindable
 final class DepositViewController: UIViewController {
     var disposeBag = DisposeBag()
 
+    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var pxlLabel: UILabel!
@@ -105,6 +106,7 @@ extension DepositViewController: ViewModelBindable {
             .drive(onNext: { [weak self] walletInfo in
                 self?.addressLabel.text = "\(walletInfo.publicKey ?? "")"
                 self?.pxlLabel.text = "\(walletInfo.amount.commaRepresentation) PXL"
+                self?.stackView.isHidden = false
             })
             .disposed(by: disposeBag)
 
@@ -113,6 +115,26 @@ extension DepositViewController: ViewModelBindable {
             .drive(onNext: { address in
                 UIPasteboard.general.string = "\(address)"
                 Toast.showToast(LocalizedStrings.str_copy_address_complete.localized())
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .showErrorPopup
+            .drive(onNext: { [weak self] in
+                Toast.loadingActivity(false)
+                self?.showPopup(
+                    title: LocalizedStrings.popup_title_network_error.localized(),
+                    message: LocalizedStrings.msg_api_internal_server_error.localized(),
+                    action: LocalizedStrings.retry.localized()) { [weak self] in
+                        self?.viewModel?.loadRetryTrigger.onNext(())
+                    }
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .activityIndicator
+            .drive(onNext: { status in
+                Toast.loadingActivity(status)
             })
             .disposed(by: disposeBag)
     }

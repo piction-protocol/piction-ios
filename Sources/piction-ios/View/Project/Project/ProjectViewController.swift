@@ -380,7 +380,9 @@ extension ProjectViewController: ViewModelBindable {
         output
             .openSubscriptionUserViewController
             .drive(onNext: { [weak self] uri in
-                self?.openSubscriptionUserViewController(uri: uri)
+                if FEATURE_EDITOR {
+                    self?.openSubscriptionUserViewController(uri: uri)
+                }
             })
             .disposed(by: disposeBag)
 

@@ -20,7 +20,12 @@ final class SubscriptionListViewController: UIViewController {
     var emptyView = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_W, height: 0))
     private var refreshControl = UIRefreshControl()
 
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView! {
+        didSet {
+            collectionView.isScrollEnabled = false
+            collectionView.refreshControl = refreshControl
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +102,7 @@ extension SubscriptionListViewController: ViewModelBindable {
         let dataSource = configureDataSource()
 
         collectionView.addInfiniteScroll { [weak self] tableView in
-            self?.viewModel?.loadTrigger.onNext(())
+            self?.viewModel?.loadNextTrigger.onNext(())
         }
         collectionView.setShouldShowInfiniteScrollHandler { [weak self] _ in
             return self?.viewModel?.shouldInfiniteScroll ?? false
@@ -126,7 +131,6 @@ extension SubscriptionListViewController: ViewModelBindable {
             .subscriptionList
             .do(onNext: { [weak self] _ in
                 _ = self?.emptyView.subviews.map { $0.removeFromSuperview() }
-                self?.collectionView.refreshControl = self?.refreshControl
             })
             .drive { $0 }
             .map { [SectionModel(model: "", items: $0)] }
@@ -135,7 +139,8 @@ extension SubscriptionListViewController: ViewModelBindable {
 
         output
             .subscriptionList
-            .drive(onNext: { [weak self] _ in
+            .drive(onNext: { [weak self] subscriptions in
+                self?.collectionView.isScrollEnabled = true
                 self?.collectionView.layoutIfNeeded()
                 self?.collectionView.finishInfiniteScroll()
             })
@@ -144,7 +149,8 @@ extension SubscriptionListViewController: ViewModelBindable {
         output
             .embedEmptyViewController
             .drive(onNext: { [weak self] style in
-                self?.collectionView.refreshControl = nil
+                self?.collectionView.isScrollEnabled = style != .defaultLogin
+                Toast.loadingActivity(false)
                 self?.collectionView.contentOffset = CGPoint(x: 0, y: -LARGE_NAVIGATION_HEIGHT)
                 self?.embedCustomEmptyViewController(style: style)
             })
@@ -160,6 +166,27 @@ extension SubscriptionListViewController: ViewModelBindable {
         output
             .isFetching
             .drive(refreshControl.rx.isRefreshing)
+            .disposed(by: disposeBag)
+
+        output
+            .activityIndicator
+            .drive(onNext: { status in
+                Toast.loadingActivity(status)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .showErrorPopup
+            .drive(onNext: { [weak self] in
+                self?.collectionView.finishInfiniteScroll()
+                Toast.loadingActivity(false)
+                self?.showPopup(
+                    title: LocalizedStrings.popup_title_network_error.localized(),
+                    message: LocalizedStrings.msg_api_internal_server_error.localized(),
+                    action: LocalizedStrings.retry.localized()) { [weak self] in
+                        self?.viewModel?.loadRetryTrigger.onNext(())
+                    }
+            })
             .disposed(by: disposeBag)
     }
 }

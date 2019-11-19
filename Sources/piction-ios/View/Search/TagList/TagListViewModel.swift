@@ -14,6 +14,8 @@ final class TagListViewModel: ViewModel {
 
     init() {}
 
+    var loadRetryTrigger = PublishSubject<Void>()
+
     struct Input {
         let viewWillAppear: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
@@ -24,13 +26,17 @@ final class TagListViewModel: ViewModel {
         let tagList: Driver<[TagModel]>
         let openTagResultProjectViewController: Driver<IndexPath>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
+        let showErrorPopup: Driver<Void>
+        let activityIndicator: Driver<Bool>
     }
 
     func build(input: Input) -> Output {
 
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
-        let tagListAction = viewWillAppear
+        let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
+
+        let tagListAction = Driver.merge(viewWillAppear, loadRetry)
             .flatMap { _ -> Driver<Action<ResponseData>> in
                 let response = PictionSDK.rx.requestAPI(TagsAPI.popularAll)
                 return Action.makeDriver(response)
@@ -44,6 +50,9 @@ final class TagListViewModel: ViewModel {
                 return Driver.just(tagList)
             }
 
+        let tagListError = tagListAction.error
+            .flatMap { _ in Driver.just(()) }
+
         let embedEmptyView = tagListSuccess
             .flatMap { items -> Driver<CustomEmptyViewStyle> in
                 if (items.count == 0) {
@@ -52,11 +61,24 @@ final class TagListViewModel: ViewModel {
                 return Driver.empty()
             }
 
+        let showActivityIndicator = tagListAction
+            .flatMap { _ in Driver.just(true) }
+
+        let hideActivityIndicator = tagListSuccess
+            .flatMap { _ in Driver.just(false) }
+
+        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
+            .flatMap { status in Driver.just(status) }
+
+        let showErrorPopup = tagListError
+
         return Output(
             viewWillAppear: viewWillAppear,
             tagList: tagListSuccess,
             openTagResultProjectViewController: input.selectedIndexPath,
-            embedEmptyViewController: embedEmptyView
+            embedEmptyViewController: embedEmptyView,
+            showErrorPopup: showErrorPopup,
+            activityIndicator: activityIndicator
         )
     }
 }

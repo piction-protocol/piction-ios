@@ -16,7 +16,8 @@ final class SponsorshipHistoryViewModel: ViewModel {
     var items: [SponsorshipModel] = []
     var shouldInfiniteScroll = true
 
-    var loadTrigger = PublishSubject<Void>()
+    var loadRetryTrigger = PublishSubject<Void>()
+    var loadNextTrigger = PublishSubject<Void>()
 
     init() {}
 
@@ -30,6 +31,8 @@ final class SponsorshipHistoryViewModel: ViewModel {
         let sponsorshipList: Driver<[SponsorshipModel]>
         let isFetching: Driver<Bool>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
+        let showErrorPopup: Driver<Void>
+        let activityIndicator: Driver<Bool>
     }
 
     func build(input: Input) -> Output {
@@ -39,25 +42,26 @@ final class SponsorshipHistoryViewModel: ViewModel {
         let initialLoad = Driver.merge(viewWillAppear, input.refreshControlDidRefresh)
             .flatMap { [weak self] _ -> Driver<Void> in
                 guard let `self` = self else { return Driver.empty() }
-                self.page = 1
+                self.page = 0
                 self.items = []
                 self.shouldInfiniteScroll = true
                 return Driver.just(())
         }
 
-        let loadNext = loadTrigger.asDriver(onErrorDriveWith: .empty())
+        let loadNext = loadNextTrigger.asDriver(onErrorDriveWith: .empty())
             .flatMap { [weak self] _ -> Driver<Void> in
                 guard let `self` = self, self.shouldInfiniteScroll else {
                     return Driver.empty()
                 }
-                self.page = self.page + 1
                 return Driver.just(())
         }
 
-        let sponsorshipListAction = Driver.merge(initialLoad, loadNext)
+        let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
+
+        let sponsorshipListAction = Driver.merge(initialLoad, loadNext, loadRetry)
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
                 guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(SponsorshipsAPI.get(page: self.page, size: 20))
+                let response = PictionSDK.rx.requestAPI(SponsorshipsAPI.get(page: self.page + 1, size: 20))
                 return Action.makeDriver(response)
         }
 
@@ -67,6 +71,7 @@ final class SponsorshipHistoryViewModel: ViewModel {
                 guard let pageList = try? response.map(to: PageViewResponse<SponsorshipModel>.self) else {
                     return Driver.empty()
                 }
+                self.page = self.page + 1
                 if (pageList.pageable?.pageNumber ?? 0) >= (pageList.totalPages ?? 0) - 1 {
                     self.shouldInfiniteScroll = false
                 }
@@ -74,11 +79,10 @@ final class SponsorshipHistoryViewModel: ViewModel {
                 return Driver.just(self.items)
             }
 
-        let refreshAction = input.refreshControlDidRefresh
-            .withLatestFrom(sponsorshipListSuccess)
-            .flatMap { _ -> Driver<Action<Void>> in
-                return Action.makeDriver(Driver.just(()))
-            }
+        let sponsorshipListError = sponsorshipListAction.error
+            .flatMap { _ in Driver.just(()) }
+
+        let showErrorPopup = sponsorshipListError
 
         let embedEmptyView = sponsorshipListSuccess
             .flatMap { items -> Driver<CustomEmptyViewStyle> in
@@ -88,11 +92,28 @@ final class SponsorshipHistoryViewModel: ViewModel {
                 return Driver.empty()
             }
 
+        let refreshAction = input.refreshControlDidRefresh
+            .withLatestFrom(sponsorshipListSuccess)
+            .flatMap { _ -> Driver<Action<Void>> in
+                return Action.makeDriver(Driver.just(()))
+            }
+
+        let showActivityIndicator = initialLoad
+            .flatMap { _ in Driver.just(true) }
+
+        let hideActivityIndicator = sponsorshipListSuccess
+            .flatMap { _ in Driver.just(false) }
+
+        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
+            .flatMap { status in Driver.just(status) }
+
         return Output(
             viewWillAppear: input.viewWillAppear,
             sponsorshipList: sponsorshipListSuccess,
             isFetching: refreshAction.isExecuting,
-            embedEmptyViewController: embedEmptyView
+            embedEmptyViewController: embedEmptyView,
+            showErrorPopup: showErrorPopup,
+            activityIndicator: activityIndicator
         )
     }
 }

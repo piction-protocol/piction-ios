@@ -26,6 +26,8 @@ final class SponsorshipListViewModel: InjectableViewModel {
 
     var sections: [SectionType<SponsorshipListSection>] = []
 
+    var loadRetryTrigger = PublishSubject<Void>()
+
     init(dependency: Dependency) {
         (updater) = dependency
     }
@@ -44,6 +46,8 @@ final class SponsorshipListViewModel: InjectableViewModel {
         let selectedIndexPath: Driver<IndexPath>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let isFetching: Driver<Bool>
+        let activityIndicator: Driver<Bool>
+        let showErrorPopup: Driver<Void>
     }
 
     func build(input: Input) -> Output {
@@ -66,7 +70,10 @@ final class SponsorshipListViewModel: InjectableViewModel {
                 return Driver.just(())
             }
 
-        let sponsorshipListAction = initialLoad
+        let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
+            .flatMap { _ in Driver.just(()) }
+
+        let sponsorshipListAction = Driver.merge(initialLoad, loadRetry)
             .flatMap { _ -> Driver<Action<ResponseData>> in
                 let response = PictionSDK.rx.requestAPI(SponsorshipsAPI.get(page: 1, size: UI_USER_INTERFACE_IDIOM() == .pad ? 10 : 5))
                 return Action.makeDriver(response)
@@ -93,11 +100,23 @@ final class SponsorshipListViewModel: InjectableViewModel {
             }
 
         let sponsorshipListError = sponsorshipListAction.error
+            .flatMap { response -> Driver<Void> in
+                let errorMsg = response as? ErrorType
+                switch errorMsg {
+                case .unauthorized:
+                    return Driver.empty()
+                default:
+                    return Driver.just(())
+                }
+            }
+
+        let sponsorshipEmptyList = sponsorshipListAction.error
             .flatMap { _ -> Driver<[SectionType<SponsorshipListSection>]> in
                 return Driver.just([])
             }
 
-        let sponsorshipList = Driver.merge(sponsorshipListSuccess, sponsorshipListError)
+        let sponsorshipList = Driver.merge(sponsorshipListSuccess, sponsorshipEmptyList)
+        let showErrorPopup = sponsorshipListError
 
         let embedEmptyLoginView = sponsorshipListAction.error
             .flatMap { response -> Driver<CustomEmptyViewStyle> in
@@ -131,13 +150,24 @@ final class SponsorshipListViewModel: InjectableViewModel {
                 return Action.makeDriver(Driver.just(()))
             }
 
+        let showActivityIndicator = Driver.merge(initialLoad, loadRetry)
+            .flatMap { _ in Driver.just(true) }
+
+        let hideActivityIndicator = sponsorshipList
+            .flatMap { _ in Driver.just(false) }
+
+        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
+            .flatMap { status in Driver.just(status) }
+
         return Output(
             viewWillAppear: input.viewWillAppear,
             viewWillDisappear: viewWillDisappear, 
             sponsorshipList: sponsorshipList,
             selectedIndexPath: selectedIndexPath,
             embedEmptyViewController: embedEmptyViewController,
-            isFetching: refreshAction.isExecuting
+            isFetching: refreshAction.isExecuting,
+            activityIndicator: activityIndicator,
+            showErrorPopup: showErrorPopup
         )
     }
 }

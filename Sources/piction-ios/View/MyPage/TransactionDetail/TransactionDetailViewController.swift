@@ -104,5 +104,25 @@ extension TransactionDetailViewController: ViewModelBindable {
                 }
             })
             .disposed(by: disposeBag)
+
+        output
+            .showErrorPopup
+            .drive(onNext: { [weak self] in
+                Toast.loadingActivity(false)
+                self?.showPopup(
+                    title: LocalizedStrings.popup_title_network_error.localized(),
+                    message: LocalizedStrings.msg_api_internal_server_error.localized(),
+                    action: LocalizedStrings.retry.localized()) { [weak self] in
+                        self?.viewModel?.loadRetryTrigger.onNext(())
+                    }
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .activityIndicator
+            .drive(onNext: { status in
+                Toast.loadingActivity(status)
+            })
+            .disposed(by: disposeBag)
     }
 }

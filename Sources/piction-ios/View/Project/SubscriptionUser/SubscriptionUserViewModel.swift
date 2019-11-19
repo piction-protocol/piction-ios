@@ -44,7 +44,7 @@ final class SubscriptionUserViewModel: ViewModel {
         let initialLoad = Driver.merge(viewWillAppear, input.refreshControlDidRefresh)
             .flatMap { [weak self] _ -> Driver<Void> in
                 guard let `self` = self else { return Driver.empty() }
-                self.page = 1
+                self.page = 0
                 self.items = []
                 self.shouldInfiniteScroll = true
                 return Driver.just(())
@@ -55,22 +55,23 @@ final class SubscriptionUserViewModel: ViewModel {
                 guard let `self` = self, self.shouldInfiniteScroll else {
                     return Driver.empty()
                 }
-                self.page = self.page + 1
                 return Driver.just(())
             }
 
         let subscriptionUserListAction = Driver.merge(initialLoad, loadNext)
            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
             guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(MyAPI.projectSubscriptions(uri: self.uri, page: self.page, size: 30))
+                let response = PictionSDK.rx.requestAPI(MyAPI.projectSubscriptions(uri: self.uri, page: self.page + 1, size: 30))
                 return Action.makeDriver(response)
            }
 
         let subscriptionUserListSuccess = subscriptionUserListAction.elements
-           .flatMap { response -> Driver<[SubscriptionUserModel]> in
+           .flatMap { [weak self] response -> Driver<[SubscriptionUserModel]> in
+               guard let `self` = self else { return Driver.empty() }
                guard let pageList = try? response.map(to: PageViewResponse<SubscriptionUserModel>.self) else {
                    return Driver.empty()
                }
+               self.page = self.page + 1
                if (pageList.pageable?.pageNumber ?? 0) >= (pageList.totalPages ?? 0) - 1 {
                    self.shouldInfiniteScroll = false
                }

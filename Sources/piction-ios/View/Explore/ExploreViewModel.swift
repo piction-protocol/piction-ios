@@ -22,7 +22,8 @@ final class ExploreViewModel: InjectableViewModel {
     var items: [ProjectModel] = []
     var shouldInfiniteScroll = true
 
-    var loadTrigger = PublishSubject<Void>()
+    var loadRetryTrigger = PublishSubject<Void>()
+    var loadNextTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
         (updater) = dependency
@@ -41,6 +42,8 @@ final class ExploreViewModel: InjectableViewModel {
         let projectList: Driver<[ProjectModel]>
         let openProjectViewController: Driver<ProjectModel>
         let isFetching: Driver<Bool>
+        let activityIndicator: Driver<Bool>
+        let showErrorPopup: Driver<Void>
     }
 
     func build(input: Input) -> Output {
@@ -54,25 +57,26 @@ final class ExploreViewModel: InjectableViewModel {
         let initialLoad = Driver.merge(viewWillAppear, refreshSession, refreshContent, refreshControlDidRefresh)
             .flatMap { [weak self] _ -> Driver<Void> in
                 guard let `self` = self else { return Driver.empty() }
-                self.page = 1
+                self.page = 0
                 self.items = []
                 self.shouldInfiniteScroll = true
                 return Driver.just(())
             }
 
-        let loadNext = loadTrigger.asDriver(onErrorDriveWith: .empty())
+        let loadNext = loadNextTrigger.asDriver(onErrorDriveWith: .empty())
             .flatMap { [weak self] _ -> Driver<Void> in
                 guard let `self` = self, self.shouldInfiniteScroll else {
                     return Driver.empty()
                 }
-                self.page = self.page + 1
                 return Driver.just(())
             }
 
-        let projectListAction = Driver.merge(initialLoad, loadNext)
+        let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
+
+        let projectListAction = Driver.merge(initialLoad, loadNext, loadRetry)
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
                 guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.all(page: self.page, size: 20))
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.all(page: self.page + 1, size: 20))
                 return Action.makeDriver(response)
             }
 
@@ -82,6 +86,7 @@ final class ExploreViewModel: InjectableViewModel {
                 guard let pageList = try? response.map(to: PageViewResponse<ProjectModel>.self) else {
                     return Driver.empty()
                 }
+                self.page = self.page + 1
                 if (pageList.pageable?.pageNumber ?? 0) >= (pageList.totalPages ?? 0) - 1 {
                     self.shouldInfiniteScroll = false
                 }
@@ -90,9 +95,10 @@ final class ExploreViewModel: InjectableViewModel {
             }
 
         let projectListError = projectListAction.error
-            .flatMap { _ -> Driver<[ProjectModel]> in
-                return Driver.just([])
-            }
+            .flatMap { _ in Driver.just(()) }
+
+        let projectList = projectListSuccess
+        let showErrorPopup = projectListError
 
         let openProjectViewController = input.selectedIndexPath
             .flatMap { [weak self] indexPath -> Driver<ProjectModel> in
@@ -101,20 +107,29 @@ final class ExploreViewModel: InjectableViewModel {
                 return Driver.just(self.items[indexPath.row])
             }
 
-        let projectList = Driver.merge(projectListSuccess, projectListError)
-
         let refreshAction = input.refreshControlDidRefresh
             .withLatestFrom(projectList)
             .flatMap { _ -> Driver<Action<Void>> in
                 return Action.makeDriver(Driver.just(()))
             }
 
+        let showActivityIndicator = Driver.merge(initialLoad, loadRetry)
+            .flatMap { _ in Driver.just(true) }
+
+        let hideActivityIndicator = projectList
+            .flatMap { _ in Driver.just(false) }
+
+        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
+            .flatMap { status in Driver.just(status) }
+
         return Output(
             viewWillAppear: input.viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
             projectList: projectList,
             openProjectViewController: openProjectViewController,
-            isFetching: refreshAction.isExecuting
+            isFetching: refreshAction.isExecuting,
+            activityIndicator: activityIndicator,
+            showErrorPopup: showErrorPopup
         )
     }
 }

@@ -16,7 +16,12 @@ import PictionSDK
 final class SponsorshipListViewController: UIViewController {
     var disposeBag = DisposeBag()
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.isScrollEnabled = false
+            tableView.refreshControl = refreshControl
+        }
+    }
     @IBOutlet weak var emptyView: UIView!
 
     private var refreshControl = UIRefreshControl()
@@ -96,7 +101,7 @@ extension SponsorshipListViewController: ViewModelBindable {
             .do(onNext: { [weak self] _ in
                 _ = self?.emptyView.subviews.map { $0.removeFromSuperview() }
                 self?.emptyView.frame.size.height = 0
-                self?.tableView.refreshControl = self?.refreshControl
+                self?.tableView.isScrollEnabled = true
             })
             .drive { $0 }
             .map { $0 }
@@ -120,9 +125,9 @@ extension SponsorshipListViewController: ViewModelBindable {
         output
             .embedEmptyViewController
             .drive(onNext: { [weak self] style in
-                guard let `self` = self else { return }
-                self.tableView.refreshControl = nil
-                self.embedCustomEmptyViewController(style: style)
+                self?.tableView.isScrollEnabled = style != .defaultLogin
+                Toast.loadingActivity(false)
+                self?.embedCustomEmptyViewController(style: style)
             })
             .disposed(by: disposeBag)
 
@@ -130,5 +135,26 @@ extension SponsorshipListViewController: ViewModelBindable {
             .isFetching
             .drive(refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
+
+        output
+            .activityIndicator
+            .drive(onNext: { status in
+                Toast.loadingActivity(status)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .showErrorPopup
+            .drive(onNext: { [weak self] in
+                Toast.loadingActivity(false)
+                self?.showPopup(
+                    title: LocalizedStrings.popup_title_network_error.localized(),
+                    message: LocalizedStrings.msg_api_internal_server_error.localized(),
+                    action: LocalizedStrings.retry.localized()) { [weak self] in
+                        self?.viewModel?.loadRetryTrigger.onNext(())
+                    }
+            })
+            .disposed(by: disposeBag)
+
     }
 }

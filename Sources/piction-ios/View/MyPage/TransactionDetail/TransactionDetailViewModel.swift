@@ -25,6 +25,7 @@ enum TransactionType {
 final class TransactionDetailViewModel: ViewModel {
 
     let transaction: TransactionModel
+    var loadRetryTrigger = PublishSubject<Void>()
 
     init(transaction: TransactionModel) {
         self.transaction = transaction
@@ -40,18 +41,23 @@ final class TransactionDetailViewModel: ViewModel {
         let navigationTitle: Driver<String>
         let selectedIndexPath: Driver<IndexPath>
         let transactionInfo: Driver<SectionType<TransactionDetailSection>>
+        let showErrorPopup: Driver<Void>
+        let activityIndicator: Driver<Bool>
     }
 
-
     func build(input: Input) -> Output {
-        let navigationTitle = input.viewWillAppear
+        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+
+        let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
+
+        let navigationTitle = Driver.merge(viewWillAppear, loadRetry)
             .flatMap { [weak self] _ -> Driver<String> in
                 guard let `self` = self else { return Driver.empty() }
                 let title = self.transaction.inOut == "IN" ? LocalizedStrings.menu_deposit_detail.localized() : LocalizedStrings.menu_withdraw_detail.localized()
                 return Driver.just(title)
             }
 
-        let transactionDetailAction = input.viewWillAppear
+        let transactionDetailAction = Driver.merge(viewWillAppear, loadRetry)
             .filter { self.transaction.transactionType != "VALUE_TRANSFER" }
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
                 guard let `self` = self else { return Driver.empty() }
@@ -132,11 +138,27 @@ final class TransactionDetailViewModel: ViewModel {
                 return Driver.just(SectionType<TransactionDetailSection>.Section(title: "transactionInfo", items: sections))
             }
 
+        let transactionInfoError = transactionDetailAction.error
+            .flatMap { _ in Driver.just(()) }
+
+        let showErrorPopup = transactionInfoError
+
+        let showActivityIndicator = transactionDetailAction
+            .flatMap { _ in Driver.just(true) }
+
+        let hideActivityIndicator = transactionInfo
+            .flatMap { _ in Driver.just(false) }
+
+        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
+            .flatMap { status in Driver.just(status) }
+
         return Output(
             viewWillAppear: input.viewWillAppear,
             navigationTitle: navigationTitle,
             selectedIndexPath: input.selectedIndexPath,
-            transactionInfo: transactionInfo
+            transactionInfo: transactionInfo,
+            showErrorPopup: showErrorPopup,
+            activityIndicator: activityIndicator
         )
     }
 }

@@ -13,6 +13,7 @@ import PictionSDK
 final class MyProjectViewModel: ViewModel {
 
     var projectList: [ProjectModel] = []
+    var loadRetryTrigger = PublishSubject<Void>()
 
     init() {}
 
@@ -28,10 +29,15 @@ final class MyProjectViewModel: ViewModel {
         let openCreateProjectViewController: Driver<Void>
         let openProjectViewController: Driver<IndexPath>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
+        let showErrorPopup: Driver<Void>
+        let activityIndicator: Driver<Bool>
     }
 
     func build(input: Input) -> Output {
-        let myProjectAction = input.viewWillAppear
+        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
+
+        let myProjectAction = Driver.merge(viewWillAppear, loadRetry)
             .flatMap { _ -> Driver<Action<ResponseData>> in
                 let response = PictionSDK.rx.requestAPI(MyAPI.projects)
                 return Action.makeDriver(response)
@@ -46,6 +52,11 @@ final class MyProjectViewModel: ViewModel {
                 return Driver.just(projects)
             }
 
+        let myProjectError = myProjectAction.error
+            .flatMap { _ in Driver.just(() )}
+
+        let showErrorPopup = myProjectError
+
         let embedEmptyView = myProjectSuccess
             .flatMap { items -> Driver<CustomEmptyViewStyle> in
                 if items.count == 0 {
@@ -58,12 +69,23 @@ final class MyProjectViewModel: ViewModel {
 
         let openProjectViewController = input.selectedIndexPath
 
+        let showActivityIndicator = myProjectAction
+            .flatMap { _ in Driver.just(true) }
+
+        let hideActivityIndicator = myProjectSuccess
+            .flatMap { _ in Driver.just(false) }
+
+        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
+            .flatMap { status in Driver.just(status) }
+
         return Output(
             viewWillAppear: input.viewWillAppear,
             projectList: myProjectSuccess,
             openCreateProjectViewController: openCreateProjectViewController,
             openProjectViewController: openProjectViewController,
-            embedEmptyViewController: embedEmptyView
+            embedEmptyViewController: embedEmptyView,
+            showErrorPopup: showErrorPopup,
+            activityIndicator: activityIndicator
         )
     }
 }

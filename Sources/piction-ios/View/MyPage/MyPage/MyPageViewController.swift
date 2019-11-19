@@ -16,7 +16,12 @@ import SafariServices
 final class MyPageViewController: UIViewController {
     var disposeBag = DisposeBag()
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.isScrollEnabled = false
+            tableView.refreshControl = refreshControl
+        }
+    }
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var emptyView: UIView!
     private var emptyHeight: CGFloat = 0
@@ -163,7 +168,7 @@ extension MyPageViewController: ViewModelBindable {
                     view.backgroundColor = UIColor(r: 242, g: 242, b: 247)
                 }
                 self?.emptyView.addSubview(view)
-                self?.tableView.refreshControl = self?.refreshControl
+                self?.tableView.isScrollEnabled = true
             })
             .drive { $0 }
             .map { $0 }
@@ -224,7 +229,8 @@ extension MyPageViewController: ViewModelBindable {
         output
             .embedEmptyViewController
             .drive(onNext: { [weak self] style in
-                self?.tableView.refreshControl = nil
+                self?.tableView.isScrollEnabled = style != .defaultLogin
+                Toast.loadingActivity(false)
                 _ = self?.containerView.subviews.map { $0.removeFromSuperview() }
                 self?.containerView.frame.size.height = 0
                 self?.embedCustomEmptyViewController(style: style)
@@ -243,6 +249,26 @@ extension MyPageViewController: ViewModelBindable {
         output
             .isFetching
             .drive(refreshControl.rx.isRefreshing)
+            .disposed(by: disposeBag)
+
+        output
+            .activityIndicator
+            .drive(onNext: { status in
+                Toast.loadingActivity(status)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .showErrorPopup
+            .drive(onNext: { [weak self] in
+                Toast.loadingActivity(false)
+                self?.showPopup(
+                    title: LocalizedStrings.popup_title_network_error.localized(),
+                    message: LocalizedStrings.msg_api_internal_server_error.localized(),
+                    action: LocalizedStrings.retry.localized()) { [weak self] in
+                        self?.viewModel?.loadRetryTrigger.onNext(())
+                    }
+            })
             .disposed(by: disposeBag)
     }
 }

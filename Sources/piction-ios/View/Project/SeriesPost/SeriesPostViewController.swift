@@ -81,7 +81,7 @@ extension SeriesPostViewController: ViewModelBindable {
         let dataSource = configureDataSource()
 
         tableView.addInfiniteScroll { [weak self] _ in
-            self?.viewModel?.loadTrigger.onNext(())
+            self?.viewModel?.loadNextTrigger.onNext(())
         }
         tableView.setShouldShowInfiniteScrollHandler { [weak self] _ in
             return self?.viewModel?.shouldInfiniteScroll ?? false
@@ -177,6 +177,27 @@ extension SeriesPostViewController: ViewModelBindable {
             .drive(onNext: { [weak self] postInfo in
                 let (uri, postId) = postInfo
                 self?.openPostViewController(uri: uri, postId: postId)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .showErrorPopup
+            .drive(onNext: { [weak self] in
+                self?.tableView.finishInfiniteScroll()
+                Toast.loadingActivity(false)
+                self?.showPopup(
+                    title: LocalizedStrings.popup_title_network_error.localized(),
+                    message: LocalizedStrings.msg_api_internal_server_error.localized(),
+                    action: LocalizedStrings.retry.localized()) { [weak self] in
+                        self?.viewModel?.loadRetryTrigger.onNext(())
+                    }
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .activityIndicator
+            .drive(onNext: { status in
+                Toast.loadingActivity(status)
             })
             .disposed(by: disposeBag)
     }

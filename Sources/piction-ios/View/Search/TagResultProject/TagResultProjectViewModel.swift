@@ -17,7 +17,8 @@ final class TagResultProjectViewModel: ViewModel {
     var items: [ProjectModel] = []
     var shouldInfiniteScroll = true
 
-    var loadTrigger = PublishSubject<Void>()
+    var loadRetryTrigger = PublishSubject<Void>()
+    var loadNextTrigger = PublishSubject<Void>()
 
     init(tag: String) {
         self.tag = tag
@@ -38,6 +39,8 @@ final class TagResultProjectViewModel: ViewModel {
         let openProjectViewController: Driver<ProjectModel>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let isFetching: Driver<Bool>
+        let showErrorPopup: Driver<Void>
+        let activityIndicator: Driver<Bool>
     }
 
     func build(input: Input) -> Output {
@@ -54,25 +57,26 @@ final class TagResultProjectViewModel: ViewModel {
         let initialLoad = Driver.merge(viewWillAppear, refreshControlDidRefresh)
             .flatMap { [weak self] _ -> Driver<Void> in
                 guard let `self` = self else { return Driver.empty() }
-                self.page = 1
+                self.page = 0
                 self.items = []
                 self.shouldInfiniteScroll = true
                 return Driver.just(())
             }
 
-        let loadNext = loadTrigger.asDriver(onErrorDriveWith: .empty())
+        let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
+
+        let loadNext = loadNextTrigger.asDriver(onErrorDriveWith: .empty())
             .flatMap { [weak self] _ -> Driver<Void> in
                 guard let `self` = self, self.shouldInfiniteScroll else {
                     return Driver.empty()
                 }
-                self.page = self.page + 1
                 return Driver.just(())
             }
 
-        let tagResultProjectListAction = Driver.merge(initialLoad, loadNext)
+        let tagResultProjectListAction = Driver.merge(initialLoad, loadNext, loadRetry)
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
                 guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.all(page: self.page, size: 20, tagName: self.tag))
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.all(page: self.page + 1, size: 20, tagName: self.tag))
                 return Action.makeDriver(response)
             }
 
@@ -82,6 +86,7 @@ final class TagResultProjectViewModel: ViewModel {
                 guard let pageList = try? response.map(to: PageViewResponse<ProjectModel>.self) else {
                     return Driver.empty()
                 }
+                self.page = self.page + 1
                 if (pageList.pageable?.pageNumber ?? 0) >= (pageList.totalPages ?? 0) - 1 {
                     self.shouldInfiniteScroll = false
                 }
@@ -89,10 +94,17 @@ final class TagResultProjectViewModel: ViewModel {
                 return Driver.just(self.items)
             }
 
-        let tagResultProjectListError = tagResultProjectListAction.error
+        let tagResultProjectError = tagResultProjectListAction.error
+            .flatMap { _ in Driver.just(()) }
+
+        let tagResultProjectEmptyList = tagResultProjectListAction.error
             .flatMap { _ -> Driver<[ProjectModel]> in
                 return Driver.just([])
             }
+
+        let tagResultProjectList = Driver.merge(tagResultProjectListSuccess, tagResultProjectEmptyList)
+
+        let showErrorPopup = tagResultProjectError
 
         let openProjectViewController = input.selectedIndexPath
             .flatMap { [weak self] indexPath -> Driver<ProjectModel> in
@@ -100,8 +112,6 @@ final class TagResultProjectViewModel: ViewModel {
                 guard self.items.count > indexPath.row else { return Driver.empty() }
                 return Driver.just(self.items[indexPath.row])
             }
-
-        let tagResultProjectList = Driver.merge(tagResultProjectListSuccess, tagResultProjectListError)
 
         let refreshAction = input.refreshControlDidRefresh
             .withLatestFrom(tagResultProjectList)
@@ -117,6 +127,15 @@ final class TagResultProjectViewModel: ViewModel {
                 return Driver.empty()
             }
 
+        let showActivityIndicator = Driver.merge(initialLoad, loadRetry)
+            .flatMap { _ in Driver.just(true) }
+
+        let hideActivityIndicator = tagResultProjectList
+            .flatMap { _ in Driver.just(false) }
+
+        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
+            .flatMap { status in Driver.just(status) }
+
         return Output(
             viewWillAppear: input.viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
@@ -124,7 +143,9 @@ final class TagResultProjectViewModel: ViewModel {
             tagResultProjectList: tagResultProjectList,
             openProjectViewController: openProjectViewController,
             embedEmptyViewController: embedEmptyView,
-            isFetching: refreshAction.isExecuting
+            isFetching: refreshAction.isExecuting,
+            showErrorPopup: showErrorPopup,
+            activityIndicator: activityIndicator
         )
     }
 }

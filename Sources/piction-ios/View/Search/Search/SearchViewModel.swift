@@ -58,7 +58,7 @@ final class SearchViewModel: ViewModel {
         let menuChange = input.segmentedControlDidChange
             .flatMap { [weak self] menu -> Driver<Void> in
                 guard let `self` = self else { return Driver.empty() }
-                self.page = 1
+                self.page = 0
                 self.sections = []
                 self.shouldInfiniteScroll = true
                 self.menu.onNext(menu)
@@ -68,7 +68,7 @@ final class SearchViewModel: ViewModel {
         let inputSearchText = input.searchText
             .flatMap { [weak self] searchText -> Driver<Void> in
                 guard let `self` = self else { return Driver.empty() }
-                self.page = 1
+                self.page = 0
                 self.sections = []
                 self.shouldInfiniteScroll = true
                 self.searchText.onNext(searchText)
@@ -80,7 +80,6 @@ final class SearchViewModel: ViewModel {
                 guard let `self` = self, self.shouldInfiniteScroll else {
                     return Driver.empty()
                 }
-                self.page = self.page + 1
                 return Driver.just(())
             }
 
@@ -96,7 +95,7 @@ final class SearchViewModel: ViewModel {
             .withLatestFrom(self.menu.asDriver(onErrorDriveWith: .empty()))
             .flatMap { [weak self] menu -> Driver<CustomEmptyViewStyle> in
                 guard let `self` = self else { return Driver.empty() }
-                self.page = 1
+                self.page = 0
                 self.sections = []
                 self.shouldInfiniteScroll = false
                 if menu == 0 {
@@ -114,7 +113,8 @@ final class SearchViewModel: ViewModel {
             .flatMapLatest { [weak self] searchText ->
                 Driver<Action<ResponseData>> in
                 print(searchText)
-                let response = PictionSDK.rx.requestAPI(SearchAPI.project(name: searchText, page: self?.page ?? 0, size: 20))
+                guard let `self` = self else { return Driver.empty() }
+                let response = PictionSDK.rx.requestAPI(SearchAPI.project(name: searchText, page: self.page + 1, size: 20))
                 return Action.makeDriver(response)
             }
 
@@ -124,6 +124,7 @@ final class SearchViewModel: ViewModel {
                 guard let pageList = try? response.map(to: PageViewResponse<ProjectModel>.self) else {
                     return Driver.empty()
                 }
+                self.page = self.page + 1
                 if (pageList.pageable?.pageNumber ?? 0) >= (pageList.totalPages ?? 0) - 1 {
                     self.shouldInfiniteScroll = false
                 }
@@ -141,7 +142,8 @@ final class SearchViewModel: ViewModel {
             .flatMapLatest { [weak self] searchText ->
                 Driver<Action<ResponseData>> in
                 print(searchText)
-                let response = PictionSDK.rx.requestAPI(SearchAPI.tag(tag: searchText, page: self?.page ?? 0, size: 20))
+                guard let `self` = self else { return Driver.empty() }
+                let response = PictionSDK.rx.requestAPI(SearchAPI.tag(tag: searchText, page: self.page + 1, size: 20))
                 return Action.makeDriver(response)
             }
 
@@ -154,6 +156,7 @@ final class SearchViewModel: ViewModel {
                 if (pageList.pageable?.pageNumber ?? 0) >= (pageList.totalPages ?? 0) - 1 {
                     self.shouldInfiniteScroll = false
                 }
+                self.page = self.page + 1
                 let tags: [SearchSection] = (pageList.content ?? []).map { .tag(item: $0) }
                 self.sections.append(contentsOf: tags)
 

@@ -80,7 +80,7 @@ extension TransactionHistoryViewController: ViewModelBindable {
         let dataSource = configureDataSource()
 
         tableView.addInfiniteScroll { [weak self] _ in
-            self?.viewModel?.loadTrigger.onNext(())
+            self?.viewModel?.loadNextTrigger.onNext(())
         }
         tableView.setShouldShowInfiniteScrollHandler { [weak self] _ in
             return self?.viewModel?.shouldInfiniteScroll ?? false
@@ -147,6 +147,20 @@ extension TransactionHistoryViewController: ViewModelBindable {
                 default:
                     return
                 }
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .showErrorPopup
+            .drive(onNext: { [weak self] in
+                self?.tableView.finishInfiniteScroll()
+                Toast.loadingActivity(false)
+                self?.showPopup(
+                    title: LocalizedStrings.popup_title_network_error.localized(),
+                    message: LocalizedStrings.msg_api_internal_server_error.localized(),
+                    action: LocalizedStrings.retry.localized()) { [weak self] in
+                        self?.viewModel?.loadRetryTrigger.onNext(())
+                    }
             })
             .disposed(by: disposeBag)
 

@@ -22,7 +22,8 @@ final class SubscriptionListViewModel: InjectableViewModel {
     var items: [ProjectModel] = []
     var shouldInfiniteScroll = true
 
-    var loadTrigger = PublishSubject<Void>()
+    var loadRetryTrigger = PublishSubject<Void>()
+    var loadNextTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
         (updater) = dependency
@@ -42,10 +43,11 @@ final class SubscriptionListViewModel: InjectableViewModel {
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let openProjectViewController: Driver<ProjectModel>
         let isFetching: Driver<Bool>
+        let showErrorPopup: Driver<Void>
+        let activityIndicator: Driver<Bool>
     }
 
     func build(input: Input) -> Output {
-
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
@@ -55,25 +57,26 @@ final class SubscriptionListViewModel: InjectableViewModel {
         let initialLoad = Driver.merge(viewWillAppear, refreshSession, refreshContent, refreshControlDidRefresh)
             .flatMap { [weak self] _ -> Driver<Void> in
                 guard let `self` = self else { return Driver.empty() }
-                self.page = 1
+                self.page = 0
                 self.items = []
                 self.shouldInfiniteScroll = true
                 return Driver.just(())
             }
 
-        let loadNext = loadTrigger.asDriver(onErrorDriveWith: .empty())
+        let loadNext = loadNextTrigger.asDriver(onErrorDriveWith: .empty())
             .flatMap { [weak self] _ -> Driver<Void> in
                 guard let `self` = self, self.shouldInfiniteScroll else {
                     return Driver.empty()
                 }
-                self.page = self.page + 1
                 return Driver.just(())
             }
 
-        let subscriptionListAction = Driver.merge(initialLoad, loadNext)
+        let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
+
+        let subscriptionListAction = Driver.merge(initialLoad, loadNext, loadRetry)
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
                 guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(MyAPI.subscription(page: self.page, size: 20))
+                let response = PictionSDK.rx.requestAPI(MyAPI.subscription(page: self.page + 1, size: 20))
                 return Action.makeDriver(response)
             }
 
@@ -83,6 +86,7 @@ final class SubscriptionListViewModel: InjectableViewModel {
                 guard let pageList = try? response.map(to: PageViewResponse<ProjectModel>.self) else {
                     return Driver.empty()
                 }
+                self.page = self.page + 1
                 if (pageList.pageable?.pageNumber ?? 0) >= (pageList.totalPages ?? 0) - 1 {
                     self.shouldInfiniteScroll = false
                 }
@@ -91,9 +95,23 @@ final class SubscriptionListViewModel: InjectableViewModel {
             }
 
         let subscriptionListError = subscriptionListAction.error
+            .flatMap { response -> Driver<Void> in
+                let errorMsg = response as? ErrorType
+                switch errorMsg {
+                case .unauthorized:
+                    return Driver.empty()
+                default:
+                    return Driver.just(())
+                }
+            }
+
+        let subscriptionEmptyList = subscriptionListAction.error
             .flatMap { _ -> Driver<[ProjectModel]> in
                 return Driver.just([])
             }
+
+        let subscriptionList = Driver.merge(subscriptionListSuccess, subscriptionEmptyList)
+        let showErrorPopup = subscriptionListError
 
         let embedEmptyLoginView = subscriptionListAction.error
             .flatMap { [weak self] response -> Driver<CustomEmptyViewStyle> in
@@ -127,13 +145,20 @@ final class SubscriptionListViewModel: InjectableViewModel {
                 return Driver.just(self.items[indexPath.row])
             }
 
-        let subscriptionList = Driver.merge(subscriptionListSuccess, subscriptionListError)
-
         let refreshAction = input.refreshControlDidRefresh
             .withLatestFrom(subscriptionList)
             .flatMap { _ -> Driver<Action<Void>> in
                 return Action.makeDriver(Driver.just(()))
             }
+
+        let showActivityIndicator = Driver.merge(initialLoad, loadRetry)
+            .flatMap { _ in Driver.just(true) }
+
+        let hideActivityIndicator = subscriptionList
+            .flatMap { _ in Driver.just(false) }
+
+        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
+            .flatMap { status in Driver.just(status) }
 
         return Output(
             viewWillAppear: input.viewWillAppear,
@@ -141,7 +166,9 @@ final class SubscriptionListViewModel: InjectableViewModel {
             subscriptionList: subscriptionList,
             embedEmptyViewController: embedEmptyViewController,
             openProjectViewController: openProjectViewController,
-            isFetching: refreshAction.isExecuting
+            isFetching: refreshAction.isExecuting,
+            showErrorPopup: showErrorPopup,
+            activityIndicator: activityIndicator
         )
     }
 }

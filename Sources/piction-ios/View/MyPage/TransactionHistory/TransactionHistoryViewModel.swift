@@ -23,7 +23,8 @@ final class TransactionHistoryViewModel: ViewModel {
     var sections: [TransactionModel] = []
     var shouldInfiniteScroll = true
 
-    var loadTrigger = PublishSubject<Void>()
+    var loadRetryTrigger = PublishSubject<Void>()
+    var loadNextTrigger = PublishSubject<Void>()
 
     init() {}
 
@@ -38,8 +39,9 @@ final class TransactionHistoryViewModel: ViewModel {
         let transactionList: Driver<SectionType<TransactionHistorySection>>
         let isFetching: Driver<Bool>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
-        let activityIndicator: Driver<Bool>
         let openTransactionDetailViewController: Driver<IndexPath>
+        let showErrorPopup: Driver<Void>
+        let activityIndicator: Driver<Bool>
     }
 
     func build(input: Input) -> Output {
@@ -48,25 +50,26 @@ final class TransactionHistoryViewModel: ViewModel {
         let initialLoad = Driver.merge(viewWillAppear, input.refreshControlDidRefresh)
             .flatMap { [weak self] _ -> Driver<Void> in
                 guard let `self` = self else { return Driver.empty() }
-                self.page = 1
+                self.page = 0
                 self.sections = []
                 self.shouldInfiniteScroll = true
                 return Driver.just(())
             }
 
-        let loadNext = loadTrigger.asDriver(onErrorDriveWith: .empty())
+        let loadNext = loadNextTrigger.asDriver(onErrorDriveWith: .empty())
             .flatMap { [weak self] _ -> Driver<Void> in
                 guard let `self` = self, self.shouldInfiniteScroll else {
                     return Driver.empty()
                 }
-                self.page = self.page + 1
                 return Driver.just(())
             }
 
-        let transactionHistoryAction = Driver.merge(initialLoad, loadNext)
+        let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
+
+        let transactionHistoryAction = Driver.merge(initialLoad, loadNext, loadRetry)
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
                 guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(MyAPI.transactions(page: self.page, size: 30))
+                let response = PictionSDK.rx.requestAPI(MyAPI.transactions(page: self.page + 1, size: 30))
                 return Action.makeDriver(response)
             }
 
@@ -79,6 +82,7 @@ final class TransactionHistoryViewModel: ViewModel {
                 if (pageList.pageable?.pageNumber ?? 0) >= (pageList.totalPages ?? 0) - 1 {
                     self.shouldInfiniteScroll = false
                 }
+                self.page = self.page + 1
                 self.sections.append(contentsOf: pageList.content ?? [])
 
                 var transactions: [TransactionHistorySection] = []
@@ -101,10 +105,24 @@ final class TransactionHistoryViewModel: ViewModel {
                 return Driver.just(SectionType<TransactionHistorySection>.Section(title: "transacation", items: transactions))
             }
 
-        let transactionHistoryError = transactionHistoryAction.error
+        let transactionHistoryEmptyList = transactionHistoryAction.error
             .flatMap { response -> Driver<SectionType<TransactionHistorySection>> in
                 return Driver.just(SectionType<TransactionHistorySection>.Section(title: "transacation", items: []))
             }
+
+        let transactionHistoryListError = transactionHistoryAction.error
+            .flatMap { response -> Driver<Void> in
+                let errorMsg = response as? ErrorType
+                switch errorMsg {
+                case .unauthorized:
+                    return Driver.empty()
+                default:
+                    return Driver.just(())
+                }
+            }
+
+        let transactionHistoryList = Driver.merge(transactionHistorySuccess, transactionHistoryEmptyList)
+        let showErrorPopup = transactionHistoryListError
 
         let refreshAction = input.refreshControlDidRefresh
             .withLatestFrom(transactionHistorySuccess)
@@ -115,7 +133,7 @@ final class TransactionHistoryViewModel: ViewModel {
         let showActivityIndicator = Driver.merge(initialLoad)
             .flatMap { _ in Driver.just(true) }
 
-        let hideActivityIndicator = Driver.merge(transactionHistorySuccess, transactionHistoryError)
+        let hideActivityIndicator = transactionHistoryList
             .flatMap { _ in Driver.just(false) }
 
         let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
@@ -134,8 +152,9 @@ final class TransactionHistoryViewModel: ViewModel {
             transactionList: transactionHistorySuccess,
             isFetching: refreshAction.isExecuting,
             embedEmptyViewController: embedEmptyView,
-            activityIndicator: activityIndicator,
-            openTransactionDetailViewController: input.selectedIndexPath
+            openTransactionDetailViewController: input.selectedIndexPath,
+            showErrorPopup: showErrorPopup,
+            activityIndicator: activityIndicator
         )
     }
 

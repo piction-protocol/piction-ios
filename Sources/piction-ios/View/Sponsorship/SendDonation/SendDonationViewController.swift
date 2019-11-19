@@ -78,7 +78,6 @@ extension SendDonationViewController: ViewModelBindable {
     func bindViewModel(viewModel: ViewModel) {
         let input = SendDonationViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
-            viewWillDisappear: rx.viewWillDisappear.asDriver(),
             amountTextFieldDidInput: amountTextField.rx.text.orEmpty.asDriver(),
             sendBtnDidTap: sendButton.rx.tap.asDriver(),
             authSuccessWithPincode: authSuccessWithPincode.asDriver(onErrorDriveWith: .empty())
@@ -90,17 +89,9 @@ extension SendDonationViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
-//                self?.tabBarController?.tabBar.isHidden = true
                 self?.amountTextField.becomeFirstResponder()
                 let userId = self?.viewModel?.loginId ?? ""
                 FirebaseManager.screenName("후원_후원하기_후원금액입력_\(userId)")
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .viewWillDisappear
-            .drive(onNext: { [weak self] _ in
-//                self?.tabBarController?.tabBar.isHidden = false
             })
             .disposed(by: disposeBag)
 
@@ -169,6 +160,13 @@ extension SendDonationViewController: ViewModelBindable {
             .openErrorPopup
             .drive(onNext: { [weak self] message in
                 self?.errorPopup(message: message)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .activityIndicator
+            .drive(onNext: { status in
+                Toast.loadingActivity(status)
             })
             .disposed(by: disposeBag)
 

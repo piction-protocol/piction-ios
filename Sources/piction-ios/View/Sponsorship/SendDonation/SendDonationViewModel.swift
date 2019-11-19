@@ -25,7 +25,6 @@ final class SendDonationViewModel: InjectableViewModel {
 
     struct Input {
         let viewWillAppear: Driver<Void>
-        let viewWillDisappear: Driver<Void>
         let amountTextFieldDidInput: Driver<String>
         let sendBtnDidTap: Driver<Void>
         let authSuccessWithPincode: Driver<Void>
@@ -33,25 +32,22 @@ final class SendDonationViewModel: InjectableViewModel {
 
     struct Output {
         let viewWillAppear: Driver<Void>
-        let viewWillDisappear: Driver<Void>
         let userInfo: Driver<UserModel>
         let walletInfo: Driver<WalletModel>
         let enableSendButton: Driver<Bool>
         let openCheckPincodeViewController: Driver<Void>
         let openConfirmDonationViewController: Driver<(String, Int)>
         let openErrorPopup: Driver<String>
+        let activityIndicator: Driver<Bool>
         let popToViewController: Driver<String>
     }
 
     func build(input: Input) -> Output {
         let viewWillAppear = input.viewWillAppear
 
-        let viewWillDisappear = input.viewWillDisappear
-
         let userInfoAction = viewWillAppear
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
                 let response = PictionSDK.rx.requestAPI(UsersAPI.findOne(id: self?.loginId ?? ""))
-
                 return Action.makeDriver(response)
             }
 
@@ -74,7 +70,6 @@ final class SendDonationViewModel: InjectableViewModel {
         let walletInfoAction = viewWillAppear
             .flatMap { _ -> Driver<Action<ResponseData>> in
                 let response = PictionSDK.rx.requestAPI(MyAPI.wallet)
-
                 return Action.makeDriver(response)
             }
 
@@ -85,6 +80,10 @@ final class SendDonationViewModel: InjectableViewModel {
                 }
                 return Driver.just(walletInfo)
             }
+
+        let walletInfoError = walletInfoAction.error
+            .flatMap { _ in Driver.just(()) }
+        let showErrorPopup = walletInfoError
 
         let latestSendInfo = Driver.combineLatest(userInfoSuccess, walletInfoSuccess, input.amountTextFieldDidInput)
 
@@ -133,15 +132,24 @@ final class SendDonationViewModel: InjectableViewModel {
                 return Driver.just(!text.isEmpty && (Int(text) ?? 0 > 0))
             }
 
+        let showActivityIndicator = viewWillAppear
+            .flatMap { _ in Driver.just(true) }
+
+        let hideActivityIndicator = walletInfoSuccess
+            .flatMap { _ in Driver.just(false) }
+
+        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
+            .flatMap { status in Driver.just(status) }
+
         return Output(
             viewWillAppear: viewWillAppear,
-            viewWillDisappear: viewWillDisappear,
             userInfo: userInfoSuccess,
             walletInfo: walletInfoSuccess,
             enableSendButton: enableSendButton,
             openCheckPincodeViewController: openCheckPincodeViewController,
             openConfirmDonationViewController: sendAmountSuccess,
             openErrorPopup: sendAmountError,
+            activityIndicator: activityIndicator,
             popToViewController: popToViewController
         )
     }

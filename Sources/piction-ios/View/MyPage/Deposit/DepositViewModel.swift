@@ -12,6 +12,8 @@ import PictionSDK
 
 final class DepositViewModel: ViewModel {
 
+    var loadRetryTrigger = PublishSubject<Void>()
+
     init() {}
 
     struct Input {
@@ -24,11 +26,15 @@ final class DepositViewModel: ViewModel {
         let userInfo: Driver<UserModel>
         let walletInfo: Driver<WalletModel>
         let copyAddress: Driver<String>
+        let showErrorPopup: Driver<Void>
+        let activityIndicator: Driver<Bool>
     }
 
-
     func build(input: Input) -> Output {
-        let userInfoAction = input.viewWillAppear
+        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
+
+        let userInfoAction = Driver.merge(viewWillAppear, loadRetry)
             .flatMap { _ -> Driver<Action<ResponseData>> in
                 let response = PictionSDK.rx.requestAPI(UsersAPI.me)
                 return Action.makeDriver(response)
@@ -42,7 +48,7 @@ final class DepositViewModel: ViewModel {
                 return Driver.just(userInfo)
             }
 
-        let walletInfoAction = input.viewWillAppear
+        let walletInfoAction = Driver.merge(viewWillAppear, loadRetry)
             .flatMap { _ -> Driver<Action<ResponseData>> in
                 let response = PictionSDK.rx.requestAPI(MyAPI.wallet)
                 return Action.makeDriver(response)
@@ -56,18 +62,33 @@ final class DepositViewModel: ViewModel {
                 return Driver.just(walletInfo)
             }
 
+        let walletInfoError = walletInfoAction.error
+            .flatMap { _ in Driver.just(()) }
+
+        let showErrorPopup = walletInfoError
+
         let copyAddress = input.copyBtnDidTap
             .withLatestFrom(walletInfoSuccess)
             .flatMap { walletInfo -> Driver<String> in
                 return Driver.just(walletInfo.publicKey ?? "")
             }
 
+        let showActivityIndicator = walletInfoAction
+            .flatMap { _ in Driver.just(true) }
+
+        let hideActivityIndicator = walletInfoSuccess
+            .flatMap { _ in Driver.just(false) }
+
+        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
+            .flatMap { status in Driver.just(status) }
 
         return Output(
             viewWillAppear: input.viewWillAppear,
             userInfo: userInfoSuccess,
             walletInfo: walletInfoSuccess,
-            copyAddress: copyAddress
+            copyAddress: copyAddress,
+            showErrorPopup: showErrorPopup,
+            activityIndicator: activityIndicator
         )
     }
 }

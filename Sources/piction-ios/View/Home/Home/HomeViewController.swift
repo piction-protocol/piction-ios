@@ -158,7 +158,7 @@ extension HomeViewController: HomeSectionDelegate {
             title: LocalizedStrings.popup_title_network_error.localized(),
             message: LocalizedStrings.msg_api_internal_server_error.localized(),
             action: LocalizedStrings.retry.localized()) { [weak self] in
-            self?.viewModel?.loadTrigger.onNext(())
+            self?.viewModel?.loadRetryTrigger.onNext(())
         }
     }
 }

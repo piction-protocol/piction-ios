@@ -101,7 +101,7 @@ extension TagResultProjectViewController: ViewModelBindable {
         let dataSource = configureDataSource()
 
         collectionView.addInfiniteScroll { [weak self] tableView in
-            self?.viewModel?.loadTrigger.onNext(())
+            self?.viewModel?.loadNextTrigger.onNext(())
         }
         collectionView.setShouldShowInfiniteScrollHandler { [weak self] _ in
             return self?.viewModel?.shouldInfiniteScroll ?? false
@@ -170,6 +170,27 @@ extension TagResultProjectViewController: ViewModelBindable {
         output
             .isFetching
             .drive(refreshControl.rx.isRefreshing)
+            .disposed(by: disposeBag)
+
+        output
+            .showErrorPopup
+            .drive(onNext: { [weak self] in
+                self?.collectionView.finishInfiniteScroll()
+                Toast.loadingActivity(false)
+                self?.showPopup(
+                    title: LocalizedStrings.popup_title_network_error.localized(),
+                    message: LocalizedStrings.msg_api_internal_server_error.localized(),
+                    action: LocalizedStrings.retry.localized()) { [weak self] in
+                    self?.viewModel?.loadRetryTrigger.onNext(())
+                }
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .activityIndicator
+            .drive(onNext: { status in
+                Toast.loadingActivity(status)
+            })
             .disposed(by: disposeBag)
     }
 }

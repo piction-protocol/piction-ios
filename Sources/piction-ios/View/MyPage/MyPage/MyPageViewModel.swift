@@ -28,6 +28,8 @@ final class MyPageViewModel: InjectableViewModel {
 
     private let updater: UpdaterProtocol
 
+    var loadRetryTrigger = PublishSubject<Void>()
+
     init(dependency: Dependency) {
         (updater) = dependency
     }
@@ -49,6 +51,8 @@ final class MyPageViewModel: InjectableViewModel {
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let showToast: Driver<String>
         let isFetching: Driver<Bool>
+        let activityIndicator: Driver<Bool>
+        let showErrorPopup: Driver<Void>
     }
 
     func build(input: Input) -> Output {
@@ -61,7 +65,11 @@ final class MyPageViewModel: InjectableViewModel {
 
         let refreshControlDidRefresh = input.refreshControlDidRefresh
 
-        let userMeAction = Driver.merge(viewWillAppear, refreshSession, refreshControlDidRefresh)
+        let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
+
+        let initialLoad = Driver.merge(viewWillAppear, refreshSession, refreshControlDidRefresh)
+
+        let userMeAction = Driver.merge(initialLoad, loadRetry)
             .flatMap { _ -> Driver<Action<ResponseData>> in
                 let response = PictionSDK.rx.requestAPI(UsersAPI.me)
                 return Action.makeDriver(response)
@@ -139,11 +147,23 @@ final class MyPageViewModel: InjectableViewModel {
             }
 
         let userMeError = userMeAction.error
+            .flatMap { response -> Driver<Void> in
+                let errorMsg = response as? ErrorType
+                switch errorMsg {
+                case .unauthorized:
+                    return Driver.empty()
+                default:
+                    return Driver.just(())
+                }
+            }
+
+        let userMeEmpty = userMeAction.error
             .flatMap { _ -> Driver<[SectionType<MyPageSection>]> in
                 return Driver.just([])
             }
 
-        let myPageList = Driver.merge(userMeSuccess, userMeError)
+        let myPageList = Driver.merge(userMeSuccess, userMeEmpty)
+        let showErrorPopup = userMeError
 
         let embedEmptyViewController = userMeAction.error
             .flatMap { response -> Driver<CustomEmptyViewStyle> in
@@ -187,10 +207,19 @@ final class MyPageViewModel: InjectableViewModel {
         let showToast = Driver.merge(signOutSuccess, signOutError)
 
         let refreshAction = input.refreshControlDidRefresh
-        .withLatestFrom(myPageList)
-        .flatMap { _ -> Driver<Action<Void>> in
-            return Action.makeDriver(Driver.just(()))
-        }
+            .withLatestFrom(myPageList)
+            .flatMap { _ -> Driver<Action<Void>> in
+                return Action.makeDriver(Driver.just(()))
+            }
+
+        let showActivityIndicator = Driver.merge(initialLoad, loadRetry)
+            .flatMap { _ in Driver.just(true) }
+
+        let hideActivityIndicator = myPageList
+            .flatMap { _ in Driver.just(false) }
+
+        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
+            .flatMap { status in Driver.just(status) }
 
         return Output(
             viewWillAppear: input.viewWillAppear,
@@ -200,7 +229,9 @@ final class MyPageViewModel: InjectableViewModel {
             embedUserInfoViewController: embedUserInfoViewController,
             embedEmptyViewController: embedEmptyViewController,
             showToast: showToast,
-            isFetching: refreshAction.isExecuting
+            isFetching: refreshAction.isExecuting,
+            activityIndicator: activityIndicator,
+            showErrorPopup: showErrorPopup
         )
     }
 }
