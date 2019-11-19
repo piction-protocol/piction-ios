@@ -21,10 +21,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                 <subviews>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Btk-nY-qqr">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="77"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="53"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JF8-Rs-jzH">
-                                                <rect key="frame" x="20" y="48" width="335" height="29"/>
+                                                <rect key="frame" x="20" y="24" width="335" height="29"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="인기 태그" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U1W-eI-cRR">
                                                         <rect key="frame" x="0.0" y="0.0" width="285" height="29"/>
@@ -54,7 +54,7 @@
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="JF8-Rs-jzH" secondAttribute="trailing" constant="20" id="6H3-eN-9Aq"/>
-                                            <constraint firstItem="JF8-Rs-jzH" firstAttribute="top" secondItem="Btk-nY-qqr" secondAttribute="top" constant="48" id="hBF-Tf-0Rw"/>
+                                            <constraint firstItem="JF8-Rs-jzH" firstAttribute="top" secondItem="Btk-nY-qqr" secondAttribute="top" constant="24" id="hBF-Tf-0Rw"/>
                                             <constraint firstAttribute="bottom" secondItem="JF8-Rs-jzH" secondAttribute="bottom" id="iBL-xD-Snt"/>
                                             <constraint firstItem="JF8-Rs-jzH" firstAttribute="leading" secondItem="Btk-nY-qqr" secondAttribute="leading" constant="20" id="qpd-Zn-ffs"/>
                                         </constraints>
@@ -69,7 +69,7 @@
                                             <size key="itemSize" width="160" height="100"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                            <inset key="sectionInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+                                            <inset key="sectionInset" minX="20" minY="0.0" maxX="20" maxY="20"/>
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HomePopularTagsCollectionViewCell" id="yss-FY-YCR" customClass="HomePopularTagsCollectionViewCell" customModule="piction_ios" customModuleProvider="target">

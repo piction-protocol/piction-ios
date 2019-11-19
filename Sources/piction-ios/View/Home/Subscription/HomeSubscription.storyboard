@@ -14,17 +14,17 @@
             <objects>
                 <viewController storyboardIdentifier="HomeSubscriptionViewController" id="ACn-Y5-kyJ" customClass="HomeSubscriptionViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="A2H-f4-4kB">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="311"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="331"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="gvq-gh-exp">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="311"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="331"/>
                                 <subviews>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qs3-xY-2D4">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="77"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="53"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c7r-fA-lDy">
-                                                <rect key="frame" x="20" y="48" width="374" height="29"/>
+                                                <rect key="frame" x="20" y="24" width="374" height="29"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="구독 프로젝트" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O0C-7f-GTk">
                                                         <rect key="frame" x="0.0" y="0.0" width="324" height="29"/>
@@ -53,37 +53,37 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstItem="c7r-fA-lDy" firstAttribute="top" secondItem="qs3-xY-2D4" secondAttribute="top" constant="48" id="4gw-dp-Z6C"/>
+                                            <constraint firstItem="c7r-fA-lDy" firstAttribute="top" secondItem="qs3-xY-2D4" secondAttribute="top" constant="24" id="4gw-dp-Z6C"/>
                                             <constraint firstItem="c7r-fA-lDy" firstAttribute="leading" secondItem="qs3-xY-2D4" secondAttribute="leading" constant="20" id="Oda-D7-MHJ"/>
                                             <constraint firstAttribute="bottom" secondItem="c7r-fA-lDy" secondAttribute="bottom" id="tNF-XB-dvD"/>
                                             <constraint firstAttribute="trailing" secondItem="c7r-fA-lDy" secondAttribute="trailing" constant="20" id="tUj-6v-zdK"/>
                                         </constraints>
                                     </view>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1Ph-so-wIQ">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="311"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="331"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="311" id="f1W-Ti-2DQ"/>
+                                            <constraint firstAttribute="height" constant="331" id="f1W-Ti-2DQ"/>
                                         </constraints>
                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="20" minimumInteritemSpacing="0.0" id="9er-QJ-zml">
-                                            <size key="itemSize" width="200" height="311"/>
+                                            <size key="itemSize" width="200" height="291"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                            <inset key="sectionInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+                                            <inset key="sectionInset" minX="20" minY="0.0" maxX="20" maxY="20"/>
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HomeSubscriptionCollectionViewCell" id="EZM-aR-aQq" customClass="HomeSubscriptionCollectionViewCell" customModule="piction_ios" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="0.0" width="200" height="311"/>
+                                                <rect key="frame" x="20" y="10" width="200" height="291"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="311"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="291"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aox-Ay-1Sb">
-                                                            <rect key="frame" x="0.0" y="0.0" width="200" height="252"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="200" height="232"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="wXh-6e-biJ">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="252"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="232"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ArT-18-kqy" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
@@ -135,7 +135,7 @@
                                                                             </userDefinedRuntimeAttributes>
                                                                         </view>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QA5-jD-gy1">
-                                                                            <rect key="frame" x="0.0" y="200" width="200" height="52"/>
+                                                                            <rect key="frame" x="0.0" y="200" width="200" height="32"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="52" id="o5O-hp-bIs"/>
                                                                             </constraints>
@@ -146,14 +146,14 @@
                                                                     </subviews>
                                                                 </stackView>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2uA-k4-Imp">
-                                                                    <rect key="frame" x="0.0" y="251.5" width="200" height="0.5"/>
+                                                                    <rect key="frame" x="0.0" y="231.5" width="200" height="0.5"/>
                                                                     <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="0.33000000000000002" id="Jc0-wH-iZa"/>
                                                                     </constraints>
                                                                 </view>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2pc-Bh-Obt">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="252"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="232"/>
                                                                 </button>
                                                             </subviews>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -172,7 +172,7 @@
                                                             </constraints>
                                                         </view>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pxl-iu-rDu">
-                                                            <rect key="frame" x="0.0" y="268" width="200" height="43"/>
+                                                            <rect key="frame" x="0.0" y="248" width="200" height="43"/>
                                                             <subviews>
                                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="등록된 포스트가 없습니다." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mNp-gL-RoT">
                                                                     <rect key="frame" x="0.0" y="0.0" width="200" height="43"/>
@@ -293,7 +293,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WKP-TP-2WY"/>
                     </view>
-                    <size key="freeformSize" width="414" height="311"/>
+                    <size key="freeformSize" width="414" height="331"/>
                     <connections>
                         <outlet property="collectionView" destination="1Ph-so-wIQ" id="sfg-6V-QM4"/>
                         <outlet property="heightConstraint" destination="f1W-Ti-2DQ" id="Opb-AB-VV3"/>

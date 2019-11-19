@@ -30,7 +30,6 @@ final class HomeSubscriptionViewController: UIViewController {
             flowLayout.itemSize = CGSize(width: width, height: height)
             flowLayout.invalidateLayout()
             collectionView.layoutIfNeeded()
-//            heightConstraint.constant = collectionView.contentSize.height > 0 ? 311 : 0
             titleView.isHidden = collectionView.contentSize.width == 0
             collectionView.isHidden = collectionView.contentSize.width == 0
         }
