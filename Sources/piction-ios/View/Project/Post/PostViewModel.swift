@@ -309,14 +309,18 @@ final class PostViewModel: InjectableViewModel {
                 return Driver.just(errorMsg.message)
             }
 
-        let showActivityIndicator = postContentAction
-            .flatMap { _ in Driver.just(true) }
+        let openFanPassListViewController = input.subscriptionBtnDidTap
+            .withLatestFrom(userInfo)
+            .filter { $0.loginId != nil }
+            .withLatestFrom(postItemSuccess)
+            .filter { ($0.fanPass?.level ?? 0) > 0 }
+            .flatMap { [weak self] _ -> Driver<(String, Int?)> in
+                return Driver.just((self?.uri ?? "", self?.postId))
+            }
 
-        let hideActivityIndicator = showPostContent
-            .flatMap { _ in Driver.just(false) }
-
-        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
-            .flatMap { status in Driver.just(status) }
+        let activityIndicator = Driver.merge(
+            postItemAction.isExecuting,
+            freeSubscriptionAction.isExecuting)
 
         let openSignInViewController = input.subscriptionBtnDidTap
             .withLatestFrom(userInfo)

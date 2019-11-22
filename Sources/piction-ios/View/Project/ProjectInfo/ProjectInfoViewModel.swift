@@ -101,14 +101,7 @@ final class ProjectInfoViewModel: InjectableViewModel {
             .filter { $0.loginId == nil }
             .flatMap { _ in Driver.just(()) }
 
-        let showActivityIndicator = projectInfoAction
-            .flatMap { _ in Driver.just(true) }
-
-        let hideActivityIndicator = projectInfoSuccess
-            .flatMap { _ in Driver.just(false) }
-
-        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
-            .flatMap { status in Driver.just(status) }
+        let activityIndicator = projectInfoAction.isExecuting
 
         return Output(
             viewWillAppear: input.viewWillAppear,

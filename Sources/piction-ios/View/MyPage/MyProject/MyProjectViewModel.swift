@@ -69,14 +69,7 @@ final class MyProjectViewModel: ViewModel {
 
         let openProjectViewController = input.selectedIndexPath
 
-        let showActivityIndicator = myProjectAction
-            .flatMap { _ in Driver.just(true) }
-
-        let hideActivityIndicator = myProjectSuccess
-            .flatMap { _ in Driver.just(false) }
-
-        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
-            .flatMap { status in Driver.just(status) }
+        let activityIndicator = myProjectAction.isExecuting
 
         return Output(
             viewWillAppear: input.viewWillAppear,

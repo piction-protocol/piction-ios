@@ -212,14 +212,7 @@ final class MyPageViewModel: InjectableViewModel {
                 return Action.makeDriver(Driver.just(()))
             }
 
-        let showActivityIndicator = Driver.merge(initialLoad, loadRetry)
-            .flatMap { _ in Driver.just(true) }
-
-        let hideActivityIndicator = myPageList
-            .flatMap { _ in Driver.just(false) }
-
-        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
-            .flatMap { status in Driver.just(status) }
+        let activityIndicator = userMeAction.isExecuting
 
         return Output(
             viewWillAppear: input.viewWillAppear,

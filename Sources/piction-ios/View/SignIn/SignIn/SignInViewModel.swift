@@ -116,14 +116,7 @@ final class SignInViewModel: InjectableViewModel {
 
         let openFindPassword = input.findPasswordBtnDidTap
 
-        let showActivityIndicator = input.signInBtnDidTap
-            .flatMap { _ in Driver.just(true) }
-
-        let hideActivityIndicator = signInButtonAction.error
-            .flatMap { _ in Driver.just(false) }
-
-        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
-            .flatMap { status in Driver.just(status) }
+        let activityIndicator = signInButtonAction.isExecuting
 
         let closeAction = input.closeBtnDidTap
             .flatMap { _ -> Driver<Bool> in

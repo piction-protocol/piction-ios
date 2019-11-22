@@ -75,14 +75,7 @@ final class ChangePasswordViewModel: ViewModel {
 
         let errorMsg = changePasswordError
 
-        let showActivityIndicator = input.saveBtnDidTap
-            .flatMap { _ in Driver.just(true) }
-
-        let hideActivityIndicator = saveButtonAction.error
-            .flatMap { _ in Driver.just(false) }
-
-        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
-            .flatMap { status in Driver.just(status) }
+        let activityIndicator = saveButtonAction.isExecuting
 
         let dismissWithCancel = input.cancelBtnDidTap
 

@@ -132,14 +132,10 @@ final class SendDonationViewModel: InjectableViewModel {
                 return Driver.just(!text.isEmpty && (Int(text) ?? 0 > 0))
             }
 
-        let showActivityIndicator = viewWillAppear
-            .flatMap { _ in Driver.just(true) }
-
-        let hideActivityIndicator = walletInfoSuccess
-            .flatMap { _ in Driver.just(false) }
-
-        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
-            .flatMap { status in Driver.just(status) }
+        let activityIndicator = Driver.merge(
+            walletInfoAction.isExecuting,
+            sendAmountAction.isExecuting,
+            sendAmountWithPincodeAction.isExecuting)
 
         return Output(
             viewWillAppear: viewWillAppear,

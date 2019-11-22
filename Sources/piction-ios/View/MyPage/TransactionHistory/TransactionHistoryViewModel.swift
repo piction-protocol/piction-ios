@@ -130,14 +130,13 @@ final class TransactionHistoryViewModel: ViewModel {
                 return Action.makeDriver(Driver.just(list))
             }
 
-        let showActivityIndicator = Driver.merge(initialLoad)
+        let showActivityIndicator = initialLoad
             .flatMap { _ in Driver.just(true) }
 
         let hideActivityIndicator = transactionHistoryList
             .flatMap { _ in Driver.just(false) }
 
         let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
-            .flatMap { status in Driver.just(status) }
 
         let embedEmptyView = transactionHistorySuccess
             .flatMap { [weak self] _ -> Driver<CustomEmptyViewStyle> in

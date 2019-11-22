@@ -335,13 +335,10 @@ final class CreatePostViewModel: InjectableViewModel {
                 return Driver.just((self?.uri ?? "", seriesId))
             }
 
-        let showActivityIndicator = Driver.merge(input.coverImageDidPick, input.contentImageDidPick)
-            .flatMap { _ in Driver.just(true) }
-
-        let hideActivityIndicator = Driver.merge(uploadCoverImageSuccess, uploadCoverImageError, uploadContentImageSuccess, uploadContentImageError)
-            .flatMap { _ in Driver.just(false) }
-
-        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
+        let activityIndicator = Driver.merge(
+            uploadCoverImageAction.isExecuting,
+            uploadContentImageAction.isExecuting,
+            saveButtonAction.isExecuting)
 
         let showToast = Driver.merge(uploadCoverImageError, uploadContentImageError, changePostInfoError)
 

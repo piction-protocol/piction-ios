@@ -251,7 +251,6 @@ final class SeriesPostViewModel: InjectableViewModel {
             .flatMap { _ in Driver.just(false) }
 
         let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
-            .flatMap { status in Driver.just(status) }
 
         return Output(
             viewWillAppear: input.viewWillAppear,

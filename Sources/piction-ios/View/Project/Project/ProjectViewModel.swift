@@ -410,14 +410,11 @@ final class ProjectViewModel: InjectableViewModel {
                 return Driver.just(errorMsg.message)
             }
 
-        let showActivityIndicator = Driver.merge(loadProjectInfoAction,  subscriptionAction, cancelSubscriptionAction)
-            .flatMap { _ in Driver.just(true) }
-
-        let hideActivityIndicator = Driver.merge(loadSuccess, subscriptionSuccess, subscriptionError, cancelSubscriptionSuccess, cancelSubscriptionError)
-            .flatMap { _ in Driver.just(false) }
-
-        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
-            .flatMap { status in Driver.just(status) }
+        let activityIndicator = Driver.merge(
+            userInfoAction.isExecuting,
+            subscriptionAction.isExecuting,
+            cancelSubscriptionAction.isExecuting,
+            deletePostAction.isExecuting)
 
         let showToast = Driver.merge(subscriptionSuccess, cancelSubscriptionSuccess, subscriptionError, cancelSubscriptionError, deletePostSuccess, deletePostSuccess, deletePostError)
 

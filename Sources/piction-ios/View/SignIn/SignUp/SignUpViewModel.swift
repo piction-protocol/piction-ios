@@ -105,13 +105,7 @@ final class SignUpViewModel: InjectableViewModel {
                 return Driver.just(())
             }
 
-        let showActivityIndicator = input.signUpBtnDidTap
-            .flatMap { _ in Driver.just(true) }
-
-        let hideActivityIndicator = Driver.merge(signUpSuccessAction.error, signUpButtonAction.error)
-            .flatMap { _ in Driver.just(false) }
-
-        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
+        let activityIndicator = signUpSuccessAction.isExecuting
 
         return Output(
             viewWillAppear: input.viewWillAppear,

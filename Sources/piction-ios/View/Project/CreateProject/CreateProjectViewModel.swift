@@ -243,13 +243,10 @@ final class CreateProjectViewModel: InjectableViewModel {
                 return Driver.just(errorMsg?.message ?? "")
             }
 
-        let showActivityIndicator = Driver.merge(input.wideThumbnailImageDidPick,  input.thumbnailImageDidPick)
-            .flatMap { _ in Driver.just(true) }
-
-        let hideActivityIndicator = Driver.merge(uploadWideThumbnailSuccess, uploadWideThumbnailError, uploadThumbnailSuccess, uploadThumbnailError)
-            .flatMap { _ in Driver.just(false) }
-
-        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
+        let activityIndicator = Driver.merge(
+            uploadWideThumbnailImageAction.isExecuting,
+            uploadThumbnailImageAction.isExecuting,
+            saveButtonAction.isExecuting)
 
         let showToast = Driver.merge(uploadWideThumbnailError, uploadThumbnailError, changeProjectInfoError)
 

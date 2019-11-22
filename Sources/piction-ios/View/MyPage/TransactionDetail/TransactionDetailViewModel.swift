@@ -143,14 +143,7 @@ final class TransactionDetailViewModel: ViewModel {
 
         let showErrorPopup = transactionInfoError
 
-        let showActivityIndicator = transactionDetailAction
-            .flatMap { _ in Driver.just(true) }
-
-        let hideActivityIndicator = transactionInfo
-            .flatMap { _ in Driver.just(false) }
-
-        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
-            .flatMap { status in Driver.just(status) }
+        let activityIndicator = transactionDetailAction.isExecuting
 
         return Output(
             viewWillAppear: input.viewWillAppear,

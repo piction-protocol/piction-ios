@@ -149,18 +149,6 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
                 return Driver.just(())
             }
 
-        let showActivityIndicator = Driver.merge(uploadPictureAction.isExecuting, saveButtonAction.isExecuting)
-            .filter { !$0 }
-            .do(onNext: { _ in
-                print("true")
-            })
-
-        let hideActivityIndicator = Driver.merge(uploadPictureAction.isExecuting, saveButtonAction.isExecuting)
-            .filter { $0 }
-            .do(onNext: { _ in
-                print("false")
-            })
-
         let openWarningPopup = input.cancelBtnDidTap
             .withLatestFrom(changeInfo.asDriver(onErrorDriveWith: .empty()))
             .filter { $0 }
@@ -174,8 +162,10 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
         let dismissViewController = Driver.merge(dismissWithCancel, changeUserInfoSuccess)
             .flatMap { _ in Driver.just(()) }
 
-        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
-            .flatMap { status in Driver.just(status) }
+        let activityIndicator = Driver.merge(
+            userInfoAction.isExecuting,
+            uploadPictureAction.isExecuting,
+            saveButtonAction.isExecuting)
 
         let showToast = Driver.merge(changeUserInfoError, uploadPictureError)
 

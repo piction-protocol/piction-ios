@@ -73,14 +73,7 @@ final class DepositViewModel: ViewModel {
                 return Driver.just(walletInfo.publicKey ?? "")
             }
 
-        let showActivityIndicator = walletInfoAction
-            .flatMap { _ in Driver.just(true) }
-
-        let hideActivityIndicator = walletInfoSuccess
-            .flatMap { _ in Driver.just(false) }
-
-        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
-            .flatMap { status in Driver.just(status) }
+        let activityIndicator = walletInfoAction.isExecuting
 
         return Output(
             viewWillAppear: input.viewWillAppear,
