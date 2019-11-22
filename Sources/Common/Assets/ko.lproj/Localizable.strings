@@ -46,7 +46,7 @@
 "popup_title_delete_post" = "포스트를 삭제하시겠습니까?";
 
 // Popup & Toast
-"msg_api_internal_server_error" = "서버에서 오류가 발생하였습니다.\n잠시 후 다시 시도해주세요.";
+"msg_api_internal_server_error" = "네트워크 오류가 발생하였습니다.\n잠시 후 다시 시도해주세요.";
 "msg_pincode_error" = "PIN 번호가 일치하지 않습니다.";
 "msg_pincode_confirm_error" = "PIN 번호가 일치하지 않습니다.\n다시 한 번 입력해주세요.";
 "msg_pincode_error_end" = "10회 동안 PIN 번호를 잘못 입력하였으므로 보안을 위해 자동으로 로그아웃됩니다.";
@@ -114,7 +114,8 @@
 "str_popular_tag" = "인기 태그";
 "str_project_count" = "%d 프로젝트";
 "str_subs_count_plural" = "구독자 수 %d";
-"str_subs_only" = "구독자 전용 포스트입니다.";
+"str_subs_only_with_fanpass" = "%@ 이상\n구독자만 이용 가능한 콘텐츠입니다.";
+"str_subs_only" = "구독자만 이용 가능한 콘텐츠입니다.";
 "str_series_subs_only" = "구독자 전용";
 "str_series_fanpass_subs_only" = "%@ 이상 구독자 전용";
 "str_sort_with_direction" = "정렬 %@";

@@ -12,7 +12,7 @@ import RxCocoa
 import PictionSDK
 
 enum ContentsSection {
-    case postList(post: PostModel, isSubscribing: Bool)
+    case postList(post: PostModel, subscriptionInfo: SubscriptionModel?)
     case seriesPostList(post: PostModel, isSubscribing: Bool, number: Int)
     case seriesHeader(series: SeriesModel)
     case seriesList(series: SeriesModel)
@@ -56,7 +56,7 @@ final class ProjectViewModel: InjectableViewModel {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
         let projectInfo: Driver<ProjectModel>
-        let subscriptionInfo: Driver<(Bool, Bool)>
+        let subscriptionInfo: Driver<(Bool, [FanPassModel], SubscriptionModel?)>
         let openCancelSubscriptionPopup: Driver<Void>
         let openSignInViewController: Driver<Void>
         let openCreatePostViewController: Driver<String>
@@ -68,6 +68,7 @@ final class ProjectViewModel: InjectableViewModel {
         let openUpdateProjectViewController: Driver<String>
         let openSeriesListViewController: Driver<String>
         let openSubscriptionUserViewController: Driver<String>
+        let openFanPassListViewController: Driver<String>
         let activityIndicator: Driver<Bool>
         let showToast: Driver<String>
     }
@@ -121,22 +122,22 @@ final class ProjectViewModel: InjectableViewModel {
                 return Driver.just(())
             }
 
-        let isSubscribingAction = Driver.merge(updateSelectedProjectMenu, refreshMenu, loadNextMenu)
+        let subscriptionInfoAction = Driver.merge(updateSelectedProjectMenu, refreshMenu, loadNextMenu)
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(FanPassAPI.isSubscription(uri: self?.uri ?? ""))
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.getProjectSubscription(uri: self?.uri ?? ""))
                 return Action.makeDriver(response)
             }
 
-        let isSubscribingSuccess = isSubscribingAction.elements
-            .flatMap { response -> Driver<Bool> in
-                guard let isSubscribing = try? response.map(to: SubscriptionModel.self) else {
+        let subscriptionInfoSuccess = subscriptionInfoAction.elements
+            .flatMap { response -> Driver<SubscriptionModel?> in
+                guard let subscriptionInfo = try? response.map(to: SubscriptionModel.self) else {
                     return Driver.empty()
                 }
-                return Driver.just(isSubscribing.fanPass != nil)
+                return Driver.just(subscriptionInfo)
             }
 
-        let isSubscribingError = isSubscribingAction.error
-            .flatMap { _ in Driver.just(false) }
+        let subscriptionInfoError = subscriptionInfoAction.error
+            .flatMap { _ in Driver<SubscriptionModel?>.just(nil) }
 
         let openProjectInfoViewController = input.infoBtnDidTap
             .flatMap { [weak self] _ -> Driver<String> in
@@ -199,10 +200,10 @@ final class ProjectViewModel: InjectableViewModel {
             .flatMap { [weak self] (_, isWriter) -> Driver<Action<ResponseData>> in
                 guard let `self` = self else { return Driver.empty() }
                 if isWriter {
-                    let response = PictionSDK.rx.requestAPI(MyAPI.posts(uri: self.uri, isRequiredFanPass: nil, page: self.page + 1, size: 20))
+                    let response = PictionSDK.rx.requestAPI(MyAPI.posts(uri: self.uri, page: self.page + 1, size: 20))
                     return Action.makeDriver(response)
                 } else {
-                    let response = PictionSDK.rx.requestAPI(PostsAPI.all(uri: self.uri, isRequiredFanPass: nil, page: self.page + 1, size: 20))
+                    let response = PictionSDK.rx.requestAPI(PostsAPI.all(uri: self.uri, page: self.page + 1, size: 20))
                     return Action.makeDriver(response)
                 }
             }
@@ -215,21 +216,14 @@ final class ProjectViewModel: InjectableViewModel {
                 return Driver.just(pageList)
             }
 
+        let projectSubscriptionInfo = Driver.merge(subscriptionInfoSuccess, subscriptionInfoError)
+
         let loadSuccess = Driver.merge(loadPostAction.elements, loadSeriesListAction.elements)
             .flatMap { _ in Driver.just("") }
 
-        let isSubscribingForInfo = Driver.merge(isSubscribingSuccess, isSubscribingError)
-
-        let isSubscribing = isSubscribingForInfo
-            .withLatestFrom(updateSelectedProjectMenu)
-            .filter { $0 == 0 }
-            .withLatestFrom(isSubscribingForInfo)
-
-        let subscriptionInfo = Driver.combineLatest(isWriter, isSubscribingForInfo)
-
         let fanPassListAction = viewWillAppear
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(FanPassAPI.projectAll(uri: self?.uri ?? ""))
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.fanPassAll(uri: self?.uri ?? ""))
                 return Action.makeDriver(response)
             }
 
@@ -241,16 +235,19 @@ final class ProjectViewModel: InjectableViewModel {
                 return Driver.just(fanPassList)
             }
 
+        let subscriptionInfo = Driver.combineLatest(isWriter, fanPassListSuccess,  projectSubscriptionInfo)
+
         let subscriptionAction = input.subscriptionBtnDidTap
             .withLatestFrom(isWriter)
             .filter { !$0 }
             .withLatestFrom(currentUserInfo)
             .filter { $0.loginId != nil }
-            .withLatestFrom(isSubscribingSuccess)
-            .filter { !$0 }
+            .withLatestFrom(projectSubscriptionInfo)
+            .filter { $0 == nil }
             .withLatestFrom(fanPassListSuccess)
-            .flatMap { fanPassList -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(FanPassAPI.subscription(fanPassId: fanPassList[safe: 0]?.id ?? 0, subscriptionPrice: fanPassList[safe: 0]?.subscriptionPrice ?? 0))
+            .filter { $0.count == 1 }
+            .flatMap { [weak self] fanPassList -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.subscription(uri: self?.uri ?? "", fanPassId: fanPassList[safe: 0]?.id ?? 0, subscriptionPrice: fanPassList[safe: 0]?.subscriptionPrice ?? 0))
                 return Action.makeDriver(response)
             }
 
@@ -273,16 +270,21 @@ final class ProjectViewModel: InjectableViewModel {
             .filter { !$0 }
             .withLatestFrom(currentUserInfo)
             .filter { $0.loginId != nil }
-            .withLatestFrom(isSubscribingSuccess)
-            .filter { $0 }
+            .withLatestFrom(projectSubscriptionInfo)
+            .filter { $0 != nil }
+            .withLatestFrom(fanPassListSuccess)
+            .filter { $0.count == 1 }
             .flatMap { _ -> Driver<Void> in
                 return Driver.just(())
             }
 
         let cancelSubscriptionAction = input.cancelSubscriptionBtnDidTap
-            .withLatestFrom(fanPassListSuccess)
-            .flatMap { fanPassList -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(FanPassAPI.delete(fanPassId: fanPassList[safe: 0]?.id ?? 0))
+            .withLatestFrom(projectSubscriptionInfo)
+            .filter { $0 != nil }
+            .flatMap { [weak self] subscriptionInfo -> Driver<Action<ResponseData>> in
+                guard (subscriptionInfo?.fanPass?.level ?? 0) == 0 else { return Driver.empty() }
+                guard let fanPassId = subscriptionInfo?.fanPass?.id else { return Driver.empty() }
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.cancelSubscription(uri: self?.uri ?? "", fanPassId: fanPassId))
                 return Action.makeDriver(response)
             }
 
@@ -312,15 +314,15 @@ final class ProjectViewModel: InjectableViewModel {
                 return Driver.just(self?.uri ?? "")
             }
 
-        let postSection = Driver.zip(loadPostSuccess, isSubscribing)
-            .flatMap { [weak self] (postList, isSubscribing) -> Driver<SectionType<ContentsSection>> in
+        let postSection = Driver.zip(loadPostSuccess, projectSubscriptionInfo)
+            .flatMap { [weak self] (postList, subscriptionInfo) -> Driver<SectionType<ContentsSection>> in
                 guard let `self` = self else { return Driver.empty() }
                 if (postList.pageable?.pageNumber ?? 0) >= (postList.totalPages ?? 0) - 1 {
                     self.shouldInfiniteScroll = false
                 }
                 self.page = self.page + 1
 
-                let posts: [ContentsSection] = (postList.content ?? []).map { .postList(post: $0, isSubscribing: isSubscribing) }
+                let posts: [ContentsSection] = (postList.content ?? []).map { .postList(post: $0, subscriptionInfo: subscriptionInfo) }
 
                 self.sections.append(contentsOf: posts)
 
@@ -433,6 +435,13 @@ final class ProjectViewModel: InjectableViewModel {
                 return Driver.just(self?.uri ?? "")
             }
 
+        let openFanPassListViewController = input.subscriptionBtnDidTap
+            .withLatestFrom(fanPassListSuccess)
+            .filter { $0.count > 1 }
+            .flatMap { [weak self] _ -> Driver<String> in
+                return Driver.just(self?.uri ?? "")
+            }
+
         return Output(
             viewWillAppear: input.viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
@@ -449,6 +458,7 @@ final class ProjectViewModel: InjectableViewModel {
             openUpdateProjectViewController: openUpdateProjectViewController,
             openSeriesListViewController: openSeriesListViewController,
             openSubscriptionUserViewController: openSubscriptionUserViewController,
+            openFanPassListViewController: openFanPassListViewController,
             activityIndicator: activityIndicator,
             showToast: showToast
         )

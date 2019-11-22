@@ -113,6 +113,7 @@ enum LocalizedStrings {
     case str_popular_tag
     case str_project_count
     case str_subs_count_plural
+    case str_subs_only_with_fanpass
     case str_subs_only
     case str_series_subs_only
     case str_series_fanpass_subs_only
@@ -305,7 +306,7 @@ enum LocalizedStrings {
 }
 
 extension LocalizedStrings {
-    public func localized(with argument: CVarArg = []) -> String {
-        return String.localizedStringWithFormat(String(describing: self).localized, argument)
+    public func localized(with args: CVarArg...) -> String {
+        return String(format: String(describing: self).localized, arguments: args)
     }
 }

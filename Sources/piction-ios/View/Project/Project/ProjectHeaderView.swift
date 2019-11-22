@@ -113,8 +113,9 @@ class ProjectHeaderView: GSKStretchyHeaderView {
         subscriptionCountLabel.text = LocalizedStrings.str_subs_count_plural.localized(with: subscriptionUserCount ?? 0)
     }
 
-    func configureSubscription(isWriter: Bool, isSubscribing: Bool) {
-        if isSubscribing {
+    func configureSubscription(isWriter: Bool, fanPassList: [FanPassModel], subscriptionInfo: SubscriptionModel?) {
+
+        if subscriptionInfo != nil {
             subscriptionUserButton.isHidden = true
             managementButton.isHidden = true
             subscriptionButton.isHidden = false
@@ -139,7 +140,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
                 managementButton.isHidden = true
                 subscriptionButton.isHidden = false
                 subscriptionButton.backgroundColor = UIColor(r: 51, g: 51, b: 51)
-                subscriptionButton.setTitle(LocalizedStrings.btn_subs.localized(), for: .normal)
+                subscriptionButton.setTitle(fanPassList.count > 1 ? LocalizedStrings.btn_subs.localized() : LocalizedStrings.btn_subs_free.localized(), for: .normal)
                 subscriptionButton.setTitleColor(.white, for: .normal)
             }
         }

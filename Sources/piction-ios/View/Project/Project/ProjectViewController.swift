@@ -80,6 +80,13 @@ final class ProjectViewController: UIViewController {
         }
     }
 
+    private func openFanPassListViewController(uri: String) {
+        let vc = FanPassListViewController.make(uri: uri)
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.openViewController(vc, type: .present)
+        }
+    }
+
     private func openDeletePopup(uri: String, postId: Int) {
         let alertController = UIAlertController(title: nil, message: LocalizedStrings.popup_title_delete_post.localized(), preferredStyle: .alert)
         let cancelButton = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel)
@@ -168,9 +175,9 @@ final class ProjectViewController: UIViewController {
         let dataSource = RxTableViewSectionedReloadDataSource<SectionType<ContentsSection>>(
             configureCell: { dataSource, tableView, indexPath, model in
                 switch dataSource[indexPath] {
-                case .postList(let post, let isSubscribing):
+                case .postList(let post, let subscriptionInfo):
                     let cell: ProjectPostListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    cell.configure(with: post, isSubscribing: isSubscribing)
+                    cell.configure(with: post, subscriptionInfo: subscriptionInfo)
                     return cell
                 case .seriesHeader(let series):
                     let cell: ProjectSeriesHeaderTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
@@ -330,8 +337,8 @@ extension ProjectViewController: ViewModelBindable {
 
         output
             .subscriptionInfo
-            .drive(onNext: { [weak self] (isWriter, isSubscribing) in
-                self?.stretchyHeader?.configureSubscription(isWriter: isWriter, isSubscribing: isSubscribing)
+            .drive(onNext: { [weak self] (isWriter, fanPassList, subscriptionInfo) in
+                self?.stretchyHeader?.configureSubscription(isWriter: isWriter, fanPassList: fanPassList, subscriptionInfo: subscriptionInfo)
             })
             .disposed(by: disposeBag)
 
@@ -383,6 +390,13 @@ extension ProjectViewController: ViewModelBindable {
                 if FEATURE_EDITOR {
                     self?.openSubscriptionUserViewController(uri: uri)
                 }
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .openFanPassListViewController
+            .drive(onNext: { [weak self] uri in
+                self?.openFanPassListViewController(uri: uri)
             })
             .disposed(by: disposeBag)
 

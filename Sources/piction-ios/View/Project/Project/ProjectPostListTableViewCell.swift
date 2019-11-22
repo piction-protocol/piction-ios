@@ -29,8 +29,8 @@ final class ProjectPostListTableViewCell: ReuseTableViewCell {
         super.layoutSubviews()
     }
 
-    func configure(with model: Model, isSubscribing: Bool) {
-        let (thumbnail, seriesName, title, publishedAt, likeCount, fanPassId, status) = (model.cover, model.series?.name, model.title, model.publishedAt, model.likeCount, model.fanPass?.id, model.status)
+    func configure(with model: Model, subscriptionInfo: SubscriptionModel?) {
+        let (thumbnail, seriesName, title, publishedAt, likeCount, fanPass, status) = (model.cover, model.series?.name, model.title, model.publishedAt, model.likeCount, model.fanPass, model.status)
 
         if let thumbnail = thumbnail {
             let coverImageWithIC = "\(thumbnail)?w=656&h=246&quality=80&output=webp"
@@ -64,8 +64,21 @@ final class ProjectPostListTableViewCell: ReuseTableViewCell {
             maskImage.blurRadius = thumbnail == nil ? 0 : 5
             lockView.backgroundColor = thumbnail == nil ? UIColor(r: 51, g: 51, b: 51, a: 0.2) : .clear
         } else {
-            if (fanPassId != nil) && !isSubscribing {
-                lockMessageLabel.text = LocalizedStrings.str_subs_only.localized()
+            var needSubscription: Bool {
+                if fanPass == nil {
+                    return false
+                }
+                if (fanPass?.level != nil) && (subscriptionInfo?.fanPass?.level == nil) {
+                    return true
+                }
+                if (fanPass?.level ?? 0) <= (subscriptionInfo?.fanPass?.level ?? 0) {
+                    return false
+                }
+                return true
+            }
+
+            if needSubscription {
+                lockMessageLabel.text = (fanPass?.level == 0) ? LocalizedStrings.str_subs_only.localized() :  LocalizedStrings.str_subs_only_with_fanpass.localized(with: fanPass?.name ?? "")
                 thumbnailView.isHidden = false
                 maskImage.isHidden = false
                 lockView.isHidden = false
