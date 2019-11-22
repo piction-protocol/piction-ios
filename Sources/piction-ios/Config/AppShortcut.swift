@@ -35,13 +35,13 @@ enum AppShortcutType: String {
         case .home:
             return ""
         case .explore:
-            return "icTab1Unselected"
-        case .subscription:
             return "icTab2Unselected"
-        case .sponsorship:
+        case .subscription:
             return "icTab3Unselected"
-        case .mypage:
+        case .sponsorship:
             return "icTab4Unselected"
+        case .mypage:
+            return "icTab5Unselected"
         }
     }
 }
