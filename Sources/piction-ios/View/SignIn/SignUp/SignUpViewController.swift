@@ -54,15 +54,15 @@ final class SignUpViewController: UIViewController {
             guard let privacyURL = URL(string: "\(AppInfo.urlScheme)://privacy") else { return }
 
             attributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 14), range: attributedStr.mutableString.range(of: LocalizedStrings.str_agreement_text.localized()))
-            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(r: 191, g: 191, b: 191), range: attributedStr.mutableString.range(of: LocalizedStrings.str_agreement_text.localized()))
-            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(r: 191, g: 191, b: 191), range: attributedStr.mutableString.range(of: LocalizedStrings.str_agreement_text.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.pictionGray, range: attributedStr.mutableString.range(of: LocalizedStrings.str_agreement_text.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.pictionGray, range: attributedStr.mutableString.range(of: LocalizedStrings.str_agreement_text.localized()))
 
             attributedStr.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: attributedStr.mutableString.range(of: LocalizedStrings.str_terms.localized()))
-            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(r: 26, g: 146, b: 255), range: attributedStr.mutableString.range(of: LocalizedStrings.str_terms.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.pictionBlue, range: attributedStr.mutableString.range(of: LocalizedStrings.str_terms.localized()))
             attributedStr.addAttribute(NSAttributedString.Key.link, value: termsURL, range: attributedStr.mutableString.range(of: LocalizedStrings.str_terms.localized()))
 
             attributedStr.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: attributedStr.mutableString.range(of: LocalizedStrings.str_privacy.localized()))
-            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(r: 26, g: 146, b: 255), range: attributedStr.mutableString.range(of: LocalizedStrings.str_privacy.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.pictionBlue, range: attributedStr.mutableString.range(of: LocalizedStrings.str_privacy.localized()))
             attributedStr.addAttribute(NSAttributedString.Key.link, value: privacyURL, range: attributedStr.mutableString.range(of: LocalizedStrings.str_privacy.localized()))
 
 
@@ -141,8 +141,8 @@ extension SignUpViewController: ViewModelBindable {
                 }
                 if isEnabled {
                     self?.checkboxImageView.image = #imageLiteral(resourceName: "checkboxOff")
-                    self?.signUpButton.backgroundColor = UIColor(r: 242, g: 242, b: 242)
-                    self?.signUpButton.setTitleColor(UIColor(r: 191, g: 191, b: 191), for: .normal)
+                    self?.signUpButton.backgroundColor = .pictionLightGray
+                    self?.signUpButton.setTitleColor(.pictionGray, for: .normal)
                 } else {
                     self?.checkboxImageView.image = #imageLiteral(resourceName: "checkboxOn")
                     self?.signUpButton.backgroundColor = UIColor(r: 51, g: 51, b: 51)

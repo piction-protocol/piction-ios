@@ -252,7 +252,7 @@ extension CreatePostViewController: ViewModelBindable {
             .selectedProject
             .drive(onNext: { [weak self] project in
                 self?.projectButton.setTitle(project?.title ?? LocalizedStrings.str_select_project.localized(), for: .normal)
-                self?.projectButton.setTitleColor(project != nil ? UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51) : UIColor.placeHolderColor, for: .normal)
+                self?.projectButton.setTitleColor(project != nil ? .pictionDarkGray : .placeHolderColor, for: .normal)
             })
             .disposed(by: disposeBag)
 
@@ -267,7 +267,7 @@ extension CreatePostViewController: ViewModelBindable {
             .selectedSeries
             .drive(onNext: { [weak self] series in
                 self?.seriesButton.setTitle(series?.name ?? LocalizedStrings.str_select_series.localized(), for: .normal)
-                self?.seriesButton.setTitleColor(series != nil ? UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51) : UIColor.placeHolderColor, for: .normal)
+                self?.seriesButton.setTitleColor(series != nil ? .pictionDarkGray : .placeHolderColor, for: .normal)
             })
             .disposed(by: disposeBag)
 
@@ -309,7 +309,7 @@ extension CreatePostViewController: ViewModelBindable {
             .contentText
             .drive(onNext: { [weak self] text in
                 if text != LocalizedStrings.str_post_content.localized() {
-                    self?.textView.textColor = UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51)
+                    self?.textView.textColor = .pictionDarkGray
                 }
                 self?.textView.text = text
             })
@@ -370,7 +370,7 @@ extension CreatePostViewController: UITextViewDelegate {
         textViewIsActive = true
         if textView.text == LocalizedStrings.str_post_content.localized() {
             textView.text = ""
-            textView.textColor = UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51)
+            textView.textColor = .pictionDarkGray
         } else if textView.text == "" {
             textView.text = LocalizedStrings.str_post_content.localized()
             textView.textColor = UIColor.placeHolderColor

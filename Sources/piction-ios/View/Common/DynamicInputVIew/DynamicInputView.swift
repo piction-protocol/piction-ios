@@ -117,11 +117,11 @@ class DynamicInputView: UIView {
     func showError(_ error: String) {
         inputTextField.resignFirstResponder()
         outlineView.layer.borderWidth = 0
-        titleLabel.textColor = UIColor(r: 213, g: 19, b: 21)
-        inputContainerView.layer.borderColor = UIColor(r: 213, g: 19, b: 21).cgColor
-        inputContainerView.backgroundColor = UIColor(r: 213, g: 19, b: 21, a: 0.05)
+        titleLabel.textColor = .pictionRed
+        inputContainerView.layer.borderColor = UIColor.pictionRed.cgColor
+        inputContainerView.backgroundColor = UIColor.pictionRed.withAlphaComponent(0.05)
         errorLabel.text = error
-        errorLabel.textColor = UIColor(r: 213, g: 19, b: 21)
+        errorLabel.textColor = .pictionRed
         errorContainerView.isHidden = false
         innerShadowView.isHidden = false
 
@@ -167,14 +167,14 @@ extension DynamicInputView: UITextFieldDelegate {
         self.outlineView.layer.borderWidth = 4
         self.errorContainerView.isHidden = defaultPlaceHolder == ""
         self.errorLabel.text = defaultPlaceHolder
-        self.errorLabel.textColor = UIColor(r: 191, g: 191, b: 191)
+        self.errorLabel.textColor = .pictionGray
 
         if defaultPlaceHolder == "" {
             heightConstraint.constant = 65
         }
         UIView.animate(withDuration: 0.5) {
-            self.inputContainerView.layer.borderColor = UIColor(r: 26, g: 146, b: 255).cgColor
-            self.titleLabel.textColor = UIColor(r: 26, g: 146, b: 255)
+            self.inputContainerView.layer.borderColor = UIColor.pictionBlue.cgColor
+            self.titleLabel.textColor = .pictionBlue
             self.titleLabel.font = UIFont.systemFont(ofSize: 12)
             self.titleLabelCenterYConstraint.constant = -10
             self.textFieldCenterYConstraint.constant = 10
@@ -183,12 +183,12 @@ extension DynamicInputView: UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.outlineView.layer.borderWidth = 0
-        self.inputContainerView.layer.borderColor = UIColor(r: 242, g: 242, b: 242).cgColor
+        self.inputContainerView.layer.borderColor = UIColor.pictionLightGray.cgColor
         self.inputContainerView.backgroundColor = .clear
         self.errorContainerView.isHidden = defaultPlaceHolder == ""
         if textField.text == "" {
             UIView.animate(withDuration: 0.5) {
-                self.titleLabel.textColor = UIColor(r: 191, g: 191, b: 191)
+                self.titleLabel.textColor = .pictionGray
                 self.titleLabel.font = UIFont.systemFont(ofSize: 14)
                 self.titleLabelCenterYConstraint.constant = 0
                 self.textFieldCenterYConstraint.constant = 0

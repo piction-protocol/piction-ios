@@ -40,10 +40,10 @@ final class CreateProjectViewController: UIViewController {
             tagsField.contentInset = UIEdgeInsets(top: 2.5, left: 0, bottom: -2.5, right: 0)
             tagsField.spaceBetweenTags = 5.0
             tagsField.spaceBetweenLines = 10.0
-            tagsField.tintColor = UIColor(r: 242, g: 242, b: 242)
+            tagsField.tintColor = .pictionLightGray
             tagsField.textColor = UIColor(r: 51, g: 51, b: 51)
-            tagsField.selectedColor = UIColor(r: 26, g: 146, b: 255)
-            tagsField.fieldTextColor = UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51)
+            tagsField.selectedColor = .pictionBlue
+            tagsField.fieldTextColor = .pictionDarkGray
             tagsField.selectedTextColor = .white
             tagsField.acceptTagOption = .space
             tagsField.returnKeyType = .next
@@ -106,7 +106,7 @@ final class CreateProjectViewController: UIViewController {
 
     private func controlStatusCheckBox(_ status: String) {
         self.privateProjectCheckBoxImageView.image = status == "HIDDEN" ? #imageLiteral(resourceName: "ic-check") : UIImage()
-        self.privateProjectCheckBoxImageView.backgroundColor = status == "HIDDEN" ? UIColor(r: 26, g: 146, b: 255) : UIColor.clear
+        self.privateProjectCheckBoxImageView.backgroundColor = status == "HIDDEN" ? .pictionBlue : UIColor.clear
     }
 }
 
@@ -163,7 +163,7 @@ extension CreateProjectViewController: ViewModelBindable {
                 self?.navigationItem.title = isModify ? LocalizedStrings.str_modify_project.localized() : LocalizedStrings.str_create_project.localized()
                 self?.saveBarButton.title = isModify ? LocalizedStrings.str_modify.localized() : LocalizedStrings.register.localized()
                 self?.projectIdTextField.isEnabled = !isModify
-                self?.projectIdTextField.textColor = isModify ? UIColor(r: 191, g: 191, b: 191) : UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51)
+                self?.projectIdTextField.textColor = isModify ? .pictionGray : .pictionDarkGray
             })
             .disposed(by: disposeBag)
 

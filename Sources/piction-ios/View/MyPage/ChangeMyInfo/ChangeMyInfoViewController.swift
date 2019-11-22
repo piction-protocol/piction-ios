@@ -277,13 +277,13 @@ extension ChangeMyInfoViewController: KeyboardManagerDelegate {
 extension ChangeMyInfoViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField === userNameTextField {
-            self.userNameUnderlineView.backgroundColor = UIColor(r: 26, g: 146, b: 255)
+            self.userNameUnderlineView.backgroundColor = .pictionBlue
         }
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField === userNameTextField {
-            self.userNameUnderlineView.backgroundColor = UIColor(named: "PictionDarkGray")
+            self.userNameUnderlineView.backgroundColor = .pictionDarkGray
         }
     }
 }

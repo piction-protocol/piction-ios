@@ -24,7 +24,7 @@ extension UINavigationController {
                 }
 
                 navBarAppearance.largeTitleTextAttributes = [
-                    NSAttributedString.Key.foregroundColor: UIColor(named: "PictionDarkGray") ?? UIColor.label,
+                    NSAttributedString.Key.foregroundColor: UIColor.pictionDarkGray,
                     NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 34)
                 ]
 

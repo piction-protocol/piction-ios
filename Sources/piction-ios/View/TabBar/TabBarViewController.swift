@@ -25,7 +25,7 @@ final class TabBarController: UITabBarController {
         setTabBar(with: TabBarItem.all)
         self.delegate = self
 
-        UITabBar.appearance().tintColor = UIColor(r: 26, g: 146, b: 255)
+        UITabBar.appearance().tintColor = .pictionBlue
     }
 
     private func setTabBar(with types: [TabBarItem]) {

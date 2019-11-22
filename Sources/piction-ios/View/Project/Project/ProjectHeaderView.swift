@@ -98,7 +98,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
         }
 
         titleLabel.text = title
-        titleLabel.textColor = UIColor(named: "PictionDarkGray")
+        titleLabel.textColor = .pictionDarkGray
 
         if let profileImage = profileImage {
             let userPictureWithIC = "\(profileImage)?w=240&h=240&quality=80&output=webp"
@@ -118,9 +118,9 @@ class ProjectHeaderView: GSKStretchyHeaderView {
             subscriptionUserButton.isHidden = true
             managementButton.isHidden = true
             subscriptionButton.isHidden = false
-            subscriptionButton.backgroundColor = UIColor(r: 242, g: 242, b: 242)
+            subscriptionButton.backgroundColor = .pictionLightGray
             subscriptionButton.setTitle(LocalizedStrings.str_project_subscribing.localized(), for: .normal)
-            subscriptionButton.setTitleColor(UIColor(r: 191, g: 191, b: 191), for: .normal)
+            subscriptionButton.setTitleColor(.pictionGray, for: .normal)
         } else {
             if isWriter {
                 if FEATURE_EDITOR {
@@ -153,8 +153,8 @@ class ProjectHeaderView: GSKStretchyHeaderView {
             postButton.backgroundColor = menu == 0 ? .clear : .white
             seriesButton.backgroundColor = menu == 0 ? .white : .clear
         }
-        postButton.setTitleColor(menu == 0 ? UIColor(named: "PictionDarkGray") : UIColor(r: 191, g: 191, b: 191), for: .normal)
-        seriesButton.setTitleColor(menu == 0 ? UIColor(r: 191, g: 191, b: 191) : UIColor(named: "PictionDarkGray"), for: .normal)
+        postButton.setTitleColor(menu == 0 ? .pictionDarkGray : .pictionGray, for: .normal)
+        seriesButton.setTitleColor(menu == 0 ? .pictionGray : .pictionDarkGray, for: .normal)
     }
 }
 

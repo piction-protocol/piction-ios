@@ -147,7 +147,7 @@ final class CreatePostViewController: UIViewController {
         switch status {
         case "PUBLIC":
             self.forAllCheckboxImageView.image = #imageLiteral(resourceName: "ic-check")
-            self.forAllCheckboxImageView.backgroundColor = UIColor(r: 26, g: 146, b: 255)
+            self.forAllCheckboxImageView.backgroundColor = .pictionBlue
             self.forSubscriptionCheckboxImageView.image = UIImage()
             self.forSubscriptionCheckboxImageView.backgroundColor = UIColor.clear
             self.forPrivateCheckboxImageView.image = UIImage()
@@ -158,12 +158,12 @@ final class CreatePostViewController: UIViewController {
             self.forSubscriptionCheckboxImageView.image = UIImage()
             self.forSubscriptionCheckboxImageView.backgroundColor = UIColor.clear
             self.forPrivateCheckboxImageView.image = #imageLiteral(resourceName: "ic-check")
-            self.forPrivateCheckboxImageView.backgroundColor = UIColor(r: 26, g: 146, b: 255)
+            self.forPrivateCheckboxImageView.backgroundColor = .pictionBlue
         case "FAN_PASS":
             self.forAllCheckboxImageView.image = UIImage()
             self.forAllCheckboxImageView.backgroundColor = UIColor.clear
             self.forSubscriptionCheckboxImageView.image = #imageLiteral(resourceName: "ic-check")
-            self.forSubscriptionCheckboxImageView.backgroundColor = UIColor(r: 26, g: 146, b: 255)
+            self.forSubscriptionCheckboxImageView.backgroundColor = .pictionBlue
             self.forPrivateCheckboxImageView.image = UIImage()
             self.forPrivateCheckboxImageView.backgroundColor = UIColor.clear
         default:
@@ -263,7 +263,7 @@ extension CreatePostViewController: ViewModelBindable {
                 self?.publishDateView.isHidden = false
                 self?.publishDatePickerButton.isEnabled = false
                 self?.publishDateLabel.text = "\(postInfo.publishedAt?.toString(format: "yyyy.MM.dd. a hh:mm:ss") ?? "")"
-                self?.publishDateLabel.textColor = UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51)
+                self?.publishDateLabel.textColor = .pictionDarkGray
             })
             .disposed(by: disposeBag)
 
@@ -330,7 +330,7 @@ extension CreatePostViewController: ViewModelBindable {
                     self?.publishDateView.isHidden = true
                     self?.publishDatePicker.isHidden = true
                     self?.publishNowCheckBoxImageView.image = #imageLiteral(resourceName: "ic-check")
-                    self?.publishNowCheckBoxImageView.backgroundColor = UIColor(r: 26, g: 146, b: 255)
+                    self?.publishNowCheckBoxImageView.backgroundColor = .pictionBlue
                     self?.chosenDateTime.onNext(nil)
                 }
             })

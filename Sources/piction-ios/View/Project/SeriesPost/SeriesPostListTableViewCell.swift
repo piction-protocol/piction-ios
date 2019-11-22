@@ -29,15 +29,13 @@ final class SeriesPostListTableViewCell: ReuseTableViewCell {
 
         titleLabel.text = title
 
-        if isSubscribing || fanPass?.id == nil {
-            subTitleLabel.textColor = UIColor(r: 191, g: 191, b: 191)
+        if isSubscribing || fanPass == nil {
+            subTitleLabel.textColor = .pictionGray
             subTitleLabel.text = date?.toString(format: LocalizedStrings.str_series_date_format.localized())
         } else {
-            subTitleLabel.textColor = UIColor(r: 213, g: 19, b: 21)
-            if fanPass?.id != nil {
-                subTitleLabel.text = LocalizedStrings.str_series_subs_only.localized()
-            } else {
-                subTitleLabel.text = LocalizedStrings.str_series_fanpass_subs_only.localized(with: fanPass?.name ?? "")
+            subTitleLabel.textColor = .pictionRed
+            if fanPass != nil {
+                subTitleLabel.text = (fanPass?.level ?? 0) == 0 ? LocalizedStrings.str_series_subs_only.localized() :  LocalizedStrings.str_series_fanpass_subs_only.localized(with: fanPass?.name ?? "")
             }
         }
     }

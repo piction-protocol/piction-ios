@@ -121,13 +121,13 @@ extension SendDonationViewController: ViewModelBindable {
             .enableSendButton
             .drive(onNext: { [weak self] status in
                 self?.sendButton.isEnabled = status
-                self?.sendButtonDescriptionLabel.textColor = status ? .white : UIColor(r: 191, g: 191, b: 191)
-                self?.sendButton.backgroundColor = status ? UIColor(r: 51, g: 51, b: 51) : UIColor(r: 242, g: 242, b: 242)
+                self?.sendButtonDescriptionLabel.textColor = status ? .white : .pictionGray
+                self?.sendButton.backgroundColor = status ? UIColor(r: 51, g: 51, b: 51) : .pictionLightGray
 
                 if status {
                     self?.amountUnderlineHeightConstraint.constant = 3
                     self?.amountUnderlineView.layer.shadowOpacity = 0.2
-                    self?.amountUnderlineView.layer.shadowColor = UIColor(r: 26, g: 146, b: 255).cgColor
+                    self?.amountUnderlineView.layer.shadowColor = UIColor.pictionBlue.cgColor
                     self?.amountUnderlineView.layer.shadowRadius = 4
                     self?.amountUnderlineView.layer.shadowOffset = CGSize(width: 0, height: 1)
                     self?.amountUnderlineView.layer.masksToBounds = false

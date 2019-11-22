@@ -22,7 +22,7 @@ final class TransactionDetailItemTypeTableViewCell: ReuseTableViewCell {
         if let linkURL = URL(string: link) {
             let linkString = NSMutableAttributedString(string: description)
             linkString.addAttribute(NSAttributedString.Key.underlineStyle, value: true, range: NSRange(location: 0, length: description.count))
-            linkString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(r: 26, g: 146, b: 255), range: NSRange(location: 0, length: description.count))
+            linkString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.pictionBlue, range: NSRange(location: 0, length: description.count))
 
             descriptionLabel.attributedText = linkString
         } else {

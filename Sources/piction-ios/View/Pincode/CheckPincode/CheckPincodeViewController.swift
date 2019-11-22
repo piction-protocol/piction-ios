@@ -151,54 +151,54 @@ extension CheckPincodeViewController: ViewModelBindable {
             .drive(onNext: { [weak self] inputPincode in
                 switch inputPincode.count {
                 case 0:
-                    self?.pincode1View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
-                    self?.pincode2View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
-                    self?.pincode3View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
-                    self?.pincode4View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
-                    self?.pincode5View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
-                    self?.pincode6View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
+                    self?.pincode1View.backgroundColor = .pictionLightGray
+                    self?.pincode2View.backgroundColor = .pictionLightGray
+                    self?.pincode3View.backgroundColor = .pictionLightGray
+                    self?.pincode4View.backgroundColor = .pictionLightGray
+                    self?.pincode5View.backgroundColor = .pictionLightGray
+                    self?.pincode6View.backgroundColor = .pictionLightGray
                 case 1:
-                    self?.pincode1View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode2View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
-                    self?.pincode3View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
-                    self?.pincode4View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
-                    self?.pincode5View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
-                    self?.pincode6View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
+                    self?.pincode1View.backgroundColor = .pictionBlue
+                    self?.pincode2View.backgroundColor = .pictionLightGray
+                    self?.pincode3View.backgroundColor = .pictionLightGray
+                    self?.pincode4View.backgroundColor = .pictionLightGray
+                    self?.pincode5View.backgroundColor = .pictionLightGray
+                    self?.pincode6View.backgroundColor = .pictionLightGray
                 case 2:
-                    self?.pincode1View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode2View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode3View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
-                    self?.pincode4View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
-                    self?.pincode5View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
-                    self?.pincode6View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
+                    self?.pincode1View.backgroundColor = .pictionBlue
+                    self?.pincode2View.backgroundColor = .pictionBlue
+                    self?.pincode3View.backgroundColor = .pictionLightGray
+                    self?.pincode4View.backgroundColor = .pictionLightGray
+                    self?.pincode5View.backgroundColor = .pictionLightGray
+                    self?.pincode6View.backgroundColor = .pictionLightGray
                 case 3:
-                    self?.pincode1View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode2View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode3View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode4View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
-                    self?.pincode5View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
-                    self?.pincode6View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
+                    self?.pincode1View.backgroundColor = .pictionBlue
+                    self?.pincode2View.backgroundColor = .pictionBlue
+                    self?.pincode3View.backgroundColor = .pictionBlue
+                    self?.pincode4View.backgroundColor = .pictionLightGray
+                    self?.pincode5View.backgroundColor = .pictionLightGray
+                    self?.pincode6View.backgroundColor = .pictionLightGray
                 case 4:
-                    self?.pincode1View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode2View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode3View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode4View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode5View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
-                    self?.pincode6View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
+                    self?.pincode1View.backgroundColor = .pictionBlue
+                    self?.pincode2View.backgroundColor = .pictionBlue
+                    self?.pincode3View.backgroundColor = .pictionBlue
+                    self?.pincode4View.backgroundColor = .pictionBlue
+                    self?.pincode5View.backgroundColor = .pictionLightGray
+                    self?.pincode6View.backgroundColor = .pictionLightGray
                 case 5:
-                    self?.pincode1View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode2View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode3View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode4View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode5View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode6View.backgroundColor = UIColor(r: 242, g: 242, b: 242)
+                    self?.pincode1View.backgroundColor = .pictionBlue
+                    self?.pincode2View.backgroundColor = .pictionBlue
+                    self?.pincode3View.backgroundColor = .pictionBlue
+                    self?.pincode4View.backgroundColor = .pictionBlue
+                    self?.pincode5View.backgroundColor = .pictionBlue
+                    self?.pincode6View.backgroundColor = .pictionLightGray
                 case 6:
-                    self?.pincode1View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode2View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode3View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode4View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode5View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-                    self?.pincode6View.backgroundColor = UIColor(r: 26, g: 146, b: 255)
+                    self?.pincode1View.backgroundColor = .pictionBlue
+                    self?.pincode2View.backgroundColor = .pictionBlue
+                    self?.pincode3View.backgroundColor = .pictionBlue
+                    self?.pincode4View.backgroundColor = .pictionBlue
+                    self?.pincode5View.backgroundColor = .pictionBlue
+                    self?.pincode6View.backgroundColor = .pictionBlue
                     self?.pincodeTextField.text = ""
                     if KeychainManager.get(key: "pincode") == inputPincode {
                         self?.authSuccess()

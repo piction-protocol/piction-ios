@@ -49,7 +49,7 @@ final class PostFooterViewController: UIViewController {
     weak var delegate: PostFooterViewDelegate?
 
     private func controlLikeButton(isLike: Bool, likeCount: Int) {
-        self.likeCountLabel.textColor = isLike ? UIColor(r: 26, g: 146, b: 255) : UIColor(r: 191, g: 191, b: 191)
+        self.likeCountLabel.textColor = isLike ? .pictionBlue : .pictionGray
         self.likeCountLabel.text = String(likeCount)
         self.likeButton.isEnabled = !isLike
         self.likeImageView.image = isLike ? #imageLiteral(resourceName: "icFavoriteOn") : #imageLiteral(resourceName: "icFavoriteOff")

@@ -9,6 +9,18 @@
 import UIKit
 
 extension UIColor {
+    static let pictionDarkGray = UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51)
+    static let pictionBlue = UIColor(r: 26, g: 146, b: 255)
+    static let pictionGray = UIColor(r: 191, g: 191, b: 191)
+    static let pictionLightGray = UIColor(r: 242, g: 242, b: 242)
+    static let pictionRed = UIColor(r: 213, g: 19, b: 21)
+    static var placeHolderColor: UIColor {
+        if #available(iOS 13.0, *) {
+            return UIColor.placeholderText
+        } else {
+            return UIColor(r: 60, g: 60, b: 60, a: 0.3)
+        }
+    }
 
     convenience init(red: Int, green: Int, blue: Int) {
         assert(red >= 0 && red <= 255, "Invalid red component")
@@ -86,14 +98,6 @@ extension UIColor {
                 Int(blue * multiplier),
                 Int(alpha * multiplier)
             )
-        }
-    }
-
-    static var placeHolderColor: UIColor {
-        if #available(iOS 13.0, *) {
-            return UIColor.placeholderText
-        } else {
-            return UIColor(r: 60, g: 60, b: 60, a: 0.3)
         }
     }
 }

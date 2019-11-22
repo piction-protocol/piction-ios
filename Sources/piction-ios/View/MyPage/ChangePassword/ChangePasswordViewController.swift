@@ -150,19 +150,19 @@ extension ChangePasswordViewController: ViewModelBindable {
                 self?.passwordCheckTextField.resignFirstResponder()
                 switch error.field ?? "" {
                 case "password":
-                    self?.passwordTextField.textColor = UIColor(r: 213, g: 19, b: 21)
+                    self?.passwordTextField.textColor = .pictionRed
                     self?.passwordErrorLabel.text = error.message ?? ""
-                    self?.passwordUnderlineView.backgroundColor = UIColor(r: 213, g: 19, b: 21)
+                    self?.passwordUnderlineView.backgroundColor = .pictionRed
                     self?.passwordErrorLabel.isHidden = false
                 case "newPassword":
-                    self?.newPasswordTextField.textColor = UIColor(r: 213, g: 19, b: 21)
+                    self?.newPasswordTextField.textColor = .pictionRed
                     self?.newPasswordErrorLabel.text = error.message ?? ""
-                    self?.newPasswordUnderlineView.backgroundColor = UIColor(r: 213, g: 19, b: 21)
+                    self?.newPasswordUnderlineView.backgroundColor = .pictionRed
                     self?.newPasswordErrorLabel.isHidden = false
                 case "passwordCheck":
-                    self?.passwordCheckTextField.textColor = UIColor(r: 213, g: 19, b: 21)
+                    self?.passwordCheckTextField.textColor = .pictionRed
                     self?.passwordCheckErrorLabel.text = error.message ?? ""
-                    self?.passwordCheckUnderlineView.backgroundColor = UIColor(r: 213, g: 19, b: 21)
+                    self?.passwordCheckUnderlineView.backgroundColor = .pictionRed
                     self?.passwordCheckErrorLabel.isHidden = false
                 default:
                     break
@@ -210,27 +210,27 @@ extension ChangePasswordViewController: UITextFieldDelegate {
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField === passwordTextField {
-            passwordUnderlineView.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-            passwordTextField.textColor = UIColor(named: "PictionDarkGray")
+            passwordUnderlineView.backgroundColor = .pictionBlue
+            passwordTextField.textColor = .pictionDarkGray
             passwordErrorLabel.isHidden = true
         } else if textField == newPasswordTextField {
-            newPasswordUnderlineView.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-            newPasswordTextField.textColor = UIColor(named: "PictionDarkGray")
+            newPasswordUnderlineView.backgroundColor = .pictionBlue
+            newPasswordTextField.textColor = .pictionDarkGray
             newPasswordErrorLabel.isHidden = true
         } else if textField == passwordCheckTextField {
-            passwordCheckUnderlineView.backgroundColor = UIColor(r: 26, g: 146, b: 255)
-            passwordCheckTextField.textColor = UIColor(named: "PictionDarkGray")
+            passwordCheckUnderlineView.backgroundColor = .pictionBlue
+            passwordCheckTextField.textColor = .pictionDarkGray
             passwordCheckErrorLabel.isHidden = true
         }
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField === passwordTextField {
-            passwordUnderlineView.backgroundColor = UIColor(named: "PictionDarkGray")
+            passwordUnderlineView.backgroundColor = .pictionDarkGray
         } else if textField == newPasswordTextField {
-            newPasswordUnderlineView.backgroundColor = UIColor(named: "PictionDarkGray")
+            newPasswordUnderlineView.backgroundColor = .pictionDarkGray
         } else if textField == passwordCheckTextField {
-            passwordCheckUnderlineView.backgroundColor = UIColor(named: "PictionDarkGray")
+            passwordCheckUnderlineView.backgroundColor = .pictionDarkGray
         }
     }
 }
