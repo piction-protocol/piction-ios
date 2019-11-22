@@ -39,6 +39,10 @@ target 'piction-ios' do
   rx_pods
   util_pods
   sdk_pods
+
+#  target 'piction-ios-shareEx' do
+#   inherit! :search_paths
+#  end
 end
 
 target 'piction-ios-test' do
@@ -50,26 +54,9 @@ target 'piction-ios-test' do
   rx_pods
   util_pods
   sdk_pods
+
+#  target 'piction-ios-test-shareEx' do
+#    inherit! :search_paths
+#  end
 end
 
-target 'piction-ios-shareEx' do
-  # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
-
-  # Pods for piction-ios-test
-  ui_pods
-  rx_pods
-  util_pods
-  sdk_pods
-end
-
-target 'piction-ios-test-shareEx' do
-  # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
-
-  # Pods for piction-ios-test
-  ui_pods
-  rx_pods
-  util_pods
-  sdk_pods
-end
