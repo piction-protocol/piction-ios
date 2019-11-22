@@ -20,6 +20,7 @@ final class PostViewController: UIViewController {
     var disposeBag = DisposeBag()
 
     @IBOutlet weak var subscriptionView: UIView!
+    @IBOutlet weak var subscriptionDescriptionLabel: UILabel!
     @IBOutlet weak var subscriptionButton: UIButton!
     @IBOutlet weak var postWebView: WKWebView! {
         didSet {
@@ -73,6 +74,13 @@ final class PostViewController: UIViewController {
         let vc = SignInViewController.make()
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .swipePresent)
+        }
+    }
+
+    private func openFanPassListViewController(uri: String, postId: Int? = nil) {
+        let vc = FanPassListViewController.make(uri: uri, postId: postId)
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.openViewController(vc, type: .present)
         }
     }
 
@@ -273,12 +281,21 @@ extension PostViewController: ViewModelBindable {
 
         output
             .showNeedSubscription
-            .drive(onNext: { [weak self] userInfo in
+            .drive(onNext: { [weak self] (userInfo, postInfo, _) in
                 guard let `self` = self else { return }
                 var buttonTitle: String {
-                    return userInfo.loginId == nil ? LocalizedStrings.login.localized() : LocalizedStrings.btn_subs.localized()
+                    if userInfo.loginId == nil { return LocalizedStrings.login.localized()
+                    }
+                    if (postInfo.fanPass?.level ?? 0) == 0 {
+                        return LocalizedStrings.btn_subs_free.localized()
+                    }
+                    return LocalizedStrings.btn_subs.localized()
+                }
+                var description: String {
+                    return (postInfo.fanPass?.level ?? 0) == 0 ? LocalizedStrings.str_subs_only.localized() : LocalizedStrings.str_subs_only_with_fanpass.localized(with: postInfo.fanPass?.name ?? "")
                 }
                 self.subscriptionButton.setTitle(buttonTitle, for: .normal)
+                self.subscriptionDescriptionLabel.text = description
                 self.subscriptionView.isHidden = false
                 self.postWebView.scrollView.isScrollEnabled = false
 
@@ -292,8 +309,15 @@ extension PostViewController: ViewModelBindable {
 
         output
             .openSignInViewController
-            .drive(onNext: { [weak self] uri in
+            .drive(onNext: { [weak self] _ in
                 self?.openSignInViewController()
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .openFanPassListViewController
+            .drive(onNext: { [weak self] (uri, postId) in
+                self?.openFanPassListViewController(uri: uri, postId: postId)
             })
             .disposed(by: disposeBag)
 

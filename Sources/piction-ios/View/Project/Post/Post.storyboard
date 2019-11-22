@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -39,8 +39,8 @@
                                                     <constraint firstAttribute="width" constant="80" id="RGv-JU-us3"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="멤버십을 구독해야 볼 수 있는 포스트입니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpX-Jx-aKJ">
-                                                <rect key="frame" x="99.5" y="96" width="175" height="52"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="구독자만 이용 가능한 콘텐츠 입니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpX-Jx-aKJ">
+                                                <rect key="frame" x="58.5" y="96" width="257.5" height="52"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="52" id="hoh-Vg-1yC"/>
                                                 </constraints>
@@ -48,7 +48,7 @@
                                                 <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                                 <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_need_subs"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_subs_only"/>
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lyf-Ue-cna" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
@@ -172,6 +172,7 @@
                         <outlet property="prevPostButton" destination="zbu-4I-4gs" id="x47-1Z-KtK"/>
                         <outlet property="shareBarButton" destination="Fr8-1K-Ymg" id="GA4-4h-y8J"/>
                         <outlet property="subscriptionButton" destination="Lyf-Ue-cna" id="nw7-TC-AT6"/>
+                        <outlet property="subscriptionDescriptionLabel" destination="hpX-Jx-aKJ" id="FaU-ZJ-eMo"/>
                         <outlet property="subscriptionView" destination="ZiD-ey-720" id="ijL-Vh-wHw"/>
                     </connections>
                 </viewController>
