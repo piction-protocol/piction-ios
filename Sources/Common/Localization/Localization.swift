@@ -16,10 +16,6 @@ extension String: Localization {
     var localized: String {
         return NSLocalizedString(self, comment: "")
     }
-
-    public func localized(with argument: CVarArg = []) -> String {
-        return String(format: self.localized, argument)
-    }
 }
 
 protocol IBLocalizable {

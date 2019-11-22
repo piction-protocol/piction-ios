@@ -75,7 +75,8 @@
 
 // Button
 "btn_new_post" = "새 포스트";
-"btn_subs" = "무료로 구독하기";
+"btn_subs" = "구독하기";
+"btn_subs_free" = "무료로 구독하기";
 "btn_user_sponsorship" = "후원하기";
 "btn_user_sponsorship_history" = "후원 기록";
 "btn_save_changed" = "변경사항 저장";
@@ -122,7 +123,7 @@
 "str_banner_header" = "공지 & 이벤트";
 "str_banner_header_info" = "픽션의 최신 정보와 특별한 혜택을 알려드립니다.";
 
-"str_project_subscribing" = "프로젝트 구독 중";
+"str_project_subscribing" = "구독 중";
 "str_project_subscrition_complete" = "구독 완료";
 "str_project_cancel_subscrition" = "구독이 취소되었습니다.";
 "str_series_posts_count" = "%d 포스트";
@@ -207,6 +208,20 @@
 "str_fanpass_purchase_info" = "FAN PASS 구매 정보";
 "str_seller" = "판매자";
 "str_buyer" = "구매자";
+
+"str_fanpasslist_description" = "님의 창작 활동을 직접 응원해보세요.";
+"str_fanpasslist_subscription_limit" = "%d명 한정";
+"str_fanpasslist_postcount" = "%d 포스트 조회 가능";
+"str_fanpasslist_subscription_remain" = "%d명 남음";
+"str_fanpasslist_subscription_expire" = "M월 d일 만료";
+"str_fanpasslist_sold_out" = "판매 종료";
+"str_fanpasslist_not_avaliable" = "구독 불가능";
+"str_fanpasslist_subscription_button" = "PXL / 30일";
+"str_fanpass_free_tier" = "무료 티어";
+"str_fanpass_current_tier" = "티어 %d";
+"str_fanpasslist_warning_current_fanpass" = "%@ 구독 중";
+"str_fanpasslist_warning_description" = "FAN PASS를 업그레이드 하는 경우, 현재 사용 중인 상품의 남은 기간은 환불되지 않습니다.";
+"str_fanpasslist_current_post_description" = "포스트를 볼 수 있는 FAN PASS 상품만 출력됩니다.";
 
 "str_authenticate_by_face_id" = "Face ID로 인증합니다.";
 "str_authenticate_by_touch_id" = "Touch ID로 인증합니다.";

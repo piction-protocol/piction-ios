@@ -389,6 +389,14 @@
 		438E764A2366B6650062D004 /* SubscriptionUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E76482366B6650062D004 /* SubscriptionUserTableViewCell.swift */; };
 		438E764C2366B7B30062D004 /* SubscriptionUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E764B2366B7B20062D004 /* SubscriptionUserViewController.swift */; };
 		438E764D2366B7B30062D004 /* SubscriptionUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E764B2366B7B20062D004 /* SubscriptionUserViewController.swift */; };
+		439029262383EE6A00A3121B /* FanPassListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439029252383EE6A00A3121B /* FanPassListViewController.swift */; };
+		439029272383EE6A00A3121B /* FanPassListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439029252383EE6A00A3121B /* FanPassListViewController.swift */; };
+		439029292383EE7600A3121B /* FanPassListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439029282383EE7600A3121B /* FanPassListViewModel.swift */; };
+		4390292A2383EE7600A3121B /* FanPassListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439029282383EE7600A3121B /* FanPassListViewModel.swift */; };
+		4390292C2383EE8600A3121B /* FanPassList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4390292B2383EE8600A3121B /* FanPassList.storyboard */; };
+		4390292D2383EE8600A3121B /* FanPassList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4390292B2383EE8600A3121B /* FanPassList.storyboard */; };
+		4390292F2383EEBF00A3121B /* FanPassListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390292E2383EEBF00A3121B /* FanPassListTableViewCell.swift */; };
+		439029302383EEBF00A3121B /* FanPassListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390292E2383EEBF00A3121B /* FanPassListTableViewCell.swift */; };
 		439E7E3523794DAB00E4A475 /* CreatePostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E7E3423794DAB00E4A475 /* CreatePostCollectionViewCell.swift */; };
 		439E7E3723794DDA00E4A475 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E7E3623794DDA00E4A475 /* UICollectionView+Extension.swift */; };
 		439E7E39237A65C400E4A475 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E7E38237A65C400E4A475 /* Date+Extension.swift */; };
@@ -777,6 +785,10 @@
 		438E76452366B6260062D004 /* SubscriptionUser.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SubscriptionUser.storyboard; sourceTree = "<group>"; };
 		438E76482366B6650062D004 /* SubscriptionUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionUserTableViewCell.swift; sourceTree = "<group>"; };
 		438E764B2366B7B20062D004 /* SubscriptionUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionUserViewController.swift; sourceTree = "<group>"; };
+		439029252383EE6A00A3121B /* FanPassListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FanPassListViewController.swift; sourceTree = "<group>"; };
+		439029282383EE7600A3121B /* FanPassListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FanPassListViewModel.swift; sourceTree = "<group>"; };
+		4390292B2383EE8600A3121B /* FanPassList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FanPassList.storyboard; sourceTree = "<group>"; };
+		4390292E2383EEBF00A3121B /* FanPassListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FanPassListTableViewCell.swift; sourceTree = "<group>"; };
 		439E7E3423794DAB00E4A475 /* CreatePostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostCollectionViewCell.swift; sourceTree = "<group>"; };
 		439E7E3623794DDA00E4A475 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		439E7E38237A65C400E4A475 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
@@ -1205,6 +1217,7 @@
 		4323F9C9233A165600243655 /* Project */ = {
 			isa = PBXGroup;
 			children = (
+				439029242383EE5400A3121B /* FanPassList */,
 				438E763E23667ED20062D004 /* SubscriptionUser */,
 				438E76312362FA890062D004 /* SeriesList */,
 				4323F9DF233A165600243655 /* Project */,
@@ -1689,6 +1702,17 @@
 			path = SubscriptionUser;
 			sourceTree = "<group>";
 		};
+		439029242383EE5400A3121B /* FanPassList */ = {
+			isa = PBXGroup;
+			children = (
+				439029252383EE6A00A3121B /* FanPassListViewController.swift */,
+				439029282383EE7600A3121B /* FanPassListViewModel.swift */,
+				4390292E2383EEBF00A3121B /* FanPassListTableViewCell.swift */,
+				4390292B2383EE8600A3121B /* FanPassList.storyboard */,
+			);
+			path = FanPassList;
+			sourceTree = "<group>";
+		};
 		439E7EC9237BE57900E4A475 /* Live */ = {
 			isa = PBXGroup;
 			children = (
@@ -2145,6 +2169,7 @@
 				4323FADB233A165C00243655 /* PostHeader.storyboard in Resources */,
 				4372268B237E46FD0054C777 /* HomeSubscription.storyboard in Resources */,
 				4323FB49233A166000243655 /* ChangeMyInfo.storyboard in Resources */,
+				4390292D2383EE8600A3121B /* FanPassList.storyboard in Resources */,
 				438E763A2362FAB90062D004 /* SeriesList.storyboard in Resources */,
 				4323FB71233A166200243655 /* ConfirmDonation.storyboard in Resources */,
 				4356F51C233DF184000710FC /* Localizable.strings in Resources */,
@@ -2202,6 +2227,7 @@
 				4323FB48233A166000243655 /* ChangeMyInfo.storyboard in Resources */,
 				4372268A237E46FD0054C777 /* HomeSubscription.storyboard in Resources */,
 				4323FB70233A166200243655 /* ConfirmDonation.storyboard in Resources */,
+				4390292C2383EE8600A3121B /* FanPassList.storyboard in Resources */,
 				4356F51B233DF184000710FC /* Localizable.strings in Resources */,
 				4323FB80233A166300243655 /* SendDonation.storyboard in Resources */,
 				4323FB0E233A165E00243655 /* CustomEmptyView.storyboard in Resources */,
@@ -2438,6 +2464,7 @@
 				4323FA8B233A165800243655 /* AppDelegate.swift in Sources */,
 				43E54399235714F800F2EC45 /* TagResultProjectListCollectionFooterView.swift in Sources */,
 				43DB22872358576D00E69C0F /* HomeSubscriptionCollectionViewCell.swift in Sources */,
+				439029302383EEBF00A3121B /* FanPassListTableViewCell.swift in Sources */,
 				4323FAED233A165C00243655 /* SeriesPostViewController.swift in Sources */,
 				4323FA95233A165900243655 /* Injectable.swift in Sources */,
 				4323FB0B233A165E00243655 /* CustomEmptyViewModel.swift in Sources */,
@@ -2478,6 +2505,7 @@
 				4323FA61233A165700243655 /* ViewModelAssembly.swift in Sources */,
 				4323FAE9233A165C00243655 /* SeriesPostListTableViewCell.swift in Sources */,
 				4323FA8D233A165800243655 /* VisualEffectView.swift in Sources */,
+				439029272383EE6A00A3121B /* FanPassListViewController.swift in Sources */,
 				4323FABB233A165A00243655 /* HomeViewController.swift in Sources */,
 				438E762D2362BCF50062D004 /* DynamicCollectionViewFlowLayout.swift in Sources */,
 				4323FB4D233A166000243655 /* TransactionHistoryListTypeTableViewCell.swift in Sources */,
@@ -2543,6 +2571,7 @@
 				4372267C237E46B50054C777 /* HomeNoticeViewModel.swift in Sources */,
 				4323FA5F233A165600243655 /* ViewControllerAssembly.swift in Sources */,
 				4323FA9B233A165900243655 /* CheckPincodeViewModel.swift in Sources */,
+				4390292A2383EE7600A3121B /* FanPassListViewModel.swift in Sources */,
 				4323FB35233A165F00243655 /* MyPagePresentTypeTableViewCell.swift in Sources */,
 				4323FA6F233A165700243655 /* Date+Extension.swift in Sources */,
 				4323FAA5233A165900243655 /* RegisterPincodeViewController.swift in Sources */,
@@ -2615,6 +2644,7 @@
 				4323FA8A233A165800243655 /* AppDelegate.swift in Sources */,
 				43E54398235714F800F2EC45 /* TagResultProjectListCollectionFooterView.swift in Sources */,
 				43DB22862358576D00E69C0F /* HomeSubscriptionCollectionViewCell.swift in Sources */,
+				4390292F2383EEBF00A3121B /* FanPassListTableViewCell.swift in Sources */,
 				4323FAEC233A165C00243655 /* SeriesPostViewController.swift in Sources */,
 				4323FA94233A165900243655 /* Injectable.swift in Sources */,
 				4323FB0A233A165E00243655 /* CustomEmptyViewModel.swift in Sources */,
@@ -2655,6 +2685,7 @@
 				4323FA60233A165600243655 /* ViewModelAssembly.swift in Sources */,
 				4323FAE8233A165C00243655 /* SeriesPostListTableViewCell.swift in Sources */,
 				4323FA8C233A165800243655 /* VisualEffectView.swift in Sources */,
+				439029262383EE6A00A3121B /* FanPassListViewController.swift in Sources */,
 				4323FABA233A165A00243655 /* HomeViewController.swift in Sources */,
 				438E762C2362BCF50062D004 /* DynamicCollectionViewFlowLayout.swift in Sources */,
 				4323FB4C233A166000243655 /* TransactionHistoryListTypeTableViewCell.swift in Sources */,
@@ -2720,6 +2751,7 @@
 				4372267B237E46B50054C777 /* HomeNoticeViewModel.swift in Sources */,
 				4323FA5E233A165600243655 /* ViewControllerAssembly.swift in Sources */,
 				4323FA9A233A165900243655 /* CheckPincodeViewModel.swift in Sources */,
+				439029292383EE7600A3121B /* FanPassListViewModel.swift in Sources */,
 				4323FB34233A165F00243655 /* MyPagePresentTypeTableViewCell.swift in Sources */,
 				4323FA6E233A165700243655 /* Date+Extension.swift in Sources */,
 				4323FAA4233A165900243655 /* RegisterPincodeViewController.swift in Sources */,

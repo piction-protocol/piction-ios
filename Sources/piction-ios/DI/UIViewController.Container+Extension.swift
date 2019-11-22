@@ -255,3 +255,10 @@ extension HomeNoticeViewController {
         return Container.shared.resolve(HomeNoticeViewController.self)!
     }
 }
+
+extension FanPassListViewController {
+    static func make(uri: String, postId: Int? = nil) -> FanPassListViewController {
+        return Container.shared.resolve(FanPassListViewController.self, arguments: uri, postId)!
+    }
+}
+

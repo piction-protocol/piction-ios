@@ -75,6 +75,7 @@ enum LocalizedStrings {
     // Button
     case btn_new_post
     case btn_subs
+    case btn_subs_free
     case btn_user_sponsorship
     case btn_user_sponsorship_history
     case btn_save_changed
@@ -206,6 +207,20 @@ enum LocalizedStrings {
     case str_project
     case str_seller
     case str_buyer
+
+    case str_fanpasslist_description
+    case str_fanpasslist_subscription_limit
+    case str_fanpasslist_postcount
+    case str_fanpasslist_subscription_remain
+    case str_fanpasslist_subscription_expire
+    case str_fanpasslist_sold_out
+    case str_fanpasslist_not_avaliable
+    case str_fanpass_free_tier
+    case str_fanpass_current_tier
+    case str_fanpasslist_subscription_button
+    case str_fanpasslist_warning_current_fanpass
+    case str_fanpasslist_warning_description
+    case str_fanpasslist_current_post_description
 
     case str_authenticate_by_face_id
     case str_authenticate_by_touch_id

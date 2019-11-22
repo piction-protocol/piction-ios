@@ -258,5 +258,12 @@ final class ViewControllerAssembly: Assembly {
             vc.viewModel = resolver.resolve(HomeNoticeViewModel.self)!
             return vc
         }
+
+        container.register(FanPassListViewController.self) { (resolver, uri: String, postId: Int?) in
+            let vc = Storyboard.FanPassList.instantiate(FanPassListViewController.self)
+            vc.viewModel = resolver.resolve(FanPassListViewModel.self, arguments: uri, postId)!
+            return vc
+        }
+
     }
 }

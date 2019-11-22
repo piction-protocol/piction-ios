@@ -239,5 +239,14 @@ final class ViewModelAssembly: Assembly {
         container.register(HomeNoticeViewModel.self) { resolver in
             return HomeNoticeViewModel()
         }
+
+        container.register(FanPassListViewModel.self) { (resolver, uri: String, postId: Int?) in
+            return FanPassListViewModel(dependency: (
+                resolver.resolve(Updater.self)!,
+                uri: uri,
+                postId: postId)
+            )
+        }
+
     }
 }
