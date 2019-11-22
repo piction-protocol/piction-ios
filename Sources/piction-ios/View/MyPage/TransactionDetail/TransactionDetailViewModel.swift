@@ -84,7 +84,7 @@ final class TransactionDetailViewModel: ViewModel {
                 let inOut = self.transaction.inOut ?? ""
 
                 if self.transaction.transactionType == "SPONSORSHIP" {
-                    guard let sponsorshipItem = try? response.map(to: SponsorshipModel.self) else {
+                    guard let sponsorshipItem = try? response.map(to: TransactionSponsorshipModel.self) else {
                         return Driver.empty()
                     }
                     let sponsorshipSection = [
@@ -94,16 +94,14 @@ final class TransactionDetailViewModel: ViewModel {
                     ]
                     return Driver.just(sponsorshipSection)
                 } else if self.transaction.transactionType == "SUBSCRIPTION" {
-                    guard let subscriptionItem = try? response.map(to: SubscriptionModel.self) else {
+                    guard let subscriptionItem = try? response.map(to: TransactionSubscriptionModel.self) else {
                         return Driver.empty()
                     }
                     let subscriptionSection = [
-                        TransactionDetailSection.info(transaction: self.transaction),
-                        TransactionDetailSection.footer,
                         TransactionDetailSection.header(title: inOut == "IN" ? LocalizedStrings.str_fanpass_sales_info.localized() : LocalizedStrings.str_fanpass_purchase_info.localized()),
                         TransactionDetailSection.list(title: LocalizedStrings.str_order_id.localized(), description: "\(subscriptionItem.orderNo ?? 0)", link: ""),
-                        TransactionDetailSection.list(title: LocalizedStrings.str_project.localized(), description: "\(subscriptionItem.fanPass?.project?.title ?? "")", link: ""),
-                        TransactionDetailSection.list(title: "FAN PASS", description: "\(subscriptionItem.fanPass?.name ?? "")", link: ""),
+                        TransactionDetailSection.list(title: LocalizedStrings.str_project.localized(), description: "\(subscriptionItem.projectName ?? "")", link: ""),
+                        TransactionDetailSection.list(title: "FAN PASS", description: "\(subscriptionItem.fanPassName ?? "")", link: ""),
                         TransactionDetailSection.list(title: inOut == "IN" ? LocalizedStrings.str_buyer.localized() : LocalizedStrings.str_seller.localized(), description: inOut == "IN" ? "\(subscriptionItem.subscriber?.loginId ?? "")" : "\(subscriptionItem.creator?.loginId ?? "")", link: ""),
                         TransactionDetailSection.footer,
                     ]
