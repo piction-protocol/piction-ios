@@ -112,7 +112,7 @@ final class CreatePostViewModel: ViewModel {
         let fanPassAction = selectedProject
             .flatMap { project -> Driver<Action<ResponseData>> in
                 guard let uri = project?.uri else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(FanPassAPI.projectAll(uri: uri))
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.fanPassAll(uri: uri))
                 return Action.makeDriver(response)
             }
 
@@ -295,13 +295,10 @@ final class CreatePostViewModel: ViewModel {
                 return Driver.just(nil)
             }
 
-        let showActivityIndicator = Driver.merge(input.saveBtnDidTap)
-            .flatMap { _ in Driver.just(true) }
-
-        let hideActivityIndicator = Driver.merge(saveError, uploadCoverImageError, uploadContentImageError)
-            .flatMap { _ in Driver.just(false) }
-
-        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
+        let activityIndicator = Driver.merge(
+            uploadCoverImageAction.isExecuting,
+            uploadContentImage.isExecuting,
+            saveAction.isExecuting)
 
         let showToast = Driver.merge(saveBtnDidTap, openSeriesError, uploadCoverImageError, saveError, uploadContentImageError)
 

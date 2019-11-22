@@ -145,8 +145,8 @@ final class CreatePostViewModel: InjectableViewModel {
             }
 
         let loadFanPassAction = viewWillAppear
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(FanPassAPI.projectAll(uri: self.uri))
+            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.fanPassAll(uri: self?.uri ?? ""))
                 return Action.makeDriver(response)
             }
 
