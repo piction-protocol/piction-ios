@@ -483,6 +483,12 @@
 		43C41F772373EB4900D012A7 /* CheckPincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C41F762373EB4900D012A7 /* CheckPincodeViewController.swift */; };
 		43C41F792373EB5400D012A7 /* CheckPincodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C41F782373EB5400D012A7 /* CheckPincodeViewModel.swift */; };
 		43C41F7B2373EB5D00D012A7 /* CheckPincode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C41F7A2373EB5D00D012A7 /* CheckPincode.storyboard */; };
+		43C5C93E2383BDB1004BACFC /* SubscribeFanPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C5C93D2383BDB1004BACFC /* SubscribeFanPassViewController.swift */; };
+		43C5C93F2383BDB1004BACFC /* SubscribeFanPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C5C93D2383BDB1004BACFC /* SubscribeFanPassViewController.swift */; };
+		43C5C9412383BDC6004BACFC /* SubscribeFanPassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C5C9402383BDC6004BACFC /* SubscribeFanPassViewModel.swift */; };
+		43C5C9422383BDC6004BACFC /* SubscribeFanPassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C5C9402383BDC6004BACFC /* SubscribeFanPassViewModel.swift */; };
+		43C5C9442383BDD6004BACFC /* SubscribeFanPass.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C5C9432383BDD6004BACFC /* SubscribeFanPass.storyboard */; };
+		43C5C9452383BDD6004BACFC /* SubscribeFanPass.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C5C9432383BDD6004BACFC /* SubscribeFanPass.storyboard */; };
 		43DB225A235808E000E69C0F /* HomePopularTagsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB2259235808E000E69C0F /* HomePopularTagsCollectionViewCell.swift */; };
 		43DB225B235808E000E69C0F /* HomePopularTagsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB2259235808E000E69C0F /* HomePopularTagsCollectionViewCell.swift */; };
 		43DB225D235808EE00E69C0F /* HomeTrendingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB225C235808EE00E69C0F /* HomeTrendingCollectionViewCell.swift */; };
@@ -821,6 +827,9 @@
 		43C41F762373EB4900D012A7 /* CheckPincodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPincodeViewController.swift; sourceTree = "<group>"; };
 		43C41F782373EB5400D012A7 /* CheckPincodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPincodeViewModel.swift; sourceTree = "<group>"; };
 		43C41F7A2373EB5D00D012A7 /* CheckPincode.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CheckPincode.storyboard; sourceTree = "<group>"; };
+		43C5C93D2383BDB1004BACFC /* SubscribeFanPassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeFanPassViewController.swift; sourceTree = "<group>"; };
+		43C5C9402383BDC6004BACFC /* SubscribeFanPassViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeFanPassViewModel.swift; sourceTree = "<group>"; };
+		43C5C9432383BDD6004BACFC /* SubscribeFanPass.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SubscribeFanPass.storyboard; sourceTree = "<group>"; };
 		43DB2259235808E000E69C0F /* HomePopularTagsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePopularTagsCollectionViewCell.swift; sourceTree = "<group>"; };
 		43DB225C235808EE00E69C0F /* HomeTrendingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTrendingCollectionViewCell.swift; sourceTree = "<group>"; };
 		43DB226023580B4600E69C0F /* TagListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListViewController.swift; sourceTree = "<group>"; };
@@ -1218,6 +1227,7 @@
 			isa = PBXGroup;
 			children = (
 				439029242383EE5400A3121B /* FanPassList */,
+				43C5C93C2383BD5B004BACFC /* SubscribeFanPass */,
 				438E763E23667ED20062D004 /* SubscriptionUser */,
 				438E76312362FA890062D004 /* SeriesList */,
 				4323F9DF233A165600243655 /* Project */,
@@ -1861,6 +1871,16 @@
 			path = CheckPincode;
 			sourceTree = "<group>";
 		};
+		43C5C93C2383BD5B004BACFC /* SubscribeFanPass */ = {
+			isa = PBXGroup;
+			children = (
+				43C5C93D2383BDB1004BACFC /* SubscribeFanPassViewController.swift */,
+				43C5C9402383BDC6004BACFC /* SubscribeFanPassViewModel.swift */,
+				43C5C9432383BDD6004BACFC /* SubscribeFanPass.storyboard */,
+			);
+			path = SubscribeFanPass;
+			sourceTree = "<group>";
+		};
 		43DB225F23580B2900E69C0F /* TagList */ = {
 			isa = PBXGroup;
 			children = (
@@ -2149,6 +2169,7 @@
 				4323FB9B233A166400243655 /* SignIn.storyboard in Resources */,
 				4323FB19233A165E00243655 /* Deposit.storyboard in Resources */,
 				4323FB01233A165D00243655 /* PostFooter.storyboard in Resources */,
+				43C5C9452383BDD6004BACFC /* SubscribeFanPass.storyboard in Resources */,
 				4323FAA3233A165900243655 /* ConfirmPincode.storyboard in Resources */,
 				4323FB05233A165D00243655 /* CreateProject.storyboard in Resources */,
 				43C41F6C2373B84F00D012A7 /* piction-ios_Info.plist in Resources */,
@@ -2207,6 +2228,7 @@
 				4323FB68233A166200243655 /* QRCodeScanner.storyboard in Resources */,
 				4323FB74233A166200243655 /* SponsorshipHistory.storyboard in Resources */,
 				4323FB9A233A166400243655 /* SignIn.storyboard in Resources */,
+				43C5C9442383BDD6004BACFC /* SubscribeFanPass.storyboard in Resources */,
 				43C41F692373B84F00D012A7 /* piction-ios-test_Info.plist in Resources */,
 				43DB226723580B5D00E69C0F /* TagList.storyboard in Resources */,
 				4323FB18233A165E00243655 /* Deposit.storyboard in Resources */,
@@ -2480,6 +2502,7 @@
 				4323FBC4233C876D00243655 /* Localization.swift in Sources */,
 				4323FB8D233A166300243655 /* SponsorshipListItemTypeTableViewCell.swift in Sources */,
 				4323FB0D233A165E00243655 /* CustomEmptyViewController.swift in Sources */,
+				43C5C9422383BDC6004BACFC /* SubscribeFanPassViewModel.swift in Sources */,
 				4323FAE7233A165C00243655 /* SeriesPostViewModel.swift in Sources */,
 				4323FB63233A166100243655 /* SearchSponsorTableViewCell.swift in Sources */,
 				4323FAA1233A165900243655 /* ConfirmPincodeViewController.swift in Sources */,
@@ -2498,6 +2521,7 @@
 				4323FB73233A166200243655 /* ConfirmDonationViewController.swift in Sources */,
 				4323FB7D233A166200243655 /* SendDonationViewModel.swift in Sources */,
 				4323FAAB233A165A00243655 /* TabBarViewController.swift in Sources */,
+				43C5C93F2383BDB1004BACFC /* SubscribeFanPassViewController.swift in Sources */,
 				4323FA79233A165800243655 /* UINavigationController+Extension.swift in Sources */,
 				4323FB8B233A166300243655 /* SponsorshipListButtonTypeTableViewCell.swift in Sources */,
 				4323FA75233A165700243655 /* UIView+Extension.swift in Sources */,
@@ -2660,6 +2684,7 @@
 				4323FBC3233C876D00243655 /* Localization.swift in Sources */,
 				4323FB8C233A166300243655 /* SponsorshipListItemTypeTableViewCell.swift in Sources */,
 				4323FB0C233A165E00243655 /* CustomEmptyViewController.swift in Sources */,
+				43C5C9412383BDC6004BACFC /* SubscribeFanPassViewModel.swift in Sources */,
 				4323FAE6233A165C00243655 /* SeriesPostViewModel.swift in Sources */,
 				4323FB62233A166100243655 /* SearchSponsorTableViewCell.swift in Sources */,
 				4323FAA0233A165900243655 /* ConfirmPincodeViewController.swift in Sources */,
@@ -2678,6 +2703,7 @@
 				4323FB72233A166200243655 /* ConfirmDonationViewController.swift in Sources */,
 				4323FB7C233A166200243655 /* SendDonationViewModel.swift in Sources */,
 				4323FAAA233A165A00243655 /* TabBarViewController.swift in Sources */,
+				43C5C93E2383BDB1004BACFC /* SubscribeFanPassViewController.swift in Sources */,
 				4323FA78233A165800243655 /* UINavigationController+Extension.swift in Sources */,
 				4323FB8A233A166300243655 /* SponsorshipListButtonTypeTableViewCell.swift in Sources */,
 				4323FA74233A165700243655 /* UIView+Extension.swift in Sources */,

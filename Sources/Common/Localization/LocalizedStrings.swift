@@ -222,6 +222,20 @@ enum LocalizedStrings {
     case str_fanpasslist_warning_description
     case str_fanpasslist_current_post_description
 
+    case str_purchase_fanpass_select_fanpass
+    case str_purchase_fanpass_show_description
+    case str_purchase_fanpass_hide_description
+    case str_purchase_fanpass_payment
+    case str_purchase_fanpass_payment_piction
+    case str_purchase_fanpass_amount
+    case str_purchase_fanpass_expire
+    case str_purchase_fanpass_expire_description
+    case str_purchase_fanpass_agree
+    case str_purchase
+    case str_purchase_fanpass_transfer_info
+    case str_purchase_fanpass_transfer_info_fees
+    case str_purchase_fanpass_guide
+
     case str_authenticate_by_face_id
     case str_authenticate_by_touch_id
     case str_authenticate_type

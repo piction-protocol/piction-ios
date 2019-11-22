@@ -248,5 +248,12 @@ final class ViewModelAssembly: Assembly {
             )
         }
 
+        container.register(SubscribeFanPassViewModel.self) { (resolver, uri: String, selectedFanPass: FanPassModel) in
+            return SubscribeFanPassViewModel(dependency: (
+                resolver.resolve(Updater.self)!,
+                uri: uri,
+                selectedFanPass: selectedFanPass)
+            )
+        }
     }
 }

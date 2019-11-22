@@ -265,5 +265,10 @@ final class ViewControllerAssembly: Assembly {
             return vc
         }
 
+        container.register(SubscribeFanPassViewController.self) { (resolver, uri: String, selectedFanPass: FanPassModel) in
+            let vc = Storyboard.SubscribeFanPass.instantiate(SubscribeFanPassViewController.self)
+            vc.viewModel = resolver.resolve(SubscribeFanPassViewModel.self, arguments: uri, selectedFanPass)!
+            return vc
+        }
     }
 }

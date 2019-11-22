@@ -262,3 +262,8 @@ extension FanPassListViewController {
     }
 }
 
+extension SubscribeFanPassViewController {
+    static func make(uri: String, selectedFanPass: FanPassModel) -> SubscribeFanPassViewController {
+        return Container.shared.resolve(SubscribeFanPassViewController.self, arguments: uri, selectedFanPass)!
+    }
+}

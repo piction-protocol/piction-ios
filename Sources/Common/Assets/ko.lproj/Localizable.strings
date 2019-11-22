@@ -223,6 +223,21 @@
 "str_fanpasslist_warning_description" = "FAN PASS를 업그레이드 하는 경우, 현재 사용 중인 상품의 남은 기간은 환불되지 않습니다.";
 "str_fanpasslist_current_post_description" = "포스트를 볼 수 있는 FAN PASS 상품만 출력됩니다.";
 
+"str_purchase_fanpass_select_fanpass" = "선택한 구독 상품";
+"str_purchase_fanpass_show_description" = "상품 설명 보기";
+"str_purchase_fanpass_hide_description" = "상품 설명 닫기";
+"str_purchase_fanpass_payment" = "결제 방법";
+"str_purchase_fanpass_payment_piction" = "픽션 지갑";
+"str_purchase_fanpass_amount" = "결제 금액";
+"str_purchase_fanpass_expire" = "제공 기간";
+"str_purchase_fanpass_expire_description" = "YYYY년 M월 d일까지 (30일)";
+"str_purchase_fanpass_agree" = "상품 설명 및 환불에 대한 내용을 확인하였으며, 이에 동의합니다.";
+"str_purchase" = "구매";
+"str_purchase_fanpass_transfer_info" = "송금 안내";
+"str_purchase_fanpass_transfer_info_fees" = "기본 수수료";
+"str_purchase_fanpass_guide" = "결제 완료 시 결제 금액이 즉시 %@님의 계좌로 송금되며, 환불은 불가능합니다.";
+
+
 "str_authenticate_by_face_id" = "Face ID로 인증합니다.";
 "str_authenticate_by_touch_id" = "Touch ID로 인증합니다.";
 "str_authenticate_type" = "%@로 인증하시겠습니까?";
