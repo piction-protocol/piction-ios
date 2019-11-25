@@ -46,8 +46,6 @@ final class ProjectViewModel: InjectableViewModel {
         let changeMenu: Driver<Int>
         let infoBtnDidTap: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
-        let updateProject: Driver<Void>
-        let seriesList: Driver<Void>
         let subscriptionUser: Driver<Void>
         let deletePost: Driver<(String, Int)>
     }
@@ -65,8 +63,6 @@ final class ProjectViewModel: InjectableViewModel {
         let openPostViewController: Driver<(String, Int)>
         let openSeriesPostViewController: Driver<(String, Int)>
         let openProjectInfoViewController: Driver<String>
-        let openUpdateProjectViewController: Driver<String>
-        let openSeriesListViewController: Driver<String>
         let openSubscriptionUserViewController: Driver<String>
         let openFanPassListViewController: Driver<String>
         let activityIndicator: Driver<Bool>
@@ -420,22 +416,14 @@ final class ProjectViewModel: InjectableViewModel {
 
         let showToast = Driver.merge(subscriptionSuccess, cancelSubscriptionSuccess, subscriptionError, cancelSubscriptionError, deletePostSuccess, deletePostSuccess, deletePostError)
 
-        let openUpdateProjectViewController = input.updateProject
-            .flatMap { [weak self] _ -> Driver<String> in
-                return Driver.just(self?.uri ?? "")
-            }
-
-        let openSeriesListViewController = input.seriesList
-            .flatMap { [weak self] _ -> Driver<String> in
-                return Driver.just(self?.uri ?? "")
-            }
-
         let openSubscriptionUserViewController = input.subscriptionUser
             .flatMap { [weak self] _ -> Driver<String> in
                 return Driver.just(self?.uri ?? "")
             }
 
         let openFanPassListViewController = input.subscriptionBtnDidTap
+            .withLatestFrom(isWriter)
+            .filter { !$0 }
             .withLatestFrom(fanPassListSuccess)
             .filter { $0.count > 1 }
             .flatMap { [weak self] _ -> Driver<String> in
@@ -455,8 +443,6 @@ final class ProjectViewModel: InjectableViewModel {
             openPostViewController: selectPostItem,
             openSeriesPostViewController: selectSeriesItem,
             openProjectInfoViewController: openProjectInfoViewController,
-            openUpdateProjectViewController: openUpdateProjectViewController,
-            openSeriesListViewController: openSeriesListViewController,
             openSubscriptionUserViewController: openSubscriptionUserViewController,
             openFanPassListViewController: openFanPassListViewController,
             activityIndicator: activityIndicator,

@@ -15,6 +15,12 @@ import UIScrollView_InfiniteScroll
 import GSKStretchyHeaderView
 import PictionSDK
 
+enum ManageMenu {
+    case project
+    case series
+    case fanpass
+}
+
 final class ProjectViewController: UIViewController {
     var disposeBag = DisposeBag()
 
@@ -27,8 +33,7 @@ final class ProjectViewController: UIViewController {
     private let subscription = PublishSubject<Void>()
     private let cancelSubscription = PublishSubject<Void>()
     private let deletePost = PublishSubject<(String, Int)>()
-    private let updateProject = PublishSubject<Void>()
-    private let seriesList = PublishSubject<Void>()
+    private let manageMenu = PublishSubject<ManageMenu>()
     private let subscriptionUser = PublishSubject<Void>()
 
     @IBOutlet weak var tableView: UITableView! {
@@ -63,6 +68,13 @@ final class ProjectViewController: UIViewController {
         let vc = ProjectInfoViewController.make(uri: uri)
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .push)
+        }
+    }
+
+    private func openManageFanPassViewController(uri: String) {
+        let vc = ManageFanPassViewController.make(uri: uri)
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.openViewController(vc, type: .swipePresent)
         }
     }
 
@@ -127,7 +139,7 @@ final class ProjectViewController: UIViewController {
         }
     }
 
-    func openSeriesListViewController(uri: String, seriesId: Int? = nil) {
+    private func openSeriesListViewController(uri: String, seriesId: Int? = nil) {
         let vc = SeriesListViewController.make(uri: uri, seriesId: seriesId)
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .swipePresent)
@@ -246,8 +258,6 @@ extension ProjectViewController: ViewModelBindable {
             changeMenu: changeMenu.asDriver(onErrorDriveWith: .empty()),
             infoBtnDidTap: infoBarButton.rx.tap.asDriver(),
             selectedIndexPath: tableView.rx.itemSelected.asDriver(),
-            updateProject: updateProject.asDriver(onErrorDriveWith: .empty()),
-            seriesList: seriesList.asDriver(onErrorDriveWith: .empty()),
             subscriptionUser: subscriptionUser.asDriver(onErrorDriveWith: .empty()),
             deletePost: deletePost.asDriver(onErrorDriveWith: .empty())
         )
@@ -371,20 +381,6 @@ extension ProjectViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .openUpdateProjectViewController
-            .drive(onNext: { [weak self] uri in
-                self?.openCreateProjectViewController(uri: uri)
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .openSeriesListViewController
-            .drive(onNext: { [weak self] uri in
-                self?.openSeriesListViewController(uri: uri)
-            })
-            .disposed(by: disposeBag)
-
-        output
             .openSubscriptionUserViewController
             .drive(onNext: { [weak self] uri in
                 if FEATURE_EDITOR {
@@ -459,23 +455,31 @@ extension ProjectViewController: ProjectHeaderViewDelegate {
     }
 
     func managementBtnDidTap() {
+        guard let uri = self.viewModel?.uri else { return }
         let alertController = UIAlertController(
         title: nil,
         message: nil,
         preferredStyle: UIAlertController.Style.actionSheet)
 
-        let updateProjectAction = UIAlertAction(
+        let manageProjectAction = UIAlertAction(
             title: "프로젝트 관리",
             style: UIAlertAction.Style.default,
             handler: { [weak self] action in
-                self?.updateProject.onNext(())
+                self?.openCreateProjectViewController(uri: uri)
             })
 
-        let seriesListAction = UIAlertAction(
+        let manageSeriesAction = UIAlertAction(
             title: "시리즈 관리",
             style: UIAlertAction.Style.default,
             handler: { [weak self] action in
-                self?.seriesList.onNext(())
+                self?.openSeriesListViewController(uri: uri)
+            })
+
+        let manageFanPassAction = UIAlertAction(
+            title: "FanPass 관리",
+            style: UIAlertAction.Style.default,
+            handler: { [weak self] action in
+                self?.openManageFanPassViewController(uri: uri)
             })
 
         let cancelAction = UIAlertAction(
@@ -484,8 +488,9 @@ extension ProjectViewController: ProjectHeaderViewDelegate {
             handler:{ action in
             })
 
-        alertController.addAction(updateProjectAction)
-        alertController.addAction(seriesListAction)
+        alertController.addAction(manageProjectAction)
+        alertController.addAction(manageSeriesAction)
+        alertController.addAction(manageFanPassAction)
         alertController.addAction(cancelAction)
 
         present(alertController, animated: true, completion: nil)
