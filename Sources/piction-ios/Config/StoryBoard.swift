@@ -54,6 +54,7 @@ public enum Storyboard: String {
     case FanPassList
     case SubscribeFanPass
     case ManageFanPass
+    case CreateFanPass
 
     public func instantiate<VC: UIViewController>(_ viewController: VC.Type) -> VC {
         guard

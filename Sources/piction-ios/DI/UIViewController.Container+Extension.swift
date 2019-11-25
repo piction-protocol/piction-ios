@@ -273,3 +273,9 @@ extension ManageFanPassViewController {
         return Container.shared.resolve(ManageFanPassViewController.self, arguments: uri, fanPassId)!
     }
 }
+
+extension CreateFanPassViewController {
+    static func make(uri: String, fanPass: FanPassModel? = nil) -> CreateFanPassViewController {
+        return Container.shared.resolve(CreateFanPassViewController.self, arguments: uri, fanPass)!
+    }
+}

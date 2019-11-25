@@ -276,5 +276,11 @@ final class ViewControllerAssembly: Assembly {
             vc.viewModel = resolver.resolve(ManageFanPassViewModel.self, arguments: uri, fanPassId)!
             return vc
         }
+
+        container.register(CreateFanPassViewController.self) { (resolver, uri: String, fanPass: FanPassModel?) in
+            let vc = Storyboard.CreateFanPass.instantiate(CreateFanPassViewController.self)
+            vc.viewModel = resolver.resolve(CreateFanPassViewModel.self, arguments: uri, fanPass)!
+            return vc
+        }
     }
 }

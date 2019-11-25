@@ -349,6 +349,12 @@
 		436C75A82387C39300902F08 /* ManageFanPass.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 436C75A62387C39300902F08 /* ManageFanPass.storyboard */; };
 		436C75AA2387C55900902F08 /* ManageFanPassTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A92387C55900902F08 /* ManageFanPassTableViewCell.swift */; };
 		436C75AB2387C55900902F08 /* ManageFanPassTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A92387C55900902F08 /* ManageFanPassTableViewCell.swift */; };
+		436C75AE2387C72A00902F08 /* CreateFanPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75AD2387C72A00902F08 /* CreateFanPassViewController.swift */; };
+		436C75AF2387C72A00902F08 /* CreateFanPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75AD2387C72A00902F08 /* CreateFanPassViewController.swift */; };
+		436C75B12387C73600902F08 /* CreateFanPassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75B02387C73600902F08 /* CreateFanPassViewModel.swift */; };
+		436C75B22387C73600902F08 /* CreateFanPassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75B02387C73600902F08 /* CreateFanPassViewModel.swift */; };
+		436C75B42387C74500902F08 /* CreateFanPass.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 436C75B32387C74500902F08 /* CreateFanPass.storyboard */; };
+		436C75B52387C74500902F08 /* CreateFanPass.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 436C75B32387C74500902F08 /* CreateFanPass.storyboard */; };
 		436CAC6C234C2E1200C84373 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436CAC6B234C2E1200C84373 /* FirebaseManager.swift */; };
 		436CAC6D234C2E1200C84373 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436CAC6B234C2E1200C84373 /* FirebaseManager.swift */; };
 		43722669237E376F0054C777 /* HomeTrendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43722668237E376F0054C777 /* HomeTrendingViewController.swift */; };
@@ -777,6 +783,9 @@
 		436C75A32387C38900902F08 /* ManageFanPassViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFanPassViewModel.swift; sourceTree = "<group>"; };
 		436C75A62387C39300902F08 /* ManageFanPass.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ManageFanPass.storyboard; sourceTree = "<group>"; };
 		436C75A92387C55900902F08 /* ManageFanPassTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFanPassTableViewCell.swift; sourceTree = "<group>"; };
+		436C75AD2387C72A00902F08 /* CreateFanPassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFanPassViewController.swift; sourceTree = "<group>"; };
+		436C75B02387C73600902F08 /* CreateFanPassViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFanPassViewModel.swift; sourceTree = "<group>"; };
+		436C75B32387C74500902F08 /* CreateFanPass.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreateFanPass.storyboard; sourceTree = "<group>"; };
 		436CAC6B234C2E1200C84373 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		43722668237E376F0054C777 /* HomeTrendingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTrendingViewController.swift; sourceTree = "<group>"; };
 		4372266B237E37820054C777 /* HomeTrendingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTrendingViewModel.swift; sourceTree = "<group>"; };
@@ -1227,6 +1236,7 @@
 		4323F9C9233A165600243655 /* Project */ = {
 			isa = PBXGroup;
 			children = (
+				436C75AC2387C71B00902F08 /* CreateFanPass */,
 				436C759F2387C36100902F08 /* ManageFanPass */,
 				439029242383EE5400A3121B /* FanPassList */,
 				43C5C93C2383BD5B004BACFC /* SubscribeFanPass */,
@@ -1623,6 +1633,16 @@
 				436C75A62387C39300902F08 /* ManageFanPass.storyboard */,
 			);
 			path = ManageFanPass;
+			sourceTree = "<group>";
+		};
+		436C75AC2387C71B00902F08 /* CreateFanPass */ = {
+			isa = PBXGroup;
+			children = (
+				436C75AD2387C72A00902F08 /* CreateFanPassViewController.swift */,
+				436C75B02387C73600902F08 /* CreateFanPassViewModel.swift */,
+				436C75B32387C74500902F08 /* CreateFanPass.storyboard */,
+			);
+			path = CreateFanPass;
 			sourceTree = "<group>";
 		};
 		436CAC6A234C2DFE00C84373 /* Firebase */ = {
@@ -2200,6 +2220,7 @@
 				4323FADB233A165C00243655 /* PostHeader.storyboard in Resources */,
 				4372268B237E46FD0054C777 /* HomeSubscription.storyboard in Resources */,
 				4323FB49233A166000243655 /* ChangeMyInfo.storyboard in Resources */,
+				436C75B52387C74500902F08 /* CreateFanPass.storyboard in Resources */,
 				4390292D2383EE8600A3121B /* FanPassList.storyboard in Resources */,
 				438E763A2362FAB90062D004 /* SeriesList.storyboard in Resources */,
 				4323FB71233A166200243655 /* ConfirmDonation.storyboard in Resources */,
@@ -2260,6 +2281,7 @@
 				4323FB48233A166000243655 /* ChangeMyInfo.storyboard in Resources */,
 				4372268A237E46FD0054C777 /* HomeSubscription.storyboard in Resources */,
 				4323FB70233A166200243655 /* ConfirmDonation.storyboard in Resources */,
+				436C75B42387C74500902F08 /* CreateFanPass.storyboard in Resources */,
 				4390292C2383EE8600A3121B /* FanPassList.storyboard in Resources */,
 				4356F51B233DF184000710FC /* Localizable.strings in Resources */,
 				4323FB80233A166300243655 /* SendDonation.storyboard in Resources */,
@@ -2472,6 +2494,7 @@
 				4323FB8D233A166300243655 /* SponsorshipListItemTypeTableViewCell.swift in Sources */,
 				4323FB0D233A165E00243655 /* CustomEmptyViewController.swift in Sources */,
 				43C5C9422383BDC6004BACFC /* SubscribeFanPassViewModel.swift in Sources */,
+				436C75B22387C73600902F08 /* CreateFanPassViewModel.swift in Sources */,
 				4323FAE7233A165C00243655 /* SeriesPostViewModel.swift in Sources */,
 				4323FB63233A166100243655 /* SearchSponsorTableViewCell.swift in Sources */,
 				4323FAA1233A165900243655 /* ConfirmPincodeViewController.swift in Sources */,
@@ -2607,6 +2630,7 @@
 				4323FB53233A166100243655 /* TransactionHistoryViewModel.swift in Sources */,
 				43DB226B23580B6F00E69C0F /* TagListTableViewCell.swift in Sources */,
 				4323FB67233A166200243655 /* SearchSponsorViewController.swift in Sources */,
+				436C75AF2387C72A00902F08 /* CreateFanPassViewController.swift in Sources */,
 				4323FA89233A165800243655 /* StoryBoard.swift in Sources */,
 				4323FB6B233A166200243655 /* QRCodeScannerViewModel.swift in Sources */,
 				436CAC6D234C2E1200C84373 /* FirebaseManager.swift in Sources */,
@@ -2657,6 +2681,7 @@
 				4323FB8C233A166300243655 /* SponsorshipListItemTypeTableViewCell.swift in Sources */,
 				4323FB0C233A165E00243655 /* CustomEmptyViewController.swift in Sources */,
 				43C5C9412383BDC6004BACFC /* SubscribeFanPassViewModel.swift in Sources */,
+				436C75B12387C73600902F08 /* CreateFanPassViewModel.swift in Sources */,
 				4323FAE6233A165C00243655 /* SeriesPostViewModel.swift in Sources */,
 				4323FB62233A166100243655 /* SearchSponsorTableViewCell.swift in Sources */,
 				4323FAA0233A165900243655 /* ConfirmPincodeViewController.swift in Sources */,
@@ -2792,6 +2817,7 @@
 				4323FB52233A166100243655 /* TransactionHistoryViewModel.swift in Sources */,
 				43DB226A23580B6F00E69C0F /* TagListTableViewCell.swift in Sources */,
 				4323FB66233A166100243655 /* SearchSponsorViewController.swift in Sources */,
+				436C75AE2387C72A00902F08 /* CreateFanPassViewController.swift in Sources */,
 				4323FA88233A165800243655 /* StoryBoard.swift in Sources */,
 				4323FB6A233A166200243655 /* QRCodeScannerViewModel.swift in Sources */,
 				436CAC6C234C2E1200C84373 /* FirebaseManager.swift in Sources */,

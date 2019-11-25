@@ -263,5 +263,13 @@ final class ViewModelAssembly: Assembly {
                 fanPassId: fanPassId)
             )
         }
+
+        container.register(CreateFanPassViewModel.self) { (resolver, uri: String, fanPass: FanPassModel?) in
+            return CreateFanPassViewModel(dependency: (
+                resolver.resolve(Updater.self)!,
+                uri: uri,
+                fanPass: fanPass)
+            )
+        }
     }
 }
