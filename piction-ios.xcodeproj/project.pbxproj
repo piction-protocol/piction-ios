@@ -1115,17 +1115,20 @@
 		4323F9A3233A165600243655 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				43722667237E37530054C777 /* Search */,
-				4323F9A4233A165600243655 /* Pincode */,
 				4323F9B1233A165600243655 /* TabBar */,
+				4323F9A4233A165600243655 /* Pincode */,
+				4323FA45233A165600243655 /* SignIn */,
+				43722667237E37530054C777 /* Search */,
 				4323F9B3233A165600243655 /* Home */,
 				43E5437A2356F5CD00F2EC45 /* Explore */,
 				4323F9C1233A165600243655 /* Subscription */,
-				4323F9C9233A165600243655 /* Project */,
-				4323F9F0233A165600243655 /* Common */,
-				4323F9F8233A165600243655 /* MyPage */,
 				4323FA27233A165600243655 /* Sponsorship */,
-				4323FA45233A165600243655 /* SignIn */,
+				4323F9F8233A165600243655 /* MyPage */,
+				4323F9C9233A165600243655 /* Project */,
+				436C75B8238BAC8200902F08 /* Series */,
+				436C75B6238BAC5000902F08 /* Post */,
+				436C75B7238BAC5C00902F08 /* FanPass */,
+				4323F9F0233A165600243655 /* Common */,
 				4356F506233DE798000710FC /* LaunchScreen.storyboard */,
 			);
 			path = View;
@@ -1236,20 +1239,10 @@
 		4323F9C9233A165600243655 /* Project */ = {
 			isa = PBXGroup;
 			children = (
-				436C75AC2387C71B00902F08 /* CreateFanPass */,
-				436C759F2387C36100902F08 /* ManageFanPass */,
-				439029242383EE5400A3121B /* FanPassList */,
-				43C5C93C2383BD5B004BACFC /* SubscribeFanPass */,
 				438E763E23667ED20062D004 /* SubscriptionUser */,
-				438E76312362FA890062D004 /* SeriesList */,
 				4323F9DF233A165600243655 /* Project */,
 				4323F9D6233A165600243655 /* ProjectInfo */,
 				4323F9EC233A165600243655 /* CreateProject */,
-				4323F9CE233A165600243655 /* Post */,
-				4323F9D2233A165600243655 /* PostHeader */,
-				4323F9E8233A165600243655 /* PostFooter */,
-				4323F9DA233A165600243655 /* SeriesPost */,
-				4323F9CA233A165600243655 /* CreatePost */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -1643,6 +1636,37 @@
 				436C75B32387C74500902F08 /* CreateFanPass.storyboard */,
 			);
 			path = CreateFanPass;
+			sourceTree = "<group>";
+		};
+		436C75B6238BAC5000902F08 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				4323F9CE233A165600243655 /* Post */,
+				4323F9D2233A165600243655 /* PostHeader */,
+				4323F9E8233A165600243655 /* PostFooter */,
+				4323F9CA233A165600243655 /* CreatePost */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
+		436C75B7238BAC5C00902F08 /* FanPass */ = {
+			isa = PBXGroup;
+			children = (
+				436C75AC2387C71B00902F08 /* CreateFanPass */,
+				436C759F2387C36100902F08 /* ManageFanPass */,
+				439029242383EE5400A3121B /* FanPassList */,
+				43C5C93C2383BD5B004BACFC /* SubscribeFanPass */,
+			);
+			path = FanPass;
+			sourceTree = "<group>";
+		};
+		436C75B8238BAC8200902F08 /* Series */ = {
+			isa = PBXGroup;
+			children = (
+				438E76312362FA890062D004 /* SeriesList */,
+				4323F9DA233A165600243655 /* SeriesPost */,
+			);
+			path = Series;
 			sourceTree = "<group>";
 		};
 		436CAC6A234C2DFE00C84373 /* Firebase */ = {
