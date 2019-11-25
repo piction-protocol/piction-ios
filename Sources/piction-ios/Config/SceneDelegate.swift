@@ -26,19 +26,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let rootView = TabBarController()
             window?.rootViewController = rootView
         }
+
         window?.backgroundColor = .systemBackground
         window?.makeKeyAndVisible()
+
+        if let url = connectionOptions.urlContexts.first?.url {
+            executeDeepLink(with: url)
+        }
+
+        if let shortcutItem = connectionOptions.shortcutItem {
+            if let window = self.window {
+                AppShortcuts.performShortcut(window: window, shortcut: shortcutItem)
+            }
+        }
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         if let url = URLContexts.first?.url {
-            if let topViewController = UIApplication.topViewController(), topViewController.isKind(of: SignUpViewController.self) {
-                _ = DeepLinkManager.executeDeepLink(with: url)
-            } else {
-                UIApplication.dismissAllPresentedController {
-                    _ = DeepLinkManager.executeDeepLink(with: url)
-                }
-            }
+            executeDeepLink(with: url)
         }
     }
 
@@ -79,3 +84,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
 }
+
+@available(iOS 13.0, *)
+extension SceneDelegate {
+    private func executeDeepLink(with url: URL) {
+        if let topViewController = UIApplication.topViewController(), topViewController.isKind(of: SignUpViewController.self) {
+            _ = DeepLinkManager.executeDeepLink(with: url)
+        } else {
+            UIApplication.dismissAllPresentedController {
+                _ = DeepLinkManager.executeDeepLink(with: url)
+            }
+        }
+    }
+}
+
