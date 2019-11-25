@@ -44,6 +44,7 @@
 "popup_title_pincode_confirm" = "Confirm PIN";
 "popup_title_notsupport_multiwindow" = "QR 코드 스캐너는 멀티윈도우를 지원하지 않습니다.";
 "popup_title_delete_post" = "포스트를 삭제하시겠습니까?";
+"popup_title_delete_fanpass" = "FanPass를 삭제하시겠습니까?";
 
 // Popup & Toast
 "msg_api_internal_server_error" = "Not available now.\nPlease try again later.";
@@ -52,6 +53,7 @@
 "msg_pincode_error_end" = "Too many wrong attempts. Signing out for your security.";
 "msg_pincode_reg_warning" = "Register PIN code to keep\nyour transactions safe.";
 "msg_delete_post_success" = "포스트가 삭제되었습니다.";
+"msg_delete_fanpass_success" = "FanPass가 삭제되었습니다.";
 
 "msg_creator_not_found" = "No result found.";
 "msg_not_piction_cp" = "Not valid QR code";

@@ -43,6 +43,7 @@ enum LocalizedStrings {
     case popup_title_pincode_confirm
     case popup_title_notsupport_multiwindow
     case popup_title_delete_post
+    case popup_title_delete_fanpass
 
     // Popup & Toast
     case msg_api_internal_server_error
@@ -52,6 +53,7 @@ enum LocalizedStrings {
     case msg_pincode_reg_warning
     case msg_already_sign_in
     case msg_delete_post_success
+    case msg_delete_fanpass_success
 
     case msg_creator_not_found
     case msg_not_piction_cp
