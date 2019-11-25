@@ -45,10 +45,14 @@ final class CreatePostViewController: UIViewController {
     @IBOutlet weak var publishDateLabel: UILabel!
     @IBOutlet weak var publishDatePickerButton: UIButton!
     @IBOutlet weak var publishDatePicker: UIDatePicker!
+    @IBOutlet weak var selectFanPassView: UIView!
+    @IBOutlet weak var selectFanPassButton: UIButton!
+    @IBOutlet weak var selectFanPassLabel: UILabel!
 
     private let chosenCoverImage = PublishSubject<UIImage>()
     private let chosenContentImage = PublishSubject<UIImage>()
-    private let chosenSeriesId = PublishSubject<SeriesModel?>()
+    private let chosenSeries = PublishSubject<SeriesModel?>()
+    private let chosenFanPass = PublishSubject<FanPassModel?>()
     private let chosenDateTime = PublishSubject<Date?>()
 
     fileprivate var mediaErrorMode = false
@@ -152,6 +156,7 @@ final class CreatePostViewController: UIViewController {
             self.forSubscriptionCheckboxImageView.backgroundColor = UIColor.clear
             self.forPrivateCheckboxImageView.image = UIImage()
             self.forPrivateCheckboxImageView.backgroundColor = UIColor.clear
+            self.selectFanPassView.isHidden = true
         case "PRIVATE":
             self.forAllCheckboxImageView.image = UIImage()
             self.forAllCheckboxImageView.backgroundColor = UIColor.clear
@@ -159,6 +164,7 @@ final class CreatePostViewController: UIViewController {
             self.forSubscriptionCheckboxImageView.backgroundColor = UIColor.clear
             self.forPrivateCheckboxImageView.image = #imageLiteral(resourceName: "ic-check")
             self.forPrivateCheckboxImageView.backgroundColor = .pictionBlue
+            self.selectFanPassView.isHidden = true
         case "FAN_PASS":
             self.forAllCheckboxImageView.image = UIImage()
             self.forAllCheckboxImageView.backgroundColor = UIColor.clear
@@ -166,13 +172,23 @@ final class CreatePostViewController: UIViewController {
             self.forSubscriptionCheckboxImageView.backgroundColor = .pictionBlue
             self.forPrivateCheckboxImageView.image = UIImage()
             self.forPrivateCheckboxImageView.backgroundColor = UIColor.clear
+            self.selectFanPassLabel.text = "무료 구독"
+            self.selectFanPassView.isHidden = false
         default:
             break
         }
     }
 
-    func openSeriesListViewController(uri: String, seriesId: Int? = nil) {
+    private func openSeriesListViewController(uri: String, seriesId: Int? = nil) {
         let vc = SeriesListViewController.make(uri: uri, seriesId: seriesId)
+        vc.delegate = self
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.openViewController(vc, type: .swipePresent)
+        }
+    }
+
+    private func openManageFanPassViewController(uri: String, fanPassId: Int? = nil) {
+        let vc = ManageFanPassViewController.make(uri: uri, fanPassId: fanPassId)
         vc.delegate = self
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .swipePresent)
@@ -194,7 +210,8 @@ extension CreatePostViewController: ViewModelBindable {
             viewWillAppear: rx.viewWillAppear.asDriver(),
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
             selectSeriesBtnDidTap: selectSeriesButton.rx.tap.asDriver(),
-            seriesChanged: chosenSeriesId.asDriver(onErrorDriveWith: .empty()),
+            seriesChanged: chosenSeries.asDriver(onErrorDriveWith: .empty()),
+            fanPassChanged: chosenFanPass.asDriver(onErrorDriveWith: .empty()),
             inputPostTitle: postTitleTextField.rx.text.orEmpty.asDriver(),
             inputContent: richTextView.rx.text.orEmpty.map { _ in self.editorView.getHTML() }.asDriver(onErrorDriveWith: .empty()),
             contentImageDidPick: chosenContentImage.asDriver(onErrorDriveWith: .empty()),
@@ -204,6 +221,7 @@ extension CreatePostViewController: ViewModelBindable {
             forAllCheckBtnDidTap: forAllCheckboxButton.rx.tap.asDriver(),
             forSubscriptionCheckBtnDidTap: forSubscriptionCheckboxButton.rx.tap.asDriver(),
             forPrivateCheckBtnDidTap: forPrivateCheckboxButton.rx.tap.asDriver(),
+            selectFanPassBtnDidTap: selectFanPassButton.rx.tap.asDriver(),
             publishNowCheckBtnDidTap: publishNowCheckBoxButton.rx.tap.asDriver(),
             publishDatePickerBtnDidTap: publishDatePickerButton.rx.tap.asDriver(),
             publishDatePickerValueChanged: publishDatePicker.rx.date.asDriver(),
@@ -258,6 +276,8 @@ extension CreatePostViewController: ViewModelBindable {
                 self?.controlStatusCheckBox(postInfo.status ?? "PUBLIC")
 
                 self?.selectSeriesButton.setTitle(postInfo.series?.name ?? LocalizedStrings.str_select_series.localized(), for: .normal)
+
+                self?.selectFanPassLabel.text = postInfo.fanPass?.name ?? ""
 
                 self?.publishNowCheckBoxView.isHidden = true
                 self?.publishDateView.isHidden = false
@@ -315,6 +335,20 @@ extension CreatePostViewController: ViewModelBindable {
             .seriesChanged
             .drive(onNext: { [weak self] series in
                 self?.selectSeriesButton.setTitle(series?.name ?? LocalizedStrings.str_select_series.localized(), for: .normal)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .fanPassChanged
+            .drive(onNext: { [weak self] fanPass in
+                self?.selectFanPassLabel.text = fanPass?.name ?? ""
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .openManageFanPassViewController
+            .drive(onNext: { [weak self] (uri, fanPassId) in
+                self?.openManageFanPassViewController(uri: uri, fanPassId: fanPassId)
             })
             .disposed(by: disposeBag)
 
@@ -406,7 +440,13 @@ extension CreatePostViewController: ViewModelBindable {
 
 extension CreatePostViewController: SeriesListDelegate {
     func selectSeries(with series: SeriesModel?) {
-        self.chosenSeriesId.onNext(series)
+        self.chosenSeries.onNext(series)
+    }
+}
+
+extension CreatePostViewController: ManageFanPassDelegate {
+    func selectFanPass(with fanPass: FanPassModel?) {
+        self.chosenFanPass.onNext(fanPass)
     }
 }
 

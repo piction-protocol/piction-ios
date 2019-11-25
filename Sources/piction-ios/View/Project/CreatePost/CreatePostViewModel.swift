@@ -39,6 +39,7 @@ final class CreatePostViewModel: InjectableViewModel {
         let viewWillDisappear: Driver<Void>
         let selectSeriesBtnDidTap: Driver<Void>
         let seriesChanged: Driver<SeriesModel?>
+        let fanPassChanged: Driver<FanPassModel?>
         let inputPostTitle: Driver<String>
         let inputContent: Driver<String>
         let contentImageDidPick: Driver<UIImage>
@@ -48,6 +49,7 @@ final class CreatePostViewModel: InjectableViewModel {
         let forAllCheckBtnDidTap: Driver<Void>
         let forSubscriptionCheckBtnDidTap: Driver<Void>
         let forPrivateCheckBtnDidTap: Driver<Void>
+        let selectFanPassBtnDidTap: Driver<Void>
         let publishNowCheckBtnDidTap: Driver<Void>
         let publishDatePickerBtnDidTap: Driver<Void>
         let publishDatePickerValueChanged: Driver<Date>
@@ -66,6 +68,8 @@ final class CreatePostViewModel: InjectableViewModel {
         let changeCoverImage: Driver<UIImage?>
         let statusChanged: Driver<String>
         let seriesChanged: Driver<SeriesModel?>
+        let fanPassChanged: Driver<FanPassModel?>
+        let openManageFanPassViewController: Driver<(String, Int?)>
         let publishNowChanged: Driver<Void>
         let openDatePicker: Driver<Date>
         let publishDatePickerValueChanged: Driver<Date>
@@ -256,6 +260,12 @@ final class CreatePostViewModel: InjectableViewModel {
                 return Driver.just("PRIVATE")
             }
 
+        let openManageFanPassViewController = input.selectFanPassBtnDidTap
+            .withLatestFrom(fanPassId.asDriver(onErrorDriveWith: .empty()))
+            .flatMap { [weak self] fanPassId -> Driver<(String, Int?)> in
+                return Driver.just((self?.uri ?? "", fanPassId))
+            }
+
         let publishNowChanged = input.publishNowCheckBtnDidTap
 
         let statusChanged = Driver.merge(checkforAll, checkforSubscription, checkforPrivate)
@@ -264,6 +274,12 @@ final class CreatePostViewModel: InjectableViewModel {
             .flatMap { [weak self] series -> Driver<SeriesModel?> in
                 self?.seriesId.onNext(series?.id)
                 return Driver.just(series)
+            }
+
+        let fanPassChanged = input.fanPassChanged
+            .flatMap { [weak self] fanPass -> Driver<FanPassModel?> in
+                self?.fanPassId.onNext(fanPass?.id)
+                return Driver.just(fanPass)
             }
 
         let publishDateChanged = input.publishDateChanged
@@ -355,6 +371,8 @@ final class CreatePostViewModel: InjectableViewModel {
             changeCoverImage: coverImage,
             statusChanged: statusChanged,
             seriesChanged: seriesChanged,
+            fanPassChanged: fanPassChanged,
+            openManageFanPassViewController: openManageFanPassViewController,
             publishNowChanged: publishNowChanged,
             openDatePicker: openDatePicker,
             publishDatePickerValueChanged: input.publishDatePickerValueChanged,
