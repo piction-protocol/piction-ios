@@ -22,8 +22,7 @@ final class SearchViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptyView: UIView!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    func setKeyboardDelegate() {
         KeyboardManager.shared.delegate = self
     }
 
@@ -88,7 +87,7 @@ extension SearchViewController: ViewModelBindable {
         let dataSource = configureDataSource()
 
         tableView.addInfiniteScroll { [weak self] tableView in
-            self?.viewModel?.loadTrigger.onNext(())
+            self?.viewModel?.loadNextTrigger.onNext(())
         }
         tableView.setShouldShowInfiniteScrollHandler { [weak self] _ in
             return self?.viewModel?.shouldInfiniteScroll ?? false

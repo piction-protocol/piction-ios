@@ -21,7 +21,7 @@ final class SearchViewModel: ViewModel {
     var sections: [SearchSection] = []
     var shouldInfiniteScroll = true
 
-    var loadTrigger = PublishSubject<Void>()
+    var loadNextTrigger = PublishSubject<Void>()
 
     var menu = BehaviorSubject<Int>(value: 0)
     var searchText = BehaviorSubject<String>(value: "")
@@ -75,7 +75,7 @@ final class SearchViewModel: ViewModel {
                 return Driver.just(())
             }
 
-        let loadNext = loadTrigger.asDriver(onErrorDriveWith: .empty())
+        let loadNext = loadNextTrigger.asDriver(onErrorDriveWith: .empty())
             .flatMap { [weak self] _ -> Driver<Void> in
                 guard let `self` = self, self.shouldInfiniteScroll else {
                     return Driver.empty()
