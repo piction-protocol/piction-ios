@@ -127,7 +127,7 @@ extension TagResultProjectViewController: ViewModelBindable {
         output
             .viewWillAppear
             .drive(onNext: { [weak self] in
-                self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
+                self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self?.setInfiniteScrollStyle()
                 FirebaseManager.screenName("태그 상세")
             })
