@@ -12,6 +12,14 @@ import PictionSDK
 
 final class SearchSponsorViewModel: ViewModel {
 
+    var page = 0
+    var sections: [UserModel] = []
+    var shouldInfiniteScroll = true
+
+    var loadNextTrigger = PublishSubject<Void>()
+
+    var searchText = BehaviorSubject<String>(value: "")
+
     init() {}
 
     struct Input {
@@ -24,53 +32,82 @@ final class SearchSponsorViewModel: ViewModel {
     struct Output {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
-        let userList: Driver<[UserModel]>
+        let searchList: Driver<[UserModel]>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let openSendDonationViewController: Driver<IndexPath>
     }
 
     func build(input: Input) -> Output {
-        let viewWillAppear = input.viewWillAppear
+        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let viewWillDisappear = input.viewWillDisappear
 
         let openSendDonationViewController = input.selectedIndexPath
 
-        let searchAction = input.searchText
-            .filter { $0 != "" }
-            .flatMap { searchText -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(SearchAPI.writer(writer: searchText))
-                return Action.makeDriver(response)
+        let inputSearchText = input.searchText
+            .distinctUntilChanged()
+            .flatMap { [weak self] searchText -> Driver<Void> in
+                self?.page = 0
+                self?.sections = []
+                self?.shouldInfiniteScroll = true
+                self?.searchText.onNext(searchText)
+                return Driver.just(())
             }
 
-        let searchTextIsEmpty = input.searchText
+        let loadNext = loadNextTrigger.asDriver(onErrorDriveWith: .empty())
+            .flatMap { [weak self] _ -> Driver<Void> in
+                guard let `self` = self, self.shouldInfiniteScroll else {
+                    return Driver.empty()
+                }
+                return Driver.just(())
+            }
+
+        let searchTextIsEmpty = self.searchText.asDriver(onErrorDriveWith: .empty())
             .filter { $0 == "" }
             .flatMap { _ -> Driver<[UserModel]> in
                 return Driver.just([])
             }
 
-        let searchSponsorGuideEmptyView = input.searchText
+        let searchSponsorGuideEmptyView = Driver.merge(viewWillAppear, inputSearchText)
+            .withLatestFrom(self.searchText.asDriver(onErrorDriveWith: .empty()))
             .filter { $0 == "" }
-            .flatMap { _ -> Driver<CustomEmptyViewStyle> in
+            .flatMap { [weak self] _ -> Driver<CustomEmptyViewStyle> in
+                self?.page = 0
+                self?.sections = []
+                self?.shouldInfiniteScroll = false
                 return Driver.just(.searchSponsorGuide)
             }
 
+        let searchAction = Driver.merge(inputSearchText, loadNext)
+            .withLatestFrom(self.searchText.asDriver(onErrorDriveWith: .empty()))
+            .filter { $0 != "" }
+            .flatMap { [weak self] searchText -> Driver<Action<ResponseData>> in
+                guard let `self` = self else { return Driver.empty() }
+                let response = PictionSDK.rx.requestAPI(SearchAPI.writer(writer: searchText, page: self.page + 1, size: 10))
+                return Action.makeDriver(response)
+            }
+
         let searchActionSuccess = searchAction.elements
-            .flatMap { response -> Driver<[UserModel]> in
-                guard let user = try? response.map(to: [UserModel].self) else {
+            .flatMap { [weak self] response -> Driver<[UserModel]> in
+                guard let `self` = self else { return Driver.empty() }
+                guard let pageList = try? response.map(to: PageViewResponse<UserModel>.self) else {
                     return Driver.empty()
                 }
-                return Driver.just(user)
+                self.page = self.page + 1
+                if (pageList.pageable?.pageNumber ?? 0) >= (pageList.totalPages ?? 0) - 1 {
+                    self.shouldInfiniteScroll = false
+                }
+                let users: [UserModel] = pageList.content ?? []
+                self.sections.append(contentsOf: users)
+                return Driver.just(self.sections)
             }
 
-        let searchActionError = searchAction.error
-            .flatMap { _ -> Driver<[UserModel]> in
-                return Driver.just([])
-            }
+        let searchList = Driver.merge(searchActionSuccess, searchTextIsEmpty)
 
-        let userList = Driver.merge(searchActionSuccess, searchActionError, searchTextIsEmpty)
-
-        let embedEmptyView = Driver.merge(searchActionSuccess, searchActionError)
+        let embedEmptyView = searchList
+            .withLatestFrom(self.searchText.asDriver(onErrorDriveWith: .empty()))
+            .filter { $0 != "" }
+            .withLatestFrom(searchList)
             .flatMap { searchList -> Driver<CustomEmptyViewStyle> in
                 if searchList.count == 0 {
                     return Driver.just(.searchSponsorEmpty)
@@ -83,7 +120,7 @@ final class SearchSponsorViewModel: ViewModel {
         return Output(
             viewWillAppear: viewWillAppear,
             viewWillDisappear: viewWillDisappear,
-            userList: userList,
+            searchList: searchList,
             embedEmptyViewController: embedEmptyViewController,
             openSendDonationViewController: openSendDonationViewController
         )

@@ -58,6 +58,13 @@ extension SearchSponsorViewController: ViewModelBindable {
     func bindViewModel(viewModel: ViewModel) {
         let dataSource = configureDataSource()
 
+        tableView.addInfiniteScroll { [weak self] tableView in
+            self?.viewModel?.loadNextTrigger.onNext(())
+        }
+        tableView.setShouldShowInfiniteScrollHandler { [weak self] _ in
+            return self?.viewModel?.shouldInfiniteScroll ?? false
+        }
+
         let input = SearchSponsorViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
@@ -76,7 +83,7 @@ extension SearchSponsorViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .userList
+            .searchList
             .do(onNext: { [weak self] _ in
                 _ = self?.emptyView.subviews.map { $0.removeFromSuperview() }
                 self?.emptyView.frame.size.height = 0
@@ -84,6 +91,14 @@ extension SearchSponsorViewController: ViewModelBindable {
             .drive { $0 }
             .map { [SectionModel(model: "", items: $0)] }
             .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+
+        output
+            .searchList
+            .drive(onNext: { [weak self] _ in
+                self?.tableView.layoutIfNeeded()
+                self?.tableView.finishInfiniteScroll()
+            })
             .disposed(by: disposeBag)
 
         output
