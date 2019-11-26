@@ -18,6 +18,11 @@ final class SeriesPostViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
+    @IBOutlet weak var coverView: UIView! {
+        didSet {
+            coverView.backgroundColor = UIColor(r: 51, g: 51, b: 51, a: 0.2)
+        }
+    }
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var coverMaskImage: VisualEffectView!
 
@@ -110,6 +115,7 @@ extension SeriesPostViewController: ViewModelBindable {
         output
             .seriesInfo
             .drive(onNext: { [weak self] seriesInfo in
+                self?.navigationItem.title = seriesInfo.name
                 self?.seriesTitleLabel.text = seriesInfo.name
                 self?.postCountLabel.text = LocalizedStrings.str_series_posts_count.localized(with: seriesInfo.postCount ?? 0)
             })

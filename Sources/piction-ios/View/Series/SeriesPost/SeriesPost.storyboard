@@ -21,35 +21,36 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="woz-mn-ecX">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="166"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="232.66666666666666"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8GO-gB-lhT">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="166"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="232.66666666666666"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nJG-de-Z4K">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="121"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="187.66666666666666"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HSe-gO-t7m">
-                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="121"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="187.66666666666666"/>
                                                             <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" secondItem="HSe-gO-t7m" secondAttribute="height" multiplier="375:121" id="qXC-1j-ky3"/>
+                                                                <constraint firstAttribute="width" secondItem="HSe-gO-t7m" secondAttribute="height" multiplier="375:187" id="qXC-1j-ky3"/>
                                                             </constraints>
                                                         </imageView>
                                                         <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nEd-aE-KdR" customClass="VisualEffectView" customModule="piction_ios" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="121"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="187.66666666666666"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="82E-Zc-Nxz">
-                                                                <rect key="frame" x="0.0" y="0.0" width="375" height="121"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="375" height="187.66666666666666"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             </view>
+                                                            <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" secondItem="nEd-aE-KdR" secondAttribute="height" multiplier="375:121" id="Ign-0U-b5L"/>
+                                                                <constraint firstAttribute="width" secondItem="nEd-aE-KdR" secondAttribute="height" multiplier="375:187" id="Ign-0U-b5L"/>
                                                             </constraints>
                                                             <blurEffect style="regular"/>
                                                         </visualEffectView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="42q-6d-MKs">
-                                                            <rect key="frame" x="20" y="35" width="335" height="51"/>
+                                                            <rect key="frame" x="20" y="68.333333333333329" width="335" height="51"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wDA-v3-5gL">
                                                                     <rect key="frame" x="0.0" y="0.0" width="335" height="27"/>
@@ -90,7 +91,7 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FnN-o2-izc">
-                                                    <rect key="frame" x="0.0" y="121" width="375" height="45"/>
+                                                    <rect key="frame" x="0.0" y="187.66666666666666" width="375" height="45"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mj8-UI-Eyi">
                                                             <rect key="frame" x="316" y="12" width="39" height="29"/>
@@ -121,12 +122,12 @@
                                     </constraints>
                                 </view>
                                 <containerView key="tableFooterView" opaque="NO" contentMode="scaleToFill" id="07O-UW-Rh9">
-                                    <rect key="frame" x="0.0" y="302" width="375" height="0.0"/>
+                                    <rect key="frame" x="0.0" y="368.66666666666663" width="375" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 </containerView>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SeriesPostListTableViewCell" rowHeight="80" id="xk3-AU-yFP" customClass="SeriesPostListTableViewCell" customModule="piction_ios" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="194" width="375" height="80"/>
+                                        <rect key="frame" x="0.0" y="260.66666666666663" width="375" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xk3-AU-yFP" id="Eo5-wY-BOK">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
@@ -210,6 +211,7 @@
                     <connections>
                         <outlet property="coverImageView" destination="HSe-gO-t7m" id="geo-bb-cMw"/>
                         <outlet property="coverMaskImage" destination="nEd-aE-KdR" id="TJe-qJ-2ZO"/>
+                        <outlet property="coverView" destination="nJG-de-Z4K" id="GSv-bn-IBy"/>
                         <outlet property="emptyView" destination="07O-UW-Rh9" id="aEQ-Sq-aj4"/>
                         <outlet property="postCountLabel" destination="aRF-4a-p1K" id="j06-xB-jCk"/>
                         <outlet property="seriesTitleLabel" destination="wDA-v3-5gL" id="0Q4-1u-4gu"/>

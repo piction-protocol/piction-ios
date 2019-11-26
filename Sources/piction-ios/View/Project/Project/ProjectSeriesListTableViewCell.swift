@@ -19,7 +19,7 @@ final class ProjectSeriesListTableViewCell: ReuseTableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450")
+        thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360")
         backgroundThumbnailImageView.image = nil
     }
 
@@ -29,10 +29,10 @@ final class ProjectSeriesListTableViewCell: ReuseTableViewCell {
         if let thumbnail = thumbnails?[safe: 0] {
             let coverImageWithIC = "\(thumbnail)?w=656&h=246&quality=80&output=webp"
             if let url = URL(string: coverImageWithIC) {
-                thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450"), completed: nil)
+                thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-post-960-x-360"), completed: nil)
             }
         } else {
-            thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450")
+            thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360")
         }
 
         if let backgroundThumbnail = thumbnails?[safe: 1] {
