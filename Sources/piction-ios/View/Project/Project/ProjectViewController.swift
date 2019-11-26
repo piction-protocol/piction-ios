@@ -191,10 +191,6 @@ final class ProjectViewController: UIViewController {
                     let cell: ProjectPostListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
                     cell.configure(with: post, subscriptionInfo: subscriptionInfo)
                     return cell
-                case .seriesHeader(let series):
-                    let cell: ProjectSeriesHeaderTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    cell.configure(with: series)
-                    return cell
                 case .seriesList(let series):
                     let cell: ProjectSeriesListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
                     cell.configure(with: series)

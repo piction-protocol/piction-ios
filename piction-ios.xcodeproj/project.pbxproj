@@ -151,8 +151,6 @@
 		4323FAEF233A165C00243655 /* ProjectHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9E0233A165600243655 /* ProjectHeaderView.xib */; };
 		4323FAF0233A165C00243655 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9E1233A165600243655 /* ProjectViewModel.swift */; };
 		4323FAF1233A165C00243655 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9E1233A165600243655 /* ProjectViewModel.swift */; };
-		4323FAF2233A165D00243655 /* ProjectSeriesHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9E2233A165600243655 /* ProjectSeriesHeaderTableViewCell.swift */; };
-		4323FAF3233A165D00243655 /* ProjectSeriesHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9E2233A165600243655 /* ProjectSeriesHeaderTableViewCell.swift */; };
 		4323FAF4233A165D00243655 /* ProjectPostListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9E3233A165600243655 /* ProjectPostListTableViewCell.swift */; };
 		4323FAF5233A165D00243655 /* ProjectPostListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9E3233A165600243655 /* ProjectPostListTableViewCell.swift */; };
 		4323FAF6233A165D00243655 /* ProjectHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9E4233A165600243655 /* ProjectHeaderView.swift */; };
@@ -682,7 +680,6 @@
 		4323F9DE233A165600243655 /* SeriesPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeriesPostViewController.swift; sourceTree = "<group>"; };
 		4323F9E0233A165600243655 /* ProjectHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectHeaderView.xib; sourceTree = "<group>"; };
 		4323F9E1233A165600243655 /* ProjectViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
-		4323F9E2233A165600243655 /* ProjectSeriesHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectSeriesHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		4323F9E3233A165600243655 /* ProjectPostListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectPostListTableViewCell.swift; sourceTree = "<group>"; };
 		4323F9E4233A165600243655 /* ProjectHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectHeaderView.swift; sourceTree = "<group>"; };
 		4323F9E5233A165600243655 /* ProjectSeriesListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectSeriesListTableViewCell.swift; sourceTree = "<group>"; };
@@ -1307,7 +1304,6 @@
 				4323F9E0233A165600243655 /* ProjectHeaderView.xib */,
 				4323F9E4233A165600243655 /* ProjectHeaderView.swift */,
 				4323F9E3233A165600243655 /* ProjectPostListTableViewCell.swift */,
-				4323F9E2233A165600243655 /* ProjectSeriesHeaderTableViewCell.swift */,
 				4323F9E5233A165600243655 /* ProjectSeriesListTableViewCell.swift */,
 				4323F9E6233A165600243655 /* Project.storyboard */,
 			);
@@ -2528,7 +2524,6 @@
 				4323FA87233A165800243655 /* AppInfo.swift in Sources */,
 				4323FB95233A166300243655 /* SignUpViewController.swift in Sources */,
 				4323FA77233A165700243655 /* UIImage+Extension.swift in Sources */,
-				4323FAF3233A165D00243655 /* ProjectSeriesHeaderTableViewCell.swift in Sources */,
 				4323FB09233A165D00243655 /* CreateProjectViewController.swift in Sources */,
 				4323FAA7233A165900243655 /* RegisterPincodeViewModel.swift in Sources */,
 				4323FB45233A166000243655 /* ChangePasswordViewModel.swift in Sources */,
@@ -2715,7 +2710,6 @@
 				4323FA86233A165800243655 /* AppInfo.swift in Sources */,
 				4323FB94233A166300243655 /* SignUpViewController.swift in Sources */,
 				4323FA76233A165700243655 /* UIImage+Extension.swift in Sources */,
-				4323FAF2233A165D00243655 /* ProjectSeriesHeaderTableViewCell.swift in Sources */,
 				4323FB08233A165D00243655 /* CreateProjectViewController.swift in Sources */,
 				4323FAA6233A165900243655 /* RegisterPincodeViewModel.swift in Sources */,
 				4323FB44233A166000243655 /* ChangePasswordViewModel.swift in Sources */,

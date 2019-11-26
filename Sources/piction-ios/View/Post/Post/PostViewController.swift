@@ -291,8 +291,6 @@ extension PostViewController: ViewModelBindable {
             .drive(onNext: { [weak self] (userInfo, postInfo, _) in
                 guard let `self` = self else { return }
                 var buttonTitle: String {
-                    if userInfo.loginId == nil { return LocalizedStrings.login.localized()
-                    }
                     if (postInfo.fanPass?.level ?? 0) == 0 {
                         return LocalizedStrings.btn_subs_free.localized()
                     }

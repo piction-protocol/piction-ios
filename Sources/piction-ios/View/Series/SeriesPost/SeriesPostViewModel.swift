@@ -90,25 +90,6 @@ final class SeriesPostViewModel: InjectableViewModel {
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
-        let loadProjectInfoAction = Driver.merge(initialLoad, loadRetry)
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.get(uri: self?.uri ?? ""))
-                return Action.makeDriver(response)
-            }
-
-        let loadProjectInfoSuccess = loadProjectInfoAction.elements
-            .flatMap { response -> Driver<ProjectModel> in
-                guard let projectInfo = try? response.map(to: ProjectModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(projectInfo)
-            }
-
-        let loadProjectInfoError = loadProjectInfoAction.error
-            .flatMap { _ in Driver.just(ProjectModel.from([:])!) }
-
-        let loadProjectInfo = Driver.merge(loadProjectInfoSuccess, loadProjectInfoError)
-
         let isSubscribingAction = Driver.merge(initialLoad, loadNext, loadRetry)
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
                 let response = PictionSDK.rx.requestAPI(ProjectsAPI.getProjectSubscription(uri: self?.uri ?? ""))
@@ -125,31 +106,6 @@ final class SeriesPostViewModel: InjectableViewModel {
 
         let isSubscribingError = isSubscribingAction.error
             .flatMap { _ in Driver.just(false) }
-
-        let userInfoAction = Driver.merge(initialLoad, loadRetry)
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(UsersAPI.me)
-                return Action.makeDriver(response)
-            }
-
-        let currentUserInfoSuccess = userInfoAction.elements
-            .flatMap { response -> Driver<UserModel> in
-                guard let userInfo = try? response.map(to: UserModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(userInfo)
-            }
-
-        let currentUserInfoError = userInfoAction.error
-            .flatMap { _ in Driver.just(UserModel.from([:])!) }
-
-        let currentUserInfo = Driver.merge(currentUserInfoSuccess, currentUserInfoError)
-
-        let isWriter = Driver.combineLatest(loadProjectInfo, currentUserInfo)
-            .flatMap { [weak self] (project, user) -> Driver<Bool> in
-                self?.isWriter = project.user?.loginId == user.loginId
-                return Driver.just(self?.isWriter ?? false)
-            }
 
         let isSubscribing = Driver.merge(isSubscribingSuccess, isSubscribingError)
 
@@ -185,8 +141,8 @@ final class SeriesPostViewModel: InjectableViewModel {
                 return Driver.just(test)
             }
 
-        let loadSeriesPostsAction = Driver.zip(Driver.merge(initialLoad, loadNext, loadRetry), isWriter)
-            .flatMap { [weak self] (_, isWriter) -> Driver<Action<ResponseData>> in
+        let loadSeriesPostsAction = Driver.merge(initialLoad, loadNext, loadRetry)
+            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
                 guard let `self` = self else { return Driver.empty() }
                 let response = PictionSDK.rx.requestAPI(SeriesAPI.allSeriesPosts(uri: self.uri, seriesId: self.seriesId, page: self.page + 1, size: 20, isDescending: self.isDescending))
                 return Action.makeDriver(response)

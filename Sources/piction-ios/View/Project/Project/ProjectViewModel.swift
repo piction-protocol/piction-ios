@@ -14,7 +14,6 @@ import PictionSDK
 enum ContentsSection {
     case postList(post: PostModel, subscriptionInfo: SubscriptionModel?)
     case seriesPostList(post: PostModel, isSubscribing: Bool, number: Int)
-    case seriesHeader(series: SeriesModel)
     case seriesList(series: SeriesModel)
 }
 

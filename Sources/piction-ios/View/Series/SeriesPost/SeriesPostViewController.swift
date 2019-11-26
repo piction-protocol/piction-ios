@@ -101,17 +101,9 @@ extension SeriesPostViewController: ViewModelBindable {
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self?.setInfiniteScrollStyle()
-//                self?.tabBarController?.tabBar.isHidden = true
                 let uri = self?.viewModel?.uri ?? ""
                 let seriesId = self?.viewModel?.seriesId ?? 0
                 FirebaseManager.screenName("시리즈상세_\(uri)_\(seriesId)")
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .viewWillDisappear
-            .drive(onNext: { [weak self] in
-//                self?.tabBarController?.tabBar.isHidden = false
             })
             .disposed(by: disposeBag)
 
