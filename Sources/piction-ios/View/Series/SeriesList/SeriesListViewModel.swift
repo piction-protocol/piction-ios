@@ -49,6 +49,7 @@ final class SeriesListViewModel: InjectableViewModel {
         let changeEditMode: Driver<Void>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let showToast: Driver<String>
+        let activityIndicator: Driver<Bool>
         let dismissViewController: Driver<Void>
     }
 
@@ -101,6 +102,12 @@ final class SeriesListViewModel: InjectableViewModel {
                 return Driver.just("")
             }
 
+        let updateSeriesError = updateSeriesAction.error
+            .flatMap { response -> Driver<String> in
+                let errorMsg = response as? ErrorType
+                return Driver.just(errorMsg?.message ?? "")
+            }
+
         let editSeriesAction = input.contextualAction
             .filter { $0.0 == .normal }
             .flatMap { (_, indexPath) -> Driver<IndexPath?> in
@@ -127,6 +134,12 @@ final class SeriesListViewModel: InjectableViewModel {
                 return Driver.just(LocalizedStrings.str_deleted_series.localized())
             }
 
+        let deleteSeriesError = deleteSeriesAction.error
+            .flatMap { response -> Driver<String> in
+                let errorMsg = response as? ErrorType
+                return Driver.just(errorMsg?.message ?? "")
+            }
+
         let embedEmptyView = seriesList
             .flatMap { items -> Driver<CustomEmptyViewStyle> in
                 if (items.count == 0) {
@@ -150,7 +163,12 @@ final class SeriesListViewModel: InjectableViewModel {
                 return Driver.just("")
             }
 
-        let showToast = Driver.merge(updateSeriesSuccess, deleteSeriesSuccess, reorderItemsSuccess)
+        let activityIndicator = Driver.merge(
+            seriesListAction.isExecuting,
+            updateSeriesAction.isExecuting,
+            deleteSeriesAction.isExecuting)
+
+        let showToast = Driver.merge(updateSeriesSuccess, deleteSeriesSuccess, reorderItemsSuccess, updateSeriesError, deleteSeriesError)
 
         return Output(
             viewWillAppear: input.viewWillAppear,
@@ -162,6 +180,7 @@ final class SeriesListViewModel: InjectableViewModel {
             changeEditMode: input.reorderBtnDidTap,
             embedEmptyViewController: embedEmptyView,
             showToast: showToast,
+            activityIndicator: activityIndicator,
             dismissViewController: input.closeBtnDidTap
         )
     }

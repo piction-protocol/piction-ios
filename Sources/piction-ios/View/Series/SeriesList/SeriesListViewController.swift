@@ -102,8 +102,8 @@ final class SeriesListViewController: UIViewController {
 
         let cancelAction = UIAlertAction(
             title: LocalizedStrings.cancel.localized(),
-            style:UIAlertAction.Style.cancel,
-            handler:{ action in
+            style: UIAlertAction.Style.cancel,
+            handler: { action in
             })
 
         alertController.addAction(insertAction)
@@ -242,6 +242,13 @@ extension SeriesListViewController: ViewModelBindable {
             .drive(onNext: { message in
                 guard message != "" else { return }
                 Toast.showToast(message)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .activityIndicator
+            .drive(onNext: { status in
+                Toast.loadingActivity(status)
             })
             .disposed(by: disposeBag)
 
