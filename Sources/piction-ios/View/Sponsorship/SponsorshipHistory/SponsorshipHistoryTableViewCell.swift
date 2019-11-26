@@ -34,6 +34,6 @@ final class SponsorshipHistoryTableViewCell: ReuseTableViewCell {
 
         amountLabel.text = "\(amount.commaRepresentation) PXL"
         messageLabel.text =  LocalizedStrings.str_sponsorship_for.localized(with: creatorName ?? "")
-        dateLabel.text = createdAt?.toString(format: "M/d\nh:m")
+        dateLabel.text = createdAt?.toString(format: "M/d\nhh:mm")
     }
 }
