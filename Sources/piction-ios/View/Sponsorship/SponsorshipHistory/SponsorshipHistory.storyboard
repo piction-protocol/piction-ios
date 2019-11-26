@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,14 +18,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3Ls-pJ-Mtx">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <containerView key="tableFooterView" opaque="NO" contentMode="scaleToFill" id="TqW-AE-ptp">
                                     <rect key="frame" x="0.0" y="122" width="414" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                    <connections>
-                                        <segue destination="t9t-2o-Kwp" kind="embed" id="Mvx-FB-5jv"/>
-                                    </connections>
                                 </containerView>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SponsorshipHistoryTableViewCell" rowHeight="66" id="Fnm-qH-W7q" customClass="SponsorshipHistoryTableViewCell" customModule="piction_ios" customModuleProvider="target">
@@ -125,7 +122,7 @@
                         <constraints>
                             <constraint firstItem="3Ls-pJ-Mtx" firstAttribute="leading" secondItem="Nq7-hb-sip" secondAttribute="leading" id="IZ8-8p-T4E"/>
                             <constraint firstItem="3Ls-pJ-Mtx" firstAttribute="trailing" secondItem="Nq7-hb-sip" secondAttribute="trailing" id="LHG-Zd-F9Y"/>
-                            <constraint firstItem="3Ls-pJ-Mtx" firstAttribute="bottom" secondItem="Nq7-hb-sip" secondAttribute="bottom" id="U5V-ne-oHE"/>
+                            <constraint firstAttribute="bottom" secondItem="3Ls-pJ-Mtx" secondAttribute="bottom" id="TQa-5Q-c8P"/>
                             <constraint firstItem="3Ls-pJ-Mtx" firstAttribute="top" secondItem="aGZ-jb-BpP" secondAttribute="top" id="Ywq-ma-D9z"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Nq7-hb-sip"/>
@@ -141,27 +138,12 @@
             </objects>
             <point key="canvasLocation" x="2247.826086956522" y="-21.428571428571427"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="e1A-sz-3jg">
-            <objects>
-                <viewController id="t9t-2o-Kwp" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="v7j-Go-eRv">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="2zW-Fm-WDu"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5kn-Cd-94r" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2104" y="338"/>
-        </scene>
     </scenes>
     <resources>
         <image name="img-dummy-userprofile-500-x-500" width="120" height="120"/>
         <image name="label_failed" width="105" height="48"/>
         <namedColor name="PictionDarkGray">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

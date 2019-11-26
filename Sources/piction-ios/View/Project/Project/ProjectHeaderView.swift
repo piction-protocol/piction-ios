@@ -77,7 +77,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
     override func awakeFromNib() {
         super.awakeFromNib()
         minimumContentHeight = DEFAULT_NAVIGATION_HEIGHT + 52
-        maximumContentHeight = projectInfoView.frame.origin.y + projectInfoView.frame.size.height + 52
+        maximumContentHeight = projectInfoView.frame.origin.y + projectInfoView.frame.size.height + 52 - DEFAULT_NAVIGATION_HEIGHT
         naviViewImageHeight.constant = DEFAULT_NAVIGATION_HEIGHT
 
         expansionMode = .topOnly

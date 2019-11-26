@@ -3,7 +3,7 @@
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="OQM-hN-oXV">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="7" id="tUy-Ku-2B8">
                                     <size key="itemSize" width="164" height="208"/>
@@ -103,7 +103,7 @@
                             <constraint firstItem="OQM-hN-oXV" firstAttribute="top" secondItem="GXa-4q-HGd" secondAttribute="top" id="BmA-UZ-igs"/>
                             <constraint firstAttribute="trailing" secondItem="OQM-hN-oXV" secondAttribute="trailing" id="EVf-Us-Nbt"/>
                             <constraint firstItem="OQM-hN-oXV" firstAttribute="leading" secondItem="GXa-4q-HGd" secondAttribute="leading" id="NPU-k6-4eG"/>
-                            <constraint firstItem="115-vF-T2p" firstAttribute="bottom" secondItem="OQM-hN-oXV" secondAttribute="bottom" id="u1y-yZ-5bN"/>
+                            <constraint firstAttribute="bottom" secondItem="OQM-hN-oXV" secondAttribute="bottom" id="Nwv-OI-PRf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="115-vF-T2p"/>
                     </view>
