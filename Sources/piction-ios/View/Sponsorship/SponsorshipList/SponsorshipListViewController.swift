@@ -125,7 +125,7 @@ extension SponsorshipListViewController: ViewModelBindable {
         output
             .embedEmptyViewController
             .drive(onNext: { [weak self] style in
-                self?.tableView.isScrollEnabled = style != .defaultLogin
+                self?.tableView.isScrollEnabled = style != .sponsorshipListLogin
                 Toast.loadingActivity(false)
                 self?.embedCustomEmptyViewController(style: style)
             })
