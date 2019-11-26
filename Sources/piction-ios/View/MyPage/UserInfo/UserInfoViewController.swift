@@ -34,13 +34,6 @@ extension UserInfoViewController: ViewModelBindable {
         let output = viewModel.build(input: input)
 
         output
-            .viewWillAppear
-            .drive(onNext: { [weak self] in
-                self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
-            })
-            .disposed(by: disposeBag)
-
-        output
             .userInfo
             .drive(onNext: { [weak self] userInfo in
                 if let profileImage = userInfo.picture {
