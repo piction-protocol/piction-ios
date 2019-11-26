@@ -163,7 +163,7 @@ final class PostViewController: UIViewController {
     @available(iOS 13.0, *)
     private func setWebviewColor() {
         let fontColor = UIColor.pictionDarkGray.hexString
-        postWebView.evaluateJavaScript("document.getElementsByTagName('body')[0].style.color =\"\(fontColor)\"")
+        postWebView.evaluateJavaScript("document.getElementsByTagName('body')[0].style.color =\"\(fontColor ?? "#333333")\"")
     }
 
     deinit {
@@ -211,6 +211,7 @@ extension PostViewController: ViewModelBindable {
             .viewDidAppear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.toolbar.isHidden = false
+//                self?.navigationController?.setToolbarHidden(false, animated: false)
             })
             .disposed(by: disposeBag)
 
@@ -219,6 +220,7 @@ extension PostViewController: ViewModelBindable {
             .drive(onNext: { [weak self] in
                 self?.navigationController?.setNavigationBarHidden(false, animated: false)
                 self?.navigationController?.toolbar.isHidden = true
+                self?.navigationController?.setToolbarHidden(true, animated: false)
             })
             .disposed(by: disposeBag)
 
