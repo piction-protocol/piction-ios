@@ -208,10 +208,17 @@ extension PostViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
+            .viewDidAppear
+            .drive(onNext: { [weak self] in
+                self?.navigationController?.toolbar.isHidden = false
+            })
+            .disposed(by: disposeBag)
+
+        output
             .viewWillDisappear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.setNavigationBarHidden(false, animated: false)
-                self?.navigationController?.setToolbarHidden(true, animated: false)
+                self?.navigationController?.toolbar.isHidden = true
             })
             .disposed(by: disposeBag)
 
@@ -360,6 +367,7 @@ extension PostViewController: ViewModelBindable {
 
         output
             .contentOffset
+            .distinctUntilChanged()
             .drive(onNext: { [weak self] offset in
                 guard let `self` = self else { return }
                 let isScrollTop = offset.y <= -44

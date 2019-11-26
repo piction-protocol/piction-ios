@@ -355,10 +355,7 @@ final class PostViewModel: InjectableViewModel {
                 return Driver.just(contentOffset)
             }
 
-        let willBeginDecelerating = Driver.combineLatest(input.willBeginDecelerating, input.viewDidAppear)
-            .flatMap { _ -> Driver<Void> in
-                return Driver.just(())
-            }
+        let willBeginDecelerating = input.willBeginDecelerating
 
         return Output(
             viewWillAppear: input.viewWillAppear,

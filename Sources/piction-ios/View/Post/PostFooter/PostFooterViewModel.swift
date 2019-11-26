@@ -100,7 +100,7 @@ final class PostFooterViewModel: InjectableViewModel {
                 return Driver.just((self.postItem, seriesPostItems, isLike))
             }
 
-        let userInfoAction = Driver.merge(refreshContent, input.viewWillAppear, refreshSession)
+        let userInfoAction = Driver.merge(refreshContent, viewWillAppear, refreshSession)
             .flatMap { _ -> Driver<Action<ResponseData>> in
                 let response = PictionSDK.rx.requestAPI(UsersAPI.me)
                 return Action.makeDriver(response)
