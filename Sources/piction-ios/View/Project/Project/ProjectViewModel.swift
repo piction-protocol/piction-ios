@@ -46,7 +46,9 @@ final class ProjectViewModel: InjectableViewModel {
         let infoBtnDidTap: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
         let subscriptionUser: Driver<Void>
-        let deletePost: Driver<(String, Int)>
+        let deletePost: Driver<Int>
+        let deleteSeries: Driver<Int>
+        let updateSeries: Driver<(String, SeriesModel)>
     }
 
     struct Output {
@@ -388,8 +390,8 @@ final class ProjectViewModel: InjectableViewModel {
         let contentList = Driver.merge(postSection, seriesSection)
 
         let deletePostAction = input.deletePost
-            .flatMap { (uri, postId) -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(PostsAPI.delete(uri: uri, postId: postId))
+            .flatMap { [weak self] postId -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(PostsAPI.delete(uri: self?.uri ?? "", postId: postId))
                 return Action.makeDriver(response)
             }
 
@@ -407,13 +409,54 @@ final class ProjectViewModel: InjectableViewModel {
                 return Driver.just(errorMsg.message)
             }
 
+        let deleteSeriesAction = input.deleteSeries
+            .flatMap { [weak self] seriesId -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(SeriesAPI.delete(uri: self?.uri ?? "", seriesId: seriesId))
+                return Action.makeDriver(response)
+            }
+
+        let deleteSeriesSuccess = deleteSeriesAction.elements
+            .flatMap { [weak self] _ -> Driver<String> in
+                self?.updater.refreshContent.onNext(())
+                return Driver.just(LocalizedStrings.str_deleted_series.localized())
+            }
+
+        let deleteSeriesError = deleteSeriesAction.error
+            .flatMap { response -> Driver<String> in
+                let errorMsg = response as? ErrorType
+                return Driver.just(errorMsg?.message ?? "")
+            }
+
+        let updateSeriesAction = input.updateSeries
+            .flatMap { [weak self] (name, series) -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(SeriesAPI.update(uri: self?.uri ?? "", seriesId: series.id ?? 0, name: name))
+                return Action.makeDriver(response)
+            }
+
+        let updateSeriesSuccess = updateSeriesAction.elements
+            .flatMap { [weak self] response -> Driver<String> in
+                guard let _ = try? response.map(to: SeriesModel.self) else {
+                    return Driver.empty()
+                }
+                self?.updater.refreshContent.onNext(())
+                return Driver.just("")
+            }
+
+        let updateSeriesError = updateSeriesAction.error
+            .flatMap { response -> Driver<String> in
+                let errorMsg = response as? ErrorType
+                return Driver.just(errorMsg?.message ?? "")
+            }
+
         let activityIndicator = Driver.merge(
             userInfoAction.isExecuting,
             subscriptionAction.isExecuting,
             cancelSubscriptionAction.isExecuting,
-            deletePostAction.isExecuting)
+            deletePostAction.isExecuting,
+            deleteSeriesAction.isExecuting,
+            updateSeriesAction.isExecuting)
 
-        let showToast = Driver.merge(subscriptionSuccess, cancelSubscriptionSuccess, subscriptionError, cancelSubscriptionError, deletePostSuccess, deletePostSuccess, deletePostError)
+        let showToast = Driver.merge(subscriptionSuccess, cancelSubscriptionSuccess, subscriptionError, cancelSubscriptionError, deletePostSuccess, deleteSeriesSuccess, updateSeriesSuccess, deletePostError, deleteSeriesError, updateSeriesError)
 
         let openSubscriptionUserViewController = input.subscriptionUser
             .flatMap { [weak self] _ -> Driver<String> in

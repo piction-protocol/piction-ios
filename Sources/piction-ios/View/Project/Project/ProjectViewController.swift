@@ -32,7 +32,9 @@ final class ProjectViewController: UIViewController {
     private let changeMenu = BehaviorSubject<Int>(value: 0)
     private let subscription = PublishSubject<Void>()
     private let cancelSubscription = PublishSubject<Void>()
-    private let deletePost = PublishSubject<(String, Int)>()
+    private let deletePost = PublishSubject<Int>()
+    private let deleteSeries = PublishSubject<Int>()
+    private let updateSeries = PublishSubject<(String, SeriesModel)>()
     private let manageMenu = PublishSubject<ManageMenu>()
     private let subscriptionUser = PublishSubject<Void>()
 
@@ -99,17 +101,75 @@ final class ProjectViewController: UIViewController {
         }
     }
 
-    private func openDeletePopup(uri: String, postId: Int) {
+    private func openDeletePostPopup(postId: Int) {
         let alertController = UIAlertController(title: nil, message: LocalizedStrings.popup_title_delete_post.localized(), preferredStyle: .alert)
         let cancelButton = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel)
         let confirmButton = UIAlertAction(title: LocalizedStrings.confirm.localized(), style: .default) { [weak self] _ in
-            self?.deletePost.onNext((uri, postId))
+            self?.deletePost.onNext(postId)
         }
 
         alertController.addAction(confirmButton)
         alertController.addAction(cancelButton)
 
         self.present(alertController, animated: true, completion: nil)
+    }
+
+    private func openDeleteSeriesPopup(seriesId: Int) {
+        let alertController = UIAlertController(
+        title: LocalizedStrings.str_delete_series.localized(),
+        message: nil,
+        preferredStyle: UIAlertController.Style.alert)
+
+        let deleteAction = UIAlertAction(
+            title: LocalizedStrings.delete.localized(),
+            style: UIAlertAction.Style.destructive,
+            handler: { [weak self] action in
+                self?.deleteSeries.onNext(seriesId)
+            })
+
+        let cancelAction = UIAlertAction(
+            title: LocalizedStrings.cancel.localized(),
+            style:UIAlertAction.Style.cancel,
+            handler:{ action in
+            })
+
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+
+        present(alertController, animated: true, completion: nil)
+    }
+
+    private func openUpdateSeriesPopup(series: SeriesModel) {
+        let alertController = UIAlertController(
+            title: LocalizedStrings.str_modify_series.localized(),
+            message: nil,
+            preferredStyle: UIAlertController.Style.alert)
+
+        alertController.addTextField(configurationHandler: { textField in
+            textField.clearButtonMode = UITextField.ViewMode.always
+            textField.text = series.name ?? ""
+        })
+
+        let insertAction = UIAlertAction(
+            title: LocalizedStrings.str_modify.localized(),
+            style: UIAlertAction.Style.default,
+            handler: { [weak self] action in
+                guard let textFields = alertController.textFields else {
+                    return
+                }
+                self?.updateSeries.onNext((textFields[0].text ?? "", series))
+            })
+
+        let cancelAction = UIAlertAction(
+            title: LocalizedStrings.cancel.localized(),
+            style: UIAlertAction.Style.cancel,
+            handler: { action in
+            })
+
+        alertController.addAction(insertAction)
+        alertController.addAction(cancelAction)
+
+        present(alertController, animated: true, completion: nil)
     }
 
     private func openSignInViewController() {
@@ -255,7 +315,9 @@ extension ProjectViewController: ViewModelBindable {
             infoBtnDidTap: infoBarButton.rx.tap.asDriver(),
             selectedIndexPath: tableView.rx.itemSelected.asDriver(),
             subscriptionUser: subscriptionUser.asDriver(onErrorDriveWith: .empty()),
-            deletePost: deletePost.asDriver(onErrorDriveWith: .empty())
+            deletePost: deletePost.asDriver(onErrorDriveWith: .empty()),
+            deleteSeries: deleteSeries.asDriver(onErrorDriveWith: .empty()),
+            updateSeries: updateSeries.asDriver(onErrorDriveWith: .empty())
         )
 
         let output = viewModel.build(input: input)
@@ -402,6 +464,7 @@ extension ProjectViewController: ViewModelBindable {
         output
             .showToast
             .drive(onNext: { message in
+                guard message != "" else { return }
                 Toast.showToast(message)
             })
             .disposed(by: disposeBag)
@@ -499,33 +562,36 @@ extension ProjectViewController: ProjectHeaderViewDelegate {
 
 extension ProjectViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard let section = self.viewModel?.sections[indexPath.row] else {
+            return UISwipeActionsConfiguration()
+        }
+        guard let uri = self.viewModel?.uri else {
+            return UISwipeActionsConfiguration()
+        }
+
         let editAction = UIContextualAction(style: .normal, title: LocalizedStrings.edit.localized(), handler: { [weak self] (action, view, completionHandler) in
-            guard let section = self?.viewModel?.sections[indexPath.row] else { completionHandler(false)
-                return
-            }
 
             switch section {
             case .postList(let post, _):
-                self?.openCreatePostViewController(uri: self?.viewModel?.uri ?? "", postId: post.id ?? 0)
+                self?.openCreatePostViewController(uri: uri, postId: post.id ?? 0)
                 completionHandler(true)
-            case .seriesList:
-                completionHandler(false)
+            case .seriesList(let series):
+                self?.openUpdateSeriesPopup(series: series)
+                completionHandler(true)
             default:
                 completionHandler(false)
             }
         })
 
         let deleteAction = UIContextualAction(style: .destructive, title: LocalizedStrings.delete.localized(), handler: { [weak self] (action, view, completionHandler) in
-            guard let section = self?.viewModel?.sections[indexPath.row] else { completionHandler(false)
-                return
-            }
 
             switch section {
             case .postList(let post, _):
-                self?.openDeletePopup(uri: self?.viewModel?.uri ?? "", postId: post.id ?? 0)
+                self?.openDeletePostPopup(postId: post.id ?? 0)
                 completionHandler(true)
-            case .seriesList:
-                completionHandler(false)
+            case .seriesList(let series):
+                self?.openDeleteSeriesPopup(seriesId: series.id ?? 0)
+                completionHandler(true)
             default:
                 completionHandler(false)
             }
