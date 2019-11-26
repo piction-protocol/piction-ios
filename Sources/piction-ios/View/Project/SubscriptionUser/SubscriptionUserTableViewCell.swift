@@ -13,12 +13,13 @@ class SubscriptionUserTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var subscriptionDateLabel: UILabel!
 
     typealias Model = SubscriptionUserModel
 
     func configure(with model: Model) {
-        let (profileImage, username, loginId, subscriptionDate) = (model.user?.picture, model.user?.username, model.user?.loginId, model.subscriptionDate)
+        let (profileImage, username, loginId, level, fanPassName, subscriptionDate) = (model.subscriber?.picture, model.subscriber?.username, model.subscriber?.loginId, model.fanPass?.level, model.fanPass?.name, model.startedAt)
 
         if let profileImage = profileImage {
             let userPictureWithIC = "\(profileImage)?w=240&h=240&quality=80&output=webp"
@@ -31,6 +32,14 @@ class SubscriptionUserTableViewCell: ReuseTableViewCell {
 
         usernameLabel.text = username
         idLabel.text = "@\(loginId ?? "")"
+        var levelText: String {
+            if level == 0 {
+                return LocalizedStrings.str_fanpass_free_tier.localized()
+            } else {
+                return LocalizedStrings.str_fanpass_current_tier.localized(with: level ?? 0)
+            }
+        }
+        levelLabel.text = "\(levelText) - \(fanPassName ?? "")"
         subscriptionDateLabel.text = subscriptionDate?.toString(format: "YYYY-MM-dd hh:mm")
     }
 }

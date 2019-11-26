@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -51,7 +51,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="3fD-jT-04d">
-                                                            <rect key="frame" x="57" y="6" width="160" height="38"/>
+                                                            <rect key="frame" x="57" y="0.0" width="160" height="50"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YlO-yg-1JM">
                                                                     <rect key="frame" x="0.0" y="0.0" width="160" height="17"/>
@@ -71,9 +71,18 @@
                                                                     <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EAF-gm-aOe">
+                                                                    <rect key="frame" x="0.0" y="42" width="160" height="8"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="17" id="6J0-IF-kp8"/>
+                                                                    </constraints>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <color key="textColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
                                                             </subviews>
                                                         </stackView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zHh-oN-yBm">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text=" " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zHh-oN-yBm">
                                                             <rect key="frame" x="224" y="16.5" width="150" height="17"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="150" id="i49-iA-Ah0"/>
@@ -84,7 +93,7 @@
                                                         </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="50" id="t53-yH-Ots"/>
+                                                        <constraint firstAttribute="height" constant="80" id="t53-yH-Ots"/>
                                                     </constraints>
                                                 </stackView>
                                             </subviews>
@@ -97,6 +106,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="idLabel" destination="bku-KH-pCC" id="7dn-1e-fGP"/>
+                                            <outlet property="levelLabel" destination="EAF-gm-aOe" id="uFu-pM-1Mh"/>
                                             <outlet property="profileImageView" destination="IqP-Jo-neA" id="9eR-Zf-rpL"/>
                                             <outlet property="subscriptionDateLabel" destination="zHh-oN-yBm" id="9EP-gf-Y6d"/>
                                             <outlet property="usernameLabel" destination="YlO-yg-1JM" id="D7X-ac-bK8"/>
@@ -134,7 +144,7 @@
     <resources>
         <image name="img-dummy-userprofile-500-x-500" width="120" height="120"/>
         <namedColor name="PictionDarkGray">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
