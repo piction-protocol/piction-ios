@@ -122,11 +122,12 @@ final class FanPassListViewModel: InjectableViewModel {
         let fanPassTableItems = Driver.combineLatest(fanPassListSuccess, subscriptionInfo, levelLimitChanged)
             .flatMap { (fanPassList, subscriptionInfo, levelLimit) -> Driver<[FanPassListTableViewCellModel]> in
 
-                let filterList = fanPassList.filter { ($0.level ?? 0) >= levelLimit }
+                let cellList = fanPassList.enumerated().map { (index, element) in FanPassListTableViewCellModel(fanPass: element, subscriptionInfo: subscriptionInfo, postCount: fanPassList[0...index].reduce(0) { $0 + ($1.postCount ?? 0) })
+                }
 
-                let cellList = filterList.map { FanPassListTableViewCellModel(fanPass: $0, subscriptionInfo: subscriptionInfo) }
+                let filterList = cellList.filter { ($0.fanPass.level ?? 0) >= levelLimit }
 
-                return Driver.just(cellList)
+                return Driver.just(filterList)
             }
 
         let projectInfoAction = initialLoad

@@ -12,6 +12,7 @@ import PictionSDK
 struct FanPassListTableViewCellModel {
     let fanPass: FanPassModel
     let subscriptionInfo: SubscriptionModel?
+    let postCount: Int
 }
 
 class FanPassListTableViewCell: ReuseTableViewCell {
@@ -26,7 +27,7 @@ class FanPassListTableViewCell: ReuseTableViewCell {
     typealias Model = FanPassListTableViewCellModel
 
     func configure(with model: Model) {
-        let (fanPass, subscriptionInfo) = (model.fanPass, model.subscriptionInfo)
+        let (fanPass, subscriptionInfo, postCount) = (model.fanPass, model.subscriptionInfo, model.postCount)
 
         var status: String {
             if let expireDate = subscriptionInfo?.expireDate,
@@ -85,7 +86,7 @@ class FanPassListTableViewCell: ReuseTableViewCell {
         subscriptionLimitLabel.isHidden = fanPass.subscriptionLimit == nil
         subscriptionLimitLabel.text = " · \(LocalizedStrings.str_fanpasslist_subscription_limit.localized(with: fanPass.subscriptionLimit ?? 0))"
         titleLabel.text = fanPass.name
-        postCountLabel.text = LocalizedStrings.str_fanpasslist_postcount.localized(with: fanPass.postCount ?? 0)
+        postCountLabel.text = LocalizedStrings.str_fanpasslist_postcount.localized(with: postCount)
         descriptionLabel.text = fanPass.description
         descriptionLabel.isHidden = (fanPass.description ?? "") == ""
         statusLabel.text = status
