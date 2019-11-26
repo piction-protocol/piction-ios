@@ -23,9 +23,9 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
         (updater) = dependency
     }
 
-    private let userName = PublishSubject<String>()
     private let imageId = PublishSubject<String?>()
     private let changeInfo = PublishSubject<Bool>()
+    private let password = PublishSubject<String?>()
 
     struct Input {
         let viewWillAppear: Driver<Void>
@@ -35,7 +35,7 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
         let pictureImageDidPick: Driver<UIImage?>
         let cancelBtnDidTap: Driver<Void>
         let saveBtnDidTap: Driver<Void>
-        let password: Driver<String>
+        let password: Driver<String?>
     }
 
     struct Output {
@@ -63,8 +63,6 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
                 guard let userInfo = try? response.map(to: UserViewResponse.self) else {
                     return Driver.empty()
                 }
-                print(userInfo)
-                self?.userName.onNext(userInfo.username ?? "")
                 self?.imageId.onNext("")
                 self?.changeInfo.onNext(false)
                 return Driver.just(userInfo)
@@ -112,13 +110,10 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
 
         let userNameChanged = Driver.combineLatest(input.userNameTextFieldDidInput, userInfoSuccess)
             .flatMap { [weak self] (inputUsername, userInfo) -> Driver<String> in
-                print(inputUsername)
-                self?.userName.onNext(inputUsername)
                 if inputUsername != "" && inputUsername != (userInfo.username ?? "") {
                     self?.changeInfo.onNext(true)
-                    return Driver.just(inputUsername)
                 }
-                return Driver.just(userInfo.username ?? "")
+                return Driver.just(inputUsername)
             }
 
         let changeUserInfo = Driver.combineLatest(userNameChanged, imageId.asDriver(onErrorDriveWith: .empty())) { (username: $0, imageId: $1) }
@@ -126,11 +121,17 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
         let enableSaveButton = changeInfo.asDriver(onErrorDriveWith: .empty())
             .filter { $0 }
 
+        let password = input.password
+            .flatMap { password -> Driver<String?> in
+                return Driver.just(password)
+            }
+
         let openPasswordPopup = input.saveBtnDidTap
 
-        let saveButtonAction = Driver.combineLatest(input.password, changeUserInfo)
+        let saveButtonAction = Driver.combineLatest(password, changeUserInfo) { (password: $0, userInfo: $1) }
+            .filter { $0.password != nil }
             .flatMap { (password, changeUserInfo) -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(UsersAPI.update(username: changeUserInfo.username, password: password, picture: changeUserInfo.imageId))
+                let response = PictionSDK.rx.requestAPI(UsersAPI.update(username: changeUserInfo.username, password: password ?? "", picture: changeUserInfo.imageId))
                 return Action.makeDriver(response)
             }
 

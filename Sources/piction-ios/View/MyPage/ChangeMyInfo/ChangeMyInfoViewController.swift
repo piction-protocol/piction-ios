@@ -26,7 +26,7 @@ final class ChangeMyInfoViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
 
     private let chosenImage = PublishSubject<UIImage?>()
-    private let password = PublishSubject<String>()
+    private let password = PublishSubject<String?>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -142,6 +142,7 @@ extension ChangeMyInfoViewController: ViewModelBindable {
         output
             .showToast
             .drive(onNext: { [weak self] message in
+                self?.password.onNext(nil)
                 self?.view.endEditing(true)
                 Toast.showToast(message)
             })
