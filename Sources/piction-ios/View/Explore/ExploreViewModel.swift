@@ -44,6 +44,7 @@ final class ExploreViewModel: InjectableViewModel {
         let isFetching: Driver<Bool>
         let activityIndicator: Driver<Bool>
         let showErrorPopup: Driver<Void>
+        let refreshSession: Driver<Void>
     }
 
     func build(input: Input) -> Output {
@@ -128,7 +129,8 @@ final class ExploreViewModel: InjectableViewModel {
             openProjectViewController: openProjectViewController,
             isFetching: refreshAction.isExecuting,
             activityIndicator: activityIndicator,
-            showErrorPopup: showErrorPopup
+            showErrorPopup: showErrorPopup,
+            refreshSession: refreshSession
         )
     }
 }

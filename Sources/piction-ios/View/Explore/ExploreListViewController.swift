@@ -176,6 +176,13 @@ extension ExploreViewController: ViewModelBindable {
                     }
             })
             .disposed(by: disposeBag)
+
+        output
+            .refreshSession
+            .drive(onNext: { [weak self] in
+                self?.navigationController?.popToRootViewController(animated: false)
+            })
+            .disposed(by: disposeBag)
     }
 }
 

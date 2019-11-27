@@ -48,6 +48,7 @@ final class SponsorshipListViewModel: InjectableViewModel {
         let isFetching: Driver<Bool>
         let activityIndicator: Driver<Bool>
         let showErrorPopup: Driver<Void>
+        let refreshSession: Driver<Void>
     }
 
     func build(input: Input) -> Output {
@@ -166,7 +167,8 @@ final class SponsorshipListViewModel: InjectableViewModel {
             embedEmptyViewController: embedEmptyViewController,
             isFetching: refreshAction.isExecuting,
             activityIndicator: activityIndicator,
-            showErrorPopup: showErrorPopup
+            showErrorPopup: showErrorPopup,
+            refreshSession: refreshSession
         )
     }
 }

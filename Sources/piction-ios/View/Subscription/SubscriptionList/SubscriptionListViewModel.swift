@@ -45,6 +45,7 @@ final class SubscriptionListViewModel: InjectableViewModel {
         let isFetching: Driver<Bool>
         let showErrorPopup: Driver<Void>
         let activityIndicator: Driver<Bool>
+        let refreshSession: Driver<Void>
     }
 
     func build(input: Input) -> Output {
@@ -167,7 +168,8 @@ final class SubscriptionListViewModel: InjectableViewModel {
             openProjectViewController: openProjectViewController,
             isFetching: refreshAction.isExecuting,
             showErrorPopup: showErrorPopup,
-            activityIndicator: activityIndicator
+            activityIndicator: activityIndicator,
+            refreshSession: refreshSession
         )
     }
 }
