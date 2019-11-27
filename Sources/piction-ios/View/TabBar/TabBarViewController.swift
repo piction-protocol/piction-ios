@@ -111,13 +111,21 @@ extension TabBarController: UITabBarControllerDelegate {
                     } else if topViewController is SubscriptionListViewController {
                         if let vc = topViewController as? SubscriptionListViewController {
                             DispatchQueue.main.async {
-                                vc.collectionView.setContentOffset(CGPoint(x: 0, y: -LARGE_NAVIGATION_HEIGHT), animated: true)
+                                if vc.navigationController?.navigationBar.frame.size.height == 44 {
+                                    vc.collectionView.setContentOffset(CGPoint(x: 0, y: -88), animated: true)
+                                } else {
+                                    vc.collectionView.setContentOffset(CGPoint(x: 0, y: -LARGE_NAVIGATION_HEIGHT), animated: true)
+                                }
                             }
                         }
                     } else if topViewController is SponsorshipListViewController {
                         if let vc = topViewController as? SponsorshipListViewController {
                             DispatchQueue.main.async {
-                                vc.tableView.setContentOffset(CGPoint(x: 0, y: -LARGE_NAVIGATION_HEIGHT), animated: true)
+                                if vc.navigationController?.navigationBar.frame.size.height == 44 {
+                                    vc.tableView.setContentOffset(CGPoint(x: 0, y: -88), animated: true)
+                                } else {
+                                    vc.tableView.setContentOffset(CGPoint(x: 0, y: -LARGE_NAVIGATION_HEIGHT), animated: true)
+                                }
                             }
                         }
                     } else if topViewController is MyPageViewController {
