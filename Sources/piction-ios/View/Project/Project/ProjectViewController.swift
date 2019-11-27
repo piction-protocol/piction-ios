@@ -361,7 +361,7 @@ extension ProjectViewController: ViewModelBindable {
         output
             .contentList
             .do(onNext: { [weak self] _ in
-                self?.emptyView.frame.size.height = SCREEN_H - DEFAULT_NAVIGATION_HEIGHT - (self?.tabBarController?.tabBar.frame.size.height ?? 0) - 52
+                self?.emptyView.frame.size.height = SCREEN_H - STATUS_HEIGHT  - DEFAULT_NAVIGATION_HEIGHT - (self?.tabBarController?.tabBar.frame.size.height ?? 0) - 52
             })
             .drive { $0 }
             .map { [$0] }
@@ -374,7 +374,7 @@ extension ProjectViewController: ViewModelBindable {
                 if list.items.count > 0 {
                     _ = self?.emptyView.subviews.map { $0.removeFromSuperview() }
                 }
-                let footerHeight = SCREEN_H - DEFAULT_NAVIGATION_HEIGHT - (self?.tabBarController?.tabBar.frame.size.height ?? 0) - 52
+                let footerHeight = SCREEN_H - STATUS_HEIGHT - DEFAULT_NAVIGATION_HEIGHT - (self?.tabBarController?.tabBar.frame.size.height ?? 0) - 52
                 let height = (self?.preferredContentSize.height ?? 0) - footerHeight
                 if height < footerHeight {
                     self?.emptyView.frame.size.height = footerHeight - height

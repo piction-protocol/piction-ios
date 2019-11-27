@@ -151,7 +151,7 @@ extension SubscriptionListViewController: ViewModelBindable {
             .drive(onNext: { [weak self] style in
                 self?.collectionView.isScrollEnabled = style != .defaultLogin
                 Toast.loadingActivity(false)
-                self?.collectionView.contentOffset = CGPoint(x: 0, y: -LARGE_NAVIGATION_HEIGHT)
+                self?.collectionView.contentOffset = CGPoint(x: 0, y: -STATUS_HEIGHT-LARGE_NAVIGATION_HEIGHT)
                 self?.embedCustomEmptyViewController(style: style)
             })
             .disposed(by: disposeBag)

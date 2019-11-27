@@ -234,7 +234,7 @@ extension MyPageViewController: ViewModelBindable {
                 _ = self?.containerView.subviews.map { $0.removeFromSuperview() }
                 self?.containerView.frame.size.height = 0
                 self?.embedCustomEmptyViewController(style: style)
-                self?.tableView.contentOffset = CGPoint(x: 0, y: -LARGE_NAVIGATION_HEIGHT)
+                self?.tableView.contentOffset = CGPoint(x: 0, y: -STATUS_HEIGHT-LARGE_NAVIGATION_HEIGHT)
                 self?.tableView.reloadData()
             })
             .disposed(by: disposeBag)

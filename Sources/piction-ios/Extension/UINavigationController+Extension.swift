@@ -31,10 +31,9 @@ extension UINavigationController {
                 navigationBar.scrollEdgeAppearance = navBarAppearance
                 navigationBar.standardAppearance = navBarAppearance
             } else {
-//                UINavigationBar.appearance().setBackgroundImage(UIImage().imageWithColor(color: .white) ,for: UIBarMetrics.default)
-//                UINavigationBar.appearance().largeTitleTextAttributes =
-//                    [NSAttributedString.Key.foregroundColor: UIColor(r: 51, g: 51, b: 51),
-//                     NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 34)]
+                UINavigationBar.appearance().largeTitleTextAttributes =
+                    [NSAttributedString.Key.foregroundColor: UIColor(r: 51, g: 51, b: 51),
+                     NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 34)]
 
                 navigationBar.isTranslucent = true
                 if transparent {
