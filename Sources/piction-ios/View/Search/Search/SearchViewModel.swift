@@ -34,6 +34,7 @@ final class SearchViewModel: ViewModel {
         let searchText: Driver<String>
         let segmentedControlDidChange: Driver<Int>
         let selectedIndexPath: Driver<IndexPath>
+        let contentOffset: Driver<CGPoint>
     }
 
     struct Output {
@@ -44,6 +45,7 @@ final class SearchViewModel: ViewModel {
         let searchList: Driver<SectionType<SearchSection>>
         let selectedIndexPath: Driver<IndexPath>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
+        let dismissViewController: Driver<Void>
     }
 
     func build(input: Input) -> Output {
@@ -169,7 +171,7 @@ final class SearchViewModel: ViewModel {
             .withLatestFrom(self.searchText.asDriver(onErrorDriveWith: .empty()))
             .filter { $0 != "" }
             .withLatestFrom(searchList)
-            .flatMap { [weak self] sections -> Driver<CustomEmptyViewStyle> in
+            .flatMap { sections -> Driver<CustomEmptyViewStyle> in
                 if sections.items.count == 0 {
                     return Driver.just(.searchListEmpty)
                 }
@@ -178,6 +180,16 @@ final class SearchViewModel: ViewModel {
 
         let embedEmptyViewController = Driver.merge(searchGuideEmptyView, embedEmptyView)
 
+        let dismissViewController = input.contentOffset
+            .withLatestFrom(searchList)
+            .flatMap { sections -> Driver<Void> in
+                if sections.items.count == 0 {
+                    return Driver.just(())
+                } else {
+                    return Driver.empty()
+                }
+            }
+
         return Output(
             viewWillAppear: viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
@@ -185,7 +197,8 @@ final class SearchViewModel: ViewModel {
             menuChanged: input.segmentedControlDidChange,
             searchList: searchList,
             selectedIndexPath: input.selectedIndexPath,
-            embedEmptyViewController: embedEmptyViewController
+            embedEmptyViewController: embedEmptyViewController,
+            dismissViewController: dismissViewController
         )
     }
 }

@@ -98,7 +98,8 @@ extension SearchViewController: ViewModelBindable {
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
             searchText: searchText.asDriver(onErrorDriveWith: .empty()).throttle(0.5),
             segmentedControlDidChange: segmentedControl.rx.selectedSegmentIndex.asDriver(),
-            selectedIndexPath: tableView.rx.itemSelected.asDriver()
+            selectedIndexPath: tableView.rx.itemSelected.asDriver(),
+            contentOffset: tableView.rx.contentOffset.asDriver()
         )
 
         let output = viewModel.build(input: input)
@@ -175,8 +176,15 @@ extension SearchViewController: ViewModelBindable {
         output
             .embedEmptyViewController
             .drive(onNext: { [weak self] style in
-                guard let `self` = self else { return }
-                self.embedCustomEmptyViewController(style: style)
+                self?.embedCustomEmptyViewController(style: style)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .dismissViewController
+            .drive(onNext: { _ in
+                UIApplication.topViewController()?.navigationItem.searchController?.searchBar.text = nil
+                UIApplication.topViewController()?.navigationItem.searchController?.dismiss(animated: true)
             })
             .disposed(by: disposeBag)
     }

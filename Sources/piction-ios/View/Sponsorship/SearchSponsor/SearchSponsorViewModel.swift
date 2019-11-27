@@ -83,7 +83,7 @@ final class SearchSponsorViewModel: ViewModel {
             .filter { $0 != "" }
             .flatMap { [weak self] searchText -> Driver<Action<ResponseData>> in
                 guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(SearchAPI.writer(writer: searchText, page: self.page + 1, size: 10))
+                let response = PictionSDK.rx.requestAPI(SearchAPI.writer(writer: searchText, page: self.page + 1, size: 20))
                 return Action.makeDriver(response)
             }
 

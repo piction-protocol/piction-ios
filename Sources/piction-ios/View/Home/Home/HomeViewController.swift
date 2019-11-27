@@ -44,12 +44,25 @@ final class HomeViewController: UIViewController {
         searchController?.searchResultsUpdater = searchResultsController
 
         navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = true
+        if #available(iOS 13, *) {
+            navigationItem.hidesSearchBarWhenScrolling = true
+        } else {
+            navigationItem.hidesSearchBarWhenScrolling = false
+        }
         definesPresentationContext = true
 
         searchController?.isActive = true
 
         searchController?.searchBar.placeholder = LocalizedStrings.hint_project_and_tag_search.localized()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if #available(iOS 13, *) {
+        } else {
+            self.navigationItem.hidesSearchBarWhenScrolling = true
+            self.navigationController?.configureNavigationBar(transparent: false, shadow: false)
+        }
     }
 
     private func embedHomeSection() {
@@ -97,8 +110,6 @@ final class HomeViewController: UIViewController {
 
     func openSearchBar() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//        DispatchQueue.main.async {
-//            self.searchController?.isActive = true
             self.searchController?.searchBar.becomeFirstResponder()
         }
     }
