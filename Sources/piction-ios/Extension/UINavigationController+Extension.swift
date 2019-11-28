@@ -28,6 +28,7 @@ extension UINavigationController {
                     NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 34)
                 ]
 
+                navigationBar.compactAppearance = navBarAppearance
                 navigationBar.scrollEdgeAppearance = navBarAppearance
                 navigationBar.standardAppearance = navBarAppearance
             } else {

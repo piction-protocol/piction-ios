@@ -23,4 +23,15 @@ extension Date {
     init(milliseconds:Int64) {
         self = Date(timeIntervalSince1970: TimeInterval(milliseconds) / 1000)
     }
+
+    func addDays(_ numDays: Int) -> Date {
+        var components = DateComponents()
+        components.day = numDays
+
+        return Calendar.current.date(byAdding: components, to: self)!
+    }
+
+    func daysAgo(_ numDays: Int) -> Date {
+        return addDays(-numDays)
+    }
 }

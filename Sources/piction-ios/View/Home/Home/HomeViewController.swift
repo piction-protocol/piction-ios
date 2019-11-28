@@ -54,6 +54,8 @@ final class HomeViewController: UIViewController {
         searchController?.isActive = true
 
         searchController?.searchBar.placeholder = LocalizedStrings.hint_project_and_tag_search.localized()
+
+        StoreReviewManager().askForReview(navigationController: self.navigationController)
     }
 
     override func viewDidAppear(_ animated: Bool) {
