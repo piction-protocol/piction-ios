@@ -99,8 +99,13 @@ class FanPassListTableViewCell: ReuseTableViewCell {
         var buttonStyle: FanPassButtonStyle {
             if let subscriptionLevel = subscriptionInfo?.fanPass?.level,
                 let fanPassLevel = fanPass.level,
-                subscriptionLevel >= fanPassLevel {
+                subscriptionLevel == fanPassLevel {
                 return .subscribing
+            }
+            if let subscriptionLevel = subscriptionInfo?.fanPass?.level,
+                let fanPassLevel = fanPass.level,
+                subscriptionLevel > fanPassLevel {
+                return .dimmed
             }
             if let fanPassSubscriptionLimit = fanPass.subscriptionLimit,
                 let fanPassSubscriptionCount = fanPass.subscriptionCount,

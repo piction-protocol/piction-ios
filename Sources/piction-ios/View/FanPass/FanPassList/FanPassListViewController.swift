@@ -102,6 +102,7 @@ extension FanPassListViewController: ViewModelBindable {
         output
             .showAllFanPassBtnDidTap
             .drive(onNext: { [weak self] _ in
+                self?.tableView.setContentOffset(CGPoint(x: 0, y: -STATUS_HEIGHT-DEFAULT_NAVIGATION_HEIGHT), animated: false)
                 self?.currentPostFanPassInfo.isHidden = true
                 self?.viewModel?.levelLimit.onNext(0)
             })
