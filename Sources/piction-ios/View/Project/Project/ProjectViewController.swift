@@ -419,7 +419,7 @@ extension ProjectViewController: ViewModelBindable {
 
         output
             .openSignInViewController
-            .drive(onNext: { [weak self] uri in
+            .drive(onNext: { [weak self] _ in
                 self?.openSignInViewController()
             })
             .disposed(by: disposeBag)

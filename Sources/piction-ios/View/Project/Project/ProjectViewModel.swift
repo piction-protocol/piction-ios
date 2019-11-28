@@ -290,7 +290,7 @@ final class ProjectViewModel: InjectableViewModel {
                 self?.updater.refreshContent.onNext(())
                 return Driver.just(LocalizedStrings.str_project_cancel_subscrition.localized())
             }
-
+ 
         let cancelSubscriptionError = cancelSubscriptionAction.error
             .flatMap { response -> Driver<String> in
                 guard let errorMsg = response as? ErrorType else {
@@ -300,6 +300,8 @@ final class ProjectViewModel: InjectableViewModel {
             }
 
         let openSignInViewController = input.subscriptionBtnDidTap
+            .withLatestFrom(fanPassListSuccess)
+            .filter { $0.count == 1 }
             .withLatestFrom(currentUserInfo)
             .filter { $0.loginId == nil }
             .flatMap { _ in Driver.just(()) }
