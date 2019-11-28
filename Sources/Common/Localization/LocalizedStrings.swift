@@ -207,6 +207,7 @@ enum LocalizedStrings {
     case str_order_id
     case str_project
     case str_fan_pass_list
+    case str_fan_pass_purchase
     case str_fan_pass_sell_info
     case str_fan_pass_buy_info
     case str_seller

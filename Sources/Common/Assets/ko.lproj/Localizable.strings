@@ -208,6 +208,7 @@
 "str_order_id" = "주문번호";
 "str_project" = "프로젝트";
 "str_fan_pass_list" = "FAN PASS 목록";
+"str_fan_pass_purchase" = "FAN PASS 구매";
 "str_fan_pass_sell_info" = "FAN PASS 판매 정보";
 "str_fan_pass_buy_info" = "FAN PASS 구매 정보";
 "str_seller" = "판매자";
@@ -236,7 +237,7 @@
 "str_purchase_fanpass_expire" = "제공 기간";
 "str_purchase_fanpass_expire_description" = "YYYY년 M월 d일까지 (30일)";
 "str_purchase_fanpass_agree" = "상품 설명 및 환불에 대한 내용을 확인하였으며, 이에 동의합니다.";
-"str_purchase" = "구매";
+"str_purchase" = "구매하기";
 "str_purchase_fanpass_transfer_info" = "송금 안내";
 "str_purchase_fanpass_transfer_info_fees" = "기본 수수료";
 "str_purchase_fanpass_guide" = "결제 완료 시 결제 금액이 즉시 %@님의 계좌로 송금되며, 환불은 불가능합니다.";

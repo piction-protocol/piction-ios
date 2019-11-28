@@ -74,7 +74,7 @@ extension SubscribeFanPassViewController: ViewModelBindable {
         output
             .walletInfo
             .drive(onNext: { [weak self] walletInfo in
-                self?.pxlLabel.text = "\(walletInfo.amount.commaRepresentation) PXL \(LocalizedStrings.str_have_pxl_amount.localized())"
+                self?.pxlLabel.text = "\(walletInfo.amount.commaRepresentation) PXL"
             })
             .disposed(by: disposeBag)
 
@@ -83,14 +83,7 @@ extension SubscribeFanPassViewController: ViewModelBindable {
             .drive(onNext: { [weak self] projectInfo in
                 self?.transferInfoWriterLabel.text = "▪︎ \(projectInfo.user?.username ?? "") : "
 
-                let infoDescription = LocalizedStrings.str_purchase_fanpass_guide.localized(with: projectInfo.user?.username ?? "")
-
-                let attributedStr = NSMutableAttributedString(string: infoDescription)
-                attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.pictionGray, range: attributedStr.mutableString.range(of: infoDescription))
-                attributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 14), range: attributedStr.mutableString.range(of: infoDescription))
-                attributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: 14), range: attributedStr.mutableString.range(of: projectInfo.user?.username ?? ""))
-
-                self?.transferInfoDescriptionLabel.attributedText = attributedStr
+                self?.transferInfoDescriptionLabel.text = LocalizedStrings.str_purchase_fanpass_guide.localized(with: projectInfo.user?.username ?? "")
             })
             .disposed(by: disposeBag)
 
@@ -124,8 +117,12 @@ extension SubscribeFanPassViewController: ViewModelBindable {
             .drive(onNext: { [weak self] _ in
                 guard let `self` = self else { return }
                 self.fanPassDescriptionLabel.isHidden = !self.fanPassDescriptionLabel.isHidden
-                self.descriptionButtonLabel.text = self.fanPassDescriptionLabel.isHidden ? LocalizedStrings.str_purchase_fanpass_show_description.localized() : LocalizedStrings.str_purchase_fanpass_hide_description.localized()
 
+                let labelText = self.fanPassDescriptionLabel.isHidden ? LocalizedStrings.str_purchase_fanpass_show_description.localized() : LocalizedStrings.str_purchase_fanpass_hide_description.localized()
+
+                let attributedStr = NSMutableAttributedString(string: labelText)
+                attributedStr.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: attributedStr.mutableString.range(of: labelText))
+                self.descriptionButtonLabel.attributedText = attributedStr
             })
             .disposed(by: disposeBag)
 
