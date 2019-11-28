@@ -38,7 +38,6 @@ final class HomeViewModel: InjectableViewModel {
         let embedHomeSection: Driver<Void>
         let isFetching: Driver<Bool>
         let activityIndicator: Driver<Bool>
-        let refreshSession: Driver<Void>
     }
 
     func build(input: Input) -> Output {
@@ -70,8 +69,7 @@ final class HomeViewModel: InjectableViewModel {
             viewWillDisappear: input.viewWillDisappear,
             embedHomeSection: embedHomeSection,
             isFetching: refreshAction.isExecuting,
-            activityIndicator: activityIndicator,
-            refreshSession: refreshSession
+            activityIndicator: activityIndicator
         )
     }
 }
