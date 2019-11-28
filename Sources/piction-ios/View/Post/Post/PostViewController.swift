@@ -162,7 +162,7 @@ final class PostViewController: UIViewController {
 
     @available(iOS 13.0, *)
     private func setWebviewColor() {
-        let fontColor = UIColor.pictionDarkGray.hexString
+        let fontColor = UIColor.pictionDarkGrayDM.hexString
         postWebView.evaluateJavaScript("document.getElementsByTagName('body')[0].style.color =\"\(fontColor ?? "#333333")\"")
     }
 
@@ -245,7 +245,7 @@ extension PostViewController: ViewModelBindable {
                 self?.prevPostButton.isEnabled = (postItem.id ?? 0) != 0
                 var buttonColor: UIColor {
                     if #available(iOS 13.0, *) {
-                        return ((postItem.id ?? 0) != 0 ? .pictionDarkGray : UIColor(r: 151, g: 151, b: 151))
+                        return (postItem.id ?? 0) != 0 ? .pictionDarkGrayDM : UIColor(r: 151, g: 151, b: 151)
                     } else {
                         return (postItem.id ?? 0) != 0 ? UIColor(r: 51, g: 51, b: 51) : UIColor(r: 151, g: 151, b: 151)
                     }
@@ -260,7 +260,7 @@ extension PostViewController: ViewModelBindable {
                 self?.nextPostButton.isEnabled = (postItem.id ?? 0) != 0
                 var buttonColor: UIColor {
                     if #available(iOS 13.0, *) {
-                        return ((postItem.id ?? 0) != 0 ? .pictionDarkGray : UIColor(r: 151, g: 151, b: 151))
+                        return (postItem.id ?? 0) != 0 ? .pictionDarkGrayDM : UIColor(r: 151, g: 151, b: 151)
                     } else {
                         return (postItem.id ?? 0) != 0 ? UIColor(r: 51, g: 51, b: 51) : UIColor(r: 151, g: 151, b: 151)
                     }

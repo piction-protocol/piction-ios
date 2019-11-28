@@ -98,7 +98,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
         }
 
         titleLabel.text = title
-        titleLabel.textColor = .pictionDarkGray
+        titleLabel.textColor = .pictionDarkGrayDM
 
         if let profileImage = profileImage {
             let userPictureWithIC = "\(profileImage)?w=240&h=240&quality=80&output=webp"
@@ -154,8 +154,8 @@ class ProjectHeaderView: GSKStretchyHeaderView {
             postButton.backgroundColor = menu == 0 ? .clear : .white
             seriesButton.backgroundColor = menu == 0 ? .white : .clear
         }
-        postButton.setTitleColor(menu == 0 ? .pictionDarkGray : .pictionGray, for: .normal)
-        seriesButton.setTitleColor(menu == 0 ? .pictionGray : .pictionDarkGray, for: .normal)
+        postButton.setTitleColor(menu == 0 ? .pictionDarkGrayDM : .pictionGray, for: .normal)
+        seriesButton.setTitleColor(menu == 0 ? .pictionGray : .pictionDarkGrayDM, for: .normal)
     }
 }
 

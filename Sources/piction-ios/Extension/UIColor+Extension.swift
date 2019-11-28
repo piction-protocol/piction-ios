@@ -9,7 +9,8 @@
 import UIKit
 
 extension UIColor {
-    static let pictionDarkGray = UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51)
+    static let pictionDarkGrayDM = UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51)
+    static let pictionDarkGray = UIColor(r: 51, g: 51, b: 51)
     static let pictionBlue = UIColor(r: 26, g: 146, b: 255)
     static let pictionGray = UIColor(r: 191, g: 191, b: 191)
     static let pictionLightGray = UIColor(r: 242, g: 242, b: 242)

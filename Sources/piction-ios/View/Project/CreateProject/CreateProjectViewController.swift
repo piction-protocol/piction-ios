@@ -43,7 +43,7 @@ final class CreateProjectViewController: UIViewController {
             tagsField.tintColor = .pictionLightGray
             tagsField.textColor = UIColor(r: 51, g: 51, b: 51)
             tagsField.selectedColor = .pictionBlue
-            tagsField.fieldTextColor = .pictionDarkGray
+            tagsField.fieldTextColor = .pictionDarkGrayDM
             tagsField.selectedTextColor = .white
             tagsField.acceptTagOption = .space
             tagsField.returnKeyType = .next
@@ -163,7 +163,7 @@ extension CreateProjectViewController: ViewModelBindable {
                 self?.navigationItem.title = isModify ? LocalizedStrings.str_modify_project.localized() : LocalizedStrings.str_create_project.localized()
                 self?.saveBarButton.title = isModify ? LocalizedStrings.str_modify.localized() : LocalizedStrings.register.localized()
                 self?.projectIdTextField.isEnabled = !isModify
-                self?.projectIdTextField.textColor = isModify ? .pictionGray : .pictionDarkGray
+                self?.projectIdTextField.textColor = isModify ? .pictionGray : .pictionDarkGrayDM
             })
             .disposed(by: disposeBag)
 

@@ -211,26 +211,26 @@ extension ChangePasswordViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField === passwordTextField {
             passwordUnderlineView.backgroundColor = .pictionBlue
-            passwordTextField.textColor = .pictionDarkGray
+            passwordTextField.textColor = .pictionDarkGrayDM
             passwordErrorLabel.isHidden = true
         } else if textField == newPasswordTextField {
             newPasswordUnderlineView.backgroundColor = .pictionBlue
-            newPasswordTextField.textColor = .pictionDarkGray
+            newPasswordTextField.textColor = .pictionDarkGrayDM
             newPasswordErrorLabel.isHidden = true
         } else if textField == passwordCheckTextField {
             passwordCheckUnderlineView.backgroundColor = .pictionBlue
-            passwordCheckTextField.textColor = .pictionDarkGray
+            passwordCheckTextField.textColor = .pictionDarkGrayDM
             passwordCheckErrorLabel.isHidden = true
         }
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField === passwordTextField {
-            passwordUnderlineView.backgroundColor = .pictionDarkGray
+            passwordUnderlineView.backgroundColor = .pictionDarkGrayDM
         } else if textField == newPasswordTextField {
-            newPasswordUnderlineView.backgroundColor = .pictionDarkGray
+            newPasswordUnderlineView.backgroundColor = .pictionDarkGrayDM
         } else if textField == passwordCheckTextField {
-            passwordCheckUnderlineView.backgroundColor = .pictionDarkGray
+            passwordCheckUnderlineView.backgroundColor = .pictionDarkGrayDM
         }
     }
 }

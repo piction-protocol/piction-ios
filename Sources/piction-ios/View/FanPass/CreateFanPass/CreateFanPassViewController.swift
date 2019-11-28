@@ -50,7 +50,7 @@ extension CreateFanPassViewController: ViewModelBindable {
 
         output
             .loadFanPass
-            .map { $0.level ?? 0 == 0 ? .pictionGray : .pictionDarkGray }
+            .map { $0.level ?? 0 == 0 ? .pictionGray : .pictionDarkGrayDM }
             .drive(onNext: { [weak self] textColor in
                 self?.priceTextField.textColor = textColor
             })

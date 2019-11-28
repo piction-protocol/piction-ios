@@ -284,7 +284,7 @@ extension ChangeMyInfoViewController: UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField === userNameTextField {
-            self.userNameUnderlineView.backgroundColor = .pictionDarkGray
+            self.userNameUnderlineView.backgroundColor = .pictionDarkGrayDM
         }
     }
 }

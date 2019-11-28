@@ -22,7 +22,7 @@ extension UINavigationController {
                 navBarAppearance.shadowColor = nil
             }
             navBarAppearance.largeTitleTextAttributes = [
-                NSAttributedString.Key.foregroundColor: .pictionDarkGray,
+                NSAttributedString.Key.foregroundColor: .pictionDarkGrayDM,
                 NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 34)
             ]
             navigationBar.scrollEdgeAppearance = navBarAppearance
