@@ -207,8 +207,9 @@
 "str_sponsorship_user" = "후원자";
 "str_order_id" = "주문번호";
 "str_project" = "프로젝트";
-"str_fanpass_sales_info" = "FAN PASS 판매 정보";
-"str_fanpass_purchase_info" = "FAN PASS 구매 정보";
+"str_fan_pass_list" = "FAN PASS 목록";
+"str_fan_pass_sell_info" = "FAN PASS 판매 정보";
+"str_fan_pass_buy_info" = "FAN PASS 구매 정보";
 "str_seller" = "판매자";
 "str_buyer" = "구매자";
 
@@ -224,7 +225,7 @@
 "str_fanpass_current_tier" = "티어 %d";
 "str_fanpasslist_warning_current_fanpass" = "%@ 구독 중";
 "str_fanpasslist_warning_description" = "FAN PASS를 업그레이드 하는 경우, 현재 사용 중인 상품의 남은 기간은 환불되지 않습니다.";
-"str_fanpasslist_current_post_description" = "포스트를 볼 수 있는 FAN PASS 상품만 출력됩니다.";
+"str_fanpasslist_current_post_description" = "해당 포스트를 볼 수 있는\nFAN PASS 상품만 출력됩니다.";
 
 "str_purchase_fanpass_select_fanpass" = "선택한 구독 상품";
 "str_purchase_fanpass_show_description" = "상품 설명 보기";

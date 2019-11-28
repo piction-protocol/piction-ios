@@ -98,7 +98,7 @@ final class TransactionDetailViewModel: ViewModel {
                         return Driver.empty()
                     }
                     let subscriptionSection = [
-                        TransactionDetailSection.header(title: inOut == "IN" ? LocalizedStrings.str_fanpass_sales_info.localized() : LocalizedStrings.str_fanpass_purchase_info.localized()),
+                        TransactionDetailSection.header(title: inOut == "IN" ? LocalizedStrings.str_fan_pass_sell_info.localized() : LocalizedStrings.str_fan_pass_buy_info.localized()),
                         TransactionDetailSection.list(title: LocalizedStrings.str_order_id.localized(), description: "\(subscriptionItem.orderNo ?? 0)", link: ""),
                         TransactionDetailSection.list(title: LocalizedStrings.str_project.localized(), description: "\(subscriptionItem.projectName ?? "")", link: ""),
                         TransactionDetailSection.list(title: "FAN PASS", description: "\(subscriptionItem.fanPassName ?? "")", link: ""),

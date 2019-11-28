@@ -204,10 +204,11 @@ enum LocalizedStrings {
     case str_sponsorship_info
     case str_sponsoredship_to
     case str_sponsorship_user
-    case str_fanpass_sales_info
-    case str_fanpass_purchase_info
     case str_order_id
     case str_project
+    case str_fan_pass_list
+    case str_fan_pass_sell_info
+    case str_fan_pass_buy_info
     case str_seller
     case str_buyer
 
