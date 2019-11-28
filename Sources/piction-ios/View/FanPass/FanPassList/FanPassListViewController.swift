@@ -58,6 +58,13 @@ final class FanPassListViewController: UIViewController {
         })
     }
 
+    private func openSignInViewController() {
+        let vc = SignInViewController.make()
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.openViewController(vc, type: .swipePresent)
+        }
+    }
+
     private func openSubscribeFanPassViewController(uri: String, selectedFanPass: FanPassModel) {
         let vc = SubscribeFanPassViewController.make(uri: uri, selectedFanPass: selectedFanPass)
         if let topViewController = UIApplication.topViewController() {
@@ -161,6 +168,13 @@ extension FanPassListViewController: ViewModelBindable {
                 } else {
                     self?.openSubscribeFanPassViewController(uri: self?.viewModel?.uri ?? "", selectedFanPass: fanPass)
                 }
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .openSignInViewController
+            .drive(onNext: { [weak self] _ in
+                self?.openSignInViewController()
             })
             .disposed(by: disposeBag)
 

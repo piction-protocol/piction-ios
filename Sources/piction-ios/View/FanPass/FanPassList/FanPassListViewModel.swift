@@ -46,6 +46,7 @@ final class FanPassListViewModel: InjectableViewModel {
         let projectInfo: Driver<ProjectModel>
         let fanPassTableItems: Driver<[FanPassListTableViewCellModel]>
         let selectedIndexPath: Driver<IndexPath>
+        let openSignInViewController: Driver<Void>
         let showErrorPopup: Driver<Void>
         let activityIndicator: Driver<Bool>
         let dismissViewController: Driver<Void>
@@ -61,10 +62,30 @@ final class FanPassListViewModel: InjectableViewModel {
         let levelLimitChanged = levelLimit.asDriver(onErrorDriveWith: .empty())
 
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
+        let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
 
-        let initialLoad = Driver.merge(viewWillAppear, loadRetry, refreshContent)
+        let initialLoad = Driver.merge(viewWillAppear, loadRetry, refreshContent, refreshSession)
 
-        let postItemAction = viewWillAppear
+        let userInfoAction = initialLoad
+            .flatMap { _ -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(UsersAPI.me)
+                return Action.makeDriver(response)
+            }
+
+        let currentUserInfoSuccess = userInfoAction.elements
+            .flatMap { response -> Driver<UserModel> in
+                guard let userInfo = try? response.map(to: UserModel.self) else {
+                    return Driver.empty()
+                }
+                return Driver.just(userInfo)
+            }
+
+        let currentUserInfoError = userInfoAction.error
+            .flatMap { _ in Driver.just(UserModel.from([:])!) }
+
+        let currentUserInfo = Driver.merge(currentUserInfoSuccess, currentUserInfoError)
+
+        let postItemAction = initialLoad
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
                 guard let postId = self?.postId else { return Driver.empty() }
                 let response = PictionSDK.rx.requestAPI(PostsAPI.get(uri: self?.uri ?? "", postId: postId))
@@ -143,6 +164,8 @@ final class FanPassListViewModel: InjectableViewModel {
             }
 
         let subscriptionFreeAction = input.subscribeFreeBtnDidTap
+            .withLatestFrom(currentUserInfo)
+            .filter { $0.loginId != nil }
             .withLatestFrom(subscriptionInfo)
             .filter { $0 == nil }
             .withLatestFrom(freeFanPassItem)
@@ -203,6 +226,16 @@ final class FanPassListViewModel: InjectableViewModel {
 
         let dismissViewController = input.closeBtnDidTap
 
+        let selectedIndexPath = input.selectedIndexPath
+            .withLatestFrom(currentUserInfo)
+            .filter { $0.loginId != nil }
+            .withLatestFrom(input.selectedIndexPath)
+
+        let openSignInViewController = input.selectedIndexPath
+            .withLatestFrom(currentUserInfo)
+            .filter { $0.loginId == nil }
+            .flatMap { _ in Driver.just(()) }
+
         return Output(
             viewWillAppear: input.viewWillAppear,
             subscriptionInfo: subscriptionInfoSuccess,
@@ -211,7 +244,8 @@ final class FanPassListViewModel: InjectableViewModel {
             fanPassList: fanPassListSuccess,
             projectInfo: projectInfoSuccess,
             fanPassTableItems: fanPassTableItems,
-            selectedIndexPath: input.selectedIndexPath,
+            selectedIndexPath: selectedIndexPath,
+            openSignInViewController: openSignInViewController,
             showErrorPopup: showErrorPopup,
             activityIndicator: activityIndicator,
             dismissViewController: dismissViewController,
