@@ -45,28 +45,28 @@ class UILabelExtension: UILabel, BorderLineConfigurable {
     }
 
     @IBInspectable
-    var topLeftRadius: Bool = true {
+    var topLeftRadius: Bool = false {
         didSet {
             configureRadius()
         }
     }
 
     @IBInspectable
-    var topRightRadius: Bool = true {
+    var topRightRadius: Bool = false {
         didSet {
             configureRadius()
         }
     }
 
     @IBInspectable
-    var bottomLeftRadius: Bool = true {
+    var bottomLeftRadius: Bool = false {
         didSet {
             configureRadius()
         }
     }
 
     @IBInspectable
-    var bottomRightRadius: Bool = true {
+    var bottomRightRadius: Bool = false {
         didSet {
             configureRadius()
         }
@@ -95,6 +95,11 @@ class UILabelExtension: UILabel, BorderLineConfigurable {
 
     private func configureRadius() {
         guard cornerRadius > 0 else { return }
+        guard topLeftRadius || topRightRadius || bottomLeftRadius || bottomRightRadius else {
+            layer.cornerRadius = cornerRadius
+            layer.masksToBounds = cornerRadius > 0
+            return
+        }
 
         var corners = UIRectCorner()
         if topLeftRadius {
