@@ -27,7 +27,7 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZiD-ey-720">
-                                <rect key="frame" x="0.0" y="380" width="414" height="310"/>
+                                <rect key="frame" x="0.0" y="343" width="414" height="310"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="6bE-0R-bal">
                                         <rect key="frame" x="20" y="52.5" width="374" height="205"/>
@@ -92,7 +92,7 @@
                             <constraint firstItem="ZiD-ey-720" firstAttribute="leading" secondItem="WQi-79-bE1" secondAttribute="leading" id="SHJ-N8-gQt"/>
                             <constraint firstItem="koI-sV-IVB" firstAttribute="top" secondItem="WQi-79-bE1" secondAttribute="top" id="UJy-wi-a0d"/>
                             <constraint firstItem="ZiD-ey-720" firstAttribute="centerX" secondItem="WQi-79-bE1" secondAttribute="centerX" id="ZXu-IN-uyK"/>
-                            <constraint firstItem="ZiD-ey-720" firstAttribute="centerY" secondItem="WQi-79-bE1" secondAttribute="centerY" constant="87" id="g56-ss-sSK"/>
+                            <constraint firstItem="ZiD-ey-720" firstAttribute="centerY" secondItem="WQi-79-bE1" secondAttribute="centerY" constant="50" id="g56-ss-sSK"/>
                             <constraint firstAttribute="trailing" secondItem="ZiD-ey-720" secondAttribute="trailing" id="hOq-IW-OOC"/>
                             <constraint firstAttribute="bottom" secondItem="koI-sV-IVB" secondAttribute="bottom" id="rY6-Fp-xZn"/>
                         </constraints>
@@ -100,7 +100,7 @@
                     </view>
                     <toolbarItems>
                         <barButtonItem width="100" id="xFd-Am-xYT">
-                            <view key="customView" contentMode="scaleToFill" id="bQl-LA-AUu">
+                            <view key="customView" contentMode="scaleToFill" ambiguous="YES" id="bQl-LA-AUu">
                                 <rect key="frame" x="20" y="27" width="366" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -131,7 +131,7 @@
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="6ag-z0-BlJ"/>
                         <barButtonItem width="100" id="woe-ZJ-c72">
-                            <view key="customView" contentMode="scaleToFill" id="LBT-hY-17x">
+                            <view key="customView" contentMode="scaleToFill" ambiguous="YES" id="LBT-hY-17x">
                                 <rect key="frame" x="394" y="27" width="0.0" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
