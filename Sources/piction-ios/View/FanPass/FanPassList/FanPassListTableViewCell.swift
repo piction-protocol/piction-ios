@@ -15,6 +15,47 @@ struct FanPassListTableViewCellModel {
     let postCount: Int
 }
 
+enum FanPassButtonStyle {
+    case dimmed
+    case `default`
+    case subscribing
+
+    var backgroundColor: UIColor {
+        switch self {
+        case .dimmed:
+            return .pictionLightGray
+        case .default:
+            return .pictionDarkGray
+        case .subscribing:
+            return .white
+        }
+    }
+
+    var textColor: UIColor {
+        switch self {
+        case .dimmed:
+            return .pictionGray
+        case .default:
+            return .white
+        case .subscribing:
+            return .pictionDarkGray
+        }
+    }
+
+    var borderColor: CGColor {
+        switch self {
+        case .subscribing:
+            return UIColor.pictionDarkGray.cgColor
+        default:
+            return UIColor.clear.cgColor
+        }
+    }
+
+    var borderWidth: CGFloat {
+        return self == .subscribing ? 2 : 0
+    }
+}
+
 class FanPassListTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var subscriptionLimitLabel: UILabel!
@@ -55,18 +96,18 @@ class FanPassListTableViewCell: ReuseTableViewCell {
             return ""
         }
 
-        var buttonDimmed: Bool {
+        var buttonStyle: FanPassButtonStyle {
             if let subscriptionLevel = subscriptionInfo?.fanPass?.level,
                 let fanPassLevel = fanPass.level,
                 subscriptionLevel >= fanPassLevel {
-                return true
+                return .subscribing
             }
             if let fanPassSubscriptionLimit = fanPass.subscriptionLimit,
                 let fanPassSubscriptionCount = fanPass.subscriptionCount,
                 (fanPassSubscriptionLimit > 0 && (fanPassSubscriptionCount >= fanPassSubscriptionLimit)) || fanPassSubscriptionLimit == 0 {
-                return true
+                return .dimmed
             }
-            return false
+            return .default
         }
 
         var subscriptionText: String {
@@ -92,7 +133,9 @@ class FanPassListTableViewCell: ReuseTableViewCell {
         statusLabel.text = status
         statusLabel.isHidden = status == ""
         subscriptionLabel.text = subscriptionText
-        subscriptionLabel.backgroundColor = buttonDimmed ? .pictionLightGray : UIColor(r: 51, g: 51, b: 51)
-        subscriptionLabel.textColor = buttonDimmed ? .pictionGray : .white
+        subscriptionLabel.backgroundColor = buttonStyle.backgroundColor
+        subscriptionLabel.textColor = buttonStyle.textColor
+        subscriptionLabel.layer.borderColor = buttonStyle.borderColor
+        subscriptionLabel.layer.borderWidth = buttonStyle.borderWidth
     }
 }
