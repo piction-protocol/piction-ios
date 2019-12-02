@@ -29,7 +29,7 @@ final class TagResultProjectViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        emptyView.frame.size.height = getVisibleHeight()
+        emptyView.frame.size.height = visibleHeight
     }
 
     private func openProjectViewController(uri: String) {

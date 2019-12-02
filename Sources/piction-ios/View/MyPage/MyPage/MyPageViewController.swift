@@ -32,7 +32,7 @@ final class MyPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        emptyHeight = getVisibleHeight()
+        emptyHeight = visibleHeight
     }
 
     private func openMyProjectViewController() {
@@ -229,13 +229,14 @@ extension MyPageViewController: ViewModelBindable {
         output
             .embedEmptyViewController
             .drive(onNext: { [weak self] style in
-                self?.tableView.isScrollEnabled = style != .defaultLogin
+                guard let `self` = self else { return }
+                self.tableView.isScrollEnabled = style != .defaultLogin
                 Toast.loadingActivity(false)
-                _ = self?.containerView.subviews.map { $0.removeFromSuperview() }
-                self?.containerView.frame.size.height = 0
-                self?.embedCustomEmptyViewController(style: style)
-                self?.tableView.contentOffset = CGPoint(x: 0, y: -STATUS_HEIGHT-LARGE_NAVIGATION_HEIGHT)
-                self?.tableView.reloadData()
+                _ = self.containerView.subviews.map { $0.removeFromSuperview() }
+                self.containerView.frame.size.height = 0
+                self.embedCustomEmptyViewController(style: style)
+                self.tableView.contentOffset = CGPoint(x: 0, y: -self.statusHeight-self.largeTitleNavigationHeight)
+                self.tableView.reloadData()
             })
             .disposed(by: disposeBag)
 

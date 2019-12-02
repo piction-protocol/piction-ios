@@ -31,7 +31,7 @@ final class SponsorshipListViewController: UIViewController {
         if style == .sponsorshipListEmpty {
             emptyView.frame.size.height = 350
         } else {
-            emptyView.frame.size.height = getVisibleHeight()
+            emptyView.frame.size.height = visibleHeight
         }
         let vc = CustomEmptyViewController.make(style: style)
         embed(vc, to: emptyView)

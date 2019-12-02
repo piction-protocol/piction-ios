@@ -213,7 +213,7 @@ extension ChangeMyInfoViewController {
                 if let popover = alertController.popoverPresentationController {
                     popover.permittedArrowDirections = .up
                     popover.sourceView = topController.view
-                    popover.sourceRect = CGRect(x: SCREEN_W / 2, y: STATUS_HEIGHT + DEFAULT_NAVIGATION_HEIGHT + pictureImageButton.frame.origin.y + pictureImageButton.frame.height, width: 0, height: 0)
+                    popover.sourceRect = CGRect(x: SCREEN_W / 2, y: self.statusHeight + self.navigationHeight + pictureImageButton.frame.origin.y + pictureImageButton.frame.height, width: 0, height: 0)
                 }
             }
             topController.present(alertController, animated: true, completion: nil)

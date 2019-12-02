@@ -30,7 +30,7 @@ final class SubscriptionListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        emptyView.frame.size.height = getVisibleHeight()
+        emptyView.frame.size.height = visibleHeight
     }
 
     private func openProjectViewController(uri: String) {
@@ -149,10 +149,11 @@ extension SubscriptionListViewController: ViewModelBindable {
         output
             .embedEmptyViewController
             .drive(onNext: { [weak self] style in
-                self?.collectionView.isScrollEnabled = style != .defaultLogin
+                guard let `self` = self else { return }
+                self.collectionView.isScrollEnabled = style != .defaultLogin
                 Toast.loadingActivity(false)
-                self?.collectionView.contentOffset = CGPoint(x: 0, y: -STATUS_HEIGHT-LARGE_NAVIGATION_HEIGHT)
-                self?.embedCustomEmptyViewController(style: style)
+                self.collectionView.contentOffset = CGPoint(x: 0, y: -self.statusHeight-self.largeTitleNavigationHeight)
+                self.embedCustomEmptyViewController(style: style)
             })
             .disposed(by: disposeBag)
 

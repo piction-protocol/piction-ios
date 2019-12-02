@@ -28,7 +28,7 @@ final class SubscriptionUserViewController: UIViewController {
 
     private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
         _ = emptyView.subviews.map { $0.removeFromSuperview() }
-        emptyView.frame.size.height = getVisibleHeight()
+        emptyView.frame.size.height = visibleHeight
         let vc = CustomEmptyViewController.make(style: style)
         embed(vc, to: emptyView)
     }

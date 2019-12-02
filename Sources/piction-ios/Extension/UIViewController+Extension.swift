@@ -54,16 +54,28 @@ extension UIViewController {
 }
 
 extension UIViewController {
-    func getVisibleHeight() -> CGFloat {
-        return self.view.bounds.size.height - getCurrentNavigationHeight() - getCurrentTabHeight()
+    public var visibleHeight: CGFloat {
+        return self.view.bounds.size.height - statusHeight - navigationHeight - tabbarHeight
     }
 
-    func getCurrentNavigationHeight() -> CGFloat {
-        return UIApplication.shared.statusBarFrame.size.height + (self.navigationController?.navigationBar.frame.size.height ?? 0)
+    public var statusHeight: CGFloat {
+        return UIApplication.shared.statusBarFrame.size.height
     }
 
-    func getCurrentTabHeight() -> CGFloat {
+    public var navigationHeight: CGFloat {
+        return (self.navigationController?.navigationBar.bounds.size.height ?? 0)
+    }
+
+    public var largeTitleNavigationHeight: CGFloat {
+        return (self.navigationController?.navigationBar.sizeThatFits(.zero).height ?? 0)
+    }
+
+    public var tabbarHeight: CGFloat {
         return (self.tabBarController?.tabBar.bounds.size.height ?? 0)
+    }
+
+    public var toolbarHeight: CGFloat {
+        return (self.navigationController?.toolbar.bounds.size.height ?? 0)
     }
 }
 

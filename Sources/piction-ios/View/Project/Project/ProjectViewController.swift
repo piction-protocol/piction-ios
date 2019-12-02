@@ -361,7 +361,8 @@ extension ProjectViewController: ViewModelBindable {
         output
             .contentList
             .do(onNext: { [weak self] _ in
-                self?.emptyView.frame.size.height = SCREEN_H - STATUS_HEIGHT  - DEFAULT_NAVIGATION_HEIGHT - (self?.tabBarController?.tabBar.frame.size.height ?? 0) - 52
+                guard let `self` = self else { return }
+                self.emptyView.frame.size.height = SCREEN_H - self.statusHeight - self.navigationHeight - self.tabbarHeight - 52
             })
             .drive { $0 }
             .map { [$0] }
@@ -371,20 +372,21 @@ extension ProjectViewController: ViewModelBindable {
         output
             .contentList
             .drive(onNext: { [weak self] list in
+                guard let `self` = self else { return }
                 if list.items.count > 0 {
-                    _ = self?.emptyView.subviews.map { $0.removeFromSuperview() }
+                    _ = self.emptyView.subviews.map { $0.removeFromSuperview() }
                 }
-                let footerHeight = SCREEN_H - STATUS_HEIGHT - DEFAULT_NAVIGATION_HEIGHT - (self?.tabBarController?.tabBar.frame.size.height ?? 0) - 52
-                let height = (self?.preferredContentSize.height ?? 0) - footerHeight
+                let footerHeight = SCREEN_H - self.statusHeight - self.navigationHeight - self.tabbarHeight - 52
+                let height = self.preferredContentSize.height - footerHeight
                 if height < footerHeight {
-                    self?.emptyView.frame.size.height = footerHeight - height
+                    self.emptyView.frame.size.height = footerHeight - height
                 } else {
-                    self?.emptyView.frame.size.height = 0
+                    self.emptyView.frame.size.height = 0
                 }
-                self?.emptyView.isHidden = false
-                self?.tableView.layoutIfNeeded()
-                self?.tableView.finishInfiniteScroll()
-                self?.tableView.reloadData()
+                self.emptyView.isHidden = false
+                self.tableView.layoutIfNeeded()
+                self.tableView.finishInfiniteScroll()
+                self.tableView.reloadData()
             })
             .disposed(by: disposeBag)
 

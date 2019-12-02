@@ -12,16 +12,8 @@ let BUNDLEID = Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String ?? "
 
 let SCREEN_W = UIScreen.main.bounds.size.width
 let SCREEN_H = UIScreen.main.bounds.size.height
-let STATUS_HEIGHT: CGFloat = UIApplication.shared.statusBarFrame.size.height
 let DEFAULT_NAVIGATION_HEIGHT: CGFloat = 44
-var LARGE_NAVIGATION_HEIGHT: CGFloat {
-    if #available(iOS 13, *) {
-        return 104.33
-    } else {
-        return 96
-    }
-}
-
+let STATUS_HEIGHT: CGFloat = UIApplication.shared.statusBarFrame.size.height
 let FEATURE_EDITOR = false
 
 final class AppInfo {

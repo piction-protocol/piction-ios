@@ -194,15 +194,16 @@ extension PostViewController: ViewModelBindable {
         output
             .viewWillAppear
             .drive(onNext: { [weak self] in
-                self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+                guard let `self` = self else { return }
+                self.navigationController?.configureNavigationBar(transparent: false, shadow: true)
 
-                self?.postWebView.scrollView.contentInset = UIEdgeInsets(
-                    top: (self?.getCurrentNavigationHeight() ?? 0),
+                self.postWebView.scrollView.contentInset = UIEdgeInsets(
+                    top: self.statusHeight + self.navigationHeight,
                     left: 0,
-                    bottom:  self?.navigationController?.toolbar.bounds.size.height ?? 0,
+                    bottom: self.toolbarHeight,
                     right: 0)
-                let uri = self?.viewModel?.uri ?? ""
-                let postId = self?.viewModel?.postId ?? 0
+                let uri = self.viewModel?.uri ?? ""
+                let postId = self.viewModel?.postId ?? 0
                 FirebaseManager.screenName("포스트뷰어_\(uri)_\(postId)")
             })
             .disposed(by: disposeBag)
