@@ -93,7 +93,8 @@ extension TabBarController: UITabBarControllerDelegate {
     }
 
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        let topViewController = UIApplication.topViewController()
+        guard let topViewController = UIApplication.topViewController() else { return }
+        lastIndex = selectedIndex
         if let lastViewController = tabBarController.selectedViewController?.children.last,
             lastViewController is HomeViewController {
             if lastViewController.navigationItem.searchController?.isActive ?? false {
@@ -103,71 +104,50 @@ extension TabBarController: UITabBarControllerDelegate {
         }
 
         if previousViewController == tabBarController.selectedViewController?.children.last {
-            if viewController.children.count == 1 {
-                if topViewController is HomeViewController {
-                    if let vc = topViewController as? HomeViewController {
-                        DispatchQueue.main.async {
-                            if topViewController?.navigationItem.searchController?.isActive ?? false {
-                                topViewController?.navigationItem.searchController?.searchBar.text = nil
-                                topViewController?.navigationItem.searchController?.dismiss(animated: true)
-                            } else if vc.navigationController?.navigationBar.frame.size.height == DEFAULT_NAVIGATION_HEIGHT {
-                                vc.scrollView.setContentOffset(CGPoint(x: 0, y: -STATUS_HEIGHT-LARGE_NAVIGATION_HEIGHT), animated: true)
-                            }
-                        }
-                    }
-                } else if topViewController is ExploreViewController {
-                    if let vc = topViewController as? ExploreViewController {
-                        DispatchQueue.main.async {
-                            if vc.navigationController?.navigationBar.frame.size.height == DEFAULT_NAVIGATION_HEIGHT {
-                                vc.collectionView.setContentOffset(CGPoint(x: 0, y: -STATUS_HEIGHT-LARGE_NAVIGATION_HEIGHT), animated: true)
-                            }
-                        }
-                    }
-                } else if topViewController is SubscriptionListViewController {
-                    if let vc = topViewController as? SubscriptionListViewController {
-                        DispatchQueue.main.async {
-                            if vc.navigationController?.navigationBar.frame.size.height == DEFAULT_NAVIGATION_HEIGHT {
-                                if #available(iOS 13, *) {
-                                    if vc.collectionView.contentSize.height >= SCREEN_H - STATUS_HEIGHT - DEFAULT_NAVIGATION_HEIGHT - (vc.tabBarController?.tabBar.bounds.size.height ?? 0) {
-                                        vc.collectionView.setContentOffset(CGPoint(x: 0, y: -STATUS_HEIGHT-LARGE_NAVIGATION_HEIGHT), animated: true)
-                                    } else {
-                                        vc.collectionView.setContentOffset(CGPoint(x: 0, y: -STATUS_HEIGHT-DEFAULT_NAVIGATION_HEIGHT), animated: true)
-                                    }
-                                } else {
-                                    vc.collectionView.setContentOffset(CGPoint(x: 0, y: -STATUS_HEIGHT-LARGE_NAVIGATION_HEIGHT), animated: true)
-                                }
-                            }
-                        }
-                    }
-                } else if topViewController is SponsorshipListViewController {
-                    if let vc = topViewController as? SponsorshipListViewController {
-                        DispatchQueue.main.async {
-                            if vc.navigationController?.navigationBar.frame.size.height == DEFAULT_NAVIGATION_HEIGHT {
-                                if #available(iOS 13, *) {
-                                    if vc.tableView.contentSize.height >= SCREEN_H - STATUS_HEIGHT - DEFAULT_NAVIGATION_HEIGHT - (vc.tabBarController?.tabBar.bounds.size.height ?? 0) {
-                                        vc.tableView.setContentOffset(CGPoint(x: 0, y: -STATUS_HEIGHT-LARGE_NAVIGATION_HEIGHT), animated: true)
-                                    } else {
-                                        vc.tableView.setContentOffset(CGPoint(x: 0, y: -STATUS_HEIGHT-DEFAULT_NAVIGATION_HEIGHT), animated: true)
-                                    }
-                                } else {
-                                    vc.tableView.setContentOffset(CGPoint(x: 0, y: -STATUS_HEIGHT-LARGE_NAVIGATION_HEIGHT), animated: true)
-                                }
-                            }
-                        }
-                    }
-                } else if topViewController is MyPageViewController {
-                    if let vc = topViewController as? MyPageViewController {
-                        DispatchQueue.main.async {
-                           if vc.navigationController?.navigationBar.frame.size.height == DEFAULT_NAVIGATION_HEIGHT {
-                               vc.tableView.setContentOffset(CGPoint(x: 0, y: -STATUS_HEIGHT-LARGE_NAVIGATION_HEIGHT), animated: true)
-                            }
-                        }
-                    }
+            guard viewController.children.count == 1 else { return }
+            guard topViewController.navigationController?.navigationBar.frame.size.height == DEFAULT_NAVIGATION_HEIGHT else { return }
+            switch topViewController {
+            case is HomeViewController:
+                guard let vc = topViewController as? HomeViewController else { return }
+                guard let searchControllerIsActive = topViewController.navigationItem.searchController?.isActive else { return }
+                if searchControllerIsActive {
+                    vc.navigationItem.searchController?.searchBar.text = nil
+                    vc.navigationItem.searchController?.dismiss(animated: true)
+                } else if vc.navigationController?.navigationBar.frame.size.height == DEFAULT_NAVIGATION_HEIGHT {
+                    vc.scrollView.setContentOffset(CGPoint(x: 0, y: -vc.statusHeight-vc.largeTitleNavigationHeight), animated: true)
                 }
+            case is ExploreViewController:
+                guard let vc = topViewController as? ExploreViewController else { return }
+                setOffset(scrollView: vc.collectionView, vc: vc)
+            case is SubscriptionListViewController:
+                guard let vc = topViewController as? SubscriptionListViewController else { return }
+                setOffset(scrollView: vc.collectionView, vc: vc)
+            case is SponsorshipListViewController:
+                guard let vc = topViewController as? SponsorshipListViewController else { return }
+                setOffset(scrollView: vc.tableView, vc: vc)
+            case is MyPageViewController:
+                guard let vc = topViewController as? MyPageViewController else { return }
+                setOffset(scrollView: vc.tableView, vc: vc)
+            default:
+                break
             }
         }
+    }
 
-        lastIndex = selectedIndex
+    private func setOffset(scrollView: UIScrollView, vc: UIViewController) {
+        if #available(iOS 13, *) {
+            if scrollView.contentSize.height < vc.visibleHeight {
+                scrollView.setContentOffset(CGPoint(x: 0, y: -vc.statusHeight-DEFAULT_NAVIGATION_HEIGHT), animated: true)
+            } else {
+                scrollView.setContentOffset(CGPoint(x: 0, y: -vc.statusHeight-vc.largeTitleNavigationHeight), animated: true)
+            }
+        } else {
+            if scrollView.contentSize.height < vc.visibleHeight {
+                scrollView.setContentOffset(CGPoint(x: 0, y: -vc.statusHeight-DEFAULT_NAVIGATION_HEIGHT-16), animated: true)
+            } else {
+                return scrollView.setContentOffset(CGPoint(x: 0, y: -vc.statusHeight-vc.largeTitleNavigationHeight), animated: true)
+            }
+        }
     }
 }
 
