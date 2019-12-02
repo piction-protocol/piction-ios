@@ -37,23 +37,7 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        searchController = UISearchController(searchResultsController: self.searchResultsController)
-
-        searchController?.hidesNavigationBarDuringPresentation = true
-        searchController?.dimsBackgroundDuringPresentation = false
-        searchController?.searchResultsUpdater = searchResultsController
-
-        navigationItem.searchController = searchController
-        if #available(iOS 13, *) {
-            navigationItem.hidesSearchBarWhenScrolling = true
-        } else {
-            navigationItem.hidesSearchBarWhenScrolling = false
-        }
-        definesPresentationContext = true
-
-        searchController?.isActive = true
-
-        searchController?.searchBar.placeholder = LocalizedStrings.hint_project_and_tag_search.localized()
+        self.configureSearchController()
 
         StoreReviewManager().askForReview(navigationController: self.navigationController)
     }
@@ -65,6 +49,26 @@ final class HomeViewController: UIViewController {
             self.navigationItem.hidesSearchBarWhenScrolling = true
             self.navigationController?.configureNavigationBar(transparent: false, shadow: false)
         }
+    }
+
+    private func configureSearchController() {
+        self.searchController = UISearchController(searchResultsController: self.searchResultsController)
+
+        self.searchController?.hidesNavigationBarDuringPresentation = true
+        self.searchController?.dimsBackgroundDuringPresentation = false
+        self.searchController?.searchResultsUpdater = self.searchResultsController
+
+        self.navigationItem.searchController = self.searchController
+        if #available(iOS 13, *) {
+            self.navigationItem.hidesSearchBarWhenScrolling = true
+        } else {
+            self.navigationItem.hidesSearchBarWhenScrolling = false
+        }
+        self.definesPresentationContext = true
+
+        self.searchController?.isActive = true
+
+        self.searchController?.searchBar.placeholder = LocalizedStrings.hint_project_and_tag_search.localized()
     }
 
     private func embedHomeSection() {
@@ -142,8 +146,15 @@ extension HomeViewController: ViewModelBindable {
         output
             .embedHomeSection
             .drive(onNext: { [weak self] in
-                self?.removeHomeSection()
-                self?.embedHomeSection()
+                guard let `self` = self else { return }
+                self.scrollView.isScrollEnabled = false
+                self.removeHomeSection()
+                self.embedHomeSection()
+                self.scrollView.isScrollEnabled = true
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.scrollView.setContentOffset(CGPoint(x: 0, y: -self.statusHeight-self.largeTitleNavigationHeight), animated: true)
+                }
             })
             .disposed(by: disposeBag)
 
