@@ -20,6 +20,7 @@ final class SubscribeFanPassViewController: UIViewController {
     @IBOutlet weak var fanPassDescriptionLabel: UILabel!
     @IBOutlet weak var descriptionButton: UIButton!
     @IBOutlet weak var descriptionButtonLabel: UILabel!
+    @IBOutlet weak var descriptionStackView: UIView!
     @IBOutlet weak var pxlLabel: UILabel!
     @IBOutlet weak var paymentPxlLabel: UILabel!
     @IBOutlet weak var expireDateLabel: UILabel! {
@@ -108,7 +109,7 @@ extension SubscribeFanPassViewController: ViewModelBindable {
 
                 self?.fanPassTitleLabel.text = "\(LocalizedStrings.str_fanpass_current_tier.localized(with: fanPassItem.level ?? 0)) - \(fanPassItem.name ?? "")"
                 self?.fanPassDescriptionLabel.text = fanPassItem.description
-                self?.descriptionButton.isHidden = fanPassItem.description == ""
+                self?.descriptionStackView.isHidden = fanPassItem.description == ""
             })
             .disposed(by: disposeBag)
 

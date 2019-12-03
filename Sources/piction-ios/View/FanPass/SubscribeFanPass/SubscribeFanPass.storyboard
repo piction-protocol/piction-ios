@@ -26,13 +26,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="eJj-gY-03s">
-                                        <rect key="frame" x="20" y="26" width="335" height="651"/>
+                                        <rect key="frame" x="20" y="26" width="335" height="624.66666666666663"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="hU6-WR-e7r">
-                                                <rect key="frame" x="0.0" y="0.0" width="335" height="114.66666666666667"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="335" height="83.666666666666671"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Zdm-4u-iDg">
-                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="90.333333333333329"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="59.333333333333336"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="선택한 구독 상품" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Dr-lc-ylT">
                                                                 <rect key="frame" x="0.0" y="0.0" width="130" height="24"/>
@@ -50,53 +50,21 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="상품 설명" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N7a-A9-2xE">
-                                                                <rect key="frame" x="0.0" y="67.333333333333329" width="52.333333333333336" height="0.0"/>
+                                                                <rect key="frame" x="0.0" y="59.333333333333329" width="52.333333333333336" height="0.0"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ETQ-VT-WxZ">
-                                                                <rect key="frame" x="0.0" y="75.333333333333329" width="121" height="15"/>
+                                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ETQ-VT-WxZ">
+                                                                <rect key="frame" x="0.0" y="59.333333333333329" width="121" height="15"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NwH-2I-VyH">
                                                                         <rect key="frame" x="0.0" y="0.0" width="121" height="15"/>
                                                                         <attributedString key="attributedText">
-                                                                            <fragment content="상품">
-                                                                                <attributes>
-                                                                                    <color key="NSColor" red="0.1019607843" green="0.57254901960000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                                    <font key="NSFont" size="12" name=".AppleSDGothicNeoI-Regular"/>
-                                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                                                    <integer key="NSUnderline" value="1"/>
-                                                                                </attributes>
-                                                                            </fragment>
-                                                                            <fragment content=" ">
+                                                                            <fragment content="상품 설명 보기">
                                                                                 <attributes>
                                                                                     <color key="NSColor" red="0.1019607843" green="0.57254901960000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <font key="NSFont" metaFont="label" size="12"/>
-                                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                                                    <integer key="NSUnderline" value="1"/>
-                                                                                </attributes>
-                                                                            </fragment>
-                                                                            <fragment content="설명">
-                                                                                <attributes>
-                                                                                    <color key="NSColor" red="0.1019607843" green="0.57254901960000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                                    <font key="NSFont" size="12" name=".AppleSDGothicNeoI-Regular"/>
-                                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                                                    <integer key="NSUnderline" value="1"/>
-                                                                                </attributes>
-                                                                            </fragment>
-                                                                            <fragment content=" ">
-                                                                                <attributes>
-                                                                                    <color key="NSColor" red="0.1019607843" green="0.57254901960000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                                    <font key="NSFont" metaFont="label" size="12"/>
-                                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                                                    <integer key="NSUnderline" value="1"/>
-                                                                                </attributes>
-                                                                            </fragment>
-                                                                            <fragment content="보기">
-                                                                                <attributes>
-                                                                                    <color key="NSColor" red="0.1019607843" green="0.57254901960000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                                    <font key="NSFont" size="12" name=".AppleSDGothicNeoI-Regular"/>
                                                                                     <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                                     <integer key="NSUnderline" value="1"/>
                                                                                 </attributes>
@@ -128,7 +96,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kSo-OP-gJp">
-                                                        <rect key="frame" x="0.0" y="114.33333333333334" width="335" height="0.3333333333333286"/>
+                                                        <rect key="frame" x="0.0" y="83.333333333333329" width="335" height="0.3333333333333286"/>
                                                         <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="0.33000000000000002" id="KXc-wX-Sfq"/>
@@ -137,7 +105,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="VPC-iH-qLz">
-                                                <rect key="frame" x="0.0" y="138.66666666666666" width="335" height="112.66666666666666"/>
+                                                <rect key="frame" x="0.0" y="107.66666666666666" width="335" height="112.66666666666666"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="QyK-qo-V5t">
                                                         <rect key="frame" x="0.0" y="0.0" width="335" height="88.333333333333329"/>
@@ -197,10 +165,10 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="c0Z-aJ-tjc">
-                                                <rect key="frame" x="0.0" y="275.33333333333331" width="335" height="104.66666666666669"/>
+                                                <rect key="frame" x="0.0" y="244.33333333333334" width="335" height="109.33333333333334"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hyQ-8j-3WX">
-                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="80.333333333333329"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="85"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="결제 금액" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BYu-kp-uPw">
                                                                 <rect key="frame" x="0.0" y="0.0" width="73.666666666666671" height="24"/>
@@ -212,13 +180,13 @@
                                                                 </userDefinedRuntimeAttributes>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7j-dn-M8a">
-                                                                <rect key="frame" x="0.0" y="32" width="5.666666666666667" height="23.333333333333329"/>
+                                                                <rect key="frame" x="0.0" y="32" width="5" height="28"/>
                                                                 <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="20"/>
                                                                 <color key="textColor" name="PictionDarkGray"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="SP4-Zy-qPm">
-                                                                <rect key="frame" x="0.0" y="63.333333333333371" width="60" height="17"/>
+                                                                <rect key="frame" x="0.0" y="68" width="60" height="17"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="제공 기간" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CKL-hv-lsB">
                                                                         <rect key="frame" x="0.0" y="0.0" width="52" height="17"/>
@@ -240,7 +208,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qOS-rs-T0a">
-                                                        <rect key="frame" x="0.0" y="104.33333333333337" width="335" height="0.3333333333333286"/>
+                                                        <rect key="frame" x="0.0" y="109" width="335" height="0.3333333333333286"/>
                                                         <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="0.33000000000000002" id="AgC-xW-aMT"/>
@@ -249,7 +217,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="kEB-fl-5Pb">
-                                                <rect key="frame" x="0.0" y="404" width="335" height="116"/>
+                                                <rect key="frame" x="0.0" y="377.66666666666669" width="335" height="116"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="송금 안내" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I4p-w6-qm6">
                                                         <rect key="frame" x="0.0" y="0.0" width="52" height="17"/>
@@ -300,7 +268,7 @@
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vTm-O9-8FI">
-                                                <rect key="frame" x="0.0" y="544" width="335" height="30"/>
+                                                <rect key="frame" x="0.0" y="517.66666666666663" width="335" height="30"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="5K1-N0-fbc">
                                                         <rect key="frame" x="0.0" y="-2" width="335" height="33.666666666666664"/>
@@ -341,7 +309,7 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zSP-1p-Sjp" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="598" width="335" height="53"/>
+                                                <rect key="frame" x="0.0" y="571.66666666666663" width="335" height="53"/>
                                                 <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="53" id="NmX-5G-tNj"/>
@@ -392,6 +360,7 @@
                         <outlet property="checkboxImageView" destination="1Rj-aY-zw2" id="pnW-MJ-Vzy"/>
                         <outlet property="descriptionButton" destination="Rj2-Vx-adx" id="TJT-0b-ykr"/>
                         <outlet property="descriptionButtonLabel" destination="NwH-2I-VyH" id="Rsp-sj-Lum"/>
+                        <outlet property="descriptionStackView" destination="ETQ-VT-WxZ" id="l9t-zL-ste"/>
                         <outlet property="expireDateLabel" destination="aJe-dq-TDo" id="60O-S0-vuN"/>
                         <outlet property="fanPassDescriptionLabel" destination="N7a-A9-2xE" id="NYi-7D-6J2"/>
                         <outlet property="fanPassTitleLabel" destination="Eje-5W-NkW" id="Lwv-KO-L9i"/>
