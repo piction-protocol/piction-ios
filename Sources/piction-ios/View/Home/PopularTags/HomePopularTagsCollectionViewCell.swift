@@ -12,8 +12,6 @@ import RxCocoa
 import PictionSDK
 
 final class HomePopularTagsCollectionViewCell: ReuseCollectionViewCell {
-    var disposeBag = DisposeBag()
-
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var thumbnailVisualEffectView: VisualEffectView! {
         didSet {
@@ -27,7 +25,6 @@ final class HomePopularTagsCollectionViewCell: ReuseCollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        disposeBag = DisposeBag()
         thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
     }
 
