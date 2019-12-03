@@ -15,6 +15,11 @@ final class TagResultProjectListCollectionViewCell: ReuseCollectionViewCell {
     @IBOutlet weak var nicknameLabel: UILabel!
     @IBOutlet weak var updateLabel: UILabel!
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
+    }
+
     typealias Model = ProjectModel
 
     func configure(with model: Model) {

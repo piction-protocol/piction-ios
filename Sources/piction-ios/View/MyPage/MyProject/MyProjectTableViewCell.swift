@@ -21,6 +21,11 @@ final class MyProjectTableViewCell: ReuseTableViewCell {
         }
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450")
+    }
+
     typealias Model = ProjectModel
 
     func configure(with model: Model) {

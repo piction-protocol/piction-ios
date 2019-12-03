@@ -14,6 +14,11 @@ final class SearchSponsorTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var idLabel: UILabel!
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
+    }
+
     typealias Model = UserModel
 
     override func layoutSubviews() {

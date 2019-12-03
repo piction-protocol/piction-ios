@@ -31,6 +31,7 @@ final class HomeSubscriptionCollectionViewCell: ReuseCollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         disposeBag = DisposeBag()
+        thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
     }
 
     private func openProjectViewController(uri: String) {

@@ -12,6 +12,11 @@ import PictionSDK
 final class HomeNoticeCollectionViewCell: ReuseCollectionViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450")
+    }
+
     typealias Model = BannerModel
 
     func configure(with model: Model) {

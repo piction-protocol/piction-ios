@@ -16,6 +16,11 @@ class SubscriptionUserTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var subscriptionDateLabel: UILabel!
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        profileImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
+    }
+
     typealias Model = SubscriptionUserModel
 
     func configure(with model: Model) {

@@ -21,6 +21,11 @@ final class ProjectPostListTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var lockMessageLabel: UILabel!
     @IBOutlet weak var maskImage: VisualEffectView!
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360")
+    }
+
     typealias Model = PostModel
 
     override func layoutSubviews() {

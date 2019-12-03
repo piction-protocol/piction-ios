@@ -16,6 +16,11 @@ final class SponsorshipHistoryTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        profileImageView.image = #imageLiteral(resourceName: "img-dummy-userprofile-500-x-500")
+    }
+
     typealias Model = SponsorshipModel
 
     func configure(with model: Model) {

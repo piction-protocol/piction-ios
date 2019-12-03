@@ -25,13 +25,13 @@ final class HomePopularTagsCollectionViewCell: ReuseCollectionViewCell {
     @IBOutlet weak var eventLabel: UILabel!
     @IBOutlet weak var eventView: UIView!
 
-    typealias Model = HomePopularTagsModel
-
-
     override func prepareForReuse() {
         super.prepareForReuse()
         disposeBag = DisposeBag()
+        thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
     }
+
+    typealias Model = HomePopularTagsModel
 
     func configure(with model: Model) {
         let (tagname, projectCount, label, thumbnail) = (model.tag.name, model.tag.taggingCount, model.tag.label, model.thumbnail)
@@ -44,10 +44,10 @@ final class HomePopularTagsCollectionViewCell: ReuseCollectionViewCell {
         if let thumbnail = thumbnail {
             let thumbnailWithIC = "\(thumbnail)?w=720&h=720&quality=80&output=webp"
             if let url = URL(string: thumbnailWithIC) {
-                self.thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-square-500-x-500"), completed: nil)
+                thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-square-500-x-500"), completed: nil)
             }
         } else {
-            self.thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
+            thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
         }
     }
 }
