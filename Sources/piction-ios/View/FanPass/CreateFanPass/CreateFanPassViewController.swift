@@ -89,7 +89,7 @@ extension CreateFanPassViewController: ViewModelBindable {
 
         output
             .loadFanPass
-            .map { $0.subscriptionLimit == nil ? #imageLiteral(resourceName: "checkboxOn") : nil}
+            .map { $0.subscriptionLimit == nil ? #imageLiteral(resourceName: "checkboxOn") : #imageLiteral(resourceName: "checkboxOff") }
             .drive(checkboxImageView.rx.image)
             .disposed(by: disposeBag)
 
@@ -112,7 +112,7 @@ extension CreateFanPassViewController: ViewModelBindable {
                 guard let isEnabled = self?.limitTextField.isHidden else { return }
                 self?.checkboxImageView.image = isEnabled ? #imageLiteral(resourceName: "checkboxOff") : #imageLiteral(resourceName: "checkboxOn")
                 self?.limitTextField.isHidden = !isEnabled
-                self?.limitTextField.text = nil
+                self?.limitTextField.text = "0"
             })
             .disposed(by: disposeBag)
 
