@@ -1,8 +1,8 @@
 //
-//  SeriesListViewController.swift
-//  piction-ios-shareEx
+//  ManageSeriesViewController.swift
+//  piction-ios
 //
-//  Created by jhseo on 2019/11/06.
+//  Created by jhseo on 2019/10/25.
 //  Copyright © 2019 Piction Network. All rights reserved.
 //
 
@@ -13,11 +13,11 @@ import ViewModelBindable
 import RxDataSources
 import PictionSDK
 
-protocol SeriesListDelegate: class {
+protocol ManageSeriesDelegate: class {
     func selectSeries(with series: SeriesModel?)
 }
 
-final class SeriesListViewController: UIViewController {
+final class ManageSeriesViewController: UIViewController {
     var disposeBag = DisposeBag()
 
     @IBOutlet weak var emptyView: UIView!
@@ -25,27 +25,31 @@ final class SeriesListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var closeButton: UIBarButtonItem!
     @IBOutlet weak var createButton: UIButton!
+    @IBOutlet weak var reorderButton: UIBarButtonItem!
 
-    weak var delegate: SeriesListDelegate?
+    weak var delegate: ManageSeriesDelegate?
 
     private let updateSeries = PublishSubject<(String, SeriesModel?)>()
     private let contextualAction = PublishSubject<(UIContextualAction.Style, IndexPath)>()
     private let deleteConfirm = PublishSubject<Int>()
+    private let reorderItems = PublishSubject<[Int]>()
 
-    private func embedCustomEmptyViewController(style: EmptyViewStyle) {
+    private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
         _ = emptyView.subviews.map { $0.removeFromSuperview() }
-        emptyView.frame.size.height = view.frame.size.height
-        let vc = EmptyViewController.make(style: style)
+        emptyView.frame.size.height = visibleHeight
+        let vc = CustomEmptyViewController.make(style: style)
         embed(vc, to: emptyView)
     }
 
     private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, SeriesModel>> {
         return RxTableViewSectionedReloadDataSource<SectionModel<String, SeriesModel>>(
             configureCell: { dataSource, tableView, indexPath, model in
-                let cell: SeriesListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                let cell: ManageSeriesTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
                 cell.configure(with: model)
                 return cell
         }, canEditRowAtIndexPath: { (_, _) in
+            return true
+        }, canMoveRowAtIndexPath: { (dataSource, indexPath) in
             return true
         })
     }
@@ -98,8 +102,8 @@ final class SeriesListViewController: UIViewController {
 
         let cancelAction = UIAlertAction(
             title: LocalizedStrings.cancel.localized(),
-            style:UIAlertAction.Style.cancel,
-            handler:{ action in
+            style: UIAlertAction.Style.cancel,
+            handler: { action in
             })
 
         alertController.addAction(insertAction)
@@ -109,19 +113,25 @@ final class SeriesListViewController: UIViewController {
     }
 }
 
-extension SeriesListViewController: ViewModelBindable {
-    typealias ViewModel = SeriesListViewModel
+extension ManageSeriesViewController: ViewModelBindable {
+    typealias ViewModel = ManageSeriesViewModel
 
     func bindViewModel(viewModel: ViewModel) {
         let dataSource = configureDataSource()
 
-        let input = SeriesListViewModel.Input(
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+
+        let input = ManageSeriesViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
+            viewWillDisappear: rx.viewWillDisappear.asDriver(),
             selectedIndexPath: tableView.rx.itemSelected.asDriver(),
+            reorderBtnDidTap: reorderButton.rx.tap.asDriver(),
             createBtnDidTap: createButton.rx.tap.asDriver(),
             contextualAction: contextualAction.asDriver(onErrorDriveWith: .empty()),
             deleteConfirm: deleteConfirm.asDriver(onErrorDriveWith: .empty()),
             updateSeries: updateSeries.asDriver(onErrorDriveWith: .empty()),
+            reorderItems: reorderItems.asDriver(onErrorDriveWith: .empty()),
             closeBtnDidTap: closeButton.rx.tap.asDriver()
         )
 
@@ -132,8 +142,22 @@ extension SeriesListViewController: ViewModelBindable {
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self?.tableView.allowsSelection = self?.delegate != nil
+                self?.tableView.allowsSelectionDuringEditing = self?.delegate != nil
                 let uri = self?.viewModel?.uri ?? ""
-                FirebaseManager.screenName("공유_시리즈목록_\(uri)")
+                let seriesId = self?.viewModel?.seriesId ?? 0
+                FirebaseManager.screenName("시리즈목록_\(uri)_\(seriesId)")
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .viewWillDisappear
+            .drive(onNext: { [weak self] _ in
+                if let selectedIndexPath = self?.tableView.indexPathForSelectedRow {
+                    let series = dataSource[selectedIndexPath]
+                    self?.delegate?.selectSeries(with: series)
+                } else {
+                    self?.delegate?.selectSeries(with: nil)
+                }
             })
             .disposed(by: disposeBag)
 
@@ -149,12 +173,37 @@ extension SeriesListViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
+            .seriesList
+            .drive(onNext: { [weak self] seriesList in
+                let selectedSeriesId = self?.viewModel?.seriesId ?? 0
+                guard let seriesIndex = seriesList.firstIndex(where: { $0.id == selectedSeriesId }) else { return }
+                let indexPath = IndexPath(row: seriesIndex, section: 0)
+                self?.tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
+            })
+            .disposed(by: disposeBag)
+
+        output
             .selectedIndexPath
             .drive(onNext: { [weak self] indexPath in
                 guard let delegate = self?.delegate else { return }
                 let series = dataSource[indexPath]
                 delegate.selectSeries(with: series)
-                self?.dismiss(animated: true)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .changeEditMode
+            .drive(onNext: { [weak self] _ in
+                guard let isEditing = self?.tableView.isEditing else { return }
+
+                if isEditing {
+                    guard let models = dataSource.sectionModels[safe: 0]?.items else { return }
+                    let reorderItems = models.map { $0.id ?? 0 }
+                    self?.reorderItems.onNext(reorderItems)
+                }
+
+                self?.reorderButton.title = isEditing ? LocalizedStrings.str_sort.localized() : LocalizedStrings.str_completed.localized()
+                self?.tableView.setEditing(!isEditing, animated: true)
             })
             .disposed(by: disposeBag)
 
@@ -189,6 +238,21 @@ extension SeriesListViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
+            .showToast
+            .drive(onNext: { message in
+                guard message != "" else { return }
+                Toast.showToast(message)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .activityIndicator
+            .drive(onNext: { status in
+                Toast.loadingActivity(status)
+            })
+            .disposed(by: disposeBag)
+
+        output
             .dismissViewController
             .drive(onNext: { [weak self] _ in
                 self?.dismiss(animated: true)
@@ -197,7 +261,7 @@ extension SeriesListViewController: ViewModelBindable {
     }
 }
 
-extension SeriesListViewController: UITableViewDelegate {
+extension ManageSeriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let editAction = UIContextualAction(style: .normal, title: LocalizedStrings.edit.localized(), handler: { [weak self] (action, view, completionHandler) in
             self?.contextualAction.onNext((action.style, indexPath))

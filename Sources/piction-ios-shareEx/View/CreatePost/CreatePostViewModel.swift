@@ -46,7 +46,7 @@ final class CreatePostViewModel: ViewModel {
         let selectedImages: Driver<[UIImage]>
         let openProjectListViewController: Driver<[ProjectModel]>
         let selectedProject: Driver<ProjectModel?>
-        let openSeriesListViewController: Driver<String>
+        let openManageSeriesViewController: Driver<String>
         let selectedSeries: Driver<SeriesModel?>
         let openStatusActionSheet: Driver<Void>
         let selectedStatus: Driver<String>
@@ -127,7 +127,7 @@ final class CreatePostViewModel: ViewModel {
 
         let fanPassId = Driver.merge(fanPassSuccess, fanPassError)
 
-        let openSeriesListViewController = input.seriesBtnDidTap
+        let openManageSeriesViewController = input.seriesBtnDidTap
             .withLatestFrom(selectedProject)
             .filter { $0 != nil }
             .flatMap { project -> Driver<String> in
@@ -311,7 +311,7 @@ final class CreatePostViewModel: ViewModel {
             selectedImages: selectedImages,
             openProjectListViewController: openProjectListViewController,
             selectedProject: selectedProject,
-            openSeriesListViewController: openSeriesListViewController,
+            openManageSeriesViewController: openManageSeriesViewController,
             selectedSeries: selectedSeries,
             openStatusActionSheet: input.statusBtnDidTap,
             selectedStatus: selectedStatus,

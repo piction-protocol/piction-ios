@@ -49,7 +49,7 @@ public enum Storyboard: String {
     case ConfirmPincode
     case QRCodeScanner
     case TagResultProject
-    case SeriesList
+    case ManageSeries
     case SubscriptionUser
     case FanPassList
     case SubscribeFanPass

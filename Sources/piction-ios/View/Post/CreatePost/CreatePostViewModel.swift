@@ -61,7 +61,7 @@ final class CreatePostViewModel: InjectableViewModel {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
         let isModify: Driver<Bool>
-        let openSeriesListViewController: Driver<(String, Int?)>
+        let openManageSeriesViewController: Driver<(String, Int?)>
         let loadPostInfo: Driver<(PostModel, String)>
         let uploadContentImage: Driver<(String, UIImage)>
         let openCoverImagePicker: Driver<Void>
@@ -345,7 +345,7 @@ final class CreatePostViewModel: InjectableViewModel {
                 }
             }
 
-        let openSeriesListViewController = input.selectSeriesBtnDidTap
+        let openManageSeriesViewController = input.selectSeriesBtnDidTap
             .withLatestFrom(seriesId.asDriver(onErrorDriveWith: .empty()))
             .flatMap { [weak self] seriesId -> Driver<(String, Int?)> in
                 return Driver.just((self?.uri ?? "", seriesId))
@@ -364,7 +364,7 @@ final class CreatePostViewModel: InjectableViewModel {
             viewWillAppear: input.viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
             isModify: isModify,
-            openSeriesListViewController: openSeriesListViewController,
+            openManageSeriesViewController: openManageSeriesViewController,
             loadPostInfo: loadPostInfo,
             uploadContentImage: contentImage,
             openCoverImagePicker: input.coverImageBtnDidTap,

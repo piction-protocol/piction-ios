@@ -1,5 +1,5 @@
 //
-//  SeriesListTableViewCell.swift
+//  ManageSeriesTableViewCell.swift
 //  piction-ios-shareEx
 //
 //  Created by jhseo on 2019/11/06.
@@ -9,7 +9,7 @@
 import UIKit
 import PictionSDK
 
-class SeriesListTableViewCell: ReuseTableViewCell {
+class ManageSeriesTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
 
     typealias Model = SeriesModel

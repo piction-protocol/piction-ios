@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		4309234C2372B5A200716AF8 /* ShareEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309234B2372B5A200716AF8 /* ShareEntryViewController.swift */; };
-		430924222372CB9000716AF8 /* SeriesList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 430924212372CB9000716AF8 /* SeriesList.storyboard */; };
-		430924242372CB9F00716AF8 /* SeriesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430924232372CB9F00716AF8 /* SeriesListViewController.swift */; };
+		430924222372CB9000716AF8 /* ManageSeries.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 430924212372CB9000716AF8 /* ManageSeries.storyboard */; };
+		430924242372CB9F00716AF8 /* ManageSeriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430924232372CB9F00716AF8 /* ManageSeriesViewController.swift */; };
 		430924262372CBAC00716AF8 /* CreatePost.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 430924252372CBAC00716AF8 /* CreatePost.storyboard */; };
 		430924282372CBB600716AF8 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430924272372CBB600716AF8 /* CreatePostViewController.swift */; };
 		4309242A2372CBBF00716AF8 /* CreatePostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430924292372CBBF00716AF8 /* CreatePostViewModel.swift */; };
-		4309242C2372CBCB00716AF8 /* SeriesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309242B2372CBCB00716AF8 /* SeriesListViewModel.swift */; };
-		4309242E2372CEFA00716AF8 /* SeriesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309242D2372CEFA00716AF8 /* SeriesListTableViewCell.swift */; };
+		4309242C2372CBCB00716AF8 /* ManageSeriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309242B2372CBCB00716AF8 /* ManageSeriesViewModel.swift */; };
+		4309242E2372CEFA00716AF8 /* ManageSeriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309242D2372CEFA00716AF8 /* ManageSeriesTableViewCell.swift */; };
 		4323FA5C233A165600243655 /* UIViewController.Container+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F97F233A165600243655 /* UIViewController.Container+Extension.swift */; };
 		4323FA5D233A165600243655 /* UIViewController.Container+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F97F233A165600243655 /* UIViewController.Container+Extension.swift */; };
 		4323FA5E233A165600243655 /* ViewControllerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F980233A165600243655 /* ViewControllerAssembly.swift */; };
@@ -389,14 +389,14 @@
 		438E762D2362BCF50062D004 /* DynamicCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E762B2362BCF50062D004 /* DynamicCollectionViewFlowLayout.swift */; };
 		438E762F2362BD650062D004 /* ProjectInfoTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E762E2362BD650062D004 /* ProjectInfoTagCollectionViewCell.swift */; };
 		438E76302362BD650062D004 /* ProjectInfoTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E762E2362BD650062D004 /* ProjectInfoTagCollectionViewCell.swift */; };
-		438E76332362FAA20062D004 /* SeriesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E76322362FAA20062D004 /* SeriesListViewController.swift */; };
-		438E76342362FAA20062D004 /* SeriesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E76322362FAA20062D004 /* SeriesListViewController.swift */; };
-		438E76362362FAAD0062D004 /* SeriesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E76352362FAAD0062D004 /* SeriesListViewModel.swift */; };
-		438E76372362FAAD0062D004 /* SeriesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E76352362FAAD0062D004 /* SeriesListViewModel.swift */; };
-		438E76392362FAB90062D004 /* SeriesList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 438E76382362FAB90062D004 /* SeriesList.storyboard */; };
-		438E763A2362FAB90062D004 /* SeriesList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 438E76382362FAB90062D004 /* SeriesList.storyboard */; };
-		438E763C2362FD050062D004 /* SeriesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E763B2362FD050062D004 /* SeriesListTableViewCell.swift */; };
-		438E763D2362FD050062D004 /* SeriesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E763B2362FD050062D004 /* SeriesListTableViewCell.swift */; };
+		438E76332362FAA20062D004 /* ManageSeriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E76322362FAA20062D004 /* ManageSeriesViewController.swift */; };
+		438E76342362FAA20062D004 /* ManageSeriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E76322362FAA20062D004 /* ManageSeriesViewController.swift */; };
+		438E76362362FAAD0062D004 /* ManageSeriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E76352362FAAD0062D004 /* ManageSeriesViewModel.swift */; };
+		438E76372362FAAD0062D004 /* ManageSeriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E76352362FAAD0062D004 /* ManageSeriesViewModel.swift */; };
+		438E76392362FAB90062D004 /* ManageSeries.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 438E76382362FAB90062D004 /* ManageSeries.storyboard */; };
+		438E763A2362FAB90062D004 /* ManageSeries.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 438E76382362FAB90062D004 /* ManageSeries.storyboard */; };
+		438E763C2362FD050062D004 /* ManageSeriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E763B2362FD050062D004 /* ManageSeriesTableViewCell.swift */; };
+		438E763D2362FD050062D004 /* ManageSeriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E763B2362FD050062D004 /* ManageSeriesTableViewCell.swift */; };
 		438E76432366B6190062D004 /* SubscriptionUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E76422366B6190062D004 /* SubscriptionUserViewModel.swift */; };
 		438E76442366B6190062D004 /* SubscriptionUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E76422366B6190062D004 /* SubscriptionUserViewModel.swift */; };
 		438E76462366B6270062D004 /* SubscriptionUser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 438E76452366B6260062D004 /* SubscriptionUser.storyboard */; };
@@ -420,7 +420,7 @@
 		439E7E87237BE47B00E4A475 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430924272372CBB600716AF8 /* CreatePostViewController.swift */; };
 		439E7E88237BE47B00E4A475 /* ProjectListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EBE1B12378E93B0081C3B7 /* ProjectListTableViewCell.swift */; };
 		439E7E89237BE47B00E4A475 /* ProjectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EBE1AD2378E8A70081C3B7 /* ProjectListViewModel.swift */; };
-		439E7E8A237BE47B00E4A475 /* SeriesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309242B2372CBCB00716AF8 /* SeriesListViewModel.swift */; };
+		439E7E8A237BE47B00E4A475 /* ManageSeriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309242B2372CBCB00716AF8 /* ManageSeriesViewModel.swift */; };
 		439E7E8B237BE47B00E4A475 /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C41F562373B30B00D012A7 /* EmptyViewController.swift */; };
 		439E7E8C237BE47B00E4A475 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EBE19B2373EECD0081C3B7 /* UIColor+Extension.swift */; };
 		439E7E8D237BE47B00E4A475 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EBE1A823740E300081C3B7 /* UIImage+Extension.swift */; };
@@ -430,7 +430,7 @@
 		439E7E91237BE47B00E4A475 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FBC2233C876D00243655 /* Localization.swift */; };
 		439E7E92237BE47B00E4A475 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E7E38237A65C400E4A475 /* Date+Extension.swift */; };
 		439E7E93237BE47B00E4A475 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EBE1BB237936610081C3B7 /* Updater.swift */; };
-		439E7E94237BE47B00E4A475 /* SeriesListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309242D2372CEFA00716AF8 /* SeriesListTableViewCell.swift */; };
+		439E7E94237BE47B00E4A475 /* ManageSeriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309242D2372CEFA00716AF8 /* ManageSeriesTableViewCell.swift */; };
 		439E7E96237BE47B00E4A475 /* CreatePostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E7E3423794DAB00E4A475 /* CreatePostCollectionViewCell.swift */; };
 		439E7E97237BE47B00E4A475 /* CreatePostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430924292372CBBF00716AF8 /* CreatePostViewModel.swift */; };
 		439E7E98237BE47B00E4A475 /* ProjectListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EBE1AB2378E89D0081C3B7 /* ProjectListViewController.swift */; };
@@ -442,7 +442,7 @@
 		439E7E9E237BE47B00E4A475 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C41F5C2373B5C000D012A7 /* UITableView+Extension.swift */; };
 		439E7E9F237BE47B00E4A475 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EBE1A623740DC90081C3B7 /* UINavigationController+Extension.swift */; };
 		439E7EA0237BE47B00E4A475 /* StoryBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C41F512373B1BE00D012A7 /* StoryBoard.swift */; };
-		439E7EA1237BE47B00E4A475 /* SeriesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430924232372CB9F00716AF8 /* SeriesListViewController.swift */; };
+		439E7EA1237BE47B00E4A475 /* ManageSeriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430924232372CB9F00716AF8 /* ManageSeriesViewController.swift */; };
 		439E7EA2237BE47B00E4A475 /* UtilityAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EBE1B8237935930081C3B7 /* UtilityAssembly.swift */; };
 		439E7EA3237BE47B00E4A475 /* Container+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C41F4E2373A32500D012A7 /* Container+Extension.swift */; };
 		439E7EA4237BE47B00E4A475 /* InputAppliable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C41F422373A28600D012A7 /* InputAppliable.swift */; };
@@ -466,7 +466,7 @@
 		439E7EBB237BE47B00E4A475 /* ProjectList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43EBE1AF2378E8B10081C3B7 /* ProjectList.storyboard */; };
 		439E7EBC237BE47B00E4A475 /* CreatePost.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 430924252372CBAC00716AF8 /* CreatePost.storyboard */; };
 		439E7EBD237BE47B00E4A475 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA55233A165600243655 /* Assets.xcassets */; };
-		439E7EBE237BE47B00E4A475 /* SeriesList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 430924212372CB9000716AF8 /* SeriesList.storyboard */; };
+		439E7EBE237BE47B00E4A475 /* ManageSeries.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 430924212372CB9000716AF8 /* ManageSeries.storyboard */; };
 		439E7ECF237BE57900E4A475 /* piction-ios-shareEx_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 439E7ECA237BE57900E4A475 /* piction-ios-shareEx_Info.plist */; };
 		439E7ED2237BE57900E4A475 /* piction-ios-test-shareEx_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 439E7ECD237BE57900E4A475 /* piction-ios-test-shareEx_Info.plist */; };
 		439E7ED5237BEC0C00E4A475 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E7ED4237BEC0B00E4A475 /* KeyboardManager.swift */; };
@@ -607,13 +607,13 @@
 		4309235A2372BAB000716AF8 /* UIViewController.Container+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController.Container+Extension.swift"; sourceTree = "<group>"; };
 		4309235C2372BACD00716AF8 /* ViewControllerAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerAssembly.swift; sourceTree = "<group>"; };
 		4309235E2372BADB00716AF8 /* ViewModelAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelAssembly.swift; sourceTree = "<group>"; };
-		430924212372CB9000716AF8 /* SeriesList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SeriesList.storyboard; sourceTree = "<group>"; };
-		430924232372CB9F00716AF8 /* SeriesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesListViewController.swift; sourceTree = "<group>"; };
+		430924212372CB9000716AF8 /* ManageSeries.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ManageSeries.storyboard; sourceTree = "<group>"; };
+		430924232372CB9F00716AF8 /* ManageSeriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageSeriesViewController.swift; sourceTree = "<group>"; };
 		430924252372CBAC00716AF8 /* CreatePost.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreatePost.storyboard; sourceTree = "<group>"; };
 		430924272372CBB600716AF8 /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
 		430924292372CBBF00716AF8 /* CreatePostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewModel.swift; sourceTree = "<group>"; };
-		4309242B2372CBCB00716AF8 /* SeriesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesListViewModel.swift; sourceTree = "<group>"; };
-		4309242D2372CEFA00716AF8 /* SeriesListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesListTableViewCell.swift; sourceTree = "<group>"; };
+		4309242B2372CBCB00716AF8 /* ManageSeriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageSeriesViewModel.swift; sourceTree = "<group>"; };
+		4309242D2372CEFA00716AF8 /* ManageSeriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageSeriesTableViewCell.swift; sourceTree = "<group>"; };
 		4317A40622E172A200A5C725 /* piction-ios-test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "piction-ios-test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4323F97F233A165600243655 /* UIViewController.Container+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController.Container+Extension.swift"; sourceTree = "<group>"; };
 		4323F980233A165600243655 /* ViewControllerAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerAssembly.swift; sourceTree = "<group>"; };
@@ -805,10 +805,10 @@
 		4372268C237E7F610054C777 /* RxDataSources+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxDataSources+Extension.swift"; sourceTree = "<group>"; };
 		438E762B2362BCF50062D004 /* DynamicCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		438E762E2362BD650062D004 /* ProjectInfoTagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectInfoTagCollectionViewCell.swift; sourceTree = "<group>"; };
-		438E76322362FAA20062D004 /* SeriesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesListViewController.swift; sourceTree = "<group>"; };
-		438E76352362FAAD0062D004 /* SeriesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesListViewModel.swift; sourceTree = "<group>"; };
-		438E76382362FAB90062D004 /* SeriesList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SeriesList.storyboard; sourceTree = "<group>"; };
-		438E763B2362FD050062D004 /* SeriesListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesListTableViewCell.swift; sourceTree = "<group>"; };
+		438E76322362FAA20062D004 /* ManageSeriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageSeriesViewController.swift; sourceTree = "<group>"; };
+		438E76352362FAAD0062D004 /* ManageSeriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageSeriesViewModel.swift; sourceTree = "<group>"; };
+		438E76382362FAB90062D004 /* ManageSeries.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ManageSeries.storyboard; sourceTree = "<group>"; };
+		438E763B2362FD050062D004 /* ManageSeriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageSeriesTableViewCell.swift; sourceTree = "<group>"; };
 		438E76422366B6190062D004 /* SubscriptionUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionUserViewModel.swift; sourceTree = "<group>"; };
 		438E76452366B6260062D004 /* SubscriptionUser.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SubscriptionUser.storyboard; sourceTree = "<group>"; };
 		438E76482366B6650062D004 /* SubscriptionUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionUserTableViewCell.swift; sourceTree = "<group>"; };
@@ -954,7 +954,7 @@
 				43C41F532373B25A00D012A7 /* EmptyView */,
 				430924202372CB4F00716AF8 /* CreatePost */,
 				43EBE1AA2378E88A0081C3B7 /* ProjectList */,
-				4309241F2372CB4700716AF8 /* SeriesList */,
+				4309241F2372CB4700716AF8 /* ManageSeries */,
 				4309234B2372B5A200716AF8 /* ShareEntryViewController.swift */,
 			);
 			path = View;
@@ -987,15 +987,15 @@
 			path = DI;
 			sourceTree = "<group>";
 		};
-		4309241F2372CB4700716AF8 /* SeriesList */ = {
+		4309241F2372CB4700716AF8 /* ManageSeries */ = {
 			isa = PBXGroup;
 			children = (
-				430924232372CB9F00716AF8 /* SeriesListViewController.swift */,
-				4309242B2372CBCB00716AF8 /* SeriesListViewModel.swift */,
-				4309242D2372CEFA00716AF8 /* SeriesListTableViewCell.swift */,
-				430924212372CB9000716AF8 /* SeriesList.storyboard */,
+				430924232372CB9F00716AF8 /* ManageSeriesViewController.swift */,
+				4309242B2372CBCB00716AF8 /* ManageSeriesViewModel.swift */,
+				4309242D2372CEFA00716AF8 /* ManageSeriesTableViewCell.swift */,
+				430924212372CB9000716AF8 /* ManageSeries.storyboard */,
 			);
-			path = SeriesList;
+			path = ManageSeries;
 			sourceTree = "<group>";
 		};
 		430924202372CB4F00716AF8 /* CreatePost */ = {
@@ -1682,7 +1682,7 @@
 		436C75B8238BAC8200902F08 /* Series */ = {
 			isa = PBXGroup;
 			children = (
-				438E76312362FA890062D004 /* SeriesList */,
+				438E76312362FA890062D004 /* ManageSeries */,
 				4323F9DA233A165600243655 /* SeriesPost */,
 			);
 			path = Series;
@@ -1766,15 +1766,15 @@
 			path = DynamicCollectionViewFlowLayout;
 			sourceTree = "<group>";
 		};
-		438E76312362FA890062D004 /* SeriesList */ = {
+		438E76312362FA890062D004 /* ManageSeries */ = {
 			isa = PBXGroup;
 			children = (
-				438E76322362FAA20062D004 /* SeriesListViewController.swift */,
-				438E76352362FAAD0062D004 /* SeriesListViewModel.swift */,
-				438E763B2362FD050062D004 /* SeriesListTableViewCell.swift */,
-				438E76382362FAB90062D004 /* SeriesList.storyboard */,
+				438E76322362FAA20062D004 /* ManageSeriesViewController.swift */,
+				438E76352362FAAD0062D004 /* ManageSeriesViewModel.swift */,
+				438E763B2362FD050062D004 /* ManageSeriesTableViewCell.swift */,
+				438E76382362FAB90062D004 /* ManageSeries.storyboard */,
 			);
-			path = SeriesList;
+			path = ManageSeries;
 			sourceTree = "<group>";
 		};
 		438E763E23667ED20062D004 /* SubscriptionUser */ = {
@@ -2266,7 +2266,7 @@
 				4323FB49233A166000243655 /* ChangeMyInfo.storyboard in Resources */,
 				436C75B52387C74500902F08 /* CreateFanPass.storyboard in Resources */,
 				4390292D2383EE8600A3121B /* FanPassList.storyboard in Resources */,
-				438E763A2362FAB90062D004 /* SeriesList.storyboard in Resources */,
+				438E763A2362FAB90062D004 /* ManageSeries.storyboard in Resources */,
 				4323FB71233A166200243655 /* ConfirmDonation.storyboard in Resources */,
 				4356F51C233DF184000710FC /* Localizable.strings in Resources */,
 				4323FB81233A166300243655 /* SendDonation.storyboard in Resources */,
@@ -2298,7 +2298,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4323FAD2233A165B00243655 /* CreatePost.storyboard in Resources */,
-				438E76392362FAB90062D004 /* SeriesList.storyboard in Resources */,
+				438E76392362FAB90062D004 /* ManageSeries.storyboard in Resources */,
 				43C41F672373B84F00D012A7 /* GoogleService-Info.plist in Resources */,
 				4323FB42233A166000243655 /* ChangePassword.storyboard in Resources */,
 				43722687237E46F20054C777 /* HomeNotice.storyboard in Resources */,
@@ -2367,7 +2367,7 @@
 				439E7EBB237BE47B00E4A475 /* ProjectList.storyboard in Resources */,
 				439E7EBC237BE47B00E4A475 /* CreatePost.storyboard in Resources */,
 				439E7EBD237BE47B00E4A475 /* Assets.xcassets in Resources */,
-				439E7EBE237BE47B00E4A475 /* SeriesList.storyboard in Resources */,
+				439E7EBE237BE47B00E4A475 /* ManageSeries.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2462,7 +2462,7 @@
 				430924282372CBB600716AF8 /* CreatePostViewController.swift in Sources */,
 				43EBE1B22378E93B0081C3B7 /* ProjectListTableViewCell.swift in Sources */,
 				43EBE1AE2378E8A70081C3B7 /* ProjectListViewModel.swift in Sources */,
-				4309242C2372CBCB00716AF8 /* SeriesListViewModel.swift in Sources */,
+				4309242C2372CBCB00716AF8 /* ManageSeriesViewModel.swift in Sources */,
 				43C41F572373B30B00D012A7 /* EmptyViewController.swift in Sources */,
 				43EBE19C2373EECD0081C3B7 /* UIColor+Extension.swift in Sources */,
 				43EBE1A923740E300081C3B7 /* UIImage+Extension.swift in Sources */,
@@ -2472,7 +2472,7 @@
 				43EBE1992373EE190081C3B7 /* Localization.swift in Sources */,
 				439E7E39237A65C400E4A475 /* Date+Extension.swift in Sources */,
 				43EBE1BC237936610081C3B7 /* Updater.swift in Sources */,
-				4309242E2372CEFA00716AF8 /* SeriesListTableViewCell.swift in Sources */,
+				4309242E2372CEFA00716AF8 /* ManageSeriesTableViewCell.swift in Sources */,
 				439E7E3523794DAB00E4A475 /* CreatePostCollectionViewCell.swift in Sources */,
 				4309242A2372CBBF00716AF8 /* CreatePostViewModel.swift in Sources */,
 				43EBE1AC2378E89D0081C3B7 /* ProjectListViewController.swift in Sources */,
@@ -2485,7 +2485,7 @@
 				439E7ED9237C059100E4A475 /* FirebaseManager.swift in Sources */,
 				43EBE1A723740DC90081C3B7 /* UINavigationController+Extension.swift in Sources */,
 				43C41F522373B1BE00D012A7 /* StoryBoard.swift in Sources */,
-				430924242372CB9F00716AF8 /* SeriesListViewController.swift in Sources */,
+				430924242372CB9F00716AF8 /* ManageSeriesViewController.swift in Sources */,
 				43EBE1B9237935930081C3B7 /* UtilityAssembly.swift in Sources */,
 				43C41F4F2373A32500D012A7 /* Container+Extension.swift in Sources */,
 				43C41F462373A28700D012A7 /* InputAppliable.swift in Sources */,
@@ -2528,7 +2528,7 @@
 				436C75A22387C37F00902F08 /* ManageFanPassViewController.swift in Sources */,
 				4323FB0B233A165E00243655 /* CustomEmptyViewModel.swift in Sources */,
 				4323FB15233A165E00243655 /* DepositViewController.swift in Sources */,
-				438E76342362FAA20062D004 /* SeriesListViewController.swift in Sources */,
+				438E76342362FAA20062D004 /* ManageSeriesViewController.swift in Sources */,
 				4323FA7B233A165800243655 /* UIViewController+Extension.swift in Sources */,
 				4323FAFD233A165D00243655 /* ProjectViewController.swift in Sources */,
 				43E543812356F5CE00F2EC45 /* ExploreListCollectionFooterView.swift in Sources */,
@@ -2606,7 +2606,7 @@
 				4323FB51233A166100243655 /* TransactionHistoryFooterTypeTableViewCell.swift in Sources */,
 				4323FB1D233A165E00243655 /* TransactionDetailViewController.swift in Sources */,
 				4323FACF233A165B00243655 /* CreatePostViewModel.swift in Sources */,
-				438E76372362FAAD0062D004 /* SeriesListViewModel.swift in Sources */,
+				438E76372362FAAD0062D004 /* ManageSeriesViewModel.swift in Sources */,
 				43E5438D2357139000F2EC45 /* TagResultProjectViewController.swift in Sources */,
 				4323FAB1233A165A00243655 /* SearchViewController.swift in Sources */,
 				4323FB37233A165F00243655 /* MyPageHeaderTypeTableViewCell.swift in Sources */,
@@ -2639,7 +2639,7 @@
 				4323FA6F233A165700243655 /* Date+Extension.swift in Sources */,
 				4323FAA5233A165900243655 /* RegisterPincodeViewController.swift in Sources */,
 				4323FA5D233A165600243655 /* UIViewController.Container+Extension.swift in Sources */,
-				438E763D2362FD050062D004 /* SeriesListTableViewCell.swift in Sources */,
+				438E763D2362FD050062D004 /* ManageSeriesTableViewCell.swift in Sources */,
 				4323FAD5233A165B00243655 /* PostViewModel.swift in Sources */,
 				4323FACB233A165B00243655 /* SubscriptionListViewModel.swift in Sources */,
 				43DB225E235808EE00E69C0F /* HomeTrendingCollectionViewCell.swift in Sources */,
@@ -2715,7 +2715,7 @@
 				436C75A12387C37F00902F08 /* ManageFanPassViewController.swift in Sources */,
 				4323FB0A233A165E00243655 /* CustomEmptyViewModel.swift in Sources */,
 				4323FB14233A165E00243655 /* DepositViewController.swift in Sources */,
-				438E76332362FAA20062D004 /* SeriesListViewController.swift in Sources */,
+				438E76332362FAA20062D004 /* ManageSeriesViewController.swift in Sources */,
 				4323FA7A233A165800243655 /* UIViewController+Extension.swift in Sources */,
 				4323FAFC233A165D00243655 /* ProjectViewController.swift in Sources */,
 				43E543802356F5CD00F2EC45 /* ExploreListCollectionFooterView.swift in Sources */,
@@ -2793,7 +2793,7 @@
 				4323FB50233A166100243655 /* TransactionHistoryFooterTypeTableViewCell.swift in Sources */,
 				4323FB1C233A165E00243655 /* TransactionDetailViewController.swift in Sources */,
 				4323FACE233A165B00243655 /* CreatePostViewModel.swift in Sources */,
-				438E76362362FAAD0062D004 /* SeriesListViewModel.swift in Sources */,
+				438E76362362FAAD0062D004 /* ManageSeriesViewModel.swift in Sources */,
 				43E5438C2357138F00F2EC45 /* TagResultProjectViewController.swift in Sources */,
 				4323FAB0233A165A00243655 /* SearchViewController.swift in Sources */,
 				4323FB36233A165F00243655 /* MyPageHeaderTypeTableViewCell.swift in Sources */,
@@ -2826,7 +2826,7 @@
 				4323FA6E233A165700243655 /* Date+Extension.swift in Sources */,
 				4323FAA4233A165900243655 /* RegisterPincodeViewController.swift in Sources */,
 				4323FA5C233A165600243655 /* UIViewController.Container+Extension.swift in Sources */,
-				438E763C2362FD050062D004 /* SeriesListTableViewCell.swift in Sources */,
+				438E763C2362FD050062D004 /* ManageSeriesTableViewCell.swift in Sources */,
 				4323FAD4233A165B00243655 /* PostViewModel.swift in Sources */,
 				4323FACA233A165B00243655 /* SubscriptionListViewModel.swift in Sources */,
 				43DB225D235808EE00E69C0F /* HomeTrendingCollectionViewCell.swift in Sources */,
@@ -2886,7 +2886,7 @@
 				439E7E87237BE47B00E4A475 /* CreatePostViewController.swift in Sources */,
 				439E7E88237BE47B00E4A475 /* ProjectListTableViewCell.swift in Sources */,
 				439E7E89237BE47B00E4A475 /* ProjectListViewModel.swift in Sources */,
-				439E7E8A237BE47B00E4A475 /* SeriesListViewModel.swift in Sources */,
+				439E7E8A237BE47B00E4A475 /* ManageSeriesViewModel.swift in Sources */,
 				439E7E8B237BE47B00E4A475 /* EmptyViewController.swift in Sources */,
 				439E7E8C237BE47B00E4A475 /* UIColor+Extension.swift in Sources */,
 				439E7E8D237BE47B00E4A475 /* UIImage+Extension.swift in Sources */,
@@ -2896,7 +2896,7 @@
 				439E7E91237BE47B00E4A475 /* Localization.swift in Sources */,
 				439E7E92237BE47B00E4A475 /* Date+Extension.swift in Sources */,
 				439E7E93237BE47B00E4A475 /* Updater.swift in Sources */,
-				439E7E94237BE47B00E4A475 /* SeriesListTableViewCell.swift in Sources */,
+				439E7E94237BE47B00E4A475 /* ManageSeriesTableViewCell.swift in Sources */,
 				439E7E96237BE47B00E4A475 /* CreatePostCollectionViewCell.swift in Sources */,
 				439E7E97237BE47B00E4A475 /* CreatePostViewModel.swift in Sources */,
 				439E7E98237BE47B00E4A475 /* ProjectListViewController.swift in Sources */,
@@ -2909,7 +2909,7 @@
 				439E7EDA237C059100E4A475 /* FirebaseManager.swift in Sources */,
 				439E7E9F237BE47B00E4A475 /* UINavigationController+Extension.swift in Sources */,
 				439E7EA0237BE47B00E4A475 /* StoryBoard.swift in Sources */,
-				439E7EA1237BE47B00E4A475 /* SeriesListViewController.swift in Sources */,
+				439E7EA1237BE47B00E4A475 /* ManageSeriesViewController.swift in Sources */,
 				439E7EA2237BE47B00E4A475 /* UtilityAssembly.swift in Sources */,
 				439E7EA3237BE47B00E4A475 /* Container+Extension.swift in Sources */,
 				439E7EA4237BE47B00E4A475 /* InputAppliable.swift in Sources */,

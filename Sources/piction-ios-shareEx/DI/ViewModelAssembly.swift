@@ -15,8 +15,8 @@ final class ViewModelAssembly: Assembly {
             return CreatePostViewModel(context: context)
         }
 
-        container.register(SeriesListViewModel.self) { (resolver, uri: String) in
-            return SeriesListViewModel(dependency: (
+        container.register(ManageSeriesViewModel.self) { (resolver, uri: String) in
+            return ManageSeriesViewModel(dependency: (
                 resolver.resolve(Updater.self)!,
                 uri: uri)
             )

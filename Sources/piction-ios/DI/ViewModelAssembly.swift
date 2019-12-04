@@ -210,8 +210,8 @@ final class ViewModelAssembly: Assembly {
             return TagResultProjectViewModel(tag: tag)
         }
 
-        container.register(SeriesListViewModel.self) { (resolver, uri: String, seriesId: Int?) in
-            return SeriesListViewModel(dependency: (
+        container.register(ManageSeriesViewModel.self) { (resolver, uri: String, seriesId: Int?) in
+            return ManageSeriesViewModel(dependency: (
                 resolver.resolve(Updater.self)!,
                 uri: uri,
                 seriesId: seriesId)

@@ -77,8 +77,8 @@ final class CreatePostViewController: UIViewController {
         self.present(nav, animated: true)
     }
 
-    func openSeriesListViewController(uri: String) {
-        let vc = SeriesListViewController.make(uri: uri)
+    func openManageSeriesViewController(uri: String) {
+        let vc = ManageSeriesViewController.make(uri: uri)
         vc.delegate = self
         let nav = UINavigationController(rootViewController: vc)
         self.present(nav, animated: true)
@@ -257,9 +257,9 @@ extension CreatePostViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .openSeriesListViewController
+            .openManageSeriesViewController
             .drive(onNext: { [weak self] uri in
-                self?.openSeriesListViewController(uri: uri)
+                self?.openManageSeriesViewController(uri: uri)
             })
             .disposed(by: disposeBag)
 
@@ -359,7 +359,7 @@ extension CreatePostViewController: ProjectListDelegate {
     }
 }
 
-extension CreatePostViewController: SeriesListDelegate {
+extension CreatePostViewController: ManageSeriesDelegate {
     func selectSeries(with series: SeriesModel?) {
         selectedSeries.onNext(series)
     }

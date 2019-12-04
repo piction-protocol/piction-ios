@@ -223,9 +223,9 @@ final class ViewControllerAssembly: Assembly {
             return vc
         }
 
-        container.register(SeriesListViewController.self) { (resolver, uri: String, seriesId: Int?) in
-            let vc = Storyboard.SeriesList.instantiate(SeriesListViewController.self)
-            vc.viewModel = resolver.resolve(SeriesListViewModel.self, arguments: uri, seriesId)!
+        container.register(ManageSeriesViewController.self) { (resolver, uri: String, seriesId: Int?) in
+            let vc = Storyboard.ManageSeries.instantiate(ManageSeriesViewController.self)
+            vc.viewModel = resolver.resolve(ManageSeriesViewModel.self, arguments: uri, seriesId)!
             return vc
         }
 

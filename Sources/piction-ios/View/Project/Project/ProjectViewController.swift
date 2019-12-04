@@ -199,8 +199,8 @@ final class ProjectViewController: UIViewController {
         }
     }
 
-    private func openSeriesListViewController(uri: String, seriesId: Int? = nil) {
-        let vc = SeriesListViewController.make(uri: uri, seriesId: seriesId)
+    private func openManageSeriesViewController(uri: String, seriesId: Int? = nil) {
+        let vc = ManageSeriesViewController.make(uri: uri, seriesId: seriesId)
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .swipePresent)
         }
@@ -533,7 +533,7 @@ extension ProjectViewController: ProjectHeaderViewDelegate {
             title: "시리즈 관리",
             style: UIAlertAction.Style.default,
             handler: { [weak self] action in
-                self?.openSeriesListViewController(uri: uri)
+                self?.openManageSeriesViewController(uri: uri)
             })
 
         let manageFanPassAction = UIAlertAction(

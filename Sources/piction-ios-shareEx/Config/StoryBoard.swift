@@ -11,7 +11,7 @@ import UIKit
 
 public enum Storyboard: String {
     case CreatePost
-    case SeriesList
+    case ManageSeries
     case EmptyView
     case CheckPincode
     case ProjectList

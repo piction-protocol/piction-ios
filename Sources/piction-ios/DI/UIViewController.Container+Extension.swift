@@ -220,9 +220,9 @@ extension TagResultProjectViewController {
     }
 }
 
-extension SeriesListViewController {
-    static func make(uri: String, seriesId: Int?) -> SeriesListViewController {
-        return Container.shared.resolve(SeriesListViewController.self, arguments: uri, seriesId)!
+extension ManageSeriesViewController {
+    static func make(uri: String, seriesId: Int?) -> ManageSeriesViewController {
+        return Container.shared.resolve(ManageSeriesViewController.self, arguments: uri, seriesId)!
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  SeriesListViewModel.swift
+//  ManageSeriesViewModel.swift
 //  piction-ios-shareEx
 //
 //  Created by jhseo on 2019/11/06.
@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
-final class SeriesListViewModel: InjectableViewModel {
+final class ManageSeriesViewModel: InjectableViewModel {
 
     typealias Dependency = (
         UpdaterProtocol,

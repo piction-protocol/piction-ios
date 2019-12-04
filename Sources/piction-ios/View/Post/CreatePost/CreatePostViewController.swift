@@ -179,8 +179,8 @@ final class CreatePostViewController: UIViewController {
         }
     }
 
-    private func openSeriesListViewController(uri: String, seriesId: Int? = nil) {
-        let vc = SeriesListViewController.make(uri: uri, seriesId: seriesId)
+    private func openManageSeriesViewController(uri: String, seriesId: Int? = nil) {
+        let vc = ManageSeriesViewController.make(uri: uri, seriesId: seriesId)
         vc.delegate = self
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .swipePresent)
@@ -402,9 +402,9 @@ extension CreatePostViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .openSeriesListViewController
+            .openManageSeriesViewController
             .drive(onNext: { [weak self] (uri, seriesId) in
-                self?.openSeriesListViewController(uri: uri, seriesId: seriesId)
+                self?.openManageSeriesViewController(uri: uri, seriesId: seriesId)
             })
             .disposed(by: disposeBag)
 
@@ -438,7 +438,7 @@ extension CreatePostViewController: ViewModelBindable {
     }
 }
 
-extension CreatePostViewController: SeriesListDelegate {
+extension CreatePostViewController: ManageSeriesDelegate {
     func selectSeries(with series: SeriesModel?) {
         self.chosenSeries.onNext(series)
     }

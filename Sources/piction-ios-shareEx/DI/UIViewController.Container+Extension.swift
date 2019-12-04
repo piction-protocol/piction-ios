@@ -16,9 +16,9 @@ extension CreatePostViewController {
     }
 }
 
-extension SeriesListViewController {
-    static func make(uri: String) -> SeriesListViewController {
-        return Container.shared.resolve(SeriesListViewController.self, argument: uri)!
+extension ManageSeriesViewController {
+    static func make(uri: String) -> ManageSeriesViewController {
+        return Container.shared.resolve(ManageSeriesViewController.self, argument: uri)!
     }
 }
 
