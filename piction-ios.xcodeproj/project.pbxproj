@@ -569,6 +569,8 @@
 		43EBE1B9237935930081C3B7 /* UtilityAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EBE1B8237935930081C3B7 /* UtilityAssembly.swift */; };
 		43EBE1BC237936610081C3B7 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EBE1BB237936610081C3B7 /* Updater.swift */; };
 		43EBE1BE23793A340081C3B7 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F99D233A165600243655 /* KeyboardManager.swift */; };
+		43EC05A72398DDDE00848CE0 /* postStyle.css in Resources */ = {isa = PBXBuildFile; fileRef = 43EC05A62398DDDE00848CE0 /* postStyle.css */; };
+		43EC05A82398DDDE00848CE0 /* postStyle.css in Resources */ = {isa = PBXBuildFile; fileRef = 43EC05A62398DDDE00848CE0 /* postStyle.css */; };
 		43F1865A2342FEAC0050BA67 /* PostFooterSeriesPostListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F186592342FEAC0050BA67 /* PostFooterSeriesPostListTableViewCell.swift */; };
 		43F1865B2343024A0050BA67 /* PostFooterSeriesPostListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F186592342FEAC0050BA67 /* PostFooterSeriesPostListTableViewCell.swift */; };
 		43F1865F23442ECD0050BA67 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 43F1866223442ECD0050BA67 /* Localizable.stringsdict */; };
@@ -888,6 +890,7 @@
 		43EBE1B62378EAC50081C3B7 /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		43EBE1B8237935930081C3B7 /* UtilityAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityAssembly.swift; sourceTree = "<group>"; };
 		43EBE1BB237936610081C3B7 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
+		43EC05A62398DDDE00848CE0 /* postStyle.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = postStyle.css; sourceTree = "<group>"; };
 		43F186592342FEAC0050BA67 /* PostFooterSeriesPostListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFooterSeriesPostListTableViewCell.swift; sourceTree = "<group>"; };
 		43F1866123442ECD0050BA67 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		43F1866423444E070050BA67 /* DeepLinking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinking.swift; sourceTree = "<group>"; };
@@ -1995,6 +1998,7 @@
 		43EBE1982373EDA50081C3B7 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				43EC05A52398DDB300848CE0 /* CSS */,
 				43502A8B238F502B00586098 /* Font */,
 				4323FBC1233C875800243655 /* Localization */,
 				4323FA54233A165600243655 /* Assets */,
@@ -2043,6 +2047,14 @@
 				43EBE1BB237936610081C3B7 /* Updater.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		43EC05A52398DDB300848CE0 /* CSS */ = {
+			isa = PBXGroup;
+			children = (
+				43EC05A62398DDDE00848CE0 /* postStyle.css */,
+			);
+			path = CSS;
 			sourceTree = "<group>";
 		};
 		43F1866323444DF30050BA67 /* DeepLinking */ = {
@@ -2254,6 +2266,7 @@
 				43E543872356F5CE00F2EC45 /* Explore.storyboard in Resources */,
 				43F1866023442ECD0050BA67 /* Localizable.stringsdict in Resources */,
 				4323FAA9233A165A00243655 /* RegisterPincode.storyboard in Resources */,
+				43EC05A82398DDDE00848CE0 /* postStyle.css in Resources */,
 				4323FB13233A165E00243655 /* DynamicInputView.xib in Resources */,
 				4323FAAD233A165A00243655 /* Search.storyboard in Resources */,
 				43C41F682373B84F00D012A7 /* GoogleService-Info.plist in Resources */,
@@ -2316,6 +2329,7 @@
 				4323FB38233A165F00243655 /* MyPage.storyboard in Resources */,
 				4323FAFA233A165D00243655 /* Project.storyboard in Resources */,
 				4323FB20233A165E00243655 /* TransactionDetail.storyboard in Resources */,
+				43EC05A72398DDDE00848CE0 /* postStyle.css in Resources */,
 				43F1865F23442ECD0050BA67 /* Localizable.stringsdict in Resources */,
 				4323FAA8233A165900243655 /* RegisterPincode.storyboard in Resources */,
 				4323FB12233A165E00243655 /* DynamicInputView.xib in Resources */,

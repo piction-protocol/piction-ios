@@ -162,7 +162,12 @@
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="F9X-at-yXF">
-                        <barButtonItem key="rightBarButtonItem" title="        " id="Fr8-1K-Ymg"/>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="bookmarks" id="vqZ-bV-VGy">
+                                <color key="tintColor" name="PictionDarkGray"/>
+                            </barButtonItem>
+                            <barButtonItem title="        " id="Fr8-1K-Ymg"/>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
@@ -170,6 +175,7 @@
                         <outlet property="nextPostButton" destination="rz0-gr-T2C" id="yVn-wW-IC6"/>
                         <outlet property="postWebView" destination="koI-sV-IVB" id="Pu4-BR-Ko8"/>
                         <outlet property="prevPostButton" destination="zbu-4I-4gs" id="x47-1Z-KtK"/>
+                        <outlet property="readmodeBarButton" destination="vqZ-bV-VGy" id="3Wl-dM-FeF"/>
                         <outlet property="shareBarButton" destination="Fr8-1K-Ymg" id="GA4-4h-y8J"/>
                         <outlet property="subscriptionButton" destination="Lyf-Ue-cna" id="nw7-TC-AT6"/>
                         <outlet property="subscriptionDescriptionLabel" destination="hpX-Jx-aKJ" id="FaU-ZJ-eMo"/>

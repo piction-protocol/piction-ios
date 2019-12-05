@@ -33,6 +33,7 @@ final class PostViewController: UIViewController {
     @IBOutlet weak var prevPostButton: UIButton!
     @IBOutlet weak var nextPostButton: UIButton!
     @IBOutlet weak var shareBarButton: UIBarButtonItem!
+    @IBOutlet weak var readmodeBarButton: UIBarButtonItem!
 
     private let loadPost = PublishSubject<Int>()
 
@@ -166,6 +167,30 @@ final class PostViewController: UIViewController {
         postWebView.evaluateJavaScript("document.getElementsByTagName('body')[0].style.color =\"\(fontColor ?? "#333333")\"")
     }
 
+    private func changeReadmode() {
+        if readmodeBarButton.tintColor == .pictionDarkGrayDM {
+            let style = [
+                "document.getElementsByTagName('body')[0].style.fontFamily =\"RIDIBatang\"",
+                "document.getElementsByTagName('body')[0].style.lineHeight =\"35px\"",
+                "document.getElementsByTagName('body')[0].style.fontSize =\"18px\"",
+                "document.body.style.marginLeft =\"\(SCREEN_W / 8)px\"",
+                "document.body.style.marginRight =\"\(SCREEN_W / 8)px\""
+            ]
+            style.forEach { postWebView.evaluateJavaScript($0) }
+            readmodeBarButton.tintColor = UIView().tintColor
+        } else {
+            let style = [
+                "document.getElementsByTagName('body')[0].style.fontFamily =\"Helvetica\"",
+                "document.getElementsByTagName('body')[0].style.lineHeight =\"28px\"",
+                "document.getElementsByTagName('body')[0].style.fontSize =\"16px\"",
+                "document.body.style.marginLeft =\"20px\"",
+                "document.body.style.marginRight =\"20px\""
+            ]
+            style.forEach { postWebView.evaluateJavaScript($0) }
+            readmodeBarButton.tintColor = .pictionDarkGrayDM
+        }
+    }
+
     deinit {
         cacheWebview()
     }
@@ -186,7 +211,8 @@ extension PostViewController: ViewModelBindable {
             subscriptionBtnDidTap: subscriptionButton.rx.tap.asDriver(),
             shareBarBtnDidTap: shareBarButton.rx.tap.asDriver(),
             contentOffset: postWebView.scrollView.rx.contentOffset.asDriver(),
-            willBeginDecelerating: postWebView.scrollView.rx.willBeginDecelerating.asDriver()
+            willBeginDecelerating: postWebView.scrollView.rx.willBeginDecelerating.asDriver(),
+            readmodeBarButton: readmodeBarButton.rx.tap.asDriver()
         )
 
         let output = viewModel.build(input: input)
@@ -212,7 +238,6 @@ extension PostViewController: ViewModelBindable {
             .viewDidAppear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.toolbar.isHidden = false
-//                self?.navigationController?.setToolbarHidden(false, animated: false)
             })
             .disposed(by: disposeBag)
 
@@ -316,8 +341,15 @@ extension PostViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
+            .changeReadmode
+            .drive(onNext: { [weak self] in
+                self?.changeReadmode()
+            })
+            .disposed(by: disposeBag)
+
+        output
             .openSignInViewController
-            .drive(onNext: { [weak self] _ in
+            .drive(onNext: { [weak self] in
                 self?.openSignInViewController()
             })
             .disposed(by: disposeBag)
@@ -361,7 +393,7 @@ extension PostViewController: ViewModelBindable {
 
         output
             .willBeginDecelerating
-            .drive(onNext: { [weak self] _ in
+            .drive(onNext: { [weak self] in
                 self?.showFullScreen()
             })
             .disposed(by: disposeBag)
@@ -434,17 +466,17 @@ extension PostViewController: WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if navigationAction.navigationType == .linkActivated  {
-            if let requestUrlString = navigationAction.request.url?.absoluteString {
-                guard let url = URL(string: requestUrlString) else {
-                    decisionHandler(.allow)
-                    return }
-                let safariViewController = SFSafariViewController(url: url)
-                present(safariViewController, animated: true, completion: nil)
-
-                decisionHandler(.cancel)
-            } else {
+            guard
+                let requestUrlString = navigationAction.request.url?.absoluteString,
+                let url = URL(string: requestUrlString)
+            else {
                 decisionHandler(.allow)
+                return
             }
+            let safariViewController = SFSafariViewController(url: url)
+            present(safariViewController, animated: true, completion: nil)
+
+            decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)
         }
@@ -459,11 +491,11 @@ extension PostViewController: UIScrollViewDelegate {
 
 extension PostViewController: PostFooterViewDelegate {
     func loadComplete() {
-        if let footerViewController = self.footerViewController {
-            if let contentHeight = footerViewController.tableView?.contentSize.height {
-                postWebView.evaluateJavaScript("document.body.style.marginBottom =\"\(contentHeight)px\"")
-            }
-        }
+        guard
+            let footerViewController = self.footerViewController,
+            let contentHeight = footerViewController.tableView?.contentSize.height
+        else { return }
+        postWebView.evaluateJavaScript("document.body.style.marginBottom =\"\(contentHeight)px\"")
     }
     func reloadPost(postId: Int) {
         loadPost.onNext(postId)

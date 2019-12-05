@@ -36,6 +36,7 @@ final class PostViewModel: InjectableViewModel {
         let shareBarBtnDidTap: Driver<Void>
         let contentOffset: Driver<CGPoint>
         let willBeginDecelerating: Driver<Void>
+        let readmodeBarButton: Driver<Void>
     }
 
     struct Output {
@@ -51,6 +52,7 @@ final class PostViewModel: InjectableViewModel {
         let activityIndicator: Driver<Bool>
         let contentOffset: Driver<CGPoint>
         let willBeginDecelerating: Driver<Void>
+        let changeReadmode: Driver<Void>
         let openSignInViewController: Driver<Void>
         let openFanPassListViewController: Driver<(String, Int?)>
         let reloadPost: Driver<Void>
@@ -73,19 +75,24 @@ final class PostViewModel: InjectableViewModel {
 
         let postContentSuccess = postContentAction.elements
             .flatMap { response -> Driver<String> in
-                guard let postItem = try? response.map(to: ContentModel.self) else {
+                guard
+                    let postItem = try? response.map(to: ContentModel.self),
+                    let path = Bundle.main.path(forResource: "postStyle", ofType: "css"),
+                    let cssString = try? String(contentsOfFile: path).components(separatedBy: .newlines).joined()
+                else {
                     return Driver.just("")
                 }
-
-                let content = "<style type=\"text/css\"> body { font: -apple-system-body; margin: 220px 20px 747px 20px; line-height: 28px; } p { margin: 0px; word-wrap: break-word; } img { max-height: 100%; width: calc(100% + 40px); margin-left: -20px; margin-right: -20px; !important; } .video { position: relative; padding-bottom: 56.25%; height: 0; } iframe { position: absolute; top: 0; left: 0; width: calc(100% + 40px); margin-left: -20px; margin-right: -20px; height: 100%; }</style><meta name=\"viewport\" content=\"initial-scale=1.0\" /><body>\(postItem.content ?? "")</body>"
-                print(postItem.content)
+                let content = """
+                    <meta name="viewport" content="initial-scale=1.0" />
+                    \(cssString)
+                    <body>\(postItem.content ?? "")</body>
+                """
                 return Driver.just(content)
             }
 
         let postContentError = postContentAction.error
             .flatMap { response -> Driver<String> in
-                let content = "<style type=\"text/css\"> body { font: -apple-system-body; margin: 220px 20px 278px 20px; } </style><meta name=\"viewport\" content=\"initial-scale=1.0\" /><body></body>"
-                return Driver.just(content)
+                return Driver.just("")
             }
 
         let showPostContent = Driver.merge(postContentSuccess, postContentError)
@@ -370,6 +377,7 @@ final class PostViewModel: InjectableViewModel {
             activityIndicator: activityIndicator,
             contentOffset: contentOffset,
             willBeginDecelerating: willBeginDecelerating,
+            changeReadmode: input.readmodeBarButton,
             openSignInViewController: openSignInViewController,
             openFanPassListViewController: openFanPassListViewController,
             reloadPost: reloadPost,
