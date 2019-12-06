@@ -91,9 +91,7 @@ final class PostViewModel: InjectableViewModel {
             }
 
         let postContentError = postContentAction.error
-            .flatMap { response -> Driver<String> in
-                return Driver.just("")
-            }
+            .flatMap { _ in Driver<String>.just("") }
 
         let showPostContent = Driver.merge(postContentSuccess, postContentError)
 
@@ -130,7 +128,11 @@ final class PostViewModel: InjectableViewModel {
         let prevPostBtnDidTap = input.prevPostBtnDidTap
             .withLatestFrom(prevPostSuccess)
             .flatMap { [weak self] postItem -> Driver<(String, Int)> in
-                return Driver.just((self?.uri ?? "", postItem.id ?? 0))
+                guard
+                    let `self` = self,
+                    let postId = postItem.id
+                else { return Driver.empty() }
+                return Driver.just((self.uri, postId))
             }
 
         let nextPostAction = Driver.merge(viewWillAppear, refreshContent)
@@ -166,12 +168,17 @@ final class PostViewModel: InjectableViewModel {
         let nextPostBtnDidTap = input.nextPostBtnDidTap
             .withLatestFrom(nextPostSuccess)
             .flatMap { [weak self] postItem -> Driver<(String, Int)> in
-                return Driver.just((self?.uri ?? "", postItem.id ?? 0))
+                guard
+                    let `self` = self,
+                    let postId = postItem.id
+                else { return Driver.empty() }
+                return Driver.just((self.uri, postId))
             }
 
         let loadPost = input.loadPost
             .flatMap { [weak self] postId -> Driver<(String, Int)> in
-                Driver.just((self?.uri ?? "", postId))
+                guard let `self` = self else { return Driver.empty() }
+                return Driver.just((self.uri, postId))
             }
 
         let changePost = Driver.merge(loadPost, prevPostBtnDidTap, nextPostBtnDidTap)
@@ -187,7 +194,8 @@ final class PostViewModel: InjectableViewModel {
 
         let projectInfoAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.get(uri: self?.uri ?? ""))
+                guard let `self` = self else { return Driver.empty() }
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.get(uri: self.uri))
                 return Action.makeDriver(response)
             }
 
@@ -201,7 +209,8 @@ final class PostViewModel: InjectableViewModel {
 
         let postItemAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(PostsAPI.get(uri: self?.uri ?? "", postId: self?.postId ?? 0))
+                guard let `self` = self else { return Driver.empty() }
+                let response = PictionSDK.rx.requestAPI(PostsAPI.get(uri: self.uri, postId: self.postId))
                 return Action.makeDriver(response)
             }
 
@@ -239,7 +248,8 @@ final class PostViewModel: InjectableViewModel {
 
         let subscriptionInfoAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.getProjectSubscription(uri: self?.uri ?? ""))
+                guard let `self` = self else { return Driver.empty() }
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.getProjectSubscription(uri: self.uri))
                 return Action.makeDriver(response)
             }
 
@@ -258,7 +268,6 @@ final class PostViewModel: InjectableViewModel {
 
         let needSubscription = Driver.zip(postItemSuccess, subscriptionInfo, userInfo, writerInfo)
             .flatMap { (postItem, subscriptionInfo, currentUser, writerInfo) -> Driver<Bool> in
-
                 var needSubscription: Bool {
                     if currentUser.loginId ?? "" == writerInfo.loginId ?? "" {
                         return false
@@ -279,12 +288,14 @@ final class PostViewModel: InjectableViewModel {
 
         let footerInfo = postItemSuccess
             .flatMap { [weak self] postItem -> Driver<(String, PostModel)> in
-                return Driver.just((self?.uri ?? "", postItem))
+                guard let `self` = self else { return Driver.empty() }
+                return Driver.just((self.uri, postItem))
             }
 
         let fanPassListAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.fanPassAll(uri: self?.uri ?? ""))
+                guard let `self` = self else { return Driver.empty() }
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.fanPassAll(uri: self.uri))
                 return Action.makeDriver(response)
             }
 
@@ -309,8 +320,9 @@ final class PostViewModel: InjectableViewModel {
             .filter { ($0.fanPass?.level ?? 0) == 0 }
             .withLatestFrom(fanPassListSuccess)
             .flatMap { [weak self] fanPassList -> Driver<Action<ResponseData>> in
+                guard let `self` = self else { return Driver.empty() }
                 let fanPassId = fanPassList.filter { ($0.level ?? 0) == 0 }.first?.id ?? 0
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.subscription(uri: self?.uri ?? "", fanPassId: fanPassId, subscriptionPrice: 0))
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.subscription(uri: self.uri, fanPassId: fanPassId, subscriptionPrice: 0))
                 return Action.makeDriver(response)
             }
 
@@ -350,7 +362,6 @@ final class PostViewModel: InjectableViewModel {
             .flatMap { [weak self] _ -> Driver<String> in
                 guard let `self` = self else { return Driver.empty() }
                 let stagingPath = AppInfo.isStaging ? "staging." : ""
-
                 let url = "https://\(stagingPath)piction.network/project/\(self.uri)/posts/\(self.postId)"
                 return Driver.just(url)
             }

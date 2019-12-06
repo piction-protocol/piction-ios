@@ -91,12 +91,27 @@ final class PostViewController: UIViewController {
                 subview.removeFromSuperview()
             }
         }
-        if let header = headerViewController {
-            remove(header)
-        }
-        if let footer = footerViewController {
-            remove(footer)
-        }
+        guard
+            let header = headerViewController,
+            let footer = footerViewController
+        else { return }
+        remove(header)
+        remove(footer)
+    }
+
+    private func resizeFooter() {
+        guard
+            !postWebView.isLoading,
+            self.subscriptionView.isHidden
+        else { return }
+        postWebView.evaluateJavaScript("document.body.style.marginBottom =\"747px\"", completionHandler: { (complete, error) in
+            self.postWebView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { (height, error) in
+                if let height = height as? CGFloat {
+                    self.embedPostFooterViewController(height: height)
+                    self.loadComplete()
+                }
+            })
+        })
     }
 
     func cacheWebview() {
@@ -124,7 +139,6 @@ final class PostViewController: UIViewController {
 
         if #available(iOS 13.0, *) {
             if previousTraitCollection?.hasDifferentColorAppearance(comparedTo: traitCollection) ?? false {
-
                 setWebviewColor()
             }
         }
@@ -133,25 +147,14 @@ final class PostViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        if let headerView = headerViewController {
-            headerView.view.frame.size.width = view.frame.size.width
-        }
-        if let footerView = footerViewController {
-            if !postWebView.isLoading {
-                footerView.view.frame.size.width = view.frame.size.width
-                postWebView.evaluateJavaScript("document.body.style.marginBottom =\"747px\"", completionHandler: { (complete, error) in
-                    self.postWebView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { (height, error) in
+        guard
+            let headerView = headerViewController,
+            let footerView = footerViewController
+        else { return }
 
-                        if self.subscriptionView.isHidden {
-                            if let height = height as? CGFloat {
-                                self.embedPostFooterViewController(height: height)
-                                self.loadComplete()
-                            }
-                        }
-                    })
-                })
-            }
-        }
+        headerView.view.frame.size.width = view.frame.size.width
+        footerView.view.frame.size.width = view.frame.size.width
+        resizeFooter()
     }
 
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
@@ -189,6 +192,7 @@ final class PostViewController: UIViewController {
             style.forEach { postWebView.evaluateJavaScript($0) }
             readmodeBarButton.tintColor = .pictionDarkGrayDM
         }
+        resizeFooter()
     }
 
     deinit {
@@ -220,16 +224,18 @@ extension PostViewController: ViewModelBindable {
         output
             .viewWillAppear
             .drive(onNext: { [weak self] in
-                guard let `self` = self else { return }
-                self.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+                guard
+                    let `self` = self,
+                    let uri = self.viewModel?.uri,
+                    let postId = self.viewModel?.postId
+                else { return }
 
+                self.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self.postWebView.scrollView.contentInset = UIEdgeInsets(
                     top: self.statusHeight + self.navigationHeight,
                     left: 0,
                     bottom: self.toolbarHeight,
                     right: 0)
-                let uri = self.viewModel?.uri ?? ""
-                let postId = self.viewModel?.postId ?? 0
                 FirebaseManager.screenName("포스트뷰어_\(uri)_\(postId)")
             })
             .disposed(by: disposeBag)
@@ -268,12 +274,13 @@ extension PostViewController: ViewModelBindable {
         output
             .prevPostIsEnabled
             .drive(onNext: { [weak self] postItem in
-                self?.prevPostButton.isEnabled = (postItem.id ?? 0) != 0
+                let isEnabled = postItem.id != nil
+                self?.prevPostButton.isEnabled = isEnabled
                 var buttonColor: UIColor {
                     if #available(iOS 13.0, *) {
-                        return (postItem.id ?? 0) != 0 ? .pictionDarkGrayDM : UIColor(r: 151, g: 151, b: 151)
+                        return isEnabled ? .pictionDarkGrayDM : UIColor(r: 151, g: 151, b: 151)
                     } else {
-                        return (postItem.id ?? 0) != 0 ? UIColor(r: 51, g: 51, b: 51) : UIColor(r: 151, g: 151, b: 151)
+                        return isEnabled ? UIColor(r: 51, g: 51, b: 51) : UIColor(r: 151, g: 151, b: 151)
                     }
                 }
                 self?.prevPostButton.setTitleColor(buttonColor, for: .normal)
@@ -283,12 +290,13 @@ extension PostViewController: ViewModelBindable {
         output
             .nextPostIsEnabled
             .drive(onNext: { [weak self] postItem in
-                self?.nextPostButton.isEnabled = (postItem.id ?? 0) != 0
+                let isEnabled = postItem.id != nil
+                self?.nextPostButton.isEnabled = isEnabled
                 var buttonColor: UIColor {
                     if #available(iOS 13.0, *) {
-                        return (postItem.id ?? 0) != 0 ? .pictionDarkGrayDM : UIColor(r: 151, g: 151, b: 151)
+                        return isEnabled ? .pictionDarkGrayDM : UIColor(r: 151, g: 151, b: 151)
                     } else {
-                        return (postItem.id ?? 0) != 0 ? UIColor(r: 51, g: 51, b: 51) : UIColor(r: 151, g: 151, b: 151)
+                        return isEnabled ? UIColor(r: 51, g: 51, b: 51) : UIColor(r: 151, g: 151, b: 151)
                     }
                 }
                 self?.nextPostButton.setTitleColor(buttonColor, for: .normal)
@@ -452,13 +460,12 @@ extension PostViewController: WKNavigationDelegate {
         }
         webView.evaluateJavaScript("document.readyState") { (complete, error) in
             if complete != nil {
-                webView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { [weak self] (height, error) in
-                    guard let `self` = self else { return }
-                    if self.subscriptionView.isHidden {
-                        if let height = height as? CGFloat {
-                            self.embedPostFooterViewController(height: height)
-                        }
-                    }
+                webView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { (height, error) in
+                    guard
+                        self.subscriptionView.isHidden,
+                        let height = height as? CGFloat
+                    else { return }
+                    self.embedPostFooterViewController(height: height)
                 })
             }
         }
@@ -511,7 +518,8 @@ extension PostViewController: UIGestureRecognizerDelegate {
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        if gestureRecognizer.isKind(of: UITapGestureRecognizer.self) && otherGestureRecognizer.isKind(of: UIPanGestureRecognizer.self) {
+        if gestureRecognizer.isKind(of: UITapGestureRecognizer.self)
+            && otherGestureRecognizer.isKind(of: UIPanGestureRecognizer.self) {
             return false
         }
         return true
