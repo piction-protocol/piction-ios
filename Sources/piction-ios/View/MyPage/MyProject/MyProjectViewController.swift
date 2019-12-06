@@ -27,20 +27,6 @@ final class MyProjectViewController: UITableViewController {
         embed(vc, to: emptyView)
     }
 
-    private func openProjectViewController(uri: String) {
-        let vc = ProjectViewController.make(uri: uri)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    private func openCreateProjectViewController(uri: String) {
-        let vc = CreateProjectViewController.make(uri: uri)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, ProjectModel>> {
         return RxTableViewSectionedReloadDataSource<SectionModel<String, ProjectModel>>(
             configureCell: { (_, tv, ip, model) in

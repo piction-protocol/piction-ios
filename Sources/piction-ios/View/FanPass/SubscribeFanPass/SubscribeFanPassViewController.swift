@@ -39,14 +39,6 @@ final class SubscribeFanPassViewController: UIViewController {
     @IBOutlet weak var purchaseButton: UIButton!
 
     private let authSuccessWithPincode = PublishSubject<Void>()
-
-    private func openCheckPincodeViewController() {
-        let vc = CheckPincodeViewController.make(style: .check)
-        vc.delegate = self
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
-        }
-    }
 }
 
 extension SubscribeFanPassViewController: ViewModelBindable {

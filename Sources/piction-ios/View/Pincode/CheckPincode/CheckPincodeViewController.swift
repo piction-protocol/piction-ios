@@ -62,13 +62,6 @@ final class CheckPincodeViewController: UIViewController {
         present(alert, animated: false, completion: nil)
     }
 
-    private func openRegisterPincodeViewController() {
-        let vc = RegisterPincodeViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     private func authSuccess() {
         UserDefaults(suiteName: "group.\(BUNDLEID)")?.set(0, forKey: "pincodeErrorCount")
         if self.viewModel?.style == .initial {
@@ -80,7 +73,7 @@ final class CheckPincodeViewController: UIViewController {
                 self?.delegate?.authSuccess()
             })
         } else {
-            self.openRegisterPincodeViewController()
+            self.openRegisterPincodeViewController(type: .push)
         }
     }
 

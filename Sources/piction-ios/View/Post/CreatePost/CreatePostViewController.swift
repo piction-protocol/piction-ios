@@ -179,22 +179,6 @@ final class CreatePostViewController: UIViewController {
         }
     }
 
-    private func openManageSeriesViewController(uri: String, seriesId: Int? = nil) {
-        let vc = ManageSeriesViewController.make(uri: uri, seriesId: seriesId)
-        vc.delegate = self
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .swipePresent)
-        }
-    }
-
-    private func openManageFanPassViewController(uri: String, fanPassId: Int? = nil) {
-        let vc = ManageFanPassViewController.make(uri: uri, fanPassId: fanPassId)
-        vc.delegate = self
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .swipePresent)
-        }
-    }
-
     @IBAction func tapGesture(_ sender: Any) {
         view.endEditing(true)
     }

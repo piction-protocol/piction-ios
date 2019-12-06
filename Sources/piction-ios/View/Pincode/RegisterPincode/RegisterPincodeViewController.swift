@@ -28,13 +28,6 @@ final class RegisterPincodeViewController: UIViewController {
         self.navigationController?.configureNavigationBar(transparent: true, shadow: false)
     }
 
-    private func openConfirmPincodeViewController(inputPincode: String) {
-        let vc = ConfirmPincodeViewController.make(inputPincode: inputPincode)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     private func openRecommendPopup() {
         let alertController = UIAlertController(title: LocalizedStrings.popup_title_pincode_create.localized(), message: LocalizedStrings.msg_pincode_reg_warning.localized(), preferredStyle: .alert)
         let cancelButton = UIAlertAction(title: LocalizedStrings.continue_go.localized(), style: .default) { _ in

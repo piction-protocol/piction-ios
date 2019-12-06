@@ -2239,7 +2239,7 @@
 				439E7ECF237BE57900E4A475 /* piction-ios-shareEx_Info.plist in Resources */,
 				430924262372CBAC00716AF8 /* CreatePost.storyboard in Resources */,
 				43EBE1952373ED7E0081C3B7 /* Assets.xcassets in Resources */,
-				430924222372CB9000716AF8 /* SeriesList.storyboard in Resources */,
+				430924222372CB9000716AF8 /* ManageSeries.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

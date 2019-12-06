@@ -29,13 +29,6 @@ final class QRCodeScannerViewController: UIViewController {
         initialAVCaptureSession()
     }
 
-    private func openSendDonationViewController(loginId: String) {
-        let vc = SendDonationViewController.make(loginId: loginId)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     private func openErrorPopup(message: String) {
         let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
 

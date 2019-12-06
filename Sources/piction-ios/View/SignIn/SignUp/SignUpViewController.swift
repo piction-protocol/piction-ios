@@ -77,12 +77,7 @@ final class SignUpViewController: UIViewController {
         }
     }
 
-    private func openSignUpComplete(loginId: String) {
-        let vc = SignUpCompleteViewController.make(loginId: loginId)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -156,7 +151,7 @@ extension SignUpViewController: ViewModelBindable {
             .openSignUpComplete
             .drive(onNext: { [weak self] in
                 let loginId = self?.loginIdInputView.inputTextField.text ?? ""
-                self?.openSignUpComplete(loginId: loginId)
+                self?.openSignUpCompleteViewController(loginId: loginId)
             })
             .disposed(by: disposeBag)
 

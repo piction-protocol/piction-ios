@@ -25,27 +25,6 @@ final class ProjectInfoViewController: UIViewController {
     @IBOutlet weak var tagStackView: UIStackView!
     @IBOutlet weak var tagCollectionView: UICollectionView!
 
-    private func openSendDonationViewController(loginId: String) {
-        let vc = SendDonationViewController.make(loginId: loginId)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    private func openSignInViewController() {
-        let vc = SignInViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .swipePresent)
-        }
-    }
-
-    private func openTagResultProjectViewController(tag: String) {
-        let vc = TagResultProjectViewController.make(tag: tag)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     private func configureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>> {
         return RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>>(
             configureCell: { dataSource, collectionView, indexPath, model in

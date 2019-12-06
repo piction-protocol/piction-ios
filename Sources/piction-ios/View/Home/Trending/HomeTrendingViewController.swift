@@ -41,13 +41,6 @@ final class HomeTrendingViewController: UIViewController {
         self.resizingCollectionViewFlowLayout()
     }
 
-    private func openProjectViewController(uri: String) {
-        let vc = ProjectViewController.make(uri: uri)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     private func configureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, ProjectModel>> {
         return RxCollectionViewSectionedReloadDataSource<SectionModel<String, ProjectModel>>(
             configureCell: { (_, collectionView, indexPath, model) in

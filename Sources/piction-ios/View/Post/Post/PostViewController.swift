@@ -71,20 +71,6 @@ final class PostViewController: UIViewController {
         footerViewController?.delegate = self
     }
 
-    private func openSignInViewController() {
-        let vc = SignInViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .swipePresent)
-        }
-    }
-
-    private func openFanPassListViewController(uri: String, postId: Int? = nil) {
-        let vc = FanPassListViewController.make(uri: uri, postId: postId)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
-        }
-    }
-
     private func removeHeaderFooter() {
         for subview in postWebView.scrollView.subviews {
             if subview.tag == 1000 || subview.tag == 1001 {

@@ -55,20 +55,6 @@ final class PostFooterViewController: UIViewController {
         self.likeImageView.image = isLike ? #imageLiteral(resourceName: "icFavoriteOn") : #imageLiteral(resourceName: "icFavoriteOff")
     }
 
-    private func openSignInViewController() {
-        let vc = SignInViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .swipePresent)
-        }
-    }
-
-    private func openSeriesPostViewController(uri: String, seriesId: Int) {
-        let vc = SeriesPostViewController.make(uri: uri, seriesId: seriesId)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     private func setSeriesPostTitle(postItem: PostModel, seriesItems: [PostIndexModel]) {
         seriesTitleLabel.text = postItem.series?.name
         seriesPostCountLabel.text = LocalizedStrings.str_series_posts_count.localized(with: postItem.series?.postCount ?? 0)

@@ -32,13 +32,6 @@ final class SearchSponsorViewController: UIViewController {
         return dataSource
     }
 
-    private func openSendDonationViewController(loginId: String) {
-        let vc = SendDonationViewController.make(loginId: loginId)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
         emptyView.frame.size.height = 350
         let vc = CustomEmptyViewController.make(style: style)

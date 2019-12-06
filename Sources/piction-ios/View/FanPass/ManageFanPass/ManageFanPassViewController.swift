@@ -44,13 +44,6 @@ final class ManageFanPassViewController: UIViewController {
         })
     }
 
-    private func openCreateFanPassViewController(uri: String, fanPass: FanPassModel? = nil) {
-        let vc = CreateFanPassViewController.make(uri: uri, fanPass: fanPass)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     private func openDeletePopup(uri: String, fanPass: FanPassModel) {
         let alertController = UIAlertController(title: nil, message: LocalizedStrings.popup_title_delete_fanpass.localized(), preferredStyle: .alert)
         let cancelButton = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel)

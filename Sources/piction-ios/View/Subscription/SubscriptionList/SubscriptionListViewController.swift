@@ -33,13 +33,6 @@ final class SubscriptionListViewController: UIViewController {
         emptyView.frame.size.height = visibleHeight
     }
 
-    private func openProjectViewController(uri: String) {
-        let vc = ProjectViewController.make(uri: uri)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
         _ = emptyView.subviews.map { $0.removeFromSuperview() }
         let vc = CustomEmptyViewController.make(style: style)

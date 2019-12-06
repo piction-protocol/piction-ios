@@ -43,20 +43,6 @@ final class SearchViewController: UIViewController {
         return dataSource
     }
 
-    private func openProjectViewController(uri: String) {
-        let vc = ProjectViewController.make(uri: uri)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    private func openTagResultProjectViewController(tag: String) {
-        let vc = TagResultProjectViewController.make(tag: tag)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
         _ = emptyView.subviews.map { $0.removeFromSuperview() }
         emptyView.frame.size.height = 350

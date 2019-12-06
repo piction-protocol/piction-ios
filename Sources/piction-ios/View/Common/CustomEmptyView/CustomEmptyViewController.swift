@@ -17,20 +17,6 @@ final class CustomEmptyViewController: UIViewController {
     @IBOutlet weak var emptyImageView: UIImageView!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var button: UIButton!
-
-    private func openSignInViewController() {
-        let vc = SignInViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .swipePresent)
-        }
-    }
-
-    private func openQRCodeScannerViewController() {
-        let vc = QRCodeScannerViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
-        }
-    }
 }
 
 extension CustomEmptyViewController: ViewModelBindable {

@@ -25,13 +25,6 @@ final class TagListViewController: UITableViewController {
         embed(vc, to: emptyView)
     }
 
-    private func openTagResultProjectViewController(tag: String) {
-        let vc = TagResultProjectViewController.make(tag: tag)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, TagModel>> {
         return RxTableViewSectionedReloadDataSource<SectionModel<String, TagModel>>(
             configureCell: { dataSource, tableView, indexPath, model in

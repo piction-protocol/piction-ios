@@ -46,21 +46,6 @@ final class SendDonationViewController: UIViewController {
         KeyboardManager.shared.delegate = self
     }
 
-    private func openConfirmDonationViewController(loginId: String, sendAmount: Int) {
-        let vc = ConfirmDonationViewController.make(loginId: loginId, sendAmount: sendAmount)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    private func openCheckPincodeViewController() {
-        let vc = CheckPincodeViewController.make(style: .check)
-        vc.delegate = self
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
-        }
-    }
-
     private func errorPopup(message: String) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
 
@@ -152,7 +137,8 @@ extension SendDonationViewController: ViewModelBindable {
         output
             .openCheckPincodeViewController
             .drive(onNext: { [weak self] _ in
-                self?.openCheckPincodeViewController()
+                guard let `self` = self else { return }
+                self.openCheckPincodeViewController(delegate: self)
             })
             .disposed(by: disposeBag)
 

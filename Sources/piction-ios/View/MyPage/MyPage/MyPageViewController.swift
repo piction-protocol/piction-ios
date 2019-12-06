@@ -11,7 +11,6 @@ import RxSwift
 import RxCocoa
 import ViewModelBindable
 import RxDataSources
-import SafariServices
 
 final class MyPageViewController: UIViewController {
     var disposeBag = DisposeBag()
@@ -33,61 +32,6 @@ final class MyPageViewController: UIViewController {
         super.viewDidLoad()
 
         emptyHeight = visibleHeight
-    }
-
-    private func openMyProjectViewController() {
-        let vc = MyProjectViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    private func openTransactionHistoryListViewController() {
-        let vc = TransactionHistoryViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    private func openDepositViewController() {
-        let vc = DepositViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    private func openChangeMyInfoViewController() {
-        let vc = ChangeMyInfoViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
-        }
-    }
-
-    private func openChangePasswordViewController() {
-        let vc = ChangePasswordViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
-        }
-    }
-
-    private func openCheckPincodeViewController() {
-        let vc = CheckPincodeViewController.make(style: .change)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
-        }
-    }
-
-    private func openRegisterPincodeViewController() {
-        let vc = RegisterPincodeViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
-        }
-    }
-
-    private func openSafariViewController(url urlString: String) {
-        guard let url = URL(string: urlString) else { return }
-        let safariViewController = SFSafariViewController(url: url)
-        self.present(safariViewController, animated: true, completion: nil)
     }
 
     private func embedUserInfoViewController() {

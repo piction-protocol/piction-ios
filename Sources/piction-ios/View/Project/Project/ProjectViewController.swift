@@ -52,55 +52,6 @@ final class ProjectViewController: UIViewController {
         }
     }
 
-    private func openPostViewController(uri: String, postId: Int) {
-        let vc = PostViewController.make(uri: uri, postId: postId)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    private func openSeriesPostViewController(uri: String, seriesId: Int) {
-        let vc = SeriesPostViewController.make(uri: uri, seriesId: seriesId)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    private func openProjectInfoViewController(uri: String) {
-        let vc = ProjectInfoViewController.make(uri: uri)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    private func openManageFanPassViewController(uri: String) {
-        let vc = ManageFanPassViewController.make(uri: uri)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .swipePresent)
-        }
-    }
-
-    private func openCreatePostViewController(uri: String, postId: Int = 0) {
-        let vc = CreatePostViewController.make(uri: uri, postId: postId)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    private func openSubscriptionUserViewController(uri: String) {
-        let vc = SubscriptionUserViewController.make(uri: uri)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .swipePresent)
-        }
-    }
-
-    private func openFanPassListViewController(uri: String) {
-        let vc = FanPassListViewController.make(uri: uri)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
-        }
-    }
-
     private func openDeletePostPopup(postId: Int) {
         let alertController = UIAlertController(title: nil, message: LocalizedStrings.popup_title_delete_post.localized(), preferredStyle: .alert)
         let cancelButton = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel)
@@ -172,13 +123,6 @@ final class ProjectViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
 
-    private func openSignInViewController() {
-        let vc = SignInViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .swipePresent)
-        }
-    }
-
     private func openCancelSubscriptionPopup() {
         let alertController = UIAlertController(title: nil, message: LocalizedStrings.msg_want_to_unsubscribe.localized(), preferredStyle: .alert)
         let cancelButton = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel)
@@ -190,20 +134,6 @@ final class ProjectViewController: UIViewController {
         alertController.addAction(cancelButton)
 
         self.present(alertController, animated: true, completion: nil)
-    }
-
-    private func openCreateProjectViewController(uri: String) {
-        let vc = CreateProjectViewController.make(uri: uri)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    private func openManageSeriesViewController(uri: String, seriesId: Int? = nil) {
-        let vc = ManageSeriesViewController.make(uri: uri, seriesId: seriesId)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .swipePresent)
-        }
     }
 
     private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {

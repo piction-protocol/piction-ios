@@ -37,20 +37,6 @@ final class SponsorshipListViewController: UIViewController {
         embed(vc, to: emptyView)
     }
 
-    private func openSearchSponsorViewController() {
-        let vc = SearchSponsorViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    private func openSponsorshipHistoryViewController() {
-        let vc = SponsorshipHistoryViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionType<SponsorshipListSection>> {
         return RxTableViewSectionedReloadDataSource<SectionType<SponsorshipListSection>>(
             configureCell: { dataSource, tableView, indexPath, model in

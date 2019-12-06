@@ -34,20 +34,6 @@ final class SignInViewController: UIViewController {
 
     private let keyboardReturnSignIn = PublishSubject<Void>()
 
-    private func openSignUpViewController() {
-        let vc = SignUpViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    private func openRegisterPincode() {
-        let vc = RegisterPincodeViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
-        }
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         KeyboardManager.shared.delegate = self
@@ -127,7 +113,7 @@ extension SignInViewController: ViewModelBindable {
                 self?.dismiss(animated: true, completion: { [weak self] in
                     if complete {
                         if KeychainManager.get(key: "pincode").isEmpty {
-                            self?.openRegisterPincode()
+                            self?.openRegisterPincodeViewController()
                         }
                     }
                 })

@@ -41,20 +41,6 @@ final class HomePopularTagsViewController: UIViewController {
         self.resizingCollectionViewFlowLayout()
     }
 
-    private func openTagResultProjectViewController(tag: String) {
-        let vc = TagResultProjectViewController.make(tag: tag)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    func openTagListViewController() {
-        let vc = TagListViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     private func configureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, HomePopularTagsModel>> {
         return RxCollectionViewSectionedReloadDataSource<SectionModel<String, HomePopularTagsModel>>(
             configureCell: { (_, collectionView, indexPath, model) in

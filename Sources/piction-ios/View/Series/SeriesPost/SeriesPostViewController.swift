@@ -31,13 +31,6 @@ final class SeriesPostViewController: UIViewController {
     @IBOutlet weak var sortButton: UIButton!
     @IBOutlet weak var emptyView: UIView!
 
-    private func openPostViewController(uri: String, postId: Int) {
-        let vc = PostViewController.make(uri: uri, postId: postId)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
         _ = emptyView.subviews.map { $0.removeFromSuperview() }
         emptyView.frame.size.height = 350

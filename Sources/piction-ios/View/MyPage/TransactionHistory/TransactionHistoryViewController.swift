@@ -26,13 +26,6 @@ final class TransactionHistoryViewController: UITableViewController {
         embed(vc, to: emptyView)
     }
 
-    private func openTransactionDetailViewController(transaction: TransactionModel) {
-        let vc = TransactionDetailViewController.make(transaction: transaction)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionType<TransactionHistorySection>> {
         let dataSource = RxTableViewSectionedReloadDataSource<SectionType<TransactionHistorySection>>(
             configureCell: { (dataSource, tableView, indexPath, model) in

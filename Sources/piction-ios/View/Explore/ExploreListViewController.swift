@@ -28,15 +28,7 @@ final class ExploreViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         emptyView.frame.size.height = visibleHeight
-    }
-
-    private func openProjectViewController(uri: String) {
-        let vc = ProjectViewController.make(uri: uri)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
     }
 
     private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
