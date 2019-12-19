@@ -13,11 +13,6 @@ import ViewModelBindable
 import RxDataSources
 import PictionSDK
 
-protocol HomeSectionDelegate: class {
-    func loadComplete()
-    func showErrorPopup()
-}
-
 final class HomeViewController: UIViewController {
     var disposeBag = DisposeBag()
 
@@ -25,14 +20,11 @@ final class HomeViewController: UIViewController {
     var searchController: UISearchController?
     private var refreshControl = UIRefreshControl()
 
-    @IBOutlet weak var scrollView: UIScrollView! {
+    @IBOutlet weak var tableView: UITableView! {
         didSet {
-            scrollView.refreshControl = refreshControl
+            tableView.refreshControl = refreshControl
         }
     }
-    @IBOutlet weak var stackView: UIStackView!
-
-    private var loadCompleted = PublishSubject<Void>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,49 +63,6 @@ final class HomeViewController: UIViewController {
         self.searchController?.searchBar.placeholder = LocalizedStrings.hint_project_and_tag_search.localized()
     }
 
-    private func embedHomeSection() {
-        embedHomeTrendingViewController()
-        embedHomeSubscriptionViewController()
-        embedHomePopularTagsViewController()
-        embedHomeNoticeViewController()
-    }
-
-    private func removeHomeSection() {
-        _ = stackView.arrangedSubviews.map { $0.removeFromSuperview() }
-    }
-
-    private func embedHomeTrendingViewController() {
-        let vc = HomeTrendingViewController.make()
-        vc.delegate = self
-        self.addChild(vc)
-        self.stackView.addArrangedSubview(vc.view)
-        vc.didMove(toParent: self)
-    }
-
-    private func embedHomeSubscriptionViewController() {
-        let vc = HomeSubscriptionViewController.make()
-        vc.delegate = self
-        self.addChild(vc)
-        self.stackView.addArrangedSubview(vc.view)
-        vc.didMove(toParent: self)
-    }
-
-    private func embedHomePopularTagsViewController() {
-        let vc = HomePopularTagsViewController.make()
-        vc.delegate = self
-        self.addChild(vc)
-        self.stackView.addArrangedSubview(vc.view)
-        vc.didMove(toParent: self)
-    }
-
-    private func embedHomeNoticeViewController() {
-        let vc = HomeNoticeViewController.make()
-        vc.delegate = self
-        self.addChild(vc)
-        self.stackView.addArrangedSubview(vc.view)
-        vc.didMove(toParent: self)
-    }
-
     func openSearchBar() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.searchController?.searchBar.becomeFirstResponder()
@@ -128,7 +77,6 @@ extension HomeViewController: ViewModelBindable {
         let input = HomeViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
-            loadComplete: loadCompleted.asDriver(onErrorDriveWith: .empty()),
             refreshControlDidRefresh: refreshControl.rx.controlEvent(.valueChanged).asDriver()
         )
 
@@ -140,21 +88,6 @@ extension HomeViewController: ViewModelBindable {
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
                 self?.searchResultsController.setKeyboardDelegate()
                 FirebaseManager.screenName("홈")
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .embedHomeSection
-            .drive(onNext: { [weak self] in
-                guard let `self` = self else { return }
-                self.scrollView.isScrollEnabled = false
-                self.removeHomeSection()
-                self.embedHomeSection()
-                self.scrollView.isScrollEnabled = true
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    self.scrollView.setContentOffset(CGPoint(x: 0, y: -self.statusHeight-self.largeTitleNavigationHeight), animated: true)
-                }
             })
             .disposed(by: disposeBag)
 
@@ -172,11 +105,7 @@ extension HomeViewController: ViewModelBindable {
     }
 }
 
-extension HomeViewController: HomeSectionDelegate {
-    func loadComplete() {
-        self.loadCompleted.onNext(())
-    }
-
+extension HomeViewController {
     func showErrorPopup() {
         Toast.loadingActivity(false)
         showPopup(

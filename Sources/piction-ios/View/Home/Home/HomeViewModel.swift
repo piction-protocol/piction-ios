@@ -28,14 +28,12 @@ final class HomeViewModel: InjectableViewModel {
     struct Input {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
-        let loadComplete: Driver<Void>
         let refreshControlDidRefresh: Driver<Void>
     }
 
     struct Output {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
-        let embedHomeSection: Driver<Void>
         let isFetching: Driver<Bool>
         let activityIndicator: Driver<Bool>
     }
@@ -48,18 +46,15 @@ final class HomeViewModel: InjectableViewModel {
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
-        let embedHomeSection = Driver.merge(viewWillAppear, refreshSession, refreshContent, input.refreshControlDidRefresh, loadRetry)
-
         let refreshAction = input.refreshControlDidRefresh
-            .withLatestFrom(input.loadComplete)
+            .withLatestFrom(input.viewWillAppear)
             .flatMap { _ -> Driver<Action<Void>> in
                 return Action.makeDriver(Driver.just(()))
             }
-
-        let showActivityIndicator = embedHomeSection
+        let showActivityIndicator = input.viewWillAppear
             .flatMap { _ in Driver.just(true) }
 
-        let hideActivityIndicator = input.loadComplete
+        let hideActivityIndicator = input.viewWillAppear
             .flatMap { _ in Driver.just(false) }
 
         let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
@@ -67,7 +62,6 @@ final class HomeViewModel: InjectableViewModel {
         return Output(
             viewWillAppear: input.viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
-            embedHomeSection: embedHomeSection,
             isFetching: refreshAction.isExecuting,
             activityIndicator: activityIndicator
         )

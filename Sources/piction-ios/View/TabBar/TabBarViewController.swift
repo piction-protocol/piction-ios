@@ -114,7 +114,7 @@ extension TabBarController: UITabBarControllerDelegate {
                     vc.navigationItem.searchController?.searchBar.text = nil
                     vc.navigationItem.searchController?.dismiss(animated: true)
                 } else if vc.navigationController?.navigationBar.frame.size.height == DEFAULT_NAVIGATION_HEIGHT {
-                    vc.scrollView.setContentOffset(CGPoint(x: 0, y: -vc.statusHeight-vc.largeTitleNavigationHeight), animated: true)
+                    vc.tableView.setContentOffset(CGPoint(x: 0, y: -vc.statusHeight-vc.largeTitleNavigationHeight), animated: true)
                 }
             case is ExploreViewController:
                 guard let vc = topViewController as? ExploreViewController else { return }

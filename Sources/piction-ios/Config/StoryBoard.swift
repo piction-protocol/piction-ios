@@ -11,10 +11,6 @@ import UIKit
 
 public enum Storyboard: String {
     case Home
-    case HomeTrending
-    case HomeSubscription
-    case HomePopularTags
-    case HomeNotice
     case TagList
     case Explore
     case SignIn

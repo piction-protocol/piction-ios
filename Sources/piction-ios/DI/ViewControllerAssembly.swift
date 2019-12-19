@@ -199,30 +199,6 @@ final class ViewControllerAssembly: Assembly {
             return vc
         }
 
-        container.register(HomeTrendingViewController.self) { resolver in
-            let vc = Storyboard.HomeTrending.instantiate(HomeTrendingViewController.self)
-            vc.viewModel = resolver.resolve(HomeTrendingViewModel.self)!
-            return vc
-        }
-
-        container.register(HomeSubscriptionViewController.self) { resolver in
-            let vc = Storyboard.HomeSubscription.instantiate(HomeSubscriptionViewController.self)
-            vc.viewModel = resolver.resolve(HomeSubscriptionViewModel.self)!
-            return vc
-        }
-
-        container.register(HomePopularTagsViewController.self) { resolver in
-            let vc = Storyboard.HomePopularTags.instantiate(HomePopularTagsViewController.self)
-            vc.viewModel = resolver.resolve(HomePopularTagsViewModel.self)!
-            return vc
-        }
-
-        container.register(HomeNoticeViewController.self) { resolver in
-            let vc = Storyboard.HomeNotice.instantiate(HomeNoticeViewController.self)
-            vc.viewModel = resolver.resolve(HomeNoticeViewModel.self)!
-            return vc
-        }
-
         container.register(FanPassListViewController.self) { (resolver, uri: String, postId: Int?) in
             let vc = Storyboard.FanPassList.instantiate(FanPassListViewController.self)
             vc.viewModel = resolver.resolve(FanPassListViewModel.self, arguments: uri, postId)!

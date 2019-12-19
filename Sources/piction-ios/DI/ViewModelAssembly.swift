@@ -189,24 +189,6 @@ final class ViewModelAssembly: Assembly {
             return SubscriptionUserViewModel(uri: uri)
         }
 
-        container.register(HomeTrendingViewModel.self) { resolver in
-            return HomeTrendingViewModel()
-        }
-
-        container.register(HomeSubscriptionViewModel.self) { resolver in
-            return HomeSubscriptionViewModel(dependency: (
-                resolver.resolve(Updater.self)!)
-            )
-        }
-
-        container.register(HomePopularTagsViewModel.self) { resolver in
-            return HomePopularTagsViewModel()
-        }
-
-        container.register(HomeNoticeViewModel.self) { resolver in
-            return HomeNoticeViewModel()
-        }
-
         container.register(FanPassListViewModel.self) { (resolver, uri: String, postId: Int?) in
             return FanPassListViewModel(dependency: (
                 resolver.resolve(Updater.self)!,
