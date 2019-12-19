@@ -139,12 +139,6 @@ final class ViewControllerAssembly: Assembly {
             return vc
         }
 
-        container.register(SponsorshipListViewController.self) { resolver in
-            let vc = Storyboard.SponsorshipList.instantiate(SponsorshipListViewController.self)
-            vc.viewModel = resolver.resolve(SponsorshipListViewModel.self)!
-            return vc
-        }
-
         container.register(SponsorshipHistoryViewController.self) { resolver in
             let vc = Storyboard.SponsorshipHistory.instantiate(SponsorshipHistoryViewController.self)
             vc.viewModel = resolver.resolve(SponsorshipHistoryViewModel.self)!

@@ -136,12 +136,6 @@ extension CreatePostViewController {
     }
 }
 
-extension SponsorshipListViewController {
-    static func make() -> SponsorshipListViewController {
-        return Container.shared.resolve(SponsorshipListViewController.self)!
-    }
-}
-
 extension SponsorshipHistoryViewController {
     static func make() -> SponsorshipHistoryViewController {
         return Container.shared.resolve(SponsorshipHistoryViewController.self)!

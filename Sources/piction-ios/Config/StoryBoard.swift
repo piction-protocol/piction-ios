@@ -37,7 +37,6 @@ public enum Storyboard: String {
     case Search
     case CreateProject
     case CreatePost
-    case SponsorshipList
     case SponsorshipHistory
     case SearchSponsor
     case SendDonation

@@ -293,18 +293,6 @@
 		4323FB7F233A166300243655 /* SendDonationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA3C233A165600243655 /* SendDonationViewController.swift */; };
 		4323FB80233A166300243655 /* SendDonation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA3D233A165600243655 /* SendDonation.storyboard */; };
 		4323FB81233A166300243655 /* SendDonation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA3D233A165600243655 /* SendDonation.storyboard */; };
-		4323FB82233A166300243655 /* SponsorshipList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA3F233A165600243655 /* SponsorshipList.storyboard */; };
-		4323FB83233A166300243655 /* SponsorshipList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA3F233A165600243655 /* SponsorshipList.storyboard */; };
-		4323FB84233A166300243655 /* SponsorshipListHeaderTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA40233A165600243655 /* SponsorshipListHeaderTypeTableViewCell.swift */; };
-		4323FB85233A166300243655 /* SponsorshipListHeaderTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA40233A165600243655 /* SponsorshipListHeaderTypeTableViewCell.swift */; };
-		4323FB86233A166300243655 /* SponsorshipListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA41233A165600243655 /* SponsorshipListViewController.swift */; };
-		4323FB87233A166300243655 /* SponsorshipListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA41233A165600243655 /* SponsorshipListViewController.swift */; };
-		4323FB88233A166300243655 /* SponsorshipListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA42233A165600243655 /* SponsorshipListViewModel.swift */; };
-		4323FB89233A166300243655 /* SponsorshipListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA42233A165600243655 /* SponsorshipListViewModel.swift */; };
-		4323FB8A233A166300243655 /* SponsorshipListButtonTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA43233A165600243655 /* SponsorshipListButtonTypeTableViewCell.swift */; };
-		4323FB8B233A166300243655 /* SponsorshipListButtonTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA43233A165600243655 /* SponsorshipListButtonTypeTableViewCell.swift */; };
-		4323FB8C233A166300243655 /* SponsorshipListItemTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA44233A165600243655 /* SponsorshipListItemTypeTableViewCell.swift */; };
-		4323FB8D233A166300243655 /* SponsorshipListItemTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA44233A165600243655 /* SponsorshipListItemTypeTableViewCell.swift */; };
 		4323FB8E233A166300243655 /* SignUpCompleteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA47233A165600243655 /* SignUpCompleteViewModel.swift */; };
 		4323FB8F233A166300243655 /* SignUpCompleteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA47233A165600243655 /* SignUpCompleteViewModel.swift */; };
 		4323FB90233A166300243655 /* SignUpComplete.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA48233A165600243655 /* SignUpComplete.storyboard */; };
@@ -757,12 +745,6 @@
 		4323FA3B233A165600243655 /* SendDonationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendDonationViewModel.swift; sourceTree = "<group>"; };
 		4323FA3C233A165600243655 /* SendDonationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendDonationViewController.swift; sourceTree = "<group>"; };
 		4323FA3D233A165600243655 /* SendDonation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SendDonation.storyboard; sourceTree = "<group>"; };
-		4323FA3F233A165600243655 /* SponsorshipList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SponsorshipList.storyboard; sourceTree = "<group>"; };
-		4323FA40233A165600243655 /* SponsorshipListHeaderTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SponsorshipListHeaderTypeTableViewCell.swift; sourceTree = "<group>"; };
-		4323FA41233A165600243655 /* SponsorshipListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SponsorshipListViewController.swift; sourceTree = "<group>"; };
-		4323FA42233A165600243655 /* SponsorshipListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SponsorshipListViewModel.swift; sourceTree = "<group>"; };
-		4323FA43233A165600243655 /* SponsorshipListButtonTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SponsorshipListButtonTypeTableViewCell.swift; sourceTree = "<group>"; };
-		4323FA44233A165600243655 /* SponsorshipListItemTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SponsorshipListItemTypeTableViewCell.swift; sourceTree = "<group>"; };
 		4323FA47233A165600243655 /* SignUpCompleteViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpCompleteViewModel.swift; sourceTree = "<group>"; };
 		4323FA48233A165600243655 /* SignUpComplete.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignUpComplete.storyboard; sourceTree = "<group>"; };
 		4323FA49233A165600243655 /* SignUpCompleteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpCompleteViewController.swift; sourceTree = "<group>"; };
@@ -1481,7 +1463,6 @@
 		4323FA27233A165600243655 /* Sponsorship */ = {
 			isa = PBXGroup;
 			children = (
-				4323FA3E233A165600243655 /* SponsorshipList */,
 				4323FA28233A165600243655 /* SearchSponsor */,
 				4323FA2D233A165600243655 /* QRCodeScanner */,
 				4323FA3A233A165600243655 /* SendDonation */,
@@ -1541,19 +1522,6 @@
 				4323FA3D233A165600243655 /* SendDonation.storyboard */,
 			);
 			path = SendDonation;
-			sourceTree = "<group>";
-		};
-		4323FA3E233A165600243655 /* SponsorshipList */ = {
-			isa = PBXGroup;
-			children = (
-				4323FA41233A165600243655 /* SponsorshipListViewController.swift */,
-				4323FA42233A165600243655 /* SponsorshipListViewModel.swift */,
-				4323FA40233A165600243655 /* SponsorshipListHeaderTypeTableViewCell.swift */,
-				4323FA43233A165600243655 /* SponsorshipListButtonTypeTableViewCell.swift */,
-				4323FA44233A165600243655 /* SponsorshipListItemTypeTableViewCell.swift */,
-				4323FA3F233A165600243655 /* SponsorshipList.storyboard */,
-			);
-			path = SponsorshipList;
 			sourceTree = "<group>";
 		};
 		4323FA45233A165600243655 /* SignIn */ = {
@@ -2299,7 +2267,6 @@
 				4356F508233DE798000710FC /* LaunchScreen.storyboard in Resources */,
 				4323FAEB233A165C00243655 /* SeriesPost.storyboard in Resources */,
 				43E54396235713D700F2EC45 /* TagResultProject.storyboard in Resources */,
-				4323FB83233A166300243655 /* SponsorshipList.storyboard in Resources */,
 				436C75A82387C39300902F08 /* ManageFanPass.storyboard in Resources */,
 				4323FAEF233A165C00243655 /* ProjectHeaderView.xib in Resources */,
 				4323FB5F233A166100243655 /* UserInfo.storyboard in Resources */,
@@ -2361,7 +2328,6 @@
 				4356F507233DE798000710FC /* LaunchScreen.storyboard in Resources */,
 				4323FAEA233A165C00243655 /* SeriesPost.storyboard in Resources */,
 				43E54395235713D700F2EC45 /* TagResultProject.storyboard in Resources */,
-				4323FB82233A166300243655 /* SponsorshipList.storyboard in Resources */,
 				4323FAEE233A165C00243655 /* ProjectHeaderView.xib in Resources */,
 				436C75A72387C39300902F08 /* ManageFanPass.storyboard in Resources */,
 				4323FB5E233A166100243655 /* UserInfo.storyboard in Resources */,
@@ -2532,7 +2498,6 @@
 				4323FB3F233A166000243655 /* MyPageViewModel.swift in Sources */,
 				4323FB7F233A166300243655 /* SendDonationViewController.swift in Sources */,
 				4323FB07233A165D00243655 /* CreateProjectViewModel.swift in Sources */,
-				4323FB85233A166300243655 /* SponsorshipListHeaderTypeTableViewCell.swift in Sources */,
 				4323FA8B233A165800243655 /* AppDelegate.swift in Sources */,
 				43E54399235714F800F2EC45 /* TagResultProjectListCollectionFooterView.swift in Sources */,
 				43DB22872358576D00E69C0F /* HomeSubscriptionCollectionViewCell.swift in Sources */,
@@ -2551,14 +2516,12 @@
 				4323FB6D233A166200243655 /* QRCodeScannerViewController.swift in Sources */,
 				4323FAC9233A165B00243655 /* SubscriptionListCollectionViewCell.swift in Sources */,
 				4323FBC4233C876D00243655 /* Localization.swift in Sources */,
-				4323FB8D233A166300243655 /* SponsorshipListItemTypeTableViewCell.swift in Sources */,
 				4323FB0D233A165E00243655 /* CustomEmptyViewController.swift in Sources */,
 				43C5C9422383BDC6004BACFC /* SubscribeFanPassViewModel.swift in Sources */,
 				436C75B22387C73600902F08 /* CreateFanPassViewModel.swift in Sources */,
 				4323FAE7233A165C00243655 /* SeriesPostViewModel.swift in Sources */,
 				4323FB63233A166100243655 /* SearchSponsorTableViewCell.swift in Sources */,
 				4323FAA1233A165900243655 /* ConfirmPincodeViewController.swift in Sources */,
-				4323FB87233A166300243655 /* SponsorshipListViewController.swift in Sources */,
 				4323FA85233A165800243655 /* UITableView+Extension.swift in Sources */,
 				43E5436A2355930D00F2EC45 /* SceneDelegate.swift in Sources */,
 				4323FA87233A165800243655 /* AppInfo.swift in Sources */,
@@ -2575,7 +2538,6 @@
 				4323FAAB233A165A00243655 /* TabBarViewController.swift in Sources */,
 				43C5C93F2383BDB1004BACFC /* SubscribeFanPassViewController.swift in Sources */,
 				4323FA79233A165800243655 /* UINavigationController+Extension.swift in Sources */,
-				4323FB8B233A166300243655 /* SponsorshipListButtonTypeTableViewCell.swift in Sources */,
 				4323FA75233A165700243655 /* UIView+Extension.swift in Sources */,
 				4323FA63233A165700243655 /* UtilityAssembly.swift in Sources */,
 				4323FA61233A165700243655 /* ViewModelAssembly.swift in Sources */,
@@ -2639,7 +2601,6 @@
 				4323FA9D233A165900243655 /* CheckPincodeViewController.swift in Sources */,
 				43F1866623444E070050BA67 /* DeepLinking.swift in Sources */,
 				43DB22932359ADBF00E69C0F /* SearchTagTableViewCell.swift in Sources */,
-				4323FB89233A166300243655 /* SponsorshipListViewModel.swift in Sources */,
 				43F1865B2343024A0050BA67 /* PostFooterSeriesPostListTableViewCell.swift in Sources */,
 				4323FB17233A165E00243655 /* DepositViewModel.swift in Sources */,
 				43F1866923444E470050BA67 /* DeepLinkManager.swift in Sources */,
@@ -2719,7 +2680,6 @@
 				4323FB3E233A166000243655 /* MyPageViewModel.swift in Sources */,
 				4323FB7E233A166300243655 /* SendDonationViewController.swift in Sources */,
 				4323FB06233A165D00243655 /* CreateProjectViewModel.swift in Sources */,
-				4323FB84233A166300243655 /* SponsorshipListHeaderTypeTableViewCell.swift in Sources */,
 				4323FA8A233A165800243655 /* AppDelegate.swift in Sources */,
 				43E54398235714F800F2EC45 /* TagResultProjectListCollectionFooterView.swift in Sources */,
 				43DB22862358576D00E69C0F /* HomeSubscriptionCollectionViewCell.swift in Sources */,
@@ -2738,14 +2698,12 @@
 				4323FB6C233A166200243655 /* QRCodeScannerViewController.swift in Sources */,
 				4323FAC8233A165B00243655 /* SubscriptionListCollectionViewCell.swift in Sources */,
 				4323FBC3233C876D00243655 /* Localization.swift in Sources */,
-				4323FB8C233A166300243655 /* SponsorshipListItemTypeTableViewCell.swift in Sources */,
 				4323FB0C233A165E00243655 /* CustomEmptyViewController.swift in Sources */,
 				43C5C9412383BDC6004BACFC /* SubscribeFanPassViewModel.swift in Sources */,
 				436C75B12387C73600902F08 /* CreateFanPassViewModel.swift in Sources */,
 				4323FAE6233A165C00243655 /* SeriesPostViewModel.swift in Sources */,
 				4323FB62233A166100243655 /* SearchSponsorTableViewCell.swift in Sources */,
 				4323FAA0233A165900243655 /* ConfirmPincodeViewController.swift in Sources */,
-				4323FB86233A166300243655 /* SponsorshipListViewController.swift in Sources */,
 				4323FA84233A165800243655 /* UITableView+Extension.swift in Sources */,
 				43E543692355930D00F2EC45 /* SceneDelegate.swift in Sources */,
 				4323FA86233A165800243655 /* AppInfo.swift in Sources */,
@@ -2762,7 +2720,6 @@
 				4323FAAA233A165A00243655 /* TabBarViewController.swift in Sources */,
 				43C5C93E2383BDB1004BACFC /* SubscribeFanPassViewController.swift in Sources */,
 				4323FA78233A165800243655 /* UINavigationController+Extension.swift in Sources */,
-				4323FB8A233A166300243655 /* SponsorshipListButtonTypeTableViewCell.swift in Sources */,
 				4323FA74233A165700243655 /* UIView+Extension.swift in Sources */,
 				4323FA62233A165700243655 /* UtilityAssembly.swift in Sources */,
 				4323FA60233A165600243655 /* ViewModelAssembly.swift in Sources */,
@@ -2826,7 +2783,6 @@
 				4323FA9C233A165900243655 /* CheckPincodeViewController.swift in Sources */,
 				43F1866523444E070050BA67 /* DeepLinking.swift in Sources */,
 				43DB22922359ADBE00E69C0F /* SearchTagTableViewCell.swift in Sources */,
-				4323FB88233A166300243655 /* SponsorshipListViewModel.swift in Sources */,
 				43F1865A2342FEAC0050BA67 /* PostFooterSeriesPostListTableViewCell.swift in Sources */,
 				4323FB16233A165E00243655 /* DepositViewModel.swift in Sources */,
 				43F1866823444E470050BA67 /* DeepLinkManager.swift in Sources */,

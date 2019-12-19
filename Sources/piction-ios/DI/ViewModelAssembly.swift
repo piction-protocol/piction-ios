@@ -138,12 +138,6 @@ final class ViewModelAssembly: Assembly {
             )
         }
 
-        container.register(SponsorshipListViewModel.self) { resolver in
-            return SponsorshipListViewModel(dependency: (
-                resolver.resolve(Updater.self)!)
-            )
-        }
-
         container.register(SponsorshipHistoryViewModel.self) { resolver in
             return SponsorshipHistoryViewModel()
         }
