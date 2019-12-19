@@ -138,10 +138,6 @@ final class ViewModelAssembly: Assembly {
             )
         }
 
-        container.register(SponsorshipHistoryViewModel.self) { resolver in
-            return SponsorshipHistoryViewModel()
-        }
-
         container.register(CustomEmptyViewModel.self) { (resolver, style: CustomEmptyViewStyle) in
             return CustomEmptyViewModel(style: style)
         }

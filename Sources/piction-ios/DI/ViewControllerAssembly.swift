@@ -139,12 +139,6 @@ final class ViewControllerAssembly: Assembly {
             return vc
         }
 
-        container.register(SponsorshipHistoryViewController.self) { resolver in
-            let vc = Storyboard.SponsorshipHistory.instantiate(SponsorshipHistoryViewController.self)
-            vc.viewModel = resolver.resolve(SponsorshipHistoryViewModel.self)!
-            return vc
-        }
-
         container.register(CustomEmptyViewController.self) { (resolver, style: CustomEmptyViewStyle) in
             let vc = Storyboard.CustomEmptyView.instantiate(CustomEmptyViewController.self)
             vc.viewModel = resolver.resolve(CustomEmptyViewModel.self, argument: style)!

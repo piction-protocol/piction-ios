@@ -161,15 +161,22 @@ extension UIViewController {
         }
     }
 
-    func openSearchSponsorViewController() {
-        let vc = SearchSponsorViewController.make()
+    func openProjectMainViewController(uri: String) {
+        let vc = ProjectMainViewController.make(uri: uri)
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .push)
         }
     }
 
-    func openSponsorshipHistoryViewController() {
-        let vc = SponsorshipHistoryViewController.make()
+    func openProjectMenuViewController(uri: String) {
+        let vc = ProjectMenuViewController.make(uri: uri)
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.openViewController(vc, type: .push)
+        }
+    }
+
+    func openSearchSponsorViewController() {
+        let vc = SearchSponsorViewController.make()
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .push)
         }

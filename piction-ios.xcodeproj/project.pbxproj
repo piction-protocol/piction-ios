@@ -279,14 +279,6 @@
 		4323FB71233A166200243655 /* ConfirmDonation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA33233A165600243655 /* ConfirmDonation.storyboard */; };
 		4323FB72233A166200243655 /* ConfirmDonationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA34233A165600243655 /* ConfirmDonationViewController.swift */; };
 		4323FB73233A166200243655 /* ConfirmDonationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA34233A165600243655 /* ConfirmDonationViewController.swift */; };
-		4323FB74233A166200243655 /* SponsorshipHistory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA36233A165600243655 /* SponsorshipHistory.storyboard */; };
-		4323FB75233A166200243655 /* SponsorshipHistory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA36233A165600243655 /* SponsorshipHistory.storyboard */; };
-		4323FB76233A166200243655 /* SponsorshipHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA37233A165600243655 /* SponsorshipHistoryViewController.swift */; };
-		4323FB77233A166200243655 /* SponsorshipHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA37233A165600243655 /* SponsorshipHistoryViewController.swift */; };
-		4323FB78233A166200243655 /* SponsorshipHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA38233A165600243655 /* SponsorshipHistoryViewModel.swift */; };
-		4323FB79233A166200243655 /* SponsorshipHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA38233A165600243655 /* SponsorshipHistoryViewModel.swift */; };
-		4323FB7A233A166200243655 /* SponsorshipHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA39233A165600243655 /* SponsorshipHistoryTableViewCell.swift */; };
-		4323FB7B233A166200243655 /* SponsorshipHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA39233A165600243655 /* SponsorshipHistoryTableViewCell.swift */; };
 		4323FB7C233A166200243655 /* SendDonationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA3B233A165600243655 /* SendDonationViewModel.swift */; };
 		4323FB7D233A166200243655 /* SendDonationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA3B233A165600243655 /* SendDonationViewModel.swift */; };
 		4323FB7E233A166300243655 /* SendDonationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA3C233A165600243655 /* SendDonationViewController.swift */; };
@@ -738,10 +730,6 @@
 		4323FA32233A165600243655 /* ConfirmDonationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmDonationViewModel.swift; sourceTree = "<group>"; };
 		4323FA33233A165600243655 /* ConfirmDonation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ConfirmDonation.storyboard; sourceTree = "<group>"; };
 		4323FA34233A165600243655 /* ConfirmDonationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmDonationViewController.swift; sourceTree = "<group>"; };
-		4323FA36233A165600243655 /* SponsorshipHistory.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SponsorshipHistory.storyboard; sourceTree = "<group>"; };
-		4323FA37233A165600243655 /* SponsorshipHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SponsorshipHistoryViewController.swift; sourceTree = "<group>"; };
-		4323FA38233A165600243655 /* SponsorshipHistoryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SponsorshipHistoryViewModel.swift; sourceTree = "<group>"; };
-		4323FA39233A165600243655 /* SponsorshipHistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SponsorshipHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		4323FA3B233A165600243655 /* SendDonationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendDonationViewModel.swift; sourceTree = "<group>"; };
 		4323FA3C233A165600243655 /* SendDonationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendDonationViewController.swift; sourceTree = "<group>"; };
 		4323FA3D233A165600243655 /* SendDonation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SendDonation.storyboard; sourceTree = "<group>"; };
@@ -1467,7 +1455,6 @@
 				4323FA2D233A165600243655 /* QRCodeScanner */,
 				4323FA3A233A165600243655 /* SendDonation */,
 				4323FA31233A165600243655 /* ConfirmDonation */,
-				4323FA35233A165600243655 /* SponsorshipHistory */,
 			);
 			path = Sponsorship;
 			sourceTree = "<group>";
@@ -1501,17 +1488,6 @@
 				4323FA33233A165600243655 /* ConfirmDonation.storyboard */,
 			);
 			path = ConfirmDonation;
-			sourceTree = "<group>";
-		};
-		4323FA35233A165600243655 /* SponsorshipHistory */ = {
-			isa = PBXGroup;
-			children = (
-				4323FA37233A165600243655 /* SponsorshipHistoryViewController.swift */,
-				4323FA38233A165600243655 /* SponsorshipHistoryViewModel.swift */,
-				4323FA39233A165600243655 /* SponsorshipHistoryTableViewCell.swift */,
-				4323FA36233A165600243655 /* SponsorshipHistory.storyboard */,
-			);
-			path = SponsorshipHistory;
 			sourceTree = "<group>";
 		};
 		4323FA3A233A165600243655 /* SendDonation */ = {
@@ -2218,7 +2194,6 @@
 				4323FAD3233A165B00243655 /* CreatePost.storyboard in Resources */,
 				4323FB43233A166000243655 /* ChangePassword.storyboard in Resources */,
 				4323FB69233A166200243655 /* QRCodeScanner.storyboard in Resources */,
-				4323FB75233A166200243655 /* SponsorshipHistory.storyboard in Resources */,
 				43722688237E46F20054C777 /* HomeNotice.storyboard in Resources */,
 				4323FB9B233A166400243655 /* SignIn.storyboard in Resources */,
 				4323FB19233A165E00243655 /* Deposit.storyboard in Resources */,
@@ -2283,7 +2258,6 @@
 				4323FB42233A166000243655 /* ChangePassword.storyboard in Resources */,
 				43722687237E46F20054C777 /* HomeNotice.storyboard in Resources */,
 				4323FB68233A166200243655 /* QRCodeScanner.storyboard in Resources */,
-				4323FB74233A166200243655 /* SponsorshipHistory.storyboard in Resources */,
 				4323FB9A233A166400243655 /* SignIn.storyboard in Resources */,
 				43C5C9442383BDD6004BACFC /* SubscribeFanPass.storyboard in Resources */,
 				43C41F692373B84F00D012A7 /* piction-ios-test_Info.plist in Resources */,
@@ -2562,7 +2536,6 @@
 				439E7ED6237BEC0C00E4A475 /* KeyboardManager.swift in Sources */,
 				4323FABF233A165A00243655 /* HomeViewModel.swift in Sources */,
 				438E76442366B6190062D004 /* SubscriptionUserViewModel.swift in Sources */,
-				4323FB7B233A166200243655 /* SponsorshipHistoryTableViewCell.swift in Sources */,
 				4323FB31233A165F00243655 /* MyPagePushTypeTableViewCell.swift in Sources */,
 				4323FB29233A165F00243655 /* MyProjectTableViewCell.swift in Sources */,
 				4323FB8F233A166300243655 /* SignUpCompleteViewModel.swift in Sources */,
@@ -2576,7 +2549,6 @@
 				4323FA83233A165800243655 /* UIViewController+Rx.swift in Sources */,
 				4323FAF7233A165D00243655 /* ProjectHeaderView.swift in Sources */,
 				4323FB59233A166100243655 /* TransactionHistoryYearTypeTableViewCell.swift in Sources */,
-				4323FB79233A166200243655 /* SponsorshipHistoryViewModel.swift in Sources */,
 				4323FB2B233A165F00243655 /* MyProjectViewModel.swift in Sources */,
 				4372268E237E7F610054C777 /* RxDataSources+Extension.swift in Sources */,
 				4323FB51233A166100243655 /* TransactionHistoryFooterTypeTableViewCell.swift in Sources */,
@@ -2659,7 +2631,6 @@
 				4323FAD7233A165B00243655 /* PostViewController.swift in Sources */,
 				4323FB6F233A166200243655 /* ConfirmDonationViewModel.swift in Sources */,
 				4323FB9F233A166400243655 /* SignInViewController.swift in Sources */,
-				4323FB77233A166200243655 /* SponsorshipHistoryViewController.swift in Sources */,
 				4323FB65233A166100243655 /* SearchSponsorViewModel.swift in Sources */,
 				43EBE1A52374087D0081C3B7 /* KeychainManager.swift in Sources */,
 				4323FADD233A165C00243655 /* PostHeaderViewModel.swift in Sources */,
@@ -2744,7 +2715,6 @@
 				439E7ED5237BEC0C00E4A475 /* KeyboardManager.swift in Sources */,
 				4323FABE233A165A00243655 /* HomeViewModel.swift in Sources */,
 				438E76432366B6190062D004 /* SubscriptionUserViewModel.swift in Sources */,
-				4323FB7A233A166200243655 /* SponsorshipHistoryTableViewCell.swift in Sources */,
 				4323FB30233A165F00243655 /* MyPagePushTypeTableViewCell.swift in Sources */,
 				4323FB28233A165F00243655 /* MyProjectTableViewCell.swift in Sources */,
 				4323FB8E233A166300243655 /* SignUpCompleteViewModel.swift in Sources */,
@@ -2758,7 +2728,6 @@
 				4323FA82233A165800243655 /* UIViewController+Rx.swift in Sources */,
 				4323FAF6233A165D00243655 /* ProjectHeaderView.swift in Sources */,
 				4323FB58233A166100243655 /* TransactionHistoryYearTypeTableViewCell.swift in Sources */,
-				4323FB78233A166200243655 /* SponsorshipHistoryViewModel.swift in Sources */,
 				4323FB2A233A165F00243655 /* MyProjectViewModel.swift in Sources */,
 				4372268D237E7F610054C777 /* RxDataSources+Extension.swift in Sources */,
 				4323FB50233A166100243655 /* TransactionHistoryFooterTypeTableViewCell.swift in Sources */,
@@ -2841,7 +2810,6 @@
 				4323FAD6233A165B00243655 /* PostViewController.swift in Sources */,
 				4323FB6E233A166200243655 /* ConfirmDonationViewModel.swift in Sources */,
 				4323FB9E233A166400243655 /* SignInViewController.swift in Sources */,
-				4323FB76233A166200243655 /* SponsorshipHistoryViewController.swift in Sources */,
 				4323FB64233A166100243655 /* SearchSponsorViewModel.swift in Sources */,
 				43EBE1A42374087D0081C3B7 /* KeychainManager.swift in Sources */,
 				4323FADC233A165C00243655 /* PostHeaderViewModel.swift in Sources */,
