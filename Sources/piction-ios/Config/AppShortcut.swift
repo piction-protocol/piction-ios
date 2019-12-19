@@ -12,7 +12,6 @@ enum AppShortcutType: String {
     case home = "home"
     case explore = "explore"
     case subscription = "subscription"
-    case sponsorship = "sponsorship"
     case mypage = "mypage"
 
     var title: String {
@@ -23,8 +22,6 @@ enum AppShortcutType: String {
             return LocalizedStrings.tab_explore.localized()
         case .subscription:
             return LocalizedStrings.tab_subscription.localized()
-        case .sponsorship:
-            return LocalizedStrings.tab_sponsorship.localized()
         case .mypage:
             return LocalizedStrings.menu_my_info.localized()
         }
@@ -38,8 +35,6 @@ enum AppShortcutType: String {
             return "icTab2Unselected"
         case .subscription:
             return "icTab3Unselected"
-        case .sponsorship:
-            return "icTab4Unselected"
         case .mypage:
             return "icTab5Unselected"
         }
@@ -64,7 +59,6 @@ class AppShortcuts {
 
         newShortcuts.append(AppShortcut(type: .explore, segue: "openExplore"))
         newShortcuts.append(AppShortcut(type: .subscription, segue: "openSubscription"))
-        newShortcuts.append(AppShortcut(type: .sponsorship, segue: "openSponsorship"))
         newShortcuts.append(AppShortcut(type: .mypage, segue: "openMyPage"))
 
         UIApplication.shared.shortcutItems = newShortcuts
@@ -83,10 +77,6 @@ class AppShortcuts {
             }
         case .subscription:
             if let url = URL(string: "\(AppInfo.urlScheme)://my-subscription") {
-                _ = DeepLinkManager.executeDeepLink(with: url)
-            }
-        case .sponsorship:
-            if let url = URL(string: "\(AppInfo.urlScheme)://home-donation") {
                 _ = DeepLinkManager.executeDeepLink(with: url)
             }
         case .mypage:

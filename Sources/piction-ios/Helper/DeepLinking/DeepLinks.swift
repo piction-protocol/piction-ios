@@ -194,65 +194,6 @@ struct MySubscriptionDeepLink: DeepLink {
 }
 
 /**
-*  후원
-*/
-
-// 후원
-// piction://home-donation
-struct HomeDonationDeepLink: DeepLink {
-    static let template = DeepLinkTemplate()
-        .term("home-donation")
-
-    init(values: DeepLinkValues) {}
-}
-
-// 후원하기 (검색)
-// piction://donation
-struct DonationDeepLink: DeepLink {
-    static let template = DeepLinkTemplate()
-        .term("donation")
-
-    init(values: DeepLinkValues) {}
-}
-
-// QR코드 인식
-// piction://donation/qrcode
-struct DonationQRCodeDeepLink: DeepLink {
-    static let template = DeepLinkTemplate()
-        .term("donation")
-        .term("qrcode")
-
-    init(values: DeepLinkValues) {}
-}
-
-// 후원 금액 입력
-// piction://donation/pay?id={unavailable-user-id}
-struct DonationPayDeepLink: DeepLink {
-    static let template = DeepLinkTemplate()
-        .term("donation")
-        .term("pay")
-        .queryStringParameters([
-            .requiredString(named: "id")
-        ])
-
-    init(values: DeepLinkValues) {
-        id = values.query["id"] as? String
-    }
-
-    let id: String?
-}
-
-// 후원 기록
-// piction://donation/log
-struct DonationLogDeepLink: DeepLink {
-    static let template = DeepLinkTemplate()
-        .term("donation")
-        .term("log")
-
-    init(values: DeepLinkValues) {}
-}
-
-/**
 *  마이페이지
 */
 

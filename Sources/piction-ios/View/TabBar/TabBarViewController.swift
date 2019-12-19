@@ -122,9 +122,6 @@ extension TabBarController: UITabBarControllerDelegate {
             case is SubscriptionListViewController:
                 guard let vc = topViewController as? SubscriptionListViewController else { return }
                 setOffset(scrollView: vc.collectionView, vc: vc)
-            case is SponsorshipListViewController:
-                guard let vc = topViewController as? SponsorshipListViewController else { return }
-                setOffset(scrollView: vc.tableView, vc: vc)
             case is MyPageViewController:
                 guard let vc = topViewController as? MyPageViewController else { return }
                 setOffset(scrollView: vc.tableView, vc: vc)
@@ -155,11 +152,10 @@ enum TabBarItem: Int {
     case home
     case explore
     case subscription
-    case sponsorship
     case myPage
 
     static var all: [TabBarItem] {
-        return [.home, .explore, .subscription, .sponsorship, .myPage]
+        return [.home, .explore, .subscription, .myPage]
     }
 }
 
@@ -185,12 +181,6 @@ extension TabBarItem {
                 LocalizedStrings.tab_subscription.localized(),
                 #imageLiteral(resourceName: "icTab3Unselected"),
                 #imageLiteral(resourceName: "icTab3Active")
-            )
-        case .sponsorship:
-            items = (
-                LocalizedStrings.tab_sponsorship.localized(),
-                #imageLiteral(resourceName: "icTab4Unselected"),
-                #imageLiteral(resourceName: "icTab4Active")
             )
         case .myPage:
             items = (
@@ -219,8 +209,6 @@ extension TabBarItem {
             viewController = ExploreViewController.make()
         case .subscription:
             viewController = SubscriptionListViewController.make()
-        case .sponsorship:
-            viewController = SponsorshipListViewController.make()
         case .myPage:
             viewController = MyPageViewController.make()
         }

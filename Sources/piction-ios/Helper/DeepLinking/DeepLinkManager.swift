@@ -25,11 +25,6 @@ struct DeepLinkManager {
                 SeriesDeepLink.self,
                 ViewerDeepLink.self,
                 MySubscriptionDeepLink.self,
-                HomeDonationDeepLink.self,
-                DonationDeepLink.self,
-                DonationQRCodeDeepLink.self,
-                DonationPayDeepLink.self,
-                DonationLogDeepLink.self,
                 MypageDeepLink.self,
                 TransactionDeepLink.self,
                 WalletDeepLink.self,
@@ -74,11 +69,6 @@ struct DeepLinkManager {
         case let link as SeriesDeepLink: return showSeries(with: link)
         case let link as ViewerDeepLink: return showViewer(with: link)
         case let link as MySubscriptionDeepLink: return showMySubscription(with: link)
-        case let link as HomeDonationDeepLink: return showHomeDonation(with: link)
-        case let link as DonationDeepLink: return showDonation(with: link)
-        case let link as DonationQRCodeDeepLink: return showDonationQRCode(with: link)
-        case let link as DonationPayDeepLink: return showDonationPay(with: link)
-        case let link as DonationLogDeepLink: return showDonationLog(with: link)
         case let link as MypageDeepLink: return showMypage(with: link)
         case let link as TransactionDeepLink: return showTransaction(with: link)
         case let link as WalletDeepLink: return showWallet(with: link)
@@ -217,54 +207,6 @@ struct DeepLinkManager {
     static func showMySubscription(with deepLink: MySubscriptionDeepLink) -> Bool {
         if let tabBarController = UIApplication.topViewController()?.tabBarController as? TabBarController {
             tabBarController.moveToSelectTab(.subscription, toRoot: true)
-            return true
-        }
-        return false
-    }
-
-    static func showHomeDonation(with deepLink: HomeDonationDeepLink) -> Bool {
-        if let tabBarController = UIApplication.topViewController()?.tabBarController as? TabBarController {
-            tabBarController.moveToSelectTab(.sponsorship, toRoot: true)
-            return true
-        }
-        return false
-    }
-
-    static func showDonation(with deepLink: DonationDeepLink) -> Bool {
-        let vc = SearchSponsorViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-            return true
-        }
-        return false
-    }
-
-    static func showDonationQRCode(with deepLink: DonationQRCodeDeepLink) -> Bool {
-        let vc = QRCodeScannerViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
-            return true
-        }
-        return false
-    }
-
-    static func showDonationPay(with deepLink: DonationPayDeepLink) -> Bool {
-        let searchVC = SearchSponsorViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.navigationController?.pushViewController(searchVC, animated: false)
-        }
-        let sendVC = SendDonationViewController.make(loginId: deepLink.id ?? "")
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(sendVC, type: .push)
-            return true
-        }
-        return false
-    }
-
-    static func showDonationLog(with deepLink: DonationLogDeepLink) -> Bool {
-        let vc = SponsorshipHistoryViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
             return true
         }
         return false
