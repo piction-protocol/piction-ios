@@ -184,12 +184,6 @@ extension TransactionDetailViewController {
     }
 }
 
-extension QRCodeScannerViewController {
-    static func make() -> QRCodeScannerViewController {
-        return Container.shared.resolve(QRCodeScannerViewController.self)!
-    }
-}
-
 extension SeriesPostViewController {
     static func make(uri: String, seriesId: Int) -> SeriesPostViewController {
         return Container.shared.resolve(SeriesPostViewController.self, arguments: uri, seriesId)!

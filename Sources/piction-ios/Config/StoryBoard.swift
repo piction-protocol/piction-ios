@@ -44,7 +44,6 @@ public enum Storyboard: String {
     case CheckPincode
     case RegisterPincode
     case ConfirmPincode
-    case QRCodeScanner
     case TagResultProject
     case ManageSeries
     case SubscriptionUser

@@ -180,10 +180,6 @@ final class ViewModelAssembly: Assembly {
             return TransactionDetailViewModel(transaction: transaction)
         }
 
-        container.register(QRCodeScannerViewModel.self) { resolver in
-            return QRCodeScannerViewModel()
-        }
-
         container.register(SeriesPostViewModel.self) { (resolver, uri: String, seriesId: Int) in
             return SeriesPostViewModel(dependency: (
                 resolver.resolve(Updater.self)!,
