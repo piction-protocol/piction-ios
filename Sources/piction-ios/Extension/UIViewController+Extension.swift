@@ -175,20 +175,6 @@ extension UIViewController {
         }
     }
 
-    func openSendDonationViewController(loginId: String) {
-        let vc = SendDonationViewController.make(loginId: loginId)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    func openConfirmDonationViewController(loginId: String, sendAmount: Int) {
-        let vc = ConfirmDonationViewController.make(loginId: loginId, sendAmount: sendAmount)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     func openCheckPincodeViewController(delegate: CheckPincodeDelegate? = nil) {
         let vc = CheckPincodeViewController.make(style: .check)
         vc.delegate = delegate
@@ -321,13 +307,6 @@ extension UIViewController {
         let vc = SignInViewController.make()
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .swipePresent)
-        }
-    }
-
-    func openQRCodeScannerViewController() {
-        let vc = QRCodeScannerViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
         }
     }
 
