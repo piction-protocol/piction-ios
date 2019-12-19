@@ -146,13 +146,6 @@ final class ViewModelAssembly: Assembly {
             return DepositViewModel()
         }
 
-        container.register(SendDonationViewModel.self) { (resolver, loginId: String) in
-            return SendDonationViewModel(dependency: (
-                resolver.resolve(Updater.self)!,
-                loginId: loginId)
-            )
-        }
-
         container.register(ConfirmDonationViewModel.self) { (resolver, loginId: String, sendAmount: Int) in
             return ConfirmDonationViewModel(dependency: (
                 resolver.resolve(Updater.self)!,

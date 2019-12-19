@@ -265,12 +265,6 @@
 		4323FB71233A166200243655 /* ConfirmDonation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA33233A165600243655 /* ConfirmDonation.storyboard */; };
 		4323FB72233A166200243655 /* ConfirmDonationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA34233A165600243655 /* ConfirmDonationViewController.swift */; };
 		4323FB73233A166200243655 /* ConfirmDonationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA34233A165600243655 /* ConfirmDonationViewController.swift */; };
-		4323FB7C233A166200243655 /* SendDonationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA3B233A165600243655 /* SendDonationViewModel.swift */; };
-		4323FB7D233A166200243655 /* SendDonationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA3B233A165600243655 /* SendDonationViewModel.swift */; };
-		4323FB7E233A166300243655 /* SendDonationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA3C233A165600243655 /* SendDonationViewController.swift */; };
-		4323FB7F233A166300243655 /* SendDonationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA3C233A165600243655 /* SendDonationViewController.swift */; };
-		4323FB80233A166300243655 /* SendDonation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA3D233A165600243655 /* SendDonation.storyboard */; };
-		4323FB81233A166300243655 /* SendDonation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA3D233A165600243655 /* SendDonation.storyboard */; };
 		4323FB8E233A166300243655 /* SignUpCompleteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA47233A165600243655 /* SignUpCompleteViewModel.swift */; };
 		4323FB8F233A166300243655 /* SignUpCompleteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA47233A165600243655 /* SignUpCompleteViewModel.swift */; };
 		4323FB90233A166300243655 /* SignUpComplete.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA48233A165600243655 /* SignUpComplete.storyboard */; };
@@ -709,9 +703,6 @@
 		4323FA32233A165600243655 /* ConfirmDonationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmDonationViewModel.swift; sourceTree = "<group>"; };
 		4323FA33233A165600243655 /* ConfirmDonation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ConfirmDonation.storyboard; sourceTree = "<group>"; };
 		4323FA34233A165600243655 /* ConfirmDonationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmDonationViewController.swift; sourceTree = "<group>"; };
-		4323FA3B233A165600243655 /* SendDonationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendDonationViewModel.swift; sourceTree = "<group>"; };
-		4323FA3C233A165600243655 /* SendDonationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendDonationViewController.swift; sourceTree = "<group>"; };
-		4323FA3D233A165600243655 /* SendDonation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SendDonation.storyboard; sourceTree = "<group>"; };
 		4323FA47233A165600243655 /* SignUpCompleteViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpCompleteViewModel.swift; sourceTree = "<group>"; };
 		4323FA48233A165600243655 /* SignUpComplete.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignUpComplete.storyboard; sourceTree = "<group>"; };
 		4323FA49233A165600243655 /* SignUpCompleteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpCompleteViewController.swift; sourceTree = "<group>"; };
@@ -1430,7 +1421,6 @@
 		4323FA27233A165600243655 /* Sponsorship */ = {
 			isa = PBXGroup;
 			children = (
-				4323FA3A233A165600243655 /* SendDonation */,
 				4323FA31233A165600243655 /* ConfirmDonation */,
 			);
 			path = Sponsorship;
@@ -1444,16 +1434,6 @@
 				4323FA33233A165600243655 /* ConfirmDonation.storyboard */,
 			);
 			path = ConfirmDonation;
-			sourceTree = "<group>";
-		};
-		4323FA3A233A165600243655 /* SendDonation */ = {
-			isa = PBXGroup;
-			children = (
-				4323FA3C233A165600243655 /* SendDonationViewController.swift */,
-				4323FA3B233A165600243655 /* SendDonationViewModel.swift */,
-				4323FA3D233A165600243655 /* SendDonation.storyboard */,
-			);
-			path = SendDonation;
 			sourceTree = "<group>";
 		};
 		4323FA45233A165600243655 /* SignIn */ = {
@@ -2180,7 +2160,6 @@
 				438E763A2362FAB90062D004 /* ManageSeries.storyboard in Resources */,
 				4323FB71233A166200243655 /* ConfirmDonation.storyboard in Resources */,
 				4356F51C233DF184000710FC /* Localizable.strings in Resources */,
-				4323FB81233A166300243655 /* SendDonation.storyboard in Resources */,
 				43502A9A238F520100586098 /* Poppins-SemiBold.ttf in Resources */,
 				4323FB0F233A165E00243655 /* CustomEmptyView.storyboard in Resources */,
 				4323FB2D233A165F00243655 /* MyProject.storyboard in Resources */,
@@ -2237,7 +2216,6 @@
 				436C75B42387C74500902F08 /* CreateFanPass.storyboard in Resources */,
 				4390292C2383EE8600A3121B /* FanPassList.storyboard in Resources */,
 				4356F51B233DF184000710FC /* Localizable.strings in Resources */,
-				4323FB80233A166300243655 /* SendDonation.storyboard in Resources */,
 				4323FB0E233A165E00243655 /* CustomEmptyView.storyboard in Resources */,
 				4323FB2C233A165F00243655 /* MyProject.storyboard in Resources */,
 				43502A99238F520100586098 /* Poppins-SemiBold.ttf in Resources */,
@@ -2422,7 +2400,6 @@
 				4323FB5D233A166100243655 /* UserInfoViewModel.swift in Sources */,
 				4323FAAF233A165A00243655 /* SearchViewModel.swift in Sources */,
 				4323FB3F233A166000243655 /* MyPageViewModel.swift in Sources */,
-				4323FB7F233A166300243655 /* SendDonationViewController.swift in Sources */,
 				4323FB07233A165D00243655 /* CreateProjectViewModel.swift in Sources */,
 				4323FA8B233A165800243655 /* AppDelegate.swift in Sources */,
 				43E54399235714F800F2EC45 /* TagResultProjectListCollectionFooterView.swift in Sources */,
@@ -2458,7 +2435,6 @@
 				438E764D2366B7B30062D004 /* SubscriptionUserViewController.swift in Sources */,
 				4356F4F8233D9CBB000710FC /* LocalizedStrings.swift in Sources */,
 				4323FB73233A166200243655 /* ConfirmDonationViewController.swift in Sources */,
-				4323FB7D233A166200243655 /* SendDonationViewModel.swift in Sources */,
 				4323FAAB233A165A00243655 /* TabBarViewController.swift in Sources */,
 				43C5C93F2383BDB1004BACFC /* SubscribeFanPassViewController.swift in Sources */,
 				4323FA79233A165800243655 /* UINavigationController+Extension.swift in Sources */,
@@ -2596,7 +2572,6 @@
 				4323FB5C233A166100243655 /* UserInfoViewModel.swift in Sources */,
 				4323FAAE233A165A00243655 /* SearchViewModel.swift in Sources */,
 				4323FB3E233A166000243655 /* MyPageViewModel.swift in Sources */,
-				4323FB7E233A166300243655 /* SendDonationViewController.swift in Sources */,
 				4323FB06233A165D00243655 /* CreateProjectViewModel.swift in Sources */,
 				4323FA8A233A165800243655 /* AppDelegate.swift in Sources */,
 				43E54398235714F800F2EC45 /* TagResultProjectListCollectionFooterView.swift in Sources */,
@@ -2632,7 +2607,6 @@
 				438E764C2366B7B30062D004 /* SubscriptionUserViewController.swift in Sources */,
 				4356F4F7233D9CBB000710FC /* LocalizedStrings.swift in Sources */,
 				4323FB72233A166200243655 /* ConfirmDonationViewController.swift in Sources */,
-				4323FB7C233A166200243655 /* SendDonationViewModel.swift in Sources */,
 				4323FAAA233A165A00243655 /* TabBarViewController.swift in Sources */,
 				43C5C93E2383BDB1004BACFC /* SubscribeFanPassViewController.swift in Sources */,
 				4323FA78233A165800243655 /* UINavigationController+Extension.swift in Sources */,

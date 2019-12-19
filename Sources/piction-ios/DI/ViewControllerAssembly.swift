@@ -151,12 +151,6 @@ final class ViewControllerAssembly: Assembly {
             return vc
         }
 
-        container.register(SendDonationViewController.self) { (resolver, loginId: String) in
-            let vc = Storyboard.SendDonation.instantiate(SendDonationViewController.self)
-            vc.viewModel = resolver.resolve(SendDonationViewModel.self, argument: loginId)!
-            return vc
-        }
-
         container.register(ConfirmDonationViewController.self) { (resolver, loginId: String, sendAmount: Int) in
             let vc = Storyboard.ConfirmDonation.instantiate(ConfirmDonationViewController.self)
             vc.viewModel = resolver.resolve(ConfirmDonationViewModel.self, arguments: loginId, sendAmount)!

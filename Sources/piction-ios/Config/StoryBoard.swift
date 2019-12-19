@@ -37,7 +37,6 @@ public enum Storyboard: String {
     case Search
     case CreateProject
     case CreatePost
-    case SendDonation
     case ConfirmDonation
     case CustomEmptyView
     case Deposit
