@@ -175,13 +175,6 @@ extension UIViewController {
         }
     }
 
-    func openSearchSponsorViewController() {
-        let vc = SearchSponsorViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     func openSendDonationViewController(loginId: String) {
         let vc = SendDonationViewController.make(loginId: loginId)
         if let topViewController = UIApplication.topViewController() {

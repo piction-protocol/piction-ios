@@ -148,12 +148,6 @@ extension DepositViewController {
     }
 }
 
-extension SearchSponsorViewController {
-    static func make() -> SearchSponsorViewController {
-        return Container.shared.resolve(SearchSponsorViewController.self)!
-    }
-}
-
 extension SendDonationViewController {
     static func make(loginId: String) -> SendDonationViewController {
         return Container.shared.resolve(SendDonationViewController.self, argument: loginId)!

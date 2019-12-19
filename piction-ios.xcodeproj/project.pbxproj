@@ -259,14 +259,6 @@
 		4323FB5D233A166100243655 /* UserInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA25233A165600243655 /* UserInfoViewModel.swift */; };
 		4323FB5E233A166100243655 /* UserInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA26233A165600243655 /* UserInfo.storyboard */; };
 		4323FB5F233A166100243655 /* UserInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA26233A165600243655 /* UserInfo.storyboard */; };
-		4323FB60233A166100243655 /* SearchSponsor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA29233A165600243655 /* SearchSponsor.storyboard */; };
-		4323FB61233A166100243655 /* SearchSponsor.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA29233A165600243655 /* SearchSponsor.storyboard */; };
-		4323FB62233A166100243655 /* SearchSponsorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA2A233A165600243655 /* SearchSponsorTableViewCell.swift */; };
-		4323FB63233A166100243655 /* SearchSponsorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA2A233A165600243655 /* SearchSponsorTableViewCell.swift */; };
-		4323FB64233A166100243655 /* SearchSponsorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA2B233A165600243655 /* SearchSponsorViewModel.swift */; };
-		4323FB65233A166100243655 /* SearchSponsorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA2B233A165600243655 /* SearchSponsorViewModel.swift */; };
-		4323FB66233A166100243655 /* SearchSponsorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA2C233A165600243655 /* SearchSponsorViewController.swift */; };
-		4323FB67233A166200243655 /* SearchSponsorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA2C233A165600243655 /* SearchSponsorViewController.swift */; };
 		4323FB68233A166200243655 /* QRCodeScanner.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA2E233A165600243655 /* QRCodeScanner.storyboard */; };
 		4323FB69233A166200243655 /* QRCodeScanner.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA2E233A165600243655 /* QRCodeScanner.storyboard */; };
 		4323FB6A233A166200243655 /* QRCodeScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA2F233A165600243655 /* QRCodeScannerViewModel.swift */; };
@@ -720,10 +712,6 @@
 		4323FA24233A165600243655 /* UserInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
 		4323FA25233A165600243655 /* UserInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoViewModel.swift; sourceTree = "<group>"; };
 		4323FA26233A165600243655 /* UserInfo.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UserInfo.storyboard; sourceTree = "<group>"; };
-		4323FA29233A165600243655 /* SearchSponsor.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SearchSponsor.storyboard; sourceTree = "<group>"; };
-		4323FA2A233A165600243655 /* SearchSponsorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSponsorTableViewCell.swift; sourceTree = "<group>"; };
-		4323FA2B233A165600243655 /* SearchSponsorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSponsorViewModel.swift; sourceTree = "<group>"; };
-		4323FA2C233A165600243655 /* SearchSponsorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSponsorViewController.swift; sourceTree = "<group>"; };
 		4323FA2E233A165600243655 /* QRCodeScanner.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = QRCodeScanner.storyboard; sourceTree = "<group>"; };
 		4323FA2F233A165600243655 /* QRCodeScannerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeScannerViewModel.swift; sourceTree = "<group>"; };
 		4323FA30233A165600243655 /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeScannerViewController.swift; sourceTree = "<group>"; };
@@ -1451,23 +1439,11 @@
 		4323FA27233A165600243655 /* Sponsorship */ = {
 			isa = PBXGroup;
 			children = (
-				4323FA28233A165600243655 /* SearchSponsor */,
 				4323FA2D233A165600243655 /* QRCodeScanner */,
 				4323FA3A233A165600243655 /* SendDonation */,
 				4323FA31233A165600243655 /* ConfirmDonation */,
 			);
 			path = Sponsorship;
-			sourceTree = "<group>";
-		};
-		4323FA28233A165600243655 /* SearchSponsor */ = {
-			isa = PBXGroup;
-			children = (
-				4323FA2C233A165600243655 /* SearchSponsorViewController.swift */,
-				4323FA2B233A165600243655 /* SearchSponsorViewModel.swift */,
-				4323FA2A233A165600243655 /* SearchSponsorTableViewCell.swift */,
-				4323FA29233A165600243655 /* SearchSponsor.storyboard */,
-			);
-			path = SearchSponsor;
 			sourceTree = "<group>";
 		};
 		4323FA2D233A165600243655 /* QRCodeScanner */ = {
@@ -2233,7 +2209,6 @@
 				4323FB99233A166400243655 /* SignUp.storyboard in Resources */,
 				43722685237E46E50054C777 /* HomePopularTags.storyboard in Resources */,
 				4323FAE1233A165C00243655 /* ProjectInfo.storyboard in Resources */,
-				4323FB61233A166100243655 /* SearchSponsor.storyboard in Resources */,
 				4323FA99233A165900243655 /* CheckPincode.storyboard in Resources */,
 				4356F502233DE0D2000710FC /* Home.storyboard in Resources */,
 				43722670237E46840054C777 /* HomeTrending.storyboard in Resources */,
@@ -2290,7 +2265,6 @@
 				43502A99238F520100586098 /* Poppins-SemiBold.ttf in Resources */,
 				4323FB98233A166400243655 /* SignUp.storyboard in Resources */,
 				4323FAE0233A165C00243655 /* ProjectInfo.storyboard in Resources */,
-				4323FB60233A166100243655 /* SearchSponsor.storyboard in Resources */,
 				4323FA98233A165900243655 /* CheckPincode.storyboard in Resources */,
 				43722684237E46E50054C777 /* HomePopularTags.storyboard in Resources */,
 				438E76462366B6270062D004 /* SubscriptionUser.storyboard in Resources */,
@@ -2494,7 +2468,6 @@
 				43C5C9422383BDC6004BACFC /* SubscribeFanPassViewModel.swift in Sources */,
 				436C75B22387C73600902F08 /* CreateFanPassViewModel.swift in Sources */,
 				4323FAE7233A165C00243655 /* SeriesPostViewModel.swift in Sources */,
-				4323FB63233A166100243655 /* SearchSponsorTableViewCell.swift in Sources */,
 				4323FAA1233A165900243655 /* ConfirmPincodeViewController.swift in Sources */,
 				4323FA85233A165800243655 /* UITableView+Extension.swift in Sources */,
 				43E5436A2355930D00F2EC45 /* SceneDelegate.swift in Sources */,
@@ -2622,7 +2595,6 @@
 				43DB226523580B5300E69C0F /* TagListViewModel.swift in Sources */,
 				4323FB53233A166100243655 /* TransactionHistoryViewModel.swift in Sources */,
 				43DB226B23580B6F00E69C0F /* TagListTableViewCell.swift in Sources */,
-				4323FB67233A166200243655 /* SearchSponsorViewController.swift in Sources */,
 				436C75AF2387C72A00902F08 /* CreateFanPassViewController.swift in Sources */,
 				4323FA89233A165800243655 /* StoryBoard.swift in Sources */,
 				4323FB6B233A166200243655 /* QRCodeScannerViewModel.swift in Sources */,
@@ -2631,7 +2603,6 @@
 				4323FAD7233A165B00243655 /* PostViewController.swift in Sources */,
 				4323FB6F233A166200243655 /* ConfirmDonationViewModel.swift in Sources */,
 				4323FB9F233A166400243655 /* SignInViewController.swift in Sources */,
-				4323FB65233A166100243655 /* SearchSponsorViewModel.swift in Sources */,
 				43EBE1A52374087D0081C3B7 /* KeychainManager.swift in Sources */,
 				4323FADD233A165C00243655 /* PostHeaderViewModel.swift in Sources */,
 				43DB225B235808E000E69C0F /* HomePopularTagsCollectionViewCell.swift in Sources */,
@@ -2673,7 +2644,6 @@
 				43C5C9412383BDC6004BACFC /* SubscribeFanPassViewModel.swift in Sources */,
 				436C75B12387C73600902F08 /* CreateFanPassViewModel.swift in Sources */,
 				4323FAE6233A165C00243655 /* SeriesPostViewModel.swift in Sources */,
-				4323FB62233A166100243655 /* SearchSponsorTableViewCell.swift in Sources */,
 				4323FAA0233A165900243655 /* ConfirmPincodeViewController.swift in Sources */,
 				4323FA84233A165800243655 /* UITableView+Extension.swift in Sources */,
 				43E543692355930D00F2EC45 /* SceneDelegate.swift in Sources */,
@@ -2801,7 +2771,6 @@
 				43DB226423580B5300E69C0F /* TagListViewModel.swift in Sources */,
 				4323FB52233A166100243655 /* TransactionHistoryViewModel.swift in Sources */,
 				43DB226A23580B6F00E69C0F /* TagListTableViewCell.swift in Sources */,
-				4323FB66233A166100243655 /* SearchSponsorViewController.swift in Sources */,
 				436C75AE2387C72A00902F08 /* CreateFanPassViewController.swift in Sources */,
 				4323FA88233A165800243655 /* StoryBoard.swift in Sources */,
 				4323FB6A233A166200243655 /* QRCodeScannerViewModel.swift in Sources */,
@@ -2810,7 +2779,6 @@
 				4323FAD6233A165B00243655 /* PostViewController.swift in Sources */,
 				4323FB6E233A166200243655 /* ConfirmDonationViewModel.swift in Sources */,
 				4323FB9E233A166400243655 /* SignInViewController.swift in Sources */,
-				4323FB64233A166100243655 /* SearchSponsorViewModel.swift in Sources */,
 				43EBE1A42374087D0081C3B7 /* KeychainManager.swift in Sources */,
 				4323FADC233A165C00243655 /* PostHeaderViewModel.swift in Sources */,
 				43DB225A235808E000E69C0F /* HomePopularTagsCollectionViewCell.swift in Sources */,
