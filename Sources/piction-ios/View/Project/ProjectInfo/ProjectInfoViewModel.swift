@@ -29,15 +29,12 @@ final class ProjectInfoViewModel: InjectableViewModel {
     struct Input {
         let viewWillAppear: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
-        let sendDonationBtnDidTap: Driver<Void>
     }
 
     struct Output {
         let viewWillAppear: Driver<Void>
         let projectInfo: Driver<ProjectModel>
         let selectedIndexPath: Driver<IndexPath>
-        let openSendDonationViewController: Driver<String>
-        let openSignInViewController: Driver<Void>
         let showErrorPopup: Driver<Void>
         let activityIndicator: Driver<Bool>
     }
@@ -87,28 +84,12 @@ final class ProjectInfoViewModel: InjectableViewModel {
 
         let showErrorPopup = projectInfoError
 
-        let openSendDonationViewController = input.sendDonationBtnDidTap
-            .withLatestFrom(userInfo)
-            .filter { $0.loginId != nil }
-            .withLatestFrom(projectInfoSuccess)
-            .flatMap { projectInfo -> Driver<String> in
-                let loginId = projectInfo.user?.loginId ?? ""
-                return Driver.just(loginId)
-            }
-
-        let openSignInViewController = input.sendDonationBtnDidTap
-            .withLatestFrom(userInfo)
-            .filter { $0.loginId == nil }
-            .flatMap { _ in Driver.just(()) }
-
         let activityIndicator = projectInfoAction.isExecuting
 
         return Output(
             viewWillAppear: input.viewWillAppear,
             projectInfo: projectInfoSuccess,
             selectedIndexPath: input.selectedIndexPath,
-            openSendDonationViewController: openSendDonationViewController,
-            openSignInViewController: openSignInViewController,
             showErrorPopup: showErrorPopup,
             activityIndicator: activityIndicator
         )

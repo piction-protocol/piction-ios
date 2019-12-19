@@ -19,7 +19,6 @@ final class ProjectInfoViewController: UIViewController {
     @IBOutlet weak var writerLabel: UILabel!
     @IBOutlet weak var loginIdLabel: UILabel!
     @IBOutlet weak var synopsisLabel: UILabel!
-    @IBOutlet weak var sendDonationButton: UIButton!
     @IBOutlet weak var creatorInfoStackView: UIStackView!
     @IBOutlet weak var synopsisStackView: UIStackView!
     @IBOutlet weak var tagStackView: UIStackView!
@@ -46,8 +45,7 @@ extension ProjectInfoViewController: ViewModelBindable {
 
         let input = ProjectInfoViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
-            selectedIndexPath: tagCollectionView.rx.itemSelected.asDriver(),
-            sendDonationBtnDidTap: sendDonationButton.rx.tap.asDriver()
+            selectedIndexPath: tagCollectionView.rx.itemSelected.asDriver()
         )
 
         let output = viewModel.build(input: input)
@@ -93,20 +91,6 @@ extension ProjectInfoViewController: ViewModelBindable {
             .drive(onNext: { [weak self] indexPath in
                 let tag = dataSource[indexPath]
                 self?.openTagResultProjectViewController(tag: tag)
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .openSendDonationViewController
-            .drive(onNext: { [weak self] loginId in
-                self?.openSendDonationViewController(loginId: loginId)
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .openSignInViewController
-            .drive(onNext: { [weak self] in
-                self?.openSignInViewController()
             })
             .disposed(by: disposeBag)
 

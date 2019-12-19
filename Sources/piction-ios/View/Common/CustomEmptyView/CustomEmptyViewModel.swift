@@ -23,7 +23,6 @@ enum CustomEmptyViewStyle {
     case transactionListEmpty
     case myProjectListEmpty
     case searchSponsorEmpty
-    case searchSponsorGuide
 
     var image: UIImage {
         switch self {
@@ -40,7 +39,6 @@ enum CustomEmptyViewStyle {
              .sponsorshipListLogin:
             return #imageLiteral(resourceName: "icStartup")
         case .searchProjectGuide,
-             .searchSponsorGuide,
              .searchTagGuide:
             return #imageLiteral(resourceName: "imgSearchNull")
         }
@@ -68,8 +66,6 @@ enum CustomEmptyViewStyle {
             return LocalizedStrings.str_project_empty.localized()
         case .searchProjectGuide:
             return LocalizedStrings.str_project_search_info.localized()
-        case .searchSponsorGuide:
-            return LocalizedStrings.str_creator_search_info.localized()
         case .searchTagGuide:
             return LocalizedStrings.str_tag_search_info.localized()
         }
@@ -80,8 +76,6 @@ enum CustomEmptyViewStyle {
         case .defaultLogin,
              .sponsorshipListLogin:
             return LocalizedStrings.login.localized()
-        case .searchSponsorGuide:
-            return LocalizedStrings.btn_qrcode.localized()
         case .projectPostListEmpty,
              .projectSeriesListEmpty,
              .sponsorshipListEmpty,
@@ -98,8 +92,6 @@ enum CustomEmptyViewStyle {
 
     var buttonImage: UIImage? {
         switch self {
-        case .searchSponsorGuide:
-            return #imageLiteral(resourceName: "icQrcode")
         default:
             return nil
         }

@@ -56,8 +56,6 @@ extension CustomEmptyViewController: ViewModelBindable {
                 case .defaultLogin,
                      .sponsorshipListLogin:
                     self.openSignInViewController()
-                case .searchSponsorGuide:
-                    self.openQRCodeScannerViewController()
                 default:
                     break
                 }
