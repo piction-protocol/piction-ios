@@ -151,12 +151,6 @@ final class ViewControllerAssembly: Assembly {
             return vc
         }
 
-        container.register(ConfirmDonationViewController.self) { (resolver, loginId: String, sendAmount: Int) in
-            let vc = Storyboard.ConfirmDonation.instantiate(ConfirmDonationViewController.self)
-            vc.viewModel = resolver.resolve(ConfirmDonationViewModel.self, arguments: loginId, sendAmount)!
-            return vc
-        }
-
         container.register(CheckPincodeViewController.self) { (resolver, style: CheckPincodeStyle) in
             let vc = Storyboard.CheckPincode.instantiate(CheckPincodeViewController.self)
             vc.viewModel = resolver.resolve(CheckPincodeViewModel.self, argument: style)!

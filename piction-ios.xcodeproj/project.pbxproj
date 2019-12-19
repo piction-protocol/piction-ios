@@ -259,12 +259,6 @@
 		4323FB5D233A166100243655 /* UserInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA25233A165600243655 /* UserInfoViewModel.swift */; };
 		4323FB5E233A166100243655 /* UserInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA26233A165600243655 /* UserInfo.storyboard */; };
 		4323FB5F233A166100243655 /* UserInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA26233A165600243655 /* UserInfo.storyboard */; };
-		4323FB6E233A166200243655 /* ConfirmDonationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA32233A165600243655 /* ConfirmDonationViewModel.swift */; };
-		4323FB6F233A166200243655 /* ConfirmDonationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA32233A165600243655 /* ConfirmDonationViewModel.swift */; };
-		4323FB70233A166200243655 /* ConfirmDonation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA33233A165600243655 /* ConfirmDonation.storyboard */; };
-		4323FB71233A166200243655 /* ConfirmDonation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA33233A165600243655 /* ConfirmDonation.storyboard */; };
-		4323FB72233A166200243655 /* ConfirmDonationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA34233A165600243655 /* ConfirmDonationViewController.swift */; };
-		4323FB73233A166200243655 /* ConfirmDonationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA34233A165600243655 /* ConfirmDonationViewController.swift */; };
 		4323FB8E233A166300243655 /* SignUpCompleteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA47233A165600243655 /* SignUpCompleteViewModel.swift */; };
 		4323FB8F233A166300243655 /* SignUpCompleteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323FA47233A165600243655 /* SignUpCompleteViewModel.swift */; };
 		4323FB90233A166300243655 /* SignUpComplete.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA48233A165600243655 /* SignUpComplete.storyboard */; };
@@ -700,9 +694,6 @@
 		4323FA24233A165600243655 /* UserInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
 		4323FA25233A165600243655 /* UserInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoViewModel.swift; sourceTree = "<group>"; };
 		4323FA26233A165600243655 /* UserInfo.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UserInfo.storyboard; sourceTree = "<group>"; };
-		4323FA32233A165600243655 /* ConfirmDonationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmDonationViewModel.swift; sourceTree = "<group>"; };
-		4323FA33233A165600243655 /* ConfirmDonation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ConfirmDonation.storyboard; sourceTree = "<group>"; };
-		4323FA34233A165600243655 /* ConfirmDonationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmDonationViewController.swift; sourceTree = "<group>"; };
 		4323FA47233A165600243655 /* SignUpCompleteViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpCompleteViewModel.swift; sourceTree = "<group>"; };
 		4323FA48233A165600243655 /* SignUpComplete.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignUpComplete.storyboard; sourceTree = "<group>"; };
 		4323FA49233A165600243655 /* SignUpCompleteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpCompleteViewController.swift; sourceTree = "<group>"; };
@@ -1069,7 +1060,6 @@
 				4323F9B3233A165600243655 /* Home */,
 				43E5437A2356F5CD00F2EC45 /* Explore */,
 				4323F9C1233A165600243655 /* Subscription */,
-				4323FA27233A165600243655 /* Sponsorship */,
 				4323F9F8233A165600243655 /* MyPage */,
 				4323F9C9233A165600243655 /* Project */,
 				436C75B8238BAC8200902F08 /* Series */,
@@ -1416,24 +1406,6 @@
 				4323FA26233A165600243655 /* UserInfo.storyboard */,
 			);
 			path = UserInfo;
-			sourceTree = "<group>";
-		};
-		4323FA27233A165600243655 /* Sponsorship */ = {
-			isa = PBXGroup;
-			children = (
-				4323FA31233A165600243655 /* ConfirmDonation */,
-			);
-			path = Sponsorship;
-			sourceTree = "<group>";
-		};
-		4323FA31233A165600243655 /* ConfirmDonation */ = {
-			isa = PBXGroup;
-			children = (
-				4323FA34233A165600243655 /* ConfirmDonationViewController.swift */,
-				4323FA32233A165600243655 /* ConfirmDonationViewModel.swift */,
-				4323FA33233A165600243655 /* ConfirmDonation.storyboard */,
-			);
-			path = ConfirmDonation;
 			sourceTree = "<group>";
 		};
 		4323FA45233A165600243655 /* SignIn */ = {
@@ -2158,7 +2130,6 @@
 				436C75B52387C74500902F08 /* CreateFanPass.storyboard in Resources */,
 				4390292D2383EE8600A3121B /* FanPassList.storyboard in Resources */,
 				438E763A2362FAB90062D004 /* ManageSeries.storyboard in Resources */,
-				4323FB71233A166200243655 /* ConfirmDonation.storyboard in Resources */,
 				4356F51C233DF184000710FC /* Localizable.strings in Resources */,
 				43502A9A238F520100586098 /* Poppins-SemiBold.ttf in Resources */,
 				4323FB0F233A165E00243655 /* CustomEmptyView.storyboard in Resources */,
@@ -2212,7 +2183,6 @@
 				4323FADA233A165C00243655 /* PostHeader.storyboard in Resources */,
 				4323FB48233A166000243655 /* ChangeMyInfo.storyboard in Resources */,
 				4372268A237E46FD0054C777 /* HomeSubscription.storyboard in Resources */,
-				4323FB70233A166200243655 /* ConfirmDonation.storyboard in Resources */,
 				436C75B42387C74500902F08 /* CreateFanPass.storyboard in Resources */,
 				4390292C2383EE8600A3121B /* FanPassList.storyboard in Resources */,
 				4356F51B233DF184000710FC /* Localizable.strings in Resources */,
@@ -2434,7 +2404,6 @@
 				4323FB45233A166000243655 /* ChangePasswordViewModel.swift in Sources */,
 				438E764D2366B7B30062D004 /* SubscriptionUserViewController.swift in Sources */,
 				4356F4F8233D9CBB000710FC /* LocalizedStrings.swift in Sources */,
-				4323FB73233A166200243655 /* ConfirmDonationViewController.swift in Sources */,
 				4323FAAB233A165A00243655 /* TabBarViewController.swift in Sources */,
 				43C5C93F2383BDB1004BACFC /* SubscribeFanPassViewController.swift in Sources */,
 				4323FA79233A165800243655 /* UINavigationController+Extension.swift in Sources */,
@@ -2553,7 +2522,6 @@
 				436CAC6D234C2E1200C84373 /* FirebaseManager.swift in Sources */,
 				4372267F237E46C30054C777 /* HomePopularTagsViewController.swift in Sources */,
 				4323FAD7233A165B00243655 /* PostViewController.swift in Sources */,
-				4323FB6F233A166200243655 /* ConfirmDonationViewModel.swift in Sources */,
 				4323FB9F233A166400243655 /* SignInViewController.swift in Sources */,
 				43EBE1A52374087D0081C3B7 /* KeychainManager.swift in Sources */,
 				4323FADD233A165C00243655 /* PostHeaderViewModel.swift in Sources */,
@@ -2606,7 +2574,6 @@
 				4323FB44233A166000243655 /* ChangePasswordViewModel.swift in Sources */,
 				438E764C2366B7B30062D004 /* SubscriptionUserViewController.swift in Sources */,
 				4356F4F7233D9CBB000710FC /* LocalizedStrings.swift in Sources */,
-				4323FB72233A166200243655 /* ConfirmDonationViewController.swift in Sources */,
 				4323FAAA233A165A00243655 /* TabBarViewController.swift in Sources */,
 				43C5C93E2383BDB1004BACFC /* SubscribeFanPassViewController.swift in Sources */,
 				4323FA78233A165800243655 /* UINavigationController+Extension.swift in Sources */,
@@ -2725,7 +2692,6 @@
 				436CAC6C234C2E1200C84373 /* FirebaseManager.swift in Sources */,
 				4372267E237E46C30054C777 /* HomePopularTagsViewController.swift in Sources */,
 				4323FAD6233A165B00243655 /* PostViewController.swift in Sources */,
-				4323FB6E233A166200243655 /* ConfirmDonationViewModel.swift in Sources */,
 				4323FB9E233A166400243655 /* SignInViewController.swift in Sources */,
 				43EBE1A42374087D0081C3B7 /* KeychainManager.swift in Sources */,
 				4323FADC233A165C00243655 /* PostHeaderViewModel.swift in Sources */,

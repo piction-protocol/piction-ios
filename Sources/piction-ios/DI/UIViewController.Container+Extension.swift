@@ -148,12 +148,6 @@ extension DepositViewController {
     }
 }
 
-extension ConfirmDonationViewController {
-    static func make(loginId: String, sendAmount: Int) -> ConfirmDonationViewController {
-        return Container.shared.resolve(ConfirmDonationViewController.self, arguments: loginId, sendAmount)!
-    }
-}
-
 extension CheckPincodeViewController {
     static func make(style: CheckPincodeStyle) -> CheckPincodeViewController {
         return Container.shared.resolve(CheckPincodeViewController.self, argument: style)!
