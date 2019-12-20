@@ -218,7 +218,7 @@ extension PostViewController: ViewModelBindable {
 
                 self.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self.postWebView.scrollView.contentInset = UIEdgeInsets(
-                    top: self.statusHeight + self.navigationHeight,
+                    top: self.statusHeight + DEFAULT_NAVIGATION_HEIGHT,
                     left: 0,
                     bottom: self.toolbarHeight,
                     right: 0)
