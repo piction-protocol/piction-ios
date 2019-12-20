@@ -14,8 +14,6 @@ enum CustomEmptyViewStyle {
     case defaultLogin
     case projectPostListEmpty
     case projectSeriesListEmpty
-    case sponsorshipListEmpty
-    case sponsorshipListLogin
     case subscriptionListEmpty
     case searchProjectGuide
     case searchTagGuide
@@ -35,9 +33,6 @@ enum CustomEmptyViewStyle {
              .myProjectListEmpty,
              .searchSponsorEmpty:
             return #imageLiteral(resourceName: "icMoodBad")
-        case .sponsorshipListEmpty,
-             .sponsorshipListLogin:
-            return #imageLiteral(resourceName: "icStartup")
         case .searchProjectGuide,
              .searchTagGuide:
             return #imageLiteral(resourceName: "imgSearchNull")
@@ -46,15 +41,12 @@ enum CustomEmptyViewStyle {
 
     var description: String {
         switch self {
-        case .defaultLogin,
-             .sponsorshipListLogin:
+        case .defaultLogin:
             return LocalizedStrings.str_need_login.localized()
         case .projectPostListEmpty:
             return LocalizedStrings.str_post_empty.localized()
         case .projectSeriesListEmpty:
             return LocalizedStrings.str_series_empty.localized()
-        case .sponsorshipListEmpty:
-            return LocalizedStrings.str_empty_sponsorship.localized()
         case .subscriptionListEmpty:
             return LocalizedStrings.str_subscription_empty.localized()
         case .searchListEmpty,
@@ -73,12 +65,10 @@ enum CustomEmptyViewStyle {
 
     var buttonTitle: String? {
         switch self {
-        case .defaultLogin,
-             .sponsorshipListLogin:
+        case .defaultLogin:
             return LocalizedStrings.login.localized()
         case .projectPostListEmpty,
              .projectSeriesListEmpty,
-             .sponsorshipListEmpty,
              .subscriptionListEmpty,
              .searchListEmpty,
              .transactionListEmpty,

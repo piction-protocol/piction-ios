@@ -53,8 +53,7 @@ extension CustomEmptyViewController: ViewModelBindable {
             .drive(onNext: { [weak self] style in
                 guard let `self` = self else { return }
                 switch style {
-                case .defaultLogin,
-                     .sponsorshipListLogin:
+                case .defaultLogin:
                     self.openSignInViewController()
                 default:
                     break
