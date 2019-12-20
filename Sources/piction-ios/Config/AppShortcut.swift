@@ -9,15 +9,15 @@
 import UIKit
 
 enum AppShortcutType: String {
-    case home = "home"
+    case search = "search"
     case explore = "explore"
     case subscription = "subscription"
     case mypage = "mypage"
 
     var title: String {
         switch self {
-        case .home:
-            return ""
+        case .search:
+            return LocalizedStrings.hint_project_and_tag_search.localized()
         case .explore:
             return LocalizedStrings.tab_explore.localized()
         case .subscription:
@@ -27,16 +27,16 @@ enum AppShortcutType: String {
         }
     }
 
-    var icon: String {
+    var icon: UIApplicationShortcutIcon {
         switch self {
-        case .home:
-            return ""
+        case .search:
+            return UIApplicationShortcutIcon(type: .search)
         case .explore:
-            return "icTab2Unselected"
+            return UIApplicationShortcutIcon(templateImageName: "icTab2Unselected")
         case .subscription:
-            return "icTab3Unselected"
+            return UIApplicationShortcutIcon(templateImageName: "icTab3Unselected")
         case .mypage:
-            return "icTab5Unselected"
+            return UIApplicationShortcutIcon(templateImageName: "icTab5Unselected")
         }
     }
 }
@@ -46,8 +46,7 @@ class AppShortcut: UIMutableApplicationShortcutItem {
 
     init(type: AppShortcutType, segue: String) {
         self.segue = segue
-        let iconImage = UIApplicationShortcutIcon(templateImageName: type.icon)
-        super.init(type: String(describing: type), localizedTitle: type.title, localizedSubtitle: nil, icon: iconImage, userInfo: nil)
+        super.init(type: String(describing: type), localizedTitle: type.title, localizedSubtitle: nil, icon: type.icon, userInfo: nil)
     }
 }
 
@@ -57,6 +56,7 @@ class AppShortcuts {
     class func sync() {
         var newShortcuts: [AppShortcut] = []
 
+        newShortcuts.append(AppShortcut(type: .search, segue: "openSearch"))
         newShortcuts.append(AppShortcut(type: .explore, segue: "openExplore"))
         newShortcuts.append(AppShortcut(type: .subscription, segue: "openSubscription"))
         newShortcuts.append(AppShortcut(type: .mypage, segue: "openMyPage"))
@@ -68,9 +68,11 @@ class AppShortcuts {
     class func performShortcut(window: UIWindow, shortcut: UIApplicationShortcutItem) {
         sync()
 
-        switch AppShortcutType(rawValue: shortcut.type) ?? .home {
-        case .home:
-            break
+        switch AppShortcutType(rawValue: shortcut.type) ?? .explore {
+        case .search:
+            if let url = URL(string: "\(AppInfo.urlScheme)://search") {
+                _ = DeepLinkManager.executeDeepLink(with: url)
+            }
         case .explore:
             if let url = URL(string: "\(AppInfo.urlScheme)://home-explore") {
                 _ = DeepLinkManager.executeDeepLink(with: url)
