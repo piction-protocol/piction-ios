@@ -115,7 +115,7 @@
 "str_subscription_project" = "구독 프로젝트";
 "str_popular_tag" = "인기 태그";
 "str_project_count" = "%d 프로젝트";
-"str_subs_count_plural" = "%d subscribers";
+"str_subs_count_plural" = "%@ subscribers";
 "str_subs_only_with_fanpass" = "%@ 이상\n구독자만 이용 가능한 포스트입니다.";
 "str_subs_only" = "Unlock this by becoming subscriber.";
 "str_series_subs_only" = "구독자 전용";
@@ -153,6 +153,7 @@
 "str_post_empty" = "등록된 포스트가 없습니다.";
 "str_series_empty" = "등록된 시리즈가 없습니다.";
 "str_project_empty" = "등록된 프로젝트가 없습니다.";
+"str_subscribing_project_empty" = "구독한 프로젝트가 없습니다.";
 
 "str_creator" = "Creator";
 "str_project_synopsis" = "Synopsis";
@@ -199,6 +200,12 @@
 "str_project_update_n_day" = "Update %d days ago";
 "str_project_update_n_month" = "Update %d months ago";
 "str_project_update_n_year" = "Update %d years ago";
+"str_post_update_n_now" = "Now";
+"str_post_update_n_minute" = "%d minutes ago";
+"str_post_update_n_hour" = "%d hours ago";
+"str_post_update_n_day" = "%d days ago";
+"str_post_update_n_month" = "%d months ago";
+"str_post_update_n_year" = "%d years ago";
 "menu_deposit_detail" = "Deposit detail";
 "menu_withdraw_detail" = "Withdraw detail";
 "str_transaction_info" = "트랜잭션 정보";
@@ -310,3 +317,6 @@
 "str_post_publish_now" = "즉시 발행";
 "str_post_publish_guide" = "공개 설정과 관계없이 설정한 시간 이전에는 포스트가 공개되지 않습니다.\n한 번 포스트가 발행된 이후에는 발행 시간을 변경할 수 없습니다.";
 "str_subscription_user_list" = "구독자 목록";
+
+"str_home_header_not_subscribing_subtitle" = "프로젝트 구독 후 픽션의 다양한 포스트를 만나볼 수 있습니다.";
+"str_home_header_no_post_subtitle" = "픽션의 다양한 포스트를 받아볼 수 있는 다른 프로젝트를 만나보세요.";

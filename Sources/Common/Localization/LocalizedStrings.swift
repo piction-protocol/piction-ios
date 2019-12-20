@@ -155,6 +155,7 @@ enum LocalizedStrings {
     case str_post_empty
     case str_series_empty
     case str_project_empty
+    case str_subscribing_project_empty
 
     case str_qrcode_scan
     case str_qrcode_help
@@ -198,6 +199,12 @@ enum LocalizedStrings {
     case str_project_update_n_day
     case str_project_update_n_month
     case str_project_update_n_year
+    case str_post_update_n_now
+    case str_post_update_n_minute
+    case str_post_update_n_hour
+    case str_post_update_n_day
+    case str_post_update_n_month
+    case str_post_update_n_year
     case menu_deposit_detail
     case menu_withdraw_detail
     case str_transaction_info
@@ -307,6 +314,9 @@ enum LocalizedStrings {
     case str_post_publish_guide
 
     case str_subscription_user_list
+
+    case str_home_header_not_subscribing_subtitle
+    case str_home_header_no_post_subtitle
 }
 
 extension LocalizedStrings {

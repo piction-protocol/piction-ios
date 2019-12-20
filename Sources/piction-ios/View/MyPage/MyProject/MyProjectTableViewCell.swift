@@ -41,7 +41,7 @@ final class MyProjectTableViewCell: ReuseTableViewCell {
         }
 
         titleLabel.text = title
-        subscriptionCountLabel.text = LocalizedStrings.str_subs_count_plural.localized(with: subscriptionUserCount ?? 0)
+        subscriptionCountLabel.text = LocalizedStrings.str_subs_count_plural.localized(with: subscriptionUserCount?.commaRepresentation ?? "0")
 
         if status == "HIDDEN" || status == "DEPRECATED" {
             lockView.isHidden = false

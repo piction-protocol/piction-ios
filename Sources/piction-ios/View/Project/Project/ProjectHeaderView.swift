@@ -110,7 +110,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
         }
         writerLabel.text = writerName
         loginIdLabel.text = "@\(writerloginId ?? "")"
-        subscriptionCountLabel.text = LocalizedStrings.str_subs_count_plural.localized(with: subscriptionUserCount ?? 0)
+        subscriptionCountLabel.text = LocalizedStrings.str_subs_count_plural.localized(with: subscriptionUserCount?.commaRepresentation ?? "0")
     }
 
     func configureSubscription(isWriter: Bool, fanPassList: [FanPassModel], subscriptionInfo: SubscriptionModel?) {
