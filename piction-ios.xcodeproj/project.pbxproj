@@ -15,6 +15,14 @@
 		4309242A2372CBBF00716AF8 /* CreatePostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430924292372CBBF00716AF8 /* CreatePostViewModel.swift */; };
 		4309242C2372CBCB00716AF8 /* ManageSeriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309242B2372CBCB00716AF8 /* ManageSeriesViewModel.swift */; };
 		4309242E2372CEFA00716AF8 /* ManageSeriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309242D2372CEFA00716AF8 /* ManageSeriesTableViewCell.swift */; };
+		43125A3323AB65D80060928F /* HomeSubscribingPostsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43125A3223AB65D70060928F /* HomeSubscribingPostsTableViewCell.swift */; };
+		43125A3423AB65D80060928F /* HomeSubscribingPostsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43125A3223AB65D70060928F /* HomeSubscribingPostsTableViewCell.swift */; };
+		43125A3623AB65F80060928F /* HomeTrendingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43125A3523AB65F80060928F /* HomeTrendingTableViewCell.swift */; };
+		43125A3723AB65F80060928F /* HomeTrendingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43125A3523AB65F80060928F /* HomeTrendingTableViewCell.swift */; };
+		43125A3D23AC86620060928F /* HomeTrendingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43125A3C23AC86610060928F /* HomeTrendingCollectionViewCell.swift */; };
+		43125A3E23AC86620060928F /* HomeTrendingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43125A3C23AC86610060928F /* HomeTrendingCollectionViewCell.swift */; };
+		43125A4023AC932E0060928F /* HomeHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43125A3F23AC932E0060928F /* HomeHeaderTableViewCell.swift */; };
+		43125A4123AC932E0060928F /* HomeHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43125A3F23AC932E0060928F /* HomeHeaderTableViewCell.swift */; };
 		4323FA5C233A165600243655 /* UIViewController.Container+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F97F233A165600243655 /* UIViewController.Container+Extension.swift */; };
 		4323FA5D233A165600243655 /* UIViewController.Container+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F97F233A165600243655 /* UIViewController.Container+Extension.swift */; };
 		4323FA5E233A165600243655 /* ViewControllerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F980233A165600243655 /* ViewControllerAssembly.swift */; };
@@ -538,6 +546,10 @@
 		430924292372CBBF00716AF8 /* CreatePostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewModel.swift; sourceTree = "<group>"; };
 		4309242B2372CBCB00716AF8 /* ManageSeriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageSeriesViewModel.swift; sourceTree = "<group>"; };
 		4309242D2372CEFA00716AF8 /* ManageSeriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageSeriesTableViewCell.swift; sourceTree = "<group>"; };
+		43125A3223AB65D70060928F /* HomeSubscribingPostsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSubscribingPostsTableViewCell.swift; sourceTree = "<group>"; };
+		43125A3523AB65F80060928F /* HomeTrendingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTrendingTableViewCell.swift; sourceTree = "<group>"; };
+		43125A3C23AC86610060928F /* HomeTrendingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTrendingCollectionViewCell.swift; sourceTree = "<group>"; };
+		43125A3F23AC932E0060928F /* HomeHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		4317A40622E172A200A5C725 /* piction-ios-test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "piction-ios-test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4323F97F233A165600243655 /* UIViewController.Container+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController.Container+Extension.swift"; sourceTree = "<group>"; };
 		4323F980233A165600243655 /* ViewControllerAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerAssembly.swift; sourceTree = "<group>"; };
@@ -1074,7 +1086,13 @@
 		4323F9B3233A165600243655 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				4323F9B9233A165600243655 /* Home */,
+				4323F9BD233A165600243655 /* HomeViewController.swift */,
+				4323F9BF233A165600243655 /* HomeViewModel.swift */,
+				43125A3F23AC932E0060928F /* HomeHeaderTableViewCell.swift */,
+				43125A3223AB65D70060928F /* HomeSubscribingPostsTableViewCell.swift */,
+				43125A3523AB65F80060928F /* HomeTrendingTableViewCell.swift */,
+				43125A3C23AC86610060928F /* HomeTrendingCollectionViewCell.swift */,
+				4356F500233DE0D2000710FC /* Home.storyboard */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1089,16 +1107,6 @@
 				4323F9B5233A165600243655 /* Search.storyboard */,
 			);
 			path = Search;
-			sourceTree = "<group>";
-		};
-		4323F9B9233A165600243655 /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				4323F9BD233A165600243655 /* HomeViewController.swift */,
-				4323F9BF233A165600243655 /* HomeViewModel.swift */,
-				4356F500233DE0D2000710FC /* Home.storyboard */,
-			);
-			path = Home;
 			sourceTree = "<group>";
 		};
 		4323F9C1233A165600243655 /* Subscription */ = {
@@ -2277,6 +2285,7 @@
 				438E76342362FAA20062D004 /* ManageSeriesViewController.swift in Sources */,
 				4323FA7B233A165800243655 /* UIViewController+Extension.swift in Sources */,
 				4323FAFD233A165D00243655 /* ProjectViewController.swift in Sources */,
+				43125A3723AB65F80060928F /* HomeTrendingTableViewCell.swift in Sources */,
 				43E543812356F5CE00F2EC45 /* ExploreListCollectionFooterView.swift in Sources */,
 				4323FB27233A165F00243655 /* TransactionDetailFooterTypeTableViewCell.swift in Sources */,
 				4323FA71233A165700243655 /* Collection+Extension.swift in Sources */,
@@ -2286,6 +2295,7 @@
 				43C5C9422383BDC6004BACFC /* SubscribeFanPassViewModel.swift in Sources */,
 				436C75B22387C73600902F08 /* CreateFanPassViewModel.swift in Sources */,
 				4323FAE7233A165C00243655 /* SeriesPostViewModel.swift in Sources */,
+				43125A4123AC932E0060928F /* HomeHeaderTableViewCell.swift in Sources */,
 				4323FAA1233A165900243655 /* ConfirmPincodeViewController.swift in Sources */,
 				4323FA85233A165800243655 /* UITableView+Extension.swift in Sources */,
 				43E5436A2355930D00F2EC45 /* SceneDelegate.swift in Sources */,
@@ -2321,6 +2331,7 @@
 				43E543852356F5CE00F2EC45 /* ExploreListCollectionViewCell.swift in Sources */,
 				4323FAF1233A165C00243655 /* ProjectViewModel.swift in Sources */,
 				4323FAE3233A165C00243655 /* ProjectInfoViewController.swift in Sources */,
+				43125A3E23AC86620060928F /* HomeTrendingCollectionViewCell.swift in Sources */,
 				4323FA6D233A165700243655 /* Int+Extension.swift in Sources */,
 				439E7ED6237BEC0C00E4A475 /* KeyboardManager.swift in Sources */,
 				4323FABF233A165A00243655 /* HomeViewModel.swift in Sources */,
@@ -2365,6 +2376,7 @@
 				43F1866923444E470050BA67 /* DeepLinkManager.swift in Sources */,
 				4323FA7F233A165800243655 /* String+Extension.swift in Sources */,
 				4323FB4B233A166000243655 /* ChangeMyInfoViewController.swift in Sources */,
+				43125A3423AB65D80060928F /* HomeSubscribingPostsTableViewCell.swift in Sources */,
 				4323FA5F233A165600243655 /* ViewControllerAssembly.swift in Sources */,
 				4323FA9B233A165900243655 /* CheckPincodeViewModel.swift in Sources */,
 				4390292A2383EE7600A3121B /* FanPassListViewModel.swift in Sources */,
@@ -2435,6 +2447,7 @@
 				438E76332362FAA20062D004 /* ManageSeriesViewController.swift in Sources */,
 				4323FA7A233A165800243655 /* UIViewController+Extension.swift in Sources */,
 				4323FAFC233A165D00243655 /* ProjectViewController.swift in Sources */,
+				43125A3623AB65F80060928F /* HomeTrendingTableViewCell.swift in Sources */,
 				43E543802356F5CD00F2EC45 /* ExploreListCollectionFooterView.swift in Sources */,
 				4323FB26233A165F00243655 /* TransactionDetailFooterTypeTableViewCell.swift in Sources */,
 				4323FA70233A165700243655 /* Collection+Extension.swift in Sources */,
@@ -2444,6 +2457,7 @@
 				43C5C9412383BDC6004BACFC /* SubscribeFanPassViewModel.swift in Sources */,
 				436C75B12387C73600902F08 /* CreateFanPassViewModel.swift in Sources */,
 				4323FAE6233A165C00243655 /* SeriesPostViewModel.swift in Sources */,
+				43125A4023AC932E0060928F /* HomeHeaderTableViewCell.swift in Sources */,
 				4323FAA0233A165900243655 /* ConfirmPincodeViewController.swift in Sources */,
 				4323FA84233A165800243655 /* UITableView+Extension.swift in Sources */,
 				43E543692355930D00F2EC45 /* SceneDelegate.swift in Sources */,
@@ -2479,6 +2493,7 @@
 				43E543842356F5CE00F2EC45 /* ExploreListCollectionViewCell.swift in Sources */,
 				4323FAF0233A165C00243655 /* ProjectViewModel.swift in Sources */,
 				4323FAE2233A165C00243655 /* ProjectInfoViewController.swift in Sources */,
+				43125A3D23AC86620060928F /* HomeTrendingCollectionViewCell.swift in Sources */,
 				4323FA6C233A165700243655 /* Int+Extension.swift in Sources */,
 				439E7ED5237BEC0C00E4A475 /* KeyboardManager.swift in Sources */,
 				4323FABE233A165A00243655 /* HomeViewModel.swift in Sources */,
@@ -2523,6 +2538,7 @@
 				43F1866823444E470050BA67 /* DeepLinkManager.swift in Sources */,
 				4323FA7E233A165800243655 /* String+Extension.swift in Sources */,
 				4323FB4A233A166000243655 /* ChangeMyInfoViewController.swift in Sources */,
+				43125A3323AB65D80060928F /* HomeSubscribingPostsTableViewCell.swift in Sources */,
 				4323FA5E233A165600243655 /* ViewControllerAssembly.swift in Sources */,
 				4323FA9A233A165900243655 /* CheckPincodeViewModel.swift in Sources */,
 				439029292383EE7600A3121B /* FanPassListViewModel.swift in Sources */,

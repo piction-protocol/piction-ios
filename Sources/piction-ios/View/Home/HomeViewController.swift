@@ -42,6 +42,10 @@ final class HomeViewController: UIViewController {
             self.navigationController?.configureNavigationBar(transparent: false, shadow: false)
         }
     }
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.tableView.layoutIfNeeded()
+    }
 
     private func configureSearchController() {
         self.searchController = UISearchController(searchResultsController: self.searchResultsController)
@@ -68,15 +72,61 @@ final class HomeViewController: UIViewController {
             self.searchController?.searchBar.becomeFirstResponder()
         }
     }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        setInfiniteScrollStyle()
+    }
+
+    private func setInfiniteScrollStyle() {
+        if #available(iOS 12.0, *) {
+            if self.traitCollection.userInterfaceStyle == .dark {
+                tableView.infiniteScrollIndicatorStyle = .white
+            } else {
+                tableView.infiniteScrollIndicatorStyle = .gray
+            }
+        }
+    }
+
+    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionType<HomeSection>> {
+        return RxTableViewSectionedReloadDataSource<SectionType<HomeSection>>(
+            configureCell: { dataSource, tableView, indexPath, model in
+                switch dataSource[indexPath] {
+                case .header(let type):
+                    let cell: HomeHeaderTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.configure(with: type)
+                    return cell
+                case .subscribingPosts(let model):
+                    let cell: HomeSubscribingPostsTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.configure(with: model)
+                    return cell
+                case .trending(let model):
+                    let cell: HomeTrendingTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.configure(with: model)
+                    cell.layoutIfNeeded()
+                    return cell
+                }
+        })
+    }
 }
 
 extension HomeViewController: ViewModelBindable {
     typealias ViewModel = HomeViewModel
 
     func bindViewModel(viewModel: ViewModel) {
+        let dataSource = configureDataSource()
+
+        tableView.addInfiniteScroll { [weak self] tableView in
+            self?.viewModel?.loadNextTrigger.onNext(())
+        }
+        tableView.setShouldShowInfiniteScrollHandler { [weak self] _ in
+            return self?.viewModel?.shouldInfiniteScroll ?? false
+        }
+
         let input = HomeViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
+            selectedIndexPath: tableView.rx.itemSelected.asDriver(),
             refreshControlDidRefresh: refreshControl.rx.controlEvent(.valueChanged).asDriver()
         )
 
@@ -88,6 +138,42 @@ extension HomeViewController: ViewModelBindable {
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
                 self?.searchResultsController.setKeyboardDelegate()
                 FirebaseManager.screenName("홈")
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .homeSection
+            .drive { $0 }
+            .map { [$0] }
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+
+        output
+            .homeSection
+            .drive(onNext: { [weak self] _ in
+                self?.tableView.layoutIfNeeded()
+                self?.tableView.finishInfiniteScroll()
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .selectedIndexPath
+            .drive(onNext: { [weak self] indexPath in
+                switch dataSource[indexPath] {
+                case .subscribingPosts(let item):
+                    guard
+                        let postId = item.id,
+                        let uri = item.project?.uri,
+                        let index = self?.navigationController?.viewControllers.count
+                    else { return }
+
+                    self?.openPostViewController(uri: uri, postId: postId)
+
+                    let backgroundProject = ProjectViewController.make(uri: uri)
+                    self?.navigationController?.viewControllers.insert(backgroundProject, at: index)
+                default:
+                    break
+                }
             })
             .disposed(by: disposeBag)
 
