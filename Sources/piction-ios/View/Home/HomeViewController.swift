@@ -47,6 +47,21 @@ final class HomeViewController: UIViewController {
         self.tableView.layoutIfNeeded()
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        setInfiniteScrollStyle()
+    }
+
+    private func setInfiniteScrollStyle() {
+        if #available(iOS 12.0, *) {
+            if self.traitCollection.userInterfaceStyle == .dark {
+                tableView.infiniteScrollIndicatorStyle = .white
+            } else {
+                tableView.infiniteScrollIndicatorStyle = .gray
+            }
+        }
+    }
+
     private func configureSearchController() {
         self.searchController = UISearchController(searchResultsController: self.searchResultsController)
 
@@ -70,21 +85,6 @@ final class HomeViewController: UIViewController {
     func openSearchBar() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.searchController?.searchBar.becomeFirstResponder()
-        }
-    }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        setInfiniteScrollStyle()
-    }
-
-    private func setInfiniteScrollStyle() {
-        if #available(iOS 12.0, *) {
-            if self.traitCollection.userInterfaceStyle == .dark {
-                tableView.infiniteScrollIndicatorStyle = .white
-            } else {
-                tableView.infiniteScrollIndicatorStyle = .gray
-            }
         }
     }
 
@@ -136,6 +136,7 @@ extension HomeViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
+                self?.setInfiniteScrollStyle()
                 self?.searchResultsController.setKeyboardDelegate()
                 FirebaseManager.screenName("홈")
             })
