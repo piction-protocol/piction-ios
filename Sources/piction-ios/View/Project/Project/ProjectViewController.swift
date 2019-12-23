@@ -24,6 +24,9 @@ enum ManageMenu {
 final class ProjectViewController: UIViewController {
     var disposeBag = DisposeBag()
 
+    private let menuHeight: CGFloat = 52
+    private var contentOffset: CGPoint?
+
     @IBOutlet weak var infoBarButton: UIBarButtonItem!
     @IBOutlet weak var emptyView: UIView!
 
@@ -40,9 +43,6 @@ final class ProjectViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView! {
         didSet {
-            tableView.estimatedRowHeight = 228
-            tableView.rowHeight = UITableView.automaticDimension
-
             stretchyHeader = ProjectHeaderView.getView()
             stretchyHeader?.delegate = self
             if let stretchyHeader = stretchyHeader {
@@ -137,9 +137,10 @@ final class ProjectViewController: UIViewController {
     }
 
     private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
-        _ = emptyView.subviews.map { $0.removeFromSuperview() }
         let vc = CustomEmptyViewController.make(style: style)
-        embed(vc, to: emptyView)
+        if let footerView = self.tableView.tableFooterView {
+            self.embed(vc, to: footerView)
+        }
     }
 
     private func openSharePopup(url: String) {
@@ -292,7 +293,8 @@ extension ProjectViewController: ViewModelBindable {
             .contentList
             .do(onNext: { [weak self] _ in
                 guard let `self` = self else { return }
-                self.emptyView.frame.size.height = SCREEN_H - self.statusHeight - self.navigationHeight - self.tabbarHeight - 52
+                let footerHeight = SCREEN_H - self.statusHeight - self.navigationHeight - self.tabbarHeight - self.menuHeight
+                self.tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: footerHeight))
             })
             .drive { $0 }
             .map { [$0] }
@@ -303,20 +305,24 @@ extension ProjectViewController: ViewModelBindable {
             .contentList
             .drive(onNext: { [weak self] list in
                 guard let `self` = self else { return }
-                if list.items.count > 0 {
-                    _ = self.emptyView.subviews.map { $0.removeFromSuperview() }
-                }
-                let footerHeight = SCREEN_H - self.statusHeight - self.navigationHeight - self.tabbarHeight - 52
-                let height = self.preferredContentSize.height - footerHeight
+                let footerHeight = SCREEN_H - self.statusHeight - self.navigationHeight - self.tabbarHeight - self.menuHeight
+                let height = self.preferredContentSize.height - (self.tableView.tableFooterView?.frame.size.height ?? 0)
                 if height < footerHeight {
-                    self.emptyView.frame.size.height = footerHeight - height
+                    self.tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: footerHeight - height))
                 } else {
-                    self.emptyView.frame.size.height = 0
+                    self.tableView.tableFooterView = UIView()
                 }
-                self.emptyView.isHidden = false
+
+                if let footerView = self.tableView.tableFooterView {
+                    footerView.isHidden = list.items.count > 0
+                }
+
                 self.tableView.layoutIfNeeded()
                 self.tableView.finishInfiniteScroll()
-                self.tableView.reloadData()
+
+                if let contentOffset = self.contentOffset {
+                    self.tableView.contentOffset = contentOffset
+                }
             })
             .disposed(by: disposeBag)
 
@@ -410,7 +416,7 @@ extension ProjectViewController: GSKStretchyHeaderViewStretchDelegate {
         if stretchFactor > 0.1 {
             stretchyHeader?.maskImage.blurRadius = 0
         } else {
-            print((1 - min(1, stretchFactor)) - 90 / 10)
+//            print((1 - min(1, stretchFactor)) - 90 / 10)
             stretchyHeader?.maskImage.blurRadius = (1 - min(1, stretchFactor) - 0.9) * 50
         }
     }
@@ -422,12 +428,24 @@ extension ProjectViewController: ProjectHeaderViewDelegate {
             self.stretchyHeader?.controlMenuButton(menu: 0)
             self.changeMenu.onNext(0)
         }
+        let menuTopPosition = self.statusHeight + self.navigationHeight + self.menuHeight
+        if tableView.contentOffset.y >= -menuTopPosition {
+            contentOffset = CGPoint(x: 0, y: -menuTopPosition)
+        } else {
+            contentOffset = tableView.contentOffset
+        }
     }
 
     func seriesBtnDidTap() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.stretchyHeader?.controlMenuButton(menu: 1)
             self.changeMenu.onNext(1)
+        }
+        let menuTopPosition = self.statusHeight + self.navigationHeight + self.menuHeight
+        if tableView.contentOffset.y >= -menuTopPosition {
+            contentOffset = CGPoint(x: 0, y: -menuTopPosition)
+        } else {
+            contentOffset = tableView.contentOffset
         }
     }
 
