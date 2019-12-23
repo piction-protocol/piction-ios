@@ -182,7 +182,6 @@ final class HomeViewModel: InjectableViewModel {
 
         let activityIndicator = Driver.merge(
             subscribingProjectsAction.isExecuting,
-            subscribingPostAction.isExecuting,
             trendingAction.isExecuting)
 
         return Output(
