@@ -1,5 +1,5 @@
 //
-//  SeriesListTableViewCell.swift
+//  ProjectSeriesListTableViewCell.swift
 //  PictionView
 //
 //  Created by jhseo on 03/07/2019.
@@ -9,7 +9,7 @@
 import UIKit
 import PictionSDK
 
-final class SeriesListTableViewCell: ReuseTableViewCell {
+final class ProjectSeriesListTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var backgroundThumbnailImageView: UIImageView!
     @IBOutlet weak var seriesLabel: UILabel!
