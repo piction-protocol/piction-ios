@@ -154,27 +154,6 @@ extension UIViewController {
         }
     }
 
-    func openProjectDetailViewController(uri: String) {
-        let vc = ProjectDetailViewController.make(uri: uri)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    func openProjectMainViewController(uri: String) {
-        let vc = ProjectMainViewController.make(uri: uri)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    func openProjectMenuViewController(uri: String) {
-        let vc = ProjectMenuViewController.make(uri: uri)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     func openCheckPincodeViewController(delegate: CheckPincodeDelegate? = nil) {
         let vc = CheckPincodeViewController.make(style: .check)
         vc.delegate = delegate
