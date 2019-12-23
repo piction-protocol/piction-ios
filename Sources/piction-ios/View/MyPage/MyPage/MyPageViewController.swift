@@ -23,15 +23,14 @@ final class MyPageViewController: UIViewController {
     }
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var emptyView: UIView!
-    private var emptyHeight: CGFloat = 0
     private var refreshControl = UIRefreshControl()
 
     private let logout = PublishSubject<Void>()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        emptyHeight = visibleHeight
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        emptyView.frame.size.width = view.frame.size.width
+        emptyView.frame.size.height = visibleHeight
     }
 
     private func embedUserInfoViewController() {
@@ -42,7 +41,7 @@ final class MyPageViewController: UIViewController {
 
     private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
         _ = emptyView.subviews.map { $0.removeFromSuperview() }
-        emptyView.frame.size.height = emptyHeight
+        emptyView.frame.size.height = visibleHeight
         let vc = CustomEmptyViewController.make(style: style)
         embed(vc, to: emptyView)
     }

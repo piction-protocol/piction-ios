@@ -70,6 +70,8 @@ final class SubscriptionListViewController: UIViewController {
             flowLayout.itemSize = CGSize(width: width, height: height)
             flowLayout.invalidateLayout()
         }
+        emptyView.frame.size.width = view.frame.size.width
+        emptyView.frame.size.height = visibleHeight
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
