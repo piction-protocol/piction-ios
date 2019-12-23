@@ -44,6 +44,8 @@ final class SignInViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
+        let updater = self.updater
+
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let userInfoAction = viewWillAppear
@@ -74,7 +76,6 @@ final class SignInViewModel: InjectableViewModel {
                 guard let errorMsg = response as? ErrorType else {
                     return Driver.empty()
                 }
-
                 switch errorMsg {
                 case .badRequest(let error):
                     return Driver.just(error)
@@ -88,7 +89,6 @@ final class SignInViewModel: InjectableViewModel {
                 guard let errorMsg = response as? ErrorType else {
                     return Driver.empty()
                 }
-
                 switch errorMsg {
                 case .badRequest(let error):
                     if error.field == nil {
@@ -102,26 +102,20 @@ final class SignInViewModel: InjectableViewModel {
             }
 
         let signInSuccess = signInButtonAction.elements
-            .flatMap { [weak self] response -> Driver<Bool> in
+            .flatMap { response -> Driver<Bool> in
                 guard let token = try? response.map(to: AuthenticationViewResponse.self) else {
                     return Driver.empty()
                 }
                 KeychainManager.set(key: "AccessToken", value: token.accessToken ?? "")
                 PictionManager.setToken(token.accessToken ?? "")
-                self?.updater.refreshSession.onNext(())
+                updater.refreshSession.onNext(())
                 return Driver.just(true)
             }
-
-        let openSignUpViewController = input.signUpBtnDidTap
-
-        let openFindPassword = input.findPasswordBtnDidTap
 
         let activityIndicator = signInButtonAction.isExecuting
 
         let closeAction = input.closeBtnDidTap
-            .flatMap { _ -> Driver<Bool> in
-                return Driver.just(false)
-            }
+            .flatMap { _ in Driver.just(false) }
 
         let dismissViewController = Driver.merge(signInSuccess, closeAction)
 
@@ -129,8 +123,8 @@ final class SignInViewModel: InjectableViewModel {
             viewWillAppear: input.viewWillAppear,
             userInfo: userInfoSuccess,
             activityIndicator: activityIndicator,
-            openSignUpViewController: openSignUpViewController,
-            openFindPassword: openFindPassword,
+            openSignUpViewController: input.signUpBtnDidTap,
+            openFindPassword: input.findPasswordBtnDidTap,
             dismissViewController: dismissViewController,
             errorMsg: signInError,
             showToast: showToast

@@ -46,13 +46,15 @@ final class ManageSeriesViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
+        let (updater, uri) = (self.updater, self.uri)
+
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
 
         let seriesListAction = Driver.merge(viewWillAppear, refreshContent)
-           .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(SeriesAPI.all(uri: self?.uri ?? ""))
+           .flatMap { _ -> Driver<Action<ResponseData>> in
+               let response = PictionSDK.rx.requestAPI(SeriesAPI.all(uri: uri))
                return Action.makeDriver(response)
            }
 

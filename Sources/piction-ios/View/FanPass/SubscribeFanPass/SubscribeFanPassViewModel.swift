@@ -50,6 +50,7 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
+        let (updater, uri, selectedFanPass) = (self.updater, self.uri, self.selectedFanPass)
 
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
@@ -58,10 +59,7 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
         let initialLoad = Driver.merge(viewWillAppear, loadRetry)
 
         let fanPassItem = initialLoad
-            .flatMap { [weak self] _ -> Driver<FanPassModel> in
-                guard let fanPassItem = self?.selectedFanPass else { return Driver.empty() }
-                return Driver.just(fanPassItem)
-            }
+            .flatMap {  _ in Driver<FanPassModel>.just(selectedFanPass) }
 
         let walletInfoAction = initialLoad
             .flatMap { _ -> Driver<Action<ResponseData>> in
@@ -77,15 +75,13 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
 
         let walletInfoError = walletInfoAction.error
             .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else {
-                    return Driver.empty()
-                }
+                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
                 return Driver.just(errorMsg.message)
             }
 
         let projectInfoAction = initialLoad
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.get(uri: self?.uri ?? ""))
+            .flatMap { _ -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.get(uri: uri))
                 return Action.makeDriver(response)
             }
 
@@ -97,8 +93,13 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
 
         let purchaseAction = input.purchaseBtnDidTap
             .filter { KeychainManager.get(key: "pincode").isEmpty }
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.subscription(uri: self?.uri ?? "", fanPassId: self?.selectedFanPass.id ?? 0, subscriptionPrice: self?.selectedFanPass.subscriptionPrice ?? 0))
+            .flatMap { _ -> Driver<Action<ResponseData>> in
+                guard
+                    let fanPassId = selectedFanPass.id,
+                    let subscriptionPrice = selectedFanPass.subscriptionPrice
+                else { return Driver.empty() }
+
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.subscription(uri: uri, fanPassId: fanPassId, subscriptionPrice: subscriptionPrice))
                 return Action.makeDriver(response)
             }
 
@@ -107,28 +108,30 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
             .flatMap { _ in Driver.just(()) }
 
         let purchaseWithPincodeAction = input.authSuccessWithPincode
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.subscription(uri: self?.uri ?? "", fanPassId: self?.selectedFanPass.id ?? 0, subscriptionPrice: self?.selectedFanPass.subscriptionPrice ?? 0))
+            .flatMap { _ -> Driver<Action<ResponseData>> in
+                guard
+                    let fanPassId = selectedFanPass.id,
+                    let subscriptionPrice = selectedFanPass.subscriptionPrice
+                else { return Driver.empty() }
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.subscription(uri: uri, fanPassId: fanPassId, subscriptionPrice: subscriptionPrice))
                 return Action.makeDriver(response)
             }
 
         let purchaseSuccess = Driver.merge(purchaseAction.elements, purchaseWithPincodeAction.elements)
-            .flatMap { [weak self] _ -> Driver<String> in
-                self?.updater.refreshContent.onNext(())
+            .flatMap { _ -> Driver<String> in
+                updater.refreshContent.onNext(())
                 return Driver.just("구독 완료")
             }
 
         let purchaseError = purchaseAction.error
             .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else {
-                    return Driver.empty()
-                }
+                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
                 return Driver.just(errorMsg.message)
             }
 
         let feesInfoAction = initialLoad
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.fees(uri: self?.uri ?? ""))
+            .flatMap { _ -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.fees(uri: uri))
                 return Action.makeDriver(response)
             }
 
@@ -146,8 +149,8 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
             purchaseWithPincodeAction.isExecuting)
 
         let showErrorPopup = Driver.merge(walletInfoError, purchaseError)
-            .do(onNext: { [weak self] _ in
-                self?.updater.refreshContent.onNext(())
+            .do(onNext: { _ in
+                updater.refreshContent.onNext(())
             })
 
         let dismissViewController = purchaseSuccess

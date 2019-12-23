@@ -52,6 +52,8 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
+        let updater = self.updater
+
         let userInfoAction = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
             .flatMap { _ -> Driver<Action<ResponseData>> in
                 let response = PictionSDK.rx.requestAPI(UsersAPI.me)
@@ -60,11 +62,13 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
 
         let userInfoSuccess = userInfoAction.elements
             .flatMap { [weak self] response -> Driver<UserViewResponse> in
-                guard let userInfo = try? response.map(to: UserViewResponse.self) else {
-                    return Driver.empty()
-                }
-                self?.imageId.onNext("")
-                self?.changeInfo.onNext(false)
+                guard
+                    let `self` = self,
+                    let userInfo = try? response.map(to: UserViewResponse.self)
+                else { return Driver.empty() }
+
+                self.imageId.onNext("")
+                self.changeInfo.onNext(false)
                 return Driver.just(userInfo)
             }
 
@@ -80,38 +84,45 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
 
         let uploadPictureError = uploadPictureAction.error
             .flatMap { response -> Driver<String> in
-                let errorMsg = response as? ErrorType
-                return Driver.just(errorMsg?.message ?? "")
+                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
+                return Driver.just(errorMsg.message)
             }
 
         let uploadPictureSuccess = uploadPictureAction.elements
             .flatMap { [weak self] response -> Driver<String?> in
-                guard let imageInfo = try? response.map(to: StorageAttachmentViewResponse.self) else {
-                    return Driver.empty()
-                }
-                self?.imageId.onNext(imageInfo.id ?? "")
-                self?.changeInfo.onNext(true)
-                return Driver.just(imageInfo.id ?? "")
+                guard
+                    let `self` = self,
+                    let imageInfo = try? response.map(to: StorageAttachmentViewResponse.self),
+                    let imageInfoId = imageInfo.id
+                else { return Driver.empty() }
+
+                self.imageId.onNext(imageInfoId)
+                self.changeInfo.onNext(true)
+                return Driver.just(imageInfoId)
             }
 
         let deletePicture = input.pictureImageDidPick
             .filter { $0 == nil }
             .flatMap { [weak self] _ -> Driver<String?> in
-                self?.imageId.onNext(nil)
-                self?.changeInfo.onNext(true)
+                guard let `self` = self else { return Driver.empty() }
+                self.imageId.onNext(nil)
+                self.changeInfo.onNext(true)
                 return Driver.just(nil)
             }
 
         let changePicture = Driver.merge(uploadPictureSuccess, deletePicture)
             .withLatestFrom(input.pictureImageDidPick)
-            .flatMap { image -> Driver<UIImage?> in
-                return Driver.just(image)
-            }
+            .flatMap { image in Driver<UIImage?>.just(image) }
 
         let userNameChanged = Driver.combineLatest(input.userNameTextFieldDidInput, userInfoSuccess)
             .flatMap { [weak self] (inputUsername, userInfo) -> Driver<String> in
-                if inputUsername != "" && inputUsername != (userInfo.username ?? "") {
-                    self?.changeInfo.onNext(true)
+                guard
+                    let `self` = self,
+                    let userName = userInfo.username
+                else { return Driver.empty() }
+
+                if inputUsername != "" && inputUsername != userName {
+                    self.changeInfo.onNext(true)
                 }
                 return Driver.just(inputUsername)
             }
@@ -122,9 +133,7 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
             .filter { $0 }
 
         let password = input.password
-            .flatMap { password -> Driver<String?> in
-                return Driver.just(password)
-            }
+            .flatMap { password in Driver<String?>.just(password) }
 
         let openPasswordPopup = input.saveBtnDidTap
 
@@ -137,16 +146,13 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
 
         let changeUserInfoError = saveButtonAction.error
             .flatMap { response -> Driver<String> in
-                let errorMsg = response as? ErrorType
-                return Driver.just(errorMsg?.message ?? "")
+                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
+                return Driver.just(errorMsg.message)
             }
 
         let changeUserInfoSuccess = saveButtonAction.elements
-            .flatMap { [weak self] response -> Driver<Void> in
-                guard let _ = try? response.map(to: AuthenticationViewResponse.self) else {
-                    return Driver.empty()
-                }
-                self?.updater.refreshSession.onNext(())
+            .flatMap { response -> Driver<Void> in
+                updater.refreshSession.onNext(())
                 return Driver.just(())
             }
 

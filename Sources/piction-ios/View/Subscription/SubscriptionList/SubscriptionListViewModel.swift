@@ -83,14 +83,16 @@ final class SubscriptionListViewModel: InjectableViewModel {
 
         let subscriptionListSuccess = subscriptionListAction.elements
             .flatMap { [weak self] response -> Driver<[ProjectModel]> in
-                guard let `self` = self else { return Driver.empty() }
-                guard let pageList = try? response.map(to: PageViewResponse<ProjectModel>.self) else {
-                    return Driver.empty()
-                }
+                guard
+                    let `self` = self,
+                    let pageList = try? response.map(to: PageViewResponse<ProjectModel>.self),
+                    let pageNumber = pageList.pageable?.pageNumber,
+                    let totalPages = pageList.totalPages
+                else { return Driver.empty() }
+
+                self.shouldInfiniteScroll = pageNumber < totalPages - 1
                 self.page = self.page + 1
-                if (pageList.pageable?.pageNumber ?? 0) >= (pageList.totalPages ?? 0) - 1 {
-                    self.shouldInfiniteScroll = false
-                }
+
                 self.items.append(contentsOf: pageList.content ?? [])
                 return Driver.just(self.items)
             }
@@ -107,9 +109,7 @@ final class SubscriptionListViewModel: InjectableViewModel {
             }
 
         let subscriptionEmptyList = subscriptionListAction.error
-            .flatMap { _ -> Driver<[ProjectModel]> in
-                return Driver.just([])
-            }
+            .flatMap { _ in Driver<[ProjectModel]>.just([]) }
 
         let subscriptionList = Driver.merge(subscriptionListSuccess, subscriptionEmptyList)
         let showErrorPopup = subscriptionListError
@@ -130,35 +130,31 @@ final class SubscriptionListViewModel: InjectableViewModel {
 
         let embedEmptyView = subscriptionListSuccess
             .flatMap { [weak self] items -> Driver<CustomEmptyViewStyle> in
-                if (items.count == 0) {
-                    self?.shouldInfiniteScroll = false
-                    return Driver.just(.subscriptionListEmpty)
-                }
-                return Driver.empty()
+                guard
+                    let `self` = self,
+                    items.isEmpty
+                else { return Driver.empty() }
+
+                self.shouldInfiniteScroll = false
+                return Driver.just(.subscriptionListEmpty)
             }
 
         let embedEmptyViewController = Driver.merge(embedEmptyView, embedEmptyLoginView)
 
         let openProjectViewController = input.selectedIndexPath
             .flatMap { [weak self] indexPath -> Driver<ProjectModel> in
-                guard let `self` = self else { return Driver.empty() }
-                guard self.items.count > indexPath.row else { return Driver.empty() }
+                guard
+                    let `self` = self,
+                    self.items.count > indexPath.row
+                else { return Driver.empty() }
                 return Driver.just(self.items[indexPath.row])
             }
 
         let refreshAction = input.refreshControlDidRefresh
             .withLatestFrom(subscriptionList)
-            .flatMap { _ -> Driver<Action<Void>> in
-                return Action.makeDriver(Driver.just(()))
-            }
+            .flatMap { _ in return Action.makeDriver(Driver<Void>.just(())) }
 
-        let showActivityIndicator = Driver.merge(initialLoad, loadRetry)
-            .flatMap { _ in Driver.just(true) }
-
-        let hideActivityIndicator = subscriptionList
-            .flatMap { _ in Driver.just(false) }
-
-        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
+        let activityIndicator = subscriptionListAction.isExecuting
 
         return Output(
             viewWillAppear: input.viewWillAppear,

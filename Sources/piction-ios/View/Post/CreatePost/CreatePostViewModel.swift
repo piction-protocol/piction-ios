@@ -81,6 +81,7 @@ final class CreatePostViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
+        let (updater, uri, postId) = (self.updater, self.uri, self.postId)
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
             .flatMap { [weak self] _ -> Driver<Void> in
                 self?.title.onNext("")
@@ -95,38 +96,38 @@ final class CreatePostViewModel: InjectableViewModel {
             }
 
         let isModify = input.viewWillAppear
-            .flatMap { [weak self] _ -> Driver<Bool> in
-                guard let `self` = self else { return Driver.empty() }
-                return Driver.just(self.postId != 0)
-            }
+            .flatMap { _ in Driver.just(postId != 0) }
 
         let loadPostAction = viewWillAppear
             .filter { self.postId != 0 }
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(PostsAPI.get(uri: self.uri, postId: self.postId))
+            .flatMap { _ -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(PostsAPI.get(uri: uri, postId: postId))
                 return Action.makeDriver(response)
             }
 
         let loadPostSuccess = loadPostAction.elements
             .flatMap { [weak self] response -> Driver<PostModel> in
-                guard let post = try? response.map(to: PostModel.self) else {
-                    return Driver.empty()
-                }
-                self?.title.onNext(post.title ?? "")
-                self?.coverImageId.onNext("")
-                self?.publishedAt.onNext(post.publishedAt ?? Date())
-                self?.fanPassId.onNext(post.fanPass?.id)
-                self?.status.onNext(post.status ?? "PUBLIC")
-                self?.seriesId.onNext(post.series?.id)
+                guard
+                    let `self` = self,
+                    let post = try? response.map(to: PostModel.self),
+                    let title = post.title,
+                    let publishedAt = post.publishedAt,
+                    let status = post.status
+                else { return Driver.empty() }
+
+                self.title.onNext(title)
+                self.coverImageId.onNext("")
+                self.publishedAt.onNext(publishedAt)
+                self.fanPassId.onNext(post.fanPass?.id ?? nil)
+                self.status.onNext(status)
+                self.seriesId.onNext(post.series?.id ?? nil)
                 return Driver.just(post)
             }
 
         let loadContentAction = viewWillAppear
             .filter { self.postId != 0 }
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(PostsAPI.content(uri: self.uri, postId: self.postId))
+            .flatMap { _ -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(PostsAPI.content(uri: uri, postId: postId))
                 return Action.makeDriver(response)
             }
 
@@ -149,8 +150,8 @@ final class CreatePostViewModel: InjectableViewModel {
             }
 
         let loadFanPassAction = viewWillAppear
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.fanPassAll(uri: self?.uri ?? ""))
+            .flatMap { _ -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.fanPassAll(uri: uri))
                 return Action.makeDriver(response)
             }
 
@@ -176,32 +177,31 @@ final class CreatePostViewModel: InjectableViewModel {
             }
 
         let uploadCoverImageAction = input.coverImageDidPick
-            .flatMap { [weak self] image -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(PostsAPI.uploadCoverImage(uri: self.uri, image: image))
+            .flatMap { image -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(PostsAPI.uploadCoverImage(uri: uri, image: image))
                 return Action.makeDriver(response)
             }
 
         let uploadCoverImageError = uploadCoverImageAction.error
             .flatMap { response -> Driver<String> in
-                let errorMsg = response as? ErrorType
-                return Driver.just(errorMsg?.message ?? "")
+                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
+                return Driver.just(errorMsg.message)
             }
 
         let uploadCoverImageSuccess = uploadCoverImageAction.elements
             .flatMap { [weak self] response -> Driver<String> in
-                guard let imageInfo = try? response.map(to: StorageAttachmentViewResponse.self) else {
-                    return Driver.empty()
-                }
-                self?.coverImageId.onNext(imageInfo.id ?? "")
-                return Driver.just(imageInfo.id ?? "")
+                guard
+                    let `self` = self,
+                    let imageInfo = try? response.map(to: StorageAttachmentViewResponse.self),
+                    let imageInfoId = imageInfo.id
+                else { return Driver.empty() }
+                self.coverImageId.onNext(imageInfoId)
+                return Driver.just(imageInfoId)
             }
 
         let changeCoverImage = uploadCoverImageSuccess
             .withLatestFrom(input.coverImageDidPick)
-            .flatMap { image -> Driver<UIImage?> in
-                return Driver.just(image)
-            }
+            .flatMap { image in Driver<UIImage?>.just(image) }
 
         let deleteCoverImage = input.deleteCoverImageBtnDidTap
             .flatMap { [weak self] _ -> Driver<UIImage?> in
@@ -212,18 +212,18 @@ final class CreatePostViewModel: InjectableViewModel {
         let coverImage = Driver.merge(changeCoverImage, deleteCoverImage)
 
         let uploadContentImageAction = input.contentImageDidPick
-            .flatMap { [weak self] image -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(PostsAPI.uploadContentImage(uri: self.uri, image: image))
+            .flatMap { image -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(PostsAPI.uploadContentImage(uri: uri, image: image))
                 return Action.makeDriver(response)
             }
 
         let uploadContentImageSuccess = uploadContentImageAction.elements
             .flatMap { response -> Driver<String> in
-                guard let imageInfo = try? response.map(to: StorageAttachmentViewResponse.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(imageInfo.url ?? "")
+                guard
+                    let imageInfo = try? response.map(to: StorageAttachmentViewResponse.self),
+                    let imageInfoUrl = imageInfo.url
+                else { return Driver.empty() }
+                return Driver.just(imageInfoUrl)
             }
 
         let contentImage = Driver.zip(uploadContentImageSuccess, input.contentImageDidPick)
@@ -233,8 +233,8 @@ final class CreatePostViewModel: InjectableViewModel {
 
         let uploadContentImageError = uploadContentImageAction.error
             .flatMap { response -> Driver<String> in
-                let errorMsg = response as? ErrorType
-                return Driver.just(errorMsg?.message ?? "")
+                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
+                return Driver.just(errorMsg.message)
             }
 
         let checkforAll = input.forAllCheckBtnDidTap
@@ -262,8 +262,8 @@ final class CreatePostViewModel: InjectableViewModel {
 
         let openManageFanPassViewController = input.selectFanPassBtnDidTap
             .withLatestFrom(fanPassId.asDriver(onErrorDriveWith: .empty()))
-            .flatMap { [weak self] fanPassId -> Driver<(String, Int?)> in
-                return Driver.just((self?.uri ?? "", fanPassId))
+            .flatMap { fanPassId -> Driver<(String, Int?)> in
+                return Driver.just((uri, fanPassId))
             }
 
         let publishNowChanged = input.publishNowCheckBtnDidTap
@@ -292,8 +292,7 @@ final class CreatePostViewModel: InjectableViewModel {
 
         let saveButtonAction = input.saveBtnDidTap
             .withLatestFrom(changePostInfo)
-            .flatMap { [weak self] changePostInfo -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
+            .flatMap { changePostInfo -> Driver<Action<ResponseData>> in
                 var content = changePostInfo.content.replacingOccurrences(of: "strong>", with: "b>")
                 content = content.replacingOccurrences(of: "em>", with: "i>")
                 content = content.replacingOccurrences(of: "<i></i>", with: "<i><br></i>")
@@ -310,29 +309,25 @@ final class CreatePostViewModel: InjectableViewModel {
 //
 //                content = content.replacingOccurrences(of: "<p><video ", with: "<div class=\"video\">  <iframe frameborder=\"0\" allowfullscreen=\"true\"")
 //                content = content.replacingOccurrences(of: "</video></p>", with: "</iframe> </div>")
-                if self.postId == 0 {
-                    let response = PictionSDK.rx.requestAPI(PostsAPI.create(uri: self.uri, title: changePostInfo.title, content: content, cover: changePostInfo.coverImageId, seriesId: changePostInfo.seriesId, fanPassId: changePostInfo.fanPassId, status: changePostInfo.status, publishedAt: changePostInfo.publishedAt?.millisecondsSince1970  ?? Date().millisecondsSince1970))
+                if postId == 0 {
+                    let response = PictionSDK.rx.requestAPI(PostsAPI.create(uri: uri, title: changePostInfo.title, content: content, cover: changePostInfo.coverImageId, seriesId: changePostInfo.seriesId, fanPassId: changePostInfo.fanPassId, status: changePostInfo.status, publishedAt: changePostInfo.publishedAt?.millisecondsSince1970  ?? Date().millisecondsSince1970))
                     return Action.makeDriver(response)
                 } else {
-                    let response = PictionSDK.rx.requestAPI(PostsAPI.update(uri: self.uri, postId: self.postId, title: changePostInfo.title, content: content, cover: changePostInfo.coverImageId, seriesId: changePostInfo.seriesId, fanPassId: changePostInfo.fanPassId, status: changePostInfo.status, publishedAt: changePostInfo.publishedAt?.millisecondsSince1970 ?? Date().millisecondsSince1970))
+                    let response = PictionSDK.rx.requestAPI(PostsAPI.update(uri: uri, postId: postId, title: changePostInfo.title, content: content, cover: changePostInfo.coverImageId, seriesId: changePostInfo.seriesId, fanPassId: changePostInfo.fanPassId, status: changePostInfo.status, publishedAt: changePostInfo.publishedAt?.millisecondsSince1970 ?? Date().millisecondsSince1970))
                     return Action.makeDriver(response)
                 }
             }
 
         let changePostInfoSuccess = saveButtonAction.elements
-            .flatMap { [weak self] response -> Driver<Void> in
-                guard let project = try? response.map(to: ProjectModel.self) else {
-                    return Driver.empty()
-                }
-                print(project)
-                self?.updater.refreshContent.onNext(())
+            .flatMap { response -> Driver<Void> in
+                updater.refreshContent.onNext(())
                 return Driver.just(())
             }
 
         let changePostInfoError = saveButtonAction.error
             .flatMap { response -> Driver<String> in
-                let errorMsg = response as? ErrorType
-                return Driver.just(errorMsg?.message ?? "")
+                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
+                return Driver.just(errorMsg.message)
             }
 
         let openDatePicker = input.publishDatePickerBtnDidTap
@@ -347,8 +342,8 @@ final class CreatePostViewModel: InjectableViewModel {
 
         let openManageSeriesViewController = input.selectSeriesBtnDidTap
             .withLatestFrom(seriesId.asDriver(onErrorDriveWith: .empty()))
-            .flatMap { [weak self] seriesId -> Driver<(String, Int?)> in
-                return Driver.just((self?.uri ?? "", seriesId))
+            .flatMap { seriesId -> Driver<(String, Int?)> in
+                return Driver.just((uri, seriesId))
             }
 
         let activityIndicator = Driver.merge(
@@ -356,7 +351,10 @@ final class CreatePostViewModel: InjectableViewModel {
             uploadContentImageAction.isExecuting,
             saveButtonAction.isExecuting)
 
-        let showToast = Driver.merge(uploadCoverImageError, uploadContentImageError, changePostInfoError)
+        let showToast = Driver.merge(
+            uploadCoverImageError,
+            uploadContentImageError,
+            changePostInfoError)
 
         let dismissKeyboard = saveButtonAction.isExecuting
 

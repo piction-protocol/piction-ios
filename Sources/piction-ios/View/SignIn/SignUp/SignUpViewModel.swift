@@ -43,6 +43,8 @@ final class SignUpViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
+        let updater = self.updater
+
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let userInfoAction = viewWillAppear
@@ -73,7 +75,6 @@ final class SignUpViewModel: InjectableViewModel {
                 guard let errorMsg = response as? ErrorType else {
                     return Driver.empty()
                 }
-
                 switch errorMsg {
                 case .badRequest(let error):
                     return Driver.just(error)
@@ -95,13 +96,13 @@ final class SignUpViewModel: InjectableViewModel {
             }
 
         let sessionCreateSuccess = signUpSuccessAction.elements
-            .flatMap { [weak self] response -> Driver<Void> in
+            .flatMap { response -> Driver<Void> in
                 guard let token = try? response.map(to: AuthenticationViewResponse.self) else {
                     return Driver.empty()
                 }
                 KeychainManager.set(key: "AccessToken", value: token.accessToken ?? "")
                 PictionManager.setToken(token.accessToken ?? "")
-                self?.updater.refreshSession.onNext(())
+                updater.refreshSession.onNext(())
                 return Driver.just(())
             }
 

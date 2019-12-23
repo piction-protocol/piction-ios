@@ -39,6 +39,8 @@ final class SubscriptionUserViewModel: ViewModel {
     }
 
     func build(input: Input) -> Output {
+        let uri = self.uri
+
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let initialLoad = Driver.merge(viewWillAppear, input.refreshControlDidRefresh)
@@ -61,7 +63,7 @@ final class SubscriptionUserViewModel: ViewModel {
         let subscriptionUserListAction = Driver.merge(initialLoad, loadNext)
            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
             guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(MyAPI.projectSubscriptions(uri: self.uri, page: self.page + 1, size: 30))
+                let response = PictionSDK.rx.requestAPI(MyAPI.projectSubscriptions(uri: uri, page: self.page + 1, size: 30))
                 return Action.makeDriver(response)
            }
 

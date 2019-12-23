@@ -41,6 +41,7 @@ final class PostFooterViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
+        let uri = self.uri
 
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
@@ -49,16 +50,18 @@ final class PostFooterViewModel: InjectableViewModel {
 
         let isLikeAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(PostsAPI.isLike(uri: self?.uri ?? "", postId: self?.postItem.id ?? 0))
+                let response = PictionSDK.rx.requestAPI(PostsAPI.isLike(uri: uri, postId: self?.postItem.id ?? 0))
                 return Action.makeDriver(response)
             }
 
         let isLikeSuccess = isLikeAction.elements
             .flatMap { response -> Driver<Bool> in
-                guard let likeInfo = try? response.map(to: LikeModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(likeInfo.like ?? false)
+                guard
+                    let likeInfo = try? response.map(to: LikeModel.self),
+                    let isLike = likeInfo.like
+                else { return Driver.empty() }
+
+                return Driver.just(isLike)
             }
 
         let isLikeError = isLikeAction.error
@@ -69,13 +72,8 @@ final class PostFooterViewModel: InjectableViewModel {
         let seriesPostItemsAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
             .filter { self.postItem.series != nil }
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-//                if self.postItem.series?.id == 0 {
-//                    return Action.makeDriver(Action<ResponseData>.Element)
-//                } else {
-                let response = PictionSDK.rx.requestAPI(SeriesAPI.getPreviousAndNextPosts(uri: self.uri, seriesId: self.postItem.series?.id ?? 0, postId: self.postItem.id ?? 0, count: 2))
+                let response = PictionSDK.rx.requestAPI(SeriesAPI.getPreviousAndNextPosts(uri: uri, seriesId: self?.postItem.series?.id ?? 0, postId: self?.postItem.id ?? 0, count: 2))
                     return Action.makeDriver(response)
-//                }
             }
 
         let seriesPostItemsSuccess = seriesPostItemsAction.elements
@@ -125,7 +123,7 @@ final class PostFooterViewModel: InjectableViewModel {
             .withLatestFrom(userInfo)
             .filter { $0.loginId != nil }
             .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(PostsAPI.like(uri: self?.uri ?? "", postId: self?.postItem.id ?? 0))
+                let response = PictionSDK.rx.requestAPI(PostsAPI.like(uri: uri, postId: self?.postItem.id ?? 0))
                 return Action.makeDriver(response)
             }
 
@@ -136,9 +134,7 @@ final class PostFooterViewModel: InjectableViewModel {
 
         let openSeriesPostViewController = input.seriesAllPostBtnDidTap
             .flatMap { [weak self] _ -> Driver<(String, Int)> in
-                guard let `self` = self else { return Driver.empty() }
-
-                return Driver.just((self.uri, self.postItem.series?.id ?? 0))
+                return Driver.just((uri, self?.postItem.series?.id ?? 0))
             }
 
         let selectSeriesPostItem = input.selectedIndexPath

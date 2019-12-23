@@ -388,7 +388,7 @@ extension CreatePostViewController: ViewModelBindable {
         output
             .openManageSeriesViewController
             .drive(onNext: { [weak self] (uri, seriesId) in
-                self?.openManageSeriesViewController(uri: uri, seriesId: seriesId)
+                self?.openManageSeriesViewController(uri: uri, seriesId: seriesId, delegate: self)
             })
             .disposed(by: disposeBag)
 

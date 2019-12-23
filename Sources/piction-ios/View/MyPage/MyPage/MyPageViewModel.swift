@@ -56,6 +56,7 @@ final class MyPageViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
+        let updater = self.updater
 
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
@@ -158,9 +159,7 @@ final class MyPageViewModel: InjectableViewModel {
             }
 
         let userMeEmpty = userMeAction.error
-            .flatMap { _ -> Driver<[SectionType<MyPageSection>]> in
-                return Driver.just([])
-            }
+            .flatMap { _ in Driver<[SectionType<MyPageSection>]>.just([]) }
 
         let myPageList = Driver.merge(userMeSuccess, userMeEmpty)
         let showErrorPopup = userMeError
@@ -176,7 +175,7 @@ final class MyPageViewModel: InjectableViewModel {
                 default:
                     return Driver.empty()
                 }
-        }
+            }
 
         let signOutAction = input.logout
             .flatMap { _ -> Driver<Action<ResponseData>> in
@@ -186,18 +185,15 @@ final class MyPageViewModel: InjectableViewModel {
 
         let signOutError = signOutAction.error
             .flatMap { response -> Driver<String> in
-                let errorMsg = response as? ErrorType
-                return Driver.just(errorMsg?.message ?? "")
+                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
+                return Driver.just(errorMsg.message)
             }
 
         let signOutSuccess = signOutAction.elements
-            .flatMap { [weak self] response -> Driver<String> in
-                guard let accessToken = try? response.map(to: AuthenticationViewResponse.self) else {
-                    return Driver.empty()
-                }
+            .flatMap { _ -> Driver<String> in
                 KeychainManager.set(key: "AccessToken", value: "")
                 PictionManager.setToken("")
-                self?.updater.refreshSession.onNext(())
+                updater.refreshSession.onNext(())
                 return Driver.just(LocalizedStrings.str_sign_out_success.localized())
             }
 
@@ -208,9 +204,7 @@ final class MyPageViewModel: InjectableViewModel {
 
         let refreshAction = input.refreshControlDidRefresh
             .withLatestFrom(myPageList)
-            .flatMap { _ -> Driver<Action<Void>> in
-                return Action.makeDriver(Driver.just(()))
-            }
+            .flatMap { _  in return Action.makeDriver(Driver<Void>.just(())) }
 
         let activityIndicator = userMeAction.isExecuting
 

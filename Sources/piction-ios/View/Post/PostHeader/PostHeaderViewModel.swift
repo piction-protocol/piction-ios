@@ -34,12 +34,13 @@ final class PostHeaderViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
+        let (postItem, userInfo) = (self.postItem, self.userInfo)
+
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let headerInfo = viewWillAppear
-            .flatMap { [weak self] _ -> Driver<(PostModel, UserModel)>in
-                guard let `self` = self else { return Driver.empty() }
-                return Driver.just((self.postItem, self.userInfo))
+            .flatMap { _ -> Driver<(PostModel, UserModel)>in
+                return Driver.just((postItem, userInfo))
             }
 
         return Output(

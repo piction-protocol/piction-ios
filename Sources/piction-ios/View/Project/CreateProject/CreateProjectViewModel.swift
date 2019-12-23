@@ -67,63 +67,58 @@ final class CreateProjectViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let updater = self.updater
+        let (updater, uri) = (self.updater, self.uri)
 
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let isModify = viewWillAppear
-            .flatMap { [weak self] _ -> Driver<Bool> in
-                guard let `self` = self else { return Driver.empty() }
-                return Driver.just(self.uri != "")
-            }
+            .flatMap { _ in Driver.just(uri != "") }
 
         let loadProjectAction = viewWillAppear
             .do(onNext: { [weak self] in
-                self?.thumbnailImageId.onNext(nil)
-                self?.wideThumbnailImageId.onNext(nil)
-                self?.synopsis.onNext("")
-                self?.status.onNext("PUBLIC")
-                self?.tags.onNext([])
+                guard let `self` = self else { return }
+                self.thumbnailImageId.onNext(nil)
+                self.wideThumbnailImageId.onNext(nil)
+                self.synopsis.onNext("")
+                self.status.onNext("PUBLIC")
+                self.tags.onNext([])
             })
-            .filter { self.uri != "" }
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.get(uri: self.uri))
+            .filter { uri != "" }
+            .flatMap { _ -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.get(uri: uri))
                 return Action.makeDriver(response)
             }
 
         let loadProjectSuccess = loadProjectAction.elements
             .flatMap { [weak self] response -> Driver<ProjectModel> in
-                guard let project = try? response.map(to: ProjectModel.self) else {
-                    return Driver.empty()
-                }
+                guard
+                    let `self` = self,
+                    let project = try? response.map(to: ProjectModel.self),
+                    let title = project.title,
+                    let uri = project.uri,
+                    let synopsis = project.synopsis,
+                    let status = project.status
+                else { return Driver.empty() }
 
-                self?.title.onNext(project.title ?? "")
-                self?.id.onNext(project.uri ?? "")
-                self?.thumbnailImageId.onNext("")
-                self?.wideThumbnailImageId.onNext("")
-                self?.synopsis.onNext(project.synopsis ?? "")
-                self?.status.onNext(project.status ?? "PUBLIC")
-                self?.tags.onNext([])
+                self.title.onNext(title)
+                self.id.onNext(uri)
+                self.thumbnailImageId.onNext("")
+                self.wideThumbnailImageId.onNext("")
+                self.synopsis.onNext(synopsis)
+                self.status.onNext(status)
+                self.tags.onNext([])
 
-                print(project)
                 return Driver.just(project)
             }
 
         let projectTitleChanged = Driver.merge(input.inputProjectTitle, title.asDriver(onErrorDriveWith: .empty()))
-            .flatMap { title -> Driver<String> in
-                return Driver.just(title)
-            }
+            .flatMap { title in Driver<String>.just(title) }
 
         let projectIdChanged = Driver.merge(input.inputProjectId, id.asDriver(onErrorDriveWith: .empty()))
-            .flatMap { id -> Driver<String> in
-                return Driver.just(id)
-            }
+            .flatMap { id in Driver<String>.just(id) }
 
         let synopsisChanged = Driver.merge(input.inputSynopsis, synopsis.asDriver(onErrorDriveWith: .empty()))
-            .flatMap { synopsis -> Driver<String> in
-                return Driver.just(synopsis)
-            }
+            .flatMap { synopsis in Driver<String>.just(synopsis) }
 
         let uploadWideThumbnailImageAction = input.wideThumbnailImageDidPick
             .flatMap { image -> Driver<Action<ResponseData>> in
@@ -133,24 +128,25 @@ final class CreateProjectViewModel: InjectableViewModel {
 
         let uploadWideThumbnailError = uploadWideThumbnailImageAction.error
             .flatMap { response -> Driver<String> in
-                let errorMsg = response as? ErrorType
-                return Driver.just(errorMsg?.message ?? "")
+                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
+                return Driver.just(errorMsg.message)
             }
 
         let uploadWideThumbnailSuccess = uploadWideThumbnailImageAction.elements
             .flatMap { [weak self] response -> Driver<String> in
-                guard let imageInfo = try? response.map(to: StorageAttachmentViewResponse.self) else {
-                    return Driver.empty()
-                }
-                self?.wideThumbnailImageId.onNext(imageInfo.id ?? "")
-                return Driver.just(imageInfo.id ?? "")
+                guard
+                    let `self` = self,
+                    let imageInfo = try? response.map(to: StorageAttachmentViewResponse.self),
+                    let imageInfoId = imageInfo.id
+                else { return Driver.empty() }
+
+                self.wideThumbnailImageId.onNext(imageInfoId)
+                return Driver.just(imageInfoId)
             }
 
         let changeWideThumbnail = uploadWideThumbnailSuccess
             .withLatestFrom(input.wideThumbnailImageDidPick)
-            .flatMap { image -> Driver<UIImage?> in
-                return Driver.just(image)
-            }
+            .flatMap { image in Driver<UIImage?>.just(image) }
 
         let deleteWideThumbnail = input.deleteWideThumbnailBtnDidTap
             .flatMap { [weak self] _ -> Driver<UIImage?> in
@@ -168,24 +164,25 @@ final class CreateProjectViewModel: InjectableViewModel {
 
         let uploadThumbnailError = uploadThumbnailImageAction.error
             .flatMap { response -> Driver<String> in
-                let errorMsg = response as? ErrorType
-                return Driver.just(errorMsg?.message ?? "")
+                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
+                return Driver.just(errorMsg.message)
             }
 
         let uploadThumbnailSuccess = uploadThumbnailImageAction.elements
             .flatMap { [weak self] response -> Driver<String> in
-                guard let imageInfo = try? response.map(to: StorageAttachmentViewResponse.self) else {
-                    return Driver.empty()
-                }
-                self?.thumbnailImageId.onNext(imageInfo.id ?? "")
-                return Driver.just(imageInfo.id ?? "")
+                guard
+                    let `self` = self,
+                    let imageInfo = try? response.map(to: StorageAttachmentViewResponse.self),
+                    let imageInfoId = imageInfo.id
+                else { return Driver.empty() }
+
+                self.thumbnailImageId.onNext(imageInfoId)
+                return Driver.just(imageInfoId)
             }
 
         let changeThumbnail = uploadThumbnailSuccess
             .withLatestFrom(input.thumbnailImageDidPick)
-            .flatMap { image -> Driver<UIImage?> in
-                return Driver.just(image)
-            }
+            .flatMap { image in Driver<UIImage?>.just(image) }
 
         let deleteThumbnail = input.deleteThumbnailBtnDidTap
             .flatMap { [weak self] _ -> Driver<UIImage?> in
@@ -216,9 +213,8 @@ final class CreateProjectViewModel: InjectableViewModel {
 
         let saveButtonAction = input.saveBtnDidTap
             .withLatestFrom(changeProjectInfo)
-            .flatMap { [weak self] changeProjectInfo -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-                if self.uri == "" {
+            .flatMap { changeProjectInfo -> Driver<Action<ResponseData>> in
+                if uri == "" {
                     let response = PictionSDK.rx.requestAPI(ProjectsAPI.create(uri: changeProjectInfo.id, title: changeProjectInfo.title, synopsis: changeProjectInfo.synopsis, thumbnail: changeProjectInfo.thumbnailImageId, wideThumbnail: changeProjectInfo.wideThumbnailImageId, tags: changeProjectInfo.tags, status: changeProjectInfo.status))
                     return Action.makeDriver(response)
                 } else {
@@ -228,19 +224,15 @@ final class CreateProjectViewModel: InjectableViewModel {
             }
 
         let changeProjectInfoSuccess = saveButtonAction.elements
-            .flatMap { response -> Driver<Void> in
-                guard let project = try? response.map(to: ProjectModel.self) else {
-                    return Driver.empty()
-                }
-                print(project)
+            .flatMap { _ -> Driver<Void> in
                 updater.refreshContent.onNext(())
                 return Driver.just(())
             }
 
         let changeProjectInfoError = saveButtonAction.error
             .flatMap { response -> Driver<String> in
-                let errorMsg = response as? ErrorType
-                return Driver.just(errorMsg?.message ?? "")
+                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
+                return Driver.just(errorMsg.message)
             }
 
         let activityIndicator = Driver.merge(

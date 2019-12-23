@@ -48,8 +48,8 @@ final class UserInfoViewModel: InjectableViewModel {
 
         let userInfoError = userInfoAction.error
             .flatMap { response -> Driver<String> in
-                let errorMsg = response as? ErrorType
-                return Driver.just(errorMsg?.message ?? "")
+                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
+                return Driver.just(errorMsg.message)
             }
 
         let userInfoSuccess = userInfoAction.elements
@@ -57,7 +57,6 @@ final class UserInfoViewModel: InjectableViewModel {
                 guard let userInfo = try? response.map(to: UserModel.self) else {
                     return Driver.empty()
                 }
-                print(userInfo)
                 return Driver.just(userInfo)
             }
 
@@ -69,8 +68,8 @@ final class UserInfoViewModel: InjectableViewModel {
 
         let walletInfoError = walletInfoAction.error
             .flatMap { response -> Driver<String> in
-                let errorMsg = response as? ErrorType
-                return Driver.just(errorMsg?.message ?? "")
+                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
+                return Driver.just(errorMsg.message)
             }
 
         let walletInfoSuccess = walletInfoAction.elements
@@ -78,7 +77,6 @@ final class UserInfoViewModel: InjectableViewModel {
                 guard let walletInfo = try? response.map(to: WalletModel.self) else {
                     return Driver.empty()
                 }
-                print(walletInfo)
                 return Driver.just(walletInfo)
             }
 

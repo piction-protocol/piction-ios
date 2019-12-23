@@ -48,6 +48,7 @@ final class ManageFanPassViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
+        let (updater, uri, fanPassId) = (self.updater, self.uri, self.fanPassId)
 
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
@@ -58,8 +59,8 @@ final class ManageFanPassViewModel: InjectableViewModel {
         let initialLoad = Driver.merge(viewWillAppear, loadRetry, refreshContent)
 
         let fanPassListAction = initialLoad
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.fanPassAll(uri: self?.uri ?? ""))
+            .flatMap { _ -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(ProjectsAPI.fanPassAll(uri: uri))
                 return Action.makeDriver(response)
             }
 
@@ -70,14 +71,10 @@ final class ManageFanPassViewModel: InjectableViewModel {
             }
 
         let fanPassListError = fanPassListAction.error
-            .flatMap { response -> Driver<Void> in
-                return Driver.just(())
-            }
+            .flatMap { _ in Driver<Void>.just(()) }
 
         let openCreateFanPassViewController = input.createBtnDidTap
-            .flatMap { [weak self] _ -> Driver<String> in
-                return Driver.just(self?.uri ?? "")
-            }
+            .flatMap { _ in Driver<String>.just(uri) }
 
         let deleteAction = input.deleteFanPass
             .flatMap { (uri, fanPassId) -> Driver<Action<ResponseData>> in
@@ -86,15 +83,15 @@ final class ManageFanPassViewModel: InjectableViewModel {
             }
 
         let deleteSuccess = deleteAction.elements
-            .flatMap { [weak self] response -> Driver<String> in
-                self?.updater.refreshContent.onNext(())
+            .flatMap { response -> Driver<String> in
+                updater.refreshContent.onNext(())
                 return Driver.just(LocalizedStrings.msg_delete_fanpass_success.localized())
             }
 
         let deleteError = deleteAction.error
             .flatMap { response -> Driver<String> in
-                let errorMsg = response as? ErrorType
-                return Driver.just(errorMsg?.message ?? "")
+                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
+                return Driver.just(errorMsg.message)
             }
 
         let showErrorPopup = fanPassListError

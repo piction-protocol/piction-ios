@@ -54,15 +54,17 @@ final class ManageSeriesViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
+        let (updater, uri) = (self.updater, self.uri)
+
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
 
         let seriesListAction = Driver.merge(viewWillAppear, refreshContent)
-               .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                    let response = PictionSDK.rx.requestAPI(SeriesAPI.all(uri: self?.uri ?? ""))
-                   return Action.makeDriver(response)
-               }
+           .flatMap { _ -> Driver<Action<ResponseData>> in
+               let response = PictionSDK.rx.requestAPI(SeriesAPI.all(uri: uri))
+               return Action.makeDriver(response)
+           }
 
         let seriesListSuccess = seriesListAction.elements
            .flatMap { response -> Driver<[SeriesModel]> in
@@ -73,93 +75,79 @@ final class ManageSeriesViewModel: InjectableViewModel {
            }
 
         let seriesListError = seriesListAction.error
-            .flatMap { _ in Driver.just([SeriesModel.from([:])!]) }
+            .flatMap { _ in Driver<[SeriesModel]>.just([]) }
 
         let seriesList = Driver.merge(seriesListSuccess, seriesListError)
 
         let createSeriesAction = input.createBtnDidTap
-            .flatMap { _ -> Driver<IndexPath?> in
-                return Driver.just(nil)
-            }
+            .flatMap { _ in Driver<IndexPath?>.just(nil) }
 
         let updateSeriesAction = input.updateSeries
-            .flatMap { [weak self] (name, series) -> Driver<Action<ResponseData>> in
-                if series == nil {
-                    let response = PictionSDK.rx.requestAPI(SeriesAPI.create(uri: self?.uri ?? "", name: name))
+            .flatMap { (name, series) -> Driver<Action<ResponseData>> in
+                if let seriesId = series?.id {
+                    let response = PictionSDK.rx.requestAPI(SeriesAPI.update(uri: uri, seriesId: seriesId, name: name))
                     return Action.makeDriver(response)
                 } else {
-                    let response = PictionSDK.rx.requestAPI(SeriesAPI.update(uri: self?.uri ?? "", seriesId: series?.id ?? 0, name: name))
+                    let response = PictionSDK.rx.requestAPI(SeriesAPI.create(uri: uri, name: name))
                     return Action.makeDriver(response)
                 }
             }
 
         let updateSeriesSuccess = updateSeriesAction.elements
-            .flatMap { [weak self] response -> Driver<String> in
-                guard let _ = try? response.map(to: SeriesModel.self) else {
-                    return Driver.empty()
-                }
-                self?.updater.refreshContent.onNext(())
+            .flatMap { _ -> Driver<String> in
+                updater.refreshContent.onNext(())
                 return Driver.just("")
             }
 
         let updateSeriesError = updateSeriesAction.error
             .flatMap { response -> Driver<String> in
-                let errorMsg = response as? ErrorType
-                return Driver.just(errorMsg?.message ?? "")
+                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
+                return Driver.just(errorMsg.message)
             }
 
         let editSeriesAction = input.contextualAction
             .filter { $0.0 == .normal }
-            .flatMap { (_, indexPath) -> Driver<IndexPath?> in
-                return Driver.just(indexPath)
-            }
+            .flatMap { (_, indexPath) in Driver<IndexPath?>.just(indexPath) }
 
         let openUpdateSeriesPopup = Driver.merge(createSeriesAction, editSeriesAction)
 
         let openDeleteConfirmPopup = input.contextualAction
             .filter { $0.0 == .destructive }
-            .flatMap { (_, indexPath) -> Driver<IndexPath> in
-                return Driver.just(indexPath)
-            }
+            .flatMap { (_, indexPath) in Driver<IndexPath>.just(indexPath) }
 
         let deleteSeriesAction = input.deleteConfirm
-            .flatMap { [weak self] seriesId -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(SeriesAPI.delete(uri: self?.uri ?? "", seriesId: seriesId))
+            .flatMap { seriesId -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(SeriesAPI.delete(uri: uri, seriesId: seriesId))
                 return Action.makeDriver(response)
             }
 
         let deleteSeriesSuccess = deleteSeriesAction.elements
-            .flatMap { [weak self] _ -> Driver<String> in
-                self?.updater.refreshContent.onNext(())
+            .flatMap { _ -> Driver<String> in
+                updater.refreshContent.onNext(())
                 return Driver.just(LocalizedStrings.str_deleted_series.localized())
             }
 
         let deleteSeriesError = deleteSeriesAction.error
             .flatMap { response -> Driver<String> in
-                let errorMsg = response as? ErrorType
-                return Driver.just(errorMsg?.message ?? "")
+                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
+                return Driver.just(errorMsg.message)
             }
 
         let embedEmptyView = seriesList
             .flatMap { items -> Driver<CustomEmptyViewStyle> in
-                if (items.count == 0) {
-                    return Driver.just(.searchListEmpty)
-                }
-                return Driver.empty()
+                guard items.count == 0 else { return Driver.empty() }
+                return Driver.just(.searchListEmpty)
             }
 
         let reorderItemsAction = input.reorderItems
-            .flatMap { [weak self] ids -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(SeriesAPI.sort(uri: self?.uri ?? "", ids: ids))
+            .flatMap { ids -> Driver<Action<ResponseData>> in
+                let response = PictionSDK.rx.requestAPI(SeriesAPI.sort(uri: uri, ids: ids))
                 return Action.makeDriver(response)
             }
 
         let reorderItemsSuccess = reorderItemsAction.elements
-            .flatMap { [weak self] response -> Driver<String> in
-                guard let _ = try? response.map(to: [SeriesModel].self) else {
-                    return Driver.empty()
-                }
-                self?.updater.refreshContent.onNext(())
+            .flatMap { _ -> Driver<String> in
+                updater.refreshContent.onNext(())
                 return Driver.just("")
             }
 
@@ -168,7 +156,12 @@ final class ManageSeriesViewModel: InjectableViewModel {
             updateSeriesAction.isExecuting,
             deleteSeriesAction.isExecuting)
 
-        let showToast = Driver.merge(updateSeriesSuccess, deleteSeriesSuccess, reorderItemsSuccess, updateSeriesError, deleteSeriesError)
+        let showToast = Driver.merge(
+            updateSeriesSuccess,
+            deleteSeriesSuccess,
+            reorderItemsSuccess,
+            updateSeriesError,
+            deleteSeriesError)
 
         return Output(
             viewWillAppear: input.viewWillAppear,

@@ -52,15 +52,20 @@ final class CreateFanPassViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
+        let (updater, uri, fanPass) = (self.updater, self.uri, self.fanPass)
 
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let loadFanPass = viewWillAppear
             .flatMap { [weak self] _ -> Driver<FanPassModel> in
-                guard let fanPass = self?.fanPass else { return Driver.empty() }
+                guard
+                    let fanPass = fanPass,
+                    let name = fanPass.name,
+                    let subscriptionPrice = fanPass.subscriptionPrice
+                else { return Driver.empty() }
 
-                self?.name.onNext(fanPass.name ?? "")
-                self?.price.onNext(String(fanPass.subscriptionPrice ?? 0))
+                self?.name.onNext(name)
+                self?.price.onNext(String(subscriptionPrice))
                 self?.description.onNext(fanPass.description ?? "")
                 if fanPass.subscriptionLimit == nil {
                     self?.limit.onNext(nil)
@@ -108,11 +113,11 @@ final class CreateFanPassViewModel: InjectableViewModel {
         let saveButtonAction = input.saveBtnDidTap
             .withLatestFrom(fanPassInfo)
             .flatMap { [weak self] fanPassInfo -> Driver<Action<ResponseData>> in
-                if self?.fanPass == nil {
-                    let response = PictionSDK.rx.requestAPI(ProjectsAPI.createFanPass(uri: self?.uri ?? "", name: fanPassInfo.name, description: fanPassInfo.description, thumbnail: nil, subscriptionLimit: Int(fanPassInfo.limit ?? "") ?? nil, subscriptionPrice: Int(fanPassInfo.price ?? "") ?? nil))
+                if fanPass == nil {
+                    let response = PictionSDK.rx.requestAPI(ProjectsAPI.createFanPass(uri: uri, name: fanPassInfo.name, description: fanPassInfo.description, thumbnail: nil, subscriptionLimit: Int(fanPassInfo.limit ?? "") ?? nil, subscriptionPrice: Int(fanPassInfo.price ?? "") ?? nil))
                     return Action.makeDriver(response)
                 } else {
-                    let response = PictionSDK.rx.requestAPI(ProjectsAPI.updateFanPass(uri: self?.uri ?? "", fanPassId: self?.fanPass?.id ?? 0, name: fanPassInfo.name, description: fanPassInfo.description, thumbnail: nil, subscriptionLimit: Int(fanPassInfo.limit ?? "") ?? nil, subscriptionPrice: Int(fanPassInfo.price ?? "") ?? nil))
+                    let response = PictionSDK.rx.requestAPI(ProjectsAPI.updateFanPass(uri: uri, fanPassId: fanPass?.id ?? 0, name: fanPassInfo.name, description: fanPassInfo.description, thumbnail: nil, subscriptionLimit: Int(fanPassInfo.limit ?? "") ?? nil, subscriptionPrice: Int(fanPassInfo.price ?? "") ?? nil))
                     return Action.makeDriver(response)
                 }
         }
@@ -120,18 +125,18 @@ final class CreateFanPassViewModel: InjectableViewModel {
         let dismissKeyboard = Driver.merge(input.saveBtnDidTap, input.limitBtnDidTap)
 
         let popViewController = saveButtonAction.elements
-            .flatMap { [weak self] response -> Driver<Void> in
+            .flatMap { response -> Driver<Void> in
                 guard let _ = try? response.map(to: FanPassModel.self) else {
                     return Driver.empty()
                 }
-                self?.updater.refreshContent.onNext(())
+                updater.refreshContent.onNext(())
                 return Driver.just(())
             }
 
         let showToast = saveButtonAction.error
             .flatMap { response -> Driver<String> in
-                let errorMsg = response as? ErrorType
-                return Driver.just(errorMsg?.message ?? "")
+                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
+                return Driver.just(errorMsg.message)
             }
 
         let activityIndicator = saveButtonAction.isExecuting
