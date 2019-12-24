@@ -53,117 +53,95 @@ final class SearchViewModel: ViewModel {
 
         let setPlaceHolder = input.viewWillAppear
             .withLatestFrom(self.menu.asDriver(onErrorDriveWith: .empty()))
-            .flatMap { menu -> Driver<Int> in
-                return Driver.just(menu)
-            }
 
         let menuChange = input.segmentedControlDidChange
-            .flatMap { [weak self] menu -> Driver<Void> in
-                guard let `self` = self else { return Driver.empty() }
-                self.page = 0
-                self.sections = []
-                self.shouldInfiniteScroll = true
-                self.menu.onNext(menu)
-                return Driver.just(())
-            }
+            .do(onNext: { [weak self] menu in
+                self?.page = 0
+                self?.sections = []
+                self?.shouldInfiniteScroll = true
+                self?.menu.onNext(menu)
+            })
+            .map { _ in Void() }
 
         let inputSearchText = input.searchText
-            .flatMap { [weak self] searchText -> Driver<Void> in
-                guard let `self` = self else { return Driver.empty() }
-                self.page = 0
-                self.sections = []
-                self.shouldInfiniteScroll = true
-                self.searchText.onNext(searchText)
-                return Driver.just(())
-            }
+            .do(onNext: { [weak self] searchText in
+                self?.page = 0
+                self?.sections = []
+                self?.shouldInfiniteScroll = true
+                self?.searchText.onNext(searchText)
+            })
+            .map { _ in Void() }
 
         let loadNext = loadNextTrigger.asDriver(onErrorDriveWith: .empty())
-            .flatMap { [weak self] _ -> Driver<Void> in
-                guard let `self` = self, self.shouldInfiniteScroll else {
-                    return Driver.empty()
-                }
-                return Driver.just(())
-            }
+            .filter { self.shouldInfiniteScroll }
 
         let searchTextIsEmpty = self.searchText.asDriver(onErrorDriveWith: .empty())
             .filter { $0 == "" }
-            .flatMap { _ -> Driver<SectionType<SearchSection>> in
-                return Driver.just(SectionType<SearchSection>.Section(title: "project", items: []))
-            }
+            .map { _ in SectionType<SearchSection>.Section(title: "project", items: []) }
 
         let searchGuideEmptyView = Driver.merge(viewWillAppear, inputSearchText, menuChange)
             .withLatestFrom(self.searchText.asDriver(onErrorDriveWith: .empty()))
             .filter { $0 == "" }
             .withLatestFrom(self.menu.asDriver(onErrorDriveWith: .empty()))
-            .flatMap { [weak self] menu -> Driver<CustomEmptyViewStyle> in
-                guard let `self` = self else { return Driver.empty() }
-                self.page = 0
-                self.sections = []
-                self.shouldInfiniteScroll = false
-                if menu == 0 {
-                    return Driver.just(.searchProjectGuide)
-                } else {
-                    return Driver.just(.searchTagGuide)
-                }
-            }
+            .do(onNext: { [weak self] _ in
+                self?.page = 0
+                self?.sections = []
+                self?.shouldInfiniteScroll = false
+            })
+            .map { $0 == 0 ? .searchProjectGuide : .searchTagGuide }
+            .flatMap(Driver<CustomEmptyViewStyle>.from)
 
         let searchProjectAction = Driver.merge(inputSearchText, loadNext, menuChange)
             .withLatestFrom(self.menu.asDriver(onErrorDriveWith: .empty()))
             .filter { $0 == 0 }
             .withLatestFrom(self.searchText.asDriver(onErrorDriveWith: .empty()))
             .filter { $0 != "" }
-            .flatMapLatest { [weak self] searchText ->
-                Driver<Action<ResponseData>> in
-                print(searchText)
-                guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(SearchAPI.project(name: searchText, page: self.page + 1, size: 20))
-                return Action.makeDriver(response)
-            }
+            .map { SearchAPI.project(name: $0, page: self.page + 1, size: 20) }
+            .map { PictionSDK.rx.requestAPI($0) }
+            .flatMapLatest(Action.makeDriver)
 
         let searchProjectActionSuccess = searchProjectAction.elements
-            .flatMap { [weak self] response -> Driver<SectionType<SearchSection>> in
-                guard let `self` = self else { return Driver.empty() }
-                guard let pageList = try? response.map(to: PageViewResponse<ProjectModel>.self) else {
-                    return Driver.empty()
-                }
+            .map { try? $0.map(to: PageViewResponse<ProjectModel>.self) }
+            .do(onNext: { [weak self] pageList in
+                guard
+                    let `self` = self,
+                    let pageNumber = pageList?.pageable?.pageNumber,
+                    let totalPages = pageList?.totalPages
+                else { return }
                 self.page = self.page + 1
-                if (pageList.pageable?.pageNumber ?? 0) >= (pageList.totalPages ?? 0) - 1 {
+                if pageNumber >= totalPages - 1 {
                     self.shouldInfiniteScroll = false
                 }
-                let projects: [SearchSection] = (pageList.content ?? []).map { .project(item: $0) }
-                self.sections.append(contentsOf: projects)
-
-                return Driver.just(SectionType<SearchSection>.Section(title: "project", items: self.sections))
-            }
+            })
+            .map { ($0?.content ?? []).map { SearchSection.project(item: $0) } }
+            .map { self.sections.append(contentsOf: $0) }
+            .map { SectionType<SearchSection>.Section(title: "project", items: self.sections) }
 
         let searchTagAction = Driver.merge(inputSearchText, loadNext, menuChange)
             .withLatestFrom(self.menu.asDriver(onErrorDriveWith: .empty()))
             .filter { $0 == 1 }
             .withLatestFrom(self.searchText.asDriver(onErrorDriveWith: .empty()))
             .filter { $0 != "" }
-            .flatMapLatest { [weak self] searchText ->
-                Driver<Action<ResponseData>> in
-                print(searchText)
-                guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(SearchAPI.tag(tag: searchText, page: self.page + 1, size: 20))
-                return Action.makeDriver(response)
-            }
+            .map { SearchAPI.tag(tag: $0, page: self.page + 1, size: 20) }
+            .map { PictionSDK.rx.requestAPI($0) }
+            .flatMapLatest(Action.makeDriver)
 
         let searchTagActionSuccess = searchTagAction.elements
-            .flatMap { [weak self] response -> Driver<SectionType<SearchSection>> in
-                guard let `self` = self else { return Driver.empty() }
-                guard let pageList = try? response.map(to: PageViewResponse<TagModel>.self) else {
-                    return Driver.empty()
-                }
-                if (pageList.pageable?.pageNumber ?? 0) >= (pageList.totalPages ?? 0) - 1 {
+            .map { try? $0.map(to: PageViewResponse<TagModel>.self) }
+            .do(onNext: { [weak self] pageList in
+                guard
+                    let `self` = self,
+                    let pageNumber = pageList?.pageable?.pageNumber,
+                    let totalPages = pageList?.totalPages
+                else { return }
+                self.page = self.page + 1
+                if pageNumber >= totalPages - 1 {
                     self.shouldInfiniteScroll = false
                 }
-                self.page = self.page + 1
-                let tags: [SearchSection] = (pageList.content ?? []).map { .tag(item: $0) }
-                self.sections.append(contentsOf: tags)
-
-                return Driver.just(SectionType<SearchSection>.Section(title: "tag", items: self.sections))
-            }
+            })
+            .map { ($0?.content ?? []).map { SearchSection.tag(item: $0) } }
+            .map { self.sections.append(contentsOf: $0) }
+            .map { SectionType<SearchSection>.Section(title: "tag", items: self.sections) }
 
         let searchList = Driver.merge(searchProjectActionSuccess, searchTagActionSuccess, searchTextIsEmpty)
 
@@ -171,24 +149,16 @@ final class SearchViewModel: ViewModel {
             .withLatestFrom(self.searchText.asDriver(onErrorDriveWith: .empty()))
             .filter { $0 != "" }
             .withLatestFrom(searchList)
-            .flatMap { sections -> Driver<CustomEmptyViewStyle> in
-                if sections.items.count == 0 {
-                    return Driver.just(.searchListEmpty)
-                }
-                return Driver.empty()
-            }
+            .filter { $0.items.isEmpty }
+            .map { _ in .searchListEmpty }
+            .flatMap(Driver<CustomEmptyViewStyle>.from)
 
         let embedEmptyViewController = Driver.merge(searchGuideEmptyView, embedEmptyView)
 
         let dismissViewController = input.contentOffset
             .withLatestFrom(searchList)
-            .flatMap { sections -> Driver<Void> in
-                if sections.items.count == 0 {
-                    return Driver.just(())
-                } else {
-                    return Driver.empty()
-                }
-            }
+            .filter { $0.items.isEmpty }
+            .map { _ in Void() }
 
         return Output(
             viewWillAppear: viewWillAppear,
