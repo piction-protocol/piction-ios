@@ -332,7 +332,8 @@ extension CreatePostViewController: ViewModelBindable {
         output
             .openManageFanPassViewController
             .drive(onNext: { [weak self] (uri, fanPassId) in
-                self?.openManageFanPassViewController(uri: uri, fanPassId: fanPassId)
+                guard let `self` = self else { return }
+                self.openManageFanPassViewController(uri: uri, fanPassId: fanPassId, delegate: self)
             })
             .disposed(by: disposeBag)
 
