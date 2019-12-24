@@ -41,44 +41,32 @@ final class UserInfoViewModel: InjectableViewModel {
         let refreshAmount = updater.refreshAmount.asDriver(onErrorDriveWith: .empty())
 
         let userInfoAction = Driver.merge(viewWillAppear, refreshSession, refreshAmount)
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(UsersAPI.me)
-                return Action.makeDriver(response)
-            }
+            .map { UsersAPI.me }
+            .map { PictionSDK.rx.requestAPI($0) }
+            .flatMap(Action.makeDriver)
 
         let userInfoError = userInfoAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let userInfoSuccess = userInfoAction.elements
-            .flatMap { response -> Driver<UserModel> in
-                guard let userInfo = try? response.map(to: UserModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(userInfo)
-            }
+            .map { try? $0.map(to: UserModel.self) }
+            .flatMap(Driver.from)
 
         let walletInfoAction = Driver.merge(viewWillAppear, refreshSession, refreshAmount)
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(MyAPI.wallet)
-                return Action.makeDriver(response)
-            }
+            .map { MyAPI.wallet }
+            .map { PictionSDK.rx.requestAPI($0) }
+            .flatMap(Action.makeDriver)
 
         let walletInfoError = walletInfoAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let walletInfoSuccess = walletInfoAction.elements
-            .flatMap { response -> Driver<WalletModel> in
-                guard let walletInfo = try? response.map(to: WalletModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(walletInfo)
-            }
+            .map { try? $0.map(to: WalletModel.self) }
+            .flatMap(Driver.from)
 
         let showToast = Driver.merge(userInfoError, walletInfoError)
 
