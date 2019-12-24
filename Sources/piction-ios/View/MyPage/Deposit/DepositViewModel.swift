@@ -35,43 +35,32 @@ final class DepositViewModel: ViewModel {
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let userInfoAction = Driver.merge(viewWillAppear, loadRetry)
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(UsersAPI.me)
-                return Action.makeDriver(response)
-            }
+            .map { UsersAPI.me }
+            .map { PictionSDK.rx.requestAPI($0) }
+            .flatMap(Action.makeDriver)
 
         let userInfoSuccess = userInfoAction.elements
-            .flatMap { response -> Driver<UserModel> in
-                guard let userInfo = try? response.map(to: UserModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(userInfo)
-            }
+            .map { try? $0.map(to: UserModel.self) }
+            .flatMap(Driver.from)
 
         let walletInfoAction = Driver.merge(viewWillAppear, loadRetry)
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(MyAPI.wallet)
-                return Action.makeDriver(response)
-            }
+            .map { MyAPI.wallet }
+            .map { PictionSDK.rx.requestAPI($0) }
+            .flatMap(Action.makeDriver)
 
         let walletInfoSuccess = walletInfoAction.elements
-            .flatMap { response -> Driver<WalletModel> in
-                guard let walletInfo = try? response.map(to: WalletModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(walletInfo)
-            }
+            .map { try? $0.map(to: WalletModel.self) }
+            .flatMap(Driver.from)
 
         let walletInfoError = walletInfoAction.error
-            .flatMap { _ in Driver.just(()) }
+            .map { _ in Void() }
 
         let showErrorPopup = walletInfoError
 
         let copyAddress = input.copyBtnDidTap
             .withLatestFrom(walletInfoSuccess)
-            .flatMap { walletInfo -> Driver<String> in
-                return Driver.just(walletInfo.publicKey ?? "")
-            }
+            .map { $0.publicKey }
+            .flatMap(Driver.from)
 
         let activityIndicator = walletInfoAction.isExecuting
 
