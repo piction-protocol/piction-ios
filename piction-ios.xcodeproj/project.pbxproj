@@ -442,14 +442,6 @@
 		43C5C9422383BDC6004BACFC /* SubscribeFanPassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C5C9402383BDC6004BACFC /* SubscribeFanPassViewModel.swift */; };
 		43C5C9442383BDD6004BACFC /* SubscribeFanPass.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C5C9432383BDD6004BACFC /* SubscribeFanPass.storyboard */; };
 		43C5C9452383BDD6004BACFC /* SubscribeFanPass.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C5C9432383BDD6004BACFC /* SubscribeFanPass.storyboard */; };
-		43DB226123580B4600E69C0F /* TagListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB226023580B4600E69C0F /* TagListViewController.swift */; };
-		43DB226223580B4600E69C0F /* TagListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB226023580B4600E69C0F /* TagListViewController.swift */; };
-		43DB226423580B5300E69C0F /* TagListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB226323580B5300E69C0F /* TagListViewModel.swift */; };
-		43DB226523580B5300E69C0F /* TagListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB226323580B5300E69C0F /* TagListViewModel.swift */; };
-		43DB226723580B5D00E69C0F /* TagList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43DB226623580B5D00E69C0F /* TagList.storyboard */; };
-		43DB226823580B5D00E69C0F /* TagList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43DB226623580B5D00E69C0F /* TagList.storyboard */; };
-		43DB226A23580B6F00E69C0F /* TagListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB226923580B6F00E69C0F /* TagListTableViewCell.swift */; };
-		43DB226B23580B6F00E69C0F /* TagListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB226923580B6F00E69C0F /* TagListTableViewCell.swift */; };
 		43DB2289235969F300E69C0F /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB2288235969F300E69C0F /* UILabel+Extension.swift */; };
 		43DB228A235969F400E69C0F /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB2288235969F300E69C0F /* UILabel+Extension.swift */; };
 		43DB22922359ADBE00E69C0F /* SearchTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB22912359ADBE00E69C0F /* SearchTagTableViewCell.swift */; };
@@ -753,10 +745,6 @@
 		43C5C93D2383BDB1004BACFC /* SubscribeFanPassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeFanPassViewController.swift; sourceTree = "<group>"; };
 		43C5C9402383BDC6004BACFC /* SubscribeFanPassViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeFanPassViewModel.swift; sourceTree = "<group>"; };
 		43C5C9432383BDD6004BACFC /* SubscribeFanPass.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SubscribeFanPass.storyboard; sourceTree = "<group>"; };
-		43DB226023580B4600E69C0F /* TagListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListViewController.swift; sourceTree = "<group>"; };
-		43DB226323580B5300E69C0F /* TagListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListViewModel.swift; sourceTree = "<group>"; };
-		43DB226623580B5D00E69C0F /* TagList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TagList.storyboard; sourceTree = "<group>"; };
-		43DB226923580B6F00E69C0F /* TagListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListTableViewCell.swift; sourceTree = "<group>"; };
 		43DB2288235969F300E69C0F /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		43DB22912359ADBE00E69C0F /* SearchTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagTableViewCell.swift; sourceTree = "<group>"; };
 		43E543682355930D00F2EC45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -1518,7 +1506,6 @@
 		43722667237E37530054C777 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				43DB225F23580B2900E69C0F /* TagList */,
 				43E5438A2357135500F2EC45 /* TagResultProject */,
 				4323F9B4233A165600243655 /* Search */,
 			);
@@ -1722,17 +1709,6 @@
 				43C5C9432383BDD6004BACFC /* SubscribeFanPass.storyboard */,
 			);
 			path = SubscribeFanPass;
-			sourceTree = "<group>";
-		};
-		43DB225F23580B2900E69C0F /* TagList */ = {
-			isa = PBXGroup;
-			children = (
-				43DB226023580B4600E69C0F /* TagListViewController.swift */,
-				43DB226323580B5300E69C0F /* TagListViewModel.swift */,
-				43DB226923580B6F00E69C0F /* TagListTableViewCell.swift */,
-				43DB226623580B5D00E69C0F /* TagList.storyboard */,
-			);
-			path = TagList;
 			sourceTree = "<group>";
 		};
 		43E5437A2356F5CD00F2EC45 /* Explore */ = {
@@ -2044,7 +2020,6 @@
 				43502A9A238F520100586098 /* Poppins-SemiBold.ttf in Resources */,
 				4323FB0F233A165E00243655 /* CustomEmptyView.storyboard in Resources */,
 				4323FB2D233A165F00243655 /* MyProject.storyboard in Resources */,
-				43DB226823580B5D00E69C0F /* TagList.storyboard in Resources */,
 				4323FB99233A166400243655 /* SignUp.storyboard in Resources */,
 				4323FAE1233A165C00243655 /* ProjectInfo.storyboard in Resources */,
 				4323FA99233A165900243655 /* CheckPincode.storyboard in Resources */,
@@ -2071,7 +2046,6 @@
 				4323FB9A233A166400243655 /* SignIn.storyboard in Resources */,
 				43C5C9442383BDD6004BACFC /* SubscribeFanPass.storyboard in Resources */,
 				43C41F692373B84F00D012A7 /* piction-ios-test_Info.plist in Resources */,
-				43DB226723580B5D00E69C0F /* TagList.storyboard in Resources */,
 				4323FB18233A165E00243655 /* Deposit.storyboard in Resources */,
 				4323FB00233A165D00243655 /* PostFooter.storyboard in Resources */,
 				4323FAA2233A165900243655 /* ConfirmPincode.storyboard in Resources */,
@@ -2327,7 +2301,6 @@
 				4323FA91233A165900243655 /* BorderLineConfigurable.swift in Sources */,
 				4323FB1F233A165E00243655 /* TransactionDetailItemTypeTableViewCell.swift in Sources */,
 				4323FB1B233A165E00243655 /* TransactionDetailHeaderTypeTableViewCell.swift in Sources */,
-				43DB226223580B4600E69C0F /* TagListViewController.swift in Sources */,
 				43E543852356F5CE00F2EC45 /* ExploreListCollectionViewCell.swift in Sources */,
 				4323FAF1233A165C00243655 /* ProjectViewModel.swift in Sources */,
 				4323FAE3233A165C00243655 /* ProjectInfoViewController.swift in Sources */,
@@ -2412,9 +2385,7 @@
 				4323FBA9233A166400243655 /* Updater.swift in Sources */,
 				4323FB41233A166000243655 /* ChangePasswordViewController.swift in Sources */,
 				4323FAC5233A165B00243655 /* SubscriptionListViewController.swift in Sources */,
-				43DB226523580B5300E69C0F /* TagListViewModel.swift in Sources */,
 				4323FB53233A166100243655 /* TransactionHistoryViewModel.swift in Sources */,
-				43DB226B23580B6F00E69C0F /* TagListTableViewCell.swift in Sources */,
 				436C75AF2387C72A00902F08 /* CreateFanPassViewController.swift in Sources */,
 				4323FA89233A165800243655 /* StoryBoard.swift in Sources */,
 				436CAC6D234C2E1200C84373 /* FirebaseManager.swift in Sources */,
@@ -2489,7 +2460,6 @@
 				4323FA90233A165800243655 /* BorderLineConfigurable.swift in Sources */,
 				4323FB1E233A165E00243655 /* TransactionDetailItemTypeTableViewCell.swift in Sources */,
 				4323FB1A233A165E00243655 /* TransactionDetailHeaderTypeTableViewCell.swift in Sources */,
-				43DB226123580B4600E69C0F /* TagListViewController.swift in Sources */,
 				43E543842356F5CE00F2EC45 /* ExploreListCollectionViewCell.swift in Sources */,
 				4323FAF0233A165C00243655 /* ProjectViewModel.swift in Sources */,
 				4323FAE2233A165C00243655 /* ProjectInfoViewController.swift in Sources */,
@@ -2574,9 +2544,7 @@
 				4323FBA8233A166400243655 /* Updater.swift in Sources */,
 				4323FB40233A166000243655 /* ChangePasswordViewController.swift in Sources */,
 				4323FAC4233A165B00243655 /* SubscriptionListViewController.swift in Sources */,
-				43DB226423580B5300E69C0F /* TagListViewModel.swift in Sources */,
 				4323FB52233A166100243655 /* TransactionHistoryViewModel.swift in Sources */,
-				43DB226A23580B6F00E69C0F /* TagListTableViewCell.swift in Sources */,
 				436C75AE2387C72A00902F08 /* CreateFanPassViewController.swift in Sources */,
 				4323FA88233A165800243655 /* StoryBoard.swift in Sources */,
 				436CAC6C234C2E1200C84373 /* FirebaseManager.swift in Sources */,

@@ -140,13 +140,6 @@ extension UIViewController {
         }
     }
 
-    func openTagListViewController() {
-        let vc = TagListViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
     func openProjectViewController(uri: String) {
         let vc = ProjectViewController.make(uri: uri)
         if let topViewController = UIApplication.topViewController() {
