@@ -49,21 +49,16 @@ final class ProjectInfoViewModel: InjectableViewModel {
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let projectInfoAction = Driver.merge(viewWillAppear, refreshContent, loadRetry)
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.get(uri: uri))
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.get(uri: uri) }
+            .map { PictionSDK.rx.requestAPI($0) }
+            .flatMap(Action.makeDriver)
 
         let projectInfoSuccess = projectInfoAction.elements
-            .flatMap { response -> Driver<ProjectModel> in
-                guard let projectInfo = try? response.map(to: ProjectModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(projectInfo)
-            }
+            .map { try? $0.map(to: ProjectModel.self) }
+            .flatMap(Driver.from)
 
         let projectInfoError = projectInfoAction.error
-            .flatMap { _ in Driver.just(()) }
+            .map { _ in Void() }
 
         let showErrorPopup = projectInfoError
 
