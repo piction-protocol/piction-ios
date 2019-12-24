@@ -166,7 +166,8 @@ extension SubscribeFanPassViewController: ViewModelBindable {
         output
             .openCheckPincodeViewController
             .drive(onNext: { [weak self] _ in
-                self?.openCheckPincodeViewController()
+                guard let `self` = self else { return }
+                self.openCheckPincodeViewController(delegate: self)
             })
             .disposed(by: disposeBag)
 

@@ -154,14 +154,6 @@ extension UIViewController {
         }
     }
 
-    func openCheckPincodeViewController(delegate: CheckPincodeDelegate? = nil) {
-        let vc = CheckPincodeViewController.make(style: .check)
-        vc.delegate = delegate
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
-        }
-    }
-
     func openMyProjectViewController() {
         let vc = MyProjectViewController.make()
         if let topViewController = UIApplication.topViewController() {
@@ -197,8 +189,10 @@ extension UIViewController {
         }
     }
 
-    func openCheckPincodeViewController() {
-        let vc = CheckPincodeViewController.make(style: .change)
+    func openCheckPincodeViewController(delegate: CheckPincodeDelegate? = nil) {
+        let style: CheckPincodeStyle = delegate == nil ? .change : .check
+        let vc = CheckPincodeViewController.make(style: style)
+        vc.delegate = delegate
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .present)
         }
