@@ -55,77 +55,61 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
         let updater = self.updater
 
         let userInfoAction = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(UsersAPI.me)
-                return Action.makeDriver(response)
-            }
+            .map { UsersAPI.me }
+            .map { PictionSDK.rx.requestAPI($0) }
+            .flatMap(Action.makeDriver)
 
         let userInfoSuccess = userInfoAction.elements
-            .flatMap { [weak self] response -> Driver<UserViewResponse> in
-                guard
-                    let `self` = self,
-                    let userInfo = try? response.map(to: UserViewResponse.self)
-                else { return Driver.empty() }
-
-                self.imageId.onNext("")
-                self.changeInfo.onNext(false)
-                return Driver.just(userInfo)
-            }
+            .map { try? $0.map(to: UserModel.self) }
+            .flatMap(Driver.from)
+            .do(onNext: { [weak self] _ in
+                self?.imageId.onNext("")
+                self?.changeInfo.onNext(false)
+            })
 
         let pictureBtnAction = input.pictureImageBtnDidTap
 
         let uploadPictureAction = input.pictureImageDidPick
             .filter { $0 != nil }
-            .flatMap { image -> Driver<Action<ResponseData>> in
-                guard let image = image else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(UsersAPI.uploadPicture(image: image))
-                return Action.makeDriver(response)
-            }
+            .map { $0! }
+            .map { UsersAPI.uploadPicture(image: $0) }
+            .map { PictionSDK.rx.requestAPI($0) }
+            .flatMap(Action.makeDriver)
 
         let uploadPictureError = uploadPictureAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let uploadPictureSuccess = uploadPictureAction.elements
-            .flatMap { [weak self] response -> Driver<String?> in
-                guard
-                    let `self` = self,
-                    let imageInfo = try? response.map(to: StorageAttachmentViewResponse.self),
-                    let imageInfoId = imageInfo.id
-                else { return Driver.empty() }
-
-                self.imageId.onNext(imageInfoId)
-                self.changeInfo.onNext(true)
-                return Driver.just(imageInfoId)
-            }
+            .map { try? $0.map(to: StorageAttachmentModel.self) }
+            .map { $0?.id }
+            .flatMap(Driver<String?>.from)
+            .do(onNext: { [weak self] imageId in
+                self?.imageId.onNext(imageId)
+                self?.changeInfo.onNext(true)
+            })
 
         let deletePicture = input.pictureImageDidPick
             .filter { $0 == nil }
-            .flatMap { [weak self] _ -> Driver<String?> in
-                guard let `self` = self else { return Driver.empty() }
-                self.imageId.onNext(nil)
-                self.changeInfo.onNext(true)
-                return Driver.just(nil)
-            }
+            .map { _ in nil }
+            .flatMap(Driver<String?>.from)
+            .do(onNext: { [weak self] _ in
+                self?.imageId.onNext(nil)
+                self?.changeInfo.onNext(true)
+            })
 
         let changePicture = Driver.merge(uploadPictureSuccess, deletePicture)
             .withLatestFrom(input.pictureImageDidPick)
-            .flatMap { image in Driver<UIImage?>.just(image) }
+            .flatMap(Driver<UIImage?>.from)
 
-        let userNameChanged = Driver.combineLatest(input.userNameTextFieldDidInput, userInfoSuccess)
-            .flatMap { [weak self] (inputUsername, userInfo) -> Driver<String> in
-                guard
-                    let `self` = self,
-                    let userName = userInfo.username
-                else { return Driver.empty() }
-
-                if inputUsername != "" && inputUsername != userName {
-                    self.changeInfo.onNext(true)
-                }
-                return Driver.just(inputUsername)
-            }
+        let userNameChanged = Driver.combineLatest(input.userNameTextFieldDidInput, userInfoSuccess) { (inputUsername: $0, username: $1.username) }
+            .filter { $0.inputUsername != "" }
+            .filter { $0.inputUsername != $0.username }
+            .map { $0.inputUsername }
+            .do(onNext: { [weak self] _ in
+                self?.changeInfo.onNext(true)
+            })
 
         let changeUserInfo = Driver.combineLatest(userNameChanged, imageId.asDriver(onErrorDriveWith: .empty())) { (username: $0, imageId: $1) }
 
@@ -133,41 +117,40 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
             .filter { $0 }
 
         let password = input.password
-            .flatMap { password in Driver<String?>.just(password) }
 
         let openPasswordPopup = input.saveBtnDidTap
 
         let saveButtonAction = Driver.combineLatest(password, changeUserInfo) { (password: $0, userInfo: $1) }
             .filter { $0.password != nil }
-            .flatMap { (password, changeUserInfo) -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(UsersAPI.update(username: changeUserInfo.username, password: password ?? "", picture: changeUserInfo.imageId))
-                return Action.makeDriver(response)
-            }
+            .map { UsersAPI.update(username: $1.username, password: $0 ?? "", picture: $1.imageId) }
+            .map { PictionSDK.rx.requestAPI($0) }
+            .flatMap(Action.makeDriver)
 
         let changeUserInfoError = saveButtonAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let changeUserInfoSuccess = saveButtonAction.elements
-            .flatMap { response -> Driver<Void> in
+            .map { _ in Void() }
+            .flatMap(Driver.from)
+            .do(onNext: { _ in
                 updater.refreshSession.onNext(())
-                return Driver.just(())
-            }
+            })
 
         let openWarningPopup = input.cancelBtnDidTap
             .withLatestFrom(changeInfo.asDriver(onErrorDriveWith: .empty()))
             .filter { $0 }
-            .flatMap { _ in Driver.just(()) }
+            .map { _ in Void() }
+            .flatMap(Driver.from)
 
         let dismissWithCancel = input.cancelBtnDidTap
             .withLatestFrom(changeInfo.asDriver(onErrorDriveWith: .empty()))
             .filter { !$0 }
-            .flatMap { _ in Driver.just(()) }
+            .map { _ in Void() }
+            .flatMap(Driver.from)
 
         let dismissViewController = Driver.merge(dismissWithCancel, changeUserInfoSuccess)
-            .flatMap { _ in Driver.just(()) }
 
         let activityIndicator = Driver.merge(
             userInfoAction.isExecuting,
