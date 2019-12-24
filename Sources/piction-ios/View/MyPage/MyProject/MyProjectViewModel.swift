@@ -38,44 +38,34 @@ final class MyProjectViewModel: ViewModel {
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let myProjectAction = Driver.merge(viewWillAppear, loadRetry)
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(MyAPI.projects)
-                return Action.makeDriver(response)
-            }
+            .map { MyAPI.projects }
+            .map { PictionSDK.rx.requestAPI($0) }
+            .flatMap(Action.makeDriver)
 
         let myProjectSuccess = myProjectAction.elements
-            .flatMap { [weak self] response -> Driver<[ProjectModel]> in
-                guard let projects = try? response.map(to: [ProjectModel].self) else {
-                    return Driver.empty()
-                }
+            .map { try? $0.map(to: [ProjectModel].self) }
+            .flatMap(Driver.from)
+            .do(onNext: { [weak self] projects in
                 self?.projectList = projects
-                return Driver.just(projects)
-            }
+            })
 
         let myProjectError = myProjectAction.error
-            .flatMap { _ in Driver.just(() )}
+            .map { _ in Void() }
 
         let showErrorPopup = myProjectError
 
         let embedEmptyView = myProjectSuccess
-            .flatMap { items -> Driver<CustomEmptyViewStyle> in
-                if items.count == 0 {
-                    return Driver.just(.myProjectListEmpty)
-                }
-                return Driver.empty()
-        }
-
-        let openCreateProjectViewController = input.createProjectBtnDidTap
-
-        let openProjectViewController = input.selectedIndexPath
+            .filter { $0.isEmpty }
+            .map { _ in .myProjectListEmpty }
+            .flatMap(Driver<CustomEmptyViewStyle>.from)
 
         let activityIndicator = myProjectAction.isExecuting
 
         return Output(
             viewWillAppear: input.viewWillAppear,
             projectList: myProjectSuccess,
-            openCreateProjectViewController: openCreateProjectViewController,
-            openProjectViewController: openProjectViewController,
+            openCreateProjectViewController: input.createProjectBtnDidTap,
+            openProjectViewController: input.selectedIndexPath,
             embedEmptyViewController: embedEmptyView,
             showErrorPopup: showErrorPopup,
             activityIndicator: activityIndicator
