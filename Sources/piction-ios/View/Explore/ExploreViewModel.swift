@@ -40,7 +40,7 @@ final class ExploreViewModel: InjectableViewModel {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
         let projectList: Driver<[ProjectModel]>
-        let openProjectViewController: Driver<ProjectModel>
+        let openProjectViewController: Driver<IndexPath>
         let isFetching: Driver<Bool>
         let activityIndicator: Driver<Bool>
         let showErrorPopup: Driver<Void>
@@ -55,69 +55,56 @@ final class ExploreViewModel: InjectableViewModel {
         let refreshControlDidRefresh = input.refreshControlDidRefresh
 
         let initialLoad = Driver.merge(viewWillAppear, refreshSession, refreshContent, refreshControlDidRefresh)
-            .flatMap { [weak self] _ -> Driver<Void> in
-                guard let `self` = self else { return Driver.empty() }
-                self.page = 0
-                self.items = []
-                self.shouldInfiniteScroll = true
-                return Driver.just(())
-            }
+            .do(onNext: { [weak self] _ in
+                self?.page = 0
+                self?.items = []
+                self?.shouldInfiniteScroll = true
+            })
 
         let loadNext = loadNextTrigger.asDriver(onErrorDriveWith: .empty())
-            .flatMap { [weak self] _ -> Driver<Void> in
-                guard let `self` = self, self.shouldInfiniteScroll else {
-                    return Driver.empty()
-                }
-                return Driver.just(())
-            }
+            .filter { self.shouldInfiniteScroll }
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let projectListAction = Driver.merge(initialLoad, loadNext, loadRetry)
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.all(page: self.page + 1, size: 20))
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.all(page: self.page + 1, size: 20) }
+            .map { PictionSDK.rx.requestAPI($0) }
+            .flatMap(Action.makeDriver)
 
         let projectListSuccess = projectListAction.elements
-            .flatMap { [weak self] response -> Driver<[ProjectModel]> in
-                guard let `self` = self else { return Driver.empty() }
-                guard let pageList = try? response.map(to: PageViewResponse<ProjectModel>.self) else {
-                    return Driver.empty()
-                }
+            .map { try? $0.map(to: PageViewResponse<ProjectModel>.self) }
+            .do(onNext: { [weak self] pageList in
+                guard
+                    let `self` = self,
+                    let pageNumber = pageList?.pageable?.pageNumber,
+                    let totalPages = pageList?.totalPages
+                else { return }
                 self.page = self.page + 1
-                if (pageList.pageable?.pageNumber ?? 0) >= (pageList.totalPages ?? 0) - 1 {
+                if pageNumber >= totalPages - 1 {
                     self.shouldInfiniteScroll = false
                 }
-                self.items.append(contentsOf: pageList.content ?? [])
-                return Driver.just(self.items)
-            }
+            })
+            .map { $0?.content ?? [] }
+            .map { self.items.append(contentsOf: $0) }
+            .map { self.items }
 
         let projectListError = projectListAction.error
-            .flatMap { _ in Driver.just(()) }
+            .map { _ in Void() }
 
         let projectList = projectListSuccess
-        let showErrorPopup = projectListError
 
-        let openProjectViewController = input.selectedIndexPath
-            .flatMap { [weak self] indexPath -> Driver<ProjectModel> in
-                guard let `self` = self else { return Driver.empty() }
-                guard self.items.count > indexPath.row else { return Driver.empty() }
-                return Driver.just(self.items[indexPath.row])
-            }
+        let showErrorPopup = projectListError
 
         let refreshAction = input.refreshControlDidRefresh
             .withLatestFrom(projectList)
-            .flatMap { _ -> Driver<Action<Void>> in
-                return Action.makeDriver(Driver.just(()))
-            }
+            .map { _ in Driver.just(()) }
+            .flatMap(Action.makeDriver)
 
         let showActivityIndicator = Driver.merge(initialLoad, loadRetry)
-            .flatMap { _ in Driver.just(true) }
+            .map { true }
 
         let hideActivityIndicator = projectList
-            .flatMap { _ in Driver.just(false) }
+            .map { _ in false }
 
         let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
 
@@ -125,7 +112,7 @@ final class ExploreViewModel: InjectableViewModel {
             viewWillAppear: input.viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
             projectList: projectList,
-            openProjectViewController: openProjectViewController,
+            openProjectViewController: input.selectedIndexPath,
             isFetching: refreshAction.isExecuting,
             activityIndicator: activityIndicator,
             showErrorPopup: showErrorPopup
