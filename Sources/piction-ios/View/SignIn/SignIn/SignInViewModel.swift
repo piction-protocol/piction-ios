@@ -49,34 +49,26 @@ final class SignInViewModel: InjectableViewModel {
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let userInfoAction = viewWillAppear
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(UsersAPI.me)
-                return Action.makeDriver(response)
-            }
+            .map { UsersAPI.me }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let userInfoSuccess = userInfoAction.elements
-            .flatMap { response -> Driver<UserModel> in
-                guard let userInfo = try? response.map(to: UserModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(userInfo)
-            }
+            .map { try? $0.map(to: UserModel.self) }
+            .flatMap(Driver.from)
 
         let signInInfo = Driver.combineLatest(input.loginIdTextFieldDidInput, input.passwordTextFieldDidInput) { (loginId: $0, password: $1) }
 
         let signInButtonAction = input.signInBtnDidTap
             .withLatestFrom(signInInfo)
-            .flatMap { signInInfo -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(SessionsAPI.create(loginId: signInInfo.loginId, password: signInInfo.password, rememberme: true))
-                return Action.makeDriver(response)
-            }
+            .map { SessionsAPI.create(loginId: $0.loginId, password: $0.password, rememberme: true) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let signInError = signInButtonAction.error
             .flatMap { response -> Driver<ErrorModel> in
-                guard let errorMsg = response as? ErrorType else {
-                    return Driver.empty()
-                }
-                switch errorMsg {
+                let errorType = response as? ErrorType
+                switch errorType {
                 case .badRequest(let error):
                     return Driver.just(error)
                 default:
@@ -86,36 +78,29 @@ final class SignInViewModel: InjectableViewModel {
 
         let showToast = signInButtonAction.error
             .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else {
+                let errorType = response as? ErrorType
+                switch errorType {
+                case .badRequest(let error) where error.field != nil:
                     return Driver.empty()
-                }
-                switch errorMsg {
-                case .badRequest(let error):
-                    if error.field == nil {
-                        return Driver.just(errorMsg.message)
-                    } else {
-                        return Driver.empty()
-                    }
                 default:
-                    return Driver.just(errorMsg.message)
+                    return Driver.just(errorType?.message ?? "")
                 }
             }
 
         let signInSuccess = signInButtonAction.elements
-            .flatMap { response -> Driver<Bool> in
-                guard let token = try? response.map(to: AuthenticationViewResponse.self) else {
-                    return Driver.empty()
-                }
-                KeychainManager.set(key: "AccessToken", value: token.accessToken ?? "")
-                PictionManager.setToken(token.accessToken ?? "")
+            .map { try? $0.map(to: AuthenticationModel.self) }
+            .map { $0?.accessToken ?? "" }
+            .do(onNext: { token in
+                KeychainManager.set(key: "AccessToken", value: token)
+                PictionManager.setToken(token)
                 updater.refreshSession.onNext(())
-                return Driver.just(true)
-            }
+            })
+            .map { _ in true }
 
         let activityIndicator = signInButtonAction.isExecuting
 
         let closeAction = input.closeBtnDidTap
-            .flatMap { _ in Driver.just(false) }
+            .map { false }
 
         let dismissViewController = Driver.merge(signInSuccess, closeAction)
 
