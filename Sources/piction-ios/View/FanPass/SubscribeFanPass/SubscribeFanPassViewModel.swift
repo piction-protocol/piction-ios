@@ -59,94 +59,71 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
         let initialLoad = Driver.merge(viewWillAppear, loadRetry)
 
         let fanPassItem = initialLoad
-            .flatMap {  _ in Driver<FanPassModel>.just(selectedFanPass) }
+            .map { selectedFanPass }
+            .flatMap(Driver.from)
 
         let walletInfoAction = initialLoad
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(MyAPI.wallet)
-                return Action.makeDriver(response)
-            }
+            .map { MyAPI.wallet }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let walletInfoSuccess = walletInfoAction.elements
-            .flatMap { response -> Driver<WalletModel> in
-                guard let wallet = try? response.map(to: WalletModel.self) else { return Driver.empty() }
-                return Driver.just(wallet)
-            }
+            .map { try? $0.map(to: WalletModel.self) }
+            .flatMap(Driver.from)
 
         let walletInfoError = walletInfoAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let projectInfoAction = initialLoad
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.get(uri: uri))
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.get(uri: uri) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let projectInfoSuccess = projectInfoAction.elements
-            .flatMap { response -> Driver<ProjectModel> in
-                guard let projectInfo = try? response.map(to: ProjectModel.self) else { return Driver.empty() }
-                return Driver.just(projectInfo)
-            }
-
-        let purchaseAction = input.purchaseBtnDidTap
-            .filter { KeychainManager.get(key: "pincode").isEmpty }
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                guard
-                    let fanPassId = selectedFanPass.id,
-                    let subscriptionPrice = selectedFanPass.subscriptionPrice
-                else { return Driver.empty() }
-
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.subscription(uri: uri, fanPassId: fanPassId, subscriptionPrice: subscriptionPrice))
-                return Action.makeDriver(response)
-            }
+            .map { try? $0.map(to: ProjectModel.self) }
+            .flatMap(Driver.from)
 
         let openCheckPincodeViewController = input.purchaseBtnDidTap
             .filter { !KeychainManager.get(key: "pincode").isEmpty }
-            .flatMap { _ in Driver.just(()) }
+            .map { _ in Void() }
 
-        let purchaseWithPincodeAction = input.authSuccessWithPincode
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                guard
-                    let fanPassId = selectedFanPass.id,
-                    let subscriptionPrice = selectedFanPass.subscriptionPrice
-                else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.subscription(uri: uri, fanPassId: fanPassId, subscriptionPrice: subscriptionPrice))
-                return Action.makeDriver(response)
-            }
+        let purchaseWithoutPicode = input.purchaseBtnDidTap
+            .filter { KeychainManager.get(key: "pincode").isEmpty }
 
-        let purchaseSuccess = Driver.merge(purchaseAction.elements, purchaseWithPincodeAction.elements)
-            .flatMap { _ -> Driver<String> in
+        let purchaseWithPincode = input.authSuccessWithPincode
+
+        let purchaseAction = Driver.merge(purchaseWithoutPicode, purchaseWithPincode)
+            .map { ProjectsAPI.subscription(uri: uri, fanPassId: selectedFanPass.id ?? 0, subscriptionPrice: selectedFanPass.subscriptionPrice ?? 0) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
+
+        let purchaseSuccess = purchaseAction.elements
+            .map { _ in "구독 완료" }
+            .do(onNext: { _ in
                 updater.refreshContent.onNext(())
-                return Driver.just("구독 완료")
-            }
+            })
 
         let purchaseError = purchaseAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let feesInfoAction = initialLoad
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.fees(uri: uri))
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.fees(uri: uri) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let feesInfoSuccess = feesInfoAction.elements
-            .flatMap { response -> Driver<FeesModel> in
-                guard let fees = try? response.map(to: FeesModel.self) else { return Driver.empty() }
-                return Driver.just(fees)
-            }
+            .map { try? $0.map(to: FeesModel.self) }
+            .flatMap(Driver.from)
 
         let fanPassInfo = Driver.combineLatest(fanPassItem, feesInfoSuccess)
 
         let activityIndicator = Driver.merge(
             walletInfoAction.isExecuting,
-            purchaseAction.isExecuting,
-            purchaseWithPincodeAction.isExecuting)
+            purchaseAction.isExecuting)
 
         let showErrorPopup = Driver.merge(walletInfoError, purchaseError)
             .do(onNext: { _ in
@@ -167,5 +144,16 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
             activityIndicator: activityIndicator,
             dismissViewController: dismissViewController
         )
+    }
+}
+
+extension ErrorType: Equatable {
+    public static func == (lhs: ErrorType, rhs: ErrorType) -> Bool {
+        switch (lhs, rhs) {
+        case (.unauthorized(_), .unauthorized(_)):
+            return true
+        default:
+            return false
+        }
     }
 }
