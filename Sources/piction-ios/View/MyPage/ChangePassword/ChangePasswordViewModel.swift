@@ -35,6 +35,7 @@ final class ChangePasswordViewModel: ViewModel {
         let enableSaveButton: Driver<Void>
         let dismissViewController: Driver<Void>
         let errorMsg: Driver<ErrorModel>
+        let showToast: Driver<String>
     }
 
     func build(input: Input) -> Output {
@@ -42,21 +43,17 @@ final class ChangePasswordViewModel: ViewModel {
 
         let enableSaveButton = changePasswordInfo
             .filter { $0 != "" && $1 != "" && $2 != "" }
-            .flatMap { _ in Driver.just(()) }
+            .map { _ in Void() }
 
         let saveButtonAction = input.saveBtnDidTap
             .withLatestFrom(changePasswordInfo)
-            .flatMap { changePasswordInfo -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(UsersAPI.updatePassword(password: changePasswordInfo.password, newPassword: changePasswordInfo.newPassword, passwordCheck: changePasswordInfo.passwordCheck))
-                return Action.makeDriver(response)
-            }
+            .map { UsersAPI.updatePassword(password: $0.password, newPassword: $0.newPassword, passwordCheck: $0.passwordCheck) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let changePasswordError = saveButtonAction.error
             .flatMap { response -> Driver<ErrorModel> in
-                guard let errorMsg = response as? ErrorType else {
-                    return Driver.empty()
-                }
-
+                let errorMsg = response as? ErrorType
                 switch errorMsg {
                 case .badRequest(let error):
                     return Driver.just(error)
@@ -66,11 +63,17 @@ final class ChangePasswordViewModel: ViewModel {
             }
 
         let changePasswordSuccess = saveButtonAction.elements
-            .flatMap { response -> Driver<Void> in
-                guard let _ = try? response.map(to: AuthenticationViewResponse.self) else {
+            .map { _ in Void() }
+
+        let showToast = saveButtonAction.error
+            .flatMap { response -> Driver<String> in
+                let errorType = response as? ErrorType
+                switch errorType {
+                case .badRequest(let error) where error.field != nil:
                     return Driver.empty()
+                default:
+                    return Driver.just(errorType?.message ?? "")
                 }
-                return Driver.just(())
             }
 
         let errorMsg = changePasswordError
@@ -80,7 +83,7 @@ final class ChangePasswordViewModel: ViewModel {
         let dismissWithCancel = input.cancelBtnDidTap
 
         let dismissViewController = Driver.merge(dismissWithCancel, changePasswordSuccess)
-            .flatMap { _ in Driver.just(()) }
+            .map { _ in Void() }
 
         return Output(
             viewWillAppear: input.viewWillAppear,
@@ -90,7 +93,8 @@ final class ChangePasswordViewModel: ViewModel {
             passwordCheckVisible: input.passwordCheckVisibleBtnDidTap,
             enableSaveButton: enableSaveButton,
             dismissViewController: dismissViewController,
-            errorMsg: errorMsg
+            errorMsg: errorMsg,
+            showToast: showToast
         )
     }
 }

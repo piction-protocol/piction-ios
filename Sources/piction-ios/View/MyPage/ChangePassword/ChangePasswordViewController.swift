@@ -170,12 +170,15 @@ extension ChangePasswordViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
-//        output
-//            .showToast
-//            .drive(onNext: { message in
-//                Toast.showToast(message)
-//            })
-//            .disposed(by: disposeBag)
+        output
+            .showToast
+            .drive(onNext: { [weak self] message in
+                self?.passwordTextField.resignFirstResponder()
+                self?.newPasswordTextField.resignFirstResponder()
+                self?.passwordCheckTextField.resignFirstResponder()
+                Toast.showToast(message)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
