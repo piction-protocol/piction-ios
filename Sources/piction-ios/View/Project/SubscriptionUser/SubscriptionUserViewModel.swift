@@ -44,61 +44,53 @@ final class SubscriptionUserViewModel: ViewModel {
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let initialLoad = Driver.merge(viewWillAppear, input.refreshControlDidRefresh)
-            .flatMap { [weak self] _ -> Driver<Void> in
-                guard let `self` = self else { return Driver.empty() }
-                self.page = 0
-                self.items = []
-                self.shouldInfiniteScroll = true
-                return Driver.just(())
-            }
+            .do(onNext: { [weak self] _ in
+                self?.page = 0
+                self?.items = []
+                self?.shouldInfiniteScroll = true
+            })
 
         let loadNext = loadTrigger.asDriver(onErrorDriveWith: .empty())
-            .flatMap { [weak self] _ -> Driver<Void> in
-                guard let `self` = self, self.shouldInfiniteScroll else {
-                    return Driver.empty()
-                }
-                return Driver.just(())
-            }
+            .filter { self.shouldInfiniteScroll }
 
         let subscriptionUserListAction = Driver.merge(initialLoad, loadNext)
-           .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-            guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(MyAPI.projectSubscriptions(uri: uri, page: self.page + 1, size: 30))
-                return Action.makeDriver(response)
-           }
+            .map { MyAPI.projectSubscriptions(uri: uri, page: self.page + 1, size: 30) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let subscriptionUserListSuccess = subscriptionUserListAction.elements
-           .flatMap { [weak self] response -> Driver<[SubscriptionUserModel]> in
-               guard let `self` = self else { return Driver.empty() }
-               guard let pageList = try? response.map(to: PageViewResponse<SubscriptionUserModel>.self) else {
-                   return Driver.empty()
-               }
-               self.page = self.page + 1
-               if (pageList.pageable?.pageNumber ?? 0) >= (pageList.totalPages ?? 0) - 1 {
-                   self.shouldInfiniteScroll = false
-               }
-               self.items.append(contentsOf: pageList.content ?? [])
-               return Driver.just(self.items)
-           }
+            .map { try? $0.map(to: PageViewResponse<SubscriptionUserModel>.self) }
+            .do(onNext: { [weak self] pageList in
+                guard
+                    let `self` = self,
+                    let pageNumber = pageList?.pageable?.pageNumber,
+                    let totalPages = pageList?.totalPages
+                else { return }
+                self.page = self.page + 1
+                if pageNumber >= totalPages - 1 {
+                    self.shouldInfiniteScroll = false
+                }
+            })
+            .map { $0?.content ?? [] }
+            .map { self.items.append(contentsOf: $0) }
+            .map { self.items }
 
         let subscriptionUserListError = subscriptionUserListAction.error
-            .flatMap { _ in Driver.just([SubscriptionUserModel.from([:])!]) }
+            .map { _ in [] }
+            .flatMap(Driver<[SubscriptionUserModel]>.from)
 
         let subscriptionUserList = Driver.merge(subscriptionUserListSuccess, subscriptionUserListError)
 
         let refreshAction = input.refreshControlDidRefresh
             .withLatestFrom(subscriptionUserList)
-            .flatMap { _ -> Driver<Action<Void>> in
-                return Action.makeDriver(Driver.just(()))
-            }
+            .map { _ in Void() }
+            .map(Driver.from)
+            .flatMap(Action.makeDriver)
 
         let embedEmptyView = subscriptionUserList
-            .flatMap { items -> Driver<CustomEmptyViewStyle> in
-                if (items.count == 0) {
-                    return Driver.just(.searchListEmpty)
-                }
-                return Driver.empty()
-            }
+            .filter { $0.isEmpty }
+            .map { _ in .searchListEmpty }
+            .flatMap(Driver<CustomEmptyViewStyle>.from)
 
         return Output(
             viewWillAppear: input.viewWillAppear,
