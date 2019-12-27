@@ -29,7 +29,7 @@ final class ManageSeriesViewController: UIViewController {
 
     weak var delegate: ManageSeriesDelegate?
 
-    private let updateSeries = PublishSubject<(String, SeriesModel?)>()
+    private let updateSeries = PublishSubject<(Int?, String)>()
     private let contextualAction = PublishSubject<(UIContextualAction.Style, IndexPath)>()
     private let deleteConfirm = PublishSubject<Int>()
     private let reorderItems = PublishSubject<[Int]>()
@@ -97,7 +97,7 @@ final class ManageSeriesViewController: UIViewController {
                 guard let textFields = alertController.textFields else {
                     return
                 }
-                self?.updateSeries.onNext((textFields[0].text ?? "", series))
+                self?.updateSeries.onNext((series?.id, textFields[0].text ?? ""))
             })
 
         let cancelAction = UIAlertAction(
