@@ -10,23 +10,32 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
-final class MyProjectViewModel: ViewModel {
+final class MyProjectViewModel: InjectableViewModel {
+
+    typealias Dependency = (
+        UpdaterProtocol
+    )
+
+    private let updater: UpdaterProtocol
 
     var projectList: [ProjectModel] = []
     var loadRetryTrigger = PublishSubject<Void>()
 
-    init() {}
+    init(dependency: Dependency) {
+        (updater) = dependency
+    }
 
     struct Input {
         let viewWillAppear: Driver<Void>
         let createProjectBtnDidTap: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
+        let contextualAction: Driver<IndexPath>
     }
 
     struct Output {
         let viewWillAppear: Driver<Void>
         let projectList: Driver<[ProjectModel]>
-        let openCreateProjectViewController: Driver<Void>
+        let openCreateProjectViewController: Driver<IndexPath?>
         let openProjectViewController: Driver<IndexPath>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let showErrorPopup: Driver<Void>
@@ -34,12 +43,15 @@ final class MyProjectViewModel: ViewModel {
     }
 
     func build(input: Input) -> Output {
+        let updater = self.updater
+
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
-        let myProjectAction = Driver.merge(viewWillAppear, loadRetry)
+        let myProjectAction = Driver.merge(viewWillAppear, refreshContent, loadRetry)
             .map { MyAPI.projects }
-            .map { PictionSDK.rx.requestAPI($0) }
+            .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let myProjectSuccess = myProjectAction.elements
@@ -51,6 +63,14 @@ final class MyProjectViewModel: ViewModel {
 
         let myProjectError = myProjectAction.error
             .map { _ in Void() }
+
+        let openCreateProject = input.createProjectBtnDidTap
+            .map { _ in IndexPath?(nil) }
+
+        let openEditProject = input.contextualAction
+            .flatMap(Driver<IndexPath?>.from)
+
+        let openCreateProjectViewController = Driver.merge(openCreateProject, openEditProject)
 
         let showErrorPopup = myProjectError
 
@@ -64,7 +84,7 @@ final class MyProjectViewModel: ViewModel {
         return Output(
             viewWillAppear: input.viewWillAppear,
             projectList: myProjectSuccess,
-            openCreateProjectViewController: input.createProjectBtnDidTap,
+            openCreateProjectViewController: openCreateProjectViewController,
             openProjectViewController: input.selectedIndexPath,
             embedEmptyViewController: embedEmptyView,
             showErrorPopup: showErrorPopup,

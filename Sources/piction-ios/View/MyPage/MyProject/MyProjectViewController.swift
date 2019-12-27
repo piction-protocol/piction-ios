@@ -16,9 +16,10 @@ import PictionSDK
 final class MyProjectViewController: UITableViewController {
     var disposeBag = DisposeBag()
 
-//    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptyView: UIView!
     @IBOutlet weak var createProjectButton: UIBarButtonItem!
+
+    private let contextualAction = PublishSubject<IndexPath>()
 
     private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
         _ = emptyView.subviews.map { $0.removeFromSuperview() }
@@ -56,7 +57,8 @@ extension MyProjectViewController: ViewModelBindable {
             viewWillAppear: rx.viewWillAppear.asDriver(),
             createProjectBtnDidTap: createProjectButton.rx.tap.asDriver(),
             selectedIndexPath:
-            tableView.rx.itemSelected.asDriver()
+            tableView.rx.itemSelected.asDriver(),
+            contextualAction: contextualAction.asDriver(onErrorDriveWith: .empty())
         )
 
         let output = viewModel.build(input: input)
@@ -84,8 +86,15 @@ extension MyProjectViewController: ViewModelBindable {
 
         output
             .openCreateProjectViewController
-            .drive(onNext: { [weak self] _ in
-                self?.openCreateProjectViewController(uri: "")
+            .drive(onNext: { [weak self] indexPath in
+                var uri: String {
+                    if let indexPath = indexPath {
+                        return dataSource[indexPath].uri ?? ""
+                    } else {
+                        return ""
+                    }
+                }
+                self?.openCreateProjectViewController(uri: uri)
             })
             .disposed(by: disposeBag)
 
@@ -132,13 +141,9 @@ extension MyProjectViewController: ViewModelBindable {
 extension MyProjectViewController {
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let editAction = UIContextualAction(style: .normal, title: LocalizedStrings.edit.localized(), handler: { [weak self] (action, view, completionHandler) in
-                if let item = self?.viewModel?.projectList[indexPath.row] {
-                    self?.openCreateProjectViewController(uri: item.uri ?? "")
-                    completionHandler(true)
-                } else {
-                    completionHandler(false)
-                }
-            })
+            self?.contextualAction.onNext(indexPath)
+            completionHandler(true)
+        })
         return UISwipeActionsConfiguration(actions: [editAction])
     }
 }
