@@ -77,7 +77,9 @@ final class ConfirmPincodeViewController: UIViewController {
             })
             alert.addAction(okAction)
 
-            let cancelAction = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel, handler : nil)
+            let cancelAction = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel, handler: { [weak self] _ in
+                self?.changeComplete.onNext(())
+            })
             alert.addAction(cancelAction)
 
             present(alert, animated: false, completion: nil)

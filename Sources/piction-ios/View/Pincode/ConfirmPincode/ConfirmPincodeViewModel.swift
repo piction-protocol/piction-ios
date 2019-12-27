@@ -39,10 +39,9 @@ final class ConfirmPincodeViewModel: InjectableViewModel {
         let updater = self.updater
 
         let dismissViewController = input.changeComplete
-            .flatMap { _ -> Driver<Void> in
+            .do(onNext: { _ in
                 updater.refreshSession.onNext(())
-                return Driver.just(())
-            }
+            })
 
         return Output(
             viewWillAppear: input.viewWillAppear,
