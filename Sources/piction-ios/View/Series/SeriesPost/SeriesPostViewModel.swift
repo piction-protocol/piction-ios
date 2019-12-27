@@ -49,7 +49,7 @@ final class SeriesPostViewModel: InjectableViewModel {
         let contentList: Driver<SectionType<ContentsSection>>
         let isDescending: Driver<Bool>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
-        let selectedIndexPath: Driver<(String, Int)>
+        let selectedIndexPath: Driver<IndexPath>
         let showErrorPopup: Driver<Void>
         let activityIndicator: Driver<Bool>
     }
@@ -64,98 +64,69 @@ final class SeriesPostViewModel: InjectableViewModel {
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
 
         let isDescending = input.sortBtnDidTap
-            .flatMap { [weak self] _ -> Driver<Bool> in
-                guard let `self` = self else { return Driver.empty() }
-                self.isDescending = !self.isDescending
-                return Driver.just(self.isDescending)
-            }
+            .map { self.isDescending = !self.isDescending }
+            .map { self.isDescending }
 
         let refreshSort = isDescending
-            .flatMap { _ in Driver.just(()) }
+            .map { _ in Void() }
 
         let initialLoad = Driver.merge(viewWillAppear, refreshContent, refreshSession, refreshSort)
-            .flatMap { [weak self] _ -> Driver<Void> in
+            .do(onNext: { [weak self] _ in
                 self?.page = 0
                 self?.sections = []
                 self?.shouldInfiniteScroll = true
-                return Driver.just(())
-            }
+            })
 
         let loadNext = loadNextTrigger.asDriver(onErrorDriveWith: .empty())
-            .flatMap { [weak self] _ -> Driver<Void> in
-                guard let `self` = self, self.shouldInfiniteScroll else {
-                    return Driver.empty()
-                }
-                return Driver.just(())
-            }
+            .filter { self.shouldInfiniteScroll }
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let isSubscribingAction = Driver.merge(initialLoad, loadNext, loadRetry)
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.getProjectSubscription(uri: uri))
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.getProjectSubscription(uri: uri) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let isSubscribingSuccess = isSubscribingAction.elements
-            .flatMap { response -> Driver<Bool> in
-                guard let isSubscribing = try? response.map(to: SubscriptionModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(isSubscribing.fanPass != nil)
-            }
+            .map { try? $0.map(to: SubscriptionModel.self) }
+            .map { $0?.fanPass != nil }
+            .flatMap(Driver.from)
 
         let isSubscribingError = isSubscribingAction.error
-            .flatMap { _ in Driver.just(false) }
+            .map { _ in false }
 
         let isSubscribing = Driver.merge(isSubscribingSuccess, isSubscribingError)
 
         let loadSeriesInfoAction = Driver.merge(initialLoad, loadRetry)
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(SeriesAPI.get(uri: uri, seriesId: seriesId))
-                return Action.makeDriver(response)
-            }
+            .map { SeriesAPI.get(uri: uri, seriesId: seriesId) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let loadSeriesInfoSuccess = loadSeriesInfoAction.elements
-            .flatMap { response -> Driver<SeriesModel> in
-                guard let seriesInfo = try? response.map(to: SeriesModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(seriesInfo)
-            }
+            .map { try? $0.map(to: SeriesModel.self) }
+            .flatMap(Driver.from)
 
         let loadSeriesThumbnailAction = Driver.merge(initialLoad, loadRetry)
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(SeriesAPI.getThumbnails(uri: uri, seriesId: seriesId))
-                return Action.makeDriver(response)
-            }
+            .map { SeriesAPI.getThumbnails(uri: uri, seriesId: seriesId) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let loadSeriesThumbnailSuccess = loadSeriesThumbnailAction.elements
-            .flatMap { response -> Driver<[String]> in
-                guard let seriesThumbnail = try? response.mapJSON() else {
-                    return Driver.empty()
-                }
-                let thumbnails = seriesThumbnail as! [String]
-                return Driver.just(thumbnails)
-            }
+            .map { try? $0.mapJSON() }
+            .map { $0 as? [String] }
+            .flatMap(Driver.from)
 
         let loadSeriesPostsAction = Driver.merge(initialLoad, loadNext, loadRetry)
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(SeriesAPI.allSeriesPosts(uri: uri, seriesId: seriesId, page: self.page + 1, size: 20, isDescending: self.isDescending))
-                return Action.makeDriver(response)
-            }
+            .map { SeriesAPI.allSeriesPosts(uri: uri, seriesId: seriesId, page: self.page + 1, size: 20, isDescending: self.isDescending) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let loadSeriesPostsSuccess = loadSeriesPostsAction.elements
-            .flatMap { response -> Driver<PageViewResponse<PostModel>> in
-                guard let pageList = try? response.map(to: PageViewResponse<PostModel>.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(pageList)
-            }
+            .map { try? $0.map(to: PageViewResponse<PostModel>.self) }
+            .flatMap(Driver.from)
 
         let loadSeriesPostError = loadSeriesPostsAction.error
-            .flatMap { _ in Driver.just(()) }
+            .map { _ in Void() }
 
         let showErrorPopup = loadSeriesPostError
 
@@ -167,42 +138,23 @@ final class SeriesPostViewModel: InjectableViewModel {
                     let totalPages = postList.totalPages,
                     let totalElements = postList.totalElements,
                     let numberOfElements = postList.size
-
                 else { return Driver.empty() }
 
                 self.shouldInfiniteScroll = pageNumber < totalPages - 1
                 let page = self.page
                 self.page = self.page + 1
 
-                let posts: [ContentsSection] = (postList.content ?? []).enumerated().map { .seriesPostList(post: $1, isSubscribing: isSubscribing, number: self.isDescending ? totalElements - page * numberOfElements - $0 : page * numberOfElements + ($0 + 1)) }
+                let posts: [ContentsSection] = (postList.content ?? []).enumerated()
+                    .map { .seriesPostList(post: $1, isSubscribing: isSubscribing, number: self.isDescending ? totalElements - page * numberOfElements - $0 : page * numberOfElements + ($0 + 1)) }
                 self.sections.append(contentsOf: posts)
 
                 return Driver.just(SectionType<ContentsSection>.Section(title: "post", items: self.sections))
             }
 
         let embedPostEmptyView = contentList
-            .flatMap { [weak self] _ -> Driver<CustomEmptyViewStyle> in
-                guard
-                    let `self` = self,
-                    self.sections.isEmpty
-                else { return Driver.empty() }
-                return Driver.just(.projectPostListEmpty)
-            }
-
-        let selectPostItem = input.selectedIndexPath
-            .flatMap { [weak self] indexPath -> Driver<(String, Int)> in
-                guard
-                    let `self` = self,
-                    self.sections.count > indexPath.row
-                else { return Driver.empty() }
-
-                switch self.sections[indexPath.row] {
-                case .seriesPostList(let post, _, _):
-                    return Driver.just((uri, post.id ?? 0))
-                default:
-                    return Driver.empty()
-                }
-            }
+            .filter { $0.items.isEmpty }
+            .map { _ in .projectPostListEmpty }
+            .flatMap(Driver<CustomEmptyViewStyle>.from)
 
         let activityIndicator = Driver.merge(
             isSubscribingAction.isExecuting,
@@ -218,7 +170,7 @@ final class SeriesPostViewModel: InjectableViewModel {
             contentList: contentList,
             isDescending: isDescending,
             embedEmptyViewController: embedPostEmptyView,
-            selectedIndexPath: selectPostItem,
+            selectedIndexPath: input.selectedIndexPath,
             showErrorPopup: showErrorPopup,
             activityIndicator: activityIndicator
         )

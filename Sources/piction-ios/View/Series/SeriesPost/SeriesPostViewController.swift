@@ -165,9 +165,18 @@ extension SeriesPostViewController: ViewModelBindable {
 
         output
             .selectedIndexPath
-            .drive(onNext: { [weak self] postInfo in
-                let (uri, postId) = postInfo
-                self?.openPostViewController(uri: uri, postId: postId)
+            .drive(onNext: { [weak self] indexPath in
+                switch dataSource[indexPath] {
+                case .seriesPostList(let post, _, _):
+                    guard
+                        let uri = self?.viewModel?.uri,
+                        let postId = post.id
+                    else { return }
+
+                    self?.openPostViewController(uri: uri, postId: postId)
+                default:
+                    return
+                }
             })
             .disposed(by: disposeBag)
 
