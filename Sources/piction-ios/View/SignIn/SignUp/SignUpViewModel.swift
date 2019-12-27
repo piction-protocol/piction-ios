@@ -48,34 +48,26 @@ final class SignUpViewModel: InjectableViewModel {
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let userInfoAction = viewWillAppear
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(UsersAPI.me)
-                return Action.makeDriver(response)
-            }
+            .map { UsersAPI.me }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let userInfoSuccess = userInfoAction.elements
-            .flatMap { response -> Driver<UserModel> in
-                guard let userInfo = try? response.map(to: UserModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(userInfo)
-            }
+            .map { try? $0.map(to: UserModel.self) }
+            .flatMap(Driver.from)
 
         let signUpInfo = Driver.combineLatest(input.loginIdTextFieldDidInput, input.emailTextFieldDidInput, input.passwordTextFieldDidInput, input.passwordCheckTextFieldDidInput, input.nicknameTextFieldDidInput) { (loginId: $0, email: $1, password: $2, passwordCheck: $3, username: $4) }
 
         let signUpButtonAction = input.signUpBtnDidTap
             .withLatestFrom(signUpInfo)
-            .flatMap { signUpInfo -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(UsersAPI.signup(loginId: signUpInfo.loginId, email: signUpInfo.email, username: signUpInfo.username, password: signUpInfo.password, passwordCheck: signUpInfo.passwordCheck))
-                return Action.makeDriver(response)
-            }
+            .map { UsersAPI.signup(loginId: $0.loginId, email: $0.email, username: $0.username, password: $0.password, passwordCheck: $0.passwordCheck) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let signUpError = signUpButtonAction.error
             .flatMap { response -> Driver<ErrorModel> in
-                guard let errorMsg = response as? ErrorType else {
-                    return Driver.empty()
-                }
-                switch errorMsg {
+                let errorType = response as? ErrorType
+                switch errorType {
                 case .badRequest(let error):
                     return Driver.just(error)
                 default:
@@ -84,27 +76,25 @@ final class SignUpViewModel: InjectableViewModel {
             }
 
         let clearErrorMsg = Driver.merge(input.loginIdTextFieldDidInput, input.emailTextFieldDidInput, input.passwordTextFieldDidInput, input.passwordCheckTextFieldDidInput, input.nicknameTextFieldDidInput)
-            .flatMap { _ in Driver.just(ErrorModel.from([:])!) }
+            .map { _ in ErrorModel.from([:])! }
 
         let errorMsg = Driver.merge(signUpError, clearErrorMsg)
 
         let signUpSuccessAction = signUpButtonAction.elements
             .withLatestFrom(signUpInfo)
-            .flatMap { signUpInfo -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(SessionsAPI.create(loginId: signUpInfo.loginId, password: signUpInfo.password, rememberme: true))
-                return Action.makeDriver(response)
-            }
+            .map { SessionsAPI.create(loginId: $0.loginId, password: $0.password, rememberme: true) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let sessionCreateSuccess = signUpSuccessAction.elements
-            .flatMap { response -> Driver<Void> in
-                guard let token = try? response.map(to: AuthenticationViewResponse.self) else {
-                    return Driver.empty()
-                }
-                KeychainManager.set(key: "AccessToken", value: token.accessToken ?? "")
-                PictionManager.setToken(token.accessToken ?? "")
+            .map { try? $0.map(to: AuthenticationViewResponse.self) }
+            .map { $0?.accessToken ?? "" }
+            .do(onNext: { token in
+                KeychainManager.set(key: "AccessToken", value: token)
+                PictionManager.setToken(token)
                 updater.refreshSession.onNext(())
-                return Driver.just(())
-            }
+            })
+            .map { _ in Void() }
 
         let activityIndicator = signUpSuccessAction.isExecuting
 
