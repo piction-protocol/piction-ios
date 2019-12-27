@@ -72,7 +72,7 @@ final class CreateProjectViewModel: InjectableViewModel {
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let isModify = viewWillAppear
-            .flatMap { _ in Driver.just(uri != "") }
+            .map { uri != "" }
 
         let loadProjectAction = viewWillAppear
             .do(onNext: { [weak self] in
@@ -84,163 +84,145 @@ final class CreateProjectViewModel: InjectableViewModel {
                 self.tags.onNext([])
             })
             .filter { uri != "" }
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.get(uri: uri))
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.get(uri: uri) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let loadProjectSuccess = loadProjectAction.elements
-            .flatMap { [weak self] response -> Driver<ProjectModel> in
+            .map { try? $0.map(to: ProjectModel.self) }
+            .flatMap(Driver.from)
+            .do(onNext: { [weak self] project in
                 guard
-                    let `self` = self,
-                    let project = try? response.map(to: ProjectModel.self),
                     let title = project.title,
                     let uri = project.uri,
                     let synopsis = project.synopsis,
                     let status = project.status
-                else { return Driver.empty() }
+                else { return }
 
-                self.title.onNext(title)
-                self.id.onNext(uri)
-                self.thumbnailImageId.onNext("")
-                self.wideThumbnailImageId.onNext("")
-                self.synopsis.onNext(synopsis)
-                self.status.onNext(status)
-                self.tags.onNext([])
-
-                return Driver.just(project)
-            }
+                self?.title.onNext(title)
+                self?.id.onNext(uri)
+                self?.thumbnailImageId.onNext("")
+                self?.wideThumbnailImageId.onNext("")
+                self?.synopsis.onNext(synopsis)
+                self?.status.onNext(status)
+                self?.tags.onNext([])
+            })
 
         let projectTitleChanged = Driver.merge(input.inputProjectTitle, title.asDriver(onErrorDriveWith: .empty()))
-            .flatMap { title in Driver<String>.just(title) }
 
         let projectIdChanged = Driver.merge(input.inputProjectId, id.asDriver(onErrorDriveWith: .empty()))
-            .flatMap { id in Driver<String>.just(id) }
 
         let synopsisChanged = Driver.merge(input.inputSynopsis, synopsis.asDriver(onErrorDriveWith: .empty()))
-            .flatMap { synopsis in Driver<String>.just(synopsis) }
 
         let uploadWideThumbnailImageAction = input.wideThumbnailImageDidPick
-            .flatMap { image -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.uploadWideThumbnail(image: image))
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.uploadWideThumbnail(image: $0) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let uploadWideThumbnailError = uploadWideThumbnailImageAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let uploadWideThumbnailSuccess = uploadWideThumbnailImageAction.elements
-            .flatMap { [weak self] response -> Driver<String> in
-                guard
-                    let `self` = self,
-                    let imageInfo = try? response.map(to: StorageAttachmentViewResponse.self),
-                    let imageInfoId = imageInfo.id
-                else { return Driver.empty() }
-
-                self.wideThumbnailImageId.onNext(imageInfoId)
-                return Driver.just(imageInfoId)
-            }
+            .map { try? $0.map(to: StorageAttachmentModel.self) }
+            .map { $0?.id }
+            .flatMap(Driver<String>.from)
+            .do(onNext: { [weak self] imageId in
+                self?.wideThumbnailImageId.onNext(imageId)
+            })
 
         let changeWideThumbnail = uploadWideThumbnailSuccess
             .withLatestFrom(input.wideThumbnailImageDidPick)
-            .flatMap { image in Driver<UIImage?>.just(image) }
+            .flatMap(Driver<UIImage?>.from)
 
         let deleteWideThumbnail = input.deleteWideThumbnailBtnDidTap
-            .flatMap { [weak self] _ -> Driver<UIImage?> in
+            .map { nil }
+            .flatMap(Driver<UIImage?>.from)
+            .do(onNext: { [weak self] _ in
                 self?.wideThumbnailImageId.onNext(nil)
-                return Driver.just(nil)
-            }
+            })
 
         let wideThumbnailImage = Driver.merge(changeWideThumbnail, deleteWideThumbnail)
 
         let uploadThumbnailImageAction = input.thumbnailImageDidPick
-            .flatMap { image -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.uploadThumbnail(image: image))
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.uploadThumbnail(image: $0) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let uploadThumbnailError = uploadThumbnailImageAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let uploadThumbnailSuccess = uploadThumbnailImageAction.elements
-            .flatMap { [weak self] response -> Driver<String> in
-                guard
-                    let `self` = self,
-                    let imageInfo = try? response.map(to: StorageAttachmentViewResponse.self),
-                    let imageInfoId = imageInfo.id
-                else { return Driver.empty() }
-
-                self.thumbnailImageId.onNext(imageInfoId)
-                return Driver.just(imageInfoId)
-            }
+            .map { try? $0.map(to: StorageAttachmentViewResponse.self) }
+            .map { $0?.id }
+            .flatMap(Driver<String?>.from)
+            .do(onNext: { [weak self] imageId in
+                self?.thumbnailImageId.onNext(imageId)
+            })
 
         let changeThumbnail = uploadThumbnailSuccess
             .withLatestFrom(input.thumbnailImageDidPick)
-            .flatMap { image in Driver<UIImage?>.just(image) }
+            .flatMap(Driver<UIImage?>.from)
 
         let deleteThumbnail = input.deleteThumbnailBtnDidTap
-            .flatMap { [weak self] _ -> Driver<UIImage?> in
+            .map { nil }
+            .flatMap(Driver<UIImage?>.from)
+            .do(onNext: { [weak self] _ in
                 self?.thumbnailImageId.onNext(nil)
-                return Driver.just(nil)
-            }
+            })
 
         let statusChanged = input.privateProjectCheckBoxBtnDidTap
             .withLatestFrom(status.asDriver(onErrorDriveWith: .empty()))
-            .flatMap { [weak self] status -> Driver<String> in
-                if status == "PUBLIC" {
-                    self?.status.onNext("HIDDEN")
-                    return Driver.just("HIDDEN")
-                } else {
-                    self?.status.onNext("PUBLIC")
-                    return Driver.just("PUBLIC")
-                }
-            }
+            .map { $0 == "PUBLIC" ? "HIDDEN" : "PUBLIC" }
+            .do(onNext: { [weak self] status in
+                self?.status.onNext(status)
+            })
 
         let tagsChanged = Driver.merge(input.inputTags, tags.asDriver(onErrorDriveWith: .empty()))
-            .flatMap { tags -> Driver<[String]> in
-                return Driver.just(tags)
-            }
 
         let thumbnailImage = Driver.merge(changeThumbnail, deleteThumbnail)
 
         let changeProjectInfo = Driver.combineLatest(projectTitleChanged, projectIdChanged, wideThumbnailImageId.asDriver(onErrorJustReturn: nil), thumbnailImageId.asDriver(onErrorJustReturn: nil), synopsisChanged, status.asDriver(onErrorDriveWith: .empty()), tagsChanged) { (title: $0, id: $1, wideThumbnailImageId: $2, thumbnailImageId: $3, synopsis: $4, status: $5, tags: $6) }
 
-        let saveButtonAction = input.saveBtnDidTap
+        let updateAction = input.saveBtnDidTap
+            .filter { uri == "" }
             .withLatestFrom(changeProjectInfo)
-            .flatMap { changeProjectInfo -> Driver<Action<ResponseData>> in
-                if uri == "" {
-                    let response = PictionSDK.rx.requestAPI(ProjectsAPI.create(uri: changeProjectInfo.id, title: changeProjectInfo.title, synopsis: changeProjectInfo.synopsis, thumbnail: changeProjectInfo.thumbnailImageId, wideThumbnail: changeProjectInfo.wideThumbnailImageId, tags: changeProjectInfo.tags, status: changeProjectInfo.status))
-                    return Action.makeDriver(response)
-                } else {
-                    let response = PictionSDK.rx.requestAPI(ProjectsAPI.update(uri: changeProjectInfo.id, title: changeProjectInfo.title, synopsis: changeProjectInfo.synopsis, thumbnail: changeProjectInfo.thumbnailImageId, wideThumbnail: changeProjectInfo.wideThumbnailImageId, tags: changeProjectInfo.tags, status: changeProjectInfo.status))
-                    return Action.makeDriver(response)
-                }
-            }
+            .map { ProjectsAPI.create(uri: $0.id, title: $0.title, synopsis: $0.synopsis, thumbnail: $0.thumbnailImageId, wideThumbnail: $0.wideThumbnailImageId, tags: $0.tags, status: $0.status) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
+
+        let createAction = input.saveBtnDidTap
+            .filter { uri != "" }
+            .withLatestFrom(changeProjectInfo)
+            .map { ProjectsAPI.update(uri: $0.id, title: $0.title, synopsis: $0.synopsis, thumbnail: $0.thumbnailImageId, wideThumbnail: $0.wideThumbnailImageId, tags: $0.tags, status: $0.status) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
+
+        let saveButtonAction = Driver.merge(updateAction, createAction)
 
         let changeProjectInfoSuccess = saveButtonAction.elements
-            .flatMap { _ -> Driver<Void> in
+            .map { _ in Void() }
+            .do(onNext: { _ in
                 updater.refreshContent.onNext(())
-                return Driver.just(())
-            }
+            })
 
         let changeProjectInfoError = saveButtonAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let activityIndicator = Driver.merge(
             uploadWideThumbnailImageAction.isExecuting,
             uploadThumbnailImageAction.isExecuting,
             saveButtonAction.isExecuting)
 
-        let showToast = Driver.merge(uploadWideThumbnailError, uploadThumbnailError, changeProjectInfoError)
+        let showToast = Driver.merge(
+            uploadWideThumbnailError,
+            uploadThumbnailError,
+            changeProjectInfoError)
 
         let dismissKeyboard = saveButtonAction.isExecuting
 
