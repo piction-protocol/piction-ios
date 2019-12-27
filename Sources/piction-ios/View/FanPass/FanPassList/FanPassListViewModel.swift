@@ -68,103 +68,78 @@ final class FanPassListViewModel: InjectableViewModel {
         let initialLoad = Driver.merge(viewWillAppear, loadRetry, refreshContent, refreshSession)
 
         let userInfoAction = initialLoad
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(UsersAPI.me)
-                return Action.makeDriver(response)
-            }
+            .map { UsersAPI.me }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let currentUserInfoSuccess = userInfoAction.elements
-            .flatMap { response -> Driver<UserModel> in
-                guard let userInfo = try? response.map(to: UserModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(userInfo)
-            }
+            .map { try? $0.map(to: UserModel.self) }
+            .flatMap(Driver.from)
 
         let currentUserInfoError = userInfoAction.error
-            .flatMap { _ in Driver.just(UserModel.from([:])!) }
+            .map { _ in UserModel.from([:])! }
 
         let currentUserInfo = Driver.merge(currentUserInfoSuccess, currentUserInfoError)
 
         let postItemAction = initialLoad
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                guard let postId = postId else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(PostsAPI.get(uri: uri, postId: postId))
-                return Action.makeDriver(response)
-            }
+            .filter { postId != nil }
+            .map { postId ?? 0 }
+            .map { PostsAPI.get(uri: uri, postId: $0) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
-        let PostItemSuccess = postItemAction.elements
-            .flatMap { [weak self] response -> Driver<PostModel> in
-                guard
-                    let postItem = try? response.map(to: PostModel.self),
-                    let fanPassLevel = postItem.fanPass?.level
-                else { return Driver.empty() }
-
+        let postItemSuccess = postItemAction.elements
+            .map { try? $0.map(to: PostModel.self) }
+            .flatMap(Driver.from)
+            .do(onNext: { [weak self] postItem in
+                guard let fanPassLevel = postItem.fanPass?.level else { return }
                 self?.levelLimit.onNext(fanPassLevel)
-                return Driver.just(postItem)
-            }
+            })
 
         let subscriptionInfoAction = initialLoad
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.getProjectSubscription(uri: uri))
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.getProjectSubscription(uri: uri) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let subscriptionInfoSuccess = subscriptionInfoAction.elements
-            .flatMap { response -> Driver<SubscriptionModel?> in
-                guard let subscriptionInfo = try? response.map(to: SubscriptionModel.self) else { return Driver.empty() }
-                return Driver.just(subscriptionInfo)
-            }
+            .map { try? $0.map(to: SubscriptionModel.self) }
+            .flatMap(Driver<SubscriptionModel?>.from)
 
         let subscriptionInfoError = subscriptionInfoAction.error
-            .flatMap { _ in Driver<SubscriptionModel?>.just(nil) }
+            .map { _ in SubscriptionModel?(nil) }
 
         let subscriptionInfo = Driver.merge(subscriptionInfoSuccess, subscriptionInfoError)
 
         let fanPassListAction = initialLoad
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.fanPassAll(uri: uri))
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.fanPassAll(uri: uri) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let fanPassListSuccess = fanPassListAction.elements
-            .flatMap { response -> Driver<[FanPassModel]> in
-                guard let fanPassList = try? response.map(to: [FanPassModel].self) else { return Driver.empty() }
-                return Driver.just(fanPassList)
-            }
+            .map { try? $0.map(to: [FanPassModel].self) }
+            .flatMap(Driver.from)
 
         let fanPassListError = fanPassListAction.error
-            .flatMap { _ in Driver<Void>.just(()) }
+            .map { _ in Void() }
 
         let freeFanPassItem = fanPassListSuccess
-            .flatMap { fanPassList -> Driver<FanPassModel?> in
-                let freeFanPass = fanPassList.filter { ($0.level ?? 0) == 0 }.first
-
-                return Driver.just(freeFanPass)
-            }
+            .map { $0.filter { ($0.level ?? 0) == 0 }.first }
 
         let fanPassTableItems = Driver.combineLatest(fanPassListSuccess, subscriptionInfo, levelLimitChanged)
-            .flatMap { (fanPassList, subscriptionInfo, levelLimit) -> Driver<[FanPassListTableViewCellModel]> in
-
-                let cellList = fanPassList.enumerated().map { (index, element) in FanPassListTableViewCellModel(fanPass: element, subscriptionInfo: subscriptionInfo, postCount: fanPassList[0...index].reduce(0) { $0 + ($1.postCount ?? 0) })
-                }
-
-                let filterList = cellList.filter { ($0.fanPass.level ?? 0) >= levelLimit }
-
-                return Driver.just(filterList)
+            .map { arg -> [FanPassListTableViewCellModel] in
+                let (fanPassList, subscriptionInfo, levelLimit) = arg
+                let cellList = fanPassList.enumerated().map { (index, element) in FanPassListTableViewCellModel(fanPass: element, subscriptionInfo: subscriptionInfo, postCount: fanPassList[0...index].reduce(0) { $0 + ($1.postCount ?? 0) }) }
+                return cellList.filter { ($0.fanPass.level ?? 0) >= levelLimit }
             }
 
         let projectInfoAction = initialLoad
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.get(uri: uri))
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.get(uri: uri) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let projectInfoSuccess = projectInfoAction.elements
-            .flatMap { response -> Driver<ProjectModel> in
-                guard let projectInfo = try? response.map(to: ProjectModel.self) else { return Driver.empty() }
-                return Driver.just(projectInfo)
-            }
+            .map { try? $0.map(to: ProjectModel.self) }
+            .flatMap(Driver.from)
 
         let subscriptionFreeAction = input.subscribeFreeBtnDidTap
             .withLatestFrom(currentUserInfo)
@@ -172,46 +147,50 @@ final class FanPassListViewModel: InjectableViewModel {
             .withLatestFrom(subscriptionInfo)
             .filter { $0 == nil }
             .withLatestFrom(freeFanPassItem)
-            .flatMap { freeFanPassItem -> Driver<Action<ResponseData>> in
-
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.subscription(uri: uri, fanPassId: freeFanPassItem?.id ?? 0, subscriptionPrice: freeFanPassItem?.subscriptionPrice ?? 0))
-
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.subscription(uri: uri, fanPassId: $0?.id ?? 0, subscriptionPrice: $0?.subscriptionPrice ?? 0) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let subscriptionFreeSuccess = subscriptionFreeAction.elements
-            .flatMap { response -> Driver<String> in
+            .map { _ in LocalizedStrings.str_project_subscrition_complete.localized() }
+            .do(onNext: { _ in
                 updater.refreshContent.onNext(())
-                return Driver.just(LocalizedStrings.str_project_subscrition_complete.localized())
-            }
-
+            })
+        
         let subscriptionFreeError = subscriptionFreeAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let cancelSubscriptionFreeAction = input.subscribeFreeBtnDidTap
             .withLatestFrom(subscriptionInfo)
             .filter { $0 != nil && ($0?.fanPass?.level ?? 0) == 0 }
             .withLatestFrom(freeFanPassItem)
-            .flatMap { freeFanPassItem -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.cancelSubscription(uri: uri, fanPassId: freeFanPassItem?.id ?? 0))
-
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.cancelSubscription(uri: uri, fanPassId:
+                $0?.id ?? 0) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let cancelSubscriptionFreeSuccess = cancelSubscriptionFreeAction.elements
-            .flatMap { response -> Driver<String> in
+            .map { _ in LocalizedStrings.str_project_cancel_subscrition.localized() }
+            .do(onNext: { _ in
                 updater.refreshContent.onNext(())
-                return Driver.just(LocalizedStrings.str_project_cancel_subscrition.localized())
-            }
+            })
 
         let cancelSubscriptionFreeError = cancelSubscriptionFreeAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
+
+        let selectedIndexPath = input.selectedIndexPath
+            .withLatestFrom(currentUserInfo)
+            .filter { $0.loginId != nil }
+            .withLatestFrom(input.selectedIndexPath)
+
+        let openSignInViewController = input.selectedIndexPath
+            .withLatestFrom(currentUserInfo)
+            .filter { $0.loginId == nil }
+            .map { _ in Void() }
 
         let showErrorPopup = fanPassListError
 
@@ -224,20 +203,10 @@ final class FanPassListViewModel: InjectableViewModel {
 
         let dismissViewController = input.closeBtnDidTap
 
-        let selectedIndexPath = input.selectedIndexPath
-            .withLatestFrom(currentUserInfo)
-            .filter { $0.loginId != nil }
-            .withLatestFrom(input.selectedIndexPath)
-
-        let openSignInViewController = input.selectedIndexPath
-            .withLatestFrom(currentUserInfo)
-            .filter { $0.loginId == nil }
-            .flatMap { _ in Driver.just(()) }
-
         return Output(
             viewWillAppear: input.viewWillAppear,
             subscriptionInfo: subscriptionInfoSuccess,
-            postItem: PostItemSuccess,
+            postItem: postItemSuccess,
             showAllFanPassBtnDidTap: input.showAllFanPassBtnDidTap,
             fanPassList: fanPassListSuccess,
             projectInfo: projectInfoSuccess,
