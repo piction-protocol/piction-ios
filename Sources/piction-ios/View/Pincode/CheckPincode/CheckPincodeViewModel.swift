@@ -39,23 +39,17 @@ final class CheckPincodeViewModel: ViewModel {
 
     func build(input: Input) -> Output {
         let viewWillAppear = input.viewWillAppear
-            .flatMap { [weak self] _ -> Driver<CheckPincodeStyle> in
-                return Driver.just(self?.style ?? .initial)
-            }
+            .map { self.style }
 
         let signOutAction = input.signout
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(SessionsAPI.delete)
-                return Action.makeDriver(response)
-            }
+            .map { SessionsAPI.delete }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let signOutSuccess = signOutAction.elements
-            .flatMap { _ -> Driver<Void> in
-                return Driver.just(())
-            }
+            .map { _ in Void() }
 
         let dismissViewController = Driver.merge(signOutSuccess, input.closeBtnDidTap)
-
 
         return Output(
             viewWillAppear: viewWillAppear,
