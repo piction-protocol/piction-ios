@@ -154,8 +154,9 @@ extension SubscriptionListViewController: ViewModelBindable {
 
         output
             .openProjectViewController
-            .drive(onNext: { [weak self] project in
-                self?.openProjectViewController(uri: project.uri ?? "")
+            .drive(onNext: { [weak self] indexPath in
+                guard let uri = dataSource[indexPath].uri else { return }
+                self?.openProjectViewController(uri: uri)
             })
             .disposed(by: disposeBag)
 
