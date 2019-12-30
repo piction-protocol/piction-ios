@@ -48,7 +48,9 @@ final class ViewModelAssembly: Assembly {
         }
 
         container.register(MyProjectViewModel.self) { resolver in
-            return MyProjectViewModel()
+            return MyProjectViewModel(dependency: (
+                resolver.resolve(Updater.self)!)
+            )
         }
 
         container.register(UserInfoViewModel.self) { resolver in
