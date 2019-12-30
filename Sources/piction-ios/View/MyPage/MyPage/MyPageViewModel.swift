@@ -71,13 +71,12 @@ final class MyPageViewModel: InjectableViewModel {
         let initialLoad = Driver.merge(viewWillAppear, refreshSession, refreshControlDidRefresh)
 
         let userMeAction = Driver.merge(initialLoad, loadRetry)
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(UsersAPI.me)
-                return Action.makeDriver(response)
-            }
+            .map { UsersAPI.me }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let userMeSuccess = userMeAction.elements
-            .flatMap { _ -> Driver<[SectionType<MyPageSection>]> in
+            .map { _ -> [SectionType<MyPageSection>] in
                 let projectItems: [MyPageSection] = [
                     MyPageSection.header(title: LocalizedStrings.str_project.localized()),
                     MyPageSection.pushType(title: LocalizedStrings.menu_my_project.localized()),
@@ -144,7 +143,7 @@ final class MyPageViewModel: InjectableViewModel {
                     SectionType<MyPageSection>.Section(title: "support", items: supportItems),
                     SectionType<MyPageSection>.Section(title: "logout", items: logoutItems)
                 ]
-                return Driver.just(section)
+                return section
             }
 
         let userMeError = userMeAction.error
@@ -159,16 +158,14 @@ final class MyPageViewModel: InjectableViewModel {
             }
 
         let userMeEmpty = userMeAction.error
-            .flatMap { _ in Driver<[SectionType<MyPageSection>]>.just([]) }
+            .map { _ in [SectionType<MyPageSection>]() }
 
         let myPageList = Driver.merge(userMeSuccess, userMeEmpty)
         let showErrorPopup = userMeError
 
         let embedEmptyViewController = userMeAction.error
             .flatMap { response -> Driver<CustomEmptyViewStyle> in
-                guard let errorMsg = response as? ErrorType else {
-                    return Driver.empty()
-                }
+                let errorMsg = response as? ErrorType
                 switch errorMsg {
                 case .unauthorized:
                     return Driver.just(.defaultLogin)
@@ -178,33 +175,33 @@ final class MyPageViewModel: InjectableViewModel {
             }
 
         let signOutAction = input.logout
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(SessionsAPI.delete)
-                return Action.makeDriver(response)
-            }
+            .map { SessionsAPI.delete }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let signOutError = signOutAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let signOutSuccess = signOutAction.elements
-            .flatMap { _ -> Driver<String> in
+            .do(onNext: { _ in
                 KeychainManager.set(key: "AccessToken", value: "")
                 PictionManager.setToken("")
                 updater.refreshSession.onNext(())
-                return Driver.just(LocalizedStrings.str_sign_out_success.localized())
-            }
+            })
+            .map { _ in LocalizedStrings.str_sign_out_success.localized() }
 
         let embedUserInfoViewController = userMeAction.elements
-            .flatMap { _ in Driver.just(()) }
+            .map { _ in Void() }
 
         let showToast = Driver.merge(signOutSuccess, signOutError)
 
         let refreshAction = input.refreshControlDidRefresh
             .withLatestFrom(myPageList)
-            .flatMap { _  in return Action.makeDriver(Driver<Void>.just(())) }
+            .map { _ in Void() }
+            .map(Driver.from)
+            .flatMap(Action.makeDriver)
 
         let activityIndicator = userMeAction.isExecuting
 
