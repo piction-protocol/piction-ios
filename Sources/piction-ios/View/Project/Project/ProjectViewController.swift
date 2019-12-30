@@ -274,18 +274,17 @@ extension ProjectViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .openPostViewController
-            .drive(onNext: { [weak self] postInfo in
-                let (uri, postId) = postInfo
-                self?.openPostViewController(uri: uri, postId: postId)
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .openSeriesPostViewController
-            .drive(onNext: { [weak self] seriesInfo in
-                let (uri, seriesId) = seriesInfo
-                self?.openSeriesPostViewController(uri: uri, seriesId: seriesId)
+            .selectedIndexPath
+            .drive(onNext: { [weak self] indexPath in
+                guard let uri = self?.viewModel?.uri else { return }
+                switch dataSource[indexPath] {
+                case .postList(let post, _):
+                    self?.openPostViewController(uri: uri, postId: post.id ?? 0)
+                case .seriesList(let series):
+                    self?.openSeriesPostViewController(uri: uri, seriesId: series.id ?? 0)
+                default:
+                    break
+                }
             })
             .disposed(by: disposeBag)
 

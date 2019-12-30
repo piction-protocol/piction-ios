@@ -61,8 +61,7 @@ final class ProjectViewModel: InjectableViewModel {
         let openCreatePostViewController: Driver<String>
         let contentList: Driver<SectionType<ContentsSection>>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
-        let openPostViewController: Driver<(String, Int)>
-        let openSeriesPostViewController: Driver<(String, Int)>
+        let selectedIndexPath: Driver<IndexPath>
         let openProjectInfoViewController: Driver<String>
         let openSubscriptionUserViewController: Driver<String>
         let openFanPassListViewController: Driver<String>
@@ -79,153 +78,128 @@ final class ProjectViewModel: InjectableViewModel {
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
 
         let updateSelectedProjectMenu = input.changeMenu
-            .flatMap { menu -> Driver<Int> in
-                return Driver.just(menu)
-            }
 
         let refreshAction = Driver.merge(refreshContent, refreshSession)
 
         let refreshMenu = refreshAction
             .withLatestFrom(updateSelectedProjectMenu)
-            .flatMap { menu -> Driver<Int> in
-                return Driver.just(menu)
-            }
 
         let loadNext = loadTrigger.asDriver(onErrorDriveWith: .empty())
-            .flatMap { [weak self] _ -> Driver<Void> in
-                guard
-                    let `self` = self,
-                    self.shouldInfiniteScroll
-                else { return Driver.empty() }
-                return Driver.just(())
-            }
+            .filter { self.shouldInfiniteScroll }
 
         let loadNextMenu = loadNext
             .withLatestFrom(updateSelectedProjectMenu)
 
         let selectPostMenu = Driver.merge(updateSelectedProjectMenu, refreshMenu)
             .filter { $0 == 0 }
-            .flatMap { [weak self] _ -> Driver<Void> in
+            .map { _ in Void() }
+            .do(onNext: { [weak self] _ in
                 self?.page = 0
                 self?.sections = []
                 self?.shouldInfiniteScroll = true
-                return Driver.just(())
-            }
+            })
 
         let selectSeriesMenu = Driver.merge(updateSelectedProjectMenu, refreshMenu)
             .filter { $0 == 1 }
-            .flatMap { [weak self] _ -> Driver<Void> in
+            .map { _ in Void() }
+            .do(onNext: { [weak self] _ in
                 self?.page = 1
                 self?.sections = []
-                self?.shouldInfiniteScroll = false
-                return Driver.just(())
-            }
+                self?.shouldInfiniteScroll = true
+            })
 
         let subscriptionInfoAction = Driver.merge(updateSelectedProjectMenu, refreshMenu, loadNextMenu)
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.getProjectSubscription(uri: uri))
-                return Action.makeDriver(response)
-            }
+            .map{ _ in ProjectsAPI.getProjectSubscription(uri: uri) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let subscriptionInfoSuccess = subscriptionInfoAction.elements
-            .flatMap { response -> Driver<SubscriptionModel?> in
-                guard let subscriptionInfo = try? response.map(to: SubscriptionModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(subscriptionInfo)
-            }
+            .map { try? $0.map(to: SubscriptionModel.self) }
+            .flatMap(Driver<SubscriptionModel?>.from)
 
         let subscriptionInfoError = subscriptionInfoAction.error
-            .flatMap { _ in Driver<SubscriptionModel?>.just(nil) }
+            .map { _ in SubscriptionModel?(nil) }
 
         let openProjectInfoViewController = input.infoBtnDidTap
-            .flatMap { _ in Driver.just(uri) }
+            .map { uri }
 
         let loadProjectInfoAction = Driver.merge(selectPostMenu, selectSeriesMenu, loadNext)
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.get(uri: uri))
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.get(uri: uri) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let loadProjectInfoSuccess = loadProjectInfoAction.elements
-            .flatMap { response -> Driver<ProjectModel> in
-                guard let projectInfo = try? response.map(to: ProjectModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(projectInfo)
-            }
+            .map { try? $0.map(to: ProjectModel.self) }
+            .flatMap(Driver.from)
 
         let loadProjectInfoError = loadProjectInfoAction.error
-            .flatMap { _ in Driver.just(ProjectModel.from([:])!) }
+            .map { _ in ProjectModel.from([:])! }
 
         let loadProjectInfo = Driver.merge(loadProjectInfoSuccess, loadProjectInfoError)
 
         let loadSeriesListAction = selectSeriesMenu
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(SeriesAPI.all(uri: uri))
-                return Action.makeDriver(response)
-            }
+            .map { SeriesAPI.all(uri: uri) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let userInfoAction = Driver.merge(viewWillAppear, refreshSession)
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(UsersAPI.me)
-                return Action.makeDriver(response)
-            }
+            .map { UsersAPI.me }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let currentUserInfoSuccess = userInfoAction.elements
-            .flatMap { response -> Driver<UserModel> in
-                guard let userInfo = try? response.map(to: UserModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(userInfo)
-            }
+            .map { try? $0.map(to: UserModel.self) }
+            .flatMap(Driver.from)
 
         let currentUserInfoError = userInfoAction.error
-            .flatMap { _ in Driver.just(UserModel.from([:])!) }
+            .map { _ in UserModel.from([:])! }
 
         let currentUserInfo = Driver.merge(currentUserInfoSuccess, currentUserInfoError)
 
         let isWriter = Driver.combineLatest(loadProjectInfo, currentUserInfo)
-            .flatMap { [weak self] (project, user) -> Driver<Bool> in
-                self?.isWriter = project.user?.loginId == user.loginId
-                return Driver.just(self?.isWriter ?? false)
-            }
+            .map { $0.user?.loginId == $1.loginId }
+            .do(onNext: { [weak self] isWriter in
+                self?.isWriter = isWriter
+            })
 
-        let loadPostAction = Driver.zip(Driver.merge(selectPostMenu, loadNext), isWriter)
-            .flatMap { [weak self] (_, isWriter) -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-                if isWriter {
-                    let response = PictionSDK.rx.requestAPI(MyAPI.posts(uri: uri, page: self.page + 1, size: 20))
-                    return Action.makeDriver(response)
-                } else {
-                    let response = PictionSDK.rx.requestAPI(PostsAPI.all(uri: uri, page: self.page + 1, size: 20))
-                    return Action.makeDriver(response)
-                }
-            }
+        let loadOthersPostAction = Driver.zip(Driver.merge(selectPostMenu, loadNext), isWriter)
+            .filter { !$0.1 }
+            .map { _ in PostsAPI.all(uri: uri, page: self.page + 1, size: 20) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
+
+        let loadWriterPostAction = Driver.zip(Driver.merge(selectPostMenu, loadNext), isWriter)
+            .filter { $0.1 }
+            .map { _ in MyAPI.posts(uri: uri, page: self.page + 1, size: 20) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
+
+        let loadPostAction = Driver.merge(loadOthersPostAction, loadWriterPostAction)
 
         let loadPostSuccess = loadPostAction.elements
-            .flatMap { response -> Driver<PageViewResponse<PostModel>> in
-                guard let pageList = try? response.map(to: PageViewResponse<PostModel>.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(pageList)
-            }
+            .map { try? $0.map(to: PageViewResponse<PostModel>.self) }
+            .flatMap(Driver.from)
+            .do(onNext: { [weak self] postList in
+                guard
+                    let page = self?.page,
+                    let pageNumber = postList.pageable?.pageNumber,
+                    let totalPages = postList.totalPages
+                else { return }
+
+                self?.shouldInfiniteScroll = pageNumber < totalPages - 1
+                self?.page = page + 1
+            })
 
         let projectSubscriptionInfo = Driver.merge(subscriptionInfoSuccess, subscriptionInfoError)
 
         let fanPassListAction = viewWillAppear
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.fanPassAll(uri: uri))
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.fanPassAll(uri: uri) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let fanPassListSuccess = fanPassListAction.elements
-            .flatMap { response -> Driver<[FanPassModel]> in
-                guard let fanPassList = try? response.map(to: [FanPassModel].self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(fanPassList)
-            }
+            .map { try? $0.map(to: [FanPassModel].self) }
+            .flatMap(Driver.from)
 
         let subscriptionInfo = Driver.combineLatest(isWriter, fanPassListSuccess,  projectSubscriptionInfo)
 
@@ -238,29 +212,20 @@ final class ProjectViewModel: InjectableViewModel {
             .filter { $0 == nil }
             .withLatestFrom(fanPassListSuccess)
             .filter { $0.count == 1 }
-            .flatMap { fanPassList -> Driver<Action<ResponseData>> in
-                guard
-                    let fanPassId = fanPassList[safe: 0]?.id,
-                    let subscriptionPrice = fanPassList[safe: 0]?.subscriptionPrice
-                else { return Driver.empty()}
-
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.subscription(uri: uri, fanPassId: fanPassId, subscriptionPrice: subscriptionPrice))
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.subscription(uri: uri, fanPassId: $0[safe: 0]?.id ?? 0, subscriptionPrice: $0[safe: 0]?.subscriptionPrice ?? 0) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let subscriptionSuccess = subscriptionAction.elements
-            .flatMap { [weak self] response -> Driver<String> in
-                self?.updater.refreshContent.onNext(())
-                return Driver.just(LocalizedStrings.str_project_subscrition_complete.localized())
-            }
+            .map { _ in LocalizedStrings.str_project_subscrition_complete.localized() }
+            .do(onNext: { _ in
+                updater.refreshContent.onNext(())
+            })
 
         let subscriptionError = subscriptionAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else {
-                    return Driver.empty()
-                }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let openCancelSubscriptionPopup = input.subscriptionBtnDidTap
             .withLatestFrom(isWriter)
@@ -271,189 +236,114 @@ final class ProjectViewModel: InjectableViewModel {
             .filter { $0 != nil }
             .withLatestFrom(fanPassListSuccess)
             .filter { $0.count == 1 }
-            .flatMap { _ in Driver.just(()) }
+            .map { _ in Void() }
 
         let cancelSubscriptionAction = input.cancelSubscriptionBtnDidTap
             .withLatestFrom(projectSubscriptionInfo)
             .filter { $0 != nil }
-            .flatMap { subscriptionInfo -> Driver<Action<ResponseData>> in
-                guard
-                    let fanPassLevel = subscriptionInfo?.fanPass?.level,
-                    let fanPassId = subscriptionInfo?.fanPass?.id,
-                    fanPassLevel == 0
-                else { return Driver.empty() }
-
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.cancelSubscription(uri: uri, fanPassId: fanPassId))
-                return Action.makeDriver(response)
-            }
+            .filter { ($0?.fanPass?.level ?? 0) == 0 }
+            .map { ProjectsAPI.cancelSubscription(uri: uri, fanPassId: $0?.fanPass?.id ?? 0) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let cancelSubscriptionSuccess = cancelSubscriptionAction.elements
-            .flatMap { response -> Driver<String> in
+            .map { _ in LocalizedStrings.str_project_cancel_subscrition.localized() }
+            .do(onNext: { _ in
                 updater.refreshContent.onNext(())
-                return Driver.just(LocalizedStrings.str_project_cancel_subscrition.localized())
-            }
+            })
  
         let cancelSubscriptionError = cancelSubscriptionAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else {
-                    return Driver.empty()
-                }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let openSignInViewController = input.subscriptionBtnDidTap
             .withLatestFrom(fanPassListSuccess)
             .filter { $0.count == 1 }
             .withLatestFrom(currentUserInfo)
             .filter { $0.loginId == nil }
-            .flatMap { _ in Driver.just(()) }
+            .map { _ in Void() }
 
         let openCreatePostViewController = input.subscriptionBtnDidTap
             .withLatestFrom(isWriter)
             .filter { $0 }
-            .flatMap { _ in Driver<String>.just(uri) }
+            .map { _ in uri }
 
         let postSection = Driver.zip(loadPostSuccess, projectSubscriptionInfo)
-            .flatMap { [weak self] (postList, subscriptionInfo) -> Driver<SectionType<ContentsSection>> in
-                guard
-                    let `self` = self,
-                    let pageNumber = postList.pageable?.pageNumber,
-                    let totalPages = postList.totalPages
-                else { return Driver.empty() }
-
-                self.shouldInfiniteScroll = pageNumber < totalPages - 1
-                self.page = self.page + 1
-
-                let posts: [ContentsSection] = (postList.content ?? []).map { .postList(post: $0, subscriptionInfo: subscriptionInfo) }
-
-                self.sections.append(contentsOf: posts)
-
-                return Driver.just(SectionType<ContentsSection>.Section(title: "post", items: self.sections))
-            }
+            .map { (postList, subscriptionInfo) in (postList.content ?? []).map { .postList(post: $0, subscriptionInfo: subscriptionInfo) } }
+            .map { self.sections.append(contentsOf: $0) }
+            .map { SectionType<ContentsSection>.Section(title: "post", items: self.sections) }
 
         let loadSeriesActionSuccess = loadSeriesListAction.elements
-            .flatMap { response -> Driver<[SeriesModel]> in
-                guard let seriesList = try? response.map(to: [SeriesModel].self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(seriesList)
-            }
+            .map { try? $0.map(to: [SeriesModel].self) }
+            .flatMap(Driver.from)
 
         let seriesSection = loadSeriesActionSuccess
-            .flatMap { [weak self] seriesList -> Driver<SectionType<ContentsSection>> in
-                let series: [ContentsSection] = seriesList.map { .seriesList(series: $0) }
-                self?.sections = series
-                return Driver.just(SectionType<ContentsSection>.Section(title: "series", items: self?.sections ?? []))
-            }
-
-        let selectPostItem = input.selectedIndexPath
-            .flatMap { [weak self] indexPath -> Driver<(String, Int)> in
-                guard
-                    let `self` = self,
-                    self.sections.count > indexPath.row
-                else { return Driver.empty() }
-
-                switch self.sections[indexPath.row] {
-                case .postList(let post, _):
-                    return Driver.just((uri, post.id ?? 0))
-                default:
-                    return Driver.empty()
-                }
-            }
-
-        let selectSeriesItem = input.selectedIndexPath
-            .flatMap { [weak self] indexPath -> Driver<(String, Int)> in
-                guard let `self` = self else { return Driver.empty() }
-                guard self.sections.count > indexPath.row else { return Driver.empty() }
-
-                switch self.sections[indexPath.row] {
-                case .seriesList(let series):
-                    return Driver.just((uri, series.id ?? 0))
-                default:
-                    return Driver.empty()
-                }
-            }
+            .map { $0.map { .seriesList(series: $0) } }
+            .map { self.sections = $0 }
+            .map { SectionType<ContentsSection>.Section(title: "series", items: self.sections) }
 
         let embedPostEmptyView = loadPostSuccess
-            .flatMap { items -> Driver<CustomEmptyViewStyle> in
-                guard
-                    let items = items.content,
-                    items.isEmpty
-                else { return Driver.empty() }
-
-                return Driver.just(.projectPostListEmpty)
-            }
+            .map { $0.content?.isEmpty }
+            .map { _ in .projectPostListEmpty }
+            .flatMap(Driver<CustomEmptyViewStyle>.from)
 
         let embedSeriesEmptyView = loadSeriesActionSuccess
-            .flatMap { seriesList -> Driver<CustomEmptyViewStyle> in
-                guard seriesList.isEmpty else { return Driver.empty() }
-                return Driver.just(.projectSeriesListEmpty)
-            }
+            .filter { $0.isEmpty }
+            .map { _ in .projectSeriesListEmpty }
+            .flatMap(Driver<CustomEmptyViewStyle>.from)
 
         let embedEmptyViewController = Driver.merge(embedPostEmptyView, embedSeriesEmptyView)
 
         let contentList = Driver.merge(postSection, seriesSection)
 
         let deletePostAction = input.deletePost
-            .flatMap { postId -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(PostsAPI.delete(uri: uri, postId: postId))
-                return Action.makeDriver(response)
-            }
+            .map { PostsAPI.delete(uri: uri, postId: $0) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let deletePostSuccess = deletePostAction.elements
-            .flatMap { _ -> Driver<String> in
+            .map { _ in LocalizedStrings.msg_delete_post_success.localized() }
+            .do(onNext: { _ in
                 updater.refreshContent.onNext(())
-                return Driver.just(LocalizedStrings.msg_delete_post_success.localized())
-            }
+            })
 
         let deletePostError = deletePostAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else {
-                    return Driver.empty()
-                }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let deleteSeriesAction = input.deleteSeries
-            .flatMap { seriesId -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(SeriesAPI.delete(uri: uri, seriesId: seriesId))
-                return Action.makeDriver(response)
-            }
+            .map { SeriesAPI.delete(uri: uri, seriesId: $0) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let deleteSeriesSuccess = deleteSeriesAction.elements
-            .flatMap { _ -> Driver<String> in
+            .map { _ in LocalizedStrings.str_deleted_series.localized() }
+            .do(onNext: { _ in
                 updater.refreshContent.onNext(())
-                return Driver.just(LocalizedStrings.str_deleted_series.localized())
-            }
+            })
 
         let deleteSeriesError = deleteSeriesAction.error
-            .flatMap { response -> Driver<String> in
-                guard
-                    let errorMsg = response as? ErrorType
-                else { return Driver.empty() }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let updateSeriesAction = input.updateSeries
-            .flatMap { (name, series) -> Driver<Action<ResponseData>> in
-                guard let seriesId = series.id else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(SeriesAPI.update(uri: uri, seriesId: seriesId, name: name))
-                return Action.makeDriver(response)
-            }
+            .map { SeriesAPI.update(uri: uri, seriesId: $0.1.id ?? 0, name: $0.0) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let updateSeriesSuccess = updateSeriesAction.elements
-            .flatMap { response -> Driver<String> in
+            .map { _ in "" }
+            .do(onNext: { _ in
                 updater.refreshContent.onNext(())
-                return Driver.just("")
-            }
+            })
 
         let updateSeriesError = updateSeriesAction.error
-            .flatMap { response -> Driver<String> in
-                guard
-                    let errorMsg = response as? ErrorType
-                else { return Driver.empty() }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let activityIndicator = Driver.merge(
             userInfoAction.isExecuting,
@@ -466,14 +356,16 @@ final class ProjectViewModel: InjectableViewModel {
         let showToast = Driver.merge(subscriptionSuccess, cancelSubscriptionSuccess, subscriptionError, cancelSubscriptionError, deletePostSuccess, deleteSeriesSuccess, updateSeriesSuccess, deletePostError, deleteSeriesError, updateSeriesError)
 
         let openSubscriptionUserViewController = input.subscriptionUser
-            .flatMap { _ in Driver.just(uri) }
+            .map { _ in uri }
+            .flatMap(Driver<String>.from)
 
         let openFanPassListViewController = input.subscriptionBtnDidTap
             .withLatestFrom(isWriter)
             .filter { !$0 }
             .withLatestFrom(fanPassListSuccess)
             .filter { $0.count > 1 }
-            .flatMap { _ in Driver.just(uri) }
+            .map { _ in uri }
+            .flatMap(Driver<String>.from)
 
         return Output(
             viewWillAppear: input.viewWillAppear,
@@ -485,8 +377,7 @@ final class ProjectViewModel: InjectableViewModel {
             openCreatePostViewController: openCreatePostViewController,
             contentList: contentList,
             embedEmptyViewController: embedEmptyViewController,
-            openPostViewController: selectPostItem,
-            openSeriesPostViewController: selectSeriesItem,
+            selectedIndexPath: input.selectedIndexPath,
             openProjectInfoViewController: openProjectInfoViewController,
             openSubscriptionUserViewController: openSubscriptionUserViewController,
             openFanPassListViewController: openFanPassListViewController,
