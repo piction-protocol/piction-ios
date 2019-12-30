@@ -50,7 +50,7 @@ final class ProjectInfoViewModel: InjectableViewModel {
 
         let projectInfoAction = Driver.merge(viewWillAppear, refreshContent, loadRetry)
             .map { ProjectsAPI.get(uri: uri) }
-            .map { PictionSDK.rx.requestAPI($0) }
+            .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let projectInfoSuccess = projectInfoAction.elements

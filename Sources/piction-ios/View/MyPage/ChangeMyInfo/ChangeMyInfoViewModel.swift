@@ -56,7 +56,7 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
 
         let userInfoAction = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
             .map { UsersAPI.me }
-            .map { PictionSDK.rx.requestAPI($0) }
+            .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let userInfoSuccess = userInfoAction.elements
@@ -73,7 +73,7 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
             .filter { $0 != nil }
             .map { $0! }
             .map { UsersAPI.uploadPicture(image: $0) }
-            .map { PictionSDK.rx.requestAPI($0) }
+            .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let uploadPictureError = uploadPictureAction.error
@@ -123,7 +123,7 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
         let saveButtonAction = Driver.combineLatest(password, changeUserInfo) { (password: $0, userInfo: $1) }
             .filter { $0.password != nil }
             .map { UsersAPI.update(username: $1.username, password: $0 ?? "", picture: $1.imageId) }
-            .map { PictionSDK.rx.requestAPI($0) }
+            .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let changeUserInfoError = saveButtonAction.error

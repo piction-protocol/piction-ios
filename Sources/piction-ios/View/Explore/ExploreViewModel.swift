@@ -68,7 +68,7 @@ final class ExploreViewModel: InjectableViewModel {
 
         let projectListAction = Driver.merge(initialLoad, loadNext, loadRetry)
             .map { ProjectsAPI.all(page: self.page + 1, size: 20) }
-            .map { PictionSDK.rx.requestAPI($0) }
+            .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let projectListSuccess = projectListAction.elements

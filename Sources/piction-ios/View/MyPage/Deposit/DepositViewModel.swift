@@ -36,7 +36,7 @@ final class DepositViewModel: ViewModel {
 
         let userInfoAction = Driver.merge(viewWillAppear, loadRetry)
             .map { UsersAPI.me }
-            .map { PictionSDK.rx.requestAPI($0) }
+            .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let userInfoSuccess = userInfoAction.elements
@@ -45,7 +45,7 @@ final class DepositViewModel: ViewModel {
 
         let walletInfoAction = Driver.merge(viewWillAppear, loadRetry)
             .map { MyAPI.wallet }
-            .map { PictionSDK.rx.requestAPI($0) }
+            .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let walletInfoSuccess = walletInfoAction.elements

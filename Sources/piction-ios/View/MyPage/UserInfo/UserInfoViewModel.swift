@@ -42,7 +42,7 @@ final class UserInfoViewModel: InjectableViewModel {
 
         let userInfoAction = Driver.merge(viewWillAppear, refreshSession, refreshAmount)
             .map { UsersAPI.me }
-            .map { PictionSDK.rx.requestAPI($0) }
+            .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let userInfoError = userInfoAction.error
@@ -56,7 +56,7 @@ final class UserInfoViewModel: InjectableViewModel {
 
         let walletInfoAction = Driver.merge(viewWillAppear, refreshSession, refreshAmount)
             .map { MyAPI.wallet }
-            .map { PictionSDK.rx.requestAPI($0) }
+            .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let walletInfoError = walletInfoAction.error

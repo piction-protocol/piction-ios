@@ -97,7 +97,7 @@ final class SearchViewModel: ViewModel {
             .withLatestFrom(self.searchText.asDriver(onErrorDriveWith: .empty()))
             .filter { $0 != "" }
             .map { SearchAPI.project(name: $0, page: self.page + 1, size: 20) }
-            .map { PictionSDK.rx.requestAPI($0) }
+            .map(PictionSDK.rx.requestAPI)
             .flatMapLatest(Action.makeDriver)
 
         let searchProjectActionSuccess = searchProjectAction.elements
@@ -123,7 +123,7 @@ final class SearchViewModel: ViewModel {
             .withLatestFrom(self.searchText.asDriver(onErrorDriveWith: .empty()))
             .filter { $0 != "" }
             .map { SearchAPI.tag(tag: $0, page: self.page + 1, size: 20) }
-            .map { PictionSDK.rx.requestAPI($0) }
+            .map(PictionSDK.rx.requestAPI)
             .flatMapLatest(Action.makeDriver)
 
         let searchTagActionSuccess = searchTagAction.elements
