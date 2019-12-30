@@ -49,93 +49,68 @@ final class PostFooterViewModel: InjectableViewModel {
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
 
         let isLikeAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(PostsAPI.isLike(uri: uri, postId: self?.postItem.id ?? 0))
-                return Action.makeDriver(response)
-            }
+            .map { PostsAPI.isLike(uri: uri, postId: self.postItem.id ?? 0) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let isLikeSuccess = isLikeAction.elements
-            .flatMap { response -> Driver<Bool> in
-                guard
-                    let likeInfo = try? response.map(to: LikeModel.self),
-                    let isLike = likeInfo.like
-                else { return Driver.empty() }
-
-                return Driver.just(isLike)
-            }
+            .map { try? $0.map(to: LikeModel.self) }
+            .map { $0?.like }
+            .flatMap(Driver.from)
 
         let isLikeError = isLikeAction.error
-            .flatMap { _ in Driver.just(false) }
+            .map { _ in false }
 
         let isLikeInfo = Driver.merge(isLikeSuccess, isLikeError)
 
         let seriesPostItemsAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
             .filter { self.postItem.series != nil }
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(SeriesAPI.getPreviousAndNextPosts(uri: uri, seriesId: self?.postItem.series?.id ?? 0, postId: self?.postItem.id ?? 0, count: 2))
-                    return Action.makeDriver(response)
-            }
+            .map { SeriesAPI.getPreviousAndNextPosts(uri: uri, seriesId: self.postItem.series?.id ?? 0, postId: self.postItem.id ?? 0, count: 2) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let seriesPostItemsSuccess = seriesPostItemsAction.elements
-            .flatMap { response -> Driver<[PostIndexModel]> in
-                guard let postItems = try? response.map(to: [PostIndexModel].self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(postItems)
-            }
+            .map { try? $0.map(to: [PostIndexModel].self) }
+            .flatMap(Driver.from)
 
         let emptySeriesPostsItems = Driver.merge(viewWillAppear, refreshContent, refreshSession)
             .filter { self.postItem.series == nil }
-            .flatMap { _ -> Driver<[PostIndexModel]> in
-                return Driver.just([])
-            }
+            .map { _ in [PostIndexModel]() }
 
         let seriesPostItems = Driver.merge(seriesPostItemsSuccess, emptySeriesPostsItems)
 
         let footerInfo = Driver.zip(seriesPostItems, isLikeInfo)
-            .flatMap { [weak self] (seriesPostItems, isLike) -> Driver<(PostModel, [PostIndexModel], Bool)> in
-                guard let `self` = self else { return Driver.empty() }
-                return Driver.just((self.postItem, seriesPostItems, isLike))
-            }
+            .map { (self.postItem, $0, $1) }
 
         let userInfoAction = Driver.merge(refreshContent, viewWillAppear, refreshSession)
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(UsersAPI.me)
-                return Action.makeDriver(response)
-            }
+            .map { UsersAPI.me }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let userInfoSuccess = userInfoAction.elements
-            .flatMap { response -> Driver<UserModel> in
-                guard let userInfo = try? response.map(to: UserModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(userInfo)
-            }
+            .map { try? $0.map(to: UserModel.self) }
+            .flatMap(Driver.from)
 
         let userInfoError = userInfoAction.error
-            .flatMap { response -> Driver<UserModel> in
-                return Driver.just(UserModel.from([:])!)
-            }
+            .map { _ in UserModel.from([:])! }
 
         let userInfo = Driver.merge(userInfoSuccess, userInfoError)
 
         let addLike = input.likeBtnDidTap
             .withLatestFrom(userInfo)
             .filter { $0.loginId != nil }
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(PostsAPI.like(uri: uri, postId: self?.postItem.id ?? 0))
-                return Action.makeDriver(response)
-            }
+            .map { _ in self.postItem.id ?? 0 }
+            .map { PostsAPI.like(uri: uri, postId: $0) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let openSignInViewController = input.likeBtnDidTap
             .withLatestFrom(userInfo)
             .filter { $0.loginId == nil }
-            .flatMap { _ in Driver.just(()) }
+            .map { _ in Void() }
 
         let openSeriesPostViewController = input.seriesAllPostBtnDidTap
-            .flatMap { [weak self] _ -> Driver<(String, Int)> in
-                return Driver.just((uri, self?.postItem.series?.id ?? 0))
-            }
+            .map { (uri, self.postItem.series?.id ?? 0) }
 
         let selectSeriesPostItem = input.selectedIndexPath
 
