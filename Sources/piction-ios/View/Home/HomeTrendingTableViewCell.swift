@@ -37,7 +37,7 @@ final class HomeTrendingTableViewCell: ReuseTableViewCell {
             if collectionView.contentSize.height > 0 {
                 heightConstraint.constant = collectionView.contentSize.height
             } else {
-                heightConstraint.constant = height + 40
+                heightConstraint.constant = cellCount == 2 ? (height + 40) * 2 : height + 40
             }
             collectionView.layoutIfNeeded()
         }
