@@ -57,23 +57,18 @@ final class CreateFanPassViewModel: InjectableViewModel {
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let loadFanPass = viewWillAppear
-            .flatMap { [weak self] _ -> Driver<FanPassModel> in
-                guard
-                    let fanPass = fanPass,
-                    let name = fanPass.name,
-                    let subscriptionPrice = fanPass.subscriptionPrice
-                else { return Driver.empty() }
-
-                self?.name.onNext(name)
-                self?.price.onNext(String(subscriptionPrice))
+            .map { fanPass }
+            .flatMap(Driver.from)
+            .do(onNext: { [weak self] fanPass in
+                self?.name.onNext(fanPass.name ?? "")
+                self?.price.onNext(String(fanPass.subscriptionPrice ?? 0))
                 self?.description.onNext(fanPass.description ?? "")
                 if fanPass.subscriptionLimit == nil {
                     self?.limit.onNext(nil)
                 } else {
                     self?.limit.onNext(String(fanPass.subscriptionLimit ?? 0))
                 }
-                return Driver.just(fanPass)
-            }
+            })
 
         let nameChanged = Driver.merge(input.fanPassName, name.asDriver(onErrorDriveWith: .empty()))
 
@@ -84,62 +79,57 @@ final class CreateFanPassViewModel: InjectableViewModel {
             description.asDriver(onErrorDriveWith: .empty()))
 
         let noLimit = input.limitBtnDidTap
-            .flatMap { [weak self] _ -> Driver<String?> in
+            .map { String?(nil) }
+            .do(onNext: { [weak self] _ in
                 self?.limit.onNext(nil)
-                return Driver<String?>.just(nil)
-            }
+            })
 
         let inputLimit = input.fanPassLimit
-            .flatMap { [weak self] limit ->  Driver<String?> in
+            .do(onNext: { [weak self] limit in
                 self?.limit.onNext(limit)
-                return Driver<String?>.just(limit)
-            }
+            })
 
         let limitChanged = Driver.merge(inputLimit, noLimit)
-            .flatMap { [weak self] limit -> Driver<String?> in
+            .do(onNext: { [weak self] limit in
                 self?.limit.onNext(limit)
-                return Driver<String?>.just(limit)
-            }
+            })
 
         let fanPassInfo = Driver.combineLatest(
             nameChanged,
             priceChanged,
             descriptionChanged,
             limitChanged) { (name: $0, price: $1, description: $2, limit: $3) }
-            .do(onNext: { info in
-                print(info)
-            })
 
-        let saveButtonAction = input.saveBtnDidTap
+        let createFanPassAction = input.saveBtnDidTap
+            .filter { fanPass == nil }
             .withLatestFrom(fanPassInfo)
-            .flatMap { [weak self] fanPassInfo -> Driver<Action<ResponseData>> in
-                if fanPass == nil {
-                    let response = PictionSDK.rx.requestAPI(ProjectsAPI.createFanPass(uri: uri, name: fanPassInfo.name, description: fanPassInfo.description, thumbnail: nil, subscriptionLimit: Int(fanPassInfo.limit ?? "") ?? nil, subscriptionPrice: Int(fanPassInfo.price ?? "") ?? nil))
-                    return Action.makeDriver(response)
-                } else {
-                    let response = PictionSDK.rx.requestAPI(ProjectsAPI.updateFanPass(uri: uri, fanPassId: fanPass?.id ?? 0, name: fanPassInfo.name, description: fanPassInfo.description, thumbnail: nil, subscriptionLimit: Int(fanPassInfo.limit ?? "") ?? nil, subscriptionPrice: Int(fanPassInfo.price ?? "") ?? nil))
-                    return Action.makeDriver(response)
-                }
-        }
+            .map { ProjectsAPI.createFanPass(uri: uri, name: $0.name, description: $0.description, thumbnail: nil, subscriptionLimit: Int($0.limit ?? "") ?? nil, subscriptionPrice: Int($0.price ?? "") ?? nil) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
+
+        let updateFanPassAction = input.saveBtnDidTap
+            .filter { fanPass != nil }
+            .withLatestFrom(fanPassInfo)
+            .map { ProjectsAPI.updateFanPass(uri: uri, fanPassId: fanPass?.id ?? 0, name: $0.name, description: $0.description, thumbnail: nil, subscriptionLimit: Int($0.limit ?? "") ?? nil, subscriptionPrice: Int($0.price ?? "") ?? nil) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
+
+        let saveFanPassAction = Driver.merge(createFanPassAction, updateFanPassAction)
 
         let dismissKeyboard = Driver.merge(input.saveBtnDidTap, input.limitBtnDidTap)
 
-        let popViewController = saveButtonAction.elements
-            .flatMap { response -> Driver<Void> in
-                guard let _ = try? response.map(to: FanPassModel.self) else {
-                    return Driver.empty()
-                }
+        let popViewController = saveFanPassAction.elements
+            .map { _ in Void() }
+            .do(onNext: { _ in
                 updater.refreshContent.onNext(())
-                return Driver.just(())
-            }
+            })
 
-        let showToast = saveButtonAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
-                return Driver.just(errorMsg.message)
-            }
+        let showToast = saveFanPassAction.error
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
-        let activityIndicator = saveButtonAction.isExecuting
+        let activityIndicator = saveFanPassAction.isExecuting
 
         return Output(
             viewWillAppear: input.viewWillAppear,
