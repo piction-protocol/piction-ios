@@ -64,121 +64,99 @@ final class HomeViewModel: InjectableViewModel {
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
 
         let initialLoad = Driver.merge(viewWillAppear, input.refreshControlDidRefresh, refreshSession, refreshContent)
-           .flatMap { [weak self] _ -> Driver<Void> in
-               guard let `self` = self else { return Driver.empty() }
-               self.page = 0
-               self.sections = []
-               self.shouldInfiniteScroll = true
-               return Driver.just(())
-           }
+            .do(onNext: { [weak self] in
+                self?.page = 0
+                self?.sections = []
+                self?.shouldInfiniteScroll = true
+            })
 
         let loadNext = loadNextTrigger.asDriver(onErrorDriveWith: .empty())
-            .flatMap { [weak self] _ -> Driver<Void> in
-                guard let `self` = self, self.shouldInfiniteScroll else {
-                    return Driver.empty()
-                }
-                return Driver.just(())
-            }
+            .filter { self.shouldInfiniteScroll }
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let subscribingProjectsAction = Driver.merge(initialLoad, loadRetry)
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(MyAPI.subscription(page: 1, size: 10))
-                return Action.makeDriver(response)
-            }
+            .map { MyAPI.subscription(page: 1, size: 10) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let subscribingProjectsSuccess = subscribingProjectsAction.elements
-            .flatMap { response -> Driver<[ProjectModel]> in
-                guard let pageList = try? response.map(to: PageViewResponse<ProjectModel>.self) else { return Driver.empty() }
-                return Driver.just(pageList.content ?? [])
-            }
+            .map { try? $0.map(to: PageViewResponse<ProjectModel>.self) }
+            .map { $0?.content }
+            .flatMap(Driver.from)
 
         let subscribingProjectsError = subscribingProjectsAction.error
             .flatMap { _ in Driver<[ProjectModel]>.just([]) }
 
         let subscribingProjectsEmpty = Driver.merge(subscribingProjectsSuccess, subscribingProjectsError)
             .filter { $0.count == 0 }
-            .flatMap { [weak self] _ -> Driver<Void> in
-                let header: HomeSection = .header(type: .notSubscribed)
-                self?.sections = [header]
-                return Driver.just(())
-            }
+            .map { _ in Void() }
+            .flatMap(Driver.from)
+            .do(onNext: { [weak self] in
+                self?.sections = [.header(type: .notSubscribed)]
+            })
 
         let subscribingPostLoad = Driver.merge(subscribingProjectsSuccess, subscribingProjectsError)
             .filter { $0.count > 0 }
-            .flatMap { _ in Driver.just(()) }
+            .map { _ in Void() }
 
         let subscribingPostAction = Driver.merge(subscribingPostLoad, loadNext)
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(MyAPI.subscribingPosts(page: self.page + 1, size: 20))
-                return Action.makeDriver(response)
-            }
+            .map { MyAPI.subscribingPosts(page: self.page + 1, size: 20) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let subscribingPostSuccess = subscribingPostAction.elements
-            .flatMap { [weak self] response -> Driver<SectionType<HomeSection>> in
+            .map { try? $0.map(to: PageViewResponse<SubscribingPostModel>.self) }
+            .flatMap(Driver.from)
+            .do(onNext: { [weak self] pageList in
                 guard
-                    let `self` = self,
-                    let pageList = try? response.map(to: PageViewResponse<SubscribingPostModel>.self),
+                    let page = self?.page,
                     let pageNumber = pageList.pageable?.pageNumber,
                     let totalPages = pageList.totalPages
-                else {
-                    return Driver.empty()
-                }
+                else { return }
 
-                self.page = self.page + 1
+                self?.page = page + 1
                 if pageNumber >= totalPages - 1 {
-                    self.shouldInfiniteScroll = false
+                    self?.shouldInfiniteScroll = false
                 }
-                if self.page == 1 && pageList.content?.count == 0 {
-                    return Driver.just(SectionType<HomeSection>.Section(title: "subscribingPosts", items: []))
-                } else {
-                    let subscribingPosts: [HomeSection] = (pageList.content ?? []).map { .subscribingPosts(item: $0) }
-                    self.sections.append(contentsOf: subscribingPosts)
-                    return Driver.just(SectionType<HomeSection>.Section(title: "subscribingPosts", items: self.sections))
-                }
-            }
+            })
+            .map { ($0.content ?? []).map { .subscribingPosts(item: $0) } }
+            .map { self.sections.append(contentsOf: $0)}
+            .map { SectionType<HomeSection>.Section(title: "subscribingPosts", items: self.sections) }
 
         let subscribingPostError = subscribingPostAction.error
-            .flatMap { _ -> Driver<SectionType<HomeSection>> in
-                return Driver.just(SectionType<HomeSection>.Section(title: "subscribingPosts", items: []))
-            }
+            .map { _ in SectionType<HomeSection>.Section(title: "subscribingPosts", items: []) }
 
         let subscribingPostsEmpty = Driver.merge(subscribingPostSuccess, subscribingPostError)
             .filter { $0.items.count == 0 }
-            .flatMap { [weak self] _ -> Driver<Void> in
-                let header: HomeSection = .header(type: .noPost)
-                self?.sections = [header]
-                return Driver.just(())
-            }
+            .map { _ in Void() }
+            .flatMap(Driver.from)
+            .do(onNext: { [weak self] _ in
+                self?.sections = [.header(type: .noPost)]
+            })
 
         let trendingAction = Driver.merge(subscribingProjectsEmpty, subscribingPostsEmpty)
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.trending)
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.trending }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let trendingSuccess = trendingAction.elements
-            .flatMap{ [weak self] response -> Driver<SectionType<HomeSection>> in
-                guard
-                    let `self` = self,
-                    let projects = try? response.map(to: [ProjectModel].self)
-                else { return Driver.empty() }
-
-                let trending: [HomeSection] = [.trending(item: projects)]
-                self.sections.append(contentsOf: trending)
-                self.shouldInfiniteScroll = false
-                return Driver.just(SectionType<HomeSection>.Section(title: "trending", items: self.sections))
-            }
+            .map { try? $0.map(to: [ProjectModel].self) }
+            .flatMap(Driver.from)
+            .map { [.trending(item: $0)] }
+            .map { self.sections.append(contentsOf: $0) }
+            .map { SectionType<HomeSection>.Section(title: "trending", items: self.sections) }
+            .do(onNext: { [weak self] _ in
+                self?.shouldInfiniteScroll = false
+            })
 
         let homeSection = Driver.merge(subscribingPostSuccess, trendingSuccess)
 
         let refreshAction = input.refreshControlDidRefresh
             .withLatestFrom(input.viewWillAppear)
-            .flatMap { _ -> Driver<Action<Void>> in
-                return Action.makeDriver(Driver.just(()))
-            }
+            .map { _ in Void() }
+            .map(Driver.from)
+            .flatMap(Action.makeDriver)
 
         let activityIndicator = Driver.merge(
             subscribingProjectsAction.isExecuting,
