@@ -92,8 +92,7 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
 
         let deletePicture = input.pictureImageDidPick
             .filter { $0 == nil }
-            .map { _ in nil }
-            .flatMap(Driver<String?>.from)
+            .map { _ in String?(nil) }
             .do(onNext: { [weak self] _ in
                 self?.imageId.onNext(nil)
                 self?.changeInfo.onNext(true)
@@ -101,7 +100,6 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
 
         let changePicture = Driver.merge(uploadPictureSuccess, deletePicture)
             .withLatestFrom(input.pictureImageDidPick)
-            .flatMap(Driver<UIImage?>.from)
 
         let userNameChanged = Driver.combineLatest(input.userNameTextFieldDidInput, userInfoSuccess) { (inputUsername: $0, username: $1.username) }
             .filter { $0.inputUsername != "" }

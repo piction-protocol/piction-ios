@@ -76,8 +76,7 @@ final class SubscriptionUserViewModel: ViewModel {
             .map { self.items }
 
         let subscriptionUserListError = subscriptionUserListAction.error
-            .map { _ in [] }
-            .flatMap(Driver<[SubscriptionUserModel]>.from)
+            .map { _ in [SubscriptionUserModel]() }
 
         let subscriptionUserList = Driver.merge(subscriptionUserListSuccess, subscriptionUserListError)
 

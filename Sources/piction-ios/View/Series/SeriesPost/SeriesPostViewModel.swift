@@ -124,6 +124,16 @@ final class SeriesPostViewModel: InjectableViewModel {
         let loadSeriesPostsSuccess = loadSeriesPostsAction.elements
             .map { try? $0.map(to: PageViewResponse<PostModel>.self) }
             .flatMap(Driver.from)
+            .do(onNext: { [weak self] postList in
+                guard
+                    let page = self?.page,
+                    let pageNumber = postList.pageable?.pageNumber,
+                    let totalPages = postList.totalPages
+                else { return }
+
+                self?.shouldInfiniteScroll = pageNumber < totalPages - 1
+                self?.page = page + 1
+            })
 
         let loadSeriesPostError = loadSeriesPostsAction.error
             .map { _ in Void() }
@@ -131,25 +141,20 @@ final class SeriesPostViewModel: InjectableViewModel {
         let showErrorPopup = loadSeriesPostError
 
         let contentList = Driver.zip(loadSeriesPostsSuccess, isSubscribing)
-            .flatMap { [weak self] (postList, isSubscribing) -> Driver<SectionType<ContentsSection>> in
+            .map { [weak self] (postList, isSubscribing) -> [ContentsSection] in
                 guard
                     let `self` = self,
-                    let pageNumber = postList.pageable?.pageNumber,
-                    let totalPages = postList.totalPages,
                     let totalElements = postList.totalElements,
                     let numberOfElements = postList.size
-                else { return Driver.empty() }
+                else { return [] }
 
-                self.shouldInfiniteScroll = pageNumber < totalPages - 1
-                let page = self.page
-                self.page = self.page + 1
+                let page = self.page - 1
 
-                let posts: [ContentsSection] = (postList.content ?? []).enumerated()
+                return (postList.content ?? []).enumerated()
                     .map { .seriesPostList(post: $1, isSubscribing: isSubscribing, number: self.isDescending ? totalElements - page * numberOfElements - $0 : page * numberOfElements + ($0 + 1)) }
-                self.sections.append(contentsOf: posts)
-
-                return Driver.just(SectionType<ContentsSection>.Section(title: "post", items: self.sections))
             }
+            .map { self.sections.append(contentsOf: $0) }
+            .map { SectionType<ContentsSection>.Section(title: "post", items: self.sections) }
 
         let embedPostEmptyView = contentList
             .filter { $0.items.isEmpty }
@@ -157,10 +162,8 @@ final class SeriesPostViewModel: InjectableViewModel {
             .flatMap(Driver<CustomEmptyViewStyle>.from)
 
         let activityIndicator = Driver.merge(
-            isSubscribingAction.isExecuting,
             loadSeriesInfoAction.isExecuting,
-            loadSeriesThumbnailAction.isExecuting,
-            loadSeriesPostsAction.isExecuting)
+            loadSeriesThumbnailAction.isExecuting)
 
         return Output(
             viewWillAppear: input.viewWillAppear,

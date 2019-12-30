@@ -90,8 +90,7 @@ final class TagResultProjectViewModel: ViewModel {
             .map { _ in Void() }
 
         let tagResultProjectEmptyList = tagResultProjectListAction.error
-            .map { _ in [] }
-            .flatMap(Driver<[ProjectModel]>.from)
+            .map { _ in [ProjectModel]() }
 
         let tagResultProjectList = Driver.merge(tagResultProjectListSuccess, tagResultProjectEmptyList)
 

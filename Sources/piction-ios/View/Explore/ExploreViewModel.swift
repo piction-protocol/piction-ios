@@ -97,7 +97,8 @@ final class ExploreViewModel: InjectableViewModel {
 
         let refreshAction = input.refreshControlDidRefresh
             .withLatestFrom(projectList)
-            .map { _ in Driver.just(()) }
+            .map { _ in Void() }
+            .map(Driver.from)
             .flatMap(Action.makeDriver)
 
         let showActivityIndicator = Driver.merge(initialLoad, loadRetry)

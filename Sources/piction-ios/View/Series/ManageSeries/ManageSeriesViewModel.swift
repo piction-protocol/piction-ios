@@ -70,8 +70,7 @@ final class ManageSeriesViewModel: InjectableViewModel {
             .flatMap(Driver.from)
 
         let seriesListError = seriesListAction.error
-            .map { _ in [] }
-            .flatMap(Driver<[SeriesModel]>.from)
+            .map { _ in [SeriesModel]() }
 
         let seriesList = Driver.merge(seriesListSuccess, seriesListError)
 
