@@ -54,13 +54,14 @@ final class PostViewModel: InjectableViewModel {
         let willBeginDecelerating: Driver<Void>
         let changeReadmode: Driver<Void>
         let openSignInViewController: Driver<Void>
-        let openFanPassListViewController: Driver<(String, Int?)>
+        let openFanPassListViewController: Driver<(String, Int)>
         let reloadPost: Driver<Void>
         let sharePost: Driver<String>
         let showToast: Driver<String>
     }
 
     func build(input: Input) -> Output {
+        let (updater, uri) = (self.updater, self.uri)
 
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
@@ -68,55 +69,44 @@ final class PostViewModel: InjectableViewModel {
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
 
         let postContentAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(PostsAPI.content(uri: self?.uri ?? "", postId: self?.postId ?? 0))
-                return Action.makeDriver(response)
-            }
+            .map { PostsAPI.content(uri: uri, postId: self.postId) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let postContentSuccess = postContentAction.elements
-            .flatMap { response -> Driver<String> in
+            .map { try? $0.map(to: ContentModel.self) }
+            .map { postItem -> String in
                 guard
-                    let postItem = try? response.map(to: ContentModel.self),
                     let path = Bundle.main.path(forResource: "postStyle", ofType: "css"),
                     let cssString = try? String(contentsOfFile: path).components(separatedBy: .newlines).joined()
-                else {
-                    return Driver.just("")
-                }
-                let content = """
+                else { return "" }
+
+                return """
                     <meta name="viewport" content="initial-scale=1.0" />
                     \(cssString)
-                    <body>\(postItem.content ?? "")</body>
+                    <body>\(postItem?.content ?? "")</body>
                 """
-                return Driver.just(content)
             }
 
         let postContentError = postContentAction.error
-            .flatMap { _ in Driver<String>.just("") }
+            .map { _ in "" }
 
         let showPostContent = Driver.merge(postContentSuccess, postContentError)
 
         let prevPostAction = Driver.merge(viewWillAppear, refreshContent)
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(PostsAPI.prevPost(uri: self.uri, postId: self.postId))
-                return Action.makeDriver(response)
-            }
+            .map { PostsAPI.prevPost(uri: uri, postId: self.postId) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let prevPostSuccess = prevPostAction.elements
-            .flatMap { response -> Driver<PostModel> in
-                guard let postItem = try? response.map(to: PostModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(postItem)
-            }
+            .map { try? $0.map(to: PostModel.self) }
+            .flatMap(Driver.from)
 
         let prevPostError = prevPostAction.error
             .flatMap { response -> Driver<PostModel> in
-                guard let errorMsg = response as? ErrorType else {
-                    return Driver.empty()
-                }
+                let errorMsg = response as? ErrorType
                 switch errorMsg {
-                case .notFound(let error):
+                case .notFound:
                     return Driver.just(PostModel.from([:])!)
                 default:
                     return Driver.empty()
@@ -127,36 +117,23 @@ final class PostViewModel: InjectableViewModel {
 
         let prevPostBtnDidTap = input.prevPostBtnDidTap
             .withLatestFrom(prevPostSuccess)
-            .flatMap { [weak self] postItem -> Driver<(String, Int)> in
-                guard
-                    let `self` = self,
-                    let postId = postItem.id
-                else { return Driver.empty() }
-                return Driver.just((self.uri, postId))
-            }
+            .map { $0.id }
+            .flatMap(Driver.from)
 
         let nextPostAction = Driver.merge(viewWillAppear, refreshContent)
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(PostsAPI.nextPost(uri: self.uri, postId: self.postId))
-                return Action.makeDriver(response)
-            }
+            .map { PostsAPI.nextPost(uri: uri, postId: self.postId) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let nextPostSuccess = nextPostAction.elements
-            .flatMap { response -> Driver<PostModel> in
-                guard let postItem = try? response.map(to: PostModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(postItem)
-            }
+            .map { try? $0.map(to: PostModel.self) }
+            .flatMap(Driver.from)
 
         let nextPostError = nextPostAction.error
             .flatMap { response -> Driver<PostModel> in
-                guard let errorMsg = response as? ErrorType else {
-                    return Driver.empty()
-                }
+                let errorMsg = response as? ErrorType
                 switch errorMsg {
-                case .notFound(let error):
+                case .notFound:
                     return Driver.just(PostModel.from([:])!)
                 default:
                     return Driver.empty()
@@ -167,145 +144,97 @@ final class PostViewModel: InjectableViewModel {
 
         let nextPostBtnDidTap = input.nextPostBtnDidTap
             .withLatestFrom(nextPostSuccess)
-            .flatMap { [weak self] postItem -> Driver<(String, Int)> in
-                guard
-                    let `self` = self,
-                    let postId = postItem.id
-                else { return Driver.empty() }
-                return Driver.just((self.uri, postId))
-            }
+            .map { $0.id }
+            .flatMap(Driver.from)
 
         let loadPost = input.loadPost
-            .flatMap { [weak self] postId -> Driver<(String, Int)> in
-                guard let `self` = self else { return Driver.empty() }
-                return Driver.just((self.uri, postId))
-            }
 
         let changePost = Driver.merge(loadPost, prevPostBtnDidTap, nextPostBtnDidTap)
-            .flatMap { [weak self] (uri, postId) -> Driver<Void> in
-                guard let `self` = self else { return Driver.empty() }
-                self.uri = uri
-                self.postId = postId
-                self.updater.refreshContent.onNext(())
-                return Driver.just(())
-            }
+            .do(onNext: { [weak self] postId in
+                self?.postId = postId
+                updater.refreshContent.onNext(())
+            })
+            .map { _ in Void() }
 
         let reloadPost = Driver.merge(changePost, refreshContent, refreshSession)
 
         let projectInfoAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.get(uri: self.uri))
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.get(uri: uri) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let writerInfo = projectInfoAction.elements
-            .flatMap { response -> Driver<UserModel> in
-                guard let writerInfo = try? response.map(to: ProjectModel.self).user else {
-                    return Driver.empty()
-                }
-                return Driver.just(writerInfo)
-            }
+            .map { try? $0.map(to: ProjectModel.self) }
+            .map { $0?.user }
+            .flatMap(Driver.from)
 
         let postItemAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(PostsAPI.get(uri: self.uri, postId: self.postId))
-                return Action.makeDriver(response)
-            }
+            .map { PostsAPI.get(uri: uri, postId: self.postId) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let postItemSuccess = postItemAction.elements
-            .flatMap { response -> Driver<PostModel> in
-                guard let postItem = try? response.map(to: PostModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(postItem)
-            }
+            .map { try? $0.map(to: PostModel.self) }
+            .flatMap(Driver.from)
 
         let headerInfo = Driver.zip(postItemSuccess, writerInfo)
-            .flatMap { Driver.just(($0, $1)) }
 
         let userInfoAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(UsersAPI.me)
-                return Action.makeDriver(response)
-            }
+            .map { UsersAPI.me }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let userInfoSuccess = userInfoAction.elements
-            .flatMap { response -> Driver<UserModel> in
-                guard let userInfo = try? response.map(to: UserModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(userInfo)
-        }
+            .map { try? $0.map(to: UserModel.self) }
+            .flatMap(Driver.from)
 
         let userInfoError = userInfoAction.error
-            .flatMap { response -> Driver<UserModel> in
-                return Driver.just(UserModel.from([:])!)
-        }
+            .map { _ in UserModel.from([:])! }
 
         let userInfo = Driver.merge(userInfoSuccess, userInfoError)
 
         let subscriptionInfoAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.getProjectSubscription(uri: self.uri))
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.getProjectSubscription(uri: uri) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let subscriptionInfoSuccess = subscriptionInfoAction.elements
-            .flatMap { response -> Driver<SubscriptionModel?> in
-                guard let subscriptionInfo = try? response.map(to: SubscriptionModel.self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(subscriptionInfo)
-            }
+            .map { try? $0.map(to: SubscriptionModel.self) }
+            .flatMap(Driver<SubscriptionModel?>.from)
 
         let subscriptionInfoError = subscriptionInfoAction.error
-            .flatMap { _ in Driver<SubscriptionModel?>.just(nil) }
+            .map { _ in SubscriptionModel?(nil) }
 
         let subscriptionInfo = Driver.merge(subscriptionInfoSuccess, subscriptionInfoError)
 
         let needSubscription = Driver.zip(postItemSuccess, subscriptionInfo, userInfo, writerInfo)
-            .flatMap { (postItem, subscriptionInfo, currentUser, writerInfo) -> Driver<Bool> in
-                var needSubscription: Bool {
-                    if currentUser.loginId ?? "" == writerInfo.loginId ?? "" {
-                        return false
-                    }
-                    if postItem.fanPass == nil {
-                        return false
-                    }
-                    if (postItem.fanPass?.level != nil) && (subscriptionInfo?.fanPass?.level == nil) {
-                        return true
-                    }
-                    if (postItem.fanPass?.level ?? 0) <= (subscriptionInfo?.fanPass?.level ?? 0) {
-                        return false
-                    }
+            .map { (postItem, subscriptionInfo, currentUser, writerInfo) -> Bool in
+                if currentUser.loginId ?? "" == writerInfo.loginId ?? "" {
+                    return false
+                }
+                if postItem.fanPass == nil {
+                    return false
+                }
+                if (postItem.fanPass?.level != nil) && (subscriptionInfo?.fanPass?.level == nil) {
                     return true
                 }
-                return Driver.just(needSubscription)
+                if (postItem.fanPass?.level ?? 0) <= (subscriptionInfo?.fanPass?.level ?? 0) {
+                    return false
+                }
+                return true
             }
 
         let footerInfo = postItemSuccess
-            .flatMap { [weak self] postItem -> Driver<(String, PostModel)> in
-                guard let `self` = self else { return Driver.empty() }
-                return Driver.just((self.uri, postItem))
-            }
+            .map { (uri, $0) }
 
         let fanPassListAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.fanPassAll(uri: self.uri))
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.fanPassAll(uri: uri) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let fanPassListSuccess = fanPassListAction.elements
-            .flatMap { response -> Driver<[FanPassModel]> in
-                guard let fanPassList = try? response.map(to: [FanPassModel].self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(fanPassList)
-            }
+            .map { try? $0.map(to: [FanPassModel].self) }
+            .flatMap(Driver.from)
 
         let needSubscriptionInfo = Driver.combineLatest(userInfo, postItemSuccess, subscriptionInfo)
 
@@ -319,35 +248,28 @@ final class PostViewModel: InjectableViewModel {
             .withLatestFrom(postItemSuccess)
             .filter { ($0.fanPass?.level ?? 0) == 0 }
             .withLatestFrom(fanPassListSuccess)
-            .flatMap { [weak self] fanPassList -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-                let fanPassId = fanPassList.filter { ($0.level ?? 0) == 0 }.first?.id ?? 0
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.subscription(uri: self.uri, fanPassId: fanPassId, subscriptionPrice: 0))
-                return Action.makeDriver(response)
-            }
+            .map { $0.filter { ($0.level ?? 0) == 0 }.first?.id ?? 0 }
+            .map { ProjectsAPI.subscription(uri: uri, fanPassId: $0, subscriptionPrice: 0) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let freeSubscriptionSuccess = freeSubscriptionAction.elements
-            .flatMap { [weak self] response -> Driver<String> in
-                self?.updater.refreshContent.onNext(())
-                return Driver.just(LocalizedStrings.str_project_subscrition_complete.localized())
-            }
+            .map { _ in LocalizedStrings.str_project_subscrition_complete.localized() }
+            .do(onNext: { _ in
+                updater.refreshContent.onNext(())
+            })
 
         let freeSubscriptionError = freeSubscriptionAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else {
-                    return Driver.empty()
-                }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let openFanPassListViewController = input.subscriptionBtnDidTap
             .withLatestFrom(userInfo)
             .filter { $0.loginId != nil }
             .withLatestFrom(postItemSuccess)
             .filter { ($0.fanPass?.level ?? 0) > 0 }
-            .flatMap { [weak self] _ -> Driver<(String, Int?)> in
-                return Driver.just((self?.uri ?? "", self?.postId))
-            }
+            .map { _ in (uri, self.postId) }
 
         let activityIndicator = Driver.merge(
             postItemAction.isExecuting,
@@ -356,22 +278,22 @@ final class PostViewModel: InjectableViewModel {
         let openSignInViewController = input.subscriptionBtnDidTap
             .withLatestFrom(userInfo)
             .filter { $0.loginId == nil }
-            .flatMap { _ in Driver.just(()) }
+            .map { _ in Void() }
 
         let sharePost = input.shareBarBtnDidTap
+            .map { AppInfo.isStaging ? "staging." : "" }
+            .map { "https://\($0)piction.network/project/\(uri)/posts/\(self.postId)" }
             .flatMap { [weak self] _ -> Driver<String> in
                 guard let `self` = self else { return Driver.empty() }
                 let stagingPath = AppInfo.isStaging ? "staging." : ""
-                let url = "https://\(stagingPath)piction.network/project/\(self.uri)/posts/\(self.postId)"
+                let url = "https://\(stagingPath)piction.network/project/\(uri)/posts/\(self.postId)"
                 return Driver.just(url)
             }
 
         let showToast = Driver.merge(freeSubscriptionSuccess, freeSubscriptionError)
 
         let contentOffset = Driver.combineLatest(input.contentOffset, input.viewDidAppear)
-            .flatMap { (contentOffset, _) -> Driver<CGPoint> in
-                return Driver.just(contentOffset)
-            }
+            .map { $0.0 }
 
         let willBeginDecelerating = input.willBeginDecelerating
 
