@@ -51,74 +51,55 @@ final class TransactionDetailViewModel: ViewModel {
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let navigationTitle = Driver.merge(viewWillAppear, loadRetry)
-            .flatMap { [weak self] _ -> Driver<String> in
-                guard let `self` = self else { return Driver.empty() }
-                let title = self.transaction.inOut == "IN" ? LocalizedStrings.menu_deposit_detail.localized() : LocalizedStrings.menu_withdraw_detail.localized()
-                return Driver.just(title)
-            }
+            .map { self.transaction.inOut == "IN" ? LocalizedStrings.menu_deposit_detail.localized() : LocalizedStrings.menu_withdraw_detail.localized() }
 
-        let transactionDetailAction = Driver.merge(viewWillAppear, loadRetry)
+        let transactionSponsorshipAction = Driver.merge(viewWillAppear, loadRetry)
             .filter { self.transaction.transactionType != "VALUE_TRANSFER" }
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-                if self.transaction.transactionType == "SPONSORSHIP" {
-                    let response =  PictionSDK.rx.requestAPI(MyAPI.sponsorshipTransaction(txHash: self.transaction.transactionHash ?? ""))
-                    return Action.makeDriver(response)
-                } else if self.transaction.transactionType == "SUBSCRIPTION" {
-                    let response = PictionSDK.rx.requestAPI(MyAPI.subscriptionTransaction(txHash: self.transaction.transactionHash ?? ""))
-                    return Action.makeDriver(response)
-                } else {
-                    return Driver.empty()
-                }
-            }
+            .filter { self.transaction.transactionType == "SPONSORSHIP" }
+            .map { MyAPI.sponsorshipTransaction(txHash: self.transaction.transactionHash ?? "") }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
+
+        let transactionSubscriptionAction = Driver.merge(viewWillAppear, loadRetry)
+            .filter { self.transaction.transactionType != "VALUE_TRANSFER" }
+            .filter { self.transaction.transactionType == "SUBSCRIPTION" }
+            .map { MyAPI.subscriptionTransaction(txHash: self.transaction.transactionHash ?? "") }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let valueTypeInfo = input.viewWillAppear
             .filter { self.transaction.transactionType == "VALUE_TRANSFER" }
-            .flatMap { _ -> Driver<[TransactionDetailSection]> in
-                return Driver.just([])
-            }
+            .map { [TransactionDetailSection]() }
 
-        let otherTypeInfo = transactionDetailAction.elements
-            .flatMap { [weak self] response -> Driver<[TransactionDetailSection]> in
-                guard let `self` = self else { return Driver.empty() }
-                let inOut = self.transaction.inOut ?? ""
+        let transactionSponsorshipSuccess = transactionSponsorshipAction.elements
+            .map { try? $0.map(to: TransactionSponsorshipModel.self) }
+            .map { [
+                TransactionDetailSection.header(title: LocalizedStrings.str_sponsorship_info.localized()),
+                TransactionDetailSection.list(title: self.transaction.inOut ?? "" == "IN" ? LocalizedStrings.str_sponsoredship_to.localized() : LocalizedStrings.str_sponsorship_user.localized(), description: self.transaction.inOut ?? "" == "IN" ? "@\($0?.sponsor?.loginId ?? "")" : "@\($0?.creator?.loginId ?? "")", link: ""),
+                TransactionDetailSection.footer,
+            ] }
 
-                if self.transaction.transactionType == "SPONSORSHIP" {
-                    guard let sponsorshipItem = try? response.map(to: TransactionSponsorshipModel.self) else {
-                        return Driver.empty()
-                    }
-                    let sponsorshipSection = [
-                        TransactionDetailSection.header(title: LocalizedStrings.str_sponsorship_info.localized()),
-                        TransactionDetailSection.list(title: inOut == "IN" ? LocalizedStrings.str_sponsoredship_to.localized() : LocalizedStrings.str_sponsorship_user.localized(), description: inOut == "IN" ? "@\(sponsorshipItem.sponsor?.loginId ?? "")" : "@\(sponsorshipItem.creator?.loginId ?? "")", link: ""),
-                        TransactionDetailSection.footer,
-                    ]
-                    return Driver.just(sponsorshipSection)
-                } else if self.transaction.transactionType == "SUBSCRIPTION" {
-                    guard let subscriptionItem = try? response.map(to: TransactionSubscriptionModel.self) else {
-                        return Driver.empty()
-                    }
-                    let subscriptionSection = [
-                        TransactionDetailSection.header(title: inOut == "IN" ? LocalizedStrings.str_fan_pass_sell_info.localized() : LocalizedStrings.str_fan_pass_buy_info.localized()),
-                        TransactionDetailSection.list(title: LocalizedStrings.str_order_id.localized(), description: "\(subscriptionItem.orderNo ?? 0)", link: ""),
-                        TransactionDetailSection.list(title: LocalizedStrings.str_project.localized(), description: "\(subscriptionItem.projectName ?? "")", link: ""),
-                        TransactionDetailSection.list(title: "FAN PASS", description: "\(subscriptionItem.fanPassName ?? "")", link: ""),
-                        TransactionDetailSection.list(title: inOut == "IN" ? LocalizedStrings.str_buyer.localized() : LocalizedStrings.str_seller.localized(), description: inOut == "IN" ? "\(subscriptionItem.subscriber?.loginId ?? "")" : "\(subscriptionItem.creator?.loginId ?? "")", link: ""),
-                        TransactionDetailSection.footer,
-                    ]
-                    return Driver.just(subscriptionSection)
-                }
-                return Driver.empty()
-            }
+        let transactionSubscriptionSuccess = transactionSubscriptionAction.elements
+            .map { try? $0.map(to: TransactionSubscriptionModel.self) }
+            .map { [
+                TransactionDetailSection.header(title: self.transaction.inOut ?? "" == "IN" ? LocalizedStrings.str_fan_pass_sell_info.localized() : LocalizedStrings.str_fan_pass_buy_info.localized()),
+                TransactionDetailSection.list(title: LocalizedStrings.str_order_id.localized(), description: "\($0?.orderNo ?? 0)", link: ""),
+                TransactionDetailSection.list(title: LocalizedStrings.str_project.localized(), description: "\($0?.projectName ?? "")", link: ""),
+                TransactionDetailSection.list(title: "FAN PASS", description: "\($0?.fanPassName ?? "")", link: ""),
+                TransactionDetailSection.list(title: self.transaction.inOut ?? "" == "IN" ? LocalizedStrings.str_buyer.localized() : LocalizedStrings.str_seller.localized(), description: self.transaction.inOut ?? "" == "IN" ? "\($0?.subscriber?.loginId ?? "")" : "\($0?.creator?.loginId ?? "")", link: ""),
+                TransactionDetailSection.footer,
+            ] }
+
+        let otherTypeInfo = Driver.merge(transactionSponsorshipSuccess, transactionSubscriptionSuccess)
 
         let transactionInfo = Driver.merge(valueTypeInfo, otherTypeInfo)
-            .flatMap { [weak self] typeSection -> Driver<SectionType<TransactionDetailSection>> in
-                guard let `self` = self else { return Driver.empty() }
+            .map { [weak self] typeSection -> [TransactionDetailSection] in
+                guard let `self` = self else { return [] }
 
                 var sections: [TransactionDetailSection] = [
                     TransactionDetailSection.info(transaction: self.transaction),
                     TransactionDetailSection.footer
                 ]
-
                 sections.append(contentsOf: typeSection)
 
                 let transactionSection = [
@@ -130,18 +111,21 @@ final class TransactionDetailViewModel: ViewModel {
                     TransactionDetailSection.list(title: "TX HASH", description: self.transaction.transactionHash ?? "", link: self.transaction.txHashWithUrl ?? ""),
                     TransactionDetailSection.footer
                 ]
-
                 sections.append(contentsOf: transactionSection)
-
-                return Driver.just(SectionType<TransactionDetailSection>.Section(title: "transactionInfo", items: sections))
+                return sections
             }
+            .map { SectionType<TransactionDetailSection>.Section(title: "transactionInfo", items: $0) }
 
-        let transactionInfoError = transactionDetailAction.error
-            .flatMap { _ in Driver.just(()) }
+        let transactionInfoError = Driver.merge(
+            transactionSponsorshipAction.error,
+            transactionSubscriptionAction.error)
+            .map { _ in Void() }
 
         let showErrorPopup = transactionInfoError
 
-        let activityIndicator = transactionDetailAction.isExecuting
+        let activityIndicator = Driver.merge(
+            transactionSponsorshipAction.isExecuting,
+            transactionSubscriptionAction.isExecuting)
 
         return Output(
             viewWillAppear: input.viewWillAppear,
