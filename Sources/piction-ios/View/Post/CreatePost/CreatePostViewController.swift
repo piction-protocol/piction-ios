@@ -182,6 +182,11 @@ final class CreatePostViewController: UIViewController {
     @IBAction func tapGesture(_ sender: Any) {
         view.endEditing(true)
     }
+
+    private func getYoutubePosterUrlString(_ url: String) -> String {
+        let youtubeIds = url.getYoutubeId()
+        return "https://img.youtube.com/vi/\(youtubeIds.first ?? "")/maxresdefault.jpg"
+    }
 }
 
 extension CreatePostViewController: ViewModelBindable {
@@ -888,7 +893,7 @@ extension CreatePostViewController {
                     return
                 }
 
-                let posterUrlString = urlString.getYoutubePosterUrlString()
+                let posterUrlString = self?.getYoutubePosterUrlString(urlString) ?? ""
                 guard let posterUrl = URL(string: posterUrlString) else {
                     return
                 }

@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Kanna
 import PictionSDK
 
 final class CreatePostViewModel: InjectableViewModel {
@@ -83,7 +84,7 @@ final class CreatePostViewModel: InjectableViewModel {
     func build(input: Input) -> Output {
         let (updater, uri, postId) = (self.updater, self.uri, self.postId)
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
-            .flatMap { [weak self] _ -> Driver<Void> in
+            .do(onNext: { [weak self] _ in
                 self?.title.onNext("")
                 self?.coverImageId.onNext("")
                 self?.content.onNext("")
@@ -91,272 +92,205 @@ final class CreatePostViewModel: InjectableViewModel {
                 self?.status.onNext("PUBLIC")
                 self?.publishedAt.onNext(nil)
                 self?.seriesId.onNext(nil)
-
-                return Driver.just(())
-            }
+            })
 
         let isModify = input.viewWillAppear
-            .flatMap { _ in Driver.just(postId != 0) }
+            .map { postId != 0 }
 
         let loadPostAction = viewWillAppear
             .filter { self.postId != 0 }
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(PostsAPI.get(uri: uri, postId: postId))
-                return Action.makeDriver(response)
-            }
+            .map { PostsAPI.get(uri: uri, postId: postId) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let loadPostSuccess = loadPostAction.elements
-            .flatMap { [weak self] response -> Driver<PostModel> in
-                guard
-                    let `self` = self,
-                    let post = try? response.map(to: PostModel.self),
-                    let title = post.title,
-                    let publishedAt = post.publishedAt,
-                    let status = post.status
-                else { return Driver.empty() }
-
-                self.title.onNext(title)
-                self.coverImageId.onNext("")
-                self.publishedAt.onNext(publishedAt)
-                self.fanPassId.onNext(post.fanPass?.id ?? nil)
-                self.status.onNext(status)
-                self.seriesId.onNext(post.series?.id ?? nil)
-                return Driver.just(post)
-            }
+            .map { try? $0.map(to: PostModel.self) }
+            .flatMap(Driver.from)
+            .do(onNext: { [weak self] post in
+                self?.title.onNext(post.title ?? "")
+                self?.coverImageId.onNext("")
+                self?.publishedAt.onNext(post.publishedAt)
+                self?.fanPassId.onNext(post.fanPass?.id ?? nil)
+                self?.status.onNext(post.status ?? "PUBLIC")
+                self?.seriesId.onNext(post.series?.id ?? nil)
+            })
 
         let loadContentAction = viewWillAppear
             .filter { self.postId != 0 }
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(PostsAPI.content(uri: uri, postId: postId))
-                return Action.makeDriver(response)
-            }
+            .map { PostsAPI.content(uri: uri, postId: postId) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let loadContentSuccess = loadContentAction.elements
-            .flatMap { [weak self] response -> Driver<String> in
-                guard let contentItem = try? response.map(to: ContentModel.self) else {
-                    return Driver.empty()
-                }
-                print("\(contentItem.content ?? "")")
-                var content = (contentItem.content ?? "").replacingOccurrences(of: "</p> <p>", with: "</p><p>")
-                content = content.convertTagIFrameToVideo()
-
+            .map { try? $0.map(to: ContentModel.self) }
+            .map { ($0?.content ?? "").replacingOccurrences(of: "</p> <p>", with: "</p><p>") }
+            .map(convertTagIFrameToVideo)
+            .flatMap(Driver.from)
+            .do(onNext: { [weak self] content in
                 self?.content.onNext(content)
-//                content = content.replacingOccurrences(of: "<div class=\"video\">  <iframe frameborder=\"0\" allowfullscreen=\"true\"", with: "<p><div class=\"video\">")
-//                content = content.replacingOccurrences(of: "</iframe> </div>", with: "</div></p>")
-//                content = content.replacingOccurrences(of: "<div class=\"video\">", with: "<p>")
-//                content = content.replacingOccurrences(of: "</iframe> </div>", with: "</iframe></p>")
-                print(content)
-                return Driver.just(content)
-            }
+            })
 
         let loadFanPassAction = viewWillAppear
-            .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.fanPassAll(uri: uri))
-                return Action.makeDriver(response)
-            }
+            .map { ProjectsAPI.fanPassAll(uri: uri) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let loadFanPassSuccess = loadFanPassAction.elements
-            .flatMap { response -> Driver<[FanPassModel]> in
-                guard let fanPassList = try? response.map(to: [FanPassModel].self) else {
-                    return Driver.empty()
-                }
-                return Driver.just(fanPassList)
-            }
+            .map { try? $0.map(to: [FanPassModel].self) }
+            .flatMap(Driver.from)
 
         let loadPostInfo = Driver.combineLatest(loadPostSuccess, loadContentSuccess)
 
         let postTitleChanged = Driver.merge(input.inputPostTitle, title.asDriver(onErrorDriveWith: .empty()))
-            .flatMap { title -> Driver<String> in
-                return Driver.just(title)
-            }
 
         let postContentChanged = Driver.merge(input.inputContent, content.asDriver(onErrorDriveWith: .empty()))
-            .flatMap { content -> Driver<String> in
-                print(content)
-                return Driver.just(content)
-            }
+            .map(changeContent)
+            .map(convertTagVideoToIFrame)
 
         let uploadCoverImageAction = input.coverImageDidPick
-            .flatMap { image -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(PostsAPI.uploadCoverImage(uri: uri, image: image))
-                return Action.makeDriver(response)
-            }
+            .map { PostsAPI.uploadCoverImage(uri: uri, image: $0) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let uploadCoverImageError = uploadCoverImageAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let uploadCoverImageSuccess = uploadCoverImageAction.elements
-            .flatMap { [weak self] response -> Driver<String> in
-                guard
-                    let `self` = self,
-                    let imageInfo = try? response.map(to: StorageAttachmentViewResponse.self),
-                    let imageInfoId = imageInfo.id
-                else { return Driver.empty() }
-                self.coverImageId.onNext(imageInfoId)
-                return Driver.just(imageInfoId)
-            }
+            .map { try? $0.map(to: StorageAttachmentViewResponse.self) }
+            .map { $0?.id }
+            .flatMap(Driver<String?>.from)
+            .do(onNext: { [weak self] imageId in
+                self?.coverImageId.onNext(imageId)
+            })
 
         let changeCoverImage = uploadCoverImageSuccess
             .withLatestFrom(input.coverImageDidPick)
-            .flatMap { image in Driver<UIImage?>.just(image) }
+            .flatMap(Driver<UIImage?>.from)
 
         let deleteCoverImage = input.deleteCoverImageBtnDidTap
-            .flatMap { [weak self] _ -> Driver<UIImage?> in
-                self?.coverImageId.onNext(nil)
-                return Driver.just(nil)
-            }
+            .map { _ in UIImage?(nil) }
+            .do(onNext: { [weak self] _ in  self?.coverImageId.onNext(nil)
+            })
 
         let coverImage = Driver.merge(changeCoverImage, deleteCoverImage)
 
         let uploadContentImageAction = input.contentImageDidPick
-            .flatMap { image -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(PostsAPI.uploadContentImage(uri: uri, image: image))
-                return Action.makeDriver(response)
-            }
+            .map { PostsAPI.uploadContentImage(uri: uri, image: $0) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
         let uploadContentImageSuccess = uploadContentImageAction.elements
-            .flatMap { response -> Driver<String> in
-                guard
-                    let imageInfo = try? response.map(to: StorageAttachmentViewResponse.self),
-                    let imageInfoUrl = imageInfo.url
-                else { return Driver.empty() }
-                return Driver.just(imageInfoUrl)
-            }
+            .map { try? $0.map(to: StorageAttachmentModel.self) }
+            .map { $0?.url }
+            .flatMap(Driver.from)
 
         let contentImage = Driver.zip(uploadContentImageSuccess, input.contentImageDidPick)
-            .flatMap { (url, image) -> Driver<(String, UIImage)> in
-                return Driver.just((url, image))
-            }
 
         let uploadContentImageError = uploadContentImageAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
-                return Driver.just(errorMsg.message)
-            }
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let checkforAll = input.forAllCheckBtnDidTap
-            .flatMap { [weak self] _ -> Driver<String> in
+            .map { "PUBLIC" }
+            .flatMap(Driver<String>.from)
+            .do(onNext: { [weak self] _ in
                 self?.status.onNext("PUBLIC")
                 self?.fanPassId.onNext(nil)
-                return Driver.just("PUBLIC")
-            }
+            })
 
         let checkforSubscription = input.forSubscriptionCheckBtnDidTap
             .withLatestFrom(loadFanPassSuccess)
-            .flatMap { [weak self] fanPassInfo -> Driver<String> in
+            .do(onNext: { [weak self] fanPassInfo in
                 self?.status.onNext("FAN_PASS")
                 let fanPassId = fanPassInfo[safe: 0]?.id ?? nil
                 self?.fanPassId.onNext(fanPassId)
-                return Driver.just("FAN_PASS")
-            }
+            })
+            .map { _ in "FAN_PASS" }
 
         let checkforPrivate = input.forPrivateCheckBtnDidTap
-            .flatMap { [weak self] _ -> Driver<String> in
+            .map { "PRIVATE" }
+            .flatMap(Driver<String>.from)
+            .do(onNext: { [weak self] _ in
                 self?.status.onNext("PRIVATE")
                 self?.fanPassId.onNext(nil)
-                return Driver.just("PRIVATE")
-            }
+            })
 
         let openManageFanPassViewController = input.selectFanPassBtnDidTap
             .withLatestFrom(fanPassId.asDriver(onErrorDriveWith: .empty()))
-            .flatMap { fanPassId -> Driver<(String, Int?)> in
-                return Driver.just((uri, fanPassId))
-            }
+            .map { (uri, $0) }
 
         let publishNowChanged = input.publishNowCheckBtnDidTap
 
         let statusChanged = Driver.merge(checkforAll, checkforSubscription, checkforPrivate)
 
         let seriesChanged = input.seriesChanged
-            .flatMap { [weak self] series -> Driver<SeriesModel?> in
+            .do(onNext: { [weak self] series in
                 self?.seriesId.onNext(series?.id)
-                return Driver.just(series)
-            }
+            })
 
         let fanPassChanged = input.fanPassChanged
-            .flatMap { [weak self] fanPass -> Driver<FanPassModel?> in
+            .do(onNext: { [weak self] fanPass in
                 self?.fanPassId.onNext(fanPass?.id)
-                return Driver.just(fanPass)
-            }
+            })
 
         let publishDateChanged = input.publishDateChanged
-            .flatMap { [weak self] date -> Driver<Date?> in
+            .do(onNext: { [weak self] date in
                 self?.publishedAt.onNext(date)
-                return Driver.just(date)
-            }
+            })
 
         let changePostInfo = Driver.combineLatest(postTitleChanged, postContentChanged, coverImageId.asDriver(onErrorDriveWith: .empty()), fanPassId.asDriver(onErrorDriveWith: .empty()), status.asDriver(onErrorDriveWith: .empty()), publishedAt.asDriver(onErrorDriveWith: .empty()), seriesId.asDriver(onErrorDriveWith: .empty())) { (title: $0, content: $1, coverImageId: $2, fanPassId: $3, status: $4, publishedAt: $5, seriesId: $6) }
 
-        let saveButtonAction = input.saveBtnDidTap
+        let createPostAction = input.saveBtnDidTap
             .withLatestFrom(changePostInfo)
-            .flatMap { changePostInfo -> Driver<Action<ResponseData>> in
-                var content = changePostInfo.content.replacingOccurrences(of: "strong>", with: "b>")
-                content = content.replacingOccurrences(of: "em>", with: "i>")
-                content = content.replacingOccurrences(of: "<i></i>", with: "<i><br></i>")
-                content = content.replacingOccurrences(of: "<u></u>", with: "<u><br></u>")
-                content = content.replacingOccurrences(of: "<b></b>", with: "<b><br></b>")
-                content = content.replacingOccurrences(of: "<p> </p>", with: "<p><br></p>")
-                content = content.replacingOccurrences(of: "<p></p>", with: "<p><br></p>")
-
-                content = content.convertTagVideoToIFrame()
-//                let youtubeIds = content.getYoutubeId()
-//                for id in youtubeIds {
-//                    content = content.replacingOccurrences(of: " poster=\"https://img.youtube.com/vi/\(id)/sddefault.jpg\"", with: "")
-//                }
-//
-//                content = content.replacingOccurrences(of: "<p><video ", with: "<div class=\"video\">  <iframe frameborder=\"0\" allowfullscreen=\"true\"")
-//                content = content.replacingOccurrences(of: "</video></p>", with: "</iframe> </div>")
-                if postId == 0 {
-                    let response = PictionSDK.rx.requestAPI(PostsAPI.create(uri: uri, title: changePostInfo.title, content: content, cover: changePostInfo.coverImageId, seriesId: changePostInfo.seriesId, fanPassId: changePostInfo.fanPassId, status: changePostInfo.status, publishedAt: changePostInfo.publishedAt?.millisecondsSince1970  ?? Date().millisecondsSince1970))
-                    return Action.makeDriver(response)
-                } else {
-                    let response = PictionSDK.rx.requestAPI(PostsAPI.update(uri: uri, postId: postId, title: changePostInfo.title, content: content, cover: changePostInfo.coverImageId, seriesId: changePostInfo.seriesId, fanPassId: changePostInfo.fanPassId, status: changePostInfo.status, publishedAt: changePostInfo.publishedAt?.millisecondsSince1970 ?? Date().millisecondsSince1970))
-                    return Action.makeDriver(response)
-                }
+            .filter { _ in postId == 0 }
+            .map { PostsAPI.create(uri: uri, title: $0.title, content: $0.content, cover: $0.coverImageId, seriesId: $0.seriesId, fanPassId: $0.fanPassId, status: $0.status, publishedAt: $0.publishedAt?.millisecondsSince1970  ?? Date().millisecondsSince1970)
             }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
-        let changePostInfoSuccess = saveButtonAction.elements
-            .flatMap { response -> Driver<Void> in
+        let updatePostAction = input.saveBtnDidTap
+            .withLatestFrom(changePostInfo)
+            .filter { _ in postId != 0 }
+            .map { PostsAPI.update(uri: uri, postId: postId, title: $0.title, content: $0.content, cover: $0.coverImageId, seriesId: $0.seriesId, fanPassId: $0.fanPassId, status: $0.status, publishedAt: $0.publishedAt?.millisecondsSince1970 ?? Date().millisecondsSince1970)
+            }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
+
+        let savePostAction = Driver.merge(createPostAction, updatePostAction)
+
+        let changePostInfoSuccess = savePostAction.elements
+            .map { _ in Void() }
+            .do(onNext: { _ in
                 updater.refreshContent.onNext(())
-                return Driver.just(())
-            }
+            })
 
-        let changePostInfoError = saveButtonAction.error
-            .flatMap { response -> Driver<String> in
-                guard let errorMsg = response as? ErrorType else { return Driver.empty() }
-                return Driver.just(errorMsg.message)
-            }
+        let changePostInfoError = savePostAction.error
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
 
         let openDatePicker = input.publishDatePickerBtnDidTap
             .withLatestFrom(publishedAt.asDriver(onErrorDriveWith: .empty()))
-            .flatMap { publishedAt -> Driver<Date> in
-                if let publishedAt = publishedAt {
-                    return Driver.just(publishedAt)
-                } else {
-                    return Driver.just(Date())
-                }
-            }
+            .map { $0 == nil ? Date() : $0! }
 
         let openManageSeriesViewController = input.selectSeriesBtnDidTap
             .withLatestFrom(seriesId.asDriver(onErrorDriveWith: .empty()))
-            .flatMap { seriesId -> Driver<(String, Int?)> in
-                return Driver.just((uri, seriesId))
-            }
+            .map { (uri, $0) }
 
         let activityIndicator = Driver.merge(
             uploadCoverImageAction.isExecuting,
             uploadContentImageAction.isExecuting,
-            saveButtonAction.isExecuting)
+            savePostAction.isExecuting)
 
         let showToast = Driver.merge(
             uploadCoverImageError,
             uploadContentImageError,
             changePostInfoError)
 
-        let dismissKeyboard = saveButtonAction.isExecuting
+        let dismissKeyboard = savePostAction.isExecuting
 
         return Output(
             viewWillAppear: input.viewWillAppear,
@@ -380,5 +314,54 @@ final class CreatePostViewModel: InjectableViewModel {
             dismissKeyboard: dismissKeyboard,
             showToast: showToast
         )
+    }
+}
+
+extension CreatePostViewModel {
+    func changeContent(_ content: String) -> String {
+        var content = content.replacingOccurrences(of: "strong>", with: "b>")
+        content = content.replacingOccurrences(of: "em>", with: "i>")
+        content = content.replacingOccurrences(of: "<i></i>", with: "<i><br></i>")
+        content = content.replacingOccurrences(of: "<u></u>", with: "<u><br></u>")
+        content = content.replacingOccurrences(of: "<b></b>", with: "<b><br></b>")
+        content = content.replacingOccurrences(of: "<p> </p>", with: "<p><br></p>")
+        content = content.replacingOccurrences(of: "<p></p>", with: "<p><br></p>")
+        return content
+    }
+
+    func convertTagIFrameToVideo(_ content: String) -> String {
+        let youtubeIds = content.getYoutubeId()
+
+        var htmlString = content
+
+        htmlString = htmlString.replacingOccurrences(of: "<div class=\"video\">  ", with: "<p>")
+        htmlString = htmlString.replacingOccurrences(of: " </div> ", with: "</p>")
+
+        if let doc = try? HTML(html: content, encoding: .utf8) {
+            for (index, element) in doc.xpath("//iframe").enumerated() {
+                if let youtubeId = youtubeIds[safe: index] {
+                    htmlString = htmlString.replacingOccurrences(of: element.toHTML ?? "", with: "<video src=\"https://www.youtube.com/watch?v=\(youtubeId)\" poster=\"https://img.youtube.com/vi/\(youtubeId)/maxresdefault.jpg\"></video>")
+                }
+            }
+        }
+        return htmlString
+    }
+
+    func convertTagVideoToIFrame(_ content: String) -> String {
+        let youtubeIds = content.getYoutubeId()
+
+        var htmlString = content
+
+        if let doc = try? HTML(html: content, encoding: .utf8) {
+            for (index, element) in doc.xpath("//video").enumerated() {
+                if let youtubeId = youtubeIds[safe: index] {
+                    htmlString = htmlString.replacingOccurrences(of: element.toHTML ?? "", with: "<iframe frameborder=\"0\" allowfullscreen=\"true\" src=\"https://www.youtube.com/embed/\(youtubeId)\"></iframe>")
+                }
+            }
+        }
+        htmlString = htmlString.replacingOccurrences(of: "<p><iframe", with: "<div class=\"video\">  <iframe")
+        htmlString = htmlString.replacingOccurrences(of: "</iframe></p>", with: "</iframe> </div> ")
+
+        return htmlString
     }
 }
