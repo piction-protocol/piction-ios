@@ -48,43 +48,37 @@ final class TransactionHistoryViewModel: ViewModel {
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let initialLoad = Driver.merge(viewWillAppear, input.refreshControlDidRefresh)
-            .flatMap { [weak self] _ -> Driver<Void> in
-                guard let `self` = self else { return Driver.empty() }
-                self.page = 0
-                self.sections = []
-                self.shouldInfiniteScroll = true
-                return Driver.just(())
-            }
+            .do(onNext: { [weak self] in
+                self?.page = 0
+                self?.sections = []
+                self?.shouldInfiniteScroll = true
+            })
 
         let loadNext = loadNextTrigger.asDriver(onErrorDriveWith: .empty())
-            .flatMap { [weak self] _ -> Driver<Void> in
-                guard let `self` = self, self.shouldInfiniteScroll else {
-                    return Driver.empty()
-                }
-                return Driver.just(())
-            }
+            .filter { self.shouldInfiniteScroll }
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let transactionHistoryAction = Driver.merge(initialLoad, loadNext, loadRetry)
-            .flatMap { [weak self] _ -> Driver<Action<ResponseData>> in
-                guard let `self` = self else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(MyAPI.transactions(page: self.page + 1, size: 30))
-                return Action.makeDriver(response)
-            }
+            .map { MyAPI.transactions(page: self.page + 1, size: 30) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
 
        let transactionHistorySuccess = transactionHistoryAction.elements
-            .flatMap { [weak self] response -> Driver<SectionType<TransactionHistorySection>> in
-                guard let `self` = self else { return Driver.empty() }
-                guard let pageList = try? response.map(to: PageViewResponse<TransactionModel>.self) else {
-                    return Driver.empty()
-                }
-                if (pageList.pageable?.pageNumber ?? 0) >= (pageList.totalPages ?? 0) - 1 {
-                    self.shouldInfiniteScroll = false
-                }
-                self.page = self.page + 1
-                self.sections.append(contentsOf: pageList.content ?? [])
+            .map { try? $0.map(to: PageViewResponse<TransactionModel>.self) }
+            .do(onNext: { [weak self] pageList in
+                guard
+                    let page = self?.page,
+                    let pageNumber = pageList?.pageable?.pageNumber,
+                    let totalPages = pageList?.totalPages
+                else { return }
 
+                self?.shouldInfiniteScroll = pageNumber < totalPages - 1
+                self?.page = page + 1
+            })
+            .map { self.sections.append(contentsOf: $0?.content ?? []) }
+            .map { [weak self] _ -> [TransactionHistorySection] in
+                guard let `self` = self else { return [] }
                 var transactions: [TransactionHistorySection] = []
 
                 let yearGroup = self.groupedBy(self.sections, dateComponents: [.year])
@@ -101,14 +95,12 @@ final class TransactionHistoryViewModel: ViewModel {
                         transactions.append(contentsOf: [.footer])
                     }
                 }
-
-                return Driver.just(SectionType<TransactionHistorySection>.Section(title: "transacation", items: transactions))
+                return transactions
             }
+            .map { SectionType<TransactionHistorySection>.Section(title: "transacation", items: $0) }
 
         let transactionHistoryEmptyList = transactionHistoryAction.error
-            .flatMap { response -> Driver<SectionType<TransactionHistorySection>> in
-                return Driver.just(SectionType<TransactionHistorySection>.Section(title: "transacation", items: []))
-            }
+            .map { _ in SectionType<TransactionHistorySection>.Section(title: "transacation", items: []) }
 
         let transactionHistoryListError = transactionHistoryAction.error
             .flatMap { response -> Driver<Void> in
@@ -126,31 +118,28 @@ final class TransactionHistoryViewModel: ViewModel {
 
         let refreshAction = input.refreshControlDidRefresh
             .withLatestFrom(transactionHistorySuccess)
-            .flatMap { list -> Driver<Action<SectionType<TransactionHistorySection>>> in
-                return Action.makeDriver(Driver.just(list))
-            }
+            .map { _ in Void() }
+            .map(Driver.from)
+            .flatMap(Action.makeDriver)
 
         let showActivityIndicator = initialLoad
-            .flatMap { _ in Driver.just(true) }
+            .map { true }
 
         let hideActivityIndicator = transactionHistoryList
-            .flatMap { _ in Driver.just(false) }
+            .map { _ in false }
 
         let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
 
-        let embedEmptyView = transactionHistorySuccess
-            .flatMap { [weak self] _ -> Driver<CustomEmptyViewStyle> in
-                if (self?.sections.count ?? 0) == 0 {
-                    return Driver.just(.transactionListEmpty)
-                }
-                return Driver.empty()
-            }
+        let embedEmptyViewController = transactionHistorySuccess
+            .map { $0.items.count == 0 }
+            .map { _ in .transactionListEmpty }
+            .flatMap(Driver<CustomEmptyViewStyle>.from)
 
         return Output(
             viewWillAppear: input.viewWillAppear,
             transactionList: transactionHistorySuccess,
             isFetching: refreshAction.isExecuting,
-            embedEmptyViewController: embedEmptyView,
+            embedEmptyViewController: embedEmptyViewController,
             openTransactionDetailViewController: input.selectedIndexPath,
             showErrorPopup: showErrorPopup,
             activityIndicator: activityIndicator
