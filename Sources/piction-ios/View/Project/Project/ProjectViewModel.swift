@@ -105,10 +105,11 @@ final class ProjectViewModel: InjectableViewModel {
             .do(onNext: { [weak self] _ in
                 self?.page = 1
                 self?.sections = []
-                self?.shouldInfiniteScroll = true
+                self?.shouldInfiniteScroll = false
             })
 
         let subscriptionInfoAction = Driver.merge(updateSelectedProjectMenu, refreshMenu, loadNextMenu)
+            .filter { $0 == 0 }
             .map{ _ in ProjectsAPI.getProjectSubscription(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -119,6 +120,8 @@ final class ProjectViewModel: InjectableViewModel {
 
         let subscriptionInfoError = subscriptionInfoAction.error
             .map { _ in SubscriptionModel?(nil) }
+
+        let projectSubscriptionInfo = Driver.merge(subscriptionInfoSuccess, subscriptionInfoError)
 
         let openProjectInfoViewController = input.infoBtnDidTap
             .map { uri }
@@ -189,8 +192,6 @@ final class ProjectViewModel: InjectableViewModel {
                 self?.shouldInfiniteScroll = pageNumber < totalPages - 1
                 self?.page = page + 1
             })
-
-        let projectSubscriptionInfo = Driver.merge(subscriptionInfoSuccess, subscriptionInfoError)
 
         let fanPassListAction = viewWillAppear
             .map { ProjectsAPI.fanPassAll(uri: uri) }
