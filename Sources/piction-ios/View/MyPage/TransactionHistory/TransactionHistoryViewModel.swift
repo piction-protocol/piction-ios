@@ -131,7 +131,7 @@ final class TransactionHistoryViewModel: ViewModel {
         let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
 
         let embedEmptyViewController = transactionHistorySuccess
-            .map { $0.items.count == 0 }
+            .filter { $0.items.isEmpty }
             .map { _ in .transactionListEmpty }
             .flatMap(Driver<CustomEmptyViewStyle>.from)
 

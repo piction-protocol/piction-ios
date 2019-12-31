@@ -89,7 +89,7 @@ final class HomeViewModel: InjectableViewModel {
             .flatMap { _ in Driver<[ProjectModel]>.just([]) }
 
         let subscribingProjectsEmpty = Driver.merge(subscribingProjectsSuccess, subscribingProjectsError)
-            .filter { $0.count == 0 }
+            .filter { $0.isEmpty }
             .map { _ in Void() }
             .flatMap(Driver.from)
             .do(onNext: { [weak self] in
@@ -128,7 +128,7 @@ final class HomeViewModel: InjectableViewModel {
             .map { _ in SectionType<HomeSection>.Section(title: "subscribingPosts", items: []) }
 
         let subscribingPostsEmpty = Driver.merge(subscribingPostSuccess, subscribingPostError)
-            .filter { $0.items.count == 0 }
+            .filter { $0.items.isEmpty }
             .map { _ in Void() }
             .flatMap(Driver.from)
             .do(onNext: { [weak self] _ in
