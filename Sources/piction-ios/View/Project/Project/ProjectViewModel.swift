@@ -79,9 +79,7 @@ final class ProjectViewModel: InjectableViewModel {
 
         let updateSelectedProjectMenu = input.changeMenu
 
-        let refreshAction = Driver.merge(refreshContent, refreshSession)
-
-        let refreshMenu = refreshAction
+        let refreshMenu = Driver.merge(refreshContent, refreshSession)
             .withLatestFrom(updateSelectedProjectMenu)
 
         let loadNext = loadTrigger.asDriver(onErrorDriveWith: .empty())
@@ -108,8 +106,13 @@ final class ProjectViewModel: InjectableViewModel {
                 self?.shouldInfiniteScroll = false
             })
 
-        let subscriptionInfoAction = Driver.merge(updateSelectedProjectMenu, refreshMenu, loadNextMenu)
+        let postSubscriptionInfoAction = Driver.merge(updateSelectedProjectMenu, refreshMenu, loadNextMenu)
             .filter { $0 == 0 }
+
+        let seriesSubscriptionInfoAction = refreshMenu
+            .filter { $0 == 1 }
+
+        let subscriptionInfoAction = Driver.merge(postSubscriptionInfoAction, seriesSubscriptionInfoAction)
             .map{ _ in ProjectsAPI.getProjectSubscription(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -139,11 +142,6 @@ final class ProjectViewModel: InjectableViewModel {
             .map { _ in ProjectModel.from([:])! }
 
         let loadProjectInfo = Driver.merge(loadProjectInfoSuccess, loadProjectInfoError)
-
-        let loadSeriesListAction = selectSeriesMenu
-            .map { SeriesAPI.all(uri: uri) }
-            .map(PictionSDK.rx.requestAPI)
-            .flatMap(Action.makeDriver)
 
         let userInfoAction = Driver.merge(viewWillAppear, refreshSession)
             .map { UsersAPI.me }
@@ -179,6 +177,11 @@ final class ProjectViewModel: InjectableViewModel {
 
         let loadPostAction = Driver.merge(loadOthersPostAction, loadWriterPostAction)
 
+        let loadSeriesListAction = selectSeriesMenu
+            .map { _ in SeriesAPI.all(uri: uri) }
+            .map(PictionSDK.rx.requestAPI)
+            .flatMap(Action.makeDriver)
+
         let loadPostSuccess = loadPostAction.elements
             .map { try? $0.map(to: PageViewResponse<PostModel>.self) }
             .flatMap(Driver.from)
@@ -202,7 +205,7 @@ final class ProjectViewModel: InjectableViewModel {
             .map { try? $0.map(to: [FanPassModel].self) }
             .flatMap(Driver.from)
 
-        let subscriptionInfo = Driver.combineLatest(isWriter, fanPassListSuccess,  projectSubscriptionInfo)
+        let subscriptionInfo = Driver.combineLatest(isWriter, fanPassListSuccess, projectSubscriptionInfo)
 
         let subscriptionAction = input.subscriptionBtnDidTap
             .withLatestFrom(isWriter)
@@ -270,16 +273,17 @@ final class ProjectViewModel: InjectableViewModel {
             .filter { $0 }
             .map { _ in uri }
 
-        let postSection = Driver.zip(loadPostSuccess, projectSubscriptionInfo)
+        let postSection = loadPostSuccess
+            .withLatestFrom(projectSubscriptionInfo) { ($0, $1) }
             .map { (postList, subscriptionInfo) in (postList.content ?? []).map { .postList(post: $0, subscriptionInfo: subscriptionInfo) } }
             .map { self.sections.append(contentsOf: $0) }
             .map { SectionType<ContentsSection>.Section(title: "post", items: self.sections) }
 
-        let loadSeriesActionSuccess = loadSeriesListAction.elements
+        let loadSeriesSuccess = loadSeriesListAction.elements
             .map { try? $0.map(to: [SeriesModel].self) }
             .flatMap(Driver.from)
 
-        let seriesSection = loadSeriesActionSuccess
+        let seriesSection = loadSeriesSuccess
             .map { $0.map { .seriesList(series: $0) } }
             .map { self.sections = $0 }
             .map { SectionType<ContentsSection>.Section(title: "series", items: self.sections) }
@@ -289,7 +293,7 @@ final class ProjectViewModel: InjectableViewModel {
             .map { _ in .projectPostListEmpty }
             .flatMap(Driver<CustomEmptyViewStyle>.from)
 
-        let embedSeriesEmptyView = loadSeriesActionSuccess
+        let embedSeriesEmptyView = loadSeriesSuccess
             .filter { $0.isEmpty }
             .map { _ in .projectSeriesListEmpty }
             .flatMap(Driver<CustomEmptyViewStyle>.from)
