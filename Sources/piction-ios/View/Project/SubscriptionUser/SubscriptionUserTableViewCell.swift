@@ -18,6 +18,7 @@ class SubscriptionUserTableViewCell: ReuseTableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        profileImageView.sd_cancelCurrentImageLoad()
         profileImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
     }
 
@@ -31,8 +32,6 @@ class SubscriptionUserTableViewCell: ReuseTableViewCell {
             if let url = URL(string: userPictureWithIC) {
                 profileImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-square-500-x-500"), completed: nil)
             }
-        } else {
-            profileImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
         }
 
         usernameLabel.text = username

@@ -21,7 +21,9 @@ final class HomeSubscribingPostsTableViewCell: ReuseTableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        largeThumbnailImageView.sd_cancelCurrentImageLoad()
         largeThumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360")
+        smallThumbnailImageView.sd_cancelCurrentImageLoad()
         smallThumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360")
     }
 
@@ -47,9 +49,6 @@ final class HomeSubscribingPostsTableViewCell: ReuseTableViewCell {
                     smallThumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-post-960-x-360"), completed: nil)
                 }
             }
-        } else {
-            largeThumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360")
-            smallThumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360")
         }
         let series = seriesName != nil ? " ᐧ \(seriesName ?? "")" : ""
         projectLabel.text = "\(projectName ?? "")\(series)"

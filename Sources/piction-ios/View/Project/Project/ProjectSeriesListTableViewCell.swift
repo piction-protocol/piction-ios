@@ -19,7 +19,9 @@ final class ProjectSeriesListTableViewCell: ReuseTableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        thumbnailImageView.sd_cancelCurrentImageLoad()
         thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360")
+        backgroundThumbnailImageView.sd_cancelCurrentImageLoad()
         backgroundThumbnailImageView.image = nil
     }
 
@@ -31,8 +33,6 @@ final class ProjectSeriesListTableViewCell: ReuseTableViewCell {
             if let url = URL(string: coverImageWithIC) {
                 thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-post-960-x-360"), completed: nil)
             }
-        } else {
-            thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360")
         }
 
         if let backgroundThumbnail = thumbnails?[safe: 1] {
@@ -40,9 +40,8 @@ final class ProjectSeriesListTableViewCell: ReuseTableViewCell {
             if let url = URL(string: coverImageWithIC) {
                 backgroundThumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: nil, completed: nil)
             }
-        } else {
-            backgroundThumbnailImageView.image = nil
         }
+
         seriesLabel.text = seriesName
         postCountLabel.text = LocalizedStrings.str_series_posts_count.localized(with: postCount ?? 0)
     }

@@ -17,6 +17,7 @@ final class TagResultProjectListCollectionViewCell: ReuseCollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        thumbnailImageView.sd_cancelCurrentImageLoad()
         thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
     }
 
@@ -30,8 +31,6 @@ final class TagResultProjectListCollectionViewCell: ReuseCollectionViewCell {
             if let url = URL(string: thumbnailWithIC) {
                 thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-square-500-x-500"), completed: nil)
             }
-        } else {
-            thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
         }
 
         titleLabel.text = title

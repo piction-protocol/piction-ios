@@ -23,6 +23,7 @@ final class MyProjectTableViewCell: ReuseTableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        thumbnailImageView.sd_cancelCurrentImageLoad()
         thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450")
     }
 
@@ -36,8 +37,6 @@ final class MyProjectTableViewCell: ReuseTableViewCell {
             if let url = URL(string: wideThumbnailWithIC) {
                 thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450"), completed: nil)
             }
-        } else {
-            thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450")
         }
 
         titleLabel.text = title
