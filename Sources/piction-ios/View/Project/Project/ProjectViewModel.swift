@@ -282,6 +282,7 @@ final class ProjectViewModel: InjectableViewModel {
         let loadSeriesSuccess = loadSeriesListAction.elements
             .map { try? $0.map(to: [SeriesModel].self) }
             .flatMap(Driver.from)
+            .map { $0.filter { ($0.postCount ?? 0) > 0 } }
 
         let seriesSection = loadSeriesSuccess
             .map { $0.map { .seriesList(series: $0) } }
