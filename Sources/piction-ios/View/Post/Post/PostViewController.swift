@@ -101,14 +101,9 @@ final class PostViewController: UIViewController {
     }
 
     func cacheWebview() {
-        if postWebView != nil {
-            postWebView.stopLoading()
-            postWebView.loadHTMLString("", baseURL: nil)
-        }
-
+        postWebView?.stopLoading()
+        postWebView?.loadHTMLString("", baseURL: nil)
         URLCache.shared.removeAllCachedResponses()
-        URLCache.shared.diskCapacity = 0
-        URLCache.shared.memoryCapacity = 0
     }
 
     func showFullScreen(_ status: Bool = true, animated: Bool = true) {

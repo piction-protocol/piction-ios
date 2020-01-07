@@ -30,10 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         // urlcache
-        let cacheSizeMemory: Int = 4 * 1024 * 1024
-        let cacheSizeDisk: Int = 32 * 1024 * 1024
-        let sharedCache: URLCache = URLCache(memoryCapacity: cacheSizeMemory, diskCapacity: cacheSizeDisk, diskPath: "nsurlcache")
-        URLCache.shared = sharedCache
+        URLCache.initCache()
 
         SDImageCache.shared().config.maxCacheSize = 100 * 1024 * 1024 // 100mb
         SDImageCache.shared().clearDisk(onCompletion: nil)
