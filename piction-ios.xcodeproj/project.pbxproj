@@ -307,6 +307,18 @@
 		4356F51C233DF184000710FC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4356F51E233DF184000710FC /* Localizable.strings */; };
 		4369108923C41A310045D020 /* URLCache+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4369108823C41A300045D020 /* URLCache+Extension.swift */; };
 		4369108A23C41A310045D020 /* URLCache+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4369108823C41A300045D020 /* URLCache+Extension.swift */; };
+		4369F8A523CC64A6008D5825 /* Explore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4369F89F23CC64A5008D5825 /* Explore.storyboard */; };
+		4369F8A623CC64A6008D5825 /* Explore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4369F89F23CC64A5008D5825 /* Explore.storyboard */; };
+		4369F8A723CC64A6008D5825 /* ExploreCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4369F8A023CC64A6008D5825 /* ExploreCollectionHeaderView.swift */; };
+		4369F8A823CC64A6008D5825 /* ExploreCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4369F8A023CC64A6008D5825 /* ExploreCollectionHeaderView.swift */; };
+		4369F8A923CC64A6008D5825 /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4369F8A123CC64A6008D5825 /* ExploreViewController.swift */; };
+		4369F8AA23CC64A6008D5825 /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4369F8A123CC64A6008D5825 /* ExploreViewController.swift */; };
+		4369F8AB23CC64A6008D5825 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4369F8A223CC64A6008D5825 /* ExploreViewModel.swift */; };
+		4369F8AC23CC64A6008D5825 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4369F8A223CC64A6008D5825 /* ExploreViewModel.swift */; };
+		4369F8AD23CC64A6008D5825 /* ExploreCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4369F8A323CC64A6008D5825 /* ExploreCollectionFooterView.swift */; };
+		4369F8AE23CC64A6008D5825 /* ExploreCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4369F8A323CC64A6008D5825 /* ExploreCollectionFooterView.swift */; };
+		4369F8AF23CC64A6008D5825 /* ExploreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4369F8A423CC64A6008D5825 /* ExploreCollectionViewCell.swift */; };
+		4369F8B023CC64A6008D5825 /* ExploreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4369F8A423CC64A6008D5825 /* ExploreCollectionViewCell.swift */; };
 		436C75A12387C37F00902F08 /* ManageFanPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A02387C37F00902F08 /* ManageFanPassViewController.swift */; };
 		436C75A22387C37F00902F08 /* ManageFanPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A02387C37F00902F08 /* ManageFanPassViewController.swift */; };
 		436C75A42387C38A00902F08 /* ManageFanPassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A32387C38900902F08 /* ManageFanPassViewModel.swift */; };
@@ -478,16 +490,6 @@
 		43E5436A2355930D00F2EC45 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E543682355930D00F2EC45 /* SceneDelegate.swift */; };
 		43E543782355AFDB00F2EC45 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E543772355AFDB00F2EC45 /* Double+Extension.swift */; };
 		43E543792355AFDD00F2EC45 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E543772355AFDB00F2EC45 /* Double+Extension.swift */; };
-		43E543802356F5CD00F2EC45 /* ExploreListCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5437B2356F5CD00F2EC45 /* ExploreListCollectionFooterView.swift */; };
-		43E543812356F5CE00F2EC45 /* ExploreListCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5437B2356F5CD00F2EC45 /* ExploreListCollectionFooterView.swift */; };
-		43E543822356F5CE00F2EC45 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5437C2356F5CD00F2EC45 /* ExploreViewModel.swift */; };
-		43E543832356F5CE00F2EC45 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5437C2356F5CD00F2EC45 /* ExploreViewModel.swift */; };
-		43E543842356F5CE00F2EC45 /* ExploreListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5437D2356F5CD00F2EC45 /* ExploreListCollectionViewCell.swift */; };
-		43E543852356F5CE00F2EC45 /* ExploreListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5437D2356F5CD00F2EC45 /* ExploreListCollectionViewCell.swift */; };
-		43E543862356F5CE00F2EC45 /* Explore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43E5437E2356F5CD00F2EC45 /* Explore.storyboard */; };
-		43E543872356F5CE00F2EC45 /* Explore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43E5437E2356F5CD00F2EC45 /* Explore.storyboard */; };
-		43E543882356F5CE00F2EC45 /* ExploreListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5437F2356F5CD00F2EC45 /* ExploreListViewController.swift */; };
-		43E543892356F5CE00F2EC45 /* ExploreListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5437F2356F5CD00F2EC45 /* ExploreListViewController.swift */; };
 		43E5438C2357138F00F2EC45 /* TagResultProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5438B2357138F00F2EC45 /* TagResultProjectViewController.swift */; };
 		43E5438D2357139000F2EC45 /* TagResultProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5438B2357138F00F2EC45 /* TagResultProjectViewController.swift */; };
 		43E5438F235713A400F2EC45 /* TagResultProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5438E235713A400F2EC45 /* TagResultProjectViewModel.swift */; };
@@ -716,6 +718,12 @@
 		4356F51F233DF190000710FC /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4356F520233DF197000710FC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4369108823C41A300045D020 /* URLCache+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLCache+Extension.swift"; sourceTree = "<group>"; };
+		4369F89F23CC64A5008D5825 /* Explore.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Explore.storyboard; sourceTree = "<group>"; };
+		4369F8A023CC64A6008D5825 /* ExploreCollectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreCollectionHeaderView.swift; sourceTree = "<group>"; };
+		4369F8A123CC64A6008D5825 /* ExploreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
+		4369F8A223CC64A6008D5825 /* ExploreViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
+		4369F8A323CC64A6008D5825 /* ExploreCollectionFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreCollectionFooterView.swift; sourceTree = "<group>"; };
+		4369F8A423CC64A6008D5825 /* ExploreCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreCollectionViewCell.swift; sourceTree = "<group>"; };
 		436C75A02387C37F00902F08 /* ManageFanPassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFanPassViewController.swift; sourceTree = "<group>"; };
 		436C75A32387C38900902F08 /* ManageFanPassViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFanPassViewModel.swift; sourceTree = "<group>"; };
 		436C75A62387C39300902F08 /* ManageFanPass.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ManageFanPass.storyboard; sourceTree = "<group>"; };
@@ -791,11 +799,6 @@
 		43DB22912359ADBE00E69C0F /* SearchTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagTableViewCell.swift; sourceTree = "<group>"; };
 		43E543682355930D00F2EC45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		43E543772355AFDB00F2EC45 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
-		43E5437B2356F5CD00F2EC45 /* ExploreListCollectionFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreListCollectionFooterView.swift; sourceTree = "<group>"; };
-		43E5437C2356F5CD00F2EC45 /* ExploreViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
-		43E5437D2356F5CD00F2EC45 /* ExploreListCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreListCollectionViewCell.swift; sourceTree = "<group>"; };
-		43E5437E2356F5CD00F2EC45 /* Explore.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Explore.storyboard; sourceTree = "<group>"; };
-		43E5437F2356F5CD00F2EC45 /* ExploreListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreListViewController.swift; sourceTree = "<group>"; };
 		43E5438B2357138F00F2EC45 /* TagResultProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagResultProjectViewController.swift; sourceTree = "<group>"; };
 		43E5438E235713A400F2EC45 /* TagResultProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagResultProjectViewModel.swift; sourceTree = "<group>"; };
 		43E54391235713C300F2EC45 /* TagResultProjectListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagResultProjectListCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1794,11 +1797,12 @@
 		43E5437A2356F5CD00F2EC45 /* Explore */ = {
 			isa = PBXGroup;
 			children = (
-				43E5437F2356F5CD00F2EC45 /* ExploreListViewController.swift */,
-				43E5437C2356F5CD00F2EC45 /* ExploreViewModel.swift */,
-				43E5437D2356F5CD00F2EC45 /* ExploreListCollectionViewCell.swift */,
-				43E5437B2356F5CD00F2EC45 /* ExploreListCollectionFooterView.swift */,
-				43E5437E2356F5CD00F2EC45 /* Explore.storyboard */,
+				4369F8A123CC64A6008D5825 /* ExploreViewController.swift */,
+				4369F8A223CC64A6008D5825 /* ExploreViewModel.swift */,
+				4369F8A023CC64A6008D5825 /* ExploreCollectionHeaderView.swift */,
+				4369F8A423CC64A6008D5825 /* ExploreCollectionViewCell.swift */,
+				4369F8A323CC64A6008D5825 /* ExploreCollectionFooterView.swift */,
+				4369F89F23CC64A5008D5825 /* Explore.storyboard */,
 			);
 			path = Explore;
 			sourceTree = "<group>";
@@ -2069,6 +2073,7 @@
 			files = (
 				4323FAD3233A165B00243655 /* CreatePost.storyboard in Resources */,
 				4323FB43233A166000243655 /* ChangePassword.storyboard in Resources */,
+				4369F8A623CC64A6008D5825 /* Explore.storyboard in Resources */,
 				4323FB9B233A166400243655 /* SignIn.storyboard in Resources */,
 				4323FB19233A165E00243655 /* Deposit.storyboard in Resources */,
 				4323FB01233A165D00243655 /* PostFooter.storyboard in Resources */,
@@ -2080,7 +2085,6 @@
 				4323FB39233A166000243655 /* MyPage.storyboard in Resources */,
 				4323FAFB233A165D00243655 /* Project.storyboard in Resources */,
 				4323FB21233A165F00243655 /* TransactionDetail.storyboard in Resources */,
-				43E543872356F5CE00F2EC45 /* Explore.storyboard in Resources */,
 				43F1866023442ECD0050BA67 /* Localizable.stringsdict in Resources */,
 				4323FAA9233A165A00243655 /* RegisterPincode.storyboard in Resources */,
 				43EC05A82398DDDE00848CE0 /* postStyle.css in Resources */,
@@ -2125,6 +2129,7 @@
 			files = (
 				4323FAD2233A165B00243655 /* CreatePost.storyboard in Resources */,
 				438E76392362FAB90062D004 /* ManageSeries.storyboard in Resources */,
+				4369F8A523CC64A6008D5825 /* Explore.storyboard in Resources */,
 				43C41F672373B84F00D012A7 /* GoogleService-Info.plist in Resources */,
 				4323FB42233A166000243655 /* ChangePassword.storyboard in Resources */,
 				4323FB9A233A166400243655 /* SignIn.storyboard in Resources */,
@@ -2161,7 +2166,6 @@
 				4323FA98233A165900243655 /* CheckPincode.storyboard in Resources */,
 				438E76462366B6270062D004 /* SubscriptionUser.storyboard in Resources */,
 				4356F501233DE0D2000710FC /* Home.storyboard in Resources */,
-				43E543862356F5CE00F2EC45 /* Explore.storyboard in Resources */,
 				4323FBA2233A166400243655 /* Assets.xcassets in Resources */,
 				4323FAD8233A165B00243655 /* Post.storyboard in Resources */,
 				4356F507233DE798000710FC /* LaunchScreen.storyboard in Resources */,
@@ -2349,7 +2353,6 @@
 				4323FA7B233A165800243655 /* UIViewController+Extension.swift in Sources */,
 				4323FAFD233A165D00243655 /* ProjectViewController.swift in Sources */,
 				43125A3723AB65F80060928F /* HomeTrendingTableViewCell.swift in Sources */,
-				43E543812356F5CE00F2EC45 /* ExploreListCollectionFooterView.swift in Sources */,
 				4323FB27233A165F00243655 /* TransactionDetailFooterTypeTableViewCell.swift in Sources */,
 				4323FA71233A165700243655 /* Collection+Extension.swift in Sources */,
 				43C153C823C813E800565FC4 /* CategorizedProjectCollectionFooterView.swift in Sources */,
@@ -2392,10 +2395,10 @@
 				4323FA69233A165700243655 /* UIImageView+Extension.swift in Sources */,
 				436C75A52387C38A00902F08 /* ManageFanPassViewModel.swift in Sources */,
 				4323FA91233A165900243655 /* BorderLineConfigurable.swift in Sources */,
+				4369F8B023CC64A6008D5825 /* ExploreCollectionViewCell.swift in Sources */,
 				4323FB1F233A165E00243655 /* TransactionDetailItemTypeTableViewCell.swift in Sources */,
 				4369108A23C41A310045D020 /* URLCache+Extension.swift in Sources */,
 				4323FB1B233A165E00243655 /* TransactionDetailHeaderTypeTableViewCell.swift in Sources */,
-				43E543852356F5CE00F2EC45 /* ExploreListCollectionViewCell.swift in Sources */,
 				4323FAF1233A165C00243655 /* ProjectViewModel.swift in Sources */,
 				4323FAE3233A165C00243655 /* ProjectInfoViewController.swift in Sources */,
 				43125A3E23AC86620060928F /* HomeTrendingCollectionViewCell.swift in Sources */,
@@ -2410,6 +2413,7 @@
 				438E76302362BD650062D004 /* ProjectInfoTagCollectionViewCell.swift in Sources */,
 				4323FA73233A165700243655 /* UIButton+Extension.swift in Sources */,
 				4323FA97233A165900243655 /* InjectableViewModel.swift in Sources */,
+				4369F8AC23CC64A6008D5825 /* ExploreViewModel.swift in Sources */,
 				43FE8EF72354463B0074080B /* AppShortcut.swift in Sources */,
 				4323FAB3233A165A00243655 /* SearchProjectTableViewCell.swift in Sources */,
 				4323FB11233A165E00243655 /* DynamicInputView.swift in Sources */,
@@ -2417,6 +2421,7 @@
 				4323FA83233A165800243655 /* UIViewController+Rx.swift in Sources */,
 				4323FAF7233A165D00243655 /* ProjectHeaderView.swift in Sources */,
 				4323FB59233A166100243655 /* TransactionHistoryYearTypeTableViewCell.swift in Sources */,
+				4369F8A823CC64A6008D5825 /* ExploreCollectionHeaderView.swift in Sources */,
 				4323FB2B233A165F00243655 /* MyProjectViewModel.swift in Sources */,
 				4372268E237E7F610054C777 /* RxDataSources+Extension.swift in Sources */,
 				4323FB51233A166100243655 /* TransactionHistoryFooterTypeTableViewCell.swift in Sources */,
@@ -2462,6 +2467,7 @@
 				4323FADF233A165C00243655 /* PostHeaderViewController.swift in Sources */,
 				4323FB25233A165F00243655 /* TransactionDetailViewModel.swift in Sources */,
 				4323FB3B233A166000243655 /* MyPageUnderlineTypeTableViewCell.swift in Sources */,
+				4369F8AE23CC64A6008D5825 /* ExploreCollectionFooterView.swift in Sources */,
 				4323FAF5233A165D00243655 /* ProjectPostListTableViewCell.swift in Sources */,
 				4323FA9F233A165900243655 /* ConfirmPincodeViewModel.swift in Sources */,
 				4323FA67233A165700243655 /* UIApplication+Extension.swift in Sources */,
@@ -2474,12 +2480,11 @@
 				4323FA65233A165700243655 /* Container+Extension.swift in Sources */,
 				436C75AB2387C55900902F08 /* ManageFanPassTableViewCell.swift in Sources */,
 				4323FB57233A166100243655 /* TransactionHistoryViewController.swift in Sources */,
-				43E543892356F5CE00F2EC45 /* ExploreListViewController.swift in Sources */,
 				43C153A623C5CFF600565FC4 /* CategorizedProjectViewModel.swift in Sources */,
 				43E543792355AFDD00F2EC45 /* Double+Extension.swift in Sources */,
 				4323FA6B233A165700243655 /* UIColor+Extension.swift in Sources */,
 				4323FB5B233A166100243655 /* UserInfoViewController.swift in Sources */,
-				43E543832356F5CE00F2EC45 /* ExploreViewModel.swift in Sources */,
+				4369F8AA23CC64A6008D5825 /* ExploreViewController.swift in Sources */,
 				4323FBA9233A166400243655 /* Updater.swift in Sources */,
 				4323FB41233A166000243655 /* ChangePasswordViewController.swift in Sources */,
 				4323FAC5233A165B00243655 /* SubscriptionListViewController.swift in Sources */,
@@ -2518,7 +2523,6 @@
 				4323FA7A233A165800243655 /* UIViewController+Extension.swift in Sources */,
 				4323FAFC233A165D00243655 /* ProjectViewController.swift in Sources */,
 				43125A3623AB65F80060928F /* HomeTrendingTableViewCell.swift in Sources */,
-				43E543802356F5CD00F2EC45 /* ExploreListCollectionFooterView.swift in Sources */,
 				4323FB26233A165F00243655 /* TransactionDetailFooterTypeTableViewCell.swift in Sources */,
 				4323FA70233A165700243655 /* Collection+Extension.swift in Sources */,
 				43C153C723C813E800565FC4 /* CategorizedProjectCollectionFooterView.swift in Sources */,
@@ -2561,10 +2565,10 @@
 				4323FA68233A165700243655 /* UIImageView+Extension.swift in Sources */,
 				436C75A42387C38A00902F08 /* ManageFanPassViewModel.swift in Sources */,
 				4323FA90233A165800243655 /* BorderLineConfigurable.swift in Sources */,
+				4369F8AF23CC64A6008D5825 /* ExploreCollectionViewCell.swift in Sources */,
 				4323FB1E233A165E00243655 /* TransactionDetailItemTypeTableViewCell.swift in Sources */,
 				4369108923C41A310045D020 /* URLCache+Extension.swift in Sources */,
 				4323FB1A233A165E00243655 /* TransactionDetailHeaderTypeTableViewCell.swift in Sources */,
-				43E543842356F5CE00F2EC45 /* ExploreListCollectionViewCell.swift in Sources */,
 				4323FAF0233A165C00243655 /* ProjectViewModel.swift in Sources */,
 				4323FAE2233A165C00243655 /* ProjectInfoViewController.swift in Sources */,
 				43125A3D23AC86620060928F /* HomeTrendingCollectionViewCell.swift in Sources */,
@@ -2579,6 +2583,7 @@
 				438E762F2362BD650062D004 /* ProjectInfoTagCollectionViewCell.swift in Sources */,
 				4323FA72233A165700243655 /* UIButton+Extension.swift in Sources */,
 				4323FA96233A165900243655 /* InjectableViewModel.swift in Sources */,
+				4369F8AB23CC64A6008D5825 /* ExploreViewModel.swift in Sources */,
 				43FE8EF62354463B0074080B /* AppShortcut.swift in Sources */,
 				4323FAB2233A165A00243655 /* SearchProjectTableViewCell.swift in Sources */,
 				4323FB10233A165E00243655 /* DynamicInputView.swift in Sources */,
@@ -2586,6 +2591,7 @@
 				4323FA82233A165800243655 /* UIViewController+Rx.swift in Sources */,
 				4323FAF6233A165D00243655 /* ProjectHeaderView.swift in Sources */,
 				4323FB58233A166100243655 /* TransactionHistoryYearTypeTableViewCell.swift in Sources */,
+				4369F8A723CC64A6008D5825 /* ExploreCollectionHeaderView.swift in Sources */,
 				4323FB2A233A165F00243655 /* MyProjectViewModel.swift in Sources */,
 				4372268D237E7F610054C777 /* RxDataSources+Extension.swift in Sources */,
 				4323FB50233A166100243655 /* TransactionHistoryFooterTypeTableViewCell.swift in Sources */,
@@ -2631,6 +2637,7 @@
 				4323FADE233A165C00243655 /* PostHeaderViewController.swift in Sources */,
 				4323FB24233A165F00243655 /* TransactionDetailViewModel.swift in Sources */,
 				4323FB3A233A166000243655 /* MyPageUnderlineTypeTableViewCell.swift in Sources */,
+				4369F8AD23CC64A6008D5825 /* ExploreCollectionFooterView.swift in Sources */,
 				4323FAF4233A165D00243655 /* ProjectPostListTableViewCell.swift in Sources */,
 				4323FA9E233A165900243655 /* ConfirmPincodeViewModel.swift in Sources */,
 				4323FA66233A165700243655 /* UIApplication+Extension.swift in Sources */,
@@ -2643,12 +2650,11 @@
 				4323FA64233A165700243655 /* Container+Extension.swift in Sources */,
 				436C75AA2387C55900902F08 /* ManageFanPassTableViewCell.swift in Sources */,
 				4323FB56233A166100243655 /* TransactionHistoryViewController.swift in Sources */,
-				43E543882356F5CE00F2EC45 /* ExploreListViewController.swift in Sources */,
 				43C153A523C5CFF600565FC4 /* CategorizedProjectViewModel.swift in Sources */,
 				43E543782355AFDB00F2EC45 /* Double+Extension.swift in Sources */,
 				4323FA6A233A165700243655 /* UIColor+Extension.swift in Sources */,
 				4323FB5A233A166100243655 /* UserInfoViewController.swift in Sources */,
-				43E543822356F5CE00F2EC45 /* ExploreViewModel.swift in Sources */,
+				4369F8A923CC64A6008D5825 /* ExploreViewController.swift in Sources */,
 				4323FBA8233A166400243655 /* Updater.swift in Sources */,
 				4323FB40233A166000243655 /* ChangePasswordViewController.swift in Sources */,
 				4323FAC4233A165B00243655 /* SubscriptionListViewController.swift in Sources */,

@@ -39,8 +39,9 @@ final class ExploreViewModel: InjectableViewModel {
     struct Output {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
+        let embedCategoryListViewController: Driver<Void>
         let projectList: Driver<[ProjectModel]>
-        let openProjectViewController: Driver<IndexPath>
+        let selectedIndexPath: Driver<IndexPath>
         let isFetching: Driver<Bool>
         let activityIndicator: Driver<Bool>
         let showErrorPopup: Driver<Void>
@@ -60,6 +61,8 @@ final class ExploreViewModel: InjectableViewModel {
                 self?.items = []
                 self?.shouldInfiniteScroll = true
             })
+
+        let embedCategoryListViewController = viewWillAppear
 
         let loadNext = loadNextTrigger.asDriver(onErrorDriveWith: .empty())
             .filter { self.shouldInfiniteScroll }
@@ -109,11 +112,13 @@ final class ExploreViewModel: InjectableViewModel {
 
         let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
 
+
         return Output(
             viewWillAppear: input.viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
+            embedCategoryListViewController: embedCategoryListViewController,
             projectList: projectList,
-            openProjectViewController: input.selectedIndexPath,
+            selectedIndexPath: input.selectedIndexPath,
             isFetching: refreshAction.isExecuting,
             activityIndicator: activityIndicator,
             showErrorPopup: showErrorPopup

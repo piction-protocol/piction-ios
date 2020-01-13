@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,15 +23,15 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="7" id="tUy-Ku-2B8">
                                     <size key="itemSize" width="164" height="208"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="headerReferenceSize" width="50" height="50"/>
                                     <size key="footerReferenceSize" width="50" height="0.0"/>
                                     <inset key="sectionInset" minX="20" minY="20" maxX="20" maxY="20"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ExploreListCollectionViewCell" id="6ak-Tf-kRm" customClass="ExploreListCollectionViewCell" customModule="piction_ios" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="20" width="164" height="208"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ExploreCollectionViewCell" id="6ak-Tf-kRm" customClass="ExploreCollectionViewCell" customModule="piction_ios" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="70" width="164" height="208"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="fIj-67-73A">
                                             <rect key="frame" x="0.0" y="0.0" width="164" height="208"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -106,16 +107,16 @@
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="3DZ-02-7Lz" firstAttribute="leading" secondItem="6ak-Tf-kRm" secondAttribute="leading" id="04i-g4-cED"/>
-                                            <constraint firstAttribute="trailing" secondItem="sQm-tz-oGc" secondAttribute="trailing" id="1iJ-S4-N74"/>
-                                            <constraint firstItem="sQm-tz-oGc" firstAttribute="leading" secondItem="6ak-Tf-kRm" secondAttribute="leading" id="Gil-c7-Hgp"/>
-                                            <constraint firstAttribute="bottom" secondItem="sQm-tz-oGc" secondAttribute="bottom" id="OqC-xx-fiU"/>
-                                            <constraint firstAttribute="trailing" secondItem="3DZ-02-7Lz" secondAttribute="trailing" id="a6W-JV-lUh"/>
-                                            <constraint firstItem="3DZ-02-7Lz" firstAttribute="top" secondItem="6ak-Tf-kRm" secondAttribute="top" id="g0z-0H-ebs"/>
-                                            <constraint firstItem="sQm-tz-oGc" firstAttribute="top" secondItem="3DZ-02-7Lz" secondAttribute="bottom" constant="8" id="j8U-5g-avR"/>
-                                        </constraints>
+                                            <constraints>
+                                                <constraint firstItem="3DZ-02-7Lz" firstAttribute="leading" secondItem="fIj-67-73A" secondAttribute="leading" id="04i-g4-cED"/>
+                                                <constraint firstAttribute="trailing" secondItem="sQm-tz-oGc" secondAttribute="trailing" id="1iJ-S4-N74"/>
+                                                <constraint firstItem="sQm-tz-oGc" firstAttribute="leading" secondItem="fIj-67-73A" secondAttribute="leading" id="Gil-c7-Hgp"/>
+                                                <constraint firstAttribute="bottom" secondItem="sQm-tz-oGc" secondAttribute="bottom" id="OqC-xx-fiU"/>
+                                                <constraint firstAttribute="trailing" secondItem="3DZ-02-7Lz" secondAttribute="trailing" id="a6W-JV-lUh"/>
+                                                <constraint firstItem="3DZ-02-7Lz" firstAttribute="top" secondItem="fIj-67-73A" secondAttribute="top" id="g0z-0H-ebs"/>
+                                                <constraint firstItem="sQm-tz-oGc" firstAttribute="top" secondItem="3DZ-02-7Lz" secondAttribute="bottom" constant="8" id="j8U-5g-avR"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
                                         <connections>
                                             <outlet property="nicknameLabel" destination="8Fe-bS-Vhf" id="kg6-Rt-bKm"/>
                                             <outlet property="thumbnailImageView" destination="Mdk-cC-SUT" id="j1e-Zx-kdL"/>
@@ -124,7 +125,11 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="ExploreListCollectionFooterView" id="nwP-nT-OE4" customClass="ExploreListCollectionFooterView" customModule="piction_ios" customModuleProvider="target">
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ExploreCollectionHeaderView" id="AyO-JW-1Ez" customClass="ExploreCollectionHeaderView" customModule="piction_ios" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </collectionReusableView>
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="ExploreCollectionFooterView" id="nwP-nT-OE4" customClass="ExploreCollectionFooterView" customModule="piction_ios" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>

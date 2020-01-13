@@ -1,5 +1,5 @@
 //
-//  ExploreListCollectionViewCell.swift
+//  ExploreCollectionViewCell.swift
 //  PictionSDK
 //
 //  Created by jhseo on 08/08/2019.
@@ -9,7 +9,7 @@
 import UIKit
 import PictionSDK
 
-final class ExploreListCollectionViewCell: ReuseCollectionViewCell {
+final class ExploreCollectionViewCell: ReuseCollectionViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var nicknameLabel: UILabel!

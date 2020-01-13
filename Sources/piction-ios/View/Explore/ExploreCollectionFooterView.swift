@@ -1,5 +1,5 @@
 //
-//  ExploreListCollectionFooterView.swift
+//  ExploreCollectionFooterView.swift
 //  PictionSDK
 //
 //  Created by jhseo on 08/08/2019.
@@ -8,6 +8,6 @@
 
 import Foundation
 
-class ExploreListCollectionFooterView: ReuseCollectionReusableView {
+class ExploreCollectionFooterView: ReuseCollectionReusableView {
 
 }

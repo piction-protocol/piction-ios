@@ -17,7 +17,9 @@ import PictionSDK
 final class ExploreViewController: UIViewController {
     var disposeBag = DisposeBag()
 
+    var exploreHeaderView: CategoryListViewController?
     var emptyView = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_W, height: 0))
+
     private var refreshControl = UIRefreshControl()
 
     @IBOutlet weak var collectionView: UICollectionView! {
@@ -31,31 +33,43 @@ final class ExploreViewController: UIViewController {
         emptyView.frame.size.height = visibleHeight
     }
 
-    private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
-        _ = emptyView.subviews.map { $0.removeFromSuperview() }
-        let vc = CustomEmptyViewController.make(style: style)
-        embed(vc, to: emptyView)
-        self.collectionView.reloadData()
+    private func embedCategoryListViewController() {
+        self.exploreHeaderView = CategoryListViewController.make()
+        self.exploreHeaderView?.delegate = self
     }
 
     private func configureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, ProjectModel>> {
         return RxCollectionViewSectionedReloadDataSource<SectionModel<String, ProjectModel>>(
+
             configureCell: { dataSource, collectionView, indexPath, model in
-                let cell: ExploreListCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+                let cell: ExploreCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
                 cell.configure(with: model)
                 return cell
-        },
-        configureSupplementaryView: { [weak self] (dataSource, collectionView, kind, indexPath) in
-            guard let `self` = self else { return UICollectionReusableView() }
-            if (kind == UICollectionView.elementKindSectionFooter) {
-                let reusableView = collectionView.dequeueReusableView(ExploreListCollectionFooterView.self, indexPath: indexPath, kind: .footer)
+            },
+            configureSupplementaryView: { [weak self] (dataSource, collectionView, kind, indexPath) in
+                guard let `self` = self else { return UICollectionReusableView() }
 
-                _ = reusableView.subviews.map { $0.removeFromSuperview() }
-                reusableView.addSubview(self.emptyView)
-                return reusableView
-            }
-            return UICollectionReusableView()
-        })
+                switch kind {
+                case UICollectionView.elementKindSectionHeader:
+                    let reusableView = collectionView.dequeueReusableView(ExploreCollectionHeaderView.self, indexPath: indexPath, kind: .header)
+
+                    if reusableView.subviews.isEmpty {
+                        if let exploreHeaderView = self.exploreHeaderView {
+                            self.embed(exploreHeaderView, to: reusableView)
+                        }
+                    }
+                    reusableView.layoutIfNeeded()
+                    return reusableView
+                case UICollectionView.elementKindSectionFooter:
+                    let reusableView = collectionView.dequeueReusableView(ExploreCollectionFooterView.self, indexPath: indexPath, kind: .footer)
+
+                    _ = reusableView.subviews.map { $0.removeFromSuperview() }
+                    reusableView.addSubview(self.emptyView)
+                    return reusableView
+                default:
+                    return UICollectionReusableView()
+                }
+            })
     }
 
     override func viewWillLayoutSubviews() {
@@ -63,10 +77,11 @@ final class ExploreViewController: UIViewController {
 
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             let cellCount: CGFloat = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad && view.frame.size.width == UIScreen.main.bounds.size.width ? 4 : 2
-            let width = (view.frame.size.width - 40 - (cellCount - 1) * 7) / cellCount 
+            let width = (view.frame.size.width - 40 - (cellCount - 1) * 7) / cellCount
             let height = width + 44
             flowLayout.itemSize = CGSize(width: width, height: height)
             flowLayout.invalidateLayout()
+            collectionView.layoutIfNeeded()
         }
     }
 
@@ -119,6 +134,11 @@ extension ExploreViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
+            .embedCategoryListViewController
+            .drive(onNext: { self.embedCategoryListViewController() })
+            .disposed(by: disposeBag)
+
+        output
             .projectList
             .do(onNext: { [weak self] _ in
                 _ = self?.emptyView.subviews.map { $0.removeFromSuperview() }
@@ -137,7 +157,7 @@ extension ExploreViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .openProjectViewController
+            .selectedIndexPath
             .drive(onNext: { [weak self] indexPath in
                 guard let uri = dataSource[indexPath].uri else { return }
                 self?.openProjectViewController(uri: uri)
@@ -172,7 +192,21 @@ extension ExploreViewController: ViewModelBindable {
     }
 }
 
+extension ExploreViewController: CategoryListViewDelegate {
+    func loadComplete() {
+        collectionView.reloadData()
+    }
+}
+
 extension ExploreViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+
+        guard let headerCollectionView = exploreHeaderView?.collectionView else { return CGSize(width: view.frame.size.width, height: 50) }
+        let width = view.frame.size.width
+        let height = headerCollectionView.contentSize.height
+        return CGSize(width: width, height: height)
+    }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         if self.emptyView.subviews.count > 0 {
             return CGSize(width: SCREEN_W, height: emptyView.frame.size.height)
@@ -190,4 +224,3 @@ extension ExploreViewController: UICollectionViewDelegateFlowLayout {
         }
     }
 }
-
