@@ -413,6 +413,10 @@
 		439E7ED6237BEC0C00E4A475 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E7ED4237BEC0B00E4A475 /* KeyboardManager.swift */; };
 		439E7ED9237C059100E4A475 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E7ED8237C059100E4A475 /* FirebaseManager.swift */; };
 		439E7EDA237C059100E4A475 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E7ED8237C059100E4A475 /* FirebaseManager.swift */; };
+		43C153AE23C5DDA000565FC4 /* SeriesPostHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153AD23C5DDA000565FC4 /* SeriesPostHeaderView.swift */; };
+		43C153AF23C5DDA000565FC4 /* SeriesPostHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153AD23C5DDA000565FC4 /* SeriesPostHeaderView.swift */; };
+		43C153B123C5DF0600565FC4 /* SeriesPostHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43C153B023C5DF0600565FC4 /* SeriesPostHeaderView.xib */; };
+		43C153B223C5DF0600565FC4 /* SeriesPostHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43C153B023C5DF0600565FC4 /* SeriesPostHeaderView.xib */; };
 		43C41F3D2373A1D500D012A7 /* UIViewController.Container+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309235A2372BAB000716AF8 /* UIViewController.Container+Extension.swift */; };
 		43C41F3E2373A1D700D012A7 /* ViewModelAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309235E2372BADB00716AF8 /* ViewModelAssembly.swift */; };
 		43C41F3F2373A1D900D012A7 /* ViewControllerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309235C2372BACD00716AF8 /* ViewControllerAssembly.swift */; };
@@ -724,6 +728,8 @@
 		439E7ECE237BE57900E4A475 /* piction-ios-test-shareEx.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "piction-ios-test-shareEx.entitlements"; sourceTree = "<group>"; };
 		439E7ED4237BEC0B00E4A475 /* KeyboardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		439E7ED8237C059100E4A475 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		43C153AD23C5DDA000565FC4 /* SeriesPostHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesPostHeaderView.swift; sourceTree = "<group>"; };
+		43C153B023C5DF0600565FC4 /* SeriesPostHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeriesPostHeaderView.xib; sourceTree = "<group>"; };
 		43C41F412373A28600D012A7 /* BorderLineConfigurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderLineConfigurable.swift; sourceTree = "<group>"; };
 		43C41F422373A28600D012A7 /* InputAppliable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputAppliable.swift; sourceTree = "<group>"; };
 		43C41F432373A28600D012A7 /* Injectable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Injectable.swift; sourceTree = "<group>"; };
@@ -1179,6 +1185,8 @@
 				4323F9DE233A165600243655 /* SeriesPostViewController.swift */,
 				4323F9DB233A165600243655 /* SeriesPostViewModel.swift */,
 				4323F9DC233A165600243655 /* SeriesPostListTableViewCell.swift */,
+				43C153B023C5DF0600565FC4 /* SeriesPostHeaderView.xib */,
+				43C153AD23C5DDA000565FC4 /* SeriesPostHeaderView.swift */,
 				4323F9DD233A165600243655 /* SeriesPost.storyboard */,
 			);
 			path = SeriesPost;
@@ -2008,6 +2016,7 @@
 				43F1866023442ECD0050BA67 /* Localizable.stringsdict in Resources */,
 				4323FAA9233A165A00243655 /* RegisterPincode.storyboard in Resources */,
 				43EC05A82398DDDE00848CE0 /* postStyle.css in Resources */,
+				43C153B223C5DF0600565FC4 /* SeriesPostHeaderView.xib in Resources */,
 				4323FB13233A165E00243655 /* DynamicInputView.xib in Resources */,
 				4323FAAD233A165A00243655 /* Search.storyboard in Resources */,
 				43C41F682373B84F00D012A7 /* GoogleService-Info.plist in Resources */,
@@ -2060,6 +2069,7 @@
 				4323FB20233A165E00243655 /* TransactionDetail.storyboard in Resources */,
 				43EC05A72398DDDE00848CE0 /* postStyle.css in Resources */,
 				43F1865F23442ECD0050BA67 /* Localizable.stringsdict in Resources */,
+				43C153B123C5DF0600565FC4 /* SeriesPostHeaderView.xib in Resources */,
 				4323FAA8233A165900243655 /* RegisterPincode.storyboard in Resources */,
 				4323FB12233A165E00243655 /* DynamicInputView.xib in Resources */,
 				4323FAAC233A165A00243655 /* Search.storyboard in Resources */,
@@ -2261,6 +2271,7 @@
 				4323FB0B233A165E00243655 /* CustomEmptyViewModel.swift in Sources */,
 				4323FB15233A165E00243655 /* DepositViewController.swift in Sources */,
 				438E76342362FAA20062D004 /* ManageSeriesViewController.swift in Sources */,
+				43C153AF23C5DDA000565FC4 /* SeriesPostHeaderView.swift in Sources */,
 				4323FA7B233A165800243655 /* UIViewController+Extension.swift in Sources */,
 				4323FAFD233A165D00243655 /* ProjectViewController.swift in Sources */,
 				43125A3723AB65F80060928F /* HomeTrendingTableViewCell.swift in Sources */,
@@ -2421,6 +2432,7 @@
 				4323FB0A233A165E00243655 /* CustomEmptyViewModel.swift in Sources */,
 				4323FB14233A165E00243655 /* DepositViewController.swift in Sources */,
 				438E76332362FAA20062D004 /* ManageSeriesViewController.swift in Sources */,
+				43C153AE23C5DDA000565FC4 /* SeriesPostHeaderView.swift in Sources */,
 				4323FA7A233A165800243655 /* UIViewController+Extension.swift in Sources */,
 				4323FAFC233A165D00243655 /* ProjectViewController.swift in Sources */,
 				43125A3623AB65F80060928F /* HomeTrendingTableViewCell.swift in Sources */,

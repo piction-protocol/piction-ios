@@ -11,12 +11,23 @@ import RxSwift
 import RxCocoa
 import ViewModelBindable
 import RxDataSources
+import GSKStretchyHeaderView
 import PictionSDK
 
 final class SeriesPostViewController: UIViewController {
     var disposeBag = DisposeBag()
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            stretchyHeader = SeriesPostHeaderView.getView()
+            if let stretchyHeader = stretchyHeader {
+                stretchyHeader.stretchDelegate = self
+                tableView.addSubview(stretchyHeader)
+            }
+        }
+    }
+
+    private var stretchyHeader: SeriesPostHeaderView?
 
     @IBOutlet weak var coverView: UIView! {
         didSet {
@@ -30,6 +41,11 @@ final class SeriesPostViewController: UIViewController {
     @IBOutlet weak var postCountLabel: UILabel!
     @IBOutlet weak var sortButton: UIButton!
     @IBOutlet weak var emptyView: UIView!
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        stretchyHeader?.frame.size.width = view.frame.size.width
+    }
 
     private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
         _ = emptyView.subviews.map { $0.removeFromSuperview() }
@@ -97,7 +113,9 @@ extension SeriesPostViewController: ViewModelBindable {
         output
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
-                self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+                self?.navigationController?.configureNavigationBar(transparent: true, shadow: false)
+                self?.navigationController?.navigationBar.barStyle = .black
+                self?.navigationController?.navigationBar.tintColor = .white
                 self?.setInfiniteScrollStyle()
                 let uri = self?.viewModel?.uri ?? ""
                 let seriesId = self?.viewModel?.seriesId ?? 0
@@ -106,27 +124,16 @@ extension SeriesPostViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .seriesInfo
-            .drive(onNext: { [weak self] seriesInfo in
-                self?.navigationItem.title = seriesInfo.name
-                self?.seriesTitleLabel.text = seriesInfo.name
-                self?.postCountLabel.text = LocalizedStrings.str_series_posts_count.localized(with: seriesInfo.postCount ?? 0)
+            .viewWillDisappear
+            .drive(onNext: { [weak self] in
+                self?.navigationController?.navigationBar.barStyle = .default
+                self?.navigationController?.navigationBar.tintColor = UIView().tintColor
             })
             .disposed(by: disposeBag)
 
         output
-            .seriesThumbnail
-            .drive(onNext: { [weak self] thumbnails in
-                self?.coverMaskImage.blurRadius = 5
-                if let coverImage = thumbnails[safe: 0] {
-                    let coverImageWithIC = "\(coverImage)?w=656&h=246&quality=80&output=webp"
-                    if let url = URL(string: coverImageWithIC) {
-                        self?.coverImageView.sd_setImageWithFade(with: url, placeholderImage: UIImage())
-                    }
-                } else {
-                    self?.coverImageView.image = nil
-                }
-            })
+            .seriesInfo
+            .drive(onNext: { self.stretchyHeader?.configureSeriesInfo(with: $0) })
             .disposed(by: disposeBag)
 
         output
@@ -157,10 +164,7 @@ extension SeriesPostViewController: ViewModelBindable {
 
         output
             .embedEmptyViewController
-            .drive(onNext: { [weak self] style in
-                guard let `self` = self else { return }
-                self.embedCustomEmptyViewController(style: style)
-            })
+            .drive(onNext: { self.embedCustomEmptyViewController(style: $0) })
             .disposed(by: disposeBag)
 
         output
@@ -196,9 +200,19 @@ extension SeriesPostViewController: ViewModelBindable {
 
         output
             .activityIndicator
-            .drive(onNext: { status in
-                Toast.loadingActivity(status)
-            })
+            .drive(onNext: { Toast.loadingActivity($0) })
             .disposed(by: disposeBag)
+    }
+}
+
+// MARK: - GSKStretchyHeaderViewStretchDelegate
+extension SeriesPostViewController: GSKStretchyHeaderViewStretchDelegate {
+    func stretchyHeaderView(_ headerView: GSKStretchyHeaderView, didChangeStretchFactor stretchFactor: CGFloat) {
+        stretchyHeader?.maskImage.isHidden = false
+        if stretchFactor > 0.1 {
+            stretchyHeader?.maskImage.blurRadius = 0
+        } else {
+            stretchyHeader?.maskImage.blurRadius = (1 - min(1, stretchFactor) - 0.9) * 50
+        }
     }
 }

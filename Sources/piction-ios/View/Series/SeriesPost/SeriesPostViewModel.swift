@@ -45,7 +45,6 @@ final class SeriesPostViewModel: InjectableViewModel {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
         let seriesInfo: Driver<SeriesModel>
-        let seriesThumbnail: Driver<[String]>
         let contentList: Driver<SectionType<ContentsSection>>
         let isDescending: Driver<Bool>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
@@ -106,16 +105,6 @@ final class SeriesPostViewModel: InjectableViewModel {
             .map { try? $0.map(to: SeriesModel.self) }
             .flatMap(Driver.from)
 
-        let loadSeriesThumbnailAction = Driver.merge(initialLoad, loadRetry)
-            .map { SeriesAPI.getThumbnails(uri: uri, seriesId: seriesId) }
-            .map(PictionSDK.rx.requestAPI)
-            .flatMap(Action.makeDriver)
-
-        let loadSeriesThumbnailSuccess = loadSeriesThumbnailAction.elements
-            .map { try? $0.mapJSON() }
-            .map { $0 as? [String] }
-            .flatMap(Driver.from)
-
         let loadSeriesPostsAction = Driver.merge(initialLoad, loadNext, loadRetry)
             .map { SeriesAPI.allSeriesPosts(uri: uri, seriesId: seriesId, page: self.page + 1, size: 20, isDescending: self.isDescending) }
             .map(PictionSDK.rx.requestAPI)
@@ -161,15 +150,12 @@ final class SeriesPostViewModel: InjectableViewModel {
             .map { _ in .projectPostListEmpty }
             .flatMap(Driver<CustomEmptyViewStyle>.from)
 
-        let activityIndicator = Driver.merge(
-            loadSeriesInfoAction.isExecuting,
-            loadSeriesThumbnailAction.isExecuting)
+        let activityIndicator = loadSeriesInfoAction.isExecuting
 
         return Output(
             viewWillAppear: input.viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
             seriesInfo: loadSeriesInfoSuccess,
-            seriesThumbnail: loadSeriesThumbnailSuccess,
             contentList: contentList,
             isDescending: isDescending,
             embedEmptyViewController: embedPostEmptyView,
