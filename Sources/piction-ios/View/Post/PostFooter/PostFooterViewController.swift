@@ -57,7 +57,7 @@ final class PostFooterViewController: UIViewController {
 
     private func setSeriesPostTitle(postItem: PostModel, seriesItems: [PostIndexModel]) {
         seriesTitleLabel.text = postItem.series?.name
-        seriesPostCountLabel.text = LocalizedStrings.str_series_posts_count.localized(with: postItem.series?.postCount ?? 0)
+        seriesPostCountLabel.text = LocalizedStrings.str_series_posts_count.localized(with: postItem.series?.postCount.commaRepresentation ?? "0")
     }
 
     private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, PostIndexModel>> {

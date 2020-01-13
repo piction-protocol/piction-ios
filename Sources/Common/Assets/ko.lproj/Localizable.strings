@@ -129,7 +129,8 @@
 "str_project_subscribing" = "구독 중";
 "str_project_subscrition_complete" = "구독 완료";
 "str_project_cancel_subscrition" = "구독이 취소되었습니다.";
-"str_series_posts_count" = "%d 포스트";
+"str_series_posts_count" = "%@ 포스트";
+"str_projects_count" = "%@ 프로젝트";
 
 "str_date_format" = "M월 d일";
 "str_reservation_datetime_format" = "예약 : M월 d일 hh:mm:ss";

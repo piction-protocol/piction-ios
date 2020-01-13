@@ -33,9 +33,27 @@
 			<key>zero</key>
 			<string>No posts</string>
 			<key>one</key>
-			<string>%d post</string>
+			<string>%@ post</string>
 			<key>other</key>
-			<string>%d posts</string>
+			<string>%@ posts</string>
+		</dict>
+	</dict>
+	<key>str_projects_count</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@project@</string>
+		<key>project</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>No projects</string>
+			<key>one</key>
+			<string>%@ project</string>
+			<key>other</key>
+			<string>%@ projects</string>
 		</dict>
 	</dict>
 	<key>str_project_update_n_minute</key>

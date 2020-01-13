@@ -27,7 +27,21 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>other</key>
-			<string>%d 포스트</string>
+			<string>%@ 포스트</string>
+		</dict>
+	</dict>
+	<key>str_projects_count</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@project@</string>
+		<key>project</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>%@ 프로젝트</string>
 		</dict>
 	</dict>
 	<key>str_project_update_n_minute</key>
