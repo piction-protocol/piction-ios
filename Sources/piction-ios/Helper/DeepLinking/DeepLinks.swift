@@ -57,6 +57,22 @@ struct SearchDeepLink: DeepLink {
     init(values: DeepLinkValues) {}
 }
 
+// 태그 상세
+// piction://tag
+struct TagResultProjectDeepLink: DeepLink {
+    static let template = DeepLinkTemplate()
+        .term("tag")
+        .queryStringParameters([
+            .requiredString(named: "keyword")
+        ])
+
+    init(values: DeepLinkValues) {
+        keyword = values.query["keyword"] as? String
+    }
+
+    let keyword: String?
+}
+
 /**
 *  탐색
 */
@@ -68,6 +84,22 @@ struct HomeExploreDeepLink: DeepLink {
         .term("home-explore")
 
     init(values: DeepLinkValues) {}
+}
+
+// 카테고리 상세
+// piction://category
+struct CategorizedProjectDeepLink: DeepLink {
+    static let template = DeepLinkTemplate()
+        .term("category")
+        .queryStringParameters([
+            .requiredString(named: "id")
+        ])
+
+    init(values: DeepLinkValues) {
+        id = values.query["id"] as? Int
+    }
+
+    let id: Int?
 }
 
 

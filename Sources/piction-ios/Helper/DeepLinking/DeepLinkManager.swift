@@ -17,7 +17,9 @@ struct DeepLinkManager {
                 SignupDeepLink.self,
                 HomeDeepLink.self,
                 HomeExploreDeepLink.self,
+                CategorizedProjectDeepLink.self,
                 SearchDeepLink.self,
+                TagResultProjectDeepLink.self,
                 ProjectDeepLink.self,
                 ProjectPostsDeepLink.self,
                 ProjectSeriesDeepLink.self,
@@ -61,7 +63,9 @@ struct DeepLinkManager {
         case let link as SignupDeepLink: return showSignup(with: link)
         case let link as HomeDeepLink: return showHome(with: link)
         case let link as HomeExploreDeepLink: return showHomeExplore(with: link)
+        case let link as CategorizedProjectDeepLink: return showCategorizedProject(with: link)
         case let link as SearchDeepLink: return showSearch(with: link)
+        case let link as TagResultProjectDeepLink: return showTagResultProject(with: link)
         case let link as ProjectDeepLink: return showProject(with: link)
         case let link as ProjectPostsDeepLink: return showProjectPosts(with: link)
         case let link as ProjectSeriesDeepLink: return showProjectSeries(with: link)
@@ -122,9 +126,27 @@ struct DeepLinkManager {
         return false
     }
 
+    static func showTagResultProject(with deepLink: TagResultProjectDeepLink) -> Bool {
+        let vc = TagResultProjectViewController.make(tag: deepLink.keyword ?? "")
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.openViewController(vc, type: .push)
+            return true
+        }
+        return false
+    }
+
     static func showHomeExplore(with deepLink: HomeExploreDeepLink) -> Bool {
         if let tabBarController = UIApplication.topViewController()?.tabBarController as? TabBarController {
             tabBarController.moveToSelectTab(.explore, toRoot: true)
+            return true
+        }
+        return false
+    }
+
+    static func showCategorizedProject(with deepLink: CategorizedProjectDeepLink) -> Bool {
+        let vc = CategorizedProjectViewController.make(categoryId: deepLink.id ?? 0)
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.openViewController(vc, type: .push)
             return true
         }
         return false
