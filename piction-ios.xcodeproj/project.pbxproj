@@ -413,10 +413,18 @@
 		439E7ED6237BEC0C00E4A475 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E7ED4237BEC0B00E4A475 /* KeyboardManager.swift */; };
 		439E7ED9237C059100E4A475 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E7ED8237C059100E4A475 /* FirebaseManager.swift */; };
 		439E7EDA237C059100E4A475 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E7ED8237C059100E4A475 /* FirebaseManager.swift */; };
+		43C1539D23C5C8EF00565FC4 /* CategoryListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1539C23C5C8EF00565FC4 /* CategoryListCollectionViewCell.swift */; };
+		43C1539E23C5C8EF00565FC4 /* CategoryListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1539C23C5C8EF00565FC4 /* CategoryListCollectionViewCell.swift */; };
 		43C153AE23C5DDA000565FC4 /* SeriesPostHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153AD23C5DDA000565FC4 /* SeriesPostHeaderView.swift */; };
 		43C153AF23C5DDA000565FC4 /* SeriesPostHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153AD23C5DDA000565FC4 /* SeriesPostHeaderView.swift */; };
 		43C153B123C5DF0600565FC4 /* SeriesPostHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43C153B023C5DF0600565FC4 /* SeriesPostHeaderView.xib */; };
 		43C153B223C5DF0600565FC4 /* SeriesPostHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43C153B023C5DF0600565FC4 /* SeriesPostHeaderView.xib */; };
+		43C153BB23C72A9200565FC4 /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153BA23C72A9200565FC4 /* CategoryListViewController.swift */; };
+		43C153BC23C72A9200565FC4 /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153BA23C72A9200565FC4 /* CategoryListViewController.swift */; };
+		43C153BE23C72A9D00565FC4 /* CategoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153BD23C72A9D00565FC4 /* CategoryListViewModel.swift */; };
+		43C153BF23C72A9D00565FC4 /* CategoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153BD23C72A9D00565FC4 /* CategoryListViewModel.swift */; };
+		43C153C123C72AA700565FC4 /* CategoryList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C153C023C72AA700565FC4 /* CategoryList.storyboard */; };
+		43C153C223C72AA700565FC4 /* CategoryList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C153C023C72AA700565FC4 /* CategoryList.storyboard */; };
 		43C41F3D2373A1D500D012A7 /* UIViewController.Container+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309235A2372BAB000716AF8 /* UIViewController.Container+Extension.swift */; };
 		43C41F3E2373A1D700D012A7 /* ViewModelAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309235E2372BADB00716AF8 /* ViewModelAssembly.swift */; };
 		43C41F3F2373A1D900D012A7 /* ViewControllerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309235C2372BACD00716AF8 /* ViewControllerAssembly.swift */; };
@@ -728,8 +736,12 @@
 		439E7ECE237BE57900E4A475 /* piction-ios-test-shareEx.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "piction-ios-test-shareEx.entitlements"; sourceTree = "<group>"; };
 		439E7ED4237BEC0B00E4A475 /* KeyboardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		439E7ED8237C059100E4A475 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		43C1539C23C5C8EF00565FC4 /* CategoryListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListCollectionViewCell.swift; sourceTree = "<group>"; };
 		43C153AD23C5DDA000565FC4 /* SeriesPostHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesPostHeaderView.swift; sourceTree = "<group>"; };
 		43C153B023C5DF0600565FC4 /* SeriesPostHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeriesPostHeaderView.xib; sourceTree = "<group>"; };
+		43C153BA23C72A9200565FC4 /* CategoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewController.swift; sourceTree = "<group>"; };
+		43C153BD23C72A9D00565FC4 /* CategoryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewModel.swift; sourceTree = "<group>"; };
+		43C153C023C72AA700565FC4 /* CategoryList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CategoryList.storyboard; sourceTree = "<group>"; };
 		43C41F412373A28600D012A7 /* BorderLineConfigurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderLineConfigurable.swift; sourceTree = "<group>"; };
 		43C41F422373A28600D012A7 /* InputAppliable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputAppliable.swift; sourceTree = "<group>"; };
 		43C41F432373A28600D012A7 /* Injectable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Injectable.swift; sourceTree = "<group>"; };
@@ -1021,6 +1033,7 @@
 				43722667237E37530054C777 /* Search */,
 				4323F9B3233A165600243655 /* Home */,
 				43E5437A2356F5CD00F2EC45 /* Explore */,
+				4369F89E23CC4C0E008D5825 /* Category */,
 				4323F9C1233A165600243655 /* Subscription */,
 				4323F9F8233A165600243655 /* MyPage */,
 				4323F9C9233A165600243655 /* Project */,
@@ -1447,6 +1460,14 @@
 			path = StoreReviewManager;
 			sourceTree = "<group>";
 		};
+		4369F89E23CC4C0E008D5825 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				43C153B923C72A7900565FC4 /* CategoryList */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 		436C759F2387C36100902F08 /* ManageFanPass */ = {
 			isa = PBXGroup;
 			children = (
@@ -1597,6 +1618,17 @@
 				439E7ED8237C059100E4A475 /* FirebaseManager.swift */,
 			);
 			path = FirebaseManager;
+			sourceTree = "<group>";
+		};
+		43C153B923C72A7900565FC4 /* CategoryList */ = {
+			isa = PBXGroup;
+			children = (
+				43C153BA23C72A9200565FC4 /* CategoryListViewController.swift */,
+				43C153BD23C72A9D00565FC4 /* CategoryListViewModel.swift */,
+				43C1539C23C5C8EF00565FC4 /* CategoryListCollectionViewCell.swift */,
+				43C153C023C72AA700565FC4 /* CategoryList.storyboard */,
+			);
+			path = CategoryList;
 			sourceTree = "<group>";
 		};
 		43C41F402373A28600D012A7 /* Protocol */ = {
@@ -2020,6 +2052,7 @@
 				4323FB13233A165E00243655 /* DynamicInputView.xib in Resources */,
 				4323FAAD233A165A00243655 /* Search.storyboard in Resources */,
 				43C41F682373B84F00D012A7 /* GoogleService-Info.plist in Resources */,
+				43C153C223C72AA700565FC4 /* CategoryList.storyboard in Resources */,
 				43C41F6A2373B84F00D012A7 /* piction-ios-test_Info.plist in Resources */,
 				4323FB91233A166300243655 /* SignUpComplete.storyboard in Resources */,
 				4323FAC3233A165B00243655 /* SubscriptionList.storyboard in Resources */,
@@ -2073,6 +2106,7 @@
 				4323FAA8233A165900243655 /* RegisterPincode.storyboard in Resources */,
 				4323FB12233A165E00243655 /* DynamicInputView.xib in Resources */,
 				4323FAAC233A165A00243655 /* Search.storyboard in Resources */,
+				43C153C123C72AA700565FC4 /* CategoryList.storyboard in Resources */,
 				4323FB90233A166300243655 /* SignUpComplete.storyboard in Resources */,
 				4323FAC2233A165B00243655 /* SubscriptionList.storyboard in Resources */,
 				4323FADA233A165C00243655 /* PostHeader.storyboard in Resources */,
@@ -2293,6 +2327,7 @@
 				4323FA77233A165700243655 /* UIImage+Extension.swift in Sources */,
 				43502A9E238FB82900586098 /* StoreReviewManager.swift in Sources */,
 				4323FB09233A165D00243655 /* CreateProjectViewController.swift in Sources */,
+				43C153BC23C72A9200565FC4 /* CategoryListViewController.swift in Sources */,
 				4323FAA7233A165900243655 /* RegisterPincodeViewModel.swift in Sources */,
 				4323FB45233A166000243655 /* ChangePasswordViewModel.swift in Sources */,
 				438E764D2366B7B30062D004 /* SubscriptionUserViewController.swift in Sources */,
@@ -2328,6 +2363,7 @@
 				4323FB31233A165F00243655 /* MyPagePushTypeTableViewCell.swift in Sources */,
 				4323FB29233A165F00243655 /* MyProjectTableViewCell.swift in Sources */,
 				4323FB8F233A166300243655 /* SignUpCompleteViewModel.swift in Sources */,
+				43C1539E23C5C8EF00565FC4 /* CategoryListCollectionViewCell.swift in Sources */,
 				438E76302362BD650062D004 /* ProjectInfoTagCollectionViewCell.swift in Sources */,
 				4323FA73233A165700243655 /* UIButton+Extension.swift in Sources */,
 				4323FA97233A165900243655 /* InjectableViewModel.swift in Sources */,
@@ -2386,6 +2422,7 @@
 				4323FA9F233A165900243655 /* ConfirmPincodeViewModel.swift in Sources */,
 				4323FA67233A165700243655 /* UIApplication+Extension.swift in Sources */,
 				4323FA7D233A165800243655 /* SharedSequence+Extension.swift in Sources */,
+				43C153BF23C72A9D00565FC4 /* CategoryListViewModel.swift in Sources */,
 				4323FB2F233A165F00243655 /* MyProjectViewController.swift in Sources */,
 				4323FB9D233A166400243655 /* SignInViewModel.swift in Sources */,
 				438E764A2366B6650062D004 /* SubscriptionUserTableViewCell.swift in Sources */,
@@ -2454,6 +2491,7 @@
 				4323FA76233A165700243655 /* UIImage+Extension.swift in Sources */,
 				43502A9D238FB82900586098 /* StoreReviewManager.swift in Sources */,
 				4323FB08233A165D00243655 /* CreateProjectViewController.swift in Sources */,
+				43C153BB23C72A9200565FC4 /* CategoryListViewController.swift in Sources */,
 				4323FAA6233A165900243655 /* RegisterPincodeViewModel.swift in Sources */,
 				4323FB44233A166000243655 /* ChangePasswordViewModel.swift in Sources */,
 				438E764C2366B7B30062D004 /* SubscriptionUserViewController.swift in Sources */,
@@ -2489,6 +2527,7 @@
 				4323FB30233A165F00243655 /* MyPagePushTypeTableViewCell.swift in Sources */,
 				4323FB28233A165F00243655 /* MyProjectTableViewCell.swift in Sources */,
 				4323FB8E233A166300243655 /* SignUpCompleteViewModel.swift in Sources */,
+				43C1539D23C5C8EF00565FC4 /* CategoryListCollectionViewCell.swift in Sources */,
 				438E762F2362BD650062D004 /* ProjectInfoTagCollectionViewCell.swift in Sources */,
 				4323FA72233A165700243655 /* UIButton+Extension.swift in Sources */,
 				4323FA96233A165900243655 /* InjectableViewModel.swift in Sources */,
@@ -2547,6 +2586,7 @@
 				4323FA9E233A165900243655 /* ConfirmPincodeViewModel.swift in Sources */,
 				4323FA66233A165700243655 /* UIApplication+Extension.swift in Sources */,
 				4323FA7C233A165800243655 /* SharedSequence+Extension.swift in Sources */,
+				43C153BE23C72A9D00565FC4 /* CategoryListViewModel.swift in Sources */,
 				4323FB2E233A165F00243655 /* MyProjectViewController.swift in Sources */,
 				4323FB9C233A166400243655 /* SignInViewModel.swift in Sources */,
 				438E76492366B6650062D004 /* SubscriptionUserTableViewCell.swift in Sources */,

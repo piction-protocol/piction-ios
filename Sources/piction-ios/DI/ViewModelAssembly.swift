@@ -23,6 +23,12 @@ final class ViewModelAssembly: Assembly {
             )
         }
 
+        container.register(CategoryListViewModel.self) { resolver in
+            return CategoryListViewModel(dependency: (
+                resolver.resolve(Updater.self)!)
+            )
+        }
+
         container.register(SignInViewModel.self) { resolver in
             return SignInViewModel(dependency: (
                 resolver.resolve(Updater.self)!)

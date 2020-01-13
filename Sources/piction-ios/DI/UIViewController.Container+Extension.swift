@@ -22,6 +22,12 @@ extension ExploreViewController {
     }
 }
 
+extension CategoryListViewController {
+    static func make() -> CategoryListViewController {
+        return Container.shared.resolve(CategoryListViewController.self)!
+    }
+}
+
 extension SignInViewController {
     static func make() -> SignInViewController {
         return Container.shared.resolve(SignInViewController.self)!

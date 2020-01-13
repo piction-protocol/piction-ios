@@ -12,6 +12,7 @@ import UIKit
 public enum Storyboard: String {
     case Home
     case Explore
+    case CategoryList
     case SignIn
     case SignUp
     case SignUpComplete

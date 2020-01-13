@@ -25,6 +25,12 @@ final class ViewControllerAssembly: Assembly {
             return vc
         }
 
+        container.register(CategoryListViewController.self) { resolver in
+            let vc = Storyboard.CategoryList.instantiate(CategoryListViewController.self)
+            vc.viewModel = resolver.resolve(CategoryListViewModel.self)!
+            return vc
+        }
+
         container.register(SignInViewController.self) { resolver in
             let vc = Storyboard.SignIn.instantiate(SignInViewController.self)
             vc.viewModel = resolver.resolve(SignInViewModel.self)!
