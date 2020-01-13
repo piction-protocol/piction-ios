@@ -13,6 +13,7 @@ public enum Storyboard: String {
     case Home
     case Explore
     case CategoryList
+    case CategorizedProject
     case SignIn
     case SignUp
     case SignUpComplete

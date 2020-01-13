@@ -31,6 +31,12 @@ final class ViewControllerAssembly: Assembly {
             return vc
         }
 
+        container.register(CategorizedProjectViewController.self) { (resolver, categoryId: Int) in
+            let vc = Storyboard.CategorizedProject.instantiate(CategorizedProjectViewController.self)
+            vc.viewModel = resolver.resolve(CategorizedProjectViewModel.self, argument: categoryId)!
+            return vc
+        }
+
         container.register(SignInViewController.self) { resolver in
             let vc = Storyboard.SignIn.instantiate(SignInViewController.self)
             vc.viewModel = resolver.resolve(SignInViewModel.self)!

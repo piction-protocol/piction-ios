@@ -415,16 +415,30 @@
 		439E7EDA237C059100E4A475 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E7ED8237C059100E4A475 /* FirebaseManager.swift */; };
 		43C1539D23C5C8EF00565FC4 /* CategoryListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1539C23C5C8EF00565FC4 /* CategoryListCollectionViewCell.swift */; };
 		43C1539E23C5C8EF00565FC4 /* CategoryListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1539C23C5C8EF00565FC4 /* CategoryListCollectionViewCell.swift */; };
+		43C153A223C5CFE600565FC4 /* CategorizedProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153A123C5CFE600565FC4 /* CategorizedProjectViewController.swift */; };
+		43C153A323C5CFE600565FC4 /* CategorizedProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153A123C5CFE600565FC4 /* CategorizedProjectViewController.swift */; };
+		43C153A523C5CFF600565FC4 /* CategorizedProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153A423C5CFF600565FC4 /* CategorizedProjectViewModel.swift */; };
+		43C153A623C5CFF600565FC4 /* CategorizedProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153A423C5CFF600565FC4 /* CategorizedProjectViewModel.swift */; };
+		43C153A823C5D00300565FC4 /* CategorizedProject.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C153A723C5D00300565FC4 /* CategorizedProject.storyboard */; };
+		43C153A923C5D00300565FC4 /* CategorizedProject.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C153A723C5D00300565FC4 /* CategorizedProject.storyboard */; };
+		43C153AB23C5D03E00565FC4 /* CategorizedProjectListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153AA23C5D03E00565FC4 /* CategorizedProjectListCollectionViewCell.swift */; };
+		43C153AC23C5D03E00565FC4 /* CategorizedProjectListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153AA23C5D03E00565FC4 /* CategorizedProjectListCollectionViewCell.swift */; };
 		43C153AE23C5DDA000565FC4 /* SeriesPostHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153AD23C5DDA000565FC4 /* SeriesPostHeaderView.swift */; };
 		43C153AF23C5DDA000565FC4 /* SeriesPostHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153AD23C5DDA000565FC4 /* SeriesPostHeaderView.swift */; };
 		43C153B123C5DF0600565FC4 /* SeriesPostHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43C153B023C5DF0600565FC4 /* SeriesPostHeaderView.xib */; };
 		43C153B223C5DF0600565FC4 /* SeriesPostHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43C153B023C5DF0600565FC4 /* SeriesPostHeaderView.xib */; };
+		43C153B423C7044F00565FC4 /* CategorizedProjectHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153B323C7044F00565FC4 /* CategorizedProjectHeaderView.swift */; };
+		43C153B523C7044F00565FC4 /* CategorizedProjectHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153B323C7044F00565FC4 /* CategorizedProjectHeaderView.swift */; };
+		43C153B723C7046000565FC4 /* CategorizedProjectHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43C153B623C7046000565FC4 /* CategorizedProjectHeaderView.xib */; };
+		43C153B823C7046000565FC4 /* CategorizedProjectHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43C153B623C7046000565FC4 /* CategorizedProjectHeaderView.xib */; };
 		43C153BB23C72A9200565FC4 /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153BA23C72A9200565FC4 /* CategoryListViewController.swift */; };
 		43C153BC23C72A9200565FC4 /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153BA23C72A9200565FC4 /* CategoryListViewController.swift */; };
 		43C153BE23C72A9D00565FC4 /* CategoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153BD23C72A9D00565FC4 /* CategoryListViewModel.swift */; };
 		43C153BF23C72A9D00565FC4 /* CategoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153BD23C72A9D00565FC4 /* CategoryListViewModel.swift */; };
 		43C153C123C72AA700565FC4 /* CategoryList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C153C023C72AA700565FC4 /* CategoryList.storyboard */; };
 		43C153C223C72AA700565FC4 /* CategoryList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C153C023C72AA700565FC4 /* CategoryList.storyboard */; };
+		43C153C723C813E800565FC4 /* CategorizedProjectCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153C623C813E800565FC4 /* CategorizedProjectCollectionFooterView.swift */; };
+		43C153C823C813E800565FC4 /* CategorizedProjectCollectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C153C623C813E800565FC4 /* CategorizedProjectCollectionFooterView.swift */; };
 		43C41F3D2373A1D500D012A7 /* UIViewController.Container+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309235A2372BAB000716AF8 /* UIViewController.Container+Extension.swift */; };
 		43C41F3E2373A1D700D012A7 /* ViewModelAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309235E2372BADB00716AF8 /* ViewModelAssembly.swift */; };
 		43C41F3F2373A1D900D012A7 /* ViewControllerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309235C2372BACD00716AF8 /* ViewControllerAssembly.swift */; };
@@ -737,11 +751,18 @@
 		439E7ED4237BEC0B00E4A475 /* KeyboardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		439E7ED8237C059100E4A475 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		43C1539C23C5C8EF00565FC4 /* CategoryListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListCollectionViewCell.swift; sourceTree = "<group>"; };
+		43C153A123C5CFE600565FC4 /* CategorizedProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorizedProjectViewController.swift; sourceTree = "<group>"; };
+		43C153A423C5CFF600565FC4 /* CategorizedProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorizedProjectViewModel.swift; sourceTree = "<group>"; };
+		43C153A723C5D00300565FC4 /* CategorizedProject.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CategorizedProject.storyboard; sourceTree = "<group>"; };
+		43C153AA23C5D03E00565FC4 /* CategorizedProjectListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorizedProjectListCollectionViewCell.swift; sourceTree = "<group>"; };
 		43C153AD23C5DDA000565FC4 /* SeriesPostHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesPostHeaderView.swift; sourceTree = "<group>"; };
 		43C153B023C5DF0600565FC4 /* SeriesPostHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeriesPostHeaderView.xib; sourceTree = "<group>"; };
+		43C153B323C7044F00565FC4 /* CategorizedProjectHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorizedProjectHeaderView.swift; sourceTree = "<group>"; };
+		43C153B623C7046000565FC4 /* CategorizedProjectHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategorizedProjectHeaderView.xib; sourceTree = "<group>"; };
 		43C153BA23C72A9200565FC4 /* CategoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewController.swift; sourceTree = "<group>"; };
 		43C153BD23C72A9D00565FC4 /* CategoryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewModel.swift; sourceTree = "<group>"; };
 		43C153C023C72AA700565FC4 /* CategoryList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CategoryList.storyboard; sourceTree = "<group>"; };
+		43C153C623C813E800565FC4 /* CategorizedProjectCollectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorizedProjectCollectionFooterView.swift; sourceTree = "<group>"; };
 		43C41F412373A28600D012A7 /* BorderLineConfigurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderLineConfigurable.swift; sourceTree = "<group>"; };
 		43C41F422373A28600D012A7 /* InputAppliable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputAppliable.swift; sourceTree = "<group>"; };
 		43C41F432373A28600D012A7 /* Injectable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Injectable.swift; sourceTree = "<group>"; };
@@ -1464,6 +1485,7 @@
 			isa = PBXGroup;
 			children = (
 				43C153B923C72A7900565FC4 /* CategoryList */,
+				43C1539F23C5CBEC00565FC4 /* CategorizedProject */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1618,6 +1640,20 @@
 				439E7ED8237C059100E4A475 /* FirebaseManager.swift */,
 			);
 			path = FirebaseManager;
+			sourceTree = "<group>";
+		};
+		43C1539F23C5CBEC00565FC4 /* CategorizedProject */ = {
+			isa = PBXGroup;
+			children = (
+				43C153A123C5CFE600565FC4 /* CategorizedProjectViewController.swift */,
+				43C153A423C5CFF600565FC4 /* CategorizedProjectViewModel.swift */,
+				43C153AA23C5D03E00565FC4 /* CategorizedProjectListCollectionViewCell.swift */,
+				43C153B623C7046000565FC4 /* CategorizedProjectHeaderView.xib */,
+				43C153B323C7044F00565FC4 /* CategorizedProjectHeaderView.swift */,
+				43C153C623C813E800565FC4 /* CategorizedProjectCollectionFooterView.swift */,
+				43C153A723C5D00300565FC4 /* CategorizedProject.storyboard */,
+			);
+			path = CategorizedProject;
 			sourceTree = "<group>";
 		};
 		43C153B923C72A7900565FC4 /* CategoryList */ = {
@@ -2055,6 +2091,7 @@
 				43C153C223C72AA700565FC4 /* CategoryList.storyboard in Resources */,
 				43C41F6A2373B84F00D012A7 /* piction-ios-test_Info.plist in Resources */,
 				4323FB91233A166300243655 /* SignUpComplete.storyboard in Resources */,
+				43C153A923C5D00300565FC4 /* CategorizedProject.storyboard in Resources */,
 				4323FAC3233A165B00243655 /* SubscriptionList.storyboard in Resources */,
 				438E76472366B6270062D004 /* SubscriptionUser.storyboard in Resources */,
 				4323FADB233A165C00243655 /* PostHeader.storyboard in Resources */,
@@ -2073,6 +2110,7 @@
 				4323FBA3233A166400243655 /* Assets.xcassets in Resources */,
 				4323FAD9233A165C00243655 /* Post.storyboard in Resources */,
 				4356F508233DE798000710FC /* LaunchScreen.storyboard in Resources */,
+				43C153B823C7046000565FC4 /* CategorizedProjectHeaderView.xib in Resources */,
 				4323FAEB233A165C00243655 /* SeriesPost.storyboard in Resources */,
 				43E54396235713D700F2EC45 /* TagResultProject.storyboard in Resources */,
 				436C75A82387C39300902F08 /* ManageFanPass.storyboard in Resources */,
@@ -2109,6 +2147,7 @@
 				43C153C123C72AA700565FC4 /* CategoryList.storyboard in Resources */,
 				4323FB90233A166300243655 /* SignUpComplete.storyboard in Resources */,
 				4323FAC2233A165B00243655 /* SubscriptionList.storyboard in Resources */,
+				43C153A823C5D00300565FC4 /* CategorizedProject.storyboard in Resources */,
 				4323FADA233A165C00243655 /* PostHeader.storyboard in Resources */,
 				4323FB48233A166000243655 /* ChangeMyInfo.storyboard in Resources */,
 				436C75B42387C74500902F08 /* CreateFanPass.storyboard in Resources */,
@@ -2127,6 +2166,7 @@
 				4323FAD8233A165B00243655 /* Post.storyboard in Resources */,
 				4356F507233DE798000710FC /* LaunchScreen.storyboard in Resources */,
 				4323FAEA233A165C00243655 /* SeriesPost.storyboard in Resources */,
+				43C153B723C7046000565FC4 /* CategorizedProjectHeaderView.xib in Resources */,
 				43E54395235713D700F2EC45 /* TagResultProject.storyboard in Resources */,
 				4323FAEE233A165C00243655 /* ProjectHeaderView.xib in Resources */,
 				436C75A72387C39300902F08 /* ManageFanPass.storyboard in Resources */,
@@ -2312,8 +2352,10 @@
 				43E543812356F5CE00F2EC45 /* ExploreListCollectionFooterView.swift in Sources */,
 				4323FB27233A165F00243655 /* TransactionDetailFooterTypeTableViewCell.swift in Sources */,
 				4323FA71233A165700243655 /* Collection+Extension.swift in Sources */,
+				43C153C823C813E800565FC4 /* CategorizedProjectCollectionFooterView.swift in Sources */,
 				4323FAC9233A165B00243655 /* SubscriptionListCollectionViewCell.swift in Sources */,
 				4323FBC4233C876D00243655 /* Localization.swift in Sources */,
+				43C153AC23C5D03E00565FC4 /* CategorizedProjectListCollectionViewCell.swift in Sources */,
 				4323FB0D233A165E00243655 /* CustomEmptyViewController.swift in Sources */,
 				43C5C9422383BDC6004BACFC /* SubscribeFanPassViewModel.swift in Sources */,
 				436C75B22387C73600902F08 /* CreateFanPassViewModel.swift in Sources */,
@@ -2324,6 +2366,7 @@
 				43E5436A2355930D00F2EC45 /* SceneDelegate.swift in Sources */,
 				4323FA87233A165800243655 /* AppInfo.swift in Sources */,
 				4323FB95233A166300243655 /* SignUpViewController.swift in Sources */,
+				43C153A323C5CFE600565FC4 /* CategorizedProjectViewController.swift in Sources */,
 				4323FA77233A165700243655 /* UIImage+Extension.swift in Sources */,
 				43502A9E238FB82900586098 /* StoreReviewManager.swift in Sources */,
 				4323FB09233A165D00243655 /* CreateProjectViewController.swift in Sources */,
@@ -2370,6 +2413,7 @@
 				43FE8EF72354463B0074080B /* AppShortcut.swift in Sources */,
 				4323FAB3233A165A00243655 /* SearchProjectTableViewCell.swift in Sources */,
 				4323FB11233A165E00243655 /* DynamicInputView.swift in Sources */,
+				43C153B523C7044F00565FC4 /* CategorizedProjectHeaderView.swift in Sources */,
 				4323FA83233A165800243655 /* UIViewController+Rx.swift in Sources */,
 				4323FAF7233A165D00243655 /* ProjectHeaderView.swift in Sources */,
 				4323FB59233A166100243655 /* TransactionHistoryYearTypeTableViewCell.swift in Sources */,
@@ -2431,6 +2475,7 @@
 				436C75AB2387C55900902F08 /* ManageFanPassTableViewCell.swift in Sources */,
 				4323FB57233A166100243655 /* TransactionHistoryViewController.swift in Sources */,
 				43E543892356F5CE00F2EC45 /* ExploreListViewController.swift in Sources */,
+				43C153A623C5CFF600565FC4 /* CategorizedProjectViewModel.swift in Sources */,
 				43E543792355AFDD00F2EC45 /* Double+Extension.swift in Sources */,
 				4323FA6B233A165700243655 /* UIColor+Extension.swift in Sources */,
 				4323FB5B233A166100243655 /* UserInfoViewController.swift in Sources */,
@@ -2476,8 +2521,10 @@
 				43E543802356F5CD00F2EC45 /* ExploreListCollectionFooterView.swift in Sources */,
 				4323FB26233A165F00243655 /* TransactionDetailFooterTypeTableViewCell.swift in Sources */,
 				4323FA70233A165700243655 /* Collection+Extension.swift in Sources */,
+				43C153C723C813E800565FC4 /* CategorizedProjectCollectionFooterView.swift in Sources */,
 				4323FAC8233A165B00243655 /* SubscriptionListCollectionViewCell.swift in Sources */,
 				4323FBC3233C876D00243655 /* Localization.swift in Sources */,
+				43C153AB23C5D03E00565FC4 /* CategorizedProjectListCollectionViewCell.swift in Sources */,
 				4323FB0C233A165E00243655 /* CustomEmptyViewController.swift in Sources */,
 				43C5C9412383BDC6004BACFC /* SubscribeFanPassViewModel.swift in Sources */,
 				436C75B12387C73600902F08 /* CreateFanPassViewModel.swift in Sources */,
@@ -2488,6 +2535,7 @@
 				43E543692355930D00F2EC45 /* SceneDelegate.swift in Sources */,
 				4323FA86233A165800243655 /* AppInfo.swift in Sources */,
 				4323FB94233A166300243655 /* SignUpViewController.swift in Sources */,
+				43C153A223C5CFE600565FC4 /* CategorizedProjectViewController.swift in Sources */,
 				4323FA76233A165700243655 /* UIImage+Extension.swift in Sources */,
 				43502A9D238FB82900586098 /* StoreReviewManager.swift in Sources */,
 				4323FB08233A165D00243655 /* CreateProjectViewController.swift in Sources */,
@@ -2534,6 +2582,7 @@
 				43FE8EF62354463B0074080B /* AppShortcut.swift in Sources */,
 				4323FAB2233A165A00243655 /* SearchProjectTableViewCell.swift in Sources */,
 				4323FB10233A165E00243655 /* DynamicInputView.swift in Sources */,
+				43C153B423C7044F00565FC4 /* CategorizedProjectHeaderView.swift in Sources */,
 				4323FA82233A165800243655 /* UIViewController+Rx.swift in Sources */,
 				4323FAF6233A165D00243655 /* ProjectHeaderView.swift in Sources */,
 				4323FB58233A166100243655 /* TransactionHistoryYearTypeTableViewCell.swift in Sources */,
@@ -2595,6 +2644,7 @@
 				436C75AA2387C55900902F08 /* ManageFanPassTableViewCell.swift in Sources */,
 				4323FB56233A166100243655 /* TransactionHistoryViewController.swift in Sources */,
 				43E543882356F5CE00F2EC45 /* ExploreListViewController.swift in Sources */,
+				43C153A523C5CFF600565FC4 /* CategorizedProjectViewModel.swift in Sources */,
 				43E543782355AFDB00F2EC45 /* Double+Extension.swift in Sources */,
 				4323FA6A233A165700243655 /* UIColor+Extension.swift in Sources */,
 				4323FB5A233A166100243655 /* UserInfoViewController.swift in Sources */,

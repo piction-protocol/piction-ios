@@ -29,6 +29,13 @@ final class ViewModelAssembly: Assembly {
             )
         }
 
+        container.register(CategorizedProjectViewModel.self) { (resolver, categoryId: Int) in
+            return CategorizedProjectViewModel(dependency: (
+                resolver.resolve(Updater.self)!,
+                categoryId: categoryId)
+            )
+        }
+
         container.register(SignInViewModel.self) { resolver in
             return SignInViewModel(dependency: (
                 resolver.resolve(Updater.self)!)

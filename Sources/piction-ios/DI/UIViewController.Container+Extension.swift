@@ -28,6 +28,12 @@ extension CategoryListViewController {
     }
 }
 
+extension CategorizedProjectViewController {
+    static func make(categoryId: Int) -> CategorizedProjectViewController {
+        return Container.shared.resolve(CategorizedProjectViewController.self, argument: categoryId)!
+    }
+}
+
 extension SignInViewController {
     static func make() -> SignInViewController {
         return Container.shared.resolve(SignInViewController.self)!

@@ -147,6 +147,13 @@ extension UIViewController {
         }
     }
 
+    func openCategorizedProjectViewController(id: Int) {
+        let vc = CategorizedProjectViewController.make(categoryId: id)
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.openViewController(vc, type: .push)
+        }
+    }
+
     func openMyProjectViewController() {
         let vc = MyProjectViewController.make()
         if let topViewController = UIApplication.topViewController() {
