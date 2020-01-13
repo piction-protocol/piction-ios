@@ -67,8 +67,6 @@ final class CategorizedProjectViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
-        stretchyHeader?.frame.size.width = view.frame.size.width
-
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             let cellCount: CGFloat = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad && view.frame.size.width == UIScreen.main.bounds.size.width ? 4 : 2
             let width = (view.frame.size.width - 40 - (cellCount - 1) * 7) / cellCount
@@ -76,6 +74,11 @@ final class CategorizedProjectViewController: UIViewController {
             flowLayout.itemSize = CGSize(width: width, height: height)
             flowLayout.invalidateLayout()
         }
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        stretchyHeader?.frame.size.width = view.frame.size.width
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

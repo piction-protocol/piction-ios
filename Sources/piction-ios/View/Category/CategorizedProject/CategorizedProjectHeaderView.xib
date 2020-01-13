@@ -84,6 +84,7 @@
                 <constraint firstItem="Vl3-00-Zjs" firstAttribute="top" secondItem="hJ1-IM-JD9" secondAttribute="top" id="g7Y-Kb-WDH"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="EeK-uS-5nj" secondAttribute="bottom" id="jM6-jV-7tH"/>
                 <constraint firstItem="kjY-C9-pmC" firstAttribute="leading" secondItem="hJ1-IM-JD9" secondAttribute="leading" constant="20" id="kLr-kZ-sf0"/>
+                <constraint firstItem="LHd-Cp-nXx" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="kjY-C9-pmC" secondAttribute="bottom" priority="250" constant="4" id="pZQ-by-iTQ"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="LHd-Cp-nXx"/>
