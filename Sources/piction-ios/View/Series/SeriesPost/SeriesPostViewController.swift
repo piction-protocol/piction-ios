@@ -42,8 +42,8 @@ final class SeriesPostViewController: UIViewController {
     @IBOutlet weak var sortButton: UIButton!
     @IBOutlet weak var emptyView: UIView!
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         stretchyHeader?.frame.size.width = view.frame.size.width
     }
 
