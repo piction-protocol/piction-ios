@@ -37,7 +37,7 @@ final class TagResultProjectListCollectionViewCell: ReuseCollectionViewCell {
         nicknameLabel.text = nickname
 
         if let lastPublishedAt = lastPublishedAt {
-            let diff = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: lastPublishedAt, to: Date())
+            let diff = Calendar.current.dateComponents([.day], from: lastPublishedAt, to: Date())
 
             if let day = diff.day, day > 0 {
                 updateLabel.isHidden = true
