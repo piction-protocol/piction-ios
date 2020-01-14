@@ -30,7 +30,6 @@ final class MyPageViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         emptyView.frame.size.width = view.frame.size.width
-        emptyView.frame.size.height = visibleHeight
     }
 
     private func embedUserInfoViewController() {
@@ -104,13 +103,7 @@ extension MyPageViewController: ViewModelBindable {
             .do(onNext: { [weak self] _ in
                 _ = self?.emptyView.subviews.map { $0.removeFromSuperview() }
                 self?.emptyView.frame.size.height = 0
-                let view = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_W, height: SCREEN_H))
-                if #available(iOS 13.0, *) {
-                    view.backgroundColor = .groupTableViewBackground
-                } else {
-                    view.backgroundColor = UIColor(r: 242, g: 242, b: 247)
-                }
-                self?.emptyView.addSubview(view)
+                self?.containerView.frame.size.height = 104
                 self?.tableView.isScrollEnabled = true
             })
             .drive { $0 }
@@ -121,9 +114,7 @@ extension MyPageViewController: ViewModelBindable {
         output
             .embedUserInfoViewController
             .drive(onNext: { [weak self] in
-                self?.containerView.frame.size.height = 104
                 self?.embedUserInfoViewController()
-                self?.tableView.reloadData()
             })
             .disposed(by: disposeBag)
 
@@ -173,12 +164,12 @@ extension MyPageViewController: ViewModelBindable {
             .embedEmptyViewController
             .drive(onNext: { [weak self] style in
                 guard let `self` = self else { return }
-                self.tableView.isScrollEnabled = style != .defaultLogin
                 Toast.loadingActivity(false)
                 _ = self.containerView.subviews.map { $0.removeFromSuperview() }
                 self.containerView.frame.size.height = 0
+                self.tableView.setContentOffset(CGPoint(x: 0, y: -self.statusHeight-self.largeTitleNavigationHeight), animated: false)
                 self.embedCustomEmptyViewController(style: style)
-                self.tableView.contentOffset = CGPoint(x: 0, y: -self.statusHeight-self.largeTitleNavigationHeight)
+                self.tableView.isScrollEnabled = style != .defaultLogin
                 self.tableView.reloadData()
             })
             .disposed(by: disposeBag)
