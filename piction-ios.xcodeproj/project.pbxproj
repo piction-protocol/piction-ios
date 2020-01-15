@@ -860,29 +860,17 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		430923372372B41500716AF8 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				43C41F752373EB3500D012A7 /* CheckPincode */,
-				43C41F532373B25A00D012A7 /* EmptyView */,
-				430924202372CB4F00716AF8 /* CreatePost */,
-				43EBE1AA2378E88A0081C3B7 /* ProjectList */,
-				4309241F2372CB4700716AF8 /* ManageSeries */,
-				4309234B2372B5A200716AF8 /* ShareEntryViewController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		430923582372BA8800716AF8 /* piction-ios-shareEx */ = {
 			isa = PBXGroup;
 			children = (
+				4369F8D823CF190F008D5825 /* Views */,
+				4369F8D923CF1921008D5825 /* ViewModels */,
 				43EBE1BA237936550081C3B7 /* Utility */,
 				430923592372BA9900716AF8 /* DI */,
 				43C41F492373A2B400D012A7 /* Extension */,
 				43C41F502373B1A200D012A7 /* Config */,
 				43C41F702373C2B600D012A7 /* Helper */,
 				43C41F402373A28600D012A7 /* Protocol */,
-				430923372372B41500716AF8 /* View */,
 				43C41F6D2373B89F00D012A7 /* SupportingFiles */,
 			);
 			path = "piction-ios-shareEx";
@@ -898,28 +886,6 @@
 				43EBE1B8237935930081C3B7 /* UtilityAssembly.swift */,
 			);
 			path = DI;
-			sourceTree = "<group>";
-		};
-		4309241F2372CB4700716AF8 /* ManageSeries */ = {
-			isa = PBXGroup;
-			children = (
-				430924232372CB9F00716AF8 /* ManageSeriesViewController.swift */,
-				4309242B2372CBCB00716AF8 /* ManageSeriesViewModel.swift */,
-				4309242D2372CEFA00716AF8 /* ManageSeriesTableViewCell.swift */,
-				430924212372CB9000716AF8 /* ManageSeries.storyboard */,
-			);
-			path = ManageSeries;
-			sourceTree = "<group>";
-		};
-		430924202372CB4F00716AF8 /* CreatePost */ = {
-			isa = PBXGroup;
-			children = (
-				430924272372CBB600716AF8 /* CreatePostViewController.swift */,
-				430924292372CBBF00716AF8 /* CreatePostViewModel.swift */,
-				439E7E3423794DAB00E4A475 /* CreatePostCollectionViewCell.swift */,
-				430924252372CBAC00716AF8 /* CreatePost.storyboard */,
-			);
-			path = CreatePost;
 			sourceTree = "<group>";
 		};
 		4323F97D233A165600243655 /* piction-ios */ = {
@@ -1279,6 +1245,63 @@
 			path = Xib;
 			sourceTree = "<group>";
 		};
+		4369F8D823CF190F008D5825 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4369F8DB23CF1952008D5825 /* Cell */,
+				4369F8DA23CF192D008D5825 /* Controller */,
+				4369F8DC23CF1963008D5825 /* Storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4369F8D923CF1921008D5825 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				43C41F782373EB5400D012A7 /* CheckPincodeViewModel.swift */,
+				43C41F542373B27E00D012A7 /* EmptyViewModel.swift */,
+				430924292372CBBF00716AF8 /* CreatePostViewModel.swift */,
+				43EBE1AD2378E8A70081C3B7 /* ProjectListViewModel.swift */,
+				4309242B2372CBCB00716AF8 /* ManageSeriesViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		4369F8DA23CF192D008D5825 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4309234B2372B5A200716AF8 /* ShareEntryViewController.swift */,
+				43C41F762373EB4900D012A7 /* CheckPincodeViewController.swift */,
+				43C41F562373B30B00D012A7 /* EmptyViewController.swift */,
+				430924272372CBB600716AF8 /* CreatePostViewController.swift */,
+				43EBE1AB2378E89D0081C3B7 /* ProjectListViewController.swift */,
+				430924232372CB9F00716AF8 /* ManageSeriesViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		4369F8DB23CF1952008D5825 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				439E7E3423794DAB00E4A475 /* CreatePostCollectionViewCell.swift */,
+				43EBE1B12378E93B0081C3B7 /* ProjectListTableViewCell.swift */,
+				4309242D2372CEFA00716AF8 /* ManageSeriesTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		4369F8DC23CF1963008D5825 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				43C41F7A2373EB5D00D012A7 /* CheckPincode.storyboard */,
+				43C41F582373B31800D012A7 /* EmptyView.storyboard */,
+				430924252372CBAC00716AF8 /* CreatePost.storyboard */,
+				43EBE1AF2378E8B10081C3B7 /* ProjectList.storyboard */,
+				430924212372CB9000716AF8 /* ManageSeries.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
 		436CAC6A234C2DFE00C84373 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
@@ -1375,16 +1398,6 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
-		43C41F532373B25A00D012A7 /* EmptyView */ = {
-			isa = PBXGroup;
-			children = (
-				43C41F562373B30B00D012A7 /* EmptyViewController.swift */,
-				43C41F542373B27E00D012A7 /* EmptyViewModel.swift */,
-				43C41F582373B31800D012A7 /* EmptyView.storyboard */,
-			);
-			path = EmptyView;
-			sourceTree = "<group>";
-		};
 		43C41F5F2373B84F00D012A7 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -1441,16 +1454,6 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
-		43C41F752373EB3500D012A7 /* CheckPincode */ = {
-			isa = PBXGroup;
-			children = (
-				43C41F762373EB4900D012A7 /* CheckPincodeViewController.swift */,
-				43C41F782373EB5400D012A7 /* CheckPincodeViewModel.swift */,
-				43C41F7A2373EB5D00D012A7 /* CheckPincode.storyboard */,
-			);
-			path = CheckPincode;
-			sourceTree = "<group>";
-		};
 		43EBE1982373EDA50081C3B7 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -1476,17 +1479,6 @@
 				43EBE1A32374087D0081C3B7 /* KeychainManager.swift */,
 			);
 			path = KeychainManager;
-			sourceTree = "<group>";
-		};
-		43EBE1AA2378E88A0081C3B7 /* ProjectList */ = {
-			isa = PBXGroup;
-			children = (
-				43EBE1AB2378E89D0081C3B7 /* ProjectListViewController.swift */,
-				43EBE1AD2378E8A70081C3B7 /* ProjectListViewModel.swift */,
-				43EBE1B12378E93B0081C3B7 /* ProjectListTableViewCell.swift */,
-				43EBE1AF2378E8B10081C3B7 /* ProjectList.storyboard */,
-			);
-			path = ProjectList;
 			sourceTree = "<group>";
 		};
 		43EBE1B52378EAB60081C3B7 /* VisualEffectView */ = {
