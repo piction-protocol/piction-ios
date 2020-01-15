@@ -1043,7 +1043,6 @@
 		4369F8C923CEF46F008D5825 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4369F8D023CEF7B6008D5825 /* Xib */,
 				4369F8CF23CEF4EC008D5825 /* Cell */,
 				4369F8CE23CEF4D7008D5825 /* Controller */,
 				4369F8CD23CEF4CF008D5825 /* View */,
@@ -1142,6 +1141,7 @@
 		4369F8CD23CEF4CF008D5825 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4369F8D023CEF7B6008D5825 /* Xib */,
 				43C153B323C7044F00565FC4 /* CategorizedProjectHeaderView.swift */,
 				4323F9E4233A165600243655 /* ProjectHeaderView.swift */,
 				43C153AD23C5DDA000565FC4 /* SeriesPostHeaderView.swift */,
@@ -1197,6 +1197,7 @@
 		4369F8CF23CEF4EC008D5825 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				4369F8D723CF0D40008D5825 /* Xib */,
 				43E54391235713C300F2EC45 /* ProjectListCollectionViewCell.swift */,
 				4323F9B8233A165600243655 /* SearchProjectTableViewCell.swift */,
 				43DB22912359ADBE00E69C0F /* SearchTagTableViewCell.swift */,
@@ -1240,6 +1241,13 @@
 				43C153B023C5DF0600565FC4 /* SeriesPostHeaderView.xib */,
 				4323F9F7233A165600243655 /* DynamicInputView.xib */,
 				4369F8D123CF045D008D5825 /* ReuseCollectionReusableView.xib */,
+			);
+			path = Xib;
+			sourceTree = "<group>";
+		};
+		4369F8D723CF0D40008D5825 /* Xib */ = {
+			isa = PBXGroup;
+			children = (
 				4369F8D423CF0A67008D5825 /* ProjectListCollectionViewCell.xib */,
 			);
 			path = Xib;
