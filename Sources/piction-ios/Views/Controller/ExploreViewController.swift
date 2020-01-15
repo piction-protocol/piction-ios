@@ -25,6 +25,7 @@ final class ExploreViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
             collectionView.refreshControl = refreshControl
+            collectionView.registerXib(ProjectListCollectionViewCell.self)
             collectionView.registerReusableView(ReuseCollectionReusableView.self, kind: .header)
             collectionView.registerReusableView(ReuseCollectionReusableView.self, kind: .footer)
         }
@@ -44,7 +45,7 @@ final class ExploreViewController: UIViewController {
         return RxCollectionViewSectionedReloadDataSource<SectionModel<String, ProjectModel>>(
 
             configureCell: { dataSource, collectionView, indexPath, model in
-                let cell: ExploreCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+                let cell: ProjectListCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
                 cell.configure(with: model)
                 return cell
             },

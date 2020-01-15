@@ -15,7 +15,11 @@ import PictionSDK
 final class HomeTrendingTableViewCell: ReuseTableViewCell {
     var disposeBag = DisposeBag()
 
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView! {
+        didSet {
+            collectionView.registerXib(ProjectListCollectionViewCell.self)
+        }
+    }
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
 
     typealias Model = [ProjectModel]
@@ -46,7 +50,7 @@ final class HomeTrendingTableViewCell: ReuseTableViewCell {
     private func configureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, ProjectModel>> {
         return RxCollectionViewSectionedReloadDataSource<SectionModel<String, ProjectModel>>(
             configureCell: { dataSource, collectionView, indexPath, model in
-                let cell: HomeTrendingCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+                let cell: ProjectListCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
                 cell.configure(with: model)
                 return cell
             })

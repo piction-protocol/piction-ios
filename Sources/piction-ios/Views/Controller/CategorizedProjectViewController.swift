@@ -28,6 +28,7 @@ final class CategorizedProjectViewController: UIViewController {
                 stretchyHeader.stretchDelegate = self
                 collectionView.addSubview(stretchyHeader)
             }
+            collectionView.registerXib(ProjectListCollectionViewCell.self)
             collectionView.registerReusableView(ReuseCollectionReusableView.self, kind: .footer)
         }
     }
@@ -48,7 +49,7 @@ final class CategorizedProjectViewController: UIViewController {
         return RxCollectionViewSectionedReloadDataSource<SectionModel<String, ProjectModel>>(
 
             configureCell: { dataSource, collectionView, indexPath, model in
-                let cell: CategorizedProjectListCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+                let cell: ProjectListCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
                 cell.configure(with: model)
                 return cell
             },

@@ -23,6 +23,7 @@ final class TaggingProjectViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
             collectionView.refreshControl = refreshControl
+            collectionView.registerXib(ProjectListCollectionViewCell.self)
             collectionView.registerReusableView(ReuseCollectionReusableView.self, kind: .footer)
         }
     }
@@ -43,7 +44,7 @@ final class TaggingProjectViewController: UIViewController {
     private func configureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, ProjectModel>> {
         return RxCollectionViewSectionedReloadDataSource<SectionModel<String, ProjectModel>>(
             configureCell: { dataSource, collectionView, indexPath, model in
-                let cell: TaggingProjectListCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+                let cell: ProjectListCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
                 cell.configure(with: model)
                 return cell
         },

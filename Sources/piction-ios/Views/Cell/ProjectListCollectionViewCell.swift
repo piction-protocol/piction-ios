@@ -1,18 +1,19 @@
 //
-//  HomeTrendingCollectionViewCell.swift
+//  ProjectListCollectionViewCell.swift
 //  piction-ios
 //
-//  Created by jhseo on 2019/12/20.
+//  Created by jhseo on 16/10/2019.
 //  Copyright © 2019 Piction Network. All rights reserved.
 //
 
 import UIKit
 import PictionSDK
 
-final class HomeTrendingCollectionViewCell: ReuseCollectionViewCell {
+final class ProjectListCollectionViewCell: ReuseCollectionViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subscriptionUserLabel: UILabel!
+    @IBOutlet weak var nicknameLabel: UILabel!
+    @IBOutlet weak var updateLabel: UILabel!
 
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -23,7 +24,7 @@ final class HomeTrendingCollectionViewCell: ReuseCollectionViewCell {
     typealias Model = ProjectModel
 
     func configure(with model: Model) {
-        let (thumbnail, title, subscriptionUserCount) = (model.thumbnail, model.title, model.subscriptionUserCount)
+        let (thumbnail, title, nickname, lastPublishedAt) = (model.thumbnail, model.title, model.user?.username, model.lastPublishedAt)
 
         if let thumbnail = thumbnail {
             let thumbnailWithIC = "\(thumbnail)?w=720&h=720&quality=80&output=webp"
@@ -33,7 +34,18 @@ final class HomeTrendingCollectionViewCell: ReuseCollectionViewCell {
         }
 
         titleLabel.text = title
-        subscriptionUserLabel.text = LocalizedStrings.str_subs_count_plural.localized(with: subscriptionUserCount?.commaRepresentation ?? "0")
+        nicknameLabel.text = nickname
 
+        if let lastPublishedAt = lastPublishedAt {
+            let diff = Calendar.current.dateComponents([.day], from: lastPublishedAt, to: Date())
+
+            if let day = diff.day, day > 0 {
+                updateLabel.isHidden = true
+            } else {
+                updateLabel.isHidden = false
+            }
+        } else {
+            updateLabel.isHidden = true
+        }
     }
 }
