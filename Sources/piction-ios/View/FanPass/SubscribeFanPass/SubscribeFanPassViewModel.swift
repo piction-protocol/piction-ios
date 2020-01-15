@@ -95,7 +95,7 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
         let purchaseWithPincode = input.authSuccessWithPincode
 
         let purchaseAction = Driver.merge(purchaseWithoutPicode, purchaseWithPincode)
-            .map { ProjectsAPI.subscription(uri: uri, fanPassId: selectedFanPass.id ?? 0, subscriptionPrice: selectedFanPass.subscriptionPrice ?? 0) }
+            .map { FanPassAPI.subscription(uri: uri, fanPassId: selectedFanPass.id ?? 0, subscriptionPrice: selectedFanPass.subscriptionPrice ?? 0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

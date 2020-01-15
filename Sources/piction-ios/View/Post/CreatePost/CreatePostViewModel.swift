@@ -131,7 +131,7 @@ final class CreatePostViewModel: InjectableViewModel {
             })
 
         let loadFanPassAction = viewWillAppear
-            .map { ProjectsAPI.fanPassAll(uri: uri) }
+            .map { FanPassAPI.all(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

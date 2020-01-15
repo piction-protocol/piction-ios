@@ -59,7 +59,7 @@ final class ManageFanPassViewModel: InjectableViewModel {
         let initialLoad = Driver.merge(viewWillAppear, loadRetry, refreshContent)
 
         let fanPassListAction = initialLoad
-            .map { ProjectsAPI.fanPassAll(uri: uri) }
+            .map { FanPassAPI.all(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -74,7 +74,7 @@ final class ManageFanPassViewModel: InjectableViewModel {
             .map { uri }
 
         let deleteAction = input.deleteFanPass
-            .map { ProjectsAPI.deleteFanPass(uri: $0, fanPassId: $1) }
+            .map { FanPassAPI.delete(uri: $0, fanPassId: $1) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

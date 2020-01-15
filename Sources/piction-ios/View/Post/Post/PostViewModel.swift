@@ -194,7 +194,7 @@ final class PostViewModel: InjectableViewModel {
         let userInfo = Driver.merge(userInfoSuccess, userInfoError)
 
         let subscriptionInfoAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
-            .map { ProjectsAPI.getProjectSubscription(uri: uri) }
+            .map { FanPassAPI.getSubscribedFanPass(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -228,7 +228,7 @@ final class PostViewModel: InjectableViewModel {
             .map { (uri, $0) }
 
         let fanPassListAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
-            .map { ProjectsAPI.fanPassAll(uri: uri) }
+            .map { FanPassAPI.all(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -249,7 +249,7 @@ final class PostViewModel: InjectableViewModel {
             .filter { ($0.fanPass?.level ?? 0) == 0 }
             .withLatestFrom(fanPassListSuccess)
             .map { $0.filter { ($0.level ?? 0) == 0 }.first?.id ?? 0 }
-            .map { ProjectsAPI.subscription(uri: uri, fanPassId: $0, subscriptionPrice: 0) }
+            .map { FanPassAPI.subscription(uri: uri, fanPassId: $0, subscriptionPrice: 0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

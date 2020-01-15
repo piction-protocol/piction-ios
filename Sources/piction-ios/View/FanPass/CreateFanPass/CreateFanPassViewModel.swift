@@ -103,14 +103,14 @@ final class CreateFanPassViewModel: InjectableViewModel {
         let createFanPassAction = input.saveBtnDidTap
             .filter { fanPass == nil }
             .withLatestFrom(fanPassInfo)
-            .map { ProjectsAPI.createFanPass(uri: uri, name: $0.name, description: $0.description, thumbnail: nil, subscriptionLimit: Int($0.limit ?? "") ?? nil, subscriptionPrice: Int($0.price ?? "") ?? nil) }
+            .map { FanPassAPI.create(uri: uri, name: $0.name, description: $0.description, thumbnail: nil, subscriptionLimit: Int($0.limit ?? "") ?? nil, subscriptionPrice: Int($0.price ?? "") ?? nil) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let updateFanPassAction = input.saveBtnDidTap
             .filter { fanPass != nil }
             .withLatestFrom(fanPassInfo)
-            .map { ProjectsAPI.updateFanPass(uri: uri, fanPassId: fanPass?.id ?? 0, name: $0.name, description: $0.description, thumbnail: nil, subscriptionLimit: Int($0.limit ?? "") ?? nil, subscriptionPrice: Int($0.price ?? "") ?? nil) }
+            .map { FanPassAPI.update(uri: uri, fanPassId: fanPass?.id ?? 0, name: $0.name, description: $0.description, thumbnail: nil, subscriptionLimit: Int($0.limit ?? "") ?? nil, subscriptionPrice: Int($0.price ?? "") ?? nil) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

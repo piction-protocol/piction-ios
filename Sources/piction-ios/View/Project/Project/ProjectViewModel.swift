@@ -113,7 +113,7 @@ final class ProjectViewModel: InjectableViewModel {
             .filter { $0 == 1 }
 
         let subscriptionInfoAction = Driver.merge(postSubscriptionInfoAction, seriesSubscriptionInfoAction)
-            .map{ _ in ProjectsAPI.getProjectSubscription(uri: uri) }
+            .map{ _ in FanPassAPI.getSubscribedFanPass(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -197,7 +197,7 @@ final class ProjectViewModel: InjectableViewModel {
             })
 
         let fanPassListAction = viewWillAppear
-            .map { ProjectsAPI.fanPassAll(uri: uri) }
+            .map { FanPassAPI.all(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -216,7 +216,7 @@ final class ProjectViewModel: InjectableViewModel {
             .filter { $0 == nil }
             .withLatestFrom(fanPassListSuccess)
             .filter { $0.count == 1 }
-            .map { ProjectsAPI.subscription(uri: uri, fanPassId: $0[safe: 0]?.id ?? 0, subscriptionPrice: $0[safe: 0]?.subscriptionPrice ?? 0) }
+            .map { FanPassAPI.subscription(uri: uri, fanPassId: $0[safe: 0]?.id ?? 0, subscriptionPrice: $0[safe: 0]?.subscriptionPrice ?? 0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -246,7 +246,7 @@ final class ProjectViewModel: InjectableViewModel {
             .withLatestFrom(projectSubscriptionInfo)
             .filter { $0 != nil }
             .filter { ($0?.fanPass?.level ?? 0) == 0 }
-            .map { ProjectsAPI.cancelSubscription(uri: uri, fanPassId: $0?.fanPass?.id ?? 0) }
+            .map { FanPassAPI.cancelSubscription(uri: uri, fanPassId: $0?.fanPass?.id ?? 0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
