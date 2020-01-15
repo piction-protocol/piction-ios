@@ -154,7 +154,7 @@ extension SearchViewController: ViewModelBindable {
                 case .project(let project):
                     self?.openProjectViewController(uri: project.uri ?? "")
                 case .tag(let tag):
-                    self?.openTagResultProjectViewController(tag: tag.name ?? "")
+                    self?.openTaggingProjectViewController(tag: tag.name ?? "")
                 }
             })
             .disposed(by: disposeBag)

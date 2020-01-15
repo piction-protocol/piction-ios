@@ -133,8 +133,8 @@ extension UIViewController {
         }
     }
 
-    func openTagResultProjectViewController(tag: String) {
-        let vc = TagResultProjectViewController.make(tag: tag)
+    func openTaggingProjectViewController(tag: String) {
+        let vc = TaggingProjectViewController.make(tag: tag)
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .push)
         }

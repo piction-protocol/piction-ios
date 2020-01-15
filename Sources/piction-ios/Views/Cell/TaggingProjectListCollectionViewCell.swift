@@ -1,5 +1,5 @@
 //
-//  TagResultProjectListCollectionViewCell.swift
+//  TaggingProjectListCollectionViewCell.swift
 //  piction-ios
 //
 //  Created by jhseo on 16/10/2019.
@@ -9,7 +9,7 @@
 import UIKit
 import PictionSDK
 
-final class TagResultProjectListCollectionViewCell: ReuseCollectionViewCell {
+final class TaggingProjectListCollectionViewCell: ReuseCollectionViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var nicknameLabel: UILabel!

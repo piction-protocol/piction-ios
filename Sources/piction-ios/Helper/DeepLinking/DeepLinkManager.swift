@@ -19,7 +19,7 @@ struct DeepLinkManager {
                 HomeExploreDeepLink.self,
                 CategorizedProjectDeepLink.self,
                 SearchDeepLink.self,
-                TagResultProjectDeepLink.self,
+                TaggingProjectDeepLink.self,
                 ProjectDeepLink.self,
                 ProjectPostsDeepLink.self,
                 ProjectSeriesDeepLink.self,
@@ -65,7 +65,7 @@ struct DeepLinkManager {
         case let link as HomeExploreDeepLink: return showHomeExplore(with: link)
         case let link as CategorizedProjectDeepLink: return showCategorizedProject(with: link)
         case let link as SearchDeepLink: return showSearch(with: link)
-        case let link as TagResultProjectDeepLink: return showTagResultProject(with: link)
+        case let link as TaggingProjectDeepLink: return showTaggingProject(with: link)
         case let link as ProjectDeepLink: return showProject(with: link)
         case let link as ProjectPostsDeepLink: return showProjectPosts(with: link)
         case let link as ProjectSeriesDeepLink: return showProjectSeries(with: link)
@@ -126,8 +126,8 @@ struct DeepLinkManager {
         return false
     }
 
-    static func showTagResultProject(with deepLink: TagResultProjectDeepLink) -> Bool {
-        let vc = TagResultProjectViewController.make(tag: deepLink.keyword ?? "")
+    static func showTaggingProject(with deepLink: TaggingProjectDeepLink) -> Bool {
+        let vc = TaggingProjectViewController.make(tag: deepLink.keyword ?? "")
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .push)
             return true

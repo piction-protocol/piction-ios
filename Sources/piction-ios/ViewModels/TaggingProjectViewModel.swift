@@ -1,5 +1,5 @@
 //
-//  TagResultProjectViewModel.swift
+//  TaggingProjectViewModel.swift
 //  piction-ios
 //
 //  Created by jhseo on 16/10/2019.
@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
-final class TagResultProjectViewModel: ViewModel {
+final class TaggingProjectViewModel: ViewModel {
 
     var page = 0
     var tag = ""
@@ -35,7 +35,7 @@ final class TagResultProjectViewModel: ViewModel {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
         let navigationTitle: Driver<String>
-        let tagResultProjectList: Driver<[ProjectModel]>
+        let taggingProjectList: Driver<[ProjectModel]>
         let openProjectViewController: Driver<IndexPath>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let isFetching: Driver<Bool>
@@ -65,12 +65,12 @@ final class TagResultProjectViewModel: ViewModel {
         let loadNext = loadNextTrigger.asDriver(onErrorDriveWith: .empty())
             .filter { self.shouldInfiniteScroll }
 
-        let tagResultProjectListAction = Driver.merge(initialLoad, loadNext, loadRetry)
+        let taggingProjectListAction = Driver.merge(initialLoad, loadNext, loadRetry)
             .map { SearchAPI.taggingProjects(tag: tag, page: self.page + 1, size: 20) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
-        let tagResultProjectListSuccess = tagResultProjectListAction.elements
+        let taggingProjectListSuccess = taggingProjectListAction.elements
             .map { try? $0.map(to: PageViewResponse<ProjectModel>.self) }
             .do(onNext: { [weak self] pageList in
                 guard
@@ -86,34 +86,34 @@ final class TagResultProjectViewModel: ViewModel {
             .map { self.items.append(contentsOf: $0?.content ?? []) }
             .map { self.items }
 
-        let tagResultProjectError = tagResultProjectListAction.error
+        let taggingProjectError = taggingProjectListAction.error
             .map { _ in Void() }
 
-        let tagResultProjectEmptyList = tagResultProjectListAction.error
+        let taggingProjectEmptyList = taggingProjectListAction.error
             .map { _ in [ProjectModel]() }
 
-        let tagResultProjectList = Driver.merge(tagResultProjectListSuccess, tagResultProjectEmptyList)
+        let taggingProjectList = Driver.merge(taggingProjectListSuccess, taggingProjectEmptyList)
 
-        let showErrorPopup = tagResultProjectError
+        let showErrorPopup = taggingProjectError
 
         let refreshAction = input.refreshControlDidRefresh
-            .withLatestFrom(tagResultProjectList)
+            .withLatestFrom(taggingProjectList)
             .map { _ in Void() }
             .map(Driver.from)
             .flatMap(Action.makeDriver)
 
-        let embedEmptyView = tagResultProjectListSuccess
+        let embedEmptyView = taggingProjectListSuccess
             .filter { $0.isEmpty }
             .map { _ in .searchListEmpty}
             .flatMap(Driver<CustomEmptyViewStyle>.from)
 
-        let activityIndicator = tagResultProjectListAction.isExecuting
+        let activityIndicator = taggingProjectListAction.isExecuting
 
         return Output(
             viewWillAppear: input.viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
             navigationTitle: navigationTitle,
-            tagResultProjectList: tagResultProjectList,
+            taggingProjectList: taggingProjectList,
             openProjectViewController: input.selectedIndexPath,
             embedEmptyViewController: embedEmptyView,
             isFetching: refreshAction.isExecuting,

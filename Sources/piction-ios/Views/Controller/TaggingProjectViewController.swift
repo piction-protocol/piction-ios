@@ -1,5 +1,5 @@
 //
-//  TagResultProjectViewController.swift
+//  TaggingProjectViewController.swift
 //  piction-ios
 //
 //  Created by jhseo on 16/10/2019.
@@ -14,7 +14,7 @@ import RxDataSources
 import UIScrollView_InfiniteScroll
 import PictionSDK
 
-final class TagResultProjectViewController: UIViewController {
+final class TaggingProjectViewController: UIViewController {
     var disposeBag = DisposeBag()
 
     var emptyView = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_W, height: 0))
@@ -43,7 +43,7 @@ final class TagResultProjectViewController: UIViewController {
     private func configureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, ProjectModel>> {
         return RxCollectionViewSectionedReloadDataSource<SectionModel<String, ProjectModel>>(
             configureCell: { dataSource, collectionView, indexPath, model in
-                let cell: TagResultProjectListCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+                let cell: TaggingProjectListCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
                 cell.configure(with: model)
                 return cell
         },
@@ -70,6 +70,8 @@ final class TagResultProjectViewController: UIViewController {
             flowLayout.itemSize = CGSize(width: width, height: height)
             flowLayout.invalidateLayout()
         }
+        emptyView.frame.size.width = view.frame.size.width
+        emptyView.frame.size.height = visibleHeight
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -88,8 +90,8 @@ final class TagResultProjectViewController: UIViewController {
     }
 }
 
-extension TagResultProjectViewController: ViewModelBindable {
-    typealias ViewModel = TagResultProjectViewModel
+extension TaggingProjectViewController: ViewModelBindable {
+    typealias ViewModel = TaggingProjectViewModel
 
     func bindViewModel(viewModel: ViewModel) {
         let dataSource = configureDataSource()
@@ -101,7 +103,7 @@ extension TagResultProjectViewController: ViewModelBindable {
             return self?.viewModel?.shouldInfiniteScroll ?? false
         }
 
-        let input = TagResultProjectViewModel.Input(
+        let input = TaggingProjectViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
             selectedIndexPath:
@@ -128,10 +130,9 @@ extension TagResultProjectViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .tagResultProjectList
+            .taggingProjectList
             .do(onNext: { [weak self] _ in
                 _ = self?.emptyView.subviews.map { $0.removeFromSuperview() }
-                self?.emptyView.frame.size.height = 0
             })
             .drive { $0 }
             .map { [SectionModel(model: "", items: $0)] }
@@ -139,7 +140,7 @@ extension TagResultProjectViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .tagResultProjectList
+            .taggingProjectList
             .drive(onNext: { [weak self] _ in
                 self?.collectionView.layoutIfNeeded()
                 self?.collectionView.finishInfiniteScroll()
@@ -190,7 +191,7 @@ extension TagResultProjectViewController: ViewModelBindable {
     }
 }
 
-extension TagResultProjectViewController: UICollectionViewDelegateFlowLayout {
+extension TaggingProjectViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         if self.emptyView.subviews.count > 0 {
             return CGSize(width: SCREEN_W, height: emptyView.frame.size.height)

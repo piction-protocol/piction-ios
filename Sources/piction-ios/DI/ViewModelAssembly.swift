@@ -184,8 +184,8 @@ final class ViewModelAssembly: Assembly {
             )
         }
 
-        container.register(TagResultProjectViewModel.self) { (resolver, tag: String) in
-            return TagResultProjectViewModel(tag: tag)
+        container.register(TaggingProjectViewModel.self) { (resolver, tag: String) in
+            return TaggingProjectViewModel(tag: tag)
         }
 
         container.register(ManageSeriesViewModel.self) { (resolver, uri: String, seriesId: Int?) in

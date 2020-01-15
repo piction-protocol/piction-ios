@@ -59,7 +59,7 @@ struct SearchDeepLink: DeepLink {
 
 // 태그 상세
 // piction://tag
-struct TagResultProjectDeepLink: DeepLink {
+struct TaggingProjectDeepLink: DeepLink {
     static let template = DeepLinkTemplate()
         .term("tag")
         .queryStringParameters([

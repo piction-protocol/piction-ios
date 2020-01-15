@@ -39,7 +39,7 @@ public enum Storyboard: String {
     case CheckPincode
     case RegisterPincode
     case ConfirmPincode
-    case TagResultProject
+    case TaggingProject
     case ManageSeries
     case SubscriptionUser
     case FanPassList

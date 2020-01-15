@@ -90,7 +90,7 @@ extension ProjectInfoViewController: ViewModelBindable {
             .selectedIndexPath
             .drive(onNext: { [weak self] indexPath in
                 let tag = dataSource[indexPath]
-                self?.openTagResultProjectViewController(tag: tag)
+                self?.openTaggingProjectViewController(tag: tag)
             })
             .disposed(by: disposeBag)
 

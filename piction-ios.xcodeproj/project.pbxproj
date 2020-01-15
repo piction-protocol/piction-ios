@@ -484,14 +484,14 @@
 		43E5436A2355930D00F2EC45 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E543682355930D00F2EC45 /* SceneDelegate.swift */; };
 		43E543782355AFDB00F2EC45 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E543772355AFDB00F2EC45 /* Double+Extension.swift */; };
 		43E543792355AFDD00F2EC45 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E543772355AFDB00F2EC45 /* Double+Extension.swift */; };
-		43E5438C2357138F00F2EC45 /* TagResultProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5438B2357138F00F2EC45 /* TagResultProjectViewController.swift */; };
-		43E5438D2357139000F2EC45 /* TagResultProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5438B2357138F00F2EC45 /* TagResultProjectViewController.swift */; };
-		43E5438F235713A400F2EC45 /* TagResultProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5438E235713A400F2EC45 /* TagResultProjectViewModel.swift */; };
-		43E54390235713A400F2EC45 /* TagResultProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5438E235713A400F2EC45 /* TagResultProjectViewModel.swift */; };
-		43E54392235713C300F2EC45 /* TagResultProjectListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E54391235713C300F2EC45 /* TagResultProjectListCollectionViewCell.swift */; };
-		43E54393235713C300F2EC45 /* TagResultProjectListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E54391235713C300F2EC45 /* TagResultProjectListCollectionViewCell.swift */; };
-		43E54395235713D700F2EC45 /* TagResultProject.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43E54394235713D700F2EC45 /* TagResultProject.storyboard */; };
-		43E54396235713D700F2EC45 /* TagResultProject.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43E54394235713D700F2EC45 /* TagResultProject.storyboard */; };
+		43E5438C2357138F00F2EC45 /* TaggingProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5438B2357138F00F2EC45 /* TaggingProjectViewController.swift */; };
+		43E5438D2357139000F2EC45 /* TaggingProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5438B2357138F00F2EC45 /* TaggingProjectViewController.swift */; };
+		43E5438F235713A400F2EC45 /* TaggingProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5438E235713A400F2EC45 /* TaggingProjectViewModel.swift */; };
+		43E54390235713A400F2EC45 /* TaggingProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E5438E235713A400F2EC45 /* TaggingProjectViewModel.swift */; };
+		43E54392235713C300F2EC45 /* TaggingProjectListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E54391235713C300F2EC45 /* TaggingProjectListCollectionViewCell.swift */; };
+		43E54393235713C300F2EC45 /* TaggingProjectListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E54391235713C300F2EC45 /* TaggingProjectListCollectionViewCell.swift */; };
+		43E54395235713D700F2EC45 /* TaggingProject.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43E54394235713D700F2EC45 /* TaggingProject.storyboard */; };
+		43E54396235713D700F2EC45 /* TaggingProject.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43E54394235713D700F2EC45 /* TaggingProject.storyboard */; };
 		43EBE1952373ED7E0081C3B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4323FA55233A165600243655 /* Assets.xcassets */; };
 		43EBE1962373ED800081C3B7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4356F51E233DF184000710FC /* Localizable.strings */; };
 		43EBE1972373ED830081C3B7 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 43F1866223442ECD0050BA67 /* Localizable.stringsdict */; };
@@ -788,10 +788,10 @@
 		43DB22912359ADBE00E69C0F /* SearchTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagTableViewCell.swift; sourceTree = "<group>"; };
 		43E543682355930D00F2EC45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		43E543772355AFDB00F2EC45 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
-		43E5438B2357138F00F2EC45 /* TagResultProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagResultProjectViewController.swift; sourceTree = "<group>"; };
-		43E5438E235713A400F2EC45 /* TagResultProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagResultProjectViewModel.swift; sourceTree = "<group>"; };
-		43E54391235713C300F2EC45 /* TagResultProjectListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagResultProjectListCollectionViewCell.swift; sourceTree = "<group>"; };
-		43E54394235713D700F2EC45 /* TagResultProject.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TagResultProject.storyboard; sourceTree = "<group>"; };
+		43E5438B2357138F00F2EC45 /* TaggingProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggingProjectViewController.swift; sourceTree = "<group>"; };
+		43E5438E235713A400F2EC45 /* TaggingProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggingProjectViewModel.swift; sourceTree = "<group>"; };
+		43E54391235713C300F2EC45 /* TaggingProjectListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggingProjectListCollectionViewCell.swift; sourceTree = "<group>"; };
+		43E54394235713D700F2EC45 /* TaggingProject.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TaggingProject.storyboard; sourceTree = "<group>"; };
 		43EBE19B2373EECD0081C3B7 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		43EBE19D237405CE0081C3B7 /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		43EBE1A0237407940081C3B7 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
@@ -1101,7 +1101,7 @@
 				4323FA50233A165600243655 /* SignInViewModel.swift */,
 				4323FA4C233A165600243655 /* SignUpViewModel.swift */,
 				4323FA47233A165600243655 /* SignUpCompleteViewModel.swift */,
-				43E5438E235713A400F2EC45 /* TagResultProjectViewModel.swift */,
+				43E5438E235713A400F2EC45 /* TaggingProjectViewModel.swift */,
 				4323F9B6233A165600243655 /* SearchViewModel.swift */,
 				4323F9BF233A165600243655 /* HomeViewModel.swift */,
 				4369F8A223CC64A6008D5825 /* ExploreViewModel.swift */,
@@ -1145,7 +1145,7 @@
 				4323FA4F233A165600243655 /* SignIn.storyboard */,
 				4323FA4D233A165600243655 /* SignUp.storyboard */,
 				4323FA48233A165600243655 /* SignUpComplete.storyboard */,
-				43E54394235713D700F2EC45 /* TagResultProject.storyboard */,
+				43E54394235713D700F2EC45 /* TaggingProject.storyboard */,
 				4323F9B5233A165600243655 /* Search.storyboard */,
 				4356F500233DE0D2000710FC /* Home.storyboard */,
 				4369F89F23CC64A5008D5825 /* Explore.storyboard */,
@@ -1200,7 +1200,7 @@
 				4323FA51233A165600243655 /* SignInViewController.swift */,
 				4323FA4B233A165600243655 /* SignUpViewController.swift */,
 				4323FA49233A165600243655 /* SignUpCompleteViewController.swift */,
-				43E5438B2357138F00F2EC45 /* TagResultProjectViewController.swift */,
+				43E5438B2357138F00F2EC45 /* TaggingProjectViewController.swift */,
 				4323F9B7233A165600243655 /* SearchViewController.swift */,
 				4323F9BD233A165600243655 /* HomeViewController.swift */,
 				4369F8A123CC64A6008D5825 /* ExploreViewController.swift */,
@@ -1237,7 +1237,7 @@
 		4369F8CF23CEF4EC008D5825 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				43E54391235713C300F2EC45 /* TagResultProjectListCollectionViewCell.swift */,
+				43E54391235713C300F2EC45 /* TaggingProjectListCollectionViewCell.swift */,
 				4323F9B8233A165600243655 /* SearchProjectTableViewCell.swift */,
 				43DB22912359ADBE00E69C0F /* SearchTagTableViewCell.swift */,
 				43125A3F23AC932E0060928F /* HomeHeaderTableViewCell.swift */,
@@ -1757,7 +1757,7 @@
 				4356F508233DE798000710FC /* LaunchScreen.storyboard in Resources */,
 				43C153B823C7046000565FC4 /* CategorizedProjectHeaderView.xib in Resources */,
 				4323FAEB233A165C00243655 /* SeriesPost.storyboard in Resources */,
-				43E54396235713D700F2EC45 /* TagResultProject.storyboard in Resources */,
+				43E54396235713D700F2EC45 /* TaggingProject.storyboard in Resources */,
 				436C75A82387C39300902F08 /* ManageFanPass.storyboard in Resources */,
 				4323FAEF233A165C00243655 /* ProjectHeaderView.xib in Resources */,
 				4323FB5F233A166100243655 /* UserInfo.storyboard in Resources */,
@@ -1813,7 +1813,7 @@
 				4356F507233DE798000710FC /* LaunchScreen.storyboard in Resources */,
 				4323FAEA233A165C00243655 /* SeriesPost.storyboard in Resources */,
 				43C153B723C7046000565FC4 /* CategorizedProjectHeaderView.xib in Resources */,
-				43E54395235713D700F2EC45 /* TagResultProject.storyboard in Resources */,
+				43E54395235713D700F2EC45 /* TaggingProject.storyboard in Resources */,
 				4323FAEE233A165C00243655 /* ProjectHeaderView.xib in Resources */,
 				436C75A72387C39300902F08 /* ManageFanPass.storyboard in Resources */,
 				4323FB5E233A166100243655 /* UserInfo.storyboard in Resources */,
@@ -1976,7 +1976,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4323FB55233A166100243655 /* TransactionHistoryHeaderTypeTableViewCell.swift in Sources */,
-				43E54390235713A400F2EC45 /* TagResultProjectViewModel.swift in Sources */,
+				43E54390235713A400F2EC45 /* TaggingProjectViewModel.swift in Sources */,
 				4323FB5D233A166100243655 /* UserInfoViewModel.swift in Sources */,
 				4323FAAF233A165A00243655 /* SearchViewModel.swift in Sources */,
 				4323FB3F233A166000243655 /* MyPageViewModel.swift in Sources */,
@@ -2066,7 +2066,7 @@
 				4323FB1D233A165E00243655 /* TransactionDetailViewController.swift in Sources */,
 				4323FACF233A165B00243655 /* CreatePostViewModel.swift in Sources */,
 				438E76372362FAAD0062D004 /* ManageSeriesViewModel.swift in Sources */,
-				43E5438D2357139000F2EC45 /* TagResultProjectViewController.swift in Sources */,
+				43E5438D2357139000F2EC45 /* TaggingProjectViewController.swift in Sources */,
 				4323FAB1233A165A00243655 /* SearchViewController.swift in Sources */,
 				4323FB37233A165F00243655 /* MyPageHeaderTypeTableViewCell.swift in Sources */,
 				4323FB97233A166400243655 /* SignUpViewModel.swift in Sources */,
@@ -2099,7 +2099,7 @@
 				438E763D2362FD050062D004 /* ManageSeriesTableViewCell.swift in Sources */,
 				4323FAD5233A165B00243655 /* PostViewModel.swift in Sources */,
 				4323FACB233A165B00243655 /* SubscriptionListViewModel.swift in Sources */,
-				43E54393235713C300F2EC45 /* TagResultProjectListCollectionViewCell.swift in Sources */,
+				43E54393235713C300F2EC45 /* TaggingProjectListCollectionViewCell.swift in Sources */,
 				4323FAF9233A165D00243655 /* ProjectSeriesListTableViewCell.swift in Sources */,
 				43DB228A235969F400E69C0F /* UILabel+Extension.swift in Sources */,
 				4323FADF233A165C00243655 /* PostHeaderViewController.swift in Sources */,
@@ -2141,7 +2141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4323FB54233A166100243655 /* TransactionHistoryHeaderTypeTableViewCell.swift in Sources */,
-				43E5438F235713A400F2EC45 /* TagResultProjectViewModel.swift in Sources */,
+				43E5438F235713A400F2EC45 /* TaggingProjectViewModel.swift in Sources */,
 				4323FB5C233A166100243655 /* UserInfoViewModel.swift in Sources */,
 				4323FAAE233A165A00243655 /* SearchViewModel.swift in Sources */,
 				4323FB3E233A166000243655 /* MyPageViewModel.swift in Sources */,
@@ -2231,7 +2231,7 @@
 				4323FB1C233A165E00243655 /* TransactionDetailViewController.swift in Sources */,
 				4323FACE233A165B00243655 /* CreatePostViewModel.swift in Sources */,
 				438E76362362FAAD0062D004 /* ManageSeriesViewModel.swift in Sources */,
-				43E5438C2357138F00F2EC45 /* TagResultProjectViewController.swift in Sources */,
+				43E5438C2357138F00F2EC45 /* TaggingProjectViewController.swift in Sources */,
 				4323FAB0233A165A00243655 /* SearchViewController.swift in Sources */,
 				4323FB36233A165F00243655 /* MyPageHeaderTypeTableViewCell.swift in Sources */,
 				4323FB96233A166400243655 /* SignUpViewModel.swift in Sources */,
@@ -2264,7 +2264,7 @@
 				438E763C2362FD050062D004 /* ManageSeriesTableViewCell.swift in Sources */,
 				4323FAD4233A165B00243655 /* PostViewModel.swift in Sources */,
 				4323FACA233A165B00243655 /* SubscriptionListViewModel.swift in Sources */,
-				43E54392235713C300F2EC45 /* TagResultProjectListCollectionViewCell.swift in Sources */,
+				43E54392235713C300F2EC45 /* TaggingProjectListCollectionViewCell.swift in Sources */,
 				4323FAF8233A165D00243655 /* ProjectSeriesListTableViewCell.swift in Sources */,
 				43DB2289235969F300E69C0F /* UILabel+Extension.swift in Sources */,
 				4323FADE233A165C00243655 /* PostHeaderViewController.swift in Sources */,

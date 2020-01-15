@@ -187,9 +187,9 @@ final class ViewControllerAssembly: Assembly {
             return vc
         }
 
-        container.register(TagResultProjectViewController.self) { (resolver, tag: String) in
-            let vc = Storyboard.TagResultProject.instantiate(TagResultProjectViewController.self)
-            vc.viewModel = resolver.resolve(TagResultProjectViewModel.self, argument: tag)!
+        container.register(TaggingProjectViewController.self) { (resolver, tag: String) in
+            let vc = Storyboard.TaggingProject.instantiate(TaggingProjectViewController.self)
+            vc.viewModel = resolver.resolve(TaggingProjectViewModel.self, argument: tag)!
             return vc
         }
 
