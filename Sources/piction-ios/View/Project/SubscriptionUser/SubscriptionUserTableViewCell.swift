@@ -22,7 +22,7 @@ class SubscriptionUserTableViewCell: ReuseTableViewCell {
         profileImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
     }
 
-    typealias Model = SubscriptionUserModel
+    typealias Model = SubscriberModel
 
     func configure(with model: Model) {
         let (profileImage, username, loginId, level, fanPassName, subscriptionDate) = (model.subscriber?.picture, model.subscriber?.username, model.subscriber?.loginId, model.fanPass?.level, model.fanPass?.name, model.startedAt)

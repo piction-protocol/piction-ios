@@ -13,7 +13,7 @@ import PictionSDK
 final class SubscriptionUserViewModel: ViewModel {
 
     var page = 0
-    var items: [SubscriptionUserModel] = []
+    var items: [SubscriberModel] = []
     var shouldInfiniteScroll = true
 
     var loadTrigger = PublishSubject<Void>()
@@ -32,7 +32,7 @@ final class SubscriptionUserViewModel: ViewModel {
 
     struct Output {
         let viewWillAppear: Driver<Void>
-        let subscriptionUserList: Driver<[SubscriptionUserModel]>
+        let subscriptionUserList: Driver<[SubscriberModel]>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let isFetching: Driver<Bool>
         let dismissViewController: Driver<Void>
@@ -59,7 +59,7 @@ final class SubscriptionUserViewModel: ViewModel {
             .flatMap(Action.makeDriver)
 
         let subscriptionUserListSuccess = subscriptionUserListAction.elements
-            .map { try? $0.map(to: PageViewResponse<SubscriptionUserModel>.self) }
+            .map { try? $0.map(to: PageViewResponse<SubscriberModel>.self) }
             .do(onNext: { [weak self] pageList in
                 guard
                     let `self` = self,
@@ -76,7 +76,7 @@ final class SubscriptionUserViewModel: ViewModel {
             .map { self.items }
 
         let subscriptionUserListError = subscriptionUserListAction.error
-            .map { _ in [SubscriptionUserModel]() }
+            .map { _ in [SubscriberModel]() }
 
         let subscriptionUserList = Driver.merge(subscriptionUserListSuccess, subscriptionUserListError)
 
