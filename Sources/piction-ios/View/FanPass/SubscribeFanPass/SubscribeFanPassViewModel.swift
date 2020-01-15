@@ -63,7 +63,7 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
             .flatMap(Driver.from)
 
         let walletInfoAction = initialLoad
-            .map { MyAPI.wallet }
+            .map { WalletAPI.get }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

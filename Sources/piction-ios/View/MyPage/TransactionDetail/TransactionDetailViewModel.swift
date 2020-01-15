@@ -56,14 +56,14 @@ final class TransactionDetailViewModel: ViewModel {
         let transactionSponsorshipAction = Driver.merge(viewWillAppear, loadRetry)
             .filter { self.transaction.transactionType != "VALUE_TRANSFER" }
             .filter { self.transaction.transactionType == "SPONSORSHIP" }
-            .map { MyAPI.sponsorshipTransaction(txHash: self.transaction.transactionHash ?? "") }
+            .map { WalletAPI.sponsorshipTransaction(txHash: self.transaction.transactionHash ?? "") }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let transactionSubscriptionAction = Driver.merge(viewWillAppear, loadRetry)
             .filter { self.transaction.transactionType != "VALUE_TRANSFER" }
             .filter { self.transaction.transactionType == "SUBSCRIPTION" }
-            .map { MyAPI.subscriptionTransaction(txHash: self.transaction.transactionHash ?? "") }
+            .map { WalletAPI.subscriptionTransaction(txHash: self.transaction.transactionHash ?? "") }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

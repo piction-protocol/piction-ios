@@ -55,7 +55,7 @@ final class UserInfoViewModel: InjectableViewModel {
             .flatMap(Driver.from)
 
         let walletInfoAction = Driver.merge(viewWillAppear, refreshSession, refreshAmount)
-            .map { MyAPI.wallet }
+            .map { WalletAPI.get }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

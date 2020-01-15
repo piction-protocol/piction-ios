@@ -60,7 +60,7 @@ final class TransactionHistoryViewModel: ViewModel {
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let transactionHistoryAction = Driver.merge(initialLoad, loadNext, loadRetry)
-            .map { MyAPI.transactions(page: self.page + 1, size: 30) }
+            .map { WalletAPI.transactions(page: self.page + 1, size: 30) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
