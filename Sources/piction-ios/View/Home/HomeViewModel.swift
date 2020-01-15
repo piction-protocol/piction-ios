@@ -76,7 +76,7 @@ final class HomeViewModel: InjectableViewModel {
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let subscribingProjectsAction = Driver.merge(initialLoad, loadRetry)
-            .map { MyAPI.subscription(page: 1, size: 10) }
+            .map { SubscriberAPI.projects(page: 1, size: 10) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -101,7 +101,7 @@ final class HomeViewModel: InjectableViewModel {
             .map { _ in Void() }
 
         let subscribingPostAction = Driver.merge(subscribingPostLoad, loadNext)
-            .map { MyAPI.subscribingPosts(page: self.page + 1, size: 20) }
+            .map { SubscriberAPI.latestPosts(page: self.page + 1, size: 20) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

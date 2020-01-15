@@ -68,7 +68,7 @@ final class SubscriptionListViewModel: InjectableViewModel {
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let subscriptionListAction = Driver.merge(initialLoad, loadNext, loadRetry)
-            .map { MyAPI.subscription(page: self.page + 1, size: 20) }
+            .map { SubscriberAPI.projects(page: self.page + 1, size: 20) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
