@@ -41,14 +41,11 @@ final class PostFooterViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let uri = self.uri
+        let (uri, postItem) = (self.uri, self.postItem)
 
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
-        let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
-        let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
-
-        let isLikeAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
+        let isLikeAction = viewWillAppear
             .map { PostAPI.getLike(uri: uri, postId: postItem.id ?? 0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -63,9 +60,9 @@ final class PostFooterViewModel: InjectableViewModel {
 
         let isLikeInfo = Driver.merge(isLikeSuccess, isLikeError)
 
-        let seriesPostItemsAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
-            .filter { self.postItem.series != nil }
-            .map { SeriesAPI.getPreviousAndNextPosts(uri: uri, seriesId: self.postItem.series?.id ?? 0, postId: self.postItem.id ?? 0, count: 2) }
+        let seriesPostItemsAction = viewWillAppear
+            .filter { postItem.series != nil }
+            .map { PostAPI.getSeriesLinks(uri: uri, postId: postItem.id ?? 0, count: 2) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -73,16 +70,16 @@ final class PostFooterViewModel: InjectableViewModel {
             .map { try? $0.map(to: [PostIndexModel].self) }
             .flatMap(Driver.from)
 
-        let emptySeriesPostsItems = Driver.merge(viewWillAppear, refreshContent, refreshSession)
-            .filter { self.postItem.series == nil }
+        let emptySeriesPostsItems = viewWillAppear
+            .filter { postItem.series == nil }
             .map { _ in [PostIndexModel]() }
 
         let seriesPostItems = Driver.merge(seriesPostItemsSuccess, emptySeriesPostsItems)
 
         let footerInfo = Driver.zip(seriesPostItems, isLikeInfo)
-            .map { (self.postItem, $0, $1) }
+            .map { (postItem, $0, $1) }
 
-        let userInfoAction = Driver.merge(refreshContent, viewWillAppear, refreshSession)
+        let userInfoAction = viewWillAppear
             .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -99,8 +96,8 @@ final class PostFooterViewModel: InjectableViewModel {
         let addLike = input.likeBtnDidTap
             .withLatestFrom(userInfo)
             .filter { $0.loginId != nil }
-            .map { _ in self.postItem.id ?? 0 }
-            .map { PostsAPI.like(uri: uri, postId: $0) }
+            .map { _ in postItem.id ?? 0 }
+            .map { PostAPI.like(uri: uri, postId: $0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -110,7 +107,7 @@ final class PostFooterViewModel: InjectableViewModel {
             .map { _ in Void() }
 
         let openSeriesPostViewController = input.seriesAllPostBtnDidTap
-            .map { (uri, self.postItem.series?.id ?? 0) }
+            .map { (uri, postItem.series?.id ?? 0) }
 
         let selectSeriesPostItem = input.selectedIndexPath
 
