@@ -863,8 +863,8 @@
 		430923582372BA8800716AF8 /* piction-ios-shareEx */ = {
 			isa = PBXGroup;
 			children = (
-				4369F8D823CF190F008D5825 /* Views */,
 				4369F8D923CF1921008D5825 /* ViewModels */,
+				4369F8D823CF190F008D5825 /* Views */,
 				43EBE1BA237936550081C3B7 /* Utility */,
 				430923592372BA9900716AF8 /* DI */,
 				43C41F492373A2B400D012A7 /* Extension */,
