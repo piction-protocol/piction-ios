@@ -130,7 +130,7 @@ final class ProjectViewModel: InjectableViewModel {
             .map { uri }
 
         let loadProjectInfoAction = Driver.merge(selectPostMenu, selectSeriesMenu, loadNext)
-            .map { ProjectsAPI.get(uri: uri) }
+            .map { ProjectAPI.get(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -144,7 +144,7 @@ final class ProjectViewModel: InjectableViewModel {
         let loadProjectInfo = Driver.merge(loadProjectInfoSuccess, loadProjectInfoError)
 
         let userInfoAction = Driver.merge(viewWillAppear, refreshSession)
-            .map { UsersAPI.me }
+            .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -165,7 +165,7 @@ final class ProjectViewModel: InjectableViewModel {
 
         let loadOthersPostAction = Driver.zip(Driver.merge(selectPostMenu, loadNext), isWriter)
             .filter { !$0.1 }
-            .map { _ in PostsAPI.all(uri: uri, page: self.page + 1, size: 20) }
+            .map { _ in PostAPI.all(uri: uri, page: self.page + 1, size: 20) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -304,7 +304,7 @@ final class ProjectViewModel: InjectableViewModel {
         let contentList = Driver.merge(postSection, seriesSection)
 
         let deletePostAction = input.deletePost
-            .map { PostsAPI.delete(uri: uri, postId: $0) }
+            .map { PostAPI.delete(uri: uri, postId: $0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

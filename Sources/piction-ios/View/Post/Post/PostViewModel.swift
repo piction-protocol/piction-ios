@@ -69,7 +69,7 @@ final class PostViewModel: InjectableViewModel {
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
 
         let postContentAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
-            .map { PostsAPI.content(uri: uri, postId: self.postId) }
+            .map { PostAPI.getContent(uri: uri, postId: self.postId) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -159,7 +159,7 @@ final class PostViewModel: InjectableViewModel {
         let reloadPost = Driver.merge(changePost, refreshContent, refreshSession)
 
         let projectInfoAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
-            .map { ProjectsAPI.get(uri: uri) }
+            .map { ProjectAPI.get(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -169,7 +169,7 @@ final class PostViewModel: InjectableViewModel {
             .flatMap(Driver.from)
 
         let postItemAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
-            .map { PostsAPI.get(uri: uri, postId: self.postId) }
+            .map { PostAPI.get(uri: uri, postId: self.postId) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -180,7 +180,7 @@ final class PostViewModel: InjectableViewModel {
         let headerInfo = Driver.zip(postItemSuccess, writerInfo)
 
         let userInfoAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
-            .map { UsersAPI.me }
+            .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

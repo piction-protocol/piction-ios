@@ -48,7 +48,7 @@ final class SignUpViewModel: InjectableViewModel {
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let userInfoAction = viewWillAppear
-            .map { UsersAPI.me }
+            .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -60,7 +60,7 @@ final class SignUpViewModel: InjectableViewModel {
 
         let signUpButtonAction = input.signUpBtnDidTap
             .withLatestFrom(signUpInfo)
-            .map { UsersAPI.signup(loginId: $0.loginId, email: $0.email, username: $0.username, password: $0.password, passwordCheck: $0.passwordCheck) }
+            .map { UserAPI.signup(loginId: $0.loginId, email: $0.email, username: $0.username, password: $0.password, passwordCheck: $0.passwordCheck) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -82,7 +82,7 @@ final class SignUpViewModel: InjectableViewModel {
 
         let signUpSuccessAction = signUpButtonAction.elements
             .withLatestFrom(signUpInfo)
-            .map { SessionsAPI.create(loginId: $0.loginId, password: $0.password, rememberme: true) }
+            .map { SessionAPI.create(loginId: $0.loginId, password: $0.password, rememberme: true) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

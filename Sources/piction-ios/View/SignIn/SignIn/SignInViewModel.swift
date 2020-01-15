@@ -49,7 +49,7 @@ final class SignInViewModel: InjectableViewModel {
         let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let userInfoAction = viewWillAppear
-            .map { UsersAPI.me }
+            .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -61,7 +61,7 @@ final class SignInViewModel: InjectableViewModel {
 
         let signInButtonAction = input.signInBtnDidTap
             .withLatestFrom(signInInfo)
-            .map { SessionsAPI.create(loginId: $0.loginId, password: $0.password, rememberme: true) }
+            .map { SessionAPI.create(loginId: $0.loginId, password: $0.password, rememberme: true) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

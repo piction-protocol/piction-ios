@@ -68,7 +68,7 @@ final class FanPassListViewModel: InjectableViewModel {
         let initialLoad = Driver.merge(viewWillAppear, loadRetry, refreshContent, refreshSession)
 
         let userInfoAction = initialLoad
-            .map { UsersAPI.me }
+            .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -84,7 +84,7 @@ final class FanPassListViewModel: InjectableViewModel {
         let postItemAction = initialLoad
             .filter { postId != nil }
             .map { postId ?? 0 }
-            .map { PostsAPI.get(uri: uri, postId: $0) }
+            .map { PostAPI.get(uri: uri, postId: $0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -133,7 +133,7 @@ final class FanPassListViewModel: InjectableViewModel {
             }
 
         let projectInfoAction = initialLoad
-            .map { ProjectsAPI.get(uri: uri) }
+            .map { ProjectAPI.get(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

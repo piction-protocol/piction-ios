@@ -35,7 +35,7 @@ final class DepositViewModel: ViewModel {
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let userInfoAction = Driver.merge(viewWillAppear, loadRetry)
-            .map { UsersAPI.me }
+            .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

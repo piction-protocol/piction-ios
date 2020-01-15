@@ -47,7 +47,7 @@ final class ChangePasswordViewModel: ViewModel {
 
         let saveButtonAction = input.saveBtnDidTap
             .withLatestFrom(changePasswordInfo)
-            .map { UsersAPI.updatePassword(password: $0.password, newPassword: $0.newPassword, passwordCheck: $0.passwordCheck) }
+            .map { UserAPI.updatePassword(password: $0.password, newPassword: $0.newPassword, passwordCheck: $0.passwordCheck) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

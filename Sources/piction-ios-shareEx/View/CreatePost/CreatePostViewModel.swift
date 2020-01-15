@@ -66,7 +66,7 @@ final class CreatePostViewModel: ViewModel {
 
         let userMeAction = viewWillAppear
             .flatMap { _ -> Driver<Action<ResponseData>> in
-                let response = PictionSDK.rx.requestAPI(UsersAPI.me)
+                let response = PictionSDK.rx.requestAPI(UserAPI.me)
                 return Action.makeDriver(response)
             }
 
@@ -112,7 +112,7 @@ final class CreatePostViewModel: ViewModel {
         let fanPassAction = selectedProject
             .flatMap { project -> Driver<Action<ResponseData>> in
                 guard let uri = project?.uri else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(ProjectsAPI.fanPassAll(uri: uri))
+                let response = PictionSDK.rx.requestAPI(ProjectAPI.fanPassAll(uri: uri))
                 return Action.makeDriver(response)
             }
 
@@ -181,7 +181,7 @@ final class CreatePostViewModel: ViewModel {
                 guard let coverImage = postItems.images.first else { return Driver.empty() }
                 guard let uri = postItems.project?.uri else { return Driver.empty() }
 
-                let response = PictionSDK.rx.requestAPI(PostsAPI.uploadCoverImage(uri: uri, image: coverImage))
+                let response = PictionSDK.rx.requestAPI(PostAPI.uploadCoverImage(uri: uri, image: coverImage))
 
                 return Action.makeDriver(response)
             }
@@ -216,7 +216,7 @@ final class CreatePostViewModel: ViewModel {
 
                 var responses: [Driver<Action<ResponseData>>] = []
                 for image in postItems.images {
-                    let response = Action.makeDriver(PictionSDK.rx.requestAPI(PostsAPI.uploadContentImage(uri: uri, image: image)))
+                    let response = Action.makeDriver(PictionSDK.rx.requestAPI(PostAPI.uploadContentImage(uri: uri, image: image)))
                     responses.append(response)
                 }
                 return Driver.zip(responses)
@@ -275,7 +275,7 @@ final class CreatePostViewModel: ViewModel {
                 guard let `self` = self else { return Driver.empty() }
                 guard let uri = postItems.project?.uri else { return Driver.empty() }
                 let contentHtml = "\(self.contentHtml)<p>\(postItems.contentText.parseSpecialStrToHtmlStr)</p>"
-                let response = PictionSDK.rx.requestAPI(PostsAPI.create(uri: uri, title: postItems.title, content: contentHtml, cover: postItems.coverId, seriesId: postItems.series?.id, fanPassId: postItems.status == "FAN_PASS" ? postItems.fanPassId : nil, status: postItems.status, publishedAt: Date().millisecondsSince1970))
+                let response = PictionSDK.rx.requestAPI(PostAPI.create(uri: uri, title: postItems.title, content: contentHtml, cover: postItems.coverId, seriesId: postItems.series?.id, fanPassId: postItems.status == "FAN_PASS" ? postItems.fanPassId : nil, status: postItems.status, publishedAt: Date().millisecondsSince1970))
                 return Action.makeDriver(response)
             }
 

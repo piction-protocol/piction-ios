@@ -96,7 +96,7 @@ final class SearchViewModel: ViewModel {
             .filter { $0 == 0 }
             .withLatestFrom(self.searchText.asDriver(onErrorDriveWith: .empty()))
             .filter { $0 != "" }
-            .map { SearchAPI.project(name: $0, page: self.page + 1, size: 20) }
+            .map { SearchAPI.projects(name: $0, page: self.page + 1, size: 20) }
             .map(PictionSDK.rx.requestAPI)
             .flatMapLatest(Action.makeDriver)
 

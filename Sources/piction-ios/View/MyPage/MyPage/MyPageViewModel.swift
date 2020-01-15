@@ -71,7 +71,7 @@ final class MyPageViewModel: InjectableViewModel {
         let initialLoad = Driver.merge(viewWillAppear, refreshSession, refreshControlDidRefresh)
 
         let userMeAction = Driver.merge(initialLoad, loadRetry)
-            .map { UsersAPI.me }
+            .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -175,7 +175,7 @@ final class MyPageViewModel: InjectableViewModel {
             }
 
         let signOutAction = input.logout
-            .map { SessionsAPI.delete }
+            .map { SessionAPI.delete }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

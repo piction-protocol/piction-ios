@@ -53,7 +53,7 @@ final class CategoryListViewModel: InjectableViewModel {
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let categoryListAction = Driver.merge(initialLoad, loadRetry)
-            .map { CategoriesAPI.all }
+            .map { CategoryAPI.all }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

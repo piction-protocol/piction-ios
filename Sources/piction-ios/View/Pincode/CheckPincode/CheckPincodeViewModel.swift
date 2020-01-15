@@ -42,7 +42,7 @@ final class CheckPincodeViewModel: ViewModel {
             .map { self.style }
 
         let signOutAction = input.signout
-            .map { SessionsAPI.delete }
+            .map { SessionAPI.delete }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

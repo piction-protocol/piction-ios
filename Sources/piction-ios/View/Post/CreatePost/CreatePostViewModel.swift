@@ -99,7 +99,7 @@ final class CreatePostViewModel: InjectableViewModel {
 
         let loadPostAction = viewWillAppear
             .filter { self.postId != 0 }
-            .map { PostsAPI.get(uri: uri, postId: postId) }
+            .map { PostAPI.get(uri: uri, postId: postId) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -117,7 +117,7 @@ final class CreatePostViewModel: InjectableViewModel {
 
         let loadContentAction = viewWillAppear
             .filter { self.postId != 0 }
-            .map { PostsAPI.content(uri: uri, postId: postId) }
+            .map { PostAPI.getContent(uri: uri, postId: postId) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -148,7 +148,7 @@ final class CreatePostViewModel: InjectableViewModel {
             .map(convertTagVideoToIFrame)
 
         let uploadCoverImageAction = input.coverImageDidPick
-            .map { PostsAPI.uploadCoverImage(uri: uri, image: $0) }
+            .map { PostAPI.uploadCoverImage(uri: uri, image: $0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -177,7 +177,7 @@ final class CreatePostViewModel: InjectableViewModel {
         let coverImage = Driver.merge(changeCoverImage, deleteCoverImage)
 
         let uploadContentImageAction = input.contentImageDidPick
-            .map { PostsAPI.uploadContentImage(uri: uri, image: $0) }
+            .map { PostAPI.uploadContentImage(uri: uri, image: $0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -246,7 +246,7 @@ final class CreatePostViewModel: InjectableViewModel {
         let createPostAction = input.saveBtnDidTap
             .withLatestFrom(changePostInfo)
             .filter { _ in postId == 0 }
-            .map { PostsAPI.create(uri: uri, title: $0.title, content: $0.content, cover: $0.coverImageId, seriesId: $0.seriesId, fanPassId: $0.fanPassId, status: $0.status, publishedAt: $0.publishedAt?.millisecondsSince1970  ?? Date().millisecondsSince1970)
+            .map { PostAPI.create(uri: uri, title: $0.title, content: $0.content, cover: $0.coverImageId, seriesId: $0.seriesId, fanPassId: $0.fanPassId, status: $0.status, publishedAt: $0.publishedAt?.millisecondsSince1970  ?? Date().millisecondsSince1970)
             }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -254,7 +254,7 @@ final class CreatePostViewModel: InjectableViewModel {
         let updatePostAction = input.saveBtnDidTap
             .withLatestFrom(changePostInfo)
             .filter { _ in postId != 0 }
-            .map { PostsAPI.update(uri: uri, postId: postId, title: $0.title, content: $0.content, cover: $0.coverImageId, seriesId: $0.seriesId, fanPassId: $0.fanPassId, status: $0.status, publishedAt: $0.publishedAt?.millisecondsSince1970 ?? Date().millisecondsSince1970)
+            .map { PostAPI.update(uri: uri, postId: postId, title: $0.title, content: $0.content, cover: $0.coverImageId, seriesId: $0.seriesId, fanPassId: $0.fanPassId, status: $0.status, publishedAt: $0.publishedAt?.millisecondsSince1970 ?? Date().millisecondsSince1970)
             }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)

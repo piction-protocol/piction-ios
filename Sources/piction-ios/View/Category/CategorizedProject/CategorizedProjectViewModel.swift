@@ -67,7 +67,7 @@ final class CategorizedProjectViewModel: InjectableViewModel {
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let categoryInfoAction = Driver.merge(initialLoad, loadRetry)
-            .map { CategoriesAPI.get(id: self.categoryId) }
+            .map { CategoryAPI.get(id: self.categoryId) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -76,7 +76,7 @@ final class CategorizedProjectViewModel: InjectableViewModel {
             .flatMap(Driver.from)
 
         let projectListAction = Driver.merge(initialLoad, loadNext, loadRetry)
-            .map { CategoriesAPI.categorizedProjects(id: self.categoryId, page: self.page + 1, size: 20) }
+            .map { CategoryAPI.categorizedProjects(id: self.categoryId, page: self.page + 1, size: 20) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

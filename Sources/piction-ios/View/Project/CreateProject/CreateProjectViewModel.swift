@@ -84,7 +84,7 @@ final class CreateProjectViewModel: InjectableViewModel {
                 self.tags.onNext([])
             })
             .filter { uri != "" }
-            .map { ProjectsAPI.get(uri: uri) }
+            .map { ProjectAPI.get(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -115,7 +115,7 @@ final class CreateProjectViewModel: InjectableViewModel {
         let synopsisChanged = Driver.merge(input.inputSynopsis, synopsis.asDriver(onErrorDriveWith: .empty()))
 
         let uploadWideThumbnailImageAction = input.wideThumbnailImageDidPick
-            .map { ProjectsAPI.uploadWideThumbnail(image: $0) }
+            .map { ProjectAPI.uploadWideThumbnail(image: $0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -146,7 +146,7 @@ final class CreateProjectViewModel: InjectableViewModel {
         let wideThumbnailImage = Driver.merge(changeWideThumbnail, deleteWideThumbnail)
 
         let uploadThumbnailImageAction = input.thumbnailImageDidPick
-            .map { ProjectsAPI.uploadThumbnail(image: $0) }
+            .map { ProjectAPI.uploadThumbnail(image: $0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -190,14 +190,14 @@ final class CreateProjectViewModel: InjectableViewModel {
         let updateAction = input.saveBtnDidTap
             .filter { uri == "" }
             .withLatestFrom(changeProjectInfo)
-            .map { ProjectsAPI.create(uri: $0.id, title: $0.title, synopsis: $0.synopsis, thumbnail: $0.thumbnailImageId, wideThumbnail: $0.wideThumbnailImageId, tags: $0.tags, status: $0.status) }
+            .map { ProjectAPI.create(uri: $0.id, title: $0.title, synopsis: $0.synopsis, thumbnail: $0.thumbnailImageId, wideThumbnail: $0.wideThumbnailImageId, tags: $0.tags, status: $0.status) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let createAction = input.saveBtnDidTap
             .filter { uri != "" }
             .withLatestFrom(changeProjectInfo)
-            .map { ProjectsAPI.update(uri: $0.id, title: $0.title, synopsis: $0.synopsis, thumbnail: $0.thumbnailImageId, wideThumbnail: $0.wideThumbnailImageId, tags: $0.tags, status: $0.status) }
+            .map { ProjectAPI.update(uri: $0.id, title: $0.title, synopsis: $0.synopsis, thumbnail: $0.thumbnailImageId, wideThumbnail: $0.wideThumbnailImageId, tags: $0.tags, status: $0.status) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

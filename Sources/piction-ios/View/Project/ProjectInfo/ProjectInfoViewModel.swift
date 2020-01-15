@@ -49,7 +49,7 @@ final class ProjectInfoViewModel: InjectableViewModel {
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let projectInfoAction = Driver.merge(viewWillAppear, refreshContent, loadRetry)
-            .map { ProjectsAPI.get(uri: uri) }
+            .map { ProjectAPI.get(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

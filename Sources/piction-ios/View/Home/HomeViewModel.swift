@@ -136,7 +136,7 @@ final class HomeViewModel: InjectableViewModel {
             })
 
         let trendingAction = Driver.merge(subscribingProjectsEmpty, subscribingPostsEmpty)
-            .map { ProjectsAPI.trending }
+            .map { ProjectAPI.trending }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

@@ -77,7 +77,7 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
             .flatMap(Driver.from)
 
         let projectInfoAction = initialLoad
-            .map { ProjectsAPI.get(uri: uri) }
+            .map { ProjectAPI.get(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -111,7 +111,7 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
             .flatMap(Driver.from)
 
         let feesInfoAction = initialLoad
-            .map { ProjectsAPI.fees(uri: uri) }
+            .map { ProjectAPI.fees(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

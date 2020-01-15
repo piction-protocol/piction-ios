@@ -49,7 +49,7 @@ final class PostFooterViewModel: InjectableViewModel {
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
 
         let isLikeAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
-            .map { PostsAPI.isLike(uri: uri, postId: self.postItem.id ?? 0) }
+            .map { PostAPI.getLike(uri: uri, postId: postItem.id ?? 0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -83,7 +83,7 @@ final class PostFooterViewModel: InjectableViewModel {
             .map { (self.postItem, $0, $1) }
 
         let userInfoAction = Driver.merge(refreshContent, viewWillAppear, refreshSession)
-            .map { UsersAPI.me }
+            .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

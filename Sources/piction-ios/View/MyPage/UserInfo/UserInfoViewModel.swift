@@ -41,7 +41,7 @@ final class UserInfoViewModel: InjectableViewModel {
         let refreshAmount = updater.refreshAmount.asDriver(onErrorDriveWith: .empty())
 
         let userInfoAction = Driver.merge(viewWillAppear, refreshSession, refreshAmount)
-            .map { UsersAPI.me }
+            .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
