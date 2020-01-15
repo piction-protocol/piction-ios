@@ -66,7 +66,7 @@ final class TagResultProjectViewModel: ViewModel {
             .filter { self.shouldInfiniteScroll }
 
         let tagResultProjectListAction = Driver.merge(initialLoad, loadNext, loadRetry)
-            .map { ProjectsAPI.all(page: self.page + 1, size: 20, tagName: tag) }
+            .map { SearchAPI.taggingProjects(tag: tag, page: self.page + 1, size: 20) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
