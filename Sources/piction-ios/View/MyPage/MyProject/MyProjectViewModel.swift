@@ -50,7 +50,7 @@ final class MyProjectViewModel: InjectableViewModel {
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let myProjectAction = Driver.merge(viewWillAppear, refreshContent, loadRetry)
-            .map { MyAPI.projects }
+            .map { CreatorAPI.projects }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

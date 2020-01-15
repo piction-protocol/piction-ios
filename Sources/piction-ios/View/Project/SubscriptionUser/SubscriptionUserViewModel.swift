@@ -54,7 +54,7 @@ final class SubscriptionUserViewModel: ViewModel {
             .filter { self.shouldInfiniteScroll }
 
         let subscriptionUserListAction = Driver.merge(initialLoad, loadNext)
-            .map { MyAPI.projectSubscriptions(uri: uri, page: self.page + 1, size: 30) }
+            .map { CreatorAPI.projectSubscriptions(uri: uri, page: self.page + 1, size: 30) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

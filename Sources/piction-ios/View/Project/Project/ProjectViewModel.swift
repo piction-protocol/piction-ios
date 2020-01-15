@@ -171,7 +171,7 @@ final class ProjectViewModel: InjectableViewModel {
 
         let loadWriterPostAction = Driver.zip(Driver.merge(selectPostMenu, loadNext), isWriter)
             .filter { $0.1 }
-            .map { _ in MyAPI.posts(uri: uri, page: self.page + 1, size: 20) }
+            .map { _ in CreatorAPI.posts(uri: uri, page: self.page + 1, size: 20) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
