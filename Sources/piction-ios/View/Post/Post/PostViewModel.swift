@@ -43,8 +43,7 @@ final class PostViewModel: InjectableViewModel {
         let viewWillAppear: Driver<Void>
         let viewDidAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
-        let prevPostIsEnabled: Driver<PostModel>
-        let nextPostIsEnabled: Driver<PostModel>
+        let prevNextLink: Driver<PostLinkModel>
         let showPostContent: Driver<String>
         let showNeedSubscription: Driver<(UserModel, PostModel, SubscriptionModel?)>
         let headerInfo: Driver<(PostModel, UserModel)>
@@ -93,58 +92,28 @@ final class PostViewModel: InjectableViewModel {
 
         let showPostContent = Driver.merge(postContentSuccess, postContentError)
 
-        let prevPostAction = Driver.merge(viewWillAppear, refreshContent)
-            .map { PostsAPI.prevPost(uri: uri, postId: self.postId) }
+        let prevNextLinkAction = Driver.merge(viewWillAppear, refreshContent)
+            .map { PostAPI.getLinks(uri: uri, postId: self.postId) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
-        let prevPostSuccess = prevPostAction.elements
-            .map { try? $0.map(to: PostModel.self) }
+        let prevNextLinkSuccess = prevNextLinkAction.elements
+            .map { try? $0.map(to: PostLinkModel.self) }
             .flatMap(Driver.from)
 
-        let prevPostError = prevPostAction.error
-            .flatMap { response -> Driver<PostModel> in
-                let errorMsg = response as? ErrorType
-                switch errorMsg {
-                case .notFound:
-                    return Driver.just(PostModel.from([:])!)
-                default:
-                    return Driver.empty()
-                }
-            }
+        let prevNextLinkError = prevNextLinkAction.error
+            .map { _ in PostLinkModel.from([:])! }
 
-        let prevPostIsEnabled = Driver.merge(prevPostSuccess, prevPostError)
+        let prevNextLink = Driver.merge(prevNextLinkSuccess, prevNextLinkError)
 
         let prevPostBtnDidTap = input.prevPostBtnDidTap
-            .withLatestFrom(prevPostSuccess)
-            .map { $0.id }
+            .withLatestFrom(prevNextLinkSuccess)
+            .map { $0.previousPost?.id }
             .flatMap(Driver.from)
-
-        let nextPostAction = Driver.merge(viewWillAppear, refreshContent)
-            .map { PostsAPI.nextPost(uri: uri, postId: self.postId) }
-            .map(PictionSDK.rx.requestAPI)
-            .flatMap(Action.makeDriver)
-
-        let nextPostSuccess = nextPostAction.elements
-            .map { try? $0.map(to: PostModel.self) }
-            .flatMap(Driver.from)
-
-        let nextPostError = nextPostAction.error
-            .flatMap { response -> Driver<PostModel> in
-                let errorMsg = response as? ErrorType
-                switch errorMsg {
-                case .notFound:
-                    return Driver.just(PostModel.from([:])!)
-                default:
-                    return Driver.empty()
-                }
-            }
-
-        let nextPostIsEnabled = Driver.merge(nextPostSuccess, nextPostError)
 
         let nextPostBtnDidTap = input.nextPostBtnDidTap
-            .withLatestFrom(nextPostSuccess)
-            .map { $0.id }
+            .withLatestFrom(prevNextLinkSuccess)
+            .map { $0.nextPost?.id }
             .flatMap(Driver.from)
 
         let loadPost = input.loadPost
@@ -156,7 +125,7 @@ final class PostViewModel: InjectableViewModel {
             })
             .map { _ in Void() }
 
-        let reloadPost = Driver.merge(changePost, refreshContent, refreshSession)
+        let reloadPost = changePost
 
         let projectInfoAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
             .map { ProjectAPI.get(uri: uri) }
@@ -301,8 +270,7 @@ final class PostViewModel: InjectableViewModel {
             viewWillAppear: input.viewWillAppear,
             viewDidAppear: input.viewDidAppear,
             viewWillDisappear: input.viewWillDisappear,
-            prevPostIsEnabled: prevPostIsEnabled,
-            nextPostIsEnabled: nextPostIsEnabled,
+            prevNextLink: prevNextLink,
             showPostContent: showPostContent,
             showNeedSubscription: showNeedSubscription,
             headerInfo: headerInfo,

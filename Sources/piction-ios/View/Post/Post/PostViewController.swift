@@ -253,34 +253,10 @@ extension PostViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .prevPostIsEnabled
-            .drive(onNext: { [weak self] postItem in
-                let isEnabled = postItem.id != nil
-                self?.prevPostButton.isEnabled = isEnabled
-                var buttonColor: UIColor {
-                    if #available(iOS 13.0, *) {
-                        return isEnabled ? .pictionDarkGrayDM : UIColor(r: 151, g: 151, b: 151)
-                    } else {
-                        return isEnabled ? UIColor(r: 51, g: 51, b: 51) : UIColor(r: 151, g: 151, b: 151)
-                    }
-                }
-                self?.prevPostButton.setTitleColor(buttonColor, for: .normal)
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .nextPostIsEnabled
-            .drive(onNext: { [weak self] postItem in
-                let isEnabled = postItem.id != nil
-                self?.nextPostButton.isEnabled = isEnabled
-                var buttonColor: UIColor {
-                    if #available(iOS 13.0, *) {
-                        return isEnabled ? .pictionDarkGrayDM : UIColor(r: 151, g: 151, b: 151)
-                    } else {
-                        return isEnabled ? UIColor(r: 51, g: 51, b: 51) : UIColor(r: 151, g: 151, b: 151)
-                    }
-                }
-                self?.nextPostButton.setTitleColor(buttonColor, for: .normal)
+            .prevNextLink
+            .drive(onNext: { [weak self] postLinkItem in
+                self?.setLinkButton(button: self?.prevPostButton, postItem: postLinkItem.previousPost)
+                self?.setLinkButton(button: self?.nextPostButton, postItem: postLinkItem.nextPost)
             })
             .disposed(by: disposeBag)
 
@@ -504,5 +480,20 @@ extension PostViewController: UIGestureRecognizerDelegate {
             return false
         }
         return true
+    }
+}
+
+extension PostViewController {
+    private func setLinkButton(button: UIButton?, postItem: PostModel?) {
+        let isEnabled = postItem?.id != nil
+        button?.isEnabled = isEnabled
+        var buttonColor: UIColor {
+            if #available(iOS 13.0, *) {
+                return isEnabled ? .pictionDarkGrayDM : UIColor(r: 151, g: 151, b: 151)
+            } else {
+                return isEnabled ? UIColor(r: 51, g: 51, b: 51) : UIColor(r: 151, g: 151, b: 151)
+            }
+        }
+        button?.setTitleColor(buttonColor, for: .normal)
     }
 }
