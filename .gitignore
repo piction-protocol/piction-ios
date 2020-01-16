@@ -5,5 +5,6 @@ project.xcworkspace
 /Carthage
 /Product
 /piction-ios.xcodeproj/xcuserdata
+/piction-ios.xcworkspace/xcuserdata
 /Pods
 *.xcuserstate
