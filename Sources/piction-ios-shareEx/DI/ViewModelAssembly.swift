@@ -19,7 +19,7 @@ final class ViewModelAssembly: Assembly {
 
         container.register(ManageSeriesViewModel.self) { (resolver, uri: String) in
             return ManageSeriesViewModel(dependency: (
-                resolver.resolve(Updater.self)!,
+                resolver.resolve(UpdaterProtocol.self)!,
                 uri: uri)
             )
         }

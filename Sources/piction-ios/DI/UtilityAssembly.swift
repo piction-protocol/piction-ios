@@ -11,7 +11,7 @@ import Swinject
 final class UtilityAssembly: Assembly {
     func assemble(container: Container) {
 
-        container.register(Updater.self) { resolver in
+        container.register(UpdaterProtocol.self) { resolver in
             return Updater()
             }
             .inObjectScope(.container)
