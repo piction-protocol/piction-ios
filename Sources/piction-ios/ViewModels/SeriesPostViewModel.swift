@@ -56,7 +56,7 @@ final class SeriesPostViewModel: InjectableViewModel {
     func build(input: Input) -> Output {
         let (uri, seriesId) = (self.uri, self.seriesId)
 
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
 
@@ -69,7 +69,7 @@ final class SeriesPostViewModel: InjectableViewModel {
         let refreshSort = isDescending
             .map { _ in Void() }
 
-        let initialLoad = Driver.merge(viewWillAppear, refreshContent, refreshSession, refreshSort)
+        let initialPage = Driver.merge(initialLoad, refreshContent, refreshSession, refreshSort)
             .do(onNext: { [weak self] _ in
                 self?.page = 0
                 self?.sections = []
@@ -81,7 +81,7 @@ final class SeriesPostViewModel: InjectableViewModel {
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
-        let isSubscribingAction = Driver.merge(initialLoad, loadNext, loadRetry)
+        let isSubscribingAction = Driver.merge(initialPage, loadNext, loadRetry)
             .map { FanPassAPI.getSubscribedFanPass(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -96,7 +96,7 @@ final class SeriesPostViewModel: InjectableViewModel {
 
         let isSubscribing = Driver.merge(isSubscribingSuccess, isSubscribingError)
 
-        let loadSeriesInfoAction = Driver.merge(initialLoad, loadRetry)
+        let loadSeriesInfoAction = Driver.merge(initialPage, loadRetry)
             .map { SeriesAPI.get(uri: uri, seriesId: seriesId) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -105,7 +105,7 @@ final class SeriesPostViewModel: InjectableViewModel {
             .map { try? $0.map(to: SeriesModel.self) }
             .flatMap(Driver.from)
 
-        let loadSeriesPostsAction = Driver.merge(initialLoad, loadNext, loadRetry)
+        let loadSeriesPostsAction = Driver.merge(initialPage, loadNext, loadRetry)
             .map { SeriesAPI.allSeriesPosts(uri: uri, seriesId: seriesId, page: self.page + 1, size: 20, isDescending: self.isDescending) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)

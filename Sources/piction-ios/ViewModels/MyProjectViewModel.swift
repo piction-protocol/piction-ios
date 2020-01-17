@@ -45,11 +45,11 @@ final class MyProjectViewModel: InjectableViewModel {
     func build(input: Input) -> Output {
         let updater = self.updater
 
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
-        let myProjectAction = Driver.merge(viewWillAppear, refreshContent, loadRetry)
+        let myProjectAction = Driver.merge(initialLoad, refreshContent, loadRetry)
             .map { CreatorAPI.projects }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)

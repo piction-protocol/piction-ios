@@ -54,9 +54,9 @@ final class CreateFanPassViewModel: InjectableViewModel {
     func build(input: Input) -> Output {
         let (updater, uri, fanPass) = (self.updater, self.uri, self.fanPass)
 
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
-        let loadFanPass = viewWillAppear
+        let loadFanPass = initialLoad
             .map { fanPass }
             .flatMap(Driver.from)
             .do(onNext: { [weak self] fanPass in

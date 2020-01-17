@@ -48,28 +48,27 @@ final class ExploreViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
         let refreshControlDidRefresh = input.refreshControlDidRefresh
 
-        let initialLoad = Driver.merge(viewWillAppear, refreshSession, refreshContent, refreshControlDidRefresh)
+        let initialPage = Driver.merge(initialLoad, refreshSession, refreshContent, refreshControlDidRefresh)
             .do(onNext: { [weak self] _ in
                 self?.page = 0
                 self?.items = []
                 self?.shouldInfiniteScroll = true
             })
 
-        let embedCategoryListViewController = viewWillAppear
+        let embedCategoryListViewController = initialLoad
 
         let loadNext = loadNextTrigger.asDriver(onErrorDriveWith: .empty())
             .filter { self.shouldInfiniteScroll }
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
-        let projectListAction = Driver.merge(initialLoad, loadNext, loadRetry)
+        let projectListAction = Driver.merge(initialPage, loadNext, loadRetry)
             .map { ProjectAPI.all(page: self.page + 1, size: 20) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -104,7 +103,7 @@ final class ExploreViewModel: InjectableViewModel {
             .map(Driver.from)
             .flatMap(Action.makeDriver)
 
-        let showActivityIndicator = Driver.merge(initialLoad, loadRetry)
+        let showActivityIndicator = Driver.merge(initialPage, loadRetry)
             .map { true }
 
         let hideActivityIndicator = projectList

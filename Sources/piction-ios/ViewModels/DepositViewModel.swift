@@ -31,10 +31,10 @@ final class DepositViewModel: ViewModel {
     }
 
     func build(input: Input) -> Output {
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
-        let userInfoAction = Driver.merge(viewWillAppear, loadRetry)
+        let userInfoAction = Driver.merge(initialLoad, loadRetry)
             .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -43,7 +43,7 @@ final class DepositViewModel: ViewModel {
             .map { try? $0.map(to: UserModel.self) }
             .flatMap(Driver.from)
 
-        let walletInfoAction = Driver.merge(viewWillAppear, loadRetry)
+        let walletInfoAction = Driver.merge(initialLoad, loadRetry)
             .map { WalletAPI.get }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)

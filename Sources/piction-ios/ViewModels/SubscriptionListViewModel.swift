@@ -49,13 +49,13 @@ final class SubscriptionListViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
         let refreshControlDidRefresh = input.refreshControlDidRefresh
 
-        let initialLoad = Driver.merge(viewWillAppear, refreshSession, refreshContent, refreshControlDidRefresh)
+        let initialPage = Driver.merge(initialLoad, refreshSession, refreshContent, refreshControlDidRefresh)
             .do(onNext: { [weak self] _ in
                 self?.page = 0
                 self?.items = []
@@ -67,7 +67,7 @@ final class SubscriptionListViewModel: InjectableViewModel {
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
-        let subscriptionListAction = Driver.merge(initialLoad, loadNext, loadRetry)
+        let subscriptionListAction = Driver.merge(initialPage, loadNext, loadRetry)
             .map { SubscriberAPI.projects(page: self.page + 1, size: 20) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -136,7 +136,7 @@ final class SubscriptionListViewModel: InjectableViewModel {
             .map(Driver.from)
             .flatMap(Action.makeDriver)
 
-        let showActivityIndicator = Driver.merge(initialLoad, loadRetry)
+        let showActivityIndicator = Driver.merge(initialPage, loadRetry)
             .map { true }
 
         let hideActivityIndicator = subscriptionList

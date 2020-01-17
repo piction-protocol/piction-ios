@@ -45,9 +45,9 @@ final class TransactionHistoryViewModel: ViewModel {
     }
 
     func build(input: Input) -> Output {
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
-        let initialLoad = Driver.merge(viewWillAppear, input.refreshControlDidRefresh)
+        let initialPage = Driver.merge(initialLoad, input.refreshControlDidRefresh)
             .do(onNext: { [weak self] in
                 self?.page = 0
                 self?.sections = []
@@ -59,7 +59,7 @@ final class TransactionHistoryViewModel: ViewModel {
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
-        let transactionHistoryAction = Driver.merge(initialLoad, loadNext, loadRetry)
+        let transactionHistoryAction = Driver.merge(initialPage, loadNext, loadRetry)
             .map { WalletAPI.transactions(page: self.page + 1, size: 30) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -122,7 +122,7 @@ final class TransactionHistoryViewModel: ViewModel {
             .map(Driver.from)
             .flatMap(Action.makeDriver)
 
-        let showActivityIndicator = initialLoad
+        let showActivityIndicator = initialPage
             .map { true }
 
         let hideActivityIndicator = transactionHistoryList

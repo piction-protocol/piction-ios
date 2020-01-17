@@ -58,12 +58,12 @@ final class HomeViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
 
-        let initialLoad = Driver.merge(viewWillAppear, input.refreshControlDidRefresh, refreshSession, refreshContent)
+        let initialPage = Driver.merge(initialLoad, input.refreshControlDidRefresh, refreshSession, refreshContent)
             .do(onNext: { [weak self] in
                 self?.page = 0
                 self?.sections = []
@@ -75,7 +75,7 @@ final class HomeViewModel: InjectableViewModel {
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
-        let subscribingProjectsAction = Driver.merge(initialLoad, loadRetry)
+        let subscribingProjectsAction = Driver.merge(initialPage, loadRetry)
             .map { SubscriberAPI.projects(page: 1, size: 10) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)

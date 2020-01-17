@@ -52,17 +52,17 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
     func build(input: Input) -> Output {
         let (updater, uri, selectedFanPass) = (self.updater, self.uri, self.selectedFanPass)
 
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
-        let initialLoad = Driver.merge(viewWillAppear, loadRetry)
+        let loadPage = Driver.merge(initialLoad, loadRetry)
 
-        let fanPassItem = initialLoad
+        let fanPassItem = loadPage
             .map { selectedFanPass }
             .flatMap(Driver.from)
 
-        let walletInfoAction = initialLoad
+        let walletInfoAction = loadPage
             .map { WalletAPI.get }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -76,7 +76,7 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
             .map { $0?.message }
             .flatMap(Driver.from)
 
-        let projectInfoAction = initialLoad
+        let projectInfoAction = loadPage
             .map { ProjectAPI.get(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -110,7 +110,7 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
             .map { $0?.message }
             .flatMap(Driver.from)
 
-        let feesInfoAction = initialLoad
+        let feesInfoAction = loadPage
             .map { ProjectAPI.fees(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)

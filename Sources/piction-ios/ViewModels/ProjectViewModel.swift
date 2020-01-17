@@ -72,7 +72,7 @@ final class ProjectViewModel: InjectableViewModel {
     func build(input: Input) -> Output {
         let (updater, uri) = (self.updater, self.uri)
 
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
@@ -143,7 +143,7 @@ final class ProjectViewModel: InjectableViewModel {
 
         let loadProjectInfo = Driver.merge(loadProjectInfoSuccess, loadProjectInfoError)
 
-        let userInfoAction = Driver.merge(viewWillAppear, refreshSession)
+        let userInfoAction = Driver.merge(initialLoad, refreshSession)
             .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -196,7 +196,7 @@ final class ProjectViewModel: InjectableViewModel {
                 self?.page = page + 1
             })
 
-        let fanPassListAction = viewWillAppear
+        let fanPassListAction = initialLoad
             .map { FanPassAPI.all(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)

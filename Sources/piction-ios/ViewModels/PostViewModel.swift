@@ -62,12 +62,12 @@ final class PostViewModel: InjectableViewModel {
     func build(input: Input) -> Output {
         let (updater, uri) = (self.updater, self.uri)
 
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
 
-        let postContentAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
+        let postContentAction = Driver.merge(initialLoad, refreshContent, refreshSession)
             .map { PostAPI.getContent(uri: uri, postId: self.postId) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -92,7 +92,7 @@ final class PostViewModel: InjectableViewModel {
 
         let showPostContent = Driver.merge(postContentSuccess, postContentError)
 
-        let prevNextLinkAction = Driver.merge(viewWillAppear, refreshContent)
+        let prevNextLinkAction = Driver.merge(initialLoad, refreshContent)
             .map { PostAPI.getLinks(uri: uri, postId: self.postId) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -127,7 +127,7 @@ final class PostViewModel: InjectableViewModel {
 
         let reloadPost = changePost
 
-        let projectInfoAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
+        let projectInfoAction = Driver.merge(initialLoad, refreshContent, refreshSession)
             .map { ProjectAPI.get(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -137,7 +137,7 @@ final class PostViewModel: InjectableViewModel {
             .map { $0?.user }
             .flatMap(Driver.from)
 
-        let postItemAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
+        let postItemAction = Driver.merge(initialLoad, refreshContent, refreshSession)
             .map { PostAPI.get(uri: uri, postId: self.postId) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -148,7 +148,7 @@ final class PostViewModel: InjectableViewModel {
 
         let headerInfo = Driver.zip(postItemSuccess, writerInfo)
 
-        let userInfoAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
+        let userInfoAction = Driver.merge(initialLoad, refreshContent, refreshSession)
             .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -162,7 +162,7 @@ final class PostViewModel: InjectableViewModel {
 
         let userInfo = Driver.merge(userInfoSuccess, userInfoError)
 
-        let subscriptionInfoAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
+        let subscriptionInfoAction = Driver.merge(initialLoad, refreshContent, refreshSession)
             .map { FanPassAPI.getSubscribedFanPass(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -196,7 +196,7 @@ final class PostViewModel: InjectableViewModel {
         let footerInfo = postItemSuccess
             .map { (uri, $0) }
 
-        let fanPassListAction = Driver.merge(viewWillAppear, refreshContent, refreshSession)
+        let fanPassListAction = Driver.merge(initialLoad, refreshContent, refreshSession)
             .map { FanPassAPI.all(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)

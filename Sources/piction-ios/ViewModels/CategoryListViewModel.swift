@@ -42,17 +42,16 @@ final class CategoryListViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
 
-        let initialLoad = Driver.merge(viewWillAppear, refreshSession, refreshContent)
+        let loadPage = Driver.merge(initialLoad, refreshSession, refreshContent)
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
-        let categoryListAction = Driver.merge(initialLoad, loadRetry)
+        let categoryListAction = Driver.merge(loadPage, loadRetry)
             .map { CategoryAPI.all }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)

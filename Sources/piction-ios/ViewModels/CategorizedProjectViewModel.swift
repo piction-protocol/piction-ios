@@ -48,13 +48,12 @@ final class CategorizedProjectViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
 
-        let initialLoad = Driver.merge(viewWillAppear, refreshSession, refreshContent)
+        let initialPage = Driver.merge(initialLoad, refreshSession, refreshContent)
             .do(onNext: { [weak self] _ in
                 self?.page = 0
                 self?.items = []
@@ -66,7 +65,7 @@ final class CategorizedProjectViewModel: InjectableViewModel {
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
-        let categoryInfoAction = Driver.merge(initialLoad, loadRetry)
+        let categoryInfoAction = Driver.merge(initialPage, loadRetry)
             .map { CategoryAPI.get(id: self.categoryId) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -75,7 +74,7 @@ final class CategorizedProjectViewModel: InjectableViewModel {
             .map { try? $0.map(to: CategoryModel.self) }
             .flatMap(Driver.from)
 
-        let projectListAction = Driver.merge(initialLoad, loadNext, loadRetry)
+        let projectListAction = Driver.merge(initialPage, loadNext, loadRetry)
             .map { CategoryAPI.categorizedProjects(id: self.categoryId, page: self.page + 1, size: 20) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)

@@ -50,15 +50,15 @@ final class ManageFanPassViewModel: InjectableViewModel {
     func build(input: Input) -> Output {
         let (updater, uri) = (self.updater, self.uri)
 
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
 
-        let initialLoad = Driver.merge(viewWillAppear, loadRetry, refreshContent)
+        let loadPage = Driver.merge(initialLoad, loadRetry, refreshContent)
 
-        let fanPassListAction = initialLoad
+        let fanPassListAction = loadPage
             .map { FanPassAPI.all(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)

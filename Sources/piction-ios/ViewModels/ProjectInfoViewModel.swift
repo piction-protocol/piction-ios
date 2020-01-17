@@ -42,13 +42,13 @@ final class ProjectInfoViewModel: InjectableViewModel {
     func build(input: Input) -> Output {
         let uri = self.uri
 
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
-        let projectInfoAction = Driver.merge(viewWillAppear, refreshContent, loadRetry)
+        let projectInfoAction = Driver.merge(initialLoad, refreshContent, loadRetry)
             .map { ProjectAPI.get(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)

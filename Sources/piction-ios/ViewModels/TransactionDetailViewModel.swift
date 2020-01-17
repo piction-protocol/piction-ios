@@ -46,21 +46,21 @@ final class TransactionDetailViewModel: ViewModel {
     }
 
     func build(input: Input) -> Output {
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
-        let navigationTitle = Driver.merge(viewWillAppear, loadRetry)
+        let navigationTitle = Driver.merge(initialLoad, loadRetry)
             .map { self.transaction.inOut == "IN" ? LocalizedStrings.menu_deposit_detail.localized() : LocalizedStrings.menu_withdraw_detail.localized() }
 
-        let transactionSponsorshipAction = Driver.merge(viewWillAppear, loadRetry)
+        let transactionSponsorshipAction = Driver.merge(initialLoad, loadRetry)
             .filter { self.transaction.transactionType != "VALUE_TRANSFER" }
             .filter { self.transaction.transactionType == "SPONSORSHIP" }
             .map { WalletAPI.sponsorshipTransaction(txHash: self.transaction.transactionHash ?? "") }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
-        let transactionSubscriptionAction = Driver.merge(viewWillAppear, loadRetry)
+        let transactionSubscriptionAction = Driver.merge(initialLoad, loadRetry)
             .filter { self.transaction.transactionType != "VALUE_TRANSFER" }
             .filter { self.transaction.transactionType == "SUBSCRIPTION" }
             .map { WalletAPI.subscriptionTransaction(txHash: self.transaction.transactionHash ?? "") }

@@ -46,14 +46,14 @@ final class TaggingProjectViewModel: ViewModel {
     func build(input: Input) -> Output {
         let tag = self.tag
 
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
-
-        let navigationTitle = viewWillAppear
+        let navigationTitle = input.viewWillAppear
             .map { tag }
+
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let refreshControlDidRefresh = input.refreshControlDidRefresh
 
-        let initialLoad = Driver.merge(viewWillAppear, refreshControlDidRefresh)
+        let initialPage = Driver.merge(initialLoad, refreshControlDidRefresh)
             .do(onNext: { [weak self] in
                 self?.page = 0
                 self?.items = []
@@ -65,7 +65,7 @@ final class TaggingProjectViewModel: ViewModel {
         let loadNext = loadNextTrigger.asDriver(onErrorDriveWith: .empty())
             .filter { self.shouldInfiniteScroll }
 
-        let taggingProjectListAction = Driver.merge(initialLoad, loadNext, loadRetry)
+        let taggingProjectListAction = Driver.merge(initialPage, loadNext, loadRetry)
             .map { SearchAPI.taggingProjects(tag: tag, page: self.page + 1, size: 20) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)

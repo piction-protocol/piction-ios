@@ -56,7 +56,7 @@ final class FanPassListViewModel: InjectableViewModel {
     func build(input: Input) -> Output {
         let (updater, uri, postId) = (self.updater, self.uri, self.postId)
 
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
@@ -65,9 +65,9 @@ final class FanPassListViewModel: InjectableViewModel {
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
 
-        let initialLoad = Driver.merge(viewWillAppear, loadRetry, refreshContent, refreshSession)
+        let loadPage = Driver.merge(initialLoad, loadRetry, refreshContent, refreshSession)
 
-        let userInfoAction = initialLoad
+        let userInfoAction = loadPage
             .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -81,7 +81,7 @@ final class FanPassListViewModel: InjectableViewModel {
 
         let currentUserInfo = Driver.merge(currentUserInfoSuccess, currentUserInfoError)
 
-        let postItemAction = initialLoad
+        let postItemAction = loadPage
             .filter { postId != nil }
             .map { postId ?? 0 }
             .map { PostAPI.get(uri: uri, postId: $0) }
@@ -96,7 +96,7 @@ final class FanPassListViewModel: InjectableViewModel {
                 self?.levelLimit.onNext(fanPassLevel)
             })
 
-        let subscriptionInfoAction = initialLoad
+        let subscriptionInfoAction = loadPage
             .map { FanPassAPI.getSubscribedFanPass(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -110,7 +110,7 @@ final class FanPassListViewModel: InjectableViewModel {
 
         let subscriptionInfo = Driver.merge(subscriptionInfoSuccess, subscriptionInfoError)
 
-        let fanPassListAction = initialLoad
+        let fanPassListAction = loadPage
             .map { FanPassAPI.all(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -132,7 +132,7 @@ final class FanPassListViewModel: InjectableViewModel {
                 return cellList.filter { ($0.fanPass.level ?? 0) >= levelLimit }
             }
 
-        let projectInfoAction = initialLoad
+        let projectInfoAction = loadPage
             .map { ProjectAPI.get(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)

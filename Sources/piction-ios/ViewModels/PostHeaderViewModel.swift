@@ -36,9 +36,7 @@ final class PostHeaderViewModel: InjectableViewModel {
     func build(input: Input) -> Output {
         let (postItem, userInfo) = (self.postItem, self.userInfo)
 
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
-
-        let headerInfo = viewWillAppear
+        let headerInfo = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
             .map { (postItem, userInfo) }
 
         return Output(

@@ -35,12 +35,12 @@ final class UserInfoViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
         let refreshAmount = updater.refreshAmount.asDriver(onErrorDriveWith: .empty())
 
-        let userInfoAction = Driver.merge(viewWillAppear, refreshSession, refreshAmount)
+        let userInfoAction = Driver.merge(initialLoad, refreshSession, refreshAmount)
             .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -54,7 +54,7 @@ final class UserInfoViewModel: InjectableViewModel {
             .map { try? $0.map(to: UserModel.self) }
             .flatMap(Driver.from)
 
-        let walletInfoAction = Driver.merge(viewWillAppear, refreshSession, refreshAmount)
+        let walletInfoAction = Driver.merge(initialLoad, refreshSession, refreshAmount)
             .map { WalletAPI.get }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)

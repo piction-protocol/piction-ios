@@ -58,9 +58,7 @@ final class MyPageViewModel: InjectableViewModel {
     func build(input: Input) -> Output {
         let updater = self.updater
 
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
-
-        let viewWillDisappear = input.viewWillDisappear
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
 
@@ -68,9 +66,9 @@ final class MyPageViewModel: InjectableViewModel {
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
-        let initialLoad = Driver.merge(viewWillAppear, refreshSession, refreshControlDidRefresh)
+        let loadPage = Driver.merge(initialLoad, refreshSession, refreshControlDidRefresh)
 
-        let userMeAction = Driver.merge(initialLoad, loadRetry)
+        let userMeAction = Driver.merge(loadPage, loadRetry)
             .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -207,7 +205,7 @@ final class MyPageViewModel: InjectableViewModel {
 
         return Output(
             viewWillAppear: input.viewWillAppear,
-            viewWillDisappear: viewWillDisappear,
+            viewWillDisappear: input.viewWillDisappear,
             myPageList: myPageList,
             selectedIndexPath: input.selectedIndexPath,
             embedUserInfoViewController: embedUserInfoViewController,

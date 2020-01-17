@@ -41,9 +41,9 @@ final class SubscriptionUserViewModel: ViewModel {
     func build(input: Input) -> Output {
         let uri = self.uri
 
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
-        let initialLoad = Driver.merge(viewWillAppear, input.refreshControlDidRefresh)
+        let initialPage = Driver.merge(initialLoad, input.refreshControlDidRefresh)
             .do(onNext: { [weak self] _ in
                 self?.page = 0
                 self?.items = []
@@ -53,7 +53,7 @@ final class SubscriptionUserViewModel: ViewModel {
         let loadNext = loadTrigger.asDriver(onErrorDriveWith: .empty())
             .filter { self.shouldInfiniteScroll }
 
-        let subscriptionUserListAction = Driver.merge(initialLoad, loadNext)
+        let subscriptionUserListAction = Driver.merge(initialPage, loadNext)
             .map { CreatorAPI.projectSubscriptions(uri: uri, page: self.page + 1, size: 30) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
