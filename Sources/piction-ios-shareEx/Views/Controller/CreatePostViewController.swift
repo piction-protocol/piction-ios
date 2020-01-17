@@ -40,7 +40,6 @@ final class CreatePostViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        KeyboardManager.shared.delegate = self
 
         let accessToken = KeychainManager.get(key: "AccessToken")
         PictionManager.setToken(accessToken)
@@ -211,6 +210,7 @@ extension CreatePostViewController: ViewModelBindable {
 
         let input = CreatePostViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
+            viewWillDisappear: rx.viewWillDisappear.asDriver(),
             inputTitle: titleTextField.rx.text.orEmpty.asDriver(),
             contentText: contentText.asDriver(onErrorDriveWith: .empty()),
             selectedImages: selectedImages.asDriver(onErrorDriveWith: .empty()),
@@ -231,6 +231,12 @@ extension CreatePostViewController: ViewModelBindable {
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 FirebaseManager.screenName("공유_포스트작성")
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .viewWillDisappear
+            .drive(onNext: { _ in
             })
             .disposed(by: disposeBag)
 
@@ -323,6 +329,33 @@ extension CreatePostViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
+            .keyboardWillChangeFrame
+            .drive(onNext: { [weak self] changedFrameInfo in
+                guard
+                    let `self` = self,
+                    let endFrame = changedFrameInfo.endFrame
+                else { return }
+
+                DispatchQueue.main.async {
+                    if endFrame.origin.y >= self.view.frame.size.height {
+                        self.scrollView.contentInset = .zero
+                        self.textViewIsActive = false
+                    } else {
+                        self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height, right: 0)
+
+                        if self.textViewIsActive {
+                            self.scrollView.scrollRectToVisible(self.textView.superview!.frame, animated: true)
+                        }
+                    }
+
+                    UIView.animate(withDuration: changedFrameInfo.duration, animations: {
+                        self.view.layoutIfNeeded()
+                    })
+                }
+            })
+            .disposed(by: disposeBag)
+
+        output
             .dismissViewController
             .drive(onNext: { [weak self] message in
                 self?.dismissPopup(message: message)
@@ -386,28 +419,5 @@ extension CreatePostViewController: UITextViewDelegate {
 
     func textViewDidChange(_ textView: UITextView) {
         self.contentText.onNext(textView.text)
-    }
-}
-
-extension CreatePostViewController: KeyboardManagerDelegate {
-    func keyboardManager(_ keyboardManager: KeyboardManager, keyboardWillChangeFrame endFrame: CGRect?, duration: TimeInterval, animationCurve: UIView.AnimationOptions) {
-        guard let endFrame = endFrame else { return }
-
-        DispatchQueue.main.async {
-            if endFrame.origin.y >= self.view.frame.size.height {
-                self.scrollView.contentInset = .zero
-                self.textViewIsActive = false
-            } else {
-                self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height, right: 0)
-
-                if self.textViewIsActive {
-                    self.scrollView.scrollRectToVisible(self.textView.superview!.frame, animated: true)
-                }
-            }
-
-            UIView.animate(withDuration: duration, animations: {
-                self.view.layoutIfNeeded()
-            })
-        }
     }
 }

@@ -865,12 +865,12 @@
 			children = (
 				4369F8D923CF1921008D5825 /* ViewModels */,
 				4369F8D823CF190F008D5825 /* Views */,
-				43EBE1BA237936550081C3B7 /* Utility */,
 				430923592372BA9900716AF8 /* DI */,
 				43C41F492373A2B400D012A7 /* Extension */,
 				43C41F502373B1A200D012A7 /* Config */,
 				43C41F702373C2B600D012A7 /* Helper */,
 				43C41F402373A28600D012A7 /* Protocol */,
+				43EBE1BA237936550081C3B7 /* Utility */,
 				43C41F6D2373B89F00D012A7 /* SupportingFiles */,
 			);
 			path = "piction-ios-shareEx";
@@ -975,14 +975,6 @@
 				4323F99B233A165600243655 /* VisualEffectView.swift */,
 			);
 			path = VisualEffectView;
-			sourceTree = "<group>";
-		};
-		4323F99C233A165600243655 /* KeyboardManager */ = {
-			isa = PBXGroup;
-			children = (
-				4323F99D233A165600243655 /* KeyboardManager.swift */,
-			);
-			path = KeyboardManager;
 			sourceTree = "<group>";
 		};
 		4323F99E233A165600243655 /* Protocol */ = {
@@ -1439,7 +1431,6 @@
 			isa = PBXGroup;
 			children = (
 				439E7ED7237C057D00E4A475 /* FirebaseManager */,
-				4323F99C233A165600243655 /* KeyboardManager */,
 				43EBE1B52378EAB60081C3B7 /* VisualEffectView */,
 				43EBE19F237407860081C3B7 /* KeychainManager */,
 				43C41F712373C2C300D012A7 /* Localization */,
@@ -1493,6 +1484,7 @@
 			isa = PBXGroup;
 			children = (
 				43EBE1BB237936610081C3B7 /* Updater.swift */,
+				4323F99D233A165600243655 /* KeyboardManager.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";

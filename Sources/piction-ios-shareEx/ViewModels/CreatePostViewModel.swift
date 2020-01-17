@@ -20,12 +20,13 @@ final class CreatePostViewModel: ViewModel {
 
     var contentHtml = ""
 
-    init(context: NSExtensionContext?) {
-        self.context = context
+    init(dependency: Dependency) {
+        (keyboardManager, context) = dependency
     }
 
     struct Input {
         let viewWillAppear: Driver<Void>
+        let viewWillDisappear: Driver<Void>
         let inputTitle: Driver<String>
         let contentText: Driver<String>
         let selectedImages: Driver<[UIImage]>
@@ -41,6 +42,7 @@ final class CreatePostViewModel: ViewModel {
 
     struct Output {
         let viewWillAppear: Driver<Void>
+        let viewWillDisappear: Driver<Void>
         let loadContents: Driver<Void>
         let contentText: Driver<String>
         let selectedImages: Driver<[UIImage]>
@@ -51,20 +53,33 @@ final class CreatePostViewModel: ViewModel {
         let openStatusActionSheet: Driver<Void>
         let selectedStatus: Driver<String>
         let enableSaveButton: Driver<Void>
+        let keyboardWillChangeFrame: Driver<ChangedKeyboardFrame>
         let activityIndicator: Driver<Bool>
         let showToast: Driver<String>
         let dismissViewController: Driver<String?>
     }
 
     func build(input: Input) -> Output {
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let keyboardManager = self.keyboardManager
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                keyboardManager.beginMonitoring()
+            })
+
+        let viewWillDisappear = input.viewWillDisappear
+            .do(onNext: { _ in
+                keyboardManager.stopMonitoring()
+            })
+
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
             .do(onNext: { [weak self] _ in
                 self?.selectedImages.onNext([])
                 self?.coverImageId.onNext(nil)
                 self?.selectedStatus.onNext("PUBLIC")
             })
 
-        let userMeAction = viewWillAppear
+        let userMeAction = initialLoad
             .flatMap { _ -> Driver<Action<ResponseData>> in
                 let response = PictionSDK.rx.requestAPI(UserAPI.me)
                 return Action.makeDriver(response)
@@ -102,7 +117,7 @@ final class CreatePostViewModel: ViewModel {
                 return Driver.just(project)
             }
 
-        let selectedProjectError = viewWillAppear
+        let selectedProjectError = initialLoad
             .flatMap { _ -> Driver<ProjectModel?> in
                 return Driver.just(nil)
             }
@@ -295,6 +310,8 @@ final class CreatePostViewModel: ViewModel {
                 return Driver.just(nil)
             }
 
+        let keyboardWillChangeFrame = keyboardManager.keyboardWillChangeFrame.asDriver(onErrorDriveWith: .empty())
+
         let activityIndicator = Driver.merge(
             uploadCoverImageAction.isExecuting,
             uploadContentImage.isExecuting,
@@ -305,8 +322,8 @@ final class CreatePostViewModel: ViewModel {
         let dismissViewController = Driver.merge(saveSuccess, userMeError, cancelAction, projectListError)
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
-            loadContents: viewWillAppear,
+            viewWillAppear: viewWillAppear,
+            loadContents: initialLoad,
             contentText: input.contentText,
             selectedImages: selectedImages,
             openProjectListViewController: openProjectListViewController,
@@ -316,6 +333,7 @@ final class CreatePostViewModel: ViewModel {
             openStatusActionSheet: input.statusBtnDidTap,
             selectedStatus: selectedStatus,
             enableSaveButton: enableSaveButton,
+            keyboardWillChangeFrame: keyboardWillChangeFrame,
             activityIndicator: activityIndicator,
             showToast: showToast,
             dismissViewController: dismissViewController

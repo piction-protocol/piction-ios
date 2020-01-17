@@ -12,7 +12,9 @@ import PictionSDK
 final class ViewModelAssembly: Assembly {
     func assemble(container: Container) {
         container.register(CreatePostViewModel.self) { (resolver, context: NSExtensionContext?) in
-            return CreatePostViewModel(context: context)
+            return CreatePostViewModel(dependency:
+                resolver.resolve(KeyboardManager.self)!,
+                context: context)
         }
 
         container.register(ManageSeriesViewModel.self) { (resolver, uri: String) in
