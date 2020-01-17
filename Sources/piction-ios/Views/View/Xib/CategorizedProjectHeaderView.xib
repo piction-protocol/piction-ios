@@ -27,7 +27,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="187"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
-                    <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="Vl3-00-Zjs" secondAttribute="height" multiplier="375:187" id="9Te-xg-O6u"/>
                     </constraints>
