@@ -111,8 +111,8 @@ extension ConfirmPincodeViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .pincodeText
-            .drive(onNext: { [weak self] inputPincode in
+            .inputPincode
+            .drive(onNext: { [weak self] (inputedPincode, inputPincode) in
                 switch inputPincode.count {
                 case 0:
                     self?.pincode1View.backgroundColor = .pictionLightGray
@@ -164,8 +164,7 @@ extension ConfirmPincodeViewController: ViewModelBindable {
                     self?.pincode5View.backgroundColor = .pictionBlue
                     self?.pincode6View.backgroundColor = .pictionBlue
 
-                    if inputPincode == (self?.viewModel?.inputPincode ?? "") {
-                        KeychainManager.set(key: "pincode", value: inputPincode)
+                    if inputedPincode == inputPincode {
                         UserDefaults(suiteName: "group.\(BUNDLEID)")?.set(0, forKey: "pincodeErrorCount")
                         if !(UserDefaults(suiteName: "group.\(BUNDLEID)")?.bool(forKey: "isEnabledAuthBio") ?? false) {
                             self?.pincodeTextField.text = ""

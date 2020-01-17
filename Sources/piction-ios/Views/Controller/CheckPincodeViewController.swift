@@ -140,8 +140,8 @@ extension CheckPincodeViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .pincodeText
-            .drive(onNext: { [weak self] inputPincode in
+            .inputPincode
+            .drive(onNext: { [weak self] (pincode, inputPincode) in
                 switch inputPincode.count {
                 case 0:
                     self?.pincode1View.backgroundColor = .pictionLightGray
@@ -193,7 +193,7 @@ extension CheckPincodeViewController: ViewModelBindable {
                     self?.pincode5View.backgroundColor = .pictionBlue
                     self?.pincode6View.backgroundColor = .pictionBlue
                     self?.pincodeTextField.text = ""
-                    if KeychainManager.get(key: "pincode") == inputPincode {
+                    if pincode == inputPincode {
                         self?.authSuccess()
                     } else {
                         self?.errorPopup()

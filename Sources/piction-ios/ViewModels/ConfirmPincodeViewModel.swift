@@ -13,14 +13,16 @@ final class ConfirmPincodeViewModel: InjectableViewModel {
 
     typealias Dependency = (
         UpdaterProtocol,
+        KeychainManagerProtocol,
         String
     )
 
     private let updater: UpdaterProtocol
-    var inputPincode = ""
+    private let keychainManager: KeychainManagerProtocol
+    private let inputedPincode: String
 
     init(dependency: Dependency) {
-        (updater, inputPincode) = dependency
+        (updater, keychainManager, inputedPincode) = dependency
     }
 
     struct Input {
@@ -31,21 +33,24 @@ final class ConfirmPincodeViewModel: InjectableViewModel {
 
     struct Output {
         let viewWillAppear: Driver<Void>
-        let pincodeText: Driver<String>
+        let inputPincode: Driver<(String, String)>
         let dismissViewController: Driver<Void>
     }
 
     func build(input: Input) -> Output {
-        let updater = self.updater
+        let (updater, keychainManager, inputedPincode) = (self.updater, self.keychainManager, self.inputedPincode)
+        let inputPincode = input.pincodeTextFieldDidInput
+            .map { (inputedPincode, $0) }
 
         let dismissViewController = input.changeComplete
             .do(onNext: { _ in
+                keychainManager.set(key: .pincode, value: inputedPincode)
                 updater.refreshSession.onNext(())
             })
 
         return Output(
             viewWillAppear: input.viewWillAppear,
-            pincodeText: input.pincodeTextFieldDidInput,
+            inputPincode: inputPincode,
             dismissViewController: dismissViewController
         )
     }

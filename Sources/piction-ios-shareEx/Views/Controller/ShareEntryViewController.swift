@@ -14,7 +14,7 @@ import PictionSDK
 class ShareEntryViewController: UINavigationController {
 
     init() {
-        let pincode = KeychainManager.get(key: "pincode")
+        let pincode = KeychainManager.get(key: .pincode)
 
         if pincode == "" {
             let vc = CreatePostViewController.make(context: nil)

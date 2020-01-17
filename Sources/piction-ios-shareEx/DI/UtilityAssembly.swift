@@ -20,6 +20,11 @@ final class UtilityAssembly: Assembly {
             return KeyboardManager()
             }
             .inObjectScope(.container)
+
+        container.register(KeychainManagerProtocol.self) { resolver in
+            return KeychainManager()
+            }
+            .inObjectScope(.container)
     }
 }
 

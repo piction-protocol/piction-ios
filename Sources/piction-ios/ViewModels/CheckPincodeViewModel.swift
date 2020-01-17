@@ -16,12 +16,17 @@ enum CheckPincodeStyle {
     case change
 }
 
-final class CheckPincodeViewModel: ViewModel {
+final class CheckPincodeViewModel: InjectableViewModel {
 
+    typealias Dependency = (
+        KeychainManagerProtocol,
+        CheckPincodeStyle
+    )
+    private let keychainManager: KeychainManagerProtocol
     var style: CheckPincodeStyle = .initial
 
-    init(style: CheckPincodeStyle) {
-        self.style = style
+    init(dependency: Dependency) {
+        (keychainManager, style) = dependency
     }
 
     struct Input {
@@ -33,13 +38,20 @@ final class CheckPincodeViewModel: ViewModel {
 
     struct Output {
         let viewWillAppear: Driver<CheckPincodeStyle>
-        let pincodeText: Driver<String>
+        let inputPincode: Driver<(String, String)>
         let dismissViewController: Driver<Void>
     }
 
     func build(input: Input) -> Output {
+        let (keychainManager, style) = (self.keychainManager, self.style)
+
         let viewWillAppear = input.viewWillAppear
-            .map { self.style }
+            .map { style }
+
+        let loadPage = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+
+        let currentPincode = loadPage
+            .map { keychainManager.get(key: .pincode) }
 
         let signOutAction = input.signout
             .map { SessionAPI.delete }
@@ -51,9 +63,11 @@ final class CheckPincodeViewModel: ViewModel {
 
         let dismissViewController = Driver.merge(signOutSuccess, input.closeBtnDidTap)
 
+        let inputPincode = Driver.combineLatest(currentPincode, input.pincodeTextFieldDidInput)
+
         return Output(
             viewWillAppear: viewWillAppear,
-            pincodeText: input.pincodeTextFieldDidInput,
+            inputPincode: inputPincode,
             dismissViewController: dismissViewController
         )
     }

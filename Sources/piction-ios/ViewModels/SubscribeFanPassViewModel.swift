@@ -14,18 +14,20 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
 
     typealias Dependency = (
         UpdaterProtocol,
+        KeychainManagerProtocol,
         String,
         FanPassModel
     )
 
-    let updater: UpdaterProtocol
-    let uri: String
-    let selectedFanPass: FanPassModel
+    private let updater: UpdaterProtocol
+    private let keychainManager: KeychainManagerProtocol
+    private let uri: String
+    private let selectedFanPass: FanPassModel
 
     var loadRetryTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
-        (updater, uri, selectedFanPass) = dependency
+        (updater, keychainManager, uri, selectedFanPass) = dependency
     }
 
     struct Input {
@@ -50,7 +52,7 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (updater, uri, selectedFanPass) = (self.updater, self.uri, self.selectedFanPass)
+        let (updater, keychainManager, uri, selectedFanPass) = (self.updater, self.keychainManager, self.uri, self.selectedFanPass)
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
@@ -86,11 +88,11 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
             .flatMap(Driver.from)
 
         let openCheckPincodeViewController = input.purchaseBtnDidTap
-            .filter { !KeychainManager.get(key: "pincode").isEmpty }
+            .filter { !keychainManager.get(key: .pincode).isEmpty }
             .map { _ in Void() }
 
         let purchaseWithoutPicode = input.purchaseBtnDidTap
-            .filter { KeychainManager.get(key: "pincode").isEmpty }
+            .filter { keychainManager.get(key: .pincode).isEmpty }
 
         let purchaseWithPincode = input.authSuccessWithPincode
 

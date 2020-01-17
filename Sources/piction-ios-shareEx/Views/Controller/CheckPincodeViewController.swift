@@ -189,7 +189,7 @@ extension CheckPincodeViewController: ViewModelBindable {
                     self?.pincode5View.backgroundColor = .pictionBlue
                     self?.pincode6View.backgroundColor = .pictionBlue
                     self?.pincodeTextField.text = ""
-                    if KeychainManager.get(key: "pincode") == inputPincode {
+                    if KeychainManager.get(key: .pincode) == inputPincode {
                         self?.authSuccess()
                     } else {
                         self?.errorPopup()

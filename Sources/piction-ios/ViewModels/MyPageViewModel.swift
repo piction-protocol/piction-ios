@@ -23,15 +23,17 @@ enum MyPageSection {
 final class MyPageViewModel: InjectableViewModel {
 
     typealias Dependency = (
-        UpdaterProtocol
+        UpdaterProtocol,
+        KeychainManagerProtocol
     )
 
     private let updater: UpdaterProtocol
+    private let keychainManager: KeychainManagerProtocol
 
     var loadRetryTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
-        (updater) = dependency
+        (updater, keychainManager) = dependency
     }
 
     struct Input {
@@ -56,7 +58,7 @@ final class MyPageViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let updater = self.updater
+        let (updater, keychainManager) = (self.updater, self.keychainManager)
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
@@ -90,11 +92,11 @@ final class MyPageViewModel: InjectableViewModel {
 
                 var securityItems: [MyPageSection] = [
                     MyPageSection.header(title: LocalizedStrings.str_security.localized()),
-                    KeychainManager.get(key: "pincode").isEmpty ? MyPageSection.presentType(title: LocalizedStrings.str_create_pin.localized(), align: .left) : MyPageSection.presentType(title: LocalizedStrings.str_change_pin.localized(), align: .left),
+                    keychainManager.get(key: .pincode).isEmpty ? MyPageSection.presentType(title: LocalizedStrings.str_create_pin.localized(), align: .left) : MyPageSection.presentType(title: LocalizedStrings.str_change_pin.localized(), align: .left),
                     MyPageSection.underline
                 ]
 
-                if !KeychainManager.get(key: "pincode").isEmpty {
+                if !keychainManager.get(key: .pincode).isEmpty {
                     let authContext = LAContext()
                     if authContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) {
                         var description = ""
@@ -184,7 +186,7 @@ final class MyPageViewModel: InjectableViewModel {
 
         let signOutSuccess = signOutAction.elements
             .do(onNext: { _ in
-                KeychainManager.set(key: "AccessToken", value: "")
+                keychainManager.set(key: .accessToken, value: "")
                 PictionManager.setToken("")
                 updater.refreshSession.onNext(())
             })

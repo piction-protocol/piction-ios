@@ -39,26 +39,30 @@ final class ViewModelAssembly: Assembly {
         container.register(SignInViewModel.self) { resolver in
             return SignInViewModel(dependency: (
                 resolver.resolve(UpdaterProtocol.self)!,
-                resolver.resolve(KeyboardManagerProtocol.self)!)
+                resolver.resolve(KeyboardManagerProtocol.self)!,
+                resolver.resolve(KeychainManagerProtocol.self)!)
             )
         }
 
         container.register(SignUpViewModel.self) { resolver in
             return SignUpViewModel(dependency: (
                 resolver.resolve(UpdaterProtocol.self)!,
-                resolver.resolve(KeyboardManagerProtocol.self)!)
+                resolver.resolve(KeyboardManagerProtocol.self)!,
+                resolver.resolve(KeychainManagerProtocol.self)!)
             )
         }
 
         container.register(SignUpCompleteViewModel.self) { (resolver, loginId: String) in
-            return SignUpCompleteViewModel(
-                loginId: loginId
+            return SignUpCompleteViewModel(dependency: (
+                resolver.resolve(KeychainManagerProtocol.self)!,
+                loginId: loginId)
             )
         }
 
         container.register(MyPageViewModel.self) { resolver in
             return MyPageViewModel(dependency: (
-                resolver.resolve(UpdaterProtocol.self)!)
+                resolver.resolve(UpdaterProtocol.self)!,
+                resolver.resolve(KeychainManagerProtocol.self)!)
             )
         }
 
@@ -165,7 +169,10 @@ final class ViewModelAssembly: Assembly {
         }
 
         container.register(CheckPincodeViewModel.self) { (resolver, style) in
-            return CheckPincodeViewModel(style: style)
+            return CheckPincodeViewModel(dependency: (
+                resolver.resolve(KeychainManagerProtocol.self)!,
+                style: style)
+            )
         }
 
         container.register(RegisterPincodeViewModel.self) { resolver in
@@ -175,6 +182,7 @@ final class ViewModelAssembly: Assembly {
         container.register(ConfirmPincodeViewModel.self) { (resolver, inputPincode) in
             return ConfirmPincodeViewModel(dependency: (
                 resolver.resolve(UpdaterProtocol.self)!,
+                resolver.resolve(KeychainManagerProtocol.self)!,
                 inputPincode: inputPincode)
             )
         }
@@ -218,6 +226,7 @@ final class ViewModelAssembly: Assembly {
         container.register(SubscribeFanPassViewModel.self) { (resolver, uri: String, selectedFanPass: FanPassModel) in
             return SubscribeFanPassViewModel(dependency: (
                 resolver.resolve(UpdaterProtocol.self)!,
+                resolver.resolve(KeychainManagerProtocol.self)!,
                 uri: uri,
                 selectedFanPass: selectedFanPass)
             )

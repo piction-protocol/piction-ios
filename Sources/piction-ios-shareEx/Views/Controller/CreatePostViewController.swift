@@ -41,7 +41,7 @@ final class CreatePostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let accessToken = KeychainManager.get(key: "AccessToken")
+        let accessToken = KeychainManager.get(key: .accessToken)
         PictionManager.setToken(accessToken)
     }
 

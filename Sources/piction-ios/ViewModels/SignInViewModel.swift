@@ -14,14 +14,16 @@ final class SignInViewModel: InjectableViewModel {
 
     typealias Dependency = (
         UpdaterProtocol,
-        KeyboardManagerProtocol
+        KeyboardManagerProtocol,
+        KeychainManagerProtocol
     )
 
     private let updater: UpdaterProtocol
     private let keyboardManager: KeyboardManagerProtocol
+    private let keychainManager: KeychainManagerProtocol
 
     init(dependency: Dependency) {
-        (updater, keyboardManager) = dependency
+        (updater, keyboardManager, keychainManager) = dependency
     }
 
     struct Input {
@@ -49,7 +51,7 @@ final class SignInViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (updater, keyboardManager) = (self.updater, self.keyboardManager)
+        let (updater, keyboardManager, keychainManager) = (self.updater, self.keyboardManager, self.keychainManager)
 
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
@@ -106,11 +108,11 @@ final class SignInViewModel: InjectableViewModel {
             .map { try? $0.map(to: AuthenticationModel.self) }
             .map { $0?.accessToken ?? "" }
             .do(onNext: { token in
-                KeychainManager.set(key: "AccessToken", value: token)
+                keychainManager.set(key: .accessToken, value: token)
                 PictionManager.setToken(token)
                 updater.refreshSession.onNext(())
             })
-            .map { _ in true }
+            .map { _ in keychainManager.get(key: .pincode).isEmpty }
 
         let keyboardWillChangeFrame = keyboardManager.keyboardWillChangeFrame.asDriver(onErrorDriveWith: .empty())
 

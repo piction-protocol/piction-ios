@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !(UserDefaults(suiteName: "group.\(BUNDLEID)")?.bool(forKey: "initialLaunch") ?? false) {
             UserDefaults(suiteName: "group.\(BUNDLEID)")?.set(true, forKey: "initialLaunch")
             PictionManager.setToken("")
-            KeychainManager.set(key: "pincode", value: "")
+            KeychainManager().set(key: .pincode, value: "")
         }
 
         // urlcache
@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         window = UIWindow(frame: UIScreen.main.bounds)
 
-        if !KeychainManager.get(key: "pincode").isEmpty {
+        if !KeychainManager().get(key: .pincode).isEmpty {
             let vc = CheckPincodeViewController.make(style: .initial)
             window?.rootViewController = vc
         } else {

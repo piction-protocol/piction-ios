@@ -14,14 +14,16 @@ final class SignUpViewModel: InjectableViewModel {
 
     typealias Dependency = (
         UpdaterProtocol,
-        KeyboardManagerProtocol
+        KeyboardManagerProtocol,
+        KeychainManagerProtocol
     )
 
     private let updater: UpdaterProtocol
     private let keyboardManager: KeyboardManagerProtocol
+    private let keychainManager: KeychainManagerProtocol
 
     init(dependency: Dependency) {
-        (updater, keyboardManager) = dependency
+        (updater, keyboardManager, keychainManager) = dependency
     }
 
     struct Input {
@@ -48,7 +50,7 @@ final class SignUpViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (updater, keyboardManager) = (self.updater, self.keyboardManager)
+        let (updater, keyboardManager, keychainManager) = (self.updater, self.keyboardManager, self.keychainManager)
 
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
@@ -105,7 +107,7 @@ final class SignUpViewModel: InjectableViewModel {
             .map { try? $0.map(to: AuthenticationViewResponse.self) }
             .map { $0?.accessToken ?? "" }
             .do(onNext: { token in
-                KeychainManager.set(key: "AccessToken", value: token)
+                keychainManager.set(key: .accessToken, value: token)
                 PictionManager.setToken(token)
                 updater.refreshSession.onNext(())
             })

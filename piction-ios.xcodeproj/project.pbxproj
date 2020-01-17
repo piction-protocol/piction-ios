@@ -959,7 +959,6 @@
 			isa = PBXGroup;
 			children = (
 				43502A9B238FB81400586098 /* StoreReviewManager */,
-				43EBE1A22374086A0081C3B7 /* KeychainManager */,
 				436CAC6E234C2F3F00C84373 /* Toast */,
 				438E762A2362BCD80062D004 /* DynamicCollectionViewFlowLayout */,
 				436CAC6A234C2DFE00C84373 /* Firebase */,
@@ -1003,6 +1002,7 @@
 			children = (
 				4323FA5A233A165600243655 /* Updater.swift */,
 				439E7ED4237BEC0B00E4A475 /* KeyboardManager.swift */,
+				43EBE1A32374087D0081C3B7 /* KeychainManager.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1432,7 +1432,6 @@
 			children = (
 				439E7ED7237C057D00E4A475 /* FirebaseManager */,
 				43EBE1B52378EAB60081C3B7 /* VisualEffectView */,
-				43EBE19F237407860081C3B7 /* KeychainManager */,
 				43C41F712373C2C300D012A7 /* Localization */,
 			);
 			path = Helper;
@@ -1456,22 +1455,6 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		43EBE19F237407860081C3B7 /* KeychainManager */ = {
-			isa = PBXGroup;
-			children = (
-				43EBE1A0237407940081C3B7 /* KeychainManager.swift */,
-			);
-			path = KeychainManager;
-			sourceTree = "<group>";
-		};
-		43EBE1A22374086A0081C3B7 /* KeychainManager */ = {
-			isa = PBXGroup;
-			children = (
-				43EBE1A32374087D0081C3B7 /* KeychainManager.swift */,
-			);
-			path = KeychainManager;
-			sourceTree = "<group>";
-		};
 		43EBE1B52378EAB60081C3B7 /* VisualEffectView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1485,6 +1468,7 @@
 			children = (
 				43EBE1BB237936610081C3B7 /* Updater.swift */,
 				4323F99D233A165600243655 /* KeyboardManager.swift */,
+				43EBE1A0237407940081C3B7 /* KeychainManager.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";

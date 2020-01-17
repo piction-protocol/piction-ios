@@ -9,12 +9,18 @@
 import RxSwift
 import RxCocoa
 
-final class SignUpCompleteViewModel: ViewModel {
+final class SignUpCompleteViewModel: InjectableViewModel {
 
-    let loginId: String
+    typealias Dependency = (
+        KeychainManagerProtocol,
+        String
+    )
 
-    init(loginId: String) {
-        self.loginId = loginId
+    private let keychainManager: KeychainManagerProtocol
+    private let loginId: String
+
+    init(dependency: Dependency) {
+        (keychainManager, loginId) = dependency
     }
 
     struct Input {
@@ -24,13 +30,21 @@ final class SignUpCompleteViewModel: ViewModel {
 
     struct Output {
         let viewWillAppear: Driver<Void>
-        let dismissViewController: Driver<Void>
+        let dismissViewController: Driver<String>
     }
 
     func build(input: Input) -> Output {
+        let (keychainManager, loginId) = (self.keychainManager, self.loginId)
+
+        let pincode = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+            .map { keychainManager.get(key: .pincode) }
+
+        let dismissViewController = input.closeBtnDidTap
+            .withLatestFrom(pincode)
+
         return Output(
             viewWillAppear: input.viewWillAppear,
-            dismissViewController: input.closeBtnDidTap
+            dismissViewController: dismissViewController
         )
     }
 }
