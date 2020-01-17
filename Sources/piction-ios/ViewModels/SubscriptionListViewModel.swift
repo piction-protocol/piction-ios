@@ -136,7 +136,13 @@ final class SubscriptionListViewModel: InjectableViewModel {
             .map(Driver.from)
             .flatMap(Action.makeDriver)
 
-        let activityIndicator = subscriptionListAction.isExecuting
+        let showActivityIndicator = Driver.merge(initialLoad, loadRetry)
+            .map { true }
+
+        let hideActivityIndicator = subscriptionList
+            .map { _ in false }
+
+        let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
 
         return Output(
             viewWillAppear: input.viewWillAppear,
