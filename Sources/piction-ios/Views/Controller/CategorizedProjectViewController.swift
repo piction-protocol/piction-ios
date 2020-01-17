@@ -208,7 +208,7 @@ extension CategorizedProjectViewController: UICollectionViewDelegateFlowLayout {
         if self.emptyView.subviews.count > 0 {
             return UIEdgeInsets.zero
         } else {
-            return UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+            return UIEdgeInsets(top: 32, left: 20, bottom: 20, right: 20)
 
         }
     }
