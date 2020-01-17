@@ -77,13 +77,6 @@ final class SignUpViewController: UIViewController {
         }
     }
 
-
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        KeyboardManager.shared.delegate = self
-    }
-
     @IBAction func tapGesture(_ sender: Any) {
         view.endEditing(true)
     }
@@ -97,6 +90,7 @@ extension SignUpViewController: ViewModelBindable {
 
         let input = SignUpViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
+            viewWillDisappear: rx.viewWillDisappear.asDriver(),
             signUpBtnDidTap: signUpButton.rx.tap.asDriver().throttle(1),
             loginIdTextFieldDidInput: loginIdInputView.inputTextField.rx.text.orEmpty.asDriver(),
             emailTextFieldDidInput: emailInputView.inputTextField.rx.text.orEmpty.asDriver(),
@@ -114,6 +108,12 @@ extension SignUpViewController: ViewModelBindable {
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self?.tabBarController?.tabBar.isHidden = true
                 FirebaseManager.screenName("회원가입")
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .viewWillDisappear
+            .drive(onNext: { _ in
             })
             .disposed(by: disposeBag)
 
@@ -156,6 +156,26 @@ extension SignUpViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
+            .keyboardWillChangeFrame
+            .drive(onNext: { [weak self] changedFrameInfo in
+                guard
+                    let `self` = self,
+                    let endFrame = changedFrameInfo.endFrame
+                else { return }
+
+                if endFrame.origin.y >= SCREEN_H {
+                    self.scrollView.contentInset = .zero
+                } else {
+                    self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height, right: 0)
+                }
+
+                UIView.animate(withDuration: changedFrameInfo.duration, animations: {
+                    self.view.layoutIfNeeded()
+                })
+            })
+            .disposed(by: disposeBag)
+
+        output
             .activityIndicator
             .drive(onNext: { status in
                 Toast.loadingActivity(status)
@@ -181,22 +201,6 @@ extension SignUpViewController: ViewModelBindable {
                 }
             })
             .disposed(by: disposeBag)
-    }
-}
-
-extension SignUpViewController: KeyboardManagerDelegate {
-    func keyboardManager(_ keyboardManager: KeyboardManager, keyboardWillChangeFrame endFrame: CGRect?, duration: TimeInterval, animationCurve: UIView.AnimationOptions) {
-        guard let endFrame = endFrame else { return }
-
-        if endFrame.origin.y >= SCREEN_H {
-            scrollView.contentInset = .zero
-        } else {
-            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height, right: 0)
-        }
-
-        UIView.animate(withDuration: duration, animations: {
-            self.view.layoutIfNeeded()
-        })
     }
 }
 

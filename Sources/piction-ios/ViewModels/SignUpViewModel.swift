@@ -13,17 +13,20 @@ import PictionSDK
 final class SignUpViewModel: InjectableViewModel {
 
     typealias Dependency = (
-        UpdaterProtocol
+        UpdaterProtocol,
+        KeyboardManager
     )
 
     private let updater: UpdaterProtocol
+    private let keyboardManager: KeyboardManager
 
     init(dependency: Dependency) {
-        (updater) = dependency
+        (updater, keyboardManager) = dependency
     }
 
     struct Input {
         let viewWillAppear: Driver<Void>
+        let viewWillDisappear: Driver<Void>
         let signUpBtnDidTap: Driver<Void>
         let loginIdTextFieldDidInput: Driver<String>
         let emailTextFieldDidInput: Driver<String>
@@ -35,19 +38,31 @@ final class SignUpViewModel: InjectableViewModel {
 
     struct Output {
         let viewWillAppear: Driver<Void>
+        let viewWillDisappear: Driver<Void>
         let userInfo: Driver<UserModel>
         let signUpBtnEnable: Driver<Void>
         let openSignUpComplete: Driver<Void>
+        let keyboardWillChangeFrame: Driver<ChangedKeyboardFrame>
         let activityIndicator: Driver<Bool>
         let errorMsg: Driver<ErrorModel>
     }
 
     func build(input: Input) -> Output {
-        let updater = self.updater
+        let (updater, keyboardManager) = (self.updater, self.keyboardManager)
 
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                keyboardManager.beginMonitoring()
+            })
 
-        let userInfoAction = viewWillAppear
+        let viewWillDisappear = input.viewWillDisappear
+            .do(onNext: { _ in
+                keyboardManager.stopMonitoring()
+            })
+
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+
+        let userInfoAction = initialLoad
             .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -96,13 +111,17 @@ final class SignUpViewModel: InjectableViewModel {
             })
             .map { _ in Void() }
 
+        let keyboardWillChangeFrame = keyboardManager.keyboardWillChangeFrame.asDriver(onErrorDriveWith: .empty())
+
         let activityIndicator = signUpSuccessAction.isExecuting
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
+            viewWillDisappear: viewWillDisappear,
             userInfo: userInfoSuccess,
             signUpBtnEnable: input.agreeBtnDidTap,
             openSignUpComplete: sessionCreateSuccess,
+            keyboardWillChangeFrame: keyboardWillChangeFrame,
             activityIndicator: activityIndicator,
             errorMsg: errorMsg
         )
