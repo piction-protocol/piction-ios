@@ -22,10 +22,6 @@ final class SearchViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptyView: UIView!
 
-    func setKeyboardDelegate() {
-        KeyboardManager.shared.delegate = self
-    }
-
     private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionType<SearchSection>> {
         let dataSource = RxTableViewSectionedReloadDataSource<SectionType<SearchSection>>(
             configureCell: { dataSource, tableView, indexPath, model in
@@ -181,21 +177,5 @@ extension SearchViewController: UISearchResultsUpdating {
         searchController.searchResultsController?.view.isHidden = false
         guard let text = searchController.searchBar.text else { return }
         self.searchText.onNext(text)
-    }
-}
-
-extension SearchViewController: KeyboardManagerDelegate {
-    func keyboardManager(_ keyboardManager: KeyboardManager, keyboardWillChangeFrame endFrame: CGRect?, duration: TimeInterval, animationCurve: UIView.AnimationOptions) {
-        guard let endFrame = endFrame else { return }
-
-        if endFrame.origin.y >= SCREEN_H {
-            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        } else {
-            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height - (UIApplication.topViewController()?.tabBarController?.tabBar.frame.size.height ?? 0), right: 0)
-        }
-
-        UIView.animate(withDuration: duration, animations: {
-            self.view.layoutIfNeeded()
-        })
     }
 }

@@ -49,7 +49,7 @@ final class SearchViewModel: ViewModel {
     }
 
     func build(input: Input) -> Output {
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let setPlaceHolder = input.viewWillAppear
             .withLatestFrom(self.menu.asDriver(onErrorDriveWith: .empty()))
@@ -79,7 +79,7 @@ final class SearchViewModel: ViewModel {
             .filter { $0 == "" }
             .map { _ in SectionType<SearchSection>.Section(title: "project", items: []) }
 
-        let searchGuideEmptyView = Driver.merge(viewWillAppear, inputSearchText, menuChange)
+        let searchGuideEmptyView = Driver.merge(initialLoad, inputSearchText, menuChange)
             .withLatestFrom(self.searchText.asDriver(onErrorDriveWith: .empty()))
             .filter { $0 == "" }
             .withLatestFrom(self.menu.asDriver(onErrorDriveWith: .empty()))
@@ -161,7 +161,7 @@ final class SearchViewModel: ViewModel {
             .map { _ in Void() }
 
         return Output(
-            viewWillAppear: viewWillAppear,
+            viewWillAppear: input.viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
             setPlaceHolder: setPlaceHolder,
             menuChanged: input.segmentedControlDidChange,

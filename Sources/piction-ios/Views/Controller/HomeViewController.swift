@@ -137,7 +137,7 @@ extension HomeViewController: ViewModelBindable {
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
                 self?.setInfiniteScrollStyle()
-                self?.searchResultsController.setKeyboardDelegate()
+//                self?.searchResultsController.setKeyboardDelegate()
                 FirebaseManager.screenName("홈")
             })
             .disposed(by: disposeBag)
