@@ -19,14 +19,17 @@ enum CheckPincodeStyle {
 final class CheckPincodeViewModel: InjectableViewModel {
 
     typealias Dependency = (
+        FirebaseManagerProtocol,
         KeychainManagerProtocol,
         CheckPincodeStyle
     )
+
+    private let firebaseManager: FirebaseManagerProtocol
     private let keychainManager: KeychainManagerProtocol
     var style: CheckPincodeStyle = .initial
 
     init(dependency: Dependency) {
-        (keychainManager, style) = dependency
+        (firebaseManager, keychainManager, style) = dependency
     }
 
     struct Input {
@@ -43,10 +46,13 @@ final class CheckPincodeViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (keychainManager, style) = (self.keychainManager, self.style)
+        let (firebaseManager, keychainManager, style) = (self.firebaseManager, self.keychainManager, self.style)
 
         let viewWillAppear = input.viewWillAppear
             .map { style }
+            .do(onNext: { _ in
+                firebaseManager.screenName("PIN인증")
+            })
 
         let loadPage = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 

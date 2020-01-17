@@ -13,10 +13,12 @@ import PictionSDK
 final class CategorizedProjectViewModel: InjectableViewModel {
 
     typealias Dependency = (
+        FirebaseManagerProtocol,
         UpdaterProtocol,
         Int
     )
 
+    let firebaseManager: FirebaseManagerProtocol
     let updater: UpdaterProtocol
     let categoryId: Int
 
@@ -28,7 +30,7 @@ final class CategorizedProjectViewModel: InjectableViewModel {
     var loadNextTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
-        (updater, categoryId) = dependency
+        (firebaseManager, updater, categoryId) = dependency
     }
 
     struct Input {
@@ -48,6 +50,13 @@ final class CategorizedProjectViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
+        let (firebaseManager, updater, categoryId) = (self.firebaseManager, self.updater, self.categoryId)
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("카테고리상세_\(categoryId)")
+            })
+
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
@@ -106,7 +115,7 @@ final class CategorizedProjectViewModel: InjectableViewModel {
         let activityIndicator = categoryInfoAction.isExecuting
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
             categoryInfo: categoryInfoSuccess,
             projectList: projectList,

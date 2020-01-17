@@ -13,10 +13,12 @@ import PictionSDK
 final class ExploreViewModel: InjectableViewModel {
 
     typealias Dependency = (
+        FirebaseManagerProtocol,
         UpdaterProtocol
     )
 
-    let updater: UpdaterProtocol
+    private let firebaseManager: FirebaseManagerProtocol
+    private let updater: UpdaterProtocol
 
     var page = 0
     var items: [ProjectModel] = []
@@ -26,7 +28,7 @@ final class ExploreViewModel: InjectableViewModel {
     var loadNextTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
-        (updater) = dependency
+        (firebaseManager, updater) = dependency
     }
 
     struct Input {
@@ -48,6 +50,13 @@ final class ExploreViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
+        let (firebaseManager, updater) = (self.firebaseManager, self.updater)
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("탐색")
+            })
+
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
@@ -113,7 +122,7 @@ final class ExploreViewModel: InjectableViewModel {
 
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
             embedCategoryListViewController: embedCategoryListViewController,
             projectList: projectList,

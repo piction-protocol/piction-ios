@@ -135,7 +135,6 @@ extension CheckPincodeViewController: ViewModelBindable {
                 if UserDefaults(suiteName: "group.\(BUNDLEID)")?.bool(forKey: "isEnabledAuthBio") ?? false {
                     self?.auth()
                 }
-                FirebaseManager.screenName("PIN인증")
             })
             .disposed(by: disposeBag)
 

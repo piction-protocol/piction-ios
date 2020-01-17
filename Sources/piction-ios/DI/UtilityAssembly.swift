@@ -25,6 +25,11 @@ final class UtilityAssembly: Assembly {
             return KeychainManager()
             }
             .inObjectScope(.container)
+
+        container.register(FirebaseManagerProtocol.self) { resolver in
+            return FirebaseManager()
+            }
+            .inObjectScope(.container)
     }
 }
 

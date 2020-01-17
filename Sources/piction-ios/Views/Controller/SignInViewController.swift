@@ -62,7 +62,6 @@ extension SignInViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
-                FirebaseManager.screenName("로그인")
             })
             .disposed(by: disposeBag)
 

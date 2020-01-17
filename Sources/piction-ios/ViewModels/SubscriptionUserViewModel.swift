@@ -10,19 +10,25 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
-final class SubscriptionUserViewModel: ViewModel {
+final class SubscriptionUserViewModel: InjectableViewModel {
+
+    typealias Dependency = (
+        FirebaseManagerProtocol,
+        String
+    )
+
+    private let firebaseManager: FirebaseManagerProtocol
+    private let uri: String
+
+    init(dependency: Dependency) {
+        (firebaseManager, uri) = dependency
+    }
 
     var page = 0
     var items: [SubscriberModel] = []
     var shouldInfiniteScroll = true
 
     var loadTrigger = PublishSubject<Void>()
-
-    let uri: String
-
-    init(uri: String) {
-        self.uri = uri
-    }
 
     struct Input {
         let viewWillAppear: Driver<Void>
@@ -39,7 +45,12 @@ final class SubscriptionUserViewModel: ViewModel {
     }
 
     func build(input: Input) -> Output {
-        let uri = self.uri
+        let (firebaseManager, uri) = (self.firebaseManager, self.uri)
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("구독자 목록")
+            })
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
@@ -92,7 +103,7 @@ final class SubscriptionUserViewModel: ViewModel {
             .flatMap(Driver<CustomEmptyViewStyle>.from)
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             subscriptionUserList: subscriptionUserList,
             embedEmptyViewController: embedEmptyView,
             isFetching: refreshAction.isExecuting,

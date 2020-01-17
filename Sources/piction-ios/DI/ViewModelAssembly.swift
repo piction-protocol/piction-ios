@@ -13,12 +13,14 @@ final class ViewModelAssembly: Assembly {
     func assemble(container: Container) {
         container.register(HomeViewModel.self) { resolver in
             return HomeViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!)
             )
         }
 
         container.register(ExploreViewModel.self) { resolver in
             return ExploreViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!)
             )
         }
@@ -31,6 +33,7 @@ final class ViewModelAssembly: Assembly {
 
         container.register(CategorizedProjectViewModel.self) { (resolver, categoryId: Int) in
             return CategorizedProjectViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 categoryId: categoryId)
             )
@@ -38,6 +41,7 @@ final class ViewModelAssembly: Assembly {
 
         container.register(SignInViewModel.self) { resolver in
             return SignInViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 resolver.resolve(KeyboardManagerProtocol.self)!,
                 resolver.resolve(KeychainManagerProtocol.self)!)
@@ -46,6 +50,7 @@ final class ViewModelAssembly: Assembly {
 
         container.register(SignUpViewModel.self) { resolver in
             return SignUpViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 resolver.resolve(KeyboardManagerProtocol.self)!,
                 resolver.resolve(KeychainManagerProtocol.self)!)
@@ -54,6 +59,7 @@ final class ViewModelAssembly: Assembly {
 
         container.register(SignUpCompleteViewModel.self) { (resolver, loginId: String) in
             return SignUpCompleteViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(KeychainManagerProtocol.self)!,
                 loginId: loginId)
             )
@@ -61,6 +67,7 @@ final class ViewModelAssembly: Assembly {
 
         container.register(MyPageViewModel.self) { resolver in
             return MyPageViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 resolver.resolve(KeychainManagerProtocol.self)!)
             )
@@ -68,6 +75,7 @@ final class ViewModelAssembly: Assembly {
 
         container.register(MyProjectViewModel.self) { resolver in
             return MyProjectViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!)
             )
         }
@@ -80,6 +88,7 @@ final class ViewModelAssembly: Assembly {
 
         container.register(ChangeMyInfoViewModel.self) { resolver in
             return ChangeMyInfoViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 resolver.resolve(KeyboardManagerProtocol.self)!)
             )
@@ -87,22 +96,27 @@ final class ViewModelAssembly: Assembly {
 
         container.register(ChangePasswordViewModel.self) { resolver in
             return ChangePasswordViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(KeyboardManagerProtocol.self)!)
             )
         }
 
         container.register(SubscriptionListViewModel.self) { resolver in
             return SubscriptionListViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!)
             )
         }
 
         container.register(TransactionHistoryViewModel.self) { resolver in
-            return TransactionHistoryViewModel()
+            return TransactionHistoryViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!)
+            )
         }
 
         container.register(ProjectViewModel.self) { (resolver, uri: String) in
             return ProjectViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 uri: uri)
             )
@@ -110,6 +124,7 @@ final class ViewModelAssembly: Assembly {
 
         container.register(ProjectInfoViewModel.self) { (resolver, uri: String) in
             return ProjectInfoViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 uri: uri)
             )
@@ -117,6 +132,7 @@ final class ViewModelAssembly: Assembly {
 
         container.register(PostViewModel.self) { (resolver, uri: String, postId: Int) in
             return PostViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 uri: uri,
                 postId: postId)
@@ -140,11 +156,14 @@ final class ViewModelAssembly: Assembly {
         }
 
         container.register(SearchViewModel.self) { resolver in
-            return SearchViewModel()
+            return SearchViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!)
+            )
         }
 
         container.register(CreateProjectViewModel.self) { (resolver, uri: String) in
             return CreateProjectViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 resolver.resolve(KeyboardManagerProtocol.self)!,
                 uri: uri)
@@ -153,6 +172,7 @@ final class ViewModelAssembly: Assembly {
 
         container.register(CreatePostViewModel.self) { (resolver, uri: String, postId: Int) in
             return CreatePostViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 resolver.resolve(KeyboardManagerProtocol.self)!,
                 uri: uri,
@@ -165,22 +185,28 @@ final class ViewModelAssembly: Assembly {
         }
 
         container.register(DepositViewModel.self) { resolver in
-            return DepositViewModel()
+            return DepositViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!)
+            )
         }
 
         container.register(CheckPincodeViewModel.self) { (resolver, style) in
             return CheckPincodeViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(KeychainManagerProtocol.self)!,
                 style: style)
             )
         }
 
         container.register(RegisterPincodeViewModel.self) { resolver in
-            return RegisterPincodeViewModel()
+            return RegisterPincodeViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!)
+            )
         }
 
         container.register(ConfirmPincodeViewModel.self) { (resolver, inputPincode) in
             return ConfirmPincodeViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 resolver.resolve(KeychainManagerProtocol.self)!,
                 inputPincode: inputPincode)
@@ -188,11 +214,15 @@ final class ViewModelAssembly: Assembly {
         }
 
         container.register(TransactionDetailViewModel.self) { (resolver, transaction: TransactionModel) in
-            return TransactionDetailViewModel(transaction: transaction)
+            return TransactionDetailViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
+                transaction: transaction)
+            )
         }
 
         container.register(SeriesPostViewModel.self) { (resolver, uri: String, seriesId: Int) in
             return SeriesPostViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 uri: uri,
                 seriesId: seriesId)
@@ -200,11 +230,15 @@ final class ViewModelAssembly: Assembly {
         }
 
         container.register(TaggingProjectViewModel.self) { (resolver, tag: String) in
-            return TaggingProjectViewModel(tag: tag)
+            return TaggingProjectViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
+                tag: tag)
+            )
         }
 
         container.register(ManageSeriesViewModel.self) { (resolver, uri: String, seriesId: Int?) in
             return ManageSeriesViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 uri: uri,
                 seriesId: seriesId)
@@ -212,11 +246,15 @@ final class ViewModelAssembly: Assembly {
         }
 
         container.register(SubscriptionUserViewModel.self) { (resolver, uri: String) in
-            return SubscriptionUserViewModel(uri: uri)
+            return SubscriptionUserViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
+                uri: uri)
+            )
         }
 
         container.register(FanPassListViewModel.self) { (resolver, uri: String, postId: Int?) in
             return FanPassListViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 uri: uri,
                 postId: postId)
@@ -225,6 +263,7 @@ final class ViewModelAssembly: Assembly {
 
         container.register(SubscribeFanPassViewModel.self) { (resolver, uri: String, selectedFanPass: FanPassModel) in
             return SubscribeFanPassViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 resolver.resolve(KeychainManagerProtocol.self)!,
                 uri: uri,
@@ -234,6 +273,7 @@ final class ViewModelAssembly: Assembly {
 
         container.register(ManageFanPassViewModel.self) { (resolver, uri: String, fanPassId: Int?) in
             return ManageFanPassViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 uri: uri,
                 fanPassId: fanPassId)
@@ -242,6 +282,7 @@ final class ViewModelAssembly: Assembly {
 
         container.register(CreateFanPassViewModel.self) { (resolver, uri: String, fanPass: FanPassModel?) in
             return CreateFanPassViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 uri: uri,
                 fanPass: fanPass)

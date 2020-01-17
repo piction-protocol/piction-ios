@@ -9,12 +9,19 @@
 import Foundation
 import FirebaseAnalytics
 
-class FirebaseManager {
-    class func screenName(_ screenName: String) {
+protocol FirebaseManagerProtocol {
+    func screenName(_ screenName: String)
+    func logEvent(category: String, action: String?, label: String?)
+}
+
+class FirebaseManager: FirebaseManagerProtocol {
+    init() {}
+
+    func screenName(_ screenName: String) {
         Analytics.setScreenName(screenName, screenClass: nil)
     }
 
-    class func logEvent(category: String, action: String?, label: String?) {
+    func logEvent(category: String, action: String?, label: String?) {
         Analytics.logEvent(category, parameters: [
             "action": action ?? "",
             "label": label ?? ""

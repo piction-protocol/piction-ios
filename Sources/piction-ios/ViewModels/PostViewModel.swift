@@ -11,18 +11,21 @@ import RxCocoa
 import PictionSDK
 
 final class PostViewModel: InjectableViewModel {
+
     typealias Dependency = (
+        FirebaseManagerProtocol,
         UpdaterProtocol,
         String,
         Int
     )
 
+    private let firebaseManager: FirebaseManagerProtocol
     private let updater: UpdaterProtocol
-    var uri: String = ""
+    private let uri: String
     var postId: Int = 0
 
     init(dependency: Dependency) {
-        (updater, uri, postId) = dependency
+        (firebaseManager, updater, uri, postId) = dependency
     }
 
     struct Input {
@@ -60,7 +63,12 @@ final class PostViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (updater, uri) = (self.updater, self.uri)
+        let (firebaseManager, updater, uri) = (self.firebaseManager, self.updater, self.uri)
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("포스트뷰어_\(uri)_\(self.postId ?? 0)")
+            })
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
@@ -267,7 +275,7 @@ final class PostViewModel: InjectableViewModel {
         let willBeginDecelerating = input.willBeginDecelerating
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             viewDidAppear: input.viewDidAppear,
             viewWillDisappear: input.viewWillDisappear,
             prevNextLink: prevNextLink,

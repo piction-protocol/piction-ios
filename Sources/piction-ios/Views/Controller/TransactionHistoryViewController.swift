@@ -95,7 +95,6 @@ extension TransactionHistoryViewController: ViewModelBindable {
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self?.setInfiniteScrollStyle()
-                FirebaseManager.screenName("마이페이지_거래내역")
             })
             .disposed(by: disposeBag)
 

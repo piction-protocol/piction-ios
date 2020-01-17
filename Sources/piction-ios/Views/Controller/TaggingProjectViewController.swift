@@ -126,7 +126,6 @@ extension TaggingProjectViewController: ViewModelBindable {
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self?.setInfiniteScrollStyle()
-                FirebaseManager.screenName("태그 상세")
             })
             .disposed(by: disposeBag)
 

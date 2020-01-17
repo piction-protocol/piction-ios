@@ -9,9 +9,17 @@
 import RxSwift
 import RxCocoa
 
-final class RegisterPincodeViewModel: ViewModel {
+final class RegisterPincodeViewModel: InjectableViewModel {
 
-    init() {}
+    typealias Dependency = (
+        FirebaseManagerProtocol
+    )
+
+    private let firebaseManager: FirebaseManagerProtocol
+
+    init(dependency: Dependency) {
+        (firebaseManager) = dependency
+    }
 
     struct Input {
         let viewWillAppear: Driver<Void>
@@ -26,8 +34,14 @@ final class RegisterPincodeViewModel: ViewModel {
     }
 
     func build(input: Input) -> Output {
+        let firebaseManager = self.firebaseManager
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("새PIN설정")
+            })
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             pincodeText: input.pincodeTextFieldDidInput,
             openRecommendPopup: input.closeBtnDidTap
         )

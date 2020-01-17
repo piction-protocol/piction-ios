@@ -59,8 +59,6 @@ extension SubscribeFanPassViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
-                let uri = self?.viewModel?.uri ?? ""
-                FirebaseManager.screenName("FANPASS구매_\(uri)")
             })
             .disposed(by: disposeBag)
 

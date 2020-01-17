@@ -23,17 +23,19 @@ enum MyPageSection {
 final class MyPageViewModel: InjectableViewModel {
 
     typealias Dependency = (
+        FirebaseManagerProtocol,
         UpdaterProtocol,
         KeychainManagerProtocol
     )
 
+    private let firebaseManager: FirebaseManagerProtocol
     private let updater: UpdaterProtocol
     private let keychainManager: KeychainManagerProtocol
 
     var loadRetryTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
-        (updater, keychainManager) = dependency
+        (firebaseManager, updater, keychainManager) = dependency
     }
 
     struct Input {
@@ -58,7 +60,12 @@ final class MyPageViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (updater, keychainManager) = (self.updater, self.keychainManager)
+        let (firebaseManager, updater, keychainManager) = (self.firebaseManager, self.updater, self.keychainManager)
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("마이페이지")
+            })
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
@@ -206,7 +213,7 @@ final class MyPageViewModel: InjectableViewModel {
         let activityIndicator = userMeAction.isExecuting
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
             myPageList: myPageList,
             selectedIndexPath: input.selectedIndexPath,

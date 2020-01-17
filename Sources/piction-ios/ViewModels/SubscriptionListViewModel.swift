@@ -13,10 +13,12 @@ import PictionSDK
 final class SubscriptionListViewModel: InjectableViewModel {
 
     typealias Dependency = (
+        FirebaseManagerProtocol,
         UpdaterProtocol
     )
 
-    let updater: UpdaterProtocol
+    private let firebaseManager: FirebaseManagerProtocol
+    private let updater: UpdaterProtocol
 
     var page = 0
     var items: [ProjectModel] = []
@@ -26,7 +28,7 @@ final class SubscriptionListViewModel: InjectableViewModel {
     var loadNextTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
-        (updater) = dependency
+        (firebaseManager, updater) = dependency
     }
 
     struct Input {
@@ -49,6 +51,13 @@ final class SubscriptionListViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
+        let (firebaseManager, updater) = (self.firebaseManager, self.updater)
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("구독")
+            })
+
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
@@ -145,7 +154,7 @@ final class SubscriptionListViewModel: InjectableViewModel {
         let activityIndicator = Driver.merge(showActivityIndicator, hideActivityIndicator)
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
             subscriptionList: subscriptionList,
             embedEmptyViewController: embedEmptyViewController,

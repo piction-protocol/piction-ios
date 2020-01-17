@@ -13,15 +13,16 @@ import PictionSDK
 
 final class CreateProjectViewModel: InjectableViewModel {
     typealias Dependency = (
+        FirebaseManagerProtocol,
         UpdaterProtocol,
         KeyboardManagerProtocol,
         String
     )
 
+    private let firebaseManager: FirebaseManagerProtocol
     private let updater: UpdaterProtocol
     private let keyboardManager: KeyboardManagerProtocol
-
-    var uri: String = ""
+    private let uri: String
 
     private let title = PublishSubject<String>()
     private let id = PublishSubject<String>()
@@ -32,7 +33,7 @@ final class CreateProjectViewModel: InjectableViewModel {
     private let tags = PublishSubject<[String]>()
 
     init(dependency: Dependency) {
-        (updater, keyboardManager, uri) = dependency
+        (firebaseManager, updater, keyboardManager, uri) = dependency
     }
 
     struct Input {
@@ -71,10 +72,11 @@ final class CreateProjectViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (updater, keyboardManager, uri) = (self.updater, self.keyboardManager, self.uri)
+        let (firebaseManager, updater, keyboardManager, uri) = (self.firebaseManager, self.updater, self.keyboardManager, self.uri)
 
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
+                firebaseManager.screenName("프로젝트 생성")
                 keyboardManager.beginMonitoring()
             })
 

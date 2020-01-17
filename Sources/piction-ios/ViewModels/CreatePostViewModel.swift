@@ -14,17 +14,18 @@ import PictionSDK
 
 final class CreatePostViewModel: InjectableViewModel {
     typealias Dependency = (
+        FirebaseManagerProtocol,
         UpdaterProtocol,
         KeyboardManagerProtocol,
         String,
         Int
     )
 
+    private let firebaseManager: FirebaseManagerProtocol
     private let updater: UpdaterProtocol
     private let keyboardManager: KeyboardManagerProtocol
-
-    var uri: String = ""
-    var postId: Int = 0
+    private let uri: String
+    private let postId: Int
 
     private let title = PublishSubject<String>()
     private let content = PublishSubject<String>()
@@ -35,7 +36,7 @@ final class CreatePostViewModel: InjectableViewModel {
     private let seriesId = PublishSubject<Int?>()
 
     init(dependency: Dependency) {
-        (updater, keyboardManager, uri, postId) = dependency
+        (firebaseManager, updater, keyboardManager, uri, postId) = dependency
     }
 
     struct Input {
@@ -86,10 +87,11 @@ final class CreatePostViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (updater, keyboardManager, uri, postId) = (self.updater, self.keyboardManager, self.uri, self.postId)
+        let (firebaseManager, updater, keyboardManager, uri, postId) = (self.firebaseManager, self.updater, self.keyboardManager, self.uri, self.postId)
 
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
+                firebaseManager.screenName("포스트작성_\(uri)")
                 keyboardManager.beginMonitoring()
             })
 

@@ -13,19 +13,21 @@ import PictionSDK
 final class ManageFanPassViewModel: InjectableViewModel {
 
     typealias Dependency = (
+        FirebaseManagerProtocol,
         UpdaterProtocol,
         String,
         Int?
     )
 
-    let updater: UpdaterProtocol
+    private let firebaseManager: FirebaseManagerProtocol
+    private let updater: UpdaterProtocol
     let uri: String
     let fanPassId: Int?
 
     var loadRetryTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
-        (updater, uri, fanPassId) = dependency
+        (firebaseManager, updater, uri, fanPassId) = dependency
     }
 
     struct Input {
@@ -48,7 +50,12 @@ final class ManageFanPassViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (updater, uri) = (self.updater, self.uri)
+        let (firebaseManager, updater, uri, fanPassId) = (self.firebaseManager, self.updater, self.uri, self.fanPassId)
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("FANPASS관리_\(uri)_\(fanPassId ?? 0)")
+            })
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
@@ -98,7 +105,7 @@ final class ManageFanPassViewModel: InjectableViewModel {
         let showToast = Driver.merge(deleteSuccess, deleteError)
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             fanPassList: fanPassListSuccess,
             selectedIndexPath: input.selectedIndexPath,
             openCreateFanPassViewController: openCreateFanPassViewController,

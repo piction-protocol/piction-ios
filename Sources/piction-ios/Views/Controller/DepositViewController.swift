@@ -90,7 +90,6 @@ extension DepositViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
-                FirebaseManager.screenName("마이페이지_입금")
             })
             .disposed(by: disposeBag)
 

@@ -14,15 +14,17 @@ import PictionSDK
 final class ChangeMyInfoViewModel: InjectableViewModel {
 
     typealias Dependency = (
+        FirebaseManagerProtocol,
         UpdaterProtocol,
         KeyboardManagerProtocol
     )
 
+    private let firebaseManager: FirebaseManagerProtocol
     private let updater: UpdaterProtocol
     private let keyboardManager: KeyboardManagerProtocol
 
     init(dependency: Dependency) {
-        (updater, keyboardManager) = dependency
+        (firebaseManager, updater, keyboardManager) = dependency
     }
 
     private let imageId = PublishSubject<String?>()
@@ -57,10 +59,11 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (updater, keyboardManager) = (self.updater, self.keyboardManager)
+        let (firebaseManager, updater, keyboardManager) = (self.firebaseManager, self.updater, self.keyboardManager)
 
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
+                firebaseManager.screenName("마이페이지_기본정보변경")
                 keyboardManager.beginMonitoring()
             })
 

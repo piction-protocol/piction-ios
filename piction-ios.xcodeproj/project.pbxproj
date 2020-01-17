@@ -961,7 +961,6 @@
 				43502A9B238FB81400586098 /* StoreReviewManager */,
 				436CAC6E234C2F3F00C84373 /* Toast */,
 				438E762A2362BCD80062D004 /* DynamicCollectionViewFlowLayout */,
-				436CAC6A234C2DFE00C84373 /* Firebase */,
 				43F1866323444DF30050BA67 /* DeepLinking */,
 				4323F99A233A165600243655 /* VisualEffectView */,
 			);
@@ -1003,6 +1002,7 @@
 				4323FA5A233A165600243655 /* Updater.swift */,
 				439E7ED4237BEC0B00E4A475 /* KeyboardManager.swift */,
 				43EBE1A32374087D0081C3B7 /* KeychainManager.swift */,
+				436CAC6B234C2E1200C84373 /* FirebaseManager.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1302,14 +1302,6 @@
 			path = Storyboard;
 			sourceTree = "<group>";
 		};
-		436CAC6A234C2DFE00C84373 /* Firebase */ = {
-			isa = PBXGroup;
-			children = (
-				436CAC6B234C2E1200C84373 /* FirebaseManager.swift */,
-			);
-			path = Firebase;
-			sourceTree = "<group>";
-		};
 		436CAC6E234C2F3F00C84373 /* Toast */ = {
 			isa = PBXGroup;
 			children = (
@@ -1342,14 +1334,6 @@
 				439E7ECE237BE57900E4A475 /* piction-ios-test-shareEx.entitlements */,
 			);
 			path = Staging;
-			sourceTree = "<group>";
-		};
-		439E7ED7237C057D00E4A475 /* FirebaseManager */ = {
-			isa = PBXGroup;
-			children = (
-				439E7ED8237C059100E4A475 /* FirebaseManager.swift */,
-			);
-			path = FirebaseManager;
 			sourceTree = "<group>";
 		};
 		43C41F402373A28600D012A7 /* Protocol */ = {
@@ -1430,7 +1414,6 @@
 		43C41F702373C2B600D012A7 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				439E7ED7237C057D00E4A475 /* FirebaseManager */,
 				43EBE1B52378EAB60081C3B7 /* VisualEffectView */,
 				43C41F712373C2C300D012A7 /* Localization */,
 			);
@@ -1469,6 +1452,7 @@
 				43EBE1BB237936610081C3B7 /* Updater.swift */,
 				4323F99D233A165600243655 /* KeyboardManager.swift */,
 				43EBE1A0237407940081C3B7 /* KeychainManager.swift */,
+				439E7ED8237C059100E4A475 /* FirebaseManager.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";

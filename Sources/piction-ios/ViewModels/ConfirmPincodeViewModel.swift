@@ -12,17 +12,19 @@ import RxCocoa
 final class ConfirmPincodeViewModel: InjectableViewModel {
 
     typealias Dependency = (
+        FirebaseManagerProtocol,
         UpdaterProtocol,
         KeychainManagerProtocol,
         String
     )
 
+    private let firebaseManager: FirebaseManagerProtocol
     private let updater: UpdaterProtocol
     private let keychainManager: KeychainManagerProtocol
     private let inputedPincode: String
 
     init(dependency: Dependency) {
-        (updater, keychainManager, inputedPincode) = dependency
+        (firebaseManager, updater, keychainManager, inputedPincode) = dependency
     }
 
     struct Input {
@@ -38,7 +40,13 @@ final class ConfirmPincodeViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (updater, keychainManager, inputedPincode) = (self.updater, self.keychainManager, self.inputedPincode)
+        let (firebaseManager, updater, keychainManager, inputedPincode) = (self.firebaseManager, self.updater, self.keychainManager, self.inputedPincode)
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("PIN재입력")
+            })
+
         let inputPincode = input.pincodeTextFieldDidInput
             .map { (inputedPincode, $0) }
 
@@ -49,7 +57,7 @@ final class ConfirmPincodeViewModel: InjectableViewModel {
             })
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             inputPincode: inputPincode,
             dismissViewController: dismissViewController
         )

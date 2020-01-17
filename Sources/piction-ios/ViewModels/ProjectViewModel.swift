@@ -20,11 +20,13 @@ enum ContentsSection {
 final class ProjectViewModel: InjectableViewModel {
 
     typealias Dependency = (
+        FirebaseManagerProtocol,
         UpdaterProtocol,
         String
     )
 
-    let updater: UpdaterProtocol
+    private let firebaseManager: FirebaseManagerProtocol
+    private let updater: UpdaterProtocol
     let uri: String
 
     var page = 0
@@ -34,7 +36,7 @@ final class ProjectViewModel: InjectableViewModel {
     var loadTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
-        (updater, uri) = dependency
+        (firebaseManager, updater, uri) = dependency
     }
 
     struct Input {
@@ -70,7 +72,12 @@ final class ProjectViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (updater, uri) = (self.updater, self.uri)
+        let (firebaseManager, updater, uri) = (self.firebaseManager, self.updater, self.uri)
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("프로젝트_\(uri)")
+            })
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 

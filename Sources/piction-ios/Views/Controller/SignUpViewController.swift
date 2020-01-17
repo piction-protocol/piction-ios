@@ -107,7 +107,6 @@ extension SignUpViewController: ViewModelBindable {
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self?.tabBarController?.tabBar.isHidden = true
-                FirebaseManager.screenName("회원가입")
             })
             .disposed(by: disposeBag)
 

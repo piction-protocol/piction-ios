@@ -13,20 +13,22 @@ import PictionSDK
 final class FanPassListViewModel: InjectableViewModel {
 
     typealias Dependency = (
+        FirebaseManagerProtocol,
         UpdaterProtocol,
         String,
         Int?
     )
 
-    let updater: UpdaterProtocol
+    private let firebaseManager: FirebaseManagerProtocol
+    private let updater: UpdaterProtocol
     let uri: String
-    let postId: Int?
+    private let postId: Int?
 
     var loadRetryTrigger = PublishSubject<Void>()
     var levelLimit = BehaviorSubject<Int>(value: 0)
 
     init(dependency: Dependency) {
-        (updater, uri, postId) = dependency
+        (firebaseManager, updater, uri, postId) = dependency
     }
 
     struct Input {
@@ -54,7 +56,12 @@ final class FanPassListViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (updater, uri, postId) = (self.updater, self.uri, self.postId)
+        let (firebaseManager, updater, uri, postId) = (self.firebaseManager, self.updater, self.uri, self.postId)
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("FANPASS목록_\(uri)")
+            })
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
@@ -204,7 +211,7 @@ final class FanPassListViewModel: InjectableViewModel {
         let dismissViewController = input.closeBtnDidTap
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             subscriptionInfo: subscriptionInfoSuccess,
             postItem: postItemSuccess,
             showAllFanPassBtnDidTap: input.showAllFanPassBtnDidTap,

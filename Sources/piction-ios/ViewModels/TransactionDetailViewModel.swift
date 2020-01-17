@@ -22,14 +22,21 @@ enum TransactionType {
     case subscription
 }
 
-final class TransactionDetailViewModel: ViewModel {
+final class TransactionDetailViewModel: InjectableViewModel {
 
-    let transaction: TransactionModel
-    var loadRetryTrigger = PublishSubject<Void>()
+    typealias Dependency = (
+        FirebaseManagerProtocol,
+        TransactionModel
+    )
 
-    init(transaction: TransactionModel) {
-        self.transaction = transaction
+    private let firebaseManager: FirebaseManagerProtocol
+    private let transaction: TransactionModel
+
+    init(dependency: Dependency) {
+        (firebaseManager, transaction) = dependency
     }
+
+    var loadRetryTrigger = PublishSubject<Void>()
 
     struct Input {
         let viewWillAppear: Driver<Void>
@@ -46,69 +53,72 @@ final class TransactionDetailViewModel: ViewModel {
     }
 
     func build(input: Input) -> Output {
+        let (firebaseManager, transaction) = (self.firebaseManager, self.transaction)
+
+        let navigationTitle = input.viewWillAppear
+            .map { transaction.inOut == "IN" ? LocalizedStrings.menu_deposit_detail.localized() : LocalizedStrings.menu_withdraw_detail.localized() }
+            .do(onNext: { title in
+                firebaseManager.screenName("마이페이지_거래내역_\(title)")
+            })
+
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
-        let navigationTitle = Driver.merge(initialLoad, loadRetry)
-            .map { self.transaction.inOut == "IN" ? LocalizedStrings.menu_deposit_detail.localized() : LocalizedStrings.menu_withdraw_detail.localized() }
-
         let transactionSponsorshipAction = Driver.merge(initialLoad, loadRetry)
-            .filter { self.transaction.transactionType != "VALUE_TRANSFER" }
-            .filter { self.transaction.transactionType == "SPONSORSHIP" }
-            .map { WalletAPI.sponsorshipTransaction(txHash: self.transaction.transactionHash ?? "") }
+            .filter { transaction.transactionType != "VALUE_TRANSFER" }
+            .filter { transaction.transactionType == "SPONSORSHIP" }
+            .map { WalletAPI.sponsorshipTransaction(txHash: transaction.transactionHash ?? "") }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let transactionSubscriptionAction = Driver.merge(initialLoad, loadRetry)
-            .filter { self.transaction.transactionType != "VALUE_TRANSFER" }
-            .filter { self.transaction.transactionType == "SUBSCRIPTION" }
-            .map { WalletAPI.subscriptionTransaction(txHash: self.transaction.transactionHash ?? "") }
+            .filter { transaction.transactionType != "VALUE_TRANSFER" }
+            .filter { transaction.transactionType == "SUBSCRIPTION" }
+            .map { WalletAPI.subscriptionTransaction(txHash: transaction.transactionHash ?? "") }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let valueTypeInfo = input.viewWillAppear
-            .filter { self.transaction.transactionType == "VALUE_TRANSFER" }
+            .filter { transaction.transactionType == "VALUE_TRANSFER" }
             .map { [TransactionDetailSection]() }
 
         let transactionSponsorshipSuccess = transactionSponsorshipAction.elements
             .map { try? $0.map(to: TransactionSponsorshipModel.self) }
             .map { [
                 TransactionDetailSection.header(title: LocalizedStrings.str_sponsorship_info.localized()),
-                TransactionDetailSection.list(title: self.transaction.inOut ?? "" == "IN" ? LocalizedStrings.str_sponsoredship_to.localized() : LocalizedStrings.str_sponsorship_user.localized(), description: self.transaction.inOut ?? "" == "IN" ? "@\($0?.sponsor?.loginId ?? "")" : "@\($0?.creator?.loginId ?? "")", link: ""),
+                TransactionDetailSection.list(title: transaction.inOut ?? "" == "IN" ? LocalizedStrings.str_sponsoredship_to.localized() : LocalizedStrings.str_sponsorship_user.localized(), description: transaction.inOut ?? "" == "IN" ? "@\($0?.sponsor?.loginId ?? "")" : "@\($0?.creator?.loginId ?? "")", link: ""),
                 TransactionDetailSection.footer,
             ] }
 
         let transactionSubscriptionSuccess = transactionSubscriptionAction.elements
             .map { try? $0.map(to: TransactionSubscriptionModel.self) }
             .map { [
-                TransactionDetailSection.header(title: self.transaction.inOut ?? "" == "IN" ? LocalizedStrings.str_fan_pass_sell_info.localized() : LocalizedStrings.str_fan_pass_buy_info.localized()),
+                TransactionDetailSection.header(title: transaction.inOut ?? "" == "IN" ? LocalizedStrings.str_fan_pass_sell_info.localized() : LocalizedStrings.str_fan_pass_buy_info.localized()),
                 TransactionDetailSection.list(title: LocalizedStrings.str_order_id.localized(), description: "\($0?.orderNo ?? 0)", link: ""),
                 TransactionDetailSection.list(title: LocalizedStrings.str_project.localized(), description: "\($0?.projectName ?? "")", link: ""),
                 TransactionDetailSection.list(title: "FAN PASS", description: "\($0?.fanPassName ?? "")", link: ""),
-                TransactionDetailSection.list(title: self.transaction.inOut ?? "" == "IN" ? LocalizedStrings.str_buyer.localized() : LocalizedStrings.str_seller.localized(), description: self.transaction.inOut ?? "" == "IN" ? "\($0?.subscriber?.loginId ?? "")" : "\($0?.creator?.loginId ?? "")", link: ""),
+                TransactionDetailSection.list(title: transaction.inOut ?? "" == "IN" ? LocalizedStrings.str_buyer.localized() : LocalizedStrings.str_seller.localized(), description: transaction.inOut ?? "" == "IN" ? "\($0?.subscriber?.loginId ?? "")" : "\($0?.creator?.loginId ?? "")", link: ""),
                 TransactionDetailSection.footer,
             ] }
 
         let otherTypeInfo = Driver.merge(transactionSponsorshipSuccess, transactionSubscriptionSuccess)
 
         let transactionInfo = Driver.merge(valueTypeInfo, otherTypeInfo)
-            .map { [weak self] typeSection -> [TransactionDetailSection] in
-                guard let `self` = self else { return [] }
-
+            .map { typeSection -> [TransactionDetailSection] in
                 var sections: [TransactionDetailSection] = [
-                    TransactionDetailSection.info(transaction: self.transaction),
+                    TransactionDetailSection.info(transaction: transaction),
                     TransactionDetailSection.footer
                 ]
                 sections.append(contentsOf: typeSection)
 
                 let transactionSection = [
                     TransactionDetailSection.header(title: LocalizedStrings.str_transaction_info.localized()),
-                    TransactionDetailSection.list(title: "From", description: self.transaction.fromAddress ?? "", link: ""),
-                    TransactionDetailSection.list(title: "To", description: self.transaction.toAddress ?? "", link: ""),
-                    TransactionDetailSection.list(title: "Amount", description: "\((self.transaction.amount ?? 0).commaRepresentation) PXL", link: ""),
-                    TransactionDetailSection.list(title: "Block #", description: String(self.transaction.blockNumber ?? 0) , link: ""),
-                    TransactionDetailSection.list(title: "TX HASH", description: self.transaction.transactionHash ?? "", link: self.transaction.txHashWithUrl ?? ""),
+                    TransactionDetailSection.list(title: "From", description: transaction.fromAddress ?? "", link: ""),
+                    TransactionDetailSection.list(title: "To", description: transaction.toAddress ?? "", link: ""),
+                    TransactionDetailSection.list(title: "Amount", description: "\((transaction.amount ?? 0).commaRepresentation) PXL", link: ""),
+                    TransactionDetailSection.list(title: "Block #", description: String(transaction.blockNumber ?? 0) , link: ""),
+                    TransactionDetailSection.list(title: "TX HASH", description: transaction.transactionHash ?? "", link: transaction.txHashWithUrl ?? ""),
                     TransactionDetailSection.footer
                 ]
                 sections.append(contentsOf: transactionSection)

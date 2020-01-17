@@ -15,7 +15,17 @@ enum SearchSection {
     case tag(item: TagModel)
 }
 
-final class SearchViewModel: ViewModel {
+final class SearchViewModel: InjectableViewModel {
+
+    typealias Dependency = (
+        FirebaseManagerProtocol
+    )
+
+    private let firebaseManager: FirebaseManagerProtocol
+
+    init(dependency: Dependency) {
+        firebaseManager = dependency
+    }
 
     var page = 0
     var sections: [SearchSection] = []
@@ -25,8 +35,6 @@ final class SearchViewModel: ViewModel {
 
     var menu = BehaviorSubject<Int>(value: 0)
     var searchText = BehaviorSubject<String>(value: "")
-
-    init() {}
 
     struct Input {
         let viewWillAppear: Driver<Void>
@@ -49,6 +57,13 @@ final class SearchViewModel: ViewModel {
     }
 
     func build(input: Input) -> Output {
+        let firebaseManager = self.firebaseManager
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("검색")
+            })
+
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let setPlaceHolder = input.viewWillAppear
@@ -161,7 +176,7 @@ final class SearchViewModel: ViewModel {
             .map { _ in Void() }
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
             setPlaceHolder: setPlaceHolder,
             menuChanged: input.segmentedControlDidChange,

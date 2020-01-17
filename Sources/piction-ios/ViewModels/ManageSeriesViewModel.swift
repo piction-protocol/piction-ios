@@ -13,17 +13,19 @@ import PictionSDK
 final class ManageSeriesViewModel: InjectableViewModel {
 
     typealias Dependency = (
+        FirebaseManagerProtocol,
         UpdaterProtocol,
         String,
         Int?
     )
 
-    let updater: UpdaterProtocol
-    let uri: String
+    private let firebaseManager: FirebaseManagerProtocol
+    private let updater: UpdaterProtocol
+    private let uri: String
     let seriesId: Int?
 
     init(dependency: Dependency) {
-        (updater, uri, seriesId) = dependency
+        (firebaseManager, updater, uri, seriesId) = dependency
     }
 
     struct Input {
@@ -54,7 +56,12 @@ final class ManageSeriesViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (updater, uri) = (self.updater, self.uri)
+        let (firebaseManager, updater, uri, seriesId) = (self.firebaseManager, self.updater, self.uri, self.seriesId)
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("시리즈목록_\(uri)_\(seriesId ?? 0)")
+            })
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
@@ -153,7 +160,7 @@ final class ManageSeriesViewModel: InjectableViewModel {
             deleteSeriesError)
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
             seriesList: seriesList,
             openUpdateSeriesPopup: openUpdateSeriesPopup,

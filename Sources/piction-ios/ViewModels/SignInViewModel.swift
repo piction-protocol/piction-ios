@@ -13,17 +13,19 @@ import PictionSDK
 final class SignInViewModel: InjectableViewModel {
 
     typealias Dependency = (
+        FirebaseManagerProtocol,
         UpdaterProtocol,
         KeyboardManagerProtocol,
         KeychainManagerProtocol
     )
 
+    private let firebaseManager: FirebaseManagerProtocol
     private let updater: UpdaterProtocol
     private let keyboardManager: KeyboardManagerProtocol
     private let keychainManager: KeychainManagerProtocol
 
     init(dependency: Dependency) {
-        (updater, keyboardManager, keychainManager) = dependency
+        (firebaseManager, updater, keyboardManager, keychainManager) = dependency
     }
 
     struct Input {
@@ -51,10 +53,11 @@ final class SignInViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (updater, keyboardManager, keychainManager) = (self.updater, self.keyboardManager, self.keychainManager)
+        let (firebaseManager, updater, keyboardManager, keychainManager) = (self.firebaseManager, self.updater, self.keyboardManager, self.keychainManager)
 
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
+                firebaseManager.screenName("로그인")
                 keyboardManager.beginMonitoring()
             })
 

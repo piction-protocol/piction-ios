@@ -128,8 +128,6 @@ extension CategorizedProjectViewController: ViewModelBindable {
                 self?.navigationController?.navigationBar.barStyle = .black
                 self?.navigationController?.navigationBar.tintColor = .white
                 self?.setInfiniteScrollStyle()
-                let categoryId = self?.viewModel?.categoryId ?? 0
-                FirebaseManager.screenName("카테고리상세_\(categoryId)")
             })
             .disposed(by: disposeBag)
 

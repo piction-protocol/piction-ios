@@ -132,7 +132,6 @@ extension ExploreViewController: ViewModelBindable {
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
                 self?.setInfiniteScrollStyle()
-                FirebaseManager.screenName("탐색")
             })
             .disposed(by: disposeBag)
 

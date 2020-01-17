@@ -63,7 +63,6 @@ extension TransactionDetailViewController: ViewModelBindable {
             .navigationTitle
             .drive(onNext: { [weak self] title in
                 self?.navigationItem.title = title
-                FirebaseManager.screenName("마이페이지_거래내역_\(title)")
             })
             .disposed(by: disposeBag)
 

@@ -25,6 +25,7 @@ enum HomeSection {
 final class HomeViewModel: InjectableViewModel {
 
     typealias Dependency = (
+        FirebaseManagerProtocol,
         UpdaterProtocol
     )
 
@@ -32,13 +33,14 @@ final class HomeViewModel: InjectableViewModel {
     var sections: [HomeSection] = []
     var shouldInfiniteScroll = true
 
+    let firebaseManager: FirebaseManagerProtocol
     let updater: UpdaterProtocol
 
     var loadRetryTrigger = PublishSubject<Void>()
     var loadNextTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
-        (updater) = dependency
+        (firebaseManager, updater) = dependency
     }
 
     struct Input {
@@ -58,6 +60,13 @@ final class HomeViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
+        let (firebaseManager, updater) = (self.firebaseManager, self.updater)
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("홈")
+            })
+
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
@@ -163,7 +172,7 @@ final class HomeViewModel: InjectableViewModel {
             trendingAction.isExecuting)
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
             homeSection: homeSection,
             selectedIndexPath: input.selectedIndexPath,

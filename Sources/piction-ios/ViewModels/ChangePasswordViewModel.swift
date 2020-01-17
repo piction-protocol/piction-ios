@@ -13,13 +13,15 @@ import PictionSDK
 final class ChangePasswordViewModel: InjectableViewModel {
 
     typealias Dependency = (
+        FirebaseManagerProtocol,
         KeyboardManagerProtocol
     )
 
+    private let firebaseManager: FirebaseManagerProtocol
     private let keyboardManager: KeyboardManagerProtocol
 
     init(dependency: Dependency) {
-        keyboardManager = dependency
+        (firebaseManager, keyboardManager) = dependency
     }
 
     struct Input {
@@ -50,10 +52,11 @@ final class ChangePasswordViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let keyboardManager = self.keyboardManager
+        let (firebaseManager, keyboardManager) = (self.firebaseManager, self.keyboardManager)
 
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
+                firebaseManager.screenName("마이페이지_비밀번호변경")
                 keyboardManager.beginMonitoring()
             })
 

@@ -13,16 +13,18 @@ import PictionSDK
 final class MyProjectViewModel: InjectableViewModel {
 
     typealias Dependency = (
+        FirebaseManagerProtocol,
         UpdaterProtocol
     )
 
+    private let firebaseManager: FirebaseManagerProtocol
     private let updater: UpdaterProtocol
 
     var projectList: [ProjectModel] = []
     var loadRetryTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
-        (updater) = dependency
+        (firebaseManager, updater) = dependency
     }
 
     struct Input {
@@ -43,7 +45,12 @@ final class MyProjectViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let updater = self.updater
+        let (firebaseManager, updater) = (self.firebaseManager, self.updater)
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("마이페이지_나의프로젝트")
+            })
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
         let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
@@ -82,7 +89,7 @@ final class MyProjectViewModel: InjectableViewModel {
         let activityIndicator = myProjectAction.isExecuting
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             projectList: myProjectSuccess,
             openCreateProjectViewController: openCreateProjectViewController,
             openProjectViewController: input.selectedIndexPath,

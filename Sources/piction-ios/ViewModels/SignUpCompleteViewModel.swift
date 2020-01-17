@@ -12,15 +12,17 @@ import RxCocoa
 final class SignUpCompleteViewModel: InjectableViewModel {
 
     typealias Dependency = (
+        FirebaseManagerProtocol,
         KeychainManagerProtocol,
         String
     )
 
+    private let firebaseManager: FirebaseManagerProtocol
     private let keychainManager: KeychainManagerProtocol
     private let loginId: String
 
     init(dependency: Dependency) {
-        (keychainManager, loginId) = dependency
+        (firebaseManager, keychainManager, loginId) = dependency
     }
 
     struct Input {
@@ -34,7 +36,12 @@ final class SignUpCompleteViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (keychainManager, loginId) = (self.keychainManager, self.loginId)
+        let (firebaseManager, keychainManager, loginId) = (self.firebaseManager, self.keychainManager, self.loginId)
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("회원가입완료_\(loginId)")
+            })
 
         let pincode = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
             .map { keychainManager.get(key: .pincode) }
@@ -43,7 +50,7 @@ final class SignUpCompleteViewModel: InjectableViewModel {
             .withLatestFrom(pincode)
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             dismissViewController: dismissViewController
         )
     }

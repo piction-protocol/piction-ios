@@ -13,14 +13,16 @@ import PictionSDK
 final class CreateFanPassViewModel: InjectableViewModel {
 
     typealias Dependency = (
+        FirebaseManagerProtocol,
         UpdaterProtocol,
         String,
         FanPassModel?
     )
 
-    let updater: UpdaterProtocol
-    let uri: String
-    let fanPass: FanPassModel?
+    private let firebaseManager: FirebaseManagerProtocol
+    private let updater: UpdaterProtocol
+    private let uri: String
+    private let fanPass: FanPassModel?
 
     private let name = PublishSubject<String>()
     private let price = PublishSubject<String?>()
@@ -28,7 +30,7 @@ final class CreateFanPassViewModel: InjectableViewModel {
     private let limit = PublishSubject<String?>()
 
     init(dependency: Dependency) {
-        (updater, uri, fanPass) = dependency
+        (firebaseManager, updater, uri, fanPass) = dependency
     }
 
     struct Input {
@@ -52,7 +54,12 @@ final class CreateFanPassViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (updater, uri, fanPass) = (self.updater, self.uri, self.fanPass)
+        let (firebaseManager, updater, uri, fanPass) = (self.firebaseManager, self.updater, self.uri, self.fanPass)
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("FANPASS생성")
+            })
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
@@ -132,7 +139,7 @@ final class CreateFanPassViewModel: InjectableViewModel {
         let activityIndicator = saveFanPassAction.isExecuting
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             loadFanPass: loadFanPass,
             limitBtnDidTap: input.limitBtnDidTap,
             popViewController: popViewController,

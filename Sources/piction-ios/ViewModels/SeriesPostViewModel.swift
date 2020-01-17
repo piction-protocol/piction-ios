@@ -13,14 +13,16 @@ import PictionSDK
 final class SeriesPostViewModel: InjectableViewModel {
 
     typealias Dependency = (
+        FirebaseManagerProtocol,
         UpdaterProtocol,
         String,
         Int
     )
 
+    private let firebaseManager: FirebaseManagerProtocol
     private let updater: UpdaterProtocol
-    let uri: String
-    let seriesId: Int
+    private let uri: String
+    private let seriesId: Int
 
     var page = 0
     var isWriter: Bool = false
@@ -32,7 +34,7 @@ final class SeriesPostViewModel: InjectableViewModel {
     var loadRetryTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
-        (updater, uri, seriesId) = dependency
+        (firebaseManager, updater, uri, seriesId) = dependency
     }
     struct Input {
         let viewWillAppear: Driver<Void>
@@ -48,13 +50,18 @@ final class SeriesPostViewModel: InjectableViewModel {
         let contentList: Driver<SectionType<ContentsSection>>
         let isDescending: Driver<Bool>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
-        let selectedIndexPath: Driver<IndexPath>
+        let selectedIndexPath: Driver<(String, IndexPath)>
         let showErrorPopup: Driver<Void>
         let activityIndicator: Driver<Bool>
     }
 
     func build(input: Input) -> Output {
-        let (uri, seriesId) = (self.uri, self.seriesId)
+        let (firebaseManager, uri, seriesId) = (self.firebaseManager, self.uri, self.seriesId)
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("시리즈상세_\(uri)_\(seriesId)")
+            })
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
@@ -145,6 +152,9 @@ final class SeriesPostViewModel: InjectableViewModel {
             .map { self.sections.append(contentsOf: $0) }
             .map { SectionType<ContentsSection>.Section(title: "post", items: self.sections) }
 
+        let selectedIndexPath = input.selectedIndexPath
+            .map { (uri, $0) }
+
         let embedPostEmptyView = contentList
             .filter { $0.items.isEmpty }
             .map { _ in .projectPostListEmpty }
@@ -153,13 +163,13 @@ final class SeriesPostViewModel: InjectableViewModel {
         let activityIndicator = loadSeriesInfoAction.isExecuting
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
             seriesInfo: loadSeriesInfoSuccess,
             contentList: contentList,
             isDescending: isDescending,
             embedEmptyViewController: embedPostEmptyView,
-            selectedIndexPath: input.selectedIndexPath,
+            selectedIndexPath: selectedIndexPath,
             showErrorPopup: showErrorPopup,
             activityIndicator: activityIndicator
         )

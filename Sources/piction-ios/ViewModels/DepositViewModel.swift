@@ -10,11 +10,19 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
-final class DepositViewModel: ViewModel {
+final class DepositViewModel: InjectableViewModel {
+
+    typealias Dependency = (
+        FirebaseManagerProtocol
+    )
+
+    private let firebaseManager: FirebaseManagerProtocol
+
+    init(dependency: Dependency) {
+        (firebaseManager) = dependency
+    }
 
     var loadRetryTrigger = PublishSubject<Void>()
-
-    init() {}
 
     struct Input {
         let viewWillAppear: Driver<Void>
@@ -31,6 +39,13 @@ final class DepositViewModel: ViewModel {
     }
 
     func build(input: Input) -> Output {
+        let firebaseManager = self.firebaseManager
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("마이페이지_입금")
+            })
+
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
@@ -65,7 +80,7 @@ final class DepositViewModel: ViewModel {
         let activityIndicator = walletInfoAction.isExecuting
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             userInfo: userInfoSuccess,
             walletInfo: walletInfoSuccess,
             copyAddress: copyAddress,

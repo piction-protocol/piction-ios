@@ -117,9 +117,6 @@ extension SeriesPostViewController: ViewModelBindable {
                 self?.navigationController?.navigationBar.barStyle = .black
                 self?.navigationController?.navigationBar.tintColor = .white
                 self?.setInfiniteScrollStyle()
-                let uri = self?.viewModel?.uri ?? ""
-                let seriesId = self?.viewModel?.seriesId ?? 0
-                FirebaseManager.screenName("시리즈상세_\(uri)_\(seriesId)")
             })
             .disposed(by: disposeBag)
 
@@ -169,14 +166,10 @@ extension SeriesPostViewController: ViewModelBindable {
 
         output
             .selectedIndexPath
-            .drive(onNext: { [weak self] indexPath in
+            .drive(onNext: { [weak self] (uri, indexPath) in
                 switch dataSource[indexPath] {
                 case .seriesPostList(let post, _, _):
-                    guard
-                        let uri = self?.viewModel?.uri,
-                        let postId = post.id
-                    else { return }
-
+                    guard let postId = post.id else { return }
                     self?.openPostViewController(uri: uri, postId: postId)
                 default:
                     return

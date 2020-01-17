@@ -13,12 +13,14 @@ import PictionSDK
 final class SubscribeFanPassViewModel: InjectableViewModel {
 
     typealias Dependency = (
+        FirebaseManagerProtocol,
         UpdaterProtocol,
         KeychainManagerProtocol,
         String,
         FanPassModel
     )
 
+    private let firebaseManager: FirebaseManagerProtocol
     private let updater: UpdaterProtocol
     private let keychainManager: KeychainManagerProtocol
     private let uri: String
@@ -27,7 +29,7 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
     var loadRetryTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
-        (updater, keychainManager, uri, selectedFanPass) = dependency
+        (firebaseManager, updater, keychainManager, uri, selectedFanPass) = dependency
     }
 
     struct Input {
@@ -52,7 +54,12 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (updater, keychainManager, uri, selectedFanPass) = (self.updater, self.keychainManager, self.uri, self.selectedFanPass)
+        let (firebaseManager, updater, keychainManager, uri, selectedFanPass) = (self.firebaseManager, self.updater, self.keychainManager, self.uri, self.selectedFanPass)
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("FANPASS구매_\(uri)")
+            })
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
@@ -135,7 +142,7 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
         let dismissViewController = purchaseSuccess
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             fanPassInfo: fanPassInfo,
             walletInfo: walletInfoSuccess,
             projectInfo: projectInfoSuccess,

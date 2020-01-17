@@ -17,7 +17,17 @@ enum TransactionHistorySection {
     case footer
 }
 
-final class TransactionHistoryViewModel: ViewModel {
+final class TransactionHistoryViewModel: InjectableViewModel {
+
+    typealias Dependency = (
+        FirebaseManagerProtocol
+    )
+
+    private let firebaseManager: FirebaseManagerProtocol
+
+    init(dependency: Dependency) {
+        (firebaseManager) = dependency
+    }
 
     var page = 0
     var sections: [TransactionModel] = []
@@ -25,8 +35,6 @@ final class TransactionHistoryViewModel: ViewModel {
 
     var loadRetryTrigger = PublishSubject<Void>()
     var loadNextTrigger = PublishSubject<Void>()
-
-    init() {}
 
     struct Input {
         let viewWillAppear: Driver<Void>
@@ -45,6 +53,13 @@ final class TransactionHistoryViewModel: ViewModel {
     }
 
     func build(input: Input) -> Output {
+        let firebaseManager = self.firebaseManager
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("마이페이지_거래내역")
+            })
+
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
         let initialPage = Driver.merge(initialLoad, input.refreshControlDidRefresh)
@@ -136,7 +151,7 @@ final class TransactionHistoryViewModel: ViewModel {
             .flatMap(Driver<CustomEmptyViewStyle>.from)
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             transactionList: transactionHistorySuccess,
             isFetching: refreshAction.isExecuting,
             embedEmptyViewController: embedEmptyViewController,

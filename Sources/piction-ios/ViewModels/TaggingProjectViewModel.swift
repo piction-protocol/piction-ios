@@ -10,7 +10,18 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
-final class TaggingProjectViewModel: ViewModel {
+final class TaggingProjectViewModel: InjectableViewModel {
+
+    typealias Dependency = (
+        FirebaseManagerProtocol,
+        String
+    )
+
+    private let firebaseManager: FirebaseManagerProtocol
+
+    init(dependency: Dependency) {
+        (firebaseManager, tag) = dependency
+    }
 
     var page = 0
     var tag = ""
@@ -19,10 +30,6 @@ final class TaggingProjectViewModel: ViewModel {
 
     var loadRetryTrigger = PublishSubject<Void>()
     var loadNextTrigger = PublishSubject<Void>()
-
-    init(tag: String) {
-        self.tag = tag
-    }
 
     struct Input {
         let viewWillAppear: Driver<Void>
@@ -44,7 +51,12 @@ final class TaggingProjectViewModel: ViewModel {
     }
 
     func build(input: Input) -> Output {
-        let tag = self.tag
+        let (firebaseManager, tag) = (self.firebaseManager, self.tag)
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                firebaseManager.screenName("태그 상세")
+            })
 
         let navigationTitle = input.viewWillAppear
             .map { tag }
@@ -110,7 +122,7 @@ final class TaggingProjectViewModel: ViewModel {
         let activityIndicator = taggingProjectListAction.isExecuting
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
             navigationTitle: navigationTitle,
             taggingProjectList: taggingProjectList,
