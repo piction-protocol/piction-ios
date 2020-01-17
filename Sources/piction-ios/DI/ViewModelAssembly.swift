@@ -76,7 +76,8 @@ final class ViewModelAssembly: Assembly {
 
         container.register(ChangeMyInfoViewModel.self) { resolver in
             return ChangeMyInfoViewModel(dependency: (
-                resolver.resolve(Updater.self)!)
+                resolver.resolve(Updater.self)!,
+                resolver.resolve(KeyboardManager.self)!)
             )
         }
 

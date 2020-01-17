@@ -14,13 +14,15 @@ import PictionSDK
 final class ChangeMyInfoViewModel: InjectableViewModel {
 
     typealias Dependency = (
-        UpdaterProtocol
+        UpdaterProtocol,
+        KeyboardManager
     )
 
     private let updater: UpdaterProtocol
+    private let keyboardManager: KeyboardManager
 
     init(dependency: Dependency) {
-        (updater) = dependency
+        (updater, keyboardManager) = dependency
     }
 
     private let imageId = PublishSubject<String?>()
@@ -29,6 +31,7 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
 
     struct Input {
         let viewWillAppear: Driver<Void>
+        let viewWillDisappear: Driver<Void>
         let emailTextFieldDidInput: Driver<String>
         let userNameTextFieldDidInput: Driver<String>
         let pictureImageBtnDidTap: Driver<Void>
@@ -40,21 +43,35 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
 
     struct Output {
         let viewWillAppear: Driver<Void>
+        let viewWillDisappear: Driver<Void>
         let userInfo: Driver<UserViewResponse>
         let pictureBtnAction: Driver<Void>
         let changePicture: Driver<UIImage?>
         let enableSaveButton: Driver<Bool>
         let openPasswordPopup: Driver<Void>
         let openWarningPopup: Driver<Void>
+        let keyboardWillChangeFrame: Driver<ChangedKeyboardFrame>
         let activityIndicator: Driver<Bool>
         let dismissViewController: Driver<Void>
         let showToast: Driver<String>
     }
 
     func build(input: Input) -> Output {
-        let updater = self.updater
+        let (updater, keyboardManager) = (self.updater, self.keyboardManager)
 
-        let userInfoAction = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                keyboardManager.beginMonitoring()
+            })
+
+        let viewWillDisappear = input.viewWillDisappear
+            .do(onNext: { _ in
+                keyboardManager.stopMonitoring()
+            })
+
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+
+        let userInfoAction = initialLoad
             .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -150,6 +167,8 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
 
         let dismissViewController = Driver.merge(dismissWithCancel, changeUserInfoSuccess)
 
+        let keyboardWillChangeFrame = keyboardManager.keyboardWillChangeFrame.asDriver(onErrorDriveWith: .empty())
+
         let activityIndicator = Driver.merge(
             userInfoAction.isExecuting,
             uploadPictureAction.isExecuting,
@@ -158,13 +177,15 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
         let showToast = Driver.merge(changeUserInfoError, uploadPictureError)
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
+            viewWillDisappear: viewWillDisappear,
             userInfo: userInfoSuccess,
             pictureBtnAction: pictureBtnAction,
             changePicture: changePicture,
             enableSaveButton: enableSaveButton,
             openPasswordPopup: openPasswordPopup,
             openWarningPopup: openWarningPopup,
+            keyboardWillChangeFrame: keyboardWillChangeFrame,
             activityIndicator: activityIndicator,
             dismissViewController: dismissViewController,
             showToast: showToast

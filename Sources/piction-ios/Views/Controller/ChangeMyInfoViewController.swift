@@ -30,7 +30,6 @@ final class ChangeMyInfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        KeyboardManager.shared.delegate = self
         self.navigationController?.configureNavigationBar(transparent: false, shadow: true)
     }
 
@@ -47,6 +46,7 @@ extension ChangeMyInfoViewController: ViewModelBindable {
 
         let input = ChangeMyInfoViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
+            viewWillDisappear: rx.viewWillDisappear.asDriver(),
             emailTextFieldDidInput: emailTextField.rx.text.orEmpty.asDriver(),
             userNameTextFieldDidInput: userNameTextField.rx.text.orEmpty.asDriver(),
             pictureImageBtnDidTap: pictureImageButton.rx.tap.asDriver(),
@@ -63,6 +63,12 @@ extension ChangeMyInfoViewController: ViewModelBindable {
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 FirebaseManager.screenName("마이페이지_기본정보변경")
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .viewWillDisappear
+            .drive(onNext: { _ in
             })
             .disposed(by: disposeBag)
 
@@ -108,6 +114,26 @@ extension ChangeMyInfoViewController: ViewModelBindable {
                 self?.saveButton.isEnabled = true
                 self?.saveButton.setTitleColor(.white, for: .normal)
                 self?.saveButton.backgroundColor = UIColor(r: 51, g: 51, b: 51)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .keyboardWillChangeFrame
+            .drive(onNext: { [weak self] changedFrameInfo in
+                guard
+                    let `self` = self,
+                    let endFrame = changedFrameInfo.endFrame
+                else { return }
+
+                if endFrame.origin.y >= SCREEN_H {
+                    self.scrollView.contentInset = .zero
+                } else {
+                    self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height, right: 0)
+                }
+
+                UIView.animate(withDuration: changedFrameInfo.duration, animations: {
+                    self.view.layoutIfNeeded()
+                })
             })
             .disposed(by: disposeBag)
 
@@ -256,22 +282,6 @@ extension ChangeMyInfoViewController {
     private func configurationPasswordTextField(textField: UITextField!){
         textField.placeholder = ""
         textField.isSecureTextEntry = true
-    }
-}
-
-extension ChangeMyInfoViewController: KeyboardManagerDelegate {
-    func keyboardManager(_ keyboardManager: KeyboardManager, keyboardWillChangeFrame endFrame: CGRect?, duration: TimeInterval, animationCurve: UIView.AnimationOptions) {
-        guard let endFrame = endFrame else { return }
-
-        if endFrame.origin.y >= SCREEN_H {
-            scrollView.contentInset = .zero
-        } else {
-            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height, right: 0)
-        }
-
-        UIView.animate(withDuration: duration, animations: {
-            self.view.layoutIfNeeded()
-        })
     }
 }
 
