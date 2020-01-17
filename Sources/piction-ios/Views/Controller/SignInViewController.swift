@@ -34,11 +34,6 @@ final class SignInViewController: UIViewController {
 
     private let keyboardReturnSignIn = PublishSubject<Void>()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        KeyboardManager.shared.delegate = self
-    }
-
     @IBAction func tapGesture(_ sender: Any) {
         view.endEditing(true)
     }
@@ -52,6 +47,7 @@ extension SignInViewController: ViewModelBindable {
 
         let input = SignInViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
+            viewWillDisappear: rx.viewWillDisappear.asDriver(),
             signInBtnDidTap: Driver.merge(signInButton.rx.tap.asDriver(), keyboardReturnSignIn.asDriver(onErrorDriveWith: .empty())),
             signUpBtnDidTap: signUpButton.rx.tap.asDriver(),
             loginIdTextFieldDidInput: loginIdInputView.inputTextField.rx.text.orEmpty.asDriver(),
@@ -67,6 +63,12 @@ extension SignInViewController: ViewModelBindable {
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 FirebaseManager.screenName("로그인")
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .viewWillDisappear
+            .drive(onNext: { _ in
             })
             .disposed(by: disposeBag)
 
@@ -97,6 +99,26 @@ extension SignInViewController: ViewModelBindable {
                     let safariViewController = SFSafariViewController(url: url)
                     self.present(safariViewController, animated: true, completion: nil)
                 }
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .keyboardWillChangeFrame
+            .drive(onNext: { [weak self] changedFrameInfo in
+                guard
+                    let `self` = self,
+                    let endFrame = changedFrameInfo.endFrame
+                else { return }
+
+                if endFrame.origin.y >= SCREEN_H {
+                    self.scrollView.contentInset = .zero
+                } else {
+                    self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height, right: 0)
+                }
+
+                UIView.animate(withDuration: changedFrameInfo.duration, animations: {
+                    self.view.layoutIfNeeded()
+                })
             })
             .disposed(by: disposeBag)
 
@@ -142,22 +164,6 @@ extension SignInViewController: ViewModelBindable {
                 Toast.showToast(message)
             })
             .disposed(by: disposeBag)
-    }
-}
-
-extension SignInViewController: KeyboardManagerDelegate {
-    func keyboardManager(_ keyboardManager: KeyboardManager, keyboardWillChangeFrame endFrame: CGRect?, duration: TimeInterval, animationCurve: UIView.AnimationOptions) {
-        guard let endFrame = endFrame else { return }
-
-        if endFrame.origin.y >= SCREEN_H {
-            scrollView.contentInset = .zero
-        } else {
-            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height, right: 0)
-        }
-
-        UIView.animate(withDuration: duration, animations: {
-            self.view.layoutIfNeeded()
-        })
     }
 }
 

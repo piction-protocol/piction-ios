@@ -38,7 +38,8 @@ final class ViewModelAssembly: Assembly {
 
         container.register(SignInViewModel.self) { resolver in
             return SignInViewModel(dependency: (
-                resolver.resolve(Updater.self)!)
+                resolver.resolve(Updater.self)!,
+                resolver.resolve(KeyboardManager.self)!)
             )
         }
 
