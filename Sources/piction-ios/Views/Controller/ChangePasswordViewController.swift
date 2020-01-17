@@ -43,7 +43,6 @@ final class ChangePasswordViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        KeyboardManager.shared.delegate = self
         self.navigationController?.configureNavigationBar(transparent: false, shadow: true)
     }
 
@@ -60,6 +59,7 @@ extension ChangePasswordViewController: ViewModelBindable {
 
         let input = ChangePasswordViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
+            viewWillDisappear: rx.viewWillDisappear.asDriver(),
             passwordTextFieldDidInput: passwordTextField.rx.text.orEmpty.asDriver(),
             newPasswordTextFieldDidInput: newPasswordTextField.rx.text.orEmpty.asDriver(),
             passwordCheckTextFieldDidInput: passwordCheckTextField.rx.text.orEmpty.asDriver(),
@@ -77,6 +77,12 @@ extension ChangePasswordViewController: ViewModelBindable {
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 FirebaseManager.screenName("마이페이지_비밀번호변경")
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .viewWillDisappear
+            .drive(onNext: { _ in
             })
             .disposed(by: disposeBag)
 
@@ -136,6 +142,26 @@ extension ChangePasswordViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
+            .keyboardWillChangeFrame
+            .drive(onNext: { [weak self] changedFrameInfo in
+                guard
+                    let `self` = self,
+                    let endFrame = changedFrameInfo.endFrame
+                else { return }
+
+                if endFrame.origin.y >= SCREEN_H {
+                    self.scrollView.contentInset = .zero
+                } else {
+                    self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height, right: 0)
+                }
+
+                UIView.animate(withDuration: changedFrameInfo.duration, animations: {
+                    self.view.layoutIfNeeded()
+                })
+            })
+            .disposed(by: disposeBag)
+
+        output
             .dismissViewController
             .drive(onNext: { [weak self] in
                 self?.dismiss(animated: true)
@@ -179,22 +205,6 @@ extension ChangePasswordViewController: ViewModelBindable {
                 Toast.showToast(message)
             })
             .disposed(by: disposeBag)
-    }
-}
-
-extension ChangePasswordViewController: KeyboardManagerDelegate {
-    func keyboardManager(_ keyboardManager: KeyboardManager, keyboardWillChangeFrame endFrame: CGRect?, duration: TimeInterval, animationCurve: UIView.AnimationOptions) {
-        guard let endFrame = endFrame else { return }
-
-        if endFrame.origin.y >= SCREEN_H {
-            scrollView.contentInset = .zero
-        } else {
-            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height, right: 0)
-        }
-
-        UIView.animate(withDuration: duration, animations: {
-            self.view.layoutIfNeeded()
-        })
     }
 }
 

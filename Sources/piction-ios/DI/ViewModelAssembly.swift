@@ -82,7 +82,9 @@ final class ViewModelAssembly: Assembly {
         }
 
         container.register(ChangePasswordViewModel.self) { resolver in
-            return ChangePasswordViewModel()
+            return ChangePasswordViewModel(dependency: (
+                resolver.resolve(KeyboardManager.self)!)
+            )
         }
 
         container.register(SubscriptionListViewModel.self) { resolver in

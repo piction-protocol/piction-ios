@@ -10,12 +10,21 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
-final class ChangePasswordViewModel: ViewModel {
+final class ChangePasswordViewModel: InjectableViewModel {
 
-    init() {}
+    typealias Dependency = (
+        KeyboardManager
+    )
+
+    private let keyboardManager: KeyboardManager
+
+    init(dependency: Dependency) {
+        keyboardManager = dependency
+    }
 
     struct Input {
         let viewWillAppear: Driver<Void>
+        let viewWillDisappear: Driver<Void>
         let passwordTextFieldDidInput: Driver<String>
         let newPasswordTextFieldDidInput: Driver<String>
         let passwordCheckTextFieldDidInput: Driver<String>
@@ -28,17 +37,31 @@ final class ChangePasswordViewModel: ViewModel {
 
     struct Output {
         let viewWillAppear: Driver<Void>
+        let viewWillDisappear: Driver<Void>
         let activityIndicator: Driver<Bool>
         let passwordVisible: Driver<Void>
         let newPasswordVisible: Driver<Void>
         let passwordCheckVisible: Driver<Void>
         let enableSaveButton: Driver<Void>
+        let keyboardWillChangeFrame: Driver<ChangedKeyboardFrame>
         let dismissViewController: Driver<Void>
         let errorMsg: Driver<ErrorModel>
         let showToast: Driver<String>
     }
 
     func build(input: Input) -> Output {
+        let keyboardManager = self.keyboardManager
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                keyboardManager.beginMonitoring()
+            })
+
+        let viewWillDisappear = input.viewWillDisappear
+            .do(onNext: { _ in
+                keyboardManager.stopMonitoring()
+            })
+
         let changePasswordInfo = Driver.combineLatest(input.passwordTextFieldDidInput, input.newPasswordTextFieldDidInput, input.passwordCheckTextFieldDidInput) { (password: $0, newPassword: $1, passwordCheck: $2) }
 
         let enableSaveButton = changePasswordInfo
@@ -85,13 +108,17 @@ final class ChangePasswordViewModel: ViewModel {
         let dismissViewController = Driver.merge(dismissWithCancel, changePasswordSuccess)
             .map { _ in Void() }
 
+        let keyboardWillChangeFrame = keyboardManager.keyboardWillChangeFrame.asDriver(onErrorDriveWith: .empty())
+
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
+            viewWillDisappear: viewWillDisappear,
             activityIndicator: activityIndicator,
             passwordVisible: input.passwordVisibleBtnDidTap,
             newPasswordVisible: input.newPasswordVisibleBtnDidTap,
             passwordCheckVisible: input.passwordCheckVisibleBtnDidTap,
             enableSaveButton: enableSaveButton,
+            keyboardWillChangeFrame: keyboardWillChangeFrame,
             dismissViewController: dismissViewController,
             errorMsg: errorMsg,
             showToast: showToast
