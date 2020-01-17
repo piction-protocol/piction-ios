@@ -14,10 +14,13 @@ import PictionSDK
 final class CreateProjectViewModel: InjectableViewModel {
     typealias Dependency = (
         UpdaterProtocol,
+        KeyboardManager,
         String
     )
 
     private let updater: UpdaterProtocol
+    private let keyboardManager: KeyboardManager
+
     var uri: String = ""
 
     private let title = PublishSubject<String>()
@@ -29,7 +32,7 @@ final class CreateProjectViewModel: InjectableViewModel {
     private let tags = PublishSubject<[String]>()
 
     init(dependency: Dependency) {
-        (updater, uri) = dependency
+        (updater, keyboardManager, uri) = dependency
     }
 
     struct Input {
@@ -60,6 +63,7 @@ final class CreateProjectViewModel: InjectableViewModel {
         let changeWideThumbnail: Driver<UIImage?>
         let changeThumbnail: Driver<UIImage?>
         let statusChanged: Driver<String>
+        let keyboardWillChangeFrame: Driver<ChangedKeyboardFrame>
         let popViewController: Driver<Void>
         let activityIndicator: Driver<Bool>
         let dismissKeyboard: Driver<Bool>
@@ -67,14 +71,27 @@ final class CreateProjectViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (updater, uri) = (self.updater, self.uri)
+        let (updater, keyboardManager, uri) = (self.updater, self.keyboardManager, self.uri)
 
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                keyboardManager.beginMonitoring()
+            })
 
-        let isModify = viewWillAppear
+        let viewWillDisappear = input.viewWillDisappear
+            .do(onNext: { _ in
+                keyboardManager.stopMonitoring()
+            })
+
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+            .do(onNext: { _ in
+                keyboardManager.beginMonitoring()
+            })
+
+        let isModify = initialLoad
             .map { uri != "" }
 
-        let loadProjectAction = viewWillAppear
+        let loadProjectAction = initialLoad
             .do(onNext: { [weak self] in
                 guard let `self` = self else { return }
                 self.thumbnailImageId.onNext(nil)
@@ -214,6 +231,8 @@ final class CreateProjectViewModel: InjectableViewModel {
             .map { $0?.message }
             .flatMap(Driver.from)
 
+        let keyboardWillChangeFrame = keyboardManager.keyboardWillChangeFrame.asDriver(onErrorDriveWith: .empty())
+
         let activityIndicator = Driver.merge(
             uploadWideThumbnailImageAction.isExecuting,
             uploadThumbnailImageAction.isExecuting,
@@ -227,8 +246,8 @@ final class CreateProjectViewModel: InjectableViewModel {
         let dismissKeyboard = saveButtonAction.isExecuting
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
-            viewWillDisappear: input.viewWillDisappear,
+            viewWillAppear: viewWillAppear,
+            viewWillDisappear: viewWillDisappear,
             isModify: isModify,
             loadProject: loadProjectSuccess,
             projectIdChanged: projectIdChanged,
@@ -237,6 +256,7 @@ final class CreateProjectViewModel: InjectableViewModel {
             changeWideThumbnail: wideThumbnailImage,
             changeThumbnail: thumbnailImage,
             statusChanged: statusChanged,
+            keyboardWillChangeFrame: keyboardWillChangeFrame,
             popViewController: changeProjectInfoSuccess,
             activityIndicator: activityIndicator,
             dismissKeyboard: dismissKeyboard,

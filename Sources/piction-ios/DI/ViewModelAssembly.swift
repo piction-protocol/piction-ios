@@ -142,6 +142,7 @@ final class ViewModelAssembly: Assembly {
         container.register(CreateProjectViewModel.self) { (resolver, uri: String) in
             return CreateProjectViewModel(dependency: (
                 resolver.resolve(Updater.self)!,
+                resolver.resolve(KeyboardManager.self)!,
                 uri: uri)
             )
         }

@@ -62,7 +62,6 @@ final class CreateProjectViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        KeyboardManager.shared.delegate = self
         self.tabBarController?.tabBar.isHidden = true
 
         tagsField.onShouldAcceptTag = { [weak self] field in
@@ -145,15 +144,13 @@ extension CreateProjectViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
-//                self?.tabBarController?.tabBar.isHidden = true
                 FirebaseManager.screenName("프로젝트 생성")
             })
             .disposed(by: disposeBag)
 
         output
             .viewWillDisappear
-            .drive(onNext: { [weak self] in
-//                self?.tabBarController?.tabBar.isHidden = false
+            .drive(onNext: { _ in
             })
             .disposed(by: disposeBag)
 
@@ -265,6 +262,30 @@ extension CreateProjectViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
+            .keyboardWillChangeFrame
+            .drive(onNext: { [weak self] changedFrameInfo in
+                guard
+                    let `self` = self,
+                    let endFrame = changedFrameInfo.endFrame
+                else { return }
+
+                if endFrame.origin.y >= SCREEN_H {
+                    self.scrollView.contentInset = .zero
+                    self.tagsFieldIsActive = false
+                } else {
+                    self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height, right: 0)
+                    if self.tagsFieldIsActive {
+                        self.scrollView.scrollRectToVisible(self.tagsField.superview!.frame, animated: true)
+                    }
+                }
+
+                UIView.animate(withDuration: changedFrameInfo.duration, animations: {
+                    self.view.layoutIfNeeded()
+                })
+            })
+            .disposed(by: disposeBag)
+
+        output
             .popViewController
             .drive(onNext: { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
@@ -326,26 +347,6 @@ extension CreateProjectViewController: CropViewControllerDelegate {
         viewController.modalTransitionStyle = .coverVertical
         viewController.presentingViewController?.dismiss(animated: true, completion: nil)
 //        cropViewController.dismiss(animated: true)
-    }
-}
-
-extension CreateProjectViewController: KeyboardManagerDelegate {
-    func keyboardManager(_ keyboardManager: KeyboardManager, keyboardWillChangeFrame endFrame: CGRect?, duration: TimeInterval, animationCurve: UIView.AnimationOptions) {
-        guard let endFrame = endFrame else { return }
-
-        if endFrame.origin.y >= SCREEN_H {
-            scrollView.contentInset = .zero
-            tagsFieldIsActive = false
-        } else {
-            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height, right: 0)
-            if tagsFieldIsActive {
-                scrollView.scrollRectToVisible(tagsField.superview!.frame, animated: true)
-            }
-        }
-
-        UIView.animate(withDuration: duration, animations: {
-            self.view.layoutIfNeeded()
-        })
     }
 }
 
