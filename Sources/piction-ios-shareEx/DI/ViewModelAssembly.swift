@@ -13,7 +13,7 @@ final class ViewModelAssembly: Assembly {
     func assemble(container: Container) {
         container.register(CreatePostViewModel.self) { (resolver, context: NSExtensionContext?) in
             return CreatePostViewModel(dependency:
-                resolver.resolve(KeyboardManager.self)!,
+                resolver.resolve(KeyboardManagerProtocol.self)!,
                 context: context)
         }
 

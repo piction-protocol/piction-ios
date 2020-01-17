@@ -38,15 +38,15 @@ final class ViewModelAssembly: Assembly {
 
         container.register(SignInViewModel.self) { resolver in
             return SignInViewModel(dependency: (
-                resolver.resolve(KeyboardManager.self)!)
                 resolver.resolve(UpdaterProtocol.self)!,
+                resolver.resolve(KeyboardManagerProtocol.self)!)
             )
         }
 
         container.register(SignUpViewModel.self) { resolver in
             return SignUpViewModel(dependency: (
-                resolver.resolve(KeyboardManager.self)!)
                 resolver.resolve(UpdaterProtocol.self)!,
+                resolver.resolve(KeyboardManagerProtocol.self)!)
             )
         }
 
@@ -76,14 +76,14 @@ final class ViewModelAssembly: Assembly {
 
         container.register(ChangeMyInfoViewModel.self) { resolver in
             return ChangeMyInfoViewModel(dependency: (
-                resolver.resolve(KeyboardManager.self)!)
                 resolver.resolve(UpdaterProtocol.self)!,
+                resolver.resolve(KeyboardManagerProtocol.self)!)
             )
         }
 
         container.register(ChangePasswordViewModel.self) { resolver in
             return ChangePasswordViewModel(dependency: (
-                resolver.resolve(KeyboardManager.self)!)
+                resolver.resolve(KeyboardManagerProtocol.self)!)
             )
         }
 
@@ -141,16 +141,16 @@ final class ViewModelAssembly: Assembly {
 
         container.register(CreateProjectViewModel.self) { (resolver, uri: String) in
             return CreateProjectViewModel(dependency: (
-                resolver.resolve(KeyboardManager.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
+                resolver.resolve(KeyboardManagerProtocol.self)!,
                 uri: uri)
             )
         }
 
         container.register(CreatePostViewModel.self) { (resolver, uri: String, postId: Int) in
             return CreatePostViewModel(dependency: (
-                resolver.resolve(KeyboardManager.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
+                resolver.resolve(KeyboardManagerProtocol.self)!,
                 uri: uri,
                 postId: postId)
             )

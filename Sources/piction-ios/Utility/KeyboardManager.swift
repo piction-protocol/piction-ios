@@ -9,16 +9,21 @@
 import RxSwift
 import RxCocoa
 
+protocol KeyboardManagerProtocol {
+    var keyboardWillChangeFrame: PublishSubject<ChangedKeyboardFrame> { get }
+    var keyboardWillHide: PublishSubject<[AnyHashable: Any?]> { get }
+    func beginMonitoring()
+    func stopMonitoring()
+}
+
 typealias ChangedKeyboardFrame = (endFrame: CGRect?, duration: TimeInterval, animationCurve: UIView.AnimationOptions)
 
-class KeyboardManager {
+class KeyboardManager: KeyboardManagerProtocol {
     var keyboardWillChangeFrame = PublishSubject<ChangedKeyboardFrame>()
     var keyboardWillHide = PublishSubject<[AnyHashable: Any?]>()
 
     init() {}
-}
 
-extension KeyboardManager {
     func beginMonitoring() {
         NotificationCenter.default.addObserver(self, selector: #selector(KeyboardManager.keyboardWillChangeFrame(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(KeyboardManager.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -28,7 +33,9 @@ extension KeyboardManager {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+}
 
+extension KeyboardManager {
     @objc func keyboardWillChangeFrame(_ notification: Notification) {
         guard let userInfo = notification.userInfo else { return }
 

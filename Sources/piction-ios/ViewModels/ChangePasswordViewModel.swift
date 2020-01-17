@@ -13,10 +13,10 @@ import PictionSDK
 final class ChangePasswordViewModel: InjectableViewModel {
 
     typealias Dependency = (
-        KeyboardManager
+        KeyboardManagerProtocol
     )
 
-    private let keyboardManager: KeyboardManager
+    private let keyboardManager: KeyboardManagerProtocol
 
     init(dependency: Dependency) {
         keyboardManager = dependency

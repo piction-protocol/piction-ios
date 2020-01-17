@@ -14,12 +14,12 @@ import PictionSDK
 final class CreateProjectViewModel: InjectableViewModel {
     typealias Dependency = (
         UpdaterProtocol,
-        KeyboardManager,
+        KeyboardManagerProtocol,
         String
     )
 
     private let updater: UpdaterProtocol
-    private let keyboardManager: KeyboardManager
+    private let keyboardManager: KeyboardManagerProtocol
 
     var uri: String = ""
 

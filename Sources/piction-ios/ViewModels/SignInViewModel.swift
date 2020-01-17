@@ -14,11 +14,11 @@ final class SignInViewModel: InjectableViewModel {
 
     typealias Dependency = (
         UpdaterProtocol,
-        KeyboardManager
+        KeyboardManagerProtocol
     )
 
     private let updater: UpdaterProtocol
-    private let keyboardManager: KeyboardManager
+    private let keyboardManager: KeyboardManagerProtocol
 
     init(dependency: Dependency) {
         (updater, keyboardManager) = dependency

@@ -15,13 +15,13 @@ import PictionSDK
 final class CreatePostViewModel: InjectableViewModel {
     typealias Dependency = (
         UpdaterProtocol,
-        KeyboardManager,
+        KeyboardManagerProtocol,
         String,
         Int
     )
 
     private let updater: UpdaterProtocol
-    private let keyboardManager: KeyboardManager
+    private let keyboardManager: KeyboardManagerProtocol
 
     var uri: String = ""
     var postId: Int = 0

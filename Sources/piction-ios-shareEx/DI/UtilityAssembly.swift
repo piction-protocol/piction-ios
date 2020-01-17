@@ -16,7 +16,7 @@ final class UtilityAssembly: Assembly {
             }
             .inObjectScope(.container)
 
-        container.register(KeyboardManager.self) { resolver in
+        container.register(KeyboardManagerProtocol.self) { resolver in
             return KeyboardManager()
             }
             .inObjectScope(.container)
