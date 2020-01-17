@@ -150,6 +150,7 @@ final class ViewModelAssembly: Assembly {
         container.register(CreatePostViewModel.self) { (resolver, uri: String, postId: Int) in
             return CreatePostViewModel(dependency: (
                 resolver.resolve(Updater.self)!,
+                resolver.resolve(KeyboardManager.self)!,
                 uri: uri,
                 postId: postId)
             )

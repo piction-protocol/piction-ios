@@ -130,8 +130,6 @@ final class CreatePostViewController: UIViewController {
         ImageAttachment.defaultAppearance.imageInsets = UIEdgeInsets.zero
 //        MediaAttachment.defaultAppearance.
 
-        KeyboardManager.shared.delegate = self
-
         NSLayoutConstraint.activate([
             editorView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             editorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -233,8 +231,7 @@ extension CreatePostViewController: ViewModelBindable {
 
         output
             .viewWillDisappear
-            .drive(onNext: { [weak self] in
-//                self?.tabBarController?.tabBar.isHidden = false
+            .drive(onNext: { _ in
             })
             .disposed(by: disposeBag)
 
@@ -399,6 +396,26 @@ extension CreatePostViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
+            .keyboardWillChangeFrame
+            .drive(onNext: { [weak self] changedFrameInfo in
+                guard
+                    let `self` = self,
+                    let endFrame = changedFrameInfo.endFrame
+                else { return }
+
+                if endFrame.origin.y >= SCREEN_H {
+                    self.scrollView.contentInset = .zero
+                } else {
+                    self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height, right: 0)
+                }
+
+                UIView.animate(withDuration: changedFrameInfo.duration, animations: {
+                    self.view.layoutIfNeeded()
+                })
+            })
+            .disposed(by: disposeBag)
+
+        output
             .popViewController
             .drive(onNext: { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
@@ -472,22 +489,6 @@ extension CreatePostViewController: CropViewControllerDelegate {
         viewController.modalTransitionStyle = .coverVertical
         viewController.presentingViewController?.dismiss(animated: true, completion: nil)
 //        cropViewController.dismiss(animated: true)
-    }
-}
-
-extension CreatePostViewController: KeyboardManagerDelegate {
-    func keyboardManager(_ keyboardManager: KeyboardManager, keyboardWillChangeFrame endFrame: CGRect?, duration: TimeInterval, animationCurve: UIView.AnimationOptions) {
-        guard let endFrame = endFrame else { return }
-
-        if endFrame.origin.y >= SCREEN_H {
-            scrollView.contentInset = .zero
-        } else {
-            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: endFrame.size.height, right: 0)
-        }
-
-        UIView.animate(withDuration: duration, animations: {
-            self.view.layoutIfNeeded()
-        })
     }
 }
 

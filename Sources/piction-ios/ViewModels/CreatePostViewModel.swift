@@ -15,11 +15,14 @@ import PictionSDK
 final class CreatePostViewModel: InjectableViewModel {
     typealias Dependency = (
         UpdaterProtocol,
+        KeyboardManager,
         String,
         Int
     )
 
     private let updater: UpdaterProtocol
+    private let keyboardManager: KeyboardManager
+
     var uri: String = ""
     var postId: Int = 0
 
@@ -32,7 +35,7 @@ final class CreatePostViewModel: InjectableViewModel {
     private let seriesId = PublishSubject<Int?>()
 
     init(dependency: Dependency) {
-        (updater, uri, postId) = dependency
+        (updater, keyboardManager, uri, postId) = dependency
     }
 
     struct Input {
@@ -75,6 +78,7 @@ final class CreatePostViewModel: InjectableViewModel {
         let openDatePicker: Driver<Date>
         let publishDatePickerValueChanged: Driver<Date>
         let publishDateChanged: Driver<Date?>
+        let keyboardWillChangeFrame: Driver<ChangedKeyboardFrame>
         let popViewController: Driver<Void>
         let activityIndicator: Driver<Bool>
         let dismissKeyboard: Driver<Bool>
@@ -82,8 +86,19 @@ final class CreatePostViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (updater, uri, postId) = (self.updater, self.uri, self.postId)
-        let viewWillAppear = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        let (updater, keyboardManager, uri, postId) = (self.updater, self.keyboardManager, self.uri, self.postId)
+
+        let viewWillAppear = input.viewWillAppear
+            .do(onNext: { _ in
+                keyboardManager.beginMonitoring()
+            })
+
+        let viewWillDisappear = input.viewWillDisappear
+            .do(onNext: { _ in
+                keyboardManager.stopMonitoring()
+            })
+
+        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
             .do(onNext: { [weak self] _ in
                 self?.title.onNext("")
                 self?.coverImageId.onNext("")
@@ -94,10 +109,10 @@ final class CreatePostViewModel: InjectableViewModel {
                 self?.seriesId.onNext(nil)
             })
 
-        let isModify = input.viewWillAppear
+        let isModify = initialLoad
             .map { postId != 0 }
 
-        let loadPostAction = viewWillAppear
+        let loadPostAction = initialLoad
             .filter { self.postId != 0 }
             .map { PostAPI.get(uri: uri, postId: postId) }
             .map(PictionSDK.rx.requestAPI)
@@ -115,7 +130,7 @@ final class CreatePostViewModel: InjectableViewModel {
                 self?.seriesId.onNext(post.series?.id ?? nil)
             })
 
-        let loadContentAction = viewWillAppear
+        let loadContentAction = initialLoad
             .filter { self.postId != 0 }
             .map { PostAPI.getContent(uri: uri, postId: postId) }
             .map(PictionSDK.rx.requestAPI)
@@ -130,7 +145,7 @@ final class CreatePostViewModel: InjectableViewModel {
                 self?.content.onNext(content)
             })
 
-        let loadFanPassAction = viewWillAppear
+        let loadFanPassAction = initialLoad
             .map { FanPassAPI.all(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -280,6 +295,8 @@ final class CreatePostViewModel: InjectableViewModel {
             .withLatestFrom(seriesId.asDriver(onErrorDriveWith: .empty()))
             .map { (uri, $0) }
 
+        let keyboardWillChangeFrame = keyboardManager.keyboardWillChangeFrame.asDriver(onErrorDriveWith: .empty())
+
         let activityIndicator = Driver.merge(
             uploadCoverImageAction.isExecuting,
             uploadContentImageAction.isExecuting,
@@ -293,8 +310,8 @@ final class CreatePostViewModel: InjectableViewModel {
         let dismissKeyboard = savePostAction.isExecuting
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
-            viewWillDisappear: input.viewWillDisappear,
+            viewWillAppear: viewWillAppear,
+            viewWillDisappear: viewWillDisappear,
             isModify: isModify,
             openManageSeriesViewController: openManageSeriesViewController,
             loadPostInfo: loadPostInfo,
@@ -309,6 +326,7 @@ final class CreatePostViewModel: InjectableViewModel {
             openDatePicker: openDatePicker,
             publishDatePickerValueChanged: input.publishDatePickerValueChanged,
             publishDateChanged: publishDateChanged,
+            keyboardWillChangeFrame: keyboardWillChangeFrame,
             popViewController: changePostInfoSuccess,
             activityIndicator: activityIndicator,
             dismissKeyboard: dismissKeyboard,
