@@ -33,22 +33,22 @@
                     </constraints>
                     <blurEffect style="regular"/>
                 </visualEffectView>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Tue-pQ-bvD">
-                    <rect key="frame" x="20" y="84" width="335" height="49"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Tue-pQ-bvD">
+                    <rect key="frame" x="20" y="89.666666666666671" width="335" height="38"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D18-Vh-NiA">
-                            <rect key="frame" x="0.0" y="0.0" width="335" height="27"/>
+                            <rect key="frame" x="0.0" y="0.0" width="335" height="21"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="27" id="ERT-3Z-dDy"/>
+                                <constraint firstAttribute="height" constant="21" id="ERT-3Z-dDy"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YWf-R2-Haw">
-                            <rect key="frame" x="0.0" y="31" width="335" height="18"/>
+                            <rect key="frame" x="0.0" y="23" width="335" height="15"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="18" id="ago-l7-Vll"/>
+                                <constraint firstAttribute="height" constant="15" id="ago-l7-Vll"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -56,7 +56,7 @@
                         </label>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="height" constant="49" id="LHb-PX-GfX"/>
+                        <constraint firstAttribute="height" constant="38" id="LHb-PX-GfX"/>
                     </constraints>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wCZ-b7-lsx">
@@ -80,7 +80,7 @@
                 <constraint firstAttribute="trailing" secondItem="LB1-Yh-OnW" secondAttribute="trailing" id="aXG-cg-Nko"/>
                 <constraint firstItem="wCZ-b7-lsx" firstAttribute="leading" secondItem="6jm-xv-r6z" secondAttribute="leading" id="db8-ux-wMh"/>
                 <constraint firstItem="4yb-u4-myD" firstAttribute="leading" secondItem="6jm-xv-r6z" secondAttribute="leading" id="lvo-ua-fAU"/>
-                <constraint firstItem="y8k-dI-QvX" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Tue-pQ-bvD" secondAttribute="bottom" priority="250" constant="4" id="pL7-Oi-X0B"/>
+                <constraint firstItem="y8k-dI-QvX" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Tue-pQ-bvD" secondAttribute="bottom" priority="250" constant="6" id="pL7-Oi-X0B"/>
                 <constraint firstAttribute="trailing" secondItem="4yb-u4-myD" secondAttribute="trailing" id="pZU-dP-6Ws"/>
                 <constraint firstItem="wCZ-b7-lsx" firstAttribute="trailing" secondItem="6jm-xv-r6z" secondAttribute="trailing" id="pny-1F-cJw"/>
                 <constraint firstItem="LB1-Yh-OnW" firstAttribute="top" secondItem="6jm-xv-r6z" secondAttribute="top" id="urf-p6-41m"/>

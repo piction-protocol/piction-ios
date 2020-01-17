@@ -33,22 +33,22 @@
                     </constraints>
                     <blurEffect style="regular"/>
                 </visualEffectView>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="kjY-C9-pmC">
-                    <rect key="frame" x="20" y="84" width="335" height="49"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="kjY-C9-pmC">
+                    <rect key="frame" x="20" y="89.5" width="335" height="38"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M5w-bU-oU2">
-                            <rect key="frame" x="0.0" y="0.0" width="335" height="27"/>
+                            <rect key="frame" x="0.0" y="0.0" width="335" height="21"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="27" id="Y67-dY-wY5"/>
+                                <constraint firstAttribute="height" constant="21" id="Y67-dY-wY5"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X6E-UN-HXd">
-                            <rect key="frame" x="0.0" y="31" width="335" height="18"/>
+                            <rect key="frame" x="0.0" y="23" width="335" height="15"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="18" id="LxJ-UY-gb2"/>
+                                <constraint firstAttribute="height" constant="15" id="LxJ-UY-gb2"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -56,7 +56,7 @@
                         </label>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="height" constant="49" id="VOf-lN-DIH"/>
+                        <constraint firstAttribute="height" constant="38" id="VOf-lN-DIH"/>
                     </constraints>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EeK-uS-5nj">
@@ -84,7 +84,7 @@
                 <constraint firstItem="Vl3-00-Zjs" firstAttribute="top" secondItem="hJ1-IM-JD9" secondAttribute="top" id="g7Y-Kb-WDH"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="EeK-uS-5nj" secondAttribute="bottom" id="jM6-jV-7tH"/>
                 <constraint firstItem="kjY-C9-pmC" firstAttribute="leading" secondItem="hJ1-IM-JD9" secondAttribute="leading" constant="20" id="kLr-kZ-sf0"/>
-                <constraint firstItem="LHd-Cp-nXx" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="kjY-C9-pmC" secondAttribute="bottom" priority="250" constant="4" id="pZQ-by-iTQ"/>
+                <constraint firstItem="LHd-Cp-nXx" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="kjY-C9-pmC" secondAttribute="bottom" priority="250" constant="6" id="pZQ-by-iTQ"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="LHd-Cp-nXx"/>
