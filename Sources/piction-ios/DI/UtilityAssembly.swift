@@ -15,6 +15,11 @@ final class UtilityAssembly: Assembly {
             return Updater()
             }
             .inObjectScope(.container)
+
+        container.register(KeyboardManager.self) { resolver in
+            return KeyboardManager()
+            }
+            .inObjectScope(.container)
     }
 }
 

@@ -5,33 +5,20 @@
 //  Created by jhseo on 16/07/2019.
 //  Copyright © 2019 Piction Network. All rights reserved.
 //
-import UIKit
 
-typealias KeyboardManagerDelegate = KeyboardManagerDelegateRequired & KeyboardManagerDelegateOptional
+import RxSwift
+import RxCocoa
 
-protocol KeyboardManagerDelegateRequired: class {
-    func keyboardManager(_ keyboardManager: KeyboardManager, keyboardWillChangeFrame endFrame: CGRect?, duration: TimeInterval, animationCurve: UIView.AnimationOptions)
-}
-
-@objc protocol KeyboardManagerDelegateOptional {
-    @objc optional func keyboardWillHide(userInfo: [AnyHashable: Any])
-}
+typealias ChangedKeyboardFrame = (endFrame: CGRect?, duration: TimeInterval, animationCurve: UIView.AnimationOptions)
 
 class KeyboardManager {
+    var keyboardWillChangeFrame = PublishSubject<ChangedKeyboardFrame>()
+    var keyboardWillHide = PublishSubject<[AnyHashable: Any?]>()
 
-    static let shared = KeyboardManager()
+    init() {}
+}
 
-    weak var delegate: KeyboardManagerDelegate?
-
-
-    init() {
-        beginMonitoring()
-    }
-
-    deinit {
-        stopMonitoring()
-    }
-
+extension KeyboardManager {
     func beginMonitoring() {
         NotificationCenter.default.addObserver(self, selector: #selector(KeyboardManager.keyboardWillChangeFrame(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(KeyboardManager.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -50,11 +37,12 @@ class KeyboardManager {
         let animationCurveRawNSN = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber
         let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIView.AnimationOptions.curveEaseOut.rawValue
         let animationCurve: UIView.AnimationOptions = UIView.AnimationOptions(rawValue: animationCurveRaw)
-        delegate?.keyboardManager(self, keyboardWillChangeFrame: endFrame, duration: duration, animationCurve: animationCurve)
+        let changedFrame = ChangedKeyboardFrame(endFrame: endFrame, duration: duration, animationCurve: animationCurve)
+        keyboardWillChangeFrame.onNext(changedFrame)
     }
 
     @objc func keyboardWillHide(_ notification: Notification) {
         guard let userInfo = notification.userInfo else { return }
-        delegate?.keyboardWillHide?(userInfo: userInfo)
+        keyboardWillHide.onNext(userInfo)
     }
 }

@@ -959,7 +959,6 @@
 			isa = PBXGroup;
 			children = (
 				43502A9B238FB81400586098 /* StoreReviewManager */,
-				439E7ED3237BEC0B00E4A475 /* KeyboardManager */,
 				43EBE1A22374086A0081C3B7 /* KeychainManager */,
 				436CAC6E234C2F3F00C84373 /* Toast */,
 				438E762A2362BCD80062D004 /* DynamicCollectionViewFlowLayout */,
@@ -1011,6 +1010,7 @@
 			isa = PBXGroup;
 			children = (
 				4323FA5A233A165600243655 /* Updater.swift */,
+				439E7ED4237BEC0B00E4A475 /* KeyboardManager.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1350,14 +1350,6 @@
 				439E7ECE237BE57900E4A475 /* piction-ios-test-shareEx.entitlements */,
 			);
 			path = Staging;
-			sourceTree = "<group>";
-		};
-		439E7ED3237BEC0B00E4A475 /* KeyboardManager */ = {
-			isa = PBXGroup;
-			children = (
-				439E7ED4237BEC0B00E4A475 /* KeyboardManager.swift */,
-			);
-			path = KeyboardManager;
 			sourceTree = "<group>";
 		};
 		439E7ED7237C057D00E4A475 /* FirebaseManager */ = {
