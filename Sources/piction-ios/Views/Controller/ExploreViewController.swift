@@ -40,6 +40,15 @@ final class ExploreViewController: UIViewController {
         self.configureSearchController()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if #available(iOS 13, *) {
+        } else {
+            self.navigationItem.hidesSearchBarWhenScrolling = true
+            self.navigationController?.configureNavigationBar(transparent: false, shadow: false)
+        }
+    }
+
     private func embedCategoryListViewController() {
         self.exploreHeaderView = CategoryListViewController.make()
         self.exploreHeaderView?.delegate = self
