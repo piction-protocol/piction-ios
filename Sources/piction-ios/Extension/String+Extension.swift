@@ -9,24 +9,32 @@
 import Foundation
 
 extension String {
-    func getYoutubeId() -> [String] {
-        let regexStr = "((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]++)"
+    static let youtubeIdRegex = #"((?<=(v|V)/)|(?<=be/)|(?<=(\?|\&)v=)|(?<=embed/))([\w-]++)"#
+    static let pictionUrlRegex = #"https?:\/\/(staging\.)?piction.network\/project\/([a-z0-9-]{5,20})(\/posts((\/)(\d+))?)?"#
 
-        let regex = try? NSRegularExpression(pattern: regexStr, options: .caseInsensitive)
-
-        var youtubeIds: [String] = []
-
-        if let results = regex?.matches(in: self, range: NSRange(location: 0, length: self.count)) {
-
-            for match in results {
-                let startIndex = self.index(self.startIndex, offsetBy: match.range.location)
-                let endIndex = self.index(startIndex, offsetBy: match.range.length - 1)
-                let id = self[startIndex...endIndex]
-                youtubeIds.append(String(id))
-            }
+    func getRegexCaptureList(pattern: String) -> [String] {
+        do {
+            let regex = try NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+            let nsString = NSString(string: self)
+            let results = regex.matches(in: self, options: [], range: NSRange(location: 0, length: nsString.length))
+            return (results.map { match in
+                (0 ..< match.numberOfRanges).map { match.range(at: $0).location == NSNotFound ? "" : nsString.substring(with: match.range(at: $0)) }
+            }).first ?? []
+        } catch let error {
+            print("invalid regex: \(error.localizedDescription)")
+            return []
         }
+    }
 
-        return youtubeIds
+    func getRegexMatches(pattern: String) -> [String] {
+        do {
+            let regex = try NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+            let results = regex.matches(in: self, range: NSRange(self.startIndex..., in: self))
+            return results.map { String(self[Range($0.range, in: self)!]) }
+        } catch let error {
+            print("invalid regex: \(error.localizedDescription)")
+            return []
+        }
     }
 }
 
