@@ -350,7 +350,7 @@ extension CreatePostViewModel {
     }
 
     func convertTagIFrameToVideo(_ content: String) -> String {
-        let youtubeIds = content.getYoutubeId()
+        let youtubeIds = content.getRegexMatches(pattern: String.youtubeIdRegex)
 
         var htmlString = content
 
@@ -368,7 +368,7 @@ extension CreatePostViewModel {
     }
 
     func convertTagVideoToIFrame(_ content: String) -> String {
-        let youtubeIds = content.getYoutubeId()
+        let youtubeIds = content.getRegexMatches(pattern: String.youtubeIdRegex)
 
         var htmlString = content
 

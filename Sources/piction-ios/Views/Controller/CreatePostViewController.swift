@@ -182,7 +182,7 @@ final class CreatePostViewController: UIViewController {
     }
 
     private func getYoutubePosterUrlString(_ url: String) -> String {
-        let youtubeIds = url.getYoutubeId()
+        let youtubeIds = url.getRegexMatches(pattern: String.youtubeIdRegex)
         return "https://img.youtube.com/vi/\(youtubeIds.first ?? "")/maxresdefault.jpg"
     }
 }
