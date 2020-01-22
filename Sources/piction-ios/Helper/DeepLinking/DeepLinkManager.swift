@@ -38,11 +38,7 @@ struct DeepLinkManager {
         )
 
         var replaceUrlString: String {
-            if AppInfo.isStaging {
-                return url.absoluteString.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "piction://", with: "piction-test://", options: NSString.CompareOptions.literal, range: nil)
-            } else {
-                return url.absoluteString.trimmingCharacters(in: .whitespacesAndNewlines)
-            }
+            return url.absoluteString.trimmingCharacters(in: .whitespacesAndNewlines)
         }
 
         guard let replaceUrl = URL(string: replaceUrlString) else { return false }
@@ -52,7 +48,7 @@ struct DeepLinkManager {
 //            print("Unable to match URL: \(url.absoluteString)")
 
             if replaceUrlString.range(of: "piction://") == nil && replaceUrlString.range(of: "piction-test://") == nil {
-                UIApplication.shared.openURL(replaceUrl)
+                UIApplication.shared.open(replaceUrl)
             }
             return false
         }

@@ -431,9 +431,12 @@ extension PostViewController: WKNavigationDelegate {
                 decisionHandler(.allow)
                 return
             }
-            let safariViewController = SFSafariViewController(url: url)
-            present(safariViewController, animated: true, completion: nil)
-
+            if requestUrlString.contains("http://") || requestUrlString.contains("https://") {
+                let safariViewController = SFSafariViewController(url: url)
+                present(safariViewController, animated: true, completion: nil)
+            } else {
+                UIApplication.shared.open(url)
+            }
             decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)
