@@ -17,6 +17,8 @@ import PictionSDK
 final class ExploreViewController: UIViewController {
     var disposeBag = DisposeBag()
 
+    let searchResultsController = SearchViewController.make()
+    var searchController: UISearchController?
     var exploreHeaderView: CategoryListViewController?
     var emptyView = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_W, height: 0))
 
@@ -34,6 +36,8 @@ final class ExploreViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         emptyView.frame.size.height = visibleHeight
+
+        self.configureSearchController()
     }
 
     private func embedCategoryListViewController() {
@@ -102,6 +106,26 @@ final class ExploreViewController: UIViewController {
             }
         }
     }
+
+    private func configureSearchController() {
+        self.searchController = UISearchController(searchResultsController: self.searchResultsController)
+
+        self.searchController?.hidesNavigationBarDuringPresentation = true
+        self.searchController?.dimsBackgroundDuringPresentation = false
+        self.searchController?.searchResultsUpdater = self.searchResultsController
+
+        self.navigationItem.searchController = self.searchController
+        if #available(iOS 13, *) {
+            self.navigationItem.hidesSearchBarWhenScrolling = true
+        } else {
+            self.navigationItem.hidesSearchBarWhenScrolling = false
+        }
+        self.definesPresentationContext = true
+
+        self.searchController?.isActive = true
+
+        self.searchController?.searchBar.placeholder = LocalizedStrings.hint_project_and_tag_search.localized()
+    }
 }
 
 extension ExploreViewController: ViewModelBindable {
@@ -160,10 +184,10 @@ extension ExploreViewController: ViewModelBindable {
 
         output
             .selectedIndexPath
-            .drive(onNext: { [weak self] indexPath in
-                guard let uri = dataSource[indexPath].uri else { return }
-                self?.openProjectViewController(uri: uri)
-            })
+            .map { dataSource[$0].uri }
+            .filter { $0 != nil }
+            .flatMap(Driver.from)
+            .drive(onNext: { self.openProjectViewController(uri: $0) })
             .disposed(by: disposeBag)
 
         output
@@ -173,9 +197,7 @@ extension ExploreViewController: ViewModelBindable {
 
         output
             .activityIndicator
-            .drive(onNext: { status in
-                Toast.loadingActivity(status)
-            })
+            .drive(onNext: { Toast.loadingActivity($0) })
             .disposed(by: disposeBag)
 
         output
@@ -222,7 +244,6 @@ extension ExploreViewController: UICollectionViewDelegateFlowLayout {
             return UIEdgeInsets.zero
         } else {
             return UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
-
         }
     }
 }

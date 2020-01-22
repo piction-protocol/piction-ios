@@ -96,7 +96,7 @@ extension TabBarController: UITabBarControllerDelegate {
         guard let topViewController = UIApplication.topViewController() else { return }
         lastIndex = selectedIndex
         if let lastViewController = tabBarController.selectedViewController?.children.last,
-            lastViewController is HomeViewController {
+            lastViewController is HomeViewController || lastViewController is ExploreViewController {
             if lastViewController.navigationItem.searchController?.isActive ?? false {
                 lastViewController.navigationItem.searchController?.searchBar.text = nil
                 lastViewController.navigationItem.searchController?.dismiss(animated: true)
@@ -109,13 +109,7 @@ extension TabBarController: UITabBarControllerDelegate {
             switch topViewController {
             case is HomeViewController:
                 guard let vc = topViewController as? HomeViewController else { return }
-                guard let searchControllerIsActive = topViewController.navigationItem.searchController?.isActive else { return }
-                if searchControllerIsActive {
-                    vc.navigationItem.searchController?.searchBar.text = nil
-                    vc.navigationItem.searchController?.dismiss(animated: true)
-                } else if vc.navigationController?.navigationBar.frame.size.height == DEFAULT_NAVIGATION_HEIGHT {
-                    vc.tableView.setContentOffset(CGPoint(x: 0, y: -vc.statusHeight-vc.largeTitleNavigationHeight), animated: true)
-                }
+                setOffset(scrollView: vc.tableView, vc: vc)
             case is ExploreViewController:
                 guard let vc = topViewController as? ExploreViewController else { return }
                 setOffset(scrollView: vc.collectionView, vc: vc)
