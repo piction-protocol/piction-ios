@@ -8,6 +8,7 @@
 
 import RxSwift
 import RxCocoa
+import Kanna
 import PictionSDK
 
 final class PostViewModel: InjectableViewModel {
@@ -82,16 +83,19 @@ final class PostViewModel: InjectableViewModel {
 
         let postContentSuccess = postContentAction.elements
             .map { try? $0.map(to: ContentModel.self) }
-            .map { postItem -> String in
+            .map { [weak self] postItem -> String in
                 guard
+                    let `self` = self,
                     let path = Bundle.main.path(forResource: "postStyle", ofType: "css"),
                     let cssString = try? String(contentsOfFile: path).components(separatedBy: .newlines).joined()
                 else { return "" }
 
+                let content = self.replaceDeeplink(content: postItem?.content ?? "")
+
                 return """
                     <meta name="viewport" content="initial-scale=1.0" />
                     \(cssString)
-                    <body>\(postItem?.content ?? "")</body>
+                    <body>\(content)</body>
                 """
             }
 
@@ -293,5 +297,63 @@ final class PostViewModel: InjectableViewModel {
             sharePost: sharePost,
             showToast: showToast
         )
+    }
+
+    func replaceDeeplink(content: String) -> String {
+        var htmlString = content
+
+        if let doc = try? HTML(html: content, encoding: .utf8) {
+            for element in doc.xpath("//a") {
+                let url = element["href"] ?? ""
+                let deepLink = self.parseRegex(urlString: url)
+                if deepLink != "" {
+                    htmlString = htmlString.replacingOccurrences(of: "\"\(url)\"", with: "\(deepLink)")
+                }
+            }
+        }
+        return htmlString
+    }
+
+    func parseRegex(urlString: String) -> String {
+        let results = urlString.getRegexCaptureList(pattern: String.pictionUrlRegex)
+
+        var scheme: String {
+            if results[safe: 1] ?? "" == "staging." {
+                return "piction-test://"
+            } else {
+                return "piction://"
+            }
+        }
+
+        var link: String {
+            if results[safe: 6] ?? "" == "" {
+                return "project"
+            } else {
+                return "viewer"
+            }
+        }
+
+        var uri: String {
+            if let uri = results[safe: 2] {
+                return "?uri=\(uri)"
+            } else {
+                return ""
+            }
+        }
+
+        var postId: String {
+            if let postId = results[safe: 6],
+                postId != "" {
+                return "&postId=\(postId)"
+            } else {
+                return ""
+            }
+        }
+
+        if uri != "" {
+            return "\(scheme)\(link)\(uri)\(postId)"
+        } else {
+            return ""
+        }
     }
 }
