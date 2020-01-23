@@ -28,6 +28,7 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
     }
 
     private let imageId = PublishSubject<String?>()
+    private let username = PublishSubject<String>()
     private let changeInfo = PublishSubject<Bool>()
     private let password = PublishSubject<String?>()
 
@@ -82,8 +83,9 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
         let userInfoSuccess = userInfoAction.elements
             .map { try? $0.map(to: UserModel.self) }
             .flatMap(Driver.from)
-            .do(onNext: { [weak self] _ in
+            .do(onNext: { [weak self] userInfo in
                 self?.imageId.onNext("")
+                self?.username.onNext(userInfo.username ?? "")
                 self?.changeInfo.onNext(false)
             })
 
@@ -118,18 +120,20 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
                 self?.changeInfo.onNext(true)
             })
 
+        let userName = Driver.combineLatest(input.userNameTextFieldDidInput, username.asDriver(onErrorDriveWith: .empty()))
+            .do(onNext: { [weak self] inputUsername, username in
+                if inputUsername != "" && inputUsername != username {
+                    self?.changeInfo.onNext(true)
+                } else {
+                    self?.changeInfo.onNext(false)
+                }
+            })
+            .map { $0 == "" ? $1 : $0 }
+
         let changePicture = Driver.merge(uploadPictureSuccess, deletePicture)
             .withLatestFrom(input.pictureImageDidPick)
 
-        let userNameChanged = Driver.combineLatest(input.userNameTextFieldDidInput, userInfoSuccess) { (inputUsername: $0, username: $1.username) }
-            .filter { $0.inputUsername != "" }
-            .filter { $0.inputUsername != $0.username }
-            .map { $0.inputUsername }
-            .do(onNext: { [weak self] _ in
-                self?.changeInfo.onNext(true)
-            })
-
-        let changeUserInfo = Driver.combineLatest(userNameChanged, imageId.asDriver(onErrorDriveWith: .empty())) { (username: $0, imageId: $1) }
+        let changeUserInfo = Driver.combineLatest(userName, imageId.asDriver(onErrorDriveWith: .empty())) { (username: $0, imageId: $1) }
 
         let enableSaveButton = changeInfo.asDriver(onErrorDriveWith: .empty())
             .filter { $0 }
