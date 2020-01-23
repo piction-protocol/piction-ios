@@ -50,6 +50,7 @@ final class PostViewModel: InjectableViewModel {
         let prevNextLink: Driver<PostLinkModel>
         let showPostContent: Driver<String>
         let showNeedSubscription: Driver<(UserModel, PostModel, SubscriptionModel?)>
+        let hideNeedSubscription: Driver<Bool>
         let headerInfo: Driver<(PostModel, UserModel)>
         let footerInfo: Driver<(String, PostModel)>
         let activityIndicator: Driver<Bool>
@@ -223,6 +224,10 @@ final class PostViewModel: InjectableViewModel {
             .filter { $0 }
             .withLatestFrom(needSubscriptionInfo)
 
+        let hideNeedSubscription = needSubscription
+            .filter { !$0 }
+            .map { !$0 }
+
         let freeSubscriptionAction = input.subscriptionBtnDidTap
             .withLatestFrom(userInfo)
             .filter { $0.loginId != nil }
@@ -285,6 +290,7 @@ final class PostViewModel: InjectableViewModel {
             prevNextLink: prevNextLink,
             showPostContent: showPostContent,
             showNeedSubscription: showNeedSubscription,
+            hideNeedSubscription: hideNeedSubscription,
             headerInfo: headerInfo,
             footerInfo: footerInfo,
             activityIndicator: activityIndicator,

@@ -300,6 +300,14 @@ extension PostViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
+            .hideNeedSubscription
+            .drive(onNext: { [weak self] _ in
+                self?.subscriptionView.isHidden = true
+                self?.postWebView.scrollView.isScrollEnabled = true
+            })
+            .disposed(by: disposeBag)
+
+        output
             .changeReadmode
             .drive(onNext: { [weak self] in
                 self?.changeReadmode()
