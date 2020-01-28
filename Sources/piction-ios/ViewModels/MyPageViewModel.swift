@@ -114,6 +114,8 @@ final class MyPageViewModel: InjectableViewModel {
                             description = "Touch ID"
                         case .none:
                             break
+                        @unknown default:
+                            break
                         }
 
                         if description != "" {

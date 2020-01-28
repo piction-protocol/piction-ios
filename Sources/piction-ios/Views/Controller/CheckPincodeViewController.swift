@@ -88,6 +88,8 @@ final class CheckPincodeViewController: UIViewController {
                 description = LocalizationKey.str_authenticate_by_touch_id.localized()
             case .none:
                 break
+            @unknown default:
+                break
             }
 
             authContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: description) { [weak self] (success, error) in

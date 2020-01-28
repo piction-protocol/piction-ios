@@ -55,6 +55,8 @@ final class ConfirmPincodeViewController: UIViewController {
                 description = LocalizationKey.str_authenticate_by_touch_id.localized()
             case .none:
                 break
+            @unknown default:
+                break
             }
 
             let alert = UIAlertController(title: authType, message: LocalizationKey.str_authenticate_type.localized(with: authType), preferredStyle: .alert)
