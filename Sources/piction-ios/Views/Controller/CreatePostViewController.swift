@@ -278,7 +278,7 @@ extension CreatePostViewController: ViewModelBindable {
                 guard let url = URL(string: url) else { return }
 
                 let attachment = self.richTextView.replaceWithImage(at: self.richTextView.selectedRange, sourceURL: url, placeHolderImage: image)
-                attachment.alignment = .none
+                attachment.alignment = ImageAttachment.Alignment.none
             })
             .disposed(by: disposeBag)
 
