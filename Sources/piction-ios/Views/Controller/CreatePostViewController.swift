@@ -897,7 +897,7 @@ extension CreatePostViewController {
                     return
                 }
 
-                if let title = linkTitle {
+                if let _ = linkTitle {
                     self?.richTextView.replaceWithVideo(at: range, sourceURL: url, posterURL: posterUrl, placeHolderImage: nil)
                 }
         })
