@@ -56,7 +56,7 @@ final class TransactionDetailViewModel: InjectableViewModel {
         let (firebaseManager, transaction) = (self.firebaseManager, self.transaction)
 
         let navigationTitle = input.viewWillAppear
-            .map { transaction.inOut == "IN" ? LocalizedStrings.menu_deposit_detail.localized() : LocalizedStrings.menu_withdraw_detail.localized() }
+            .map { transaction.inOut == "IN" ? LocalizationKey.menu_deposit_detail.localized() : LocalizationKey.menu_withdraw_detail.localized() }
             .do(onNext: { title in
                 firebaseManager.screenName("마이페이지_거래내역_\(title)")
             })
@@ -86,19 +86,19 @@ final class TransactionDetailViewModel: InjectableViewModel {
         let transactionSponsorshipSuccess = transactionSponsorshipAction.elements
             .map { try? $0.map(to: TransactionSponsorshipModel.self) }
             .map { [
-                TransactionDetailSection.header(title: LocalizedStrings.str_sponsorship_info.localized()),
-                TransactionDetailSection.list(title: transaction.inOut ?? "" == "IN" ? LocalizedStrings.str_sponsoredship_to.localized() : LocalizedStrings.str_sponsorship_user.localized(), description: transaction.inOut ?? "" == "IN" ? "@\($0?.sponsor?.loginId ?? "")" : "@\($0?.creator?.loginId ?? "")", link: ""),
+                TransactionDetailSection.header(title: LocalizationKey.str_sponsorship_info.localized()),
+                TransactionDetailSection.list(title: transaction.inOut ?? "" == "IN" ? LocalizationKey.str_sponsoredship_to.localized() : LocalizationKey.str_sponsorship_user.localized(), description: transaction.inOut ?? "" == "IN" ? "@\($0?.sponsor?.loginId ?? "")" : "@\($0?.creator?.loginId ?? "")", link: ""),
                 TransactionDetailSection.footer,
             ] }
 
         let transactionSubscriptionSuccess = transactionSubscriptionAction.elements
             .map { try? $0.map(to: TransactionSubscriptionModel.self) }
             .map { [
-                TransactionDetailSection.header(title: transaction.inOut ?? "" == "IN" ? LocalizedStrings.str_fan_pass_sell_info.localized() : LocalizedStrings.str_fan_pass_buy_info.localized()),
-                TransactionDetailSection.list(title: LocalizedStrings.str_order_id.localized(), description: "\($0?.orderNo ?? 0)", link: ""),
-                TransactionDetailSection.list(title: LocalizedStrings.str_project.localized(), description: "\($0?.projectName ?? "")", link: ""),
+                TransactionDetailSection.header(title: transaction.inOut ?? "" == "IN" ? LocalizationKey.str_fan_pass_sell_info.localized() : LocalizationKey.str_fan_pass_buy_info.localized()),
+                TransactionDetailSection.list(title: LocalizationKey.str_order_id.localized(), description: "\($0?.orderNo ?? 0)", link: ""),
+                TransactionDetailSection.list(title: LocalizationKey.str_project.localized(), description: "\($0?.projectName ?? "")", link: ""),
                 TransactionDetailSection.list(title: "FAN PASS", description: "\($0?.fanPassName ?? "")", link: ""),
-                TransactionDetailSection.list(title: transaction.inOut ?? "" == "IN" ? LocalizedStrings.str_buyer.localized() : LocalizedStrings.str_seller.localized(), description: transaction.inOut ?? "" == "IN" ? "\($0?.subscriber?.loginId ?? "")" : "\($0?.creator?.loginId ?? "")", link: ""),
+                TransactionDetailSection.list(title: transaction.inOut ?? "" == "IN" ? LocalizationKey.str_buyer.localized() : LocalizationKey.str_seller.localized(), description: transaction.inOut ?? "" == "IN" ? "\($0?.subscriber?.loginId ?? "")" : "\($0?.creator?.loginId ?? "")", link: ""),
                 TransactionDetailSection.footer,
             ] }
 
@@ -113,7 +113,7 @@ final class TransactionDetailViewModel: InjectableViewModel {
                 sections.append(contentsOf: typeSection)
 
                 let transactionSection = [
-                    TransactionDetailSection.header(title: LocalizedStrings.str_transaction_info.localized()),
+                    TransactionDetailSection.header(title: LocalizationKey.str_transaction_info.localized()),
                     TransactionDetailSection.list(title: "From", description: transaction.fromAddress ?? "", link: ""),
                     TransactionDetailSection.list(title: "To", description: transaction.toAddress ?? "", link: ""),
                     TransactionDetailSection.list(title: "Amount", description: "\((transaction.amount ?? 0).commaRepresentation) PXL", link: ""),

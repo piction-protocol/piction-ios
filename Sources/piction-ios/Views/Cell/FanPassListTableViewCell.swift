@@ -75,23 +75,23 @@ class FanPassListTableViewCell: ReuseTableViewCell {
                 let fanPassLevel = fanPass.level,
                 let subscriptionLevel = subscriptionInfo?.fanPass?.level,
                 fanPassLevel == subscriptionLevel {
-                return expireDate.toString(format: LocalizedStrings.str_fanpasslist_subscription_expire.localized())
+                return expireDate.toString(format: LocalizationKey.str_fanpasslist_subscription_expire.localized())
             }
             if let fanPassSubscriptionLimit = fanPass.subscriptionLimit,
                 let fanPassSubscriptionCount = fanPass.subscriptionCount,
                 (fanPassSubscriptionLimit > 0 && (fanPassSubscriptionCount >= fanPassSubscriptionLimit)) || fanPass.subscriptionLimit == 0 {
-                return LocalizedStrings.str_fanpasslist_sold_out.localized()
+                return LocalizationKey.str_fanpasslist_sold_out.localized()
             }
             if let subscriptionLevel = subscriptionInfo?.fanPass?.level,
                 let fanPassLevel = fanPass.level,
                 subscriptionLevel > fanPassLevel {
-                return LocalizedStrings.str_fanpasslist_not_avaliable.localized()
+                return LocalizationKey.str_fanpasslist_not_avaliable.localized()
             }
             if let fanPassSubscriptionLimit = fanPass.subscriptionLimit,
                 let fanPassSubscriptionCount = fanPass.subscriptionCount,
                 fanPassSubscriptionLimit > 0 {
                 let remains = fanPassSubscriptionLimit - fanPassSubscriptionCount
-                return LocalizedStrings.str_fanpasslist_subscription_remain.localized(with: remains)
+                return LocalizationKey.str_fanpasslist_subscription_remain.localized(with: remains)
             }
             return ""
         }
@@ -119,20 +119,20 @@ class FanPassListTableViewCell: ReuseTableViewCell {
             if let subscriptionLevel = subscriptionInfo?.fanPass?.level,
                 let fanPassLevel = fanPass.level,
                 subscriptionLevel == fanPassLevel {
-                return LocalizedStrings.str_project_subscribing.localized()
+                return LocalizationKey.str_project_subscribing.localized()
             }
             if let price = fanPass.subscriptionPrice,
                 price > 0 {
-                return "\(price.commaRepresentation) \(LocalizedStrings.str_fanpasslist_subscription_button.localized())"
+                return "\(price.commaRepresentation) \(LocalizationKey.str_fanpasslist_subscription_button.localized())"
             }
-            return LocalizedStrings.btn_subs.localized()
+            return LocalizationKey.btn_subs.localized()
         }
 
-        levelLabel.text = (fanPass.level ?? 0) == 0 ? LocalizedStrings.str_fanpass_free_tier.localized() : LocalizedStrings.str_fanpass_current_tier.localized(with: fanPass.level ?? 0)
+        levelLabel.text = (fanPass.level ?? 0) == 0 ? LocalizationKey.str_fanpass_free_tier.localized() : LocalizationKey.str_fanpass_current_tier.localized(with: fanPass.level ?? 0)
         subscriptionLimitLabel.isHidden = fanPass.subscriptionLimit == nil
-        subscriptionLimitLabel.text = " · \(LocalizedStrings.str_fanpasslist_subscription_limit.localized(with: fanPass.subscriptionLimit ?? 0))"
+        subscriptionLimitLabel.text = " · \(LocalizationKey.str_fanpasslist_subscription_limit.localized(with: fanPass.subscriptionLimit ?? 0))"
         titleLabel.text = fanPass.name
-        postCountLabel.text = LocalizedStrings.str_fanpasslist_postcount.localized(with: postCount)
+        postCountLabel.text = LocalizationKey.str_fanpasslist_postcount.localized(with: postCount)
         descriptionLabel.text = fanPass.description
         descriptionLabel.isHidden = (fanPass.description ?? "") == ""
         statusLabel.text = status

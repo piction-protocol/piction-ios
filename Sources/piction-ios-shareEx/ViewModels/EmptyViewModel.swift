@@ -23,7 +23,7 @@ enum EmptyViewStyle {
     var description: String {
         switch self {
         case .seriesListEmpty:
-            return LocalizedStrings.str_series_empty.localized()
+            return LocalizationKey.str_series_empty.localized()
         }
     }
 

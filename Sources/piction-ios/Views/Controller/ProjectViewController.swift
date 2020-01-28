@@ -53,9 +53,9 @@ final class ProjectViewController: UIViewController {
     }
 
     private func openDeletePostPopup(postId: Int) {
-        let alertController = UIAlertController(title: nil, message: LocalizedStrings.popup_title_delete_post.localized(), preferredStyle: .alert)
-        let cancelButton = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel)
-        let confirmButton = UIAlertAction(title: LocalizedStrings.confirm.localized(), style: .default) { [weak self] _ in
+        let alertController = UIAlertController(title: nil, message: LocalizationKey.popup_title_delete_post.localized(), preferredStyle: .alert)
+        let cancelButton = UIAlertAction(title: LocalizationKey.cancel.localized(), style: .cancel)
+        let confirmButton = UIAlertAction(title: LocalizationKey.confirm.localized(), style: .default) { [weak self] _ in
             self?.deletePost.onNext(postId)
         }
 
@@ -67,19 +67,19 @@ final class ProjectViewController: UIViewController {
 
     private func openDeleteSeriesPopup(seriesId: Int) {
         let alertController = UIAlertController(
-        title: LocalizedStrings.str_delete_series.localized(),
+        title: LocalizationKey.str_delete_series.localized(),
         message: nil,
         preferredStyle: UIAlertController.Style.alert)
 
         let deleteAction = UIAlertAction(
-            title: LocalizedStrings.delete.localized(),
+            title: LocalizationKey.delete.localized(),
             style: UIAlertAction.Style.destructive,
             handler: { [weak self] action in
                 self?.deleteSeries.onNext(seriesId)
             })
 
         let cancelAction = UIAlertAction(
-            title: LocalizedStrings.cancel.localized(),
+            title: LocalizationKey.cancel.localized(),
             style:UIAlertAction.Style.cancel,
             handler:{ action in
             })
@@ -92,7 +92,7 @@ final class ProjectViewController: UIViewController {
 
     private func openUpdateSeriesPopup(series: SeriesModel) {
         let alertController = UIAlertController(
-            title: LocalizedStrings.str_modify_series.localized(),
+            title: LocalizationKey.str_modify_series.localized(),
             message: nil,
             preferredStyle: UIAlertController.Style.alert)
 
@@ -102,7 +102,7 @@ final class ProjectViewController: UIViewController {
         })
 
         let insertAction = UIAlertAction(
-            title: LocalizedStrings.str_modify.localized(),
+            title: LocalizationKey.str_modify.localized(),
             style: UIAlertAction.Style.default,
             handler: { [weak self] action in
                 guard let textFields = alertController.textFields else {
@@ -112,7 +112,7 @@ final class ProjectViewController: UIViewController {
             })
 
         let cancelAction = UIAlertAction(
-            title: LocalizedStrings.cancel.localized(),
+            title: LocalizationKey.cancel.localized(),
             style: UIAlertAction.Style.cancel,
             handler: { action in
             })
@@ -124,9 +124,9 @@ final class ProjectViewController: UIViewController {
     }
 
     private func openCancelSubscriptionPopup() {
-        let alertController = UIAlertController(title: nil, message: LocalizedStrings.msg_want_to_unsubscribe.localized(), preferredStyle: .alert)
-        let cancelButton = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel)
-        let confirmButton = UIAlertAction(title: LocalizedStrings.confirm.localized(), style: .default) { [weak self] _ in
+        let alertController = UIAlertController(title: nil, message: LocalizationKey.msg_want_to_unsubscribe.localized(), preferredStyle: .alert)
+        let cancelButton = UIAlertAction(title: LocalizationKey.cancel.localized(), style: .cancel)
+        let confirmButton = UIAlertAction(title: LocalizationKey.confirm.localized(), style: .default) { [weak self] _ in
             self?.cancelSubscription.onNext(())
         }
 
@@ -516,7 +516,7 @@ extension ProjectViewController: UITableViewDelegate {
             return UISwipeActionsConfiguration()
         }
 
-        let editAction = UIContextualAction(style: .normal, title: LocalizedStrings.edit.localized(), handler: { [weak self] (action, view, completionHandler) in
+        let editAction = UIContextualAction(style: .normal, title: LocalizationKey.edit.localized(), handler: { [weak self] (action, view, completionHandler) in
 
             switch section {
             case .postList(let post, _):
@@ -530,7 +530,7 @@ extension ProjectViewController: UITableViewDelegate {
             }
         })
 
-        let deleteAction = UIContextualAction(style: .destructive, title: LocalizedStrings.delete.localized(), handler: { [weak self] (action, view, completionHandler) in
+        let deleteAction = UIContextualAction(style: .destructive, title: LocalizationKey.delete.localized(), handler: { [weak self] (action, view, completionHandler) in
 
             switch section {
             case .postList(let post, _):

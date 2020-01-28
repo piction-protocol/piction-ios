@@ -44,15 +44,15 @@ final class CheckPincodeViewController: UIViewController {
 
         var message: String {
             if errorCount >= 10 {
-                return LocalizedStrings.msg_pincode_error_end.localized()
+                return LocalizationKey.msg_pincode_error_end.localized()
             } else {
-                return "\(LocalizedStrings.msg_pincode_error.localized())\n(\(errorCount)/10)"
+                return "\(LocalizationKey.msg_pincode_error.localized())\n(\(errorCount)/10)"
             }
         }
 
-        let alert = UIAlertController(title: LocalizedStrings.popup_title_pincode_sign_out.localized(), message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: LocalizationKey.popup_title_pincode_sign_out.localized(), message: message, preferredStyle: .alert)
 
-        let okAction = UIAlertAction(title: LocalizedStrings.confirm.localized(), style: .default, handler: { [weak self] action in
+        let okAction = UIAlertAction(title: LocalizationKey.confirm.localized(), style: .default, handler: { [weak self] action in
             if errorCount >= 10 {
                 self?.signout.onNext(())
             }
@@ -83,9 +83,9 @@ final class CheckPincodeViewController: UIViewController {
             var description = ""
             switch authContext.biometryType {
             case .faceID:
-                description = LocalizedStrings.str_authenticate_by_face_id.localized()
+                description = LocalizationKey.str_authenticate_by_face_id.localized()
             case .touchID:
-                description = LocalizedStrings.str_authenticate_by_touch_id.localized()
+                description = LocalizationKey.str_authenticate_by_touch_id.localized()
             case .none:
                 break
             }
@@ -130,7 +130,7 @@ extension CheckPincodeViewController: ViewModelBindable {
 
                 if style == .change || style == .check {
                     self?.closeButton.isEnabled = true
-                    self?.closeButton.title = LocalizedStrings.cancel.localized()
+                    self?.closeButton.title = LocalizationKey.cancel.localized()
                 }
                 if UserDefaults(suiteName: "group.\(BUNDLEID)")?.bool(forKey: "isEnabledAuthBio") ?? false {
                     self?.auth()

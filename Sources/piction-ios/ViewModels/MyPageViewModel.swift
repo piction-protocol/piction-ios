@@ -85,21 +85,21 @@ final class MyPageViewModel: InjectableViewModel {
         let userMeSuccess = userMeAction.elements
             .map { _ -> [SectionType<MyPageSection>] in
                 let projectItems: [MyPageSection] = [
-                    MyPageSection.header(title: LocalizedStrings.str_project.localized()),
-                    MyPageSection.pushType(title: LocalizedStrings.menu_my_project.localized()),
+                    MyPageSection.header(title: LocalizationKey.str_project.localized()),
+                    MyPageSection.pushType(title: LocalizationKey.menu_my_project.localized()),
                     MyPageSection.underline
                 ]
 
                 let walletItems: [MyPageSection] = [
-                    MyPageSection.header(title: LocalizedStrings.str_piction_address_management.localized()),
-                    MyPageSection.pushType(title: LocalizedStrings.str_transactions.localized()),
-                    MyPageSection.pushType(title: LocalizedStrings.str_deposit.localized()),
+                    MyPageSection.header(title: LocalizationKey.str_piction_address_management.localized()),
+                    MyPageSection.pushType(title: LocalizationKey.str_transactions.localized()),
+                    MyPageSection.pushType(title: LocalizationKey.str_deposit.localized()),
                     MyPageSection.underline
                 ]
 
                 var securityItems: [MyPageSection] = [
-                    MyPageSection.header(title: LocalizedStrings.str_security.localized()),
-                    keychainManager.get(key: .pincode).isEmpty ? MyPageSection.presentType(title: LocalizedStrings.str_create_pin.localized(), align: .left) : MyPageSection.presentType(title: LocalizedStrings.str_change_pin.localized(), align: .left),
+                    MyPageSection.header(title: LocalizationKey.str_security.localized()),
+                    keychainManager.get(key: .pincode).isEmpty ? MyPageSection.presentType(title: LocalizationKey.str_create_pin.localized(), align: .left) : MyPageSection.presentType(title: LocalizationKey.str_change_pin.localized(), align: .left),
                     MyPageSection.underline
                 ]
 
@@ -124,21 +124,21 @@ final class MyPageViewModel: InjectableViewModel {
                 }
 
                 let myInfoItems: [MyPageSection] = [
-                    MyPageSection.header(title: LocalizedStrings.str_user_profile.localized()),
-                    MyPageSection.presentType(title: LocalizedStrings.str_change_basic_info.localized(), align: .left),
-                    MyPageSection.presentType(title: LocalizedStrings.str_change_pw.localized(), align: .left),
+                    MyPageSection.header(title: LocalizationKey.str_user_profile.localized()),
+                    MyPageSection.presentType(title: LocalizationKey.str_change_basic_info.localized(), align: .left),
+                    MyPageSection.presentType(title: LocalizationKey.str_change_pw.localized(), align: .left),
                     MyPageSection.underline
                 ]
 
                 let supportItems: [MyPageSection] = [
-                    MyPageSection.header(title: LocalizedStrings.str_service_center.localized()),
-                    MyPageSection.presentType(title: LocalizedStrings.str_terms.localized(), align: .left),
-                    MyPageSection.presentType(title: LocalizedStrings.str_privacy.localized(), align: .left),
+                    MyPageSection.header(title: LocalizationKey.str_service_center.localized()),
+                    MyPageSection.presentType(title: LocalizationKey.str_terms.localized(), align: .left),
+                    MyPageSection.presentType(title: LocalizationKey.str_privacy.localized(), align: .left),
                     MyPageSection.underline
                 ]
 
                 let logoutItems: [MyPageSection] = [
-                    MyPageSection.presentType(title: LocalizedStrings.str_sign_out.localized(), align: .center),
+                    MyPageSection.presentType(title: LocalizationKey.str_sign_out.localized(), align: .center),
                     MyPageSection.underline
                 ]
 
@@ -197,7 +197,7 @@ final class MyPageViewModel: InjectableViewModel {
                 PictionManager.setToken("")
                 updater.refreshSession.onNext(())
             })
-            .map { _ in LocalizedStrings.str_sign_out_success.localized() }
+            .map { _ in LocalizationKey.str_sign_out_success.localized() }
 
         let embedUserInfoViewController = userMeAction.elements
             .map { _ in Void() }

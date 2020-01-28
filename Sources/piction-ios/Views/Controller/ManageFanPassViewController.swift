@@ -45,9 +45,9 @@ final class ManageFanPassViewController: UIViewController {
     }
 
     private func openDeletePopup(uri: String, fanPass: FanPassModel) {
-        let alertController = UIAlertController(title: nil, message: LocalizedStrings.popup_title_delete_fanpass.localized(), preferredStyle: .alert)
-        let cancelButton = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel)
-        let confirmButton = UIAlertAction(title: LocalizedStrings.confirm.localized(), style: .default) { [weak self] _ in
+        let alertController = UIAlertController(title: nil, message: LocalizationKey.popup_title_delete_fanpass.localized(), preferredStyle: .alert)
+        let cancelButton = UIAlertAction(title: LocalizationKey.cancel.localized(), style: .cancel)
+        let confirmButton = UIAlertAction(title: LocalizationKey.confirm.localized(), style: .default) { [weak self] _ in
             guard let fanPassId = fanPass.id else { return }
             self?.deleteFanPass.onNext((uri, fanPassId))
         }
@@ -137,9 +137,9 @@ extension ManageFanPassViewController: ViewModelBindable {
             .drive(onNext: { [weak self] in
                 Toast.loadingActivity(false)
                 self?.showPopup(
-                    title: LocalizedStrings.popup_title_network_error.localized(),
-                    message: LocalizedStrings.msg_api_internal_server_error.localized(),
-                    action: LocalizedStrings.retry.localized()) { [weak self] in
+                    title: LocalizationKey.popup_title_network_error.localized(),
+                    message: LocalizationKey.msg_api_internal_server_error.localized(),
+                    action: LocalizationKey.retry.localized()) { [weak self] in
                         self?.viewModel?.loadRetryTrigger.onNext(())
                     }
             })
@@ -163,14 +163,14 @@ extension ManageFanPassViewController: ViewModelBindable {
 
 extension ManageFanPassViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let editAction = UIContextualAction(style: .normal, title: LocalizedStrings.edit.localized(), handler: { [weak self] (action, view, completionHandler) in
+        let editAction = UIContextualAction(style: .normal, title: LocalizationKey.edit.localized(), handler: { [weak self] (action, view, completionHandler) in
             guard let uri = self?.viewModel?.uri else { return }
             if let fanPass: FanPassModel = try? self?.tableView.rx.model(at: indexPath) {
                 self?.openCreateFanPassViewController(uri: uri, fanPass: fanPass)
                 completionHandler(true)
             }
         })
-        let deleteAction = UIContextualAction(style: .destructive, title: LocalizedStrings.delete.localized(), handler: { [weak self] (action, view, completionHandler) in
+        let deleteAction = UIContextualAction(style: .destructive, title: LocalizationKey.delete.localized(), handler: { [weak self] (action, view, completionHandler) in
             guard let uri = self?.viewModel?.uri else { return }
             if let fanPass: FanPassModel = try? self?.tableView.rx.model(at: indexPath) {
                 self?.openDeletePopup(uri: uri, fanPass: fanPass)

@@ -52,19 +52,19 @@ final class ManageSeriesViewController: UIViewController {
 
     private func openDeleteConfirmPopup(seriesId: Int) {
         let alertController = UIAlertController(
-            title: LocalizedStrings.str_delete_series.localized(),
+            title: LocalizationKey.str_delete_series.localized(),
             message: nil,
             preferredStyle: UIAlertController.Style.alert)
 
             let deleteAction = UIAlertAction(
-                title: LocalizedStrings.delete.localized(),
+                title: LocalizationKey.delete.localized(),
                 style: UIAlertAction.Style.destructive,
                 handler: { [weak self] action in
                     self?.deleteConfirm.onNext(seriesId)
                 })
 
             let cancelAction = UIAlertAction(
-                title: LocalizedStrings.cancel.localized(),
+                title: LocalizationKey.cancel.localized(),
                 style:UIAlertAction.Style.cancel,
                 handler:{ action in
                 })
@@ -77,7 +77,7 @@ final class ManageSeriesViewController: UIViewController {
 
     private func openUpdateSeriesPopup(series: SeriesModel?) {
         let alertController = UIAlertController(
-            title: series == nil ? LocalizedStrings.str_add_series.localized() : LocalizedStrings.str_modify_series.localized(),
+            title: series == nil ? LocalizationKey.str_add_series.localized() : LocalizationKey.str_modify_series.localized(),
             message: nil,
             preferredStyle: UIAlertController.Style.alert)
 
@@ -87,7 +87,7 @@ final class ManageSeriesViewController: UIViewController {
         })
 
         let insertAction = UIAlertAction(
-            title: series == nil ? LocalizedStrings.create.localized() : LocalizedStrings.str_modify.localized(),
+            title: series == nil ? LocalizationKey.create.localized() : LocalizationKey.str_modify.localized(),
             style: UIAlertAction.Style.default,
             handler: { [weak self] action in
                 guard let textFields = alertController.textFields else {
@@ -97,7 +97,7 @@ final class ManageSeriesViewController: UIViewController {
             })
 
         let cancelAction = UIAlertAction(
-            title: LocalizedStrings.cancel.localized(),
+            title: LocalizationKey.cancel.localized(),
             style:UIAlertAction.Style.cancel,
             handler:{ action in
             })
@@ -199,12 +199,12 @@ extension ManageSeriesViewController: ViewModelBindable {
 
 extension ManageSeriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let editAction = UIContextualAction(style: .normal, title: LocalizedStrings.edit.localized(), handler: { [weak self] (action, view, completionHandler) in
+        let editAction = UIContextualAction(style: .normal, title: LocalizationKey.edit.localized(), handler: { [weak self] (action, view, completionHandler) in
             self?.contextualAction.onNext((action.style, indexPath))
             completionHandler(true)
         })
 
-        let deleteAction = UIContextualAction(style: .destructive, title: LocalizedStrings.delete.localized(), handler: { [weak self] (action, view, completionHandler) in
+        let deleteAction = UIContextualAction(style: .destructive, title: LocalizationKey.delete.localized(), handler: { [weak self] (action, view, completionHandler) in
             self?.contextualAction.onNext((action.style, indexPath))
             completionHandler(true)
         })

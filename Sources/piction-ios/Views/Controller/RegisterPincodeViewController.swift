@@ -29,10 +29,10 @@ final class RegisterPincodeViewController: UIViewController {
     }
 
     private func openRecommendPopup() {
-        let alertController = UIAlertController(title: LocalizedStrings.popup_title_pincode_create.localized(), message: LocalizedStrings.msg_pincode_reg_warning.localized(), preferredStyle: .alert)
-        let cancelButton = UIAlertAction(title: LocalizedStrings.continue_go.localized(), style: .default) { _ in
+        let alertController = UIAlertController(title: LocalizationKey.popup_title_pincode_create.localized(), message: LocalizationKey.msg_pincode_reg_warning.localized(), preferredStyle: .alert)
+        let cancelButton = UIAlertAction(title: LocalizationKey.continue_go.localized(), style: .default) { _ in
         }
-        let confirmButton = UIAlertAction(title: LocalizedStrings.pass.localized(), style: .default) { [weak self] _ in
+        let confirmButton = UIAlertAction(title: LocalizationKey.pass.localized(), style: .default) { [weak self] _ in
             self?.dismiss(animated: true)
         }
 

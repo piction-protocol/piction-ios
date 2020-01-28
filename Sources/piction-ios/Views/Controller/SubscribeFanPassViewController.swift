@@ -26,7 +26,7 @@ final class SubscribeFanPassViewController: UIViewController {
     @IBOutlet weak var expireDateLabel: UILabel! {
         didSet  {
             if let expireDate = Calendar.current.date(byAdding: .day, value: 30, to: Date()) {
-                expireDateLabel.text = expireDate.toString(format: LocalizedStrings.str_purchase_fanpass_expire_description.localized())
+                expireDateLabel.text = expireDate.toString(format: LocalizationKey.str_purchase_fanpass_expire_description.localized())
             }
         }
     }
@@ -74,7 +74,7 @@ extension SubscribeFanPassViewController: ViewModelBindable {
             .drive(onNext: { [weak self] projectInfo in
                 self?.transferInfoWriterLabel.text = "▪︎ \(projectInfo.user?.username ?? "") : "
 
-                self?.transferInfoDescriptionLabel.text = LocalizedStrings.str_purchase_fanpass_guide.localized(with: projectInfo.user?.username ?? "")
+                self?.transferInfoDescriptionLabel.text = LocalizationKey.str_purchase_fanpass_guide.localized(with: projectInfo.user?.username ?? "")
             })
             .disposed(by: disposeBag)
 
@@ -97,7 +97,7 @@ extension SubscribeFanPassViewController: ViewModelBindable {
                 self?.transferInfoWriterPxlLabel.text = "\(writerPxl.commaRepresentation) PXL"
                 self?.transferInfoFeeLabel.text = "\(totalFeePxl.commaRepresentation) PXL"
 
-                self?.fanPassTitleLabel.text = "\(LocalizedStrings.str_fanpass_current_tier.localized(with: fanPassItem.level ?? 0)) - \(fanPassItem.name ?? "")"
+                self?.fanPassTitleLabel.text = "\(LocalizationKey.str_fanpass_current_tier.localized(with: fanPassItem.level ?? 0)) - \(fanPassItem.name ?? "")"
                 self?.fanPassDescriptionLabel.text = fanPassItem.description
                 self?.descriptionStackView.isHidden = fanPassItem.description == ""
             })
@@ -109,7 +109,7 @@ extension SubscribeFanPassViewController: ViewModelBindable {
                 guard let `self` = self else { return }
                 self.fanPassDescriptionLabel.isHidden = !self.fanPassDescriptionLabel.isHidden
 
-                let labelText = self.fanPassDescriptionLabel.isHidden ? LocalizedStrings.str_purchase_fanpass_show_description.localized() : LocalizedStrings.str_purchase_fanpass_hide_description.localized()
+                let labelText = self.fanPassDescriptionLabel.isHidden ? LocalizationKey.str_purchase_fanpass_show_description.localized() : LocalizationKey.str_purchase_fanpass_hide_description.localized()
 
                 let attributedStr = NSMutableAttributedString(string: labelText)
                 attributedStr.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: attributedStr.mutableString.range(of: labelText))
@@ -147,11 +147,11 @@ extension SubscribeFanPassViewController: ViewModelBindable {
             .showErrorPopup
             .drive(onNext: { [weak self] message in
                 Toast.loadingActivity(false)
-                let title = message == "" ? LocalizedStrings.popup_title_network_error.localized() : nil
-                let message = message == "" ? LocalizedStrings.msg_api_internal_server_error.localized() : message
+                let title = message == "" ? LocalizationKey.popup_title_network_error.localized() : nil
+                let message = message == "" ? LocalizationKey.msg_api_internal_server_error.localized() : message
 
                 let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                let okAction = UIAlertAction(title: LocalizedStrings.confirm.localized(), style: .default, handler: { action in
+                let okAction = UIAlertAction(title: LocalizationKey.confirm.localized(), style: .default, handler: { action in
                         self?.navigationController?.popViewController(animated: true)
                     })
                 alert.addAction(okAction)

@@ -159,7 +159,7 @@ final class FanPassListViewModel: InjectableViewModel {
             .flatMap(Action.makeDriver)
 
         let subscriptionFreeSuccess = subscriptionFreeAction.elements
-            .map { _ in LocalizedStrings.str_project_subscrition_complete.localized() }
+            .map { _ in LocalizationKey.str_project_subscrition_complete.localized() }
             .do(onNext: { _ in
                 updater.refreshContent.onNext(())
             })
@@ -179,7 +179,7 @@ final class FanPassListViewModel: InjectableViewModel {
             .flatMap(Action.makeDriver)
 
         let cancelSubscriptionFreeSuccess = cancelSubscriptionFreeAction.elements
-            .map { _ in LocalizedStrings.str_project_cancel_subscrition.localized() }
+            .map { _ in LocalizationKey.str_project_cancel_subscrition.localized() }
             .do(onNext: { _ in
                 updater.refreshContent.onNext(())
             })

@@ -31,11 +31,11 @@ final class SeriesPostListTableViewCell: ReuseTableViewCell {
 
         if isSubscribing || fanPass == nil {
             subTitleLabel.textColor = .pictionGray
-            subTitleLabel.text = date?.toString(format: LocalizedStrings.str_series_date_format.localized())
+            subTitleLabel.text = date?.toString(format: LocalizationKey.str_series_date_format.localized())
         } else {
             subTitleLabel.textColor = .pictionRed
             if fanPass != nil {
-                subTitleLabel.text = (fanPass?.level ?? 0) == 0 ? LocalizedStrings.str_series_subs_only.localized() :  LocalizedStrings.str_series_fanpass_subs_only.localized(with: fanPass?.name ?? "")
+                subTitleLabel.text = (fanPass?.level ?? 0) == 0 ? LocalizationKey.str_series_subs_only.localized() :  LocalizationKey.str_series_fanpass_subs_only.localized(with: fanPass?.name ?? "")
             }
         }
     }

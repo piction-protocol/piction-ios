@@ -279,12 +279,12 @@ extension PostViewController: ViewModelBindable {
                 guard let `self` = self else { return }
                 var buttonTitle: String {
                     if (postInfo.fanPass?.level ?? 0) == 0 {
-                        return LocalizedStrings.btn_subs_free.localized()
+                        return LocalizationKey.btn_subs_free.localized()
                     }
-                    return LocalizedStrings.btn_subs.localized()
+                    return LocalizationKey.btn_subs.localized()
                 }
                 var description: String {
-                    return (postInfo.fanPass?.level ?? 0) == 0 ? LocalizedStrings.str_subs_only.localized() : LocalizedStrings.str_subs_only_with_fanpass.localized(with: postInfo.fanPass?.name ?? "")
+                    return (postInfo.fanPass?.level ?? 0) == 0 ? LocalizationKey.str_subs_only.localized() : LocalizationKey.str_subs_only_with_fanpass.localized(with: postInfo.fanPass?.name ?? "")
                 }
                 self.subscriptionButton.setTitle(buttonTitle, for: .normal)
                 self.subscriptionDescriptionLabel.text = description

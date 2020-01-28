@@ -237,7 +237,7 @@ final class PostViewModel: InjectableViewModel {
             .flatMap(Action.makeDriver)
 
         let freeSubscriptionSuccess = freeSubscriptionAction.elements
-            .map { _ in LocalizedStrings.str_project_subscrition_complete.localized() }
+            .map { _ in LocalizationKey.str_project_subscrition_complete.localized() }
             .do(onNext: { _ in
                 updater.refreshContent.onNext(())
             })

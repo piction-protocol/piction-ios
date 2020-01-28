@@ -18,6 +18,6 @@ final class SearchTagTableViewCell: ReuseTableViewCell {
     func configure(with model: Model) {
         let (tagName, projectCount) = (model.name, model.taggingCount)
         tagLabel.text = "#\(tagName ?? "")"
-        projectCountLabel.text = LocalizedStrings.str_project_count.localized(with: projectCount ?? 0)
+        projectCountLabel.text = LocalizationKey.str_project_count.localized(with: projectCount ?? 0)
     }
 }

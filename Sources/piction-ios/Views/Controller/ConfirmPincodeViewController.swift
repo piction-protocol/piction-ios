@@ -31,9 +31,9 @@ final class ConfirmPincodeViewController: UIViewController {
     }
 
     private func errorPopup() {
-        let alert = UIAlertController(title: LocalizedStrings.popup_title_pincode_confirm.localized(), message: LocalizedStrings.msg_pincode_confirm_error.localized(), preferredStyle: .alert)
+        let alert = UIAlertController(title: LocalizationKey.popup_title_pincode_confirm.localized(), message: LocalizationKey.msg_pincode_confirm_error.localized(), preferredStyle: .alert)
 
-        let okAction = UIAlertAction(title: LocalizedStrings.confirm.localized(), style: .default, handler: { action in
+        let okAction = UIAlertAction(title: LocalizationKey.confirm.localized(), style: .default, handler: { action in
         })
         alert.addAction(okAction)
 
@@ -49,17 +49,17 @@ final class ConfirmPincodeViewController: UIViewController {
             switch authContext.biometryType {
             case .faceID:
                 authType = "Face ID"
-                description = LocalizedStrings.str_authenticate_by_face_id.localized()
+                description = LocalizationKey.str_authenticate_by_face_id.localized()
             case .touchID:
                 authType = "Touch ID"
-                description = LocalizedStrings.str_authenticate_by_touch_id.localized()
+                description = LocalizationKey.str_authenticate_by_touch_id.localized()
             case .none:
                 break
             }
 
-            let alert = UIAlertController(title: authType, message: LocalizedStrings.str_authenticate_type.localized(with: authType), preferredStyle: .alert)
+            let alert = UIAlertController(title: authType, message: LocalizationKey.str_authenticate_type.localized(with: authType), preferredStyle: .alert)
 
-            let okAction = UIAlertAction(title: LocalizedStrings.register.localized(), style: .default, handler: { action in
+            let okAction = UIAlertAction(title: LocalizationKey.register.localized(), style: .default, handler: { action in
                 authContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: description) { [weak self] (success, error) in
                     DispatchQueue.main.async {
                         if success {
@@ -77,7 +77,7 @@ final class ConfirmPincodeViewController: UIViewController {
             })
             alert.addAction(okAction)
 
-            let cancelAction = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel, handler: { [weak self] _ in
+            let cancelAction = UIAlertAction(title: LocalizationKey.cancel.localized(), style: .cancel, handler: { [weak self] _ in
                 self?.changeComplete.onNext(())
             })
             alert.addAction(cancelAction)

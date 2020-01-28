@@ -90,28 +90,28 @@ final class CreatePostViewController: UIViewController {
         preferredStyle: UIAlertController.Style.actionSheet)
 
         let publicAction = UIAlertAction(
-            title: LocalizedStrings.str_post_status_public.localized(),
+            title: LocalizationKey.str_post_status_public.localized(),
             style: UIAlertAction.Style.default,
             handler: { [weak self] action in
                 self?.selectedStatus.onNext("PUBLIC")
             })
 
         let fanPassAction = UIAlertAction(
-            title: LocalizedStrings.str_post_status_fanpass.localized(),
+            title: LocalizationKey.str_post_status_fanpass.localized(),
             style: UIAlertAction.Style.default,
             handler: { [weak self] action in
                 self?.selectedStatus.onNext("FAN_PASS")
             })
 
         let privateAction = UIAlertAction(
-            title: LocalizedStrings.str_post_status_private.localized(),
+            title: LocalizationKey.str_post_status_private.localized(),
             style: UIAlertAction.Style.default,
             handler: { [weak self] action in
                 self?.selectedStatus.onNext("PRIVATE")
             })
 
         let cancelAction = UIAlertAction(
-            title: LocalizedStrings.cancel.localized(),
+            title: LocalizationKey.cancel.localized(),
             style:UIAlertAction.Style.cancel,
             handler:{ action in
             })
@@ -125,11 +125,11 @@ final class CreatePostViewController: UIViewController {
     }
 
     func dismissPopup(message: String?) {
-        let alertMessage = message != nil ? message : LocalizedStrings.str_cancel_creation_post.localized()
+        let alertMessage = message != nil ? message : LocalizationKey.str_cancel_creation_post.localized()
         let alertController = UIAlertController(title: nil, message: alertMessage, preferredStyle: .alert)
-        let cancelButton = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .default) { _ in
+        let cancelButton = UIAlertAction(title: LocalizationKey.cancel.localized(), style: .default) { _ in
         }
-        let confirmButton = UIAlertAction(title: LocalizedStrings.confirm.localized(), style: .default) { [weak self] _ in
+        let confirmButton = UIAlertAction(title: LocalizationKey.confirm.localized(), style: .default) { [weak self] _ in
             self?.hideExtensionWithCompletionHandler(completion: { [weak self] (Bool) -> Void in
                 self?.extensionContext!.completeRequest(returningItems: nil, completionHandler: nil)
             })
@@ -257,7 +257,7 @@ extension CreatePostViewController: ViewModelBindable {
         output
             .selectedProject
             .drive(onNext: { [weak self] project in
-                self?.projectButton.setTitle(project?.title ?? LocalizedStrings.str_select_project.localized(), for: .normal)
+                self?.projectButton.setTitle(project?.title ?? LocalizationKey.str_select_project.localized(), for: .normal)
                 self?.projectButton.setTitleColor(project != nil ? .pictionDarkGrayDM : .placeHolderColor, for: .normal)
             })
             .disposed(by: disposeBag)
@@ -272,7 +272,7 @@ extension CreatePostViewController: ViewModelBindable {
         output
             .selectedSeries
             .drive(onNext: { [weak self] series in
-                self?.seriesButton.setTitle(series?.name ?? LocalizedStrings.str_select_series.localized(), for: .normal)
+                self?.seriesButton.setTitle(series?.name ?? LocalizationKey.str_select_series.localized(), for: .normal)
                 self?.seriesButton.setTitleColor(series != nil ? .pictionDarkGrayDM : .placeHolderColor, for: .normal)
             })
             .disposed(by: disposeBag)
@@ -291,13 +291,13 @@ extension CreatePostViewController: ViewModelBindable {
                 var statusName: String {
                     switch status {
                     case "PUBLIC":
-                        return LocalizedStrings.str_post_status_public.localized()
+                        return LocalizationKey.str_post_status_public.localized()
                     case "FAN_PASS":
-                        return LocalizedStrings.str_post_status_fanpass.localized()
+                        return LocalizationKey.str_post_status_fanpass.localized()
                     case "PRIVATE":
-                        return LocalizedStrings.str_post_status_private.localized()
+                        return LocalizationKey.str_post_status_private.localized()
                     default:
-                        return LocalizedStrings.str_post_status_public.localized()
+                        return LocalizationKey.str_post_status_public.localized()
                     }
                 }
                 self?.statusButton.setTitle(statusName, for: .normal)
@@ -314,7 +314,7 @@ extension CreatePostViewController: ViewModelBindable {
         output
             .contentText
             .drive(onNext: { [weak self] text in
-                if text != LocalizedStrings.str_post_content.localized() {
+                if text != LocalizationKey.str_post_content.localized() {
                     self?.textView.textColor = .pictionDarkGrayDM
                 }
                 self?.textView.text = text
@@ -401,18 +401,18 @@ extension CreatePostViewController: ManageSeriesDelegate {
 extension CreatePostViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         textViewIsActive = true
-        if textView.text == LocalizedStrings.str_post_content.localized() {
+        if textView.text == LocalizationKey.str_post_content.localized() {
             textView.text = ""
             textView.textColor = .pictionDarkGrayDM
         } else if textView.text == "" {
-            textView.text = LocalizedStrings.str_post_content.localized()
+            textView.text = LocalizationKey.str_post_content.localized()
             textView.textColor = UIColor.placeHolderColor
         }
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text == "" {
-            textView.text = LocalizedStrings.str_post_content.localized()
+            textView.text = LocalizationKey.str_post_content.localized()
             textView.textColor = UIColor.placeHolderColor
         }
     }

@@ -68,7 +68,7 @@ extension MyProjectViewController: ViewModelBindable {
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
                 self?.createProjectButton.isEnabled = FEATURE_EDITOR
-                self?.createProjectButton.title = FEATURE_EDITOR ? LocalizedStrings.create.localized() : ""
+                self?.createProjectButton.title = FEATURE_EDITOR ? LocalizationKey.create.localized() : ""
             })
             .disposed(by: disposeBag)
         
@@ -120,9 +120,9 @@ extension MyProjectViewController: ViewModelBindable {
             .drive(onNext: { [weak self] in
                 Toast.loadingActivity(false)
                 self?.showPopup(
-                    title: LocalizedStrings.popup_title_network_error.localized(),
-                    message: LocalizedStrings.msg_api_internal_server_error.localized(),
-                    action: LocalizedStrings.retry.localized()) { [weak self] in
+                    title: LocalizationKey.popup_title_network_error.localized(),
+                    message: LocalizationKey.msg_api_internal_server_error.localized(),
+                    action: LocalizationKey.retry.localized()) { [weak self] in
                         self?.viewModel?.loadRetryTrigger.onNext(())
                     }
             })
@@ -139,7 +139,7 @@ extension MyProjectViewController: ViewModelBindable {
 
 extension MyProjectViewController {
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let editAction = UIContextualAction(style: .normal, title: LocalizedStrings.edit.localized(), handler: { [weak self] (action, view, completionHandler) in
+        let editAction = UIContextualAction(style: .normal, title: LocalizationKey.edit.localized(), handler: { [weak self] (action, view, completionHandler) in
             self?.contextualAction.onNext(indexPath)
             completionHandler(true)
         })

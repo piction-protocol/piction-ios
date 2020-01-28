@@ -36,6 +36,6 @@ final class CategoryListCollectionViewCell: ReuseCollectionViewCell {
         titleLabel.text = title
         thumbnailMaskView.isHidden = title == nil
         categorizedCountLabel.isHidden = title == nil
-        categorizedCountLabel.text = LocalizedStrings.str_projects_count.localized(with: categorizedCount.commaRepresentation)
+        categorizedCountLabel.text = LocalizationKey.str_projects_count.localized(with: categorizedCount.commaRepresentation)
     }
 }

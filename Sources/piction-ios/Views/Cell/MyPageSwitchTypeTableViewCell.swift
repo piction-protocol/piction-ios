@@ -34,9 +34,9 @@ final class MyPageSwitchTypeTableViewCell: ReuseTableViewCell {
                 var description = ""
                 switch authContext.biometryType {
                 case .faceID:
-                    description = LocalizedStrings.str_authenticate_by_face_id.localized()
+                    description = LocalizationKey.str_authenticate_by_face_id.localized()
                 case .touchID:
-                    description = LocalizedStrings.str_authenticate_by_touch_id.localized()
+                    description = LocalizationKey.str_authenticate_by_touch_id.localized()
                 case .none:
                     break
                 }

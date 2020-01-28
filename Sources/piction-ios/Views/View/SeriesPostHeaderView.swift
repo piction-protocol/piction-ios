@@ -55,7 +55,7 @@ class SeriesPostHeaderView: GSKStretchyHeaderView {
         }
 
         titleLabel.text = title
-        postCountLabel.text = LocalizedStrings.str_series_posts_count.localized(with: postCount.commaRepresentation)
+        postCountLabel.text = LocalizationKey.str_series_posts_count.localized(with: postCount.commaRepresentation)
     }
 }
 

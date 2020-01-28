@@ -42,31 +42,31 @@ enum CustomEmptyViewStyle {
     var description: String {
         switch self {
         case .defaultLogin:
-            return LocalizedStrings.str_need_login.localized()
+            return LocalizationKey.str_need_login.localized()
         case .projectPostListEmpty:
-            return LocalizedStrings.str_post_empty.localized()
+            return LocalizationKey.str_post_empty.localized()
         case .projectSeriesListEmpty:
-            return LocalizedStrings.str_series_empty.localized()
+            return LocalizationKey.str_series_empty.localized()
         case .subscriptionListEmpty:
-            return LocalizedStrings.str_subscription_empty.localized()
+            return LocalizationKey.str_subscription_empty.localized()
         case .searchListEmpty,
              .searchSponsorEmpty:
-            return LocalizedStrings.str_search_empty.localized()
+            return LocalizationKey.str_search_empty.localized()
         case .transactionListEmpty:
-            return LocalizedStrings.str_transaction_empty.localized()
+            return LocalizationKey.str_transaction_empty.localized()
         case .myProjectListEmpty:
-            return LocalizedStrings.str_project_empty.localized()
+            return LocalizationKey.str_project_empty.localized()
         case .searchProjectGuide:
-            return LocalizedStrings.str_project_search_info.localized()
+            return LocalizationKey.str_project_search_info.localized()
         case .searchTagGuide:
-            return LocalizedStrings.str_tag_search_info.localized()
+            return LocalizationKey.str_tag_search_info.localized()
         }
     }
 
     var buttonTitle: String? {
         switch self {
         case .defaultLogin:
-            return LocalizedStrings.login.localized()
+            return LocalizationKey.login.localized()
         case .projectPostListEmpty,
              .projectSeriesListEmpty,
              .subscriptionListEmpty,

@@ -113,7 +113,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
         }
         writerLabel.text = writerName
         loginIdLabel.text = "@\(writerloginId ?? "")"
-        subscriptionCountLabel.text = LocalizedStrings.str_subs_count_plural.localized(with: subscriptionUserCount?.commaRepresentation ?? "0")
+        subscriptionCountLabel.text = LocalizationKey.str_subs_count_plural.localized(with: subscriptionUserCount?.commaRepresentation ?? "0")
     }
 
     func configureSubscription(isWriter: Bool, fanPassList: [FanPassModel], subscriptionInfo: SubscriptionModel?) {
@@ -123,7 +123,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
             managementButton.isHidden = true
             subscriptionButton.isHidden = false
             subscriptionButton.backgroundColor = .pictionLightGray
-            subscriptionButton.setTitle(LocalizedStrings.str_project_subscribing.localized(), for: .normal)
+            subscriptionButton.setTitle(LocalizationKey.str_project_subscribing.localized(), for: .normal)
             subscriptionButton.setTitleColor(.pictionGray, for: .normal)
         } else {
             if isWriter {
@@ -132,7 +132,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
                     managementButton.isHidden = false
                     subscriptionButton.isHidden = false
                     subscriptionButton.backgroundColor = UIColor(r: 51, g: 51, b: 51)
-                    subscriptionButton.setTitle(LocalizedStrings.btn_new_post.localized(), for: .normal)
+                    subscriptionButton.setTitle(LocalizationKey.btn_new_post.localized(), for: .normal)
                     subscriptionButton.setTitleColor(.white, for: .normal)
                 } else {
                     managementButton.isHidden = true
@@ -143,7 +143,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
                 managementButton.isHidden = true
                 subscriptionButton.isHidden = false
                 subscriptionButton.backgroundColor = UIColor(r: 51, g: 51, b: 51)
-                subscriptionButton.setTitle(fanPassList.count > 1 ? LocalizedStrings.btn_subs.localized() : LocalizedStrings.btn_subs_free.localized(), for: .normal)
+                subscriptionButton.setTitle(fanPassList.count > 1 ? LocalizationKey.btn_subs.localized() : LocalizationKey.btn_subs_free.localized(), for: .normal)
                 subscriptionButton.setTitleColor(.white, for: .normal)
             }
         }

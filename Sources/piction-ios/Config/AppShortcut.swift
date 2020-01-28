@@ -17,13 +17,13 @@ enum AppShortcutType: String {
     var title: String {
         switch self {
         case .search:
-            return LocalizedStrings.hint_project_and_tag_search.localized()
+            return LocalizationKey.hint_project_and_tag_search.localized()
         case .explore:
-            return LocalizedStrings.tab_explore.localized()
+            return LocalizationKey.tab_explore.localized()
         case .subscription:
-            return LocalizedStrings.tab_subscription.localized()
+            return LocalizationKey.tab_subscription.localized()
         case .mypage:
-            return LocalizedStrings.menu_my_info.localized()
+            return LocalizationKey.menu_my_info.localized()
         }
     }
 

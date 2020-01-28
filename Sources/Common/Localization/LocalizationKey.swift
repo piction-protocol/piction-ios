@@ -1,13 +1,14 @@
 //
-//  LocalizedStrings.swift
+//  LocalizationKey.swift
 //  piction-ios
 //
 //  Created by jhseo on 27/09/2019.
+//  Copyright © 2019 Piction Network. All rights reserved.
 //
 
 import Foundation
 
-enum LocalizedStrings {
+enum LocalizationKey {
     case confirm
     case pass
     case cancel
@@ -320,7 +321,7 @@ enum LocalizedStrings {
     case str_home_header_no_post_subtitle
 }
 
-extension LocalizedStrings {
+extension LocalizationKey {
     public func localized(with args: CVarArg...) -> String {
         return String(format: String(describing: self).localized, arguments: args)
     }

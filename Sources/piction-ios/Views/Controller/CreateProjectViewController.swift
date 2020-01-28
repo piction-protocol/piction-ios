@@ -35,7 +35,7 @@ final class CreateProjectViewController: UIViewController {
     @IBOutlet weak var tagsField: WSTagsField! {
         didSet {
             tagsField.font = .systemFont(ofSize: 14)
-            tagsField.placeholder = LocalizedStrings.str_create_tag_placeholder.localized()
+            tagsField.placeholder = LocalizationKey.str_create_tag_placeholder.localized()
             tagsField.layoutMargins = UIEdgeInsets(top: 6.5, left: 10, bottom: 6.5, right: 10)
             tagsField.contentInset = UIEdgeInsets(top: 2.5, left: 0, bottom: -2.5, right: 0)
             tagsField.spaceBetweenTags = 5.0
@@ -156,8 +156,8 @@ extension CreateProjectViewController: ViewModelBindable {
         output
             .isModify
             .drive(onNext: { [weak self] isModify in
-                self?.navigationItem.title = isModify ? LocalizedStrings.str_modify_project.localized() : LocalizedStrings.str_create_project.localized()
-                self?.saveBarButton.title = isModify ? LocalizedStrings.str_modify.localized() : LocalizedStrings.register.localized()
+                self?.navigationItem.title = isModify ? LocalizationKey.str_modify_project.localized() : LocalizationKey.str_create_project.localized()
+                self?.saveBarButton.title = isModify ? LocalizationKey.str_modify.localized() : LocalizationKey.register.localized()
                 self?.projectIdTextField.isEnabled = !isModify
                 self?.projectIdTextField.textColor = isModify ? .pictionGray : .pictionDarkGrayDM
             })
@@ -201,7 +201,7 @@ extension CreateProjectViewController: ViewModelBindable {
         output
             .projectIdChanged
             .drive(onNext: { [weak self] projectId in
-                self?.projectUrlLabel.text = "\(LocalizedStrings.str_create_project_uri.localized()): https://piction.network/project/\(projectId)"
+                self?.projectUrlLabel.text = "\(LocalizationKey.str_create_project_uri.localized()): https://piction.network/project/\(projectId)"
             })
             .disposed(by: disposeBag)
 
@@ -334,7 +334,7 @@ extension CreateProjectViewController: CropViewControllerDelegate {
         let imgData = NSData(data: image.jpegData(compressionQuality: 1)!)
         print(imgData.count)
         if imgData.count > (1048576 * 10) {
-            Toast.showToast(LocalizedStrings.str_image_size_exceeded.localized())
+            Toast.showToast(LocalizationKey.str_image_size_exceeded.localized())
         } else {
             if cropViewController.view.tag == 0 {
                 self.chosenWideThumbnailImage.onNext(image)
@@ -366,7 +366,7 @@ extension CreateProjectViewController {
 
     func openAttachImage(image: UIImage) {
         let alertController = UIAlertController(
-            title: LocalizedStrings.str_create_project_thumbnail_image.localized(),
+            title: LocalizationKey.str_create_project_thumbnail_image.localized(),
         message: nil,
         preferredStyle: UIAlertController.Style.actionSheet)
 
@@ -385,7 +385,7 @@ extension CreateProjectViewController {
             })
 
         let cancelAction = UIAlertAction(
-            title: LocalizedStrings.cancel.localized(),
+            title: LocalizationKey.cancel.localized(),
             style:UIAlertAction.Style.cancel,
             handler:{ action in
             })

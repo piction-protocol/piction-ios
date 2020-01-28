@@ -87,7 +87,7 @@ final class CreatePostViewModel: ViewModel {
 
         let userMeError = userMeAction.error
             .flatMap { _ -> Driver<String?> in
-                return Driver.just(LocalizedStrings.str_login_first.localized())
+                return Driver.just(LocalizationKey.str_login_first.localized())
         }
 
         let projectListAction = userMeAction.elements
@@ -106,7 +106,7 @@ final class CreatePostViewModel: ViewModel {
 
         let projectListError = projectListAction.error
             .flatMap { _ -> Driver<String?> in
-                return Driver.just(LocalizedStrings.str_create_project_first.localized())
+                return Driver.just(LocalizationKey.str_create_project_first.localized())
             }
 
         let openProjectListViewController = input.projectBtnDidTap
@@ -153,7 +153,7 @@ final class CreatePostViewModel: ViewModel {
             .withLatestFrom(selectedProject)
             .filter { $0 == nil }
             .flatMap { _ -> Driver<String> in
-                return Driver.just(LocalizedStrings.str_select_project_first.localized())
+                return Driver.just(LocalizationKey.str_select_project_first.localized())
             }
 
         let selectedSeries = input.selectedSeries
@@ -186,7 +186,7 @@ final class CreatePostViewModel: ViewModel {
             .flatMap { _ in Driver.just(()) }
 
         let saveBtnDidTap = input.saveBtnDidTap
-            .flatMap { _ in Driver<String>.just(LocalizedStrings.str_saving_post.localized()) }
+            .flatMap { _ in Driver<String>.just(LocalizationKey.str_saving_post.localized()) }
 
         let uploadCoverImageAction = input.saveBtnDidTap
             .withLatestFrom(postItems)
@@ -296,7 +296,7 @@ final class CreatePostViewModel: ViewModel {
 
         let saveSuccess = saveAction.elements
             .flatMap { _ -> Driver<String?> in
-                return Driver.just(LocalizedStrings.str_save_post_complete.localized())
+                return Driver.just(LocalizationKey.str_save_post_complete.localized())
             }
 
         let saveError = saveAction.error

@@ -76,7 +76,7 @@ extension SignInViewController: ViewModelBindable {
             .drive(onNext: { [weak self] userInfo in
                 if userInfo.loginId != "" {
                     self?.dismiss(animated: true, completion: {
-                        Toast.showToast(LocalizedStrings.msg_already_sign_in.localized())
+                        Toast.showToast(LocalizationKey.msg_already_sign_in.localized())
                     })
                 }
             })

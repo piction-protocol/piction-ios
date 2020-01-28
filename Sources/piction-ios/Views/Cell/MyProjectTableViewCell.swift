@@ -40,15 +40,15 @@ final class MyProjectTableViewCell: ReuseTableViewCell {
         }
 
         titleLabel.text = title
-        subscriptionCountLabel.text = LocalizedStrings.str_subs_count_plural.localized(with: subscriptionUserCount?.commaRepresentation ?? "0")
+        subscriptionCountLabel.text = LocalizationKey.str_subs_count_plural.localized(with: subscriptionUserCount?.commaRepresentation ?? "0")
 
         if status == "HIDDEN" || status == "DEPRECATED" {
             lockView.isHidden = false
             maskImage.isHidden = false
             if status == "HIDDEN" {
-                statusLabel.text = LocalizedStrings.str_post_status_private.localized()
+                statusLabel.text = LocalizationKey.str_post_status_private.localized()
             } else if status == "DEPRECATED" {
-                statusLabel.text = LocalizedStrings.str_post_status_deprecated.localized()
+                statusLabel.text = LocalizationKey.str_post_status_deprecated.localized()
             }
         } else {
             lockView.isHidden = true

@@ -119,7 +119,7 @@ final class ManageSeriesViewModel: InjectableViewModel {
         let deleteSeriesSuccess = deleteSeriesAction.elements
             .flatMap { [weak self] _ -> Driver<String> in
                 self?.updater.refreshContent.onNext(())
-                return Driver.just(LocalizedStrings.str_deleted_series.localized())
+                return Driver.just(LocalizationKey.str_deleted_series.localized())
             }
 
         let embedEmptyView = seriesList

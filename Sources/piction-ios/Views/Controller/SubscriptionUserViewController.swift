@@ -101,7 +101,7 @@ extension SubscriptionUserViewController: ViewModelBindable {
         output
             .subscriptionUserList
             .drive(onNext: { [weak self] subscriptionUserList in
-                self?.navigationItem.title = "\(LocalizedStrings.str_subscription_user_list.localized()) (\(subscriptionUserList.count))"
+                self?.navigationItem.title = "\(LocalizationKey.str_subscription_user_list.localized()) (\(subscriptionUserList.count))"
                 self?.tableView.layoutIfNeeded()
                 self?.tableView.finishInfiniteScroll()
             })

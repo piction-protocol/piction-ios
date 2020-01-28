@@ -22,7 +22,7 @@ class ManageFanPassTableViewCell: ReuseTableViewCell {
     func configure(with model: Model) {
         let (level, title, postCount, subscriptionCount, subscriptionLimit, subscriptionPrice) = (model.level, model.name, model.postCount, model.subscriptionCount, model.subscriptionLimit, model.subscriptionPrice)
 
-        levelLabel.text = (level ?? 0) == 0 ? LocalizedStrings.str_fanpass_free_tier.localized() : LocalizedStrings.str_fanpass_current_tier.localized(with: level ?? 0)
+        levelLabel.text = (level ?? 0) == 0 ? LocalizationKey.str_fanpass_free_tier.localized() : LocalizationKey.str_fanpass_current_tier.localized(with: level ?? 0)
         titleLabel.text = title
         postCountLabel.text = "포스트 \(postCount ?? 0)개"
         priceLabel.text = level == 0 ? "무료" : "\(subscriptionPrice.commaRepresentation) PXL"

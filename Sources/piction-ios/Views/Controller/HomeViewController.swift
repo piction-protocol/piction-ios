@@ -79,7 +79,7 @@ final class HomeViewController: UIViewController {
 
         self.searchController?.isActive = true
 
-        self.searchController?.searchBar.placeholder = LocalizedStrings.hint_project_and_tag_search.localized()
+        self.searchController?.searchBar.placeholder = LocalizationKey.hint_project_and_tag_search.localized()
     }
 
     func openSearchBar() {
@@ -194,9 +194,9 @@ extension HomeViewController {
     func showErrorPopup() {
         Toast.loadingActivity(false)
         showPopup(
-            title: LocalizedStrings.popup_title_network_error.localized(),
-            message: LocalizedStrings.msg_api_internal_server_error.localized(),
-            action: LocalizedStrings.retry.localized()) { [weak self] in
+            title: LocalizationKey.popup_title_network_error.localized(),
+            message: LocalizationKey.msg_api_internal_server_error.localized(),
+            action: LocalizationKey.retry.localized()) { [weak self] in
             self?.viewModel?.loadRetryTrigger.onNext(())
         }
     }

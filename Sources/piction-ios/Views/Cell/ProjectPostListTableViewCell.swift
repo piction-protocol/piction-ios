@@ -46,15 +46,15 @@ final class ProjectPostListTableViewCell: ReuseTableViewCell {
         }
 
         seriesLabel.isHidden = seriesName == nil
-        seriesLabel.text = "\(LocalizedStrings.tab_series.localized()) · \(seriesName ?? "")"
+        seriesLabel.text = "\(LocalizationKey.tab_series.localized()) · \(seriesName ?? "")"
 
         titleLabel.text = title
 
         if let publishedAt = publishedAt {
             if publishedAt.millisecondsSince1970 > Date().millisecondsSince1970 {
-                dateLabel.text = publishedAt.toString(format: LocalizedStrings.str_reservation_datetime_format.localized())
+                dateLabel.text = publishedAt.toString(format: LocalizationKey.str_reservation_datetime_format.localized())
             } else {
-                dateLabel.text = publishedAt.toString(format: LocalizedStrings.str_date_format.localized())
+                dateLabel.text = publishedAt.toString(format: LocalizationKey.str_date_format.localized())
             }
         }
 
@@ -62,7 +62,7 @@ final class ProjectPostListTableViewCell: ReuseTableViewCell {
         likeLabel.text = "\(likeCount ?? 0)"
 
         if status == "PRIVATE" {
-            lockMessageLabel.text = LocalizedStrings.str_private_only.localized()
+            lockMessageLabel.text = LocalizationKey.str_private_only.localized()
             thumbnailView.isHidden = false
             maskImage.isHidden = false
             lockView.isHidden = false
@@ -83,7 +83,7 @@ final class ProjectPostListTableViewCell: ReuseTableViewCell {
             }
 
             if needSubscription {
-                lockMessageLabel.text = (fanPass?.level == 0) ? LocalizedStrings.str_subs_only.localized() :  LocalizedStrings.str_subs_only_with_fanpass.localized(with: fanPass?.name ?? "")
+                lockMessageLabel.text = (fanPass?.level == 0) ? LocalizationKey.str_subs_only.localized() :  LocalizationKey.str_subs_only_with_fanpass.localized(with: fanPass?.name ?? "")
                 thumbnailView.isHidden = false
                 maskImage.isHidden = false
                 lockView.isHidden = false

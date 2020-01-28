@@ -86,7 +86,7 @@ final class ManageFanPassViewModel: InjectableViewModel {
             .flatMap(Action.makeDriver)
 
         let deleteSuccess = deleteAction.elements
-            .map { _ in LocalizedStrings.msg_delete_fanpass_success.localized() }
+            .map { _ in LocalizationKey.msg_delete_fanpass_success.localized() }
             .do(onNext: { _ in
                 updater.refreshContent.onNext(())
             })

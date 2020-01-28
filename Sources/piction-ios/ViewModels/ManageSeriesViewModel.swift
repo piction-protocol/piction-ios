@@ -125,7 +125,7 @@ final class ManageSeriesViewModel: InjectableViewModel {
             .flatMap(Action.makeDriver)
 
         let deleteSeriesSuccess = deleteSeriesAction.elements
-            .map { _ in LocalizedStrings.str_deleted_series.localized() }
+            .map { _ in LocalizationKey.str_deleted_series.localized() }
             .do(onNext: { _ in updater.refreshContent.onNext(()) })
 
         let deleteSeriesError = deleteSeriesAction.error

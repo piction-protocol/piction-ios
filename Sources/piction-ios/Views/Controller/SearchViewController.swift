@@ -98,9 +98,9 @@ extension SearchViewController: ViewModelBindable {
             .setPlaceHolder
             .drive(onNext: { menu in
                 if menu == 0 {
-                    UIApplication.topViewController()?.navigationItem.searchController?.searchBar.placeholder = LocalizedStrings.hint_project_search.localized()
+                    UIApplication.topViewController()?.navigationItem.searchController?.searchBar.placeholder = LocalizationKey.hint_project_search.localized()
                 } else {
-                    UIApplication.topViewController()?.navigationItem.searchController?.searchBar.placeholder = LocalizedStrings.hint_tag_search.localized()
+                    UIApplication.topViewController()?.navigationItem.searchController?.searchBar.placeholder = LocalizationKey.hint_tag_search.localized()
                 }
             })
             .disposed(by: disposeBag)
@@ -108,7 +108,7 @@ extension SearchViewController: ViewModelBindable {
         output
             .viewWillDisappear
             .drive(onNext: { _ in
-                UIApplication.topViewController()?.navigationItem.searchController?.searchBar.placeholder = LocalizedStrings.hint_project_and_tag_search.localized()
+                UIApplication.topViewController()?.navigationItem.searchController?.searchBar.placeholder = LocalizationKey.hint_project_and_tag_search.localized()
             })
             .disposed(by: disposeBag)
 
@@ -116,9 +116,9 @@ extension SearchViewController: ViewModelBindable {
             .menuChanged
             .drive(onNext: { menu in
                 if menu == 0 {
-                    UIApplication.topViewController()?.navigationItem.searchController?.searchBar.placeholder = LocalizedStrings.hint_project_search.localized()
+                    UIApplication.topViewController()?.navigationItem.searchController?.searchBar.placeholder = LocalizationKey.hint_project_search.localized()
                 } else {
-                    UIApplication.topViewController()?.navigationItem.searchController?.searchBar.placeholder = LocalizedStrings.hint_tag_search.localized()
+                    UIApplication.topViewController()?.navigationItem.searchController?.searchBar.placeholder = LocalizationKey.hint_tag_search.localized()
                 }
             })
             .disposed(by: disposeBag)

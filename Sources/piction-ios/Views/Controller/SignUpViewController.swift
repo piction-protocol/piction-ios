@@ -48,22 +48,22 @@ final class SignUpViewController: UIViewController {
     }
     @IBOutlet weak var agreementTextView: UITextView! {
         didSet {
-            let attributedStr: NSMutableAttributedString = NSMutableAttributedString(string: LocalizedStrings.str_agreement_text.localized())
+            let attributedStr: NSMutableAttributedString = NSMutableAttributedString(string: LocalizationKey.str_agreement_text.localized())
 
             guard let termsURL = URL(string: "\(AppInfo.urlScheme)://terms") else { return }
             guard let privacyURL = URL(string: "\(AppInfo.urlScheme)://privacy") else { return }
 
-            attributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 14), range: attributedStr.mutableString.range(of: LocalizedStrings.str_agreement_text.localized()))
-            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.pictionGray, range: attributedStr.mutableString.range(of: LocalizedStrings.str_agreement_text.localized()))
-            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.pictionGray, range: attributedStr.mutableString.range(of: LocalizedStrings.str_agreement_text.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 14), range: attributedStr.mutableString.range(of: LocalizationKey.str_agreement_text.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.pictionGray, range: attributedStr.mutableString.range(of: LocalizationKey.str_agreement_text.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.pictionGray, range: attributedStr.mutableString.range(of: LocalizationKey.str_agreement_text.localized()))
 
-            attributedStr.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: attributedStr.mutableString.range(of: LocalizedStrings.str_terms.localized()))
-            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.pictionBlue, range: attributedStr.mutableString.range(of: LocalizedStrings.str_terms.localized()))
-            attributedStr.addAttribute(NSAttributedString.Key.link, value: termsURL, range: attributedStr.mutableString.range(of: LocalizedStrings.str_terms.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: attributedStr.mutableString.range(of: LocalizationKey.str_terms.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.pictionBlue, range: attributedStr.mutableString.range(of: LocalizationKey.str_terms.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.link, value: termsURL, range: attributedStr.mutableString.range(of: LocalizationKey.str_terms.localized()))
 
-            attributedStr.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: attributedStr.mutableString.range(of: LocalizedStrings.str_privacy.localized()))
-            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.pictionBlue, range: attributedStr.mutableString.range(of: LocalizedStrings.str_privacy.localized()))
-            attributedStr.addAttribute(NSAttributedString.Key.link, value: privacyURL, range: attributedStr.mutableString.range(of: LocalizedStrings.str_privacy.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: attributedStr.mutableString.range(of: LocalizationKey.str_privacy.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.pictionBlue, range: attributedStr.mutableString.range(of: LocalizationKey.str_privacy.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.link, value: privacyURL, range: attributedStr.mutableString.range(of: LocalizationKey.str_privacy.localized()))
 
 
             agreementTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -121,7 +121,7 @@ extension SignUpViewController: ViewModelBindable {
             .drive(onNext: { [weak self] userInfo in
                 if userInfo.loginId != "" {
                     self?.dismiss(animated: true, completion: {
-                        Toast.showToast(LocalizedStrings.msg_already_sign_in.localized())
+                        Toast.showToast(LocalizationKey.msg_already_sign_in.localized())
                     })
                 }
             })

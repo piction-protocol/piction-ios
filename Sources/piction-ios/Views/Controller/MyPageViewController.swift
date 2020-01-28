@@ -134,30 +134,30 @@ extension MyPageViewController: ViewModelBindable {
                     break
                 case .pushType(let title):
                     switch title {
-                    case LocalizedStrings.menu_my_project.localized():
+                    case LocalizationKey.menu_my_project.localized():
                         self?.openMyProjectViewController()
-                    case LocalizedStrings.str_transactions.localized():
+                    case LocalizationKey.str_transactions.localized():
                         self?.openTransactionHistoryListViewController()
-                    case LocalizedStrings.str_deposit.localized():
+                    case LocalizationKey.str_deposit.localized():
                         self?.openDepositViewController()
                     default:
                         break
                     }
                 case .presentType(let title, _):
                     switch title {
-                    case LocalizedStrings.str_create_pin.localized():
+                    case LocalizationKey.str_create_pin.localized():
                         self?.openRegisterPincodeViewController()
-                    case LocalizedStrings.str_change_pin.localized():
+                    case LocalizationKey.str_change_pin.localized():
                          self?.openCheckPincodeViewController()
-                    case LocalizedStrings.str_change_basic_info.localized():
+                    case LocalizationKey.str_change_basic_info.localized():
                         self?.openChangeMyInfoViewController()
-                    case LocalizedStrings.str_change_pw.localized():
+                    case LocalizationKey.str_change_pw.localized():
                         self?.openChangePasswordViewController()
-                    case LocalizedStrings.str_terms.localized():
+                    case LocalizationKey.str_terms.localized():
                         self?.openSafariViewController(url: "https://piction.network/terms")
-                    case LocalizedStrings.str_privacy.localized():
+                    case LocalizationKey.str_privacy.localized():
                         self?.openSafariViewController(url: "https://piction.network/privacy")
-                    case LocalizedStrings.str_sign_out.localized():
+                    case LocalizationKey.str_sign_out.localized():
                         self?.logout.onNext(())
                     default:
                         break
@@ -205,9 +205,9 @@ extension MyPageViewController: ViewModelBindable {
             .drive(onNext: { [weak self] in
                 Toast.loadingActivity(false)
                 self?.showPopup(
-                    title: LocalizedStrings.popup_title_network_error.localized(),
-                    message: LocalizedStrings.msg_api_internal_server_error.localized(),
-                    action: LocalizedStrings.retry.localized()) { [weak self] in
+                    title: LocalizationKey.popup_title_network_error.localized(),
+                    message: LocalizationKey.msg_api_internal_server_error.localized(),
+                    action: LocalizationKey.retry.localized()) { [weak self] in
                         self?.viewModel?.loadRetryTrigger.onNext(())
                     }
             })

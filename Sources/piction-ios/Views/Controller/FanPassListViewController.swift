@@ -114,7 +114,7 @@ extension FanPassListViewController: ViewModelBindable {
                     let fanPassName = subscriptionInfo?.fanPass?.name,
                     level > 0 {
                     self?.currentSubscriptionFanPassTitleLabel.text =
-                        "\(LocalizedStrings.str_fanpass_current_tier.localized(with: level)) -  \(LocalizedStrings.str_fanpasslist_warning_current_fanpass.localized(with: fanPassName))"
+                        "\(LocalizationKey.str_fanpass_current_tier.localized(with: level)) -  \(LocalizationKey.str_fanpasslist_warning_current_fanpass.localized(with: fanPassName))"
                     self?.currentSubscriptionFanPassView.isHidden = false
                 }
             })
@@ -175,9 +175,9 @@ extension FanPassListViewController: ViewModelBindable {
             .drive(onNext: { [weak self] in
                 Toast.loadingActivity(false)
                 self?.showPopup(
-                    title: LocalizedStrings.popup_title_network_error.localized(),
-                    message: LocalizedStrings.msg_api_internal_server_error.localized(),
-                    action: LocalizedStrings.retry.localized()) { [weak self] in
+                    title: LocalizationKey.popup_title_network_error.localized(),
+                    message: LocalizationKey.msg_api_internal_server_error.localized(),
+                    action: LocalizationKey.retry.localized()) { [weak self] in
                         self?.viewModel?.loadRetryTrigger.onNext(())
                     }
             })

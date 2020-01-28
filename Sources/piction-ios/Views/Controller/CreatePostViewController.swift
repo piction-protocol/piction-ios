@@ -236,8 +236,8 @@ extension CreatePostViewController: ViewModelBindable {
         output
             .isModify
             .drive(onNext: { [weak self] isModify in
-                self?.navigationItem.title = isModify ? LocalizedStrings.str_modify_post.localized() : LocalizedStrings.str_create_post.localized()
-                self?.saveBarButton.title = isModify ? LocalizedStrings.str_modify.localized() : LocalizedStrings.register.localized()
+                self?.navigationItem.title = isModify ? LocalizationKey.str_modify_post.localized() : LocalizationKey.str_create_post.localized()
+                self?.saveBarButton.title = isModify ? LocalizationKey.str_modify.localized() : LocalizationKey.register.localized()
             })
             .disposed(by: disposeBag)
 
@@ -259,7 +259,7 @@ extension CreatePostViewController: ViewModelBindable {
                 }
                 self?.controlStatusCheckBox(postInfo.status ?? "PUBLIC")
 
-                self?.selectSeriesButton.setTitle(postInfo.series?.name ?? LocalizedStrings.str_select_series.localized(), for: .normal)
+                self?.selectSeriesButton.setTitle(postInfo.series?.name ?? LocalizationKey.str_select_series.localized(), for: .normal)
 
                 self?.selectFanPassLabel.text = postInfo.fanPass?.name ?? ""
 
@@ -318,7 +318,7 @@ extension CreatePostViewController: ViewModelBindable {
         output
             .seriesChanged
             .drive(onNext: { [weak self] series in
-                self?.selectSeriesButton.setTitle(series?.name ?? LocalizedStrings.str_select_series.localized(), for: .normal)
+                self?.selectSeriesButton.setTitle(series?.name ?? LocalizationKey.str_select_series.localized(), for: .normal)
             })
             .disposed(by: disposeBag)
 
@@ -475,7 +475,7 @@ extension CreatePostViewController: CropViewControllerDelegate {
         let imgData = NSData(data: image.jpegData(compressionQuality: 1)!)
         print(imgData.count)
         if imgData.count > (1048576 * 10) {
-            Toast.showToast(LocalizedStrings.str_image_size_exceeded.localized())
+            Toast.showToast(LocalizationKey.str_image_size_exceeded.localized())
         } else {
             if cropViewController.view.tag == 0 {
                 self.chosenContentImage.onNext(image)
@@ -1402,26 +1402,26 @@ extension CreatePostViewController {
 
     func openAttachImage(image: UIImage) {
         let alertController = UIAlertController(
-        title: LocalizedStrings.str_select_image_position.localized(),
+        title: LocalizationKey.str_select_image_position.localized(),
         message: nil,
         preferredStyle: UIAlertController.Style.actionSheet)
 
         let coverImageAction = UIAlertAction(
-            title: LocalizedStrings.str_cover_image.localized(),
+            title: LocalizationKey.str_cover_image.localized(),
             style: UIAlertAction.Style.default,
             handler: { [weak self] action in
                 self?.openCropViewController(image: image, tag: 1)
             })
 
         let postImageAction = UIAlertAction(
-            title: LocalizedStrings.str_post_content_image.localized(),
+            title: LocalizationKey.str_post_content_image.localized(),
             style: UIAlertAction.Style.default,
             handler: { [weak self] action in
                 self?.openCropViewController(image: image, tag : 0)
             })
 
         let cancelAction = UIAlertAction(
-            title: LocalizedStrings.cancel.localized(),
+            title: LocalizationKey.cancel.localized(),
             style:UIAlertAction.Style.cancel,
             handler:{ action in
             })

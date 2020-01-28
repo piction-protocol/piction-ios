@@ -85,14 +85,14 @@ extension UIViewController {
     func showPopup(
         title: String? = nil,
         message: String? = nil,
-        action: String = LocalizedStrings.confirm.localized(),
+        action: String = LocalizationKey.confirm.localized(),
         completion: @escaping () -> Void) {
         let alert = UIAlertController(
             title: title,
             message: message,
             preferredStyle: .alert)
 
-        let cancelButton = UIAlertAction(title: LocalizedStrings.cancel.localized(), style: .cancel)
+        let cancelButton = UIAlertAction(title: LocalizationKey.cancel.localized(), style: .cancel)
         let confirmAction = UIAlertAction(title: action, style: .default, handler: { _ in
             completion()
         })

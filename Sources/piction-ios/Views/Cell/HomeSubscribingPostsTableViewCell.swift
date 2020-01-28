@@ -59,17 +59,17 @@ final class HomeSubscribingPostsTableViewCell: ReuseTableViewCell {
             let diff = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: (publishedAt ?? Date()), to: Date())
 
             if let year = diff.year, year > 0 {
-                return LocalizedStrings.str_post_update_n_year.localized(with: year)
+                return LocalizationKey.str_post_update_n_year.localized(with: year)
             } else if let month = diff.month, month > 0 {
-                return LocalizedStrings.str_post_update_n_month.localized(with: month)
+                return LocalizationKey.str_post_update_n_month.localized(with: month)
             } else if let day = diff.day, day > 0 {
-                return LocalizedStrings.str_post_update_n_day.localized(with: day)
+                return LocalizationKey.str_post_update_n_day.localized(with: day)
             } else if let hour = diff.hour, hour > 0 {
-                return LocalizedStrings.str_post_update_n_hour.localized(with: hour)
+                return LocalizationKey.str_post_update_n_hour.localized(with: hour)
             } else if let minute = diff.minute, minute > 0 {
-                return LocalizedStrings.str_post_update_n_minute.localized(with: minute)
+                return LocalizationKey.str_post_update_n_minute.localized(with: minute)
             } else {
-                return LocalizedStrings.str_post_update_n_now.localized()
+                return LocalizationKey.str_post_update_n_now.localized()
             }
         }
 

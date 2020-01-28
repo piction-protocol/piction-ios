@@ -21,53 +21,53 @@ final class DepositViewController: UIViewController {
 
     @IBOutlet weak var depositGuidePiction1Label: UILabel! {
         didSet {
-            let attributedStr = NSMutableAttributedString(string: LocalizedStrings.str_deposit_guide_1.localized())
+            let attributedStr = NSMutableAttributedString(string: LocalizationKey.str_deposit_guide_1.localized())
 
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.headIndent = 10
             paragraphStyle.lineHeightMultiple = 1.5
 
-            attributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 12), range: attributedStr.mutableString.range(of: LocalizedStrings.str_deposit_guide_1.localized()))
-            attributedStr.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: attributedStr.mutableString.range(of: LocalizedStrings.str_deposit_guide_1.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 12), range: attributedStr.mutableString.range(of: LocalizationKey.str_deposit_guide_1.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: attributedStr.mutableString.range(of: LocalizationKey.str_deposit_guide_1.localized()))
             depositGuidePiction1Label.attributedText = attributedStr
         }
     }
     @IBOutlet weak var depositGuidePiction2Label: UILabel! {
         didSet {
-            let attributedStr = NSMutableAttributedString(string: LocalizedStrings.str_deposit_guide_2.localized())
+            let attributedStr = NSMutableAttributedString(string: LocalizationKey.str_deposit_guide_2.localized())
 
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.headIndent = 10
             paragraphStyle.lineHeightMultiple = 1.5
 
-            attributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 12), range: attributedStr.mutableString.range(of: LocalizedStrings.str_deposit_guide_2.localized()))
-            attributedStr.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: attributedStr.mutableString.range(of: LocalizedStrings.str_deposit_guide_2.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 12), range: attributedStr.mutableString.range(of: LocalizationKey.str_deposit_guide_2.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: attributedStr.mutableString.range(of: LocalizationKey.str_deposit_guide_2.localized()))
             depositGuidePiction2Label.attributedText = attributedStr
         }
     }
     @IBOutlet weak var depositGuide1Label: UILabel! {
         didSet {
-            let attributedStr = NSMutableAttributedString(string: LocalizedStrings.str_deposit_guide_3.localized())
+            let attributedStr = NSMutableAttributedString(string: LocalizationKey.str_deposit_guide_3.localized())
 
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.headIndent = 10
             paragraphStyle.lineHeightMultiple = 1.5
 
-            attributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 12), range: attributedStr.mutableString.range(of: LocalizedStrings.str_deposit_guide_3.localized()))
-            attributedStr.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: attributedStr.mutableString.range(of: LocalizedStrings.str_deposit_guide_3.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 12), range: attributedStr.mutableString.range(of: LocalizationKey.str_deposit_guide_3.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: attributedStr.mutableString.range(of: LocalizationKey.str_deposit_guide_3.localized()))
             depositGuide1Label.attributedText = attributedStr
         }
     }
     @IBOutlet weak var depositGuide2Label: UILabel! {
         didSet {
-            let attributedStr = NSMutableAttributedString(string: LocalizedStrings.str_deposit_guide_4_piction.localized())
+            let attributedStr = NSMutableAttributedString(string: LocalizationKey.str_deposit_guide_4_piction.localized())
 
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.headIndent = 10
             paragraphStyle.lineHeightMultiple = 1.5
 
-            attributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 12), range: attributedStr.mutableString.range(of: LocalizedStrings.str_deposit_guide_4_piction.localized()))
-            attributedStr.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: attributedStr.mutableString.range(of: LocalizedStrings.str_deposit_guide_4_piction.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 12), range: attributedStr.mutableString.range(of: LocalizationKey.str_deposit_guide_4_piction.localized()))
+            attributedStr.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: attributedStr.mutableString.range(of: LocalizationKey.str_deposit_guide_4_piction.localized()))
             depositGuide2Label.attributedText = attributedStr
         }
     }
@@ -96,7 +96,7 @@ extension DepositViewController: ViewModelBindable {
         output
             .userInfo
             .drive(onNext: { [weak self] userInfo in
-                self?.idLabel.text = LocalizedStrings.str_wallet_address.localized(with: userInfo.loginId ?? "")
+                self?.idLabel.text = LocalizationKey.str_wallet_address.localized(with: userInfo.loginId ?? "")
             })
             .disposed(by: disposeBag)
 
@@ -113,7 +113,7 @@ extension DepositViewController: ViewModelBindable {
             .copyAddress
             .drive(onNext: { address in
                 UIPasteboard.general.string = "\(address)"
-                Toast.showToast(LocalizedStrings.str_copy_address_complete.localized())
+                Toast.showToast(LocalizationKey.str_copy_address_complete.localized())
             })
             .disposed(by: disposeBag)
 
@@ -122,9 +122,9 @@ extension DepositViewController: ViewModelBindable {
             .drive(onNext: { [weak self] in
                 Toast.loadingActivity(false)
                 self?.showPopup(
-                    title: LocalizedStrings.popup_title_network_error.localized(),
-                    message: LocalizedStrings.msg_api_internal_server_error.localized(),
-                    action: LocalizedStrings.retry.localized()) { [weak self] in
+                    title: LocalizationKey.popup_title_network_error.localized(),
+                    message: LocalizationKey.msg_api_internal_server_error.localized(),
+                    action: LocalizationKey.retry.localized()) { [weak self] in
                         self?.viewModel?.loadRetryTrigger.onNext(())
                     }
             })

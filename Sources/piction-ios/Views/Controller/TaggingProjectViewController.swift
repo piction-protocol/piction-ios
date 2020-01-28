@@ -174,9 +174,9 @@ extension TaggingProjectViewController: ViewModelBindable {
                 self?.collectionView.finishInfiniteScroll()
                 Toast.loadingActivity(false)
                 self?.showPopup(
-                    title: LocalizedStrings.popup_title_network_error.localized(),
-                    message: LocalizedStrings.msg_api_internal_server_error.localized(),
-                    action: LocalizedStrings.retry.localized()) { [weak self] in
+                    title: LocalizationKey.popup_title_network_error.localized(),
+                    message: LocalizationKey.msg_api_internal_server_error.localized(),
+                    action: LocalizationKey.retry.localized()) { [weak self] in
                     self?.viewModel?.loadRetryTrigger.onNext(())
                 }
             })

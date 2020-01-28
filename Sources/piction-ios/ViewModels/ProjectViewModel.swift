@@ -228,7 +228,7 @@ final class ProjectViewModel: InjectableViewModel {
             .flatMap(Action.makeDriver)
 
         let subscriptionSuccess = subscriptionAction.elements
-            .map { _ in LocalizedStrings.str_project_subscrition_complete.localized() }
+            .map { _ in LocalizationKey.str_project_subscrition_complete.localized() }
             .do(onNext: { _ in
                 updater.refreshContent.onNext(())
             })
@@ -258,7 +258,7 @@ final class ProjectViewModel: InjectableViewModel {
             .flatMap(Action.makeDriver)
 
         let cancelSubscriptionSuccess = cancelSubscriptionAction.elements
-            .map { _ in LocalizedStrings.str_project_cancel_subscrition.localized() }
+            .map { _ in LocalizationKey.str_project_cancel_subscrition.localized() }
             .do(onNext: { _ in
                 updater.refreshContent.onNext(())
             })
@@ -316,7 +316,7 @@ final class ProjectViewModel: InjectableViewModel {
             .flatMap(Action.makeDriver)
 
         let deletePostSuccess = deletePostAction.elements
-            .map { _ in LocalizedStrings.msg_delete_post_success.localized() }
+            .map { _ in LocalizationKey.msg_delete_post_success.localized() }
             .do(onNext: { _ in
                 updater.refreshContent.onNext(())
             })
@@ -332,7 +332,7 @@ final class ProjectViewModel: InjectableViewModel {
             .flatMap(Action.makeDriver)
 
         let deleteSeriesSuccess = deleteSeriesAction.elements
-            .map { _ in LocalizedStrings.str_deleted_series.localized() }
+            .map { _ in LocalizationKey.str_deleted_series.localized() }
             .do(onNext: { _ in
                 updater.refreshContent.onNext(())
             })
@@ -381,7 +381,7 @@ final class ProjectViewModel: InjectableViewModel {
             .flatMap(Driver<String>.from)
 
         return Output(
-            viewWillAppear: input.viewWillAppear,
+            viewWillAppear: viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
             projectInfo: loadProjectInfo,
             subscriptionInfo: subscriptionInfo,

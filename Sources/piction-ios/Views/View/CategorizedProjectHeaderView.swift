@@ -55,7 +55,7 @@ class CategorizedProjectHeaderView: GSKStretchyHeaderView {
         }
 
         titleLabel.text = title
-        projectCountLabel.text = LocalizedStrings.str_projects_count.localized(with: categorizedCount.commaRepresentation)
+        projectCountLabel.text = LocalizationKey.str_projects_count.localized(with: categorizedCount.commaRepresentation)
     }
 }
 
