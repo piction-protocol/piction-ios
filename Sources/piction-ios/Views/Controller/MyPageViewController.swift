@@ -100,10 +100,18 @@ extension MyPageViewController: ViewModelBindable {
         output
             .myPageList
             .do(onNext: { [weak self] _ in
-                _ = self?.emptyView.subviews.map { $0.removeFromSuperview() }
-                self?.emptyView.frame.size.height = 0
-                self?.containerView.frame.size.height = 104
-                self?.tableView.isScrollEnabled = true
+                guard let `self` = self else { return }
+                _ = self.emptyView.subviews.map { $0.removeFromSuperview() }
+                self.emptyView.frame.size.height = 20
+                self.containerView.frame.size.height = 104
+                self.tableView.isScrollEnabled = true
+                let footerView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.height, height: self.view.frame.size.height))
+                if #available(iOS 13, *) {
+                    footerView.backgroundColor = .systemGroupedBackground
+                } else {
+                    footerView.backgroundColor = UIColor(r: 240, g: 240, b: 245)
+                }
+                self.emptyView.addSubview(footerView)
             })
             .drive { $0 }
             .map { $0 }
