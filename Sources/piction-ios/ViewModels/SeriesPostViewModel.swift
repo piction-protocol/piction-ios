@@ -88,20 +88,19 @@ final class SeriesPostViewModel: InjectableViewModel {
 
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
-        let isSubscribingAction = Driver.merge(initialPage, loadNext, loadRetry)
+        let subscriptionInfoAction = Driver.merge(initialPage, loadNext, loadRetry)
             .map { FanPassAPI.getSubscribedFanPass(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
-        let isSubscribingSuccess = isSubscribingAction.elements
+        let subscriptionInfoSuccess = subscriptionInfoAction.elements
             .map { try? $0.map(to: SubscriptionModel.self) }
-            .map { $0?.fanPass != nil }
-            .flatMap(Driver.from)
+            .flatMap(Driver<SubscriptionModel?>.from)
 
-        let isSubscribingError = isSubscribingAction.error
-            .map { _ in false }
+        let SubscriptionInfoError = subscriptionInfoAction.error
+            .map { _ in SubscriptionModel?(nil) }
 
-        let isSubscribing = Driver.merge(isSubscribingSuccess, isSubscribingError)
+        let subscriptionInfo = Driver.merge(subscriptionInfoSuccess, SubscriptionInfoError)
 
         let loadSeriesInfoAction = Driver.merge(initialPage, loadRetry)
             .map { SeriesAPI.get(uri: uri, seriesId: seriesId) }
@@ -136,8 +135,9 @@ final class SeriesPostViewModel: InjectableViewModel {
 
         let showErrorPopup = loadSeriesPostError
 
-        let contentList = Driver.zip(loadSeriesPostsSuccess, isSubscribing)
-            .map { [weak self] (postList, isSubscribing) -> [ContentsSection] in
+        let contentList = loadSeriesPostsSuccess
+            .withLatestFrom(subscriptionInfo) { ($0, $1) }
+            .map { [weak self] (postList, subscriptionInfo) -> [ContentsSection] in
                 guard
                     let `self` = self,
                     let totalElements = postList.totalElements,
@@ -147,7 +147,7 @@ final class SeriesPostViewModel: InjectableViewModel {
                 let page = self.page - 1
 
                 return (postList.content ?? []).enumerated()
-                    .map { .seriesPostList(post: $1, isSubscribing: isSubscribing, number: self.isDescending ? totalElements - page * numberOfElements - $0 : page * numberOfElements + ($0 + 1)) }
+                    .map { .seriesPostList(post: $1, subscriptionInfo: subscriptionInfo, number: self.isDescending ? totalElements - page * numberOfElements - $0 : page * numberOfElements + ($0 + 1)) }
             }
             .map { self.sections.append(contentsOf: $0) }
             .map { SectionType<ContentsSection>.Section(title: "post", items: self.sections) }

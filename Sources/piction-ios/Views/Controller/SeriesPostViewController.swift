@@ -58,9 +58,9 @@ final class SeriesPostViewController: UIViewController {
         let dataSource = RxTableViewSectionedReloadDataSource<SectionType<ContentsSection>>(
             configureCell: { dataSource, tableView, indexPath, model in
                 switch dataSource[indexPath] {
-                case .seriesPostList(let post, let isSubscribing, let number):
+                case .seriesPostList(let post, let subscriptionInfo, let number):
                     let cell: SeriesPostListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    cell.configure(with: post, isSubscribing: isSubscribing, number: number)
+                    cell.configure(with: post, subscriptionInfo: subscriptionInfo, number: number)
                     return cell
                 default:
                     let cell = UITableViewCell()

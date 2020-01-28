@@ -22,14 +22,14 @@ final class SeriesPostListTableViewCell: ReuseTableViewCell {
         super.layoutSubviews()
     }
 
-    func configure(with model: Model, isSubscribing: Bool, number: Int) {
+    func configure(with model: Model, subscriptionInfo: SubscriptionModel?, number: Int) {
         let (title, date, fanPass) = (model.title, model.createdAt, model.fanPass)
 
         numberLabel.text = "#\(number)"
 
         titleLabel.text = title
 
-        if isSubscribing || fanPass == nil {
+        if fanPass == nil || subscriptionInfo?.fanPass?.level == fanPass?.level {
             subTitleLabel.textColor = .pictionGray
             subTitleLabel.text = date?.toString(format: LocalizationKey.str_series_date_format.localized())
         } else {
