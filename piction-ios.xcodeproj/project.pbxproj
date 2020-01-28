@@ -359,6 +359,7 @@
 		4390292D2383EE8600A3121B /* FanPassList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4390292B2383EE8600A3121B /* FanPassList.storyboard */; };
 		4390292F2383EEBF00A3121B /* FanPassListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390292E2383EEBF00A3121B /* FanPassListTableViewCell.swift */; };
 		439029302383EEBF00A3121B /* FanPassListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390292E2383EEBF00A3121B /* FanPassListTableViewCell.swift */; };
+		4390495223E01E7700C33A29 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43C41F622373B84F00D012A7 /* GoogleService-Info.plist */; };
 		439E7E3523794DAB00E4A475 /* CreatePostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E7E3423794DAB00E4A475 /* CreatePostCollectionViewCell.swift */; };
 		439E7E3723794DDA00E4A475 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E7E3623794DDA00E4A475 /* UICollectionView+Extension.swift */; };
 		439E7E39237A65C400E4A475 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E7E38237A65C400E4A475 /* Date+Extension.swift */; };
@@ -457,12 +458,6 @@
 		43C41F592373B31800D012A7 /* EmptyView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C41F582373B31800D012A7 /* EmptyView.storyboard */; };
 		43C41F5B2373B41F00D012A7 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C41F5A2373B41F00D012A7 /* UIViewController+Extension.swift */; };
 		43C41F5D2373B5C000D012A7 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C41F5C2373B5C000D012A7 /* UITableView+Extension.swift */; };
-		43C41F672373B84F00D012A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43C41F622373B84F00D012A7 /* GoogleService-Info.plist */; };
-		43C41F682373B84F00D012A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43C41F622373B84F00D012A7 /* GoogleService-Info.plist */; };
-		43C41F692373B84F00D012A7 /* piction-ios-test_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43C41F632373B84F00D012A7 /* piction-ios-test_Info.plist */; };
-		43C41F6A2373B84F00D012A7 /* piction-ios-test_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43C41F632373B84F00D012A7 /* piction-ios-test_Info.plist */; };
-		43C41F6B2373B84F00D012A7 /* piction-ios_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43C41F652373B84F00D012A7 /* piction-ios_Info.plist */; };
-		43C41F6C2373B84F00D012A7 /* piction-ios_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43C41F652373B84F00D012A7 /* piction-ios_Info.plist */; };
 		43C41F772373EB4900D012A7 /* CheckPincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C41F762373EB4900D012A7 /* CheckPincodeViewController.swift */; };
 		43C41F792373EB5400D012A7 /* CheckPincodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C41F782373EB5400D012A7 /* CheckPincodeViewModel.swift */; };
 		43C41F7B2373EB5D00D012A7 /* CheckPincode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C41F7A2373EB5D00D012A7 /* CheckPincode.storyboard */; };
@@ -1664,7 +1659,6 @@
 				43C5C9452383BDD6004BACFC /* SubscribeFanPass.storyboard in Resources */,
 				4323FAA3233A165900243655 /* ConfirmPincode.storyboard in Resources */,
 				4323FB05233A165D00243655 /* CreateProject.storyboard in Resources */,
-				43C41F6C2373B84F00D012A7 /* piction-ios_Info.plist in Resources */,
 				4323FB4F233A166000243655 /* TransactionHistory.storyboard in Resources */,
 				4323FB39233A166000243655 /* MyPage.storyboard in Resources */,
 				4323FAFB233A165D00243655 /* Project.storyboard in Resources */,
@@ -1676,9 +1670,7 @@
 				4369F8D323CF045D008D5825 /* ReuseCollectionReusableView.xib in Resources */,
 				4323FB13233A165E00243655 /* DynamicInputView.xib in Resources */,
 				4323FAAD233A165A00243655 /* Search.storyboard in Resources */,
-				43C41F682373B84F00D012A7 /* GoogleService-Info.plist in Resources */,
 				43C153C223C72AA700565FC4 /* CategoryList.storyboard in Resources */,
-				43C41F6A2373B84F00D012A7 /* piction-ios-test_Info.plist in Resources */,
 				4323FB91233A166300243655 /* SignUpComplete.storyboard in Resources */,
 				43C153A923C5D00300565FC4 /* CategorizedProject.storyboard in Resources */,
 				4323FAC3233A165B00243655 /* SubscriptionList.storyboard in Resources */,
@@ -1706,6 +1698,7 @@
 				436C75A82387C39300902F08 /* ManageFanPass.storyboard in Resources */,
 				4323FAEF233A165C00243655 /* ProjectHeaderView.xib in Resources */,
 				4323FB5F233A166100243655 /* UserInfo.storyboard in Resources */,
+				4390495223E01E7700C33A29 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1716,11 +1709,9 @@
 				4323FAD2233A165B00243655 /* CreatePost.storyboard in Resources */,
 				438E76392362FAB90062D004 /* ManageSeries.storyboard in Resources */,
 				4369F8A523CC64A6008D5825 /* Explore.storyboard in Resources */,
-				43C41F672373B84F00D012A7 /* GoogleService-Info.plist in Resources */,
 				4323FB42233A166000243655 /* ChangePassword.storyboard in Resources */,
 				4323FB9A233A166400243655 /* SignIn.storyboard in Resources */,
 				43C5C9442383BDD6004BACFC /* SubscribeFanPass.storyboard in Resources */,
-				43C41F692373B84F00D012A7 /* piction-ios-test_Info.plist in Resources */,
 				4323FB18233A165E00243655 /* Deposit.storyboard in Resources */,
 				4323FB00233A165D00243655 /* PostFooter.storyboard in Resources */,
 				4323FAA2233A165900243655 /* ConfirmPincode.storyboard in Resources */,
@@ -1763,7 +1754,6 @@
 				4323FAEE233A165C00243655 /* ProjectHeaderView.xib in Resources */,
 				436C75A72387C39300902F08 /* ManageFanPass.storyboard in Resources */,
 				4323FB5E233A166100243655 /* UserInfo.storyboard in Resources */,
-				43C41F6B2373B84F00D012A7 /* piction-ios_Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2492,11 +2482,7 @@
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Framework",
-					"$(PROJECT_DIR)/Product",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2578,11 +2564,7 @@
 				ENABLE_BITCODE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Framework",
-					"$(PROJECT_DIR)/Product",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -2653,15 +2635,12 @@
 				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/Sources/piction-ios/SupportingFiles/Live/piction-ios.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TVSPDRR58A;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Framework",
-					"$(PROJECT_DIR)/Product",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2684,6 +2663,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "";
+				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
@@ -2740,15 +2720,12 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TVSPDRR58A;
 				ENABLE_BITCODE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Framework",
-					"$(PROJECT_DIR)/Product",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -2766,6 +2743,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "";
+				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
