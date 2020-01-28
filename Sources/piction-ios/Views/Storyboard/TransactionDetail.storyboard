@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina5_9" orientation="portrait" appearance="dark"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -88,7 +88,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NpI-LS-F0V">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="0.33333333333333331"/>
                                                     <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="0.33000000000000002" id="yo7-xG-Uk8"/>
@@ -99,7 +99,7 @@
                                                 <constraint firstItem="NpI-LS-F0V" firstAttribute="leading" secondItem="0ZI-64-Xh0" secondAttribute="leading" id="3fm-JL-ZOJ"/>
                                                 <constraint firstAttribute="trailing" secondItem="NpI-LS-F0V" secondAttribute="trailing" id="7QH-01-ovR"/>
                                                 <constraint firstItem="NpI-LS-F0V" firstAttribute="top" secondItem="0ZI-64-Xh0" secondAttribute="top" id="UQz-d5-qdF"/>
-                                                <constraint firstAttribute="bottom" secondItem="NpI-LS-F0V" secondAttribute="bottom" constant="20" id="Z5I-SN-OVi"/>
+                                                <constraint firstAttribute="bottom" secondItem="NpI-LS-F0V" secondAttribute="bottom" constant="19.670000000000002" id="Z5I-SN-OVi"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
