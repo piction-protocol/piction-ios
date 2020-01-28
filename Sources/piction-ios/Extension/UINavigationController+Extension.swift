@@ -36,7 +36,6 @@ extension UINavigationController {
                     [NSAttributedString.Key.foregroundColor: UIColor(r: 51, g: 51, b: 51),
                      NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 34)]
 
-                navigationBar.isTranslucent = true
                 if transparent {
                     navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
                 } else {
