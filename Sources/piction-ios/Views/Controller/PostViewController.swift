@@ -207,11 +207,13 @@ extension PostViewController: ViewModelBindable {
             .drive(onNext: { [weak self] in
                 guard let `self` = self else { return }
                 self.navigationController?.configureNavigationBar(transparent: false, shadow: true)
-                self.postWebView.scrollView.contentInset = UIEdgeInsets(
-                    top: self.statusHeight + DEFAULT_NAVIGATION_HEIGHT,
-                    left: 0,
-                    bottom: self.toolbarHeight,
-                    right: 0)
+                if #available(iOS 13, *) {
+                    self.postWebView.scrollView.contentInset = UIEdgeInsets(
+                        top: self.statusHeight + DEFAULT_NAVIGATION_HEIGHT,
+                        left: 0,
+                        bottom: self.toolbarHeight,
+                        right: 0)
+                }
             })
             .disposed(by: disposeBag)
 
