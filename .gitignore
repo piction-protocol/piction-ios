@@ -8,3 +8,4 @@ project.xcworkspace
 /piction-ios.xcworkspace/xcuserdata
 /Pods
 *.xcuserstate
+GoogleService-Info.plist
