@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -80,7 +80,7 @@
                 <constraint firstAttribute="trailing" secondItem="LB1-Yh-OnW" secondAttribute="trailing" id="aXG-cg-Nko"/>
                 <constraint firstItem="wCZ-b7-lsx" firstAttribute="leading" secondItem="6jm-xv-r6z" secondAttribute="leading" id="db8-ux-wMh"/>
                 <constraint firstItem="4yb-u4-myD" firstAttribute="leading" secondItem="6jm-xv-r6z" secondAttribute="leading" id="lvo-ua-fAU"/>
-                <constraint firstItem="y8k-dI-QvX" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Tue-pQ-bvD" secondAttribute="bottom" priority="250" constant="6" id="pL7-Oi-X0B"/>
+                <constraint firstItem="y8k-dI-QvX" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Tue-pQ-bvD" secondAttribute="bottom" priority="250" constant="4" id="pL7-Oi-X0B"/>
                 <constraint firstAttribute="trailing" secondItem="4yb-u4-myD" secondAttribute="trailing" id="pZU-dP-6Ws"/>
                 <constraint firstItem="wCZ-b7-lsx" firstAttribute="trailing" secondItem="6jm-xv-r6z" secondAttribute="trailing" id="pny-1F-cJw"/>
                 <constraint firstItem="LB1-Yh-OnW" firstAttribute="top" secondItem="6jm-xv-r6z" secondAttribute="top" id="urf-p6-41m"/>

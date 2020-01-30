@@ -29,7 +29,7 @@ final class SeriesPostListTableViewCell: ReuseTableViewCell {
 
         titleLabel.text = title
 
-        if fanPass == nil || subscriptionInfo?.fanPass?.level == fanPass?.level {
+        if fanPass == nil || (subscriptionInfo?.fanPass?.level ?? 0) >= (fanPass?.level ?? 0) {
             subTitleLabel.textColor = .pictionGray
             subTitleLabel.text = date?.toString(format: LocalizationKey.str_series_date_format.localized())
         } else {
