@@ -1595,6 +1595,7 @@
 				LastSwiftMigration = 9999;
 				LastSwiftUpdateCheck = 1120;
 				LastUpgradeCheck = 9999;
+				ORGANIZATIONNAME = "Piction Network";
 				TargetAttributes = {
 					4309233B2372B42F00716AF8 = {
 						CreatedOnToolsVersion = 11.2;
