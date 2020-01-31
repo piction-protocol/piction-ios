@@ -103,17 +103,7 @@ final class ExploreViewController: UIViewController {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        setInfiniteScrollStyle()
-    }
-
-    private func setInfiniteScrollStyle() {
-        if #available(iOS 12.0, *) {
-            if self.traitCollection.userInterfaceStyle == .dark {
-                collectionView.infiniteScrollIndicatorStyle = .white
-            } else {
-                collectionView.infiniteScrollIndicatorStyle = .gray
-            }
-        }
+        collectionView.setInfiniteScrollStyle()
     }
 
     private func configureSearchController() {
@@ -164,7 +154,7 @@ extension ExploreViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
-                self?.setInfiniteScrollStyle()
+                self?.collectionView.setInfiniteScrollStyle()
             })
             .disposed(by: disposeBag)
 

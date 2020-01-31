@@ -360,6 +360,8 @@
 		4390292F2383EEBF00A3121B /* FanPassListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390292E2383EEBF00A3121B /* FanPassListTableViewCell.swift */; };
 		439029302383EEBF00A3121B /* FanPassListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390292E2383EEBF00A3121B /* FanPassListTableViewCell.swift */; };
 		4390495223E01E7700C33A29 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43C41F622373B84F00D012A7 /* GoogleService-Info.plist */; };
+		4391D87523E3D80C008A4DE4 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4391D87423E3D80C008A4DE4 /* UIScrollView+Extension.swift */; };
+		4391D87623E3D80C008A4DE4 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4391D87423E3D80C008A4DE4 /* UIScrollView+Extension.swift */; };
 		439E7E3523794DAB00E4A475 /* CreatePostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E7E3423794DAB00E4A475 /* CreatePostCollectionViewCell.swift */; };
 		439E7E3723794DDA00E4A475 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E7E3623794DDA00E4A475 /* UICollectionView+Extension.swift */; };
 		439E7E39237A65C400E4A475 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439E7E38237A65C400E4A475 /* Date+Extension.swift */; };
@@ -727,6 +729,7 @@
 		439029282383EE7600A3121B /* FanPassListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FanPassListViewModel.swift; sourceTree = "<group>"; };
 		4390292B2383EE8600A3121B /* FanPassList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FanPassList.storyboard; sourceTree = "<group>"; };
 		4390292E2383EEBF00A3121B /* FanPassListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FanPassListTableViewCell.swift; sourceTree = "<group>"; };
+		4391D87423E3D80C008A4DE4 /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
 		439E7E3423794DAB00E4A475 /* CreatePostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostCollectionViewCell.swift; sourceTree = "<group>"; };
 		439E7E3623794DDA00E4A475 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		439E7E38237A65C400E4A475 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
@@ -934,6 +937,7 @@
 				43DB2288235969F300E69C0F /* UILabel+Extension.swift */,
 				4372268C237E7F610054C777 /* RxDataSources+Extension.swift */,
 				4369108823C41A300045D020 /* URLCache+Extension.swift */,
+				4391D87423E3D80C008A4DE4 /* UIScrollView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -2063,6 +2067,7 @@
 				436C75AF2387C72A00902F08 /* CreateFanPassViewController.swift in Sources */,
 				4323FA89233A165800243655 /* StoryBoard.swift in Sources */,
 				436CAC6D234C2E1200C84373 /* FirebaseManager.swift in Sources */,
+				4391D87623E3D80C008A4DE4 /* UIScrollView+Extension.swift in Sources */,
 				4323FAD7233A165B00243655 /* PostViewController.swift in Sources */,
 				4323FB9F233A166400243655 /* SignInViewController.swift in Sources */,
 				43EBE1A52374087D0081C3B7 /* KeychainManager.swift in Sources */,
@@ -2225,6 +2230,7 @@
 				436C75AE2387C72A00902F08 /* CreateFanPassViewController.swift in Sources */,
 				4323FA88233A165800243655 /* StoryBoard.swift in Sources */,
 				436CAC6C234C2E1200C84373 /* FirebaseManager.swift in Sources */,
+				4391D87523E3D80C008A4DE4 /* UIScrollView+Extension.swift in Sources */,
 				4323FAD6233A165B00243655 /* PostViewController.swift in Sources */,
 				4323FB9E233A166400243655 /* SignInViewController.swift in Sources */,
 				43EBE1A42374087D0081C3B7 /* KeychainManager.swift in Sources */,

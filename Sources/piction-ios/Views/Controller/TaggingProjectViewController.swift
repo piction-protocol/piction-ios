@@ -77,17 +77,7 @@ final class TaggingProjectViewController: UIViewController {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        setInfiniteScrollStyle()
-    }
-
-    private func setInfiniteScrollStyle() {
-        if #available(iOS 12.0, *) {
-            if self.traitCollection.userInterfaceStyle == .dark {
-                collectionView.infiniteScrollIndicatorStyle = .white
-            } else {
-                collectionView.infiniteScrollIndicatorStyle = .gray
-            }
-        }
+        collectionView.setInfiniteScrollStyle()
     }
 }
 
@@ -125,7 +115,7 @@ extension TaggingProjectViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
-                self?.setInfiniteScrollStyle()
+                self?.collectionView.setInfiniteScrollStyle()
             })
             .disposed(by: disposeBag)
 

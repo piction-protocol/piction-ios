@@ -74,17 +74,7 @@ final class SeriesPostViewController: UIViewController {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        setInfiniteScrollStyle()
-    }
-
-    private func setInfiniteScrollStyle() {
-        if #available(iOS 12.0, *) {
-            if self.traitCollection.userInterfaceStyle == .dark {
-                tableView.infiniteScrollIndicatorStyle = .white
-            } else {
-                tableView.infiniteScrollIndicatorStyle = .gray
-            }
-        }
+        tableView.setInfiniteScrollStyle()
     }
 }
 
@@ -116,7 +106,7 @@ extension SeriesPostViewController: ViewModelBindable {
                 self?.navigationController?.configureNavigationBar(transparent: true, shadow: false)
                 self?.navigationController?.navigationBar.barStyle = .black
                 self?.navigationController?.navigationBar.tintColor = .white
-                self?.setInfiniteScrollStyle()
+                self?.tableView.setInfiniteScrollStyle()
             })
             .disposed(by: disposeBag)
 

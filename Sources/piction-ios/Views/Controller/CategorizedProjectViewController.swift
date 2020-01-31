@@ -85,17 +85,7 @@ final class CategorizedProjectViewController: UIViewController {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        setInfiniteScrollStyle()
-    }
-
-    private func setInfiniteScrollStyle() {
-        if #available(iOS 12.0, *) {
-            if self.traitCollection.userInterfaceStyle == .dark {
-                collectionView.infiniteScrollIndicatorStyle = .white
-            } else {
-                collectionView.infiniteScrollIndicatorStyle = .gray
-            }
-        }
+        collectionView.setInfiniteScrollStyle()
     }
 }
 
@@ -127,7 +117,7 @@ extension CategorizedProjectViewController: ViewModelBindable {
                 self?.navigationController?.configureNavigationBar(transparent: true, shadow: false)
                 self?.navigationController?.navigationBar.barStyle = .black
                 self?.navigationController?.navigationBar.tintColor = .white
-                self?.setInfiniteScrollStyle()
+                self?.collectionView.setInfiniteScrollStyle()
             })
             .disposed(by: disposeBag)
 

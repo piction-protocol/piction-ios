@@ -49,17 +49,7 @@ final class HomeViewController: UIViewController {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        setInfiniteScrollStyle()
-    }
-
-    private func setInfiniteScrollStyle() {
-        if #available(iOS 12.0, *) {
-            if self.traitCollection.userInterfaceStyle == .dark {
-                tableView.infiniteScrollIndicatorStyle = .white
-            } else {
-                tableView.infiniteScrollIndicatorStyle = .gray
-            }
-        }
+        tableView.setInfiniteScrollStyle()
     }
 
     private func configureSearchController() {
@@ -136,7 +126,7 @@ extension HomeViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
-                self?.setInfiniteScrollStyle()
+                self?.tableView.setInfiniteScrollStyle()
             })
             .disposed(by: disposeBag)
 

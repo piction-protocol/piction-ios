@@ -48,17 +48,7 @@ final class SearchViewController: UIViewController {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        setInfiniteScrollStyle()
-    }
-
-    private func setInfiniteScrollStyle() {
-        if #available(iOS 12.0, *) {
-            if self.traitCollection.userInterfaceStyle == .dark {
-                tableView.infiniteScrollIndicatorStyle = .white
-            } else {
-                tableView.infiniteScrollIndicatorStyle = .gray
-            }
-        }
+        tableView.setInfiniteScrollStyle()
     }
 }
 
@@ -90,7 +80,7 @@ extension SearchViewController: ViewModelBindable {
             .viewWillAppear
             .drive(onNext: { [weak self] in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
-                self?.setInfiniteScrollStyle()
+                self?.tableView.setInfiniteScrollStyle()
             })
             .disposed(by: disposeBag)
 
