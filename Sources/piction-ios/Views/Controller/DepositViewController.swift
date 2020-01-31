@@ -132,9 +132,7 @@ extension DepositViewController: ViewModelBindable {
 
         output
             .activityIndicator
-            .drive(onNext: { status in
-                Toast.loadingActivity(status)
-            })
+            .loadingActivity()
             .disposed(by: disposeBag)
     }
 }

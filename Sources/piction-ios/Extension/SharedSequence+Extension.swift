@@ -70,3 +70,11 @@ extension SharedSequence where E: ActionConvertible {
     }
 }
 
+extension SharedSequence where E == Bool {
+    public func loadingActivity() -> Disposable {
+        return asDriver(onErrorDriveWith: .empty())
+            .drive(onNext: { status in
+                Toast.loadingActivity(status)
+            })
+    }
+}

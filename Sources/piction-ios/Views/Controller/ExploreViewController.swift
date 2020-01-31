@@ -206,7 +206,7 @@ extension ExploreViewController: ViewModelBindable {
 
         output
             .activityIndicator
-            .drive(onNext: { Toast.loadingActivity($0) })
+            .loadingActivity()
             .disposed(by: disposeBag)
 
         output
