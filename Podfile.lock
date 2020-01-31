@@ -147,8 +147,8 @@ PODS:
     - RxCocoa (~> 4.5)
     - RxSwift (~> 4.5)
   - RxSwift (4.5.0)
-  - SDWebImage/Core (4.4.7)
-  - SDWebImage/WebP (4.4.7):
+  - SDWebImage/Core (4.4.8)
+  - SDWebImage/WebP (4.4.8):
     - libwebp (< 2.0, >= 0.5)
     - SDWebImage/Core
   - Swinject (2.7.1)
@@ -199,13 +199,11 @@ SPEC REPOS:
     - Gridicons
     - GSKStretchyHeaderView
     - Kanna
-    - libwebp
     - nanopb
     - Protobuf
     - RxCocoa
     - RxDataSources
     - RxSwift
-    - SDWebImage
     - Swinject
     - Toast-Swift
     - UIScrollView-InfiniteScroll
@@ -213,12 +211,14 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - KeychainAccess
+    - libwebp
     - ModelMapper
     - Moya
     - Moya-ModelMapper
     - PictionSDK
     - Result
     - RxGesture
+    - SDWebImage
     - WSTagsField
 
 EXTERNAL SOURCES:
@@ -265,7 +265,7 @@ SPEC CHECKSUMS:
   RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
   RxGesture: c1b7bf17166b0ef9d642a9510f8bac5785f18990
   RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
-  SDWebImage: c10d14a8883ebd89664f02a422006f66a85c0c5d
+  SDWebImage: 783af2c3fa36291a250030c4752ee370a9a51d13
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
   Toast-Swift: 36f4720243c8582c2be243a60a51e193c761f541
   UIScrollView-InfiniteScroll: 3ef456bcbe759c19f510a383cff96e6647c98c98
@@ -273,6 +273,6 @@ SPEC CHECKSUMS:
   WordPress-Aztec-iOS: 419ebf7a333fe147da33e4754978f20a5fd08a86
   WSTagsField: 35923c87c8bbf11e3c12ef3d3e3107425fb0ac2c
 
-PODFILE CHECKSUM: ae524ad1bdd9a409db414ae8b37b8c16eba96470
+PODFILE CHECKSUM: 2693f1ceb3765cd52268a1e346f62af1b5997301
 
 COCOAPODS: 1.8.4
