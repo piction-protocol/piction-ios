@@ -49,7 +49,7 @@ final class SignInViewModel: InjectableViewModel {
         let keyboardWillChangeFrame: Driver<ChangedKeyboardFrame>
         let dismissViewController: Driver<Bool>
         let errorMsg: Driver<ErrorModel>
-        let showToast: Driver<String>
+        let toastMessage: Driver<String>
     }
 
     func build(input: Input) -> Output {
@@ -96,7 +96,7 @@ final class SignInViewModel: InjectableViewModel {
                 }
             }
 
-        let showToast = signInButtonAction.error
+        let toastMessage = signInButtonAction.error
             .flatMap { response -> Driver<String> in
                 let errorType = response as? ErrorType
                 switch errorType {
@@ -136,7 +136,7 @@ final class SignInViewModel: InjectableViewModel {
             keyboardWillChangeFrame: keyboardWillChangeFrame,
             dismissViewController: dismissViewController,
             errorMsg: signInError,
-            showToast: showToast
+            toastMessage: toastMessage
         )
     }
 }

@@ -48,7 +48,7 @@ final class ChangePasswordViewModel: InjectableViewModel {
         let keyboardWillChangeFrame: Driver<ChangedKeyboardFrame>
         let dismissViewController: Driver<Void>
         let errorMsg: Driver<ErrorModel>
-        let showToast: Driver<String>
+        let toastMessage: Driver<String>
     }
 
     func build(input: Input) -> Output {
@@ -91,7 +91,7 @@ final class ChangePasswordViewModel: InjectableViewModel {
         let changePasswordSuccess = saveButtonAction.elements
             .map { _ in Void() }
 
-        let showToast = saveButtonAction.error
+        let toastMessage = saveButtonAction.error
             .flatMap { response -> Driver<String> in
                 let errorType = response as? ErrorType
                 switch errorType {
@@ -124,7 +124,7 @@ final class ChangePasswordViewModel: InjectableViewModel {
             keyboardWillChangeFrame: keyboardWillChangeFrame,
             dismissViewController: dismissViewController,
             errorMsg: errorMsg,
-            showToast: showToast
+            toastMessage: toastMessage
         )
     }
 }

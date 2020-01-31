@@ -68,7 +68,7 @@ final class ProjectViewModel: InjectableViewModel {
         let openSubscriptionUserViewController: Driver<String>
         let openFanPassListViewController: Driver<String>
         let activityIndicator: Driver<Bool>
-        let showToast: Driver<String>
+        let toastMessage: Driver<String>
     }
 
     func build(input: Input) -> Output {
@@ -366,7 +366,7 @@ final class ProjectViewModel: InjectableViewModel {
             deleteSeriesAction.isExecuting,
             updateSeriesAction.isExecuting)
 
-        let showToast = Driver.merge(subscriptionSuccess, cancelSubscriptionSuccess, subscriptionError, cancelSubscriptionError, deletePostSuccess, deleteSeriesSuccess, updateSeriesSuccess, deletePostError, deleteSeriesError, updateSeriesError)
+        let toastMessage = Driver.merge(subscriptionSuccess, cancelSubscriptionSuccess, subscriptionError, cancelSubscriptionError, deletePostSuccess, deleteSeriesSuccess, updateSeriesSuccess, deletePostError, deleteSeriesError, updateSeriesError)
 
         let openSubscriptionUserViewController = input.subscriptionUser
             .map { _ in uri }
@@ -395,7 +395,7 @@ final class ProjectViewModel: InjectableViewModel {
             openSubscriptionUserViewController: openSubscriptionUserViewController,
             openFanPassListViewController: openFanPassListViewController,
             activityIndicator: activityIndicator,
-            showToast: showToast
+            toastMessage: toastMessage
         )
     }
 }

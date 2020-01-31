@@ -46,7 +46,7 @@ final class ManageFanPassViewModel: InjectableViewModel {
         let showErrorPopup: Driver<Void>
         let activityIndicator: Driver<Bool>
         let dismissViewController: Driver<Void>
-        let showToast: Driver<String>
+        let toastMessage: Driver<String>
     }
 
     func build(input: Input) -> Output {
@@ -102,7 +102,7 @@ final class ManageFanPassViewModel: InjectableViewModel {
 
         let dismissViewController = input.closeBtnDidTap
 
-        let showToast = Driver.merge(deleteSuccess, deleteError)
+        let toastMessage = Driver.merge(deleteSuccess, deleteError)
 
         return Output(
             viewWillAppear: viewWillAppear,
@@ -112,7 +112,7 @@ final class ManageFanPassViewModel: InjectableViewModel {
             showErrorPopup: showErrorPopup,
             activityIndicator: activityIndicator,
             dismissViewController: dismissViewController,
-            showToast: showToast
+            toastMessage: toastMessage
         )
     }
 }

@@ -152,12 +152,12 @@ extension SignInViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .showToast
-            .drive(onNext: { [weak self] message in
+            .toastMessage
+            .do(onNext: { [weak self] message in
                 self?.loginIdInputView.inputTextField.resignFirstResponder()
                 self?.passwordInputView.inputTextField.resignFirstResponder()
-                Toast.showToast(message)
             })
+            .showToast()
             .disposed(by: disposeBag)
     }
 }

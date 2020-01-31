@@ -428,10 +428,8 @@ extension CreatePostViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .showToast
-            .drive(onNext: { message in
-                Toast.showToast(message)
-            })
+            .toastMessage
+            .showToast()
             .disposed(by: disposeBag)
 
         output

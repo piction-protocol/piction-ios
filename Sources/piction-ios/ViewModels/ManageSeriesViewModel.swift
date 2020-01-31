@@ -50,7 +50,7 @@ final class ManageSeriesViewModel: InjectableViewModel {
         let selectedIndexPath: Driver<IndexPath>
         let changeEditMode: Driver<Void>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
-        let showToast: Driver<String>
+        let toastMessage: Driver<String>
         let activityIndicator: Driver<Bool>
         let dismissViewController: Driver<Void>
     }
@@ -152,7 +152,7 @@ final class ManageSeriesViewModel: InjectableViewModel {
             updateSeriesAction.isExecuting,
             deleteSeriesAction.isExecuting)
 
-        let showToast = Driver.merge(
+        let toastMessage = Driver.merge(
             updateSeriesSuccess,
             deleteSeriesSuccess,
             reorderItemsSuccess,
@@ -168,7 +168,7 @@ final class ManageSeriesViewModel: InjectableViewModel {
             selectedIndexPath: input.selectedIndexPath,
             changeEditMode: input.reorderBtnDidTap,
             embedEmptyViewController: embedEmptyView,
-            showToast: showToast,
+            toastMessage: toastMessage,
             activityIndicator: activityIndicator,
             dismissViewController: input.closeBtnDidTap
         )

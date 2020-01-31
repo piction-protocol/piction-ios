@@ -53,7 +53,7 @@ final class MyPageViewModel: InjectableViewModel {
         let selectedIndexPath: Driver<IndexPath>
         let embedUserInfoViewController: Driver<Void>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
-        let showToast: Driver<String>
+        let toastMessage: Driver<String>
         let isFetching: Driver<Bool>
         let activityIndicator: Driver<Bool>
         let showErrorPopup: Driver<Void>
@@ -204,7 +204,7 @@ final class MyPageViewModel: InjectableViewModel {
         let embedUserInfoViewController = userMeAction.elements
             .map { _ in Void() }
 
-        let showToast = Driver.merge(signOutSuccess, signOutError)
+        let toastMessage = Driver.merge(signOutSuccess, signOutError)
 
         let refreshAction = input.refreshControlDidRefresh
             .withLatestFrom(myPageList)
@@ -221,7 +221,7 @@ final class MyPageViewModel: InjectableViewModel {
             selectedIndexPath: input.selectedIndexPath,
             embedUserInfoViewController: embedUserInfoViewController,
             embedEmptyViewController: embedEmptyViewController,
-            showToast: showToast,
+            toastMessage: toastMessage,
             isFetching: refreshAction.isExecuting,
             activityIndicator: activityIndicator,
             showErrorPopup: showErrorPopup

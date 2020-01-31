@@ -50,7 +50,7 @@ final class CreateFanPassViewModel: InjectableViewModel {
         let popViewController: Driver<Void>
         let activityIndicator: Driver<Bool>
         let dismissKeyboard: Driver<Void>
-        let showToast: Driver<String>
+        let toastMessage: Driver<String>
     }
 
     func build(input: Input) -> Output {
@@ -131,7 +131,7 @@ final class CreateFanPassViewModel: InjectableViewModel {
                 updater.refreshContent.onNext(())
             })
 
-        let showToast = saveFanPassAction.error
+        let toastMessage = saveFanPassAction.error
             .map { $0 as? ErrorType }
             .map { $0?.message }
             .flatMap(Driver.from)
@@ -145,7 +145,7 @@ final class CreateFanPassViewModel: InjectableViewModel {
             popViewController: popViewController,
             activityIndicator: activityIndicator,
             dismissKeyboard: dismissKeyboard,
-            showToast: showToast
+            toastMessage: toastMessage
         )
     }
 }

@@ -363,7 +363,7 @@ extension CreatePostViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .showToast
+            .toastMessage
             .drive(onNext: { [weak self] message in
                 self?.view.endEditing(true)
                 self?.view.makeToast(message)

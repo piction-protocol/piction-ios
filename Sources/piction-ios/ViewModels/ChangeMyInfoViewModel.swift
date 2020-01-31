@@ -56,7 +56,7 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
         let keyboardWillChangeFrame: Driver<ChangedKeyboardFrame>
         let activityIndicator: Driver<Bool>
         let dismissViewController: Driver<Void>
-        let showToast: Driver<String>
+        let toastMessage: Driver<String>
     }
 
     func build(input: Input) -> Output {
@@ -181,7 +181,7 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
             uploadPictureAction.isExecuting,
             saveButtonAction.isExecuting)
 
-        let showToast = Driver.merge(changeUserInfoError, uploadPictureError)
+        let toastMessage = Driver.merge(changeUserInfoError, uploadPictureError)
 
         return Output(
             viewWillAppear: viewWillAppear,
@@ -195,7 +195,7 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
             keyboardWillChangeFrame: keyboardWillChangeFrame,
             activityIndicator: activityIndicator,
             dismissViewController: dismissViewController,
-            showToast: showToast
+            toastMessage: toastMessage
         )
     }
 }

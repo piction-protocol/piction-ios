@@ -61,7 +61,7 @@ final class PostViewModel: InjectableViewModel {
         let openFanPassListViewController: Driver<(String, Int)>
         let reloadPost: Driver<Void>
         let sharePost: Driver<String>
-        let showToast: Driver<String>
+        let toastMessage: Driver<String>
     }
 
     func build(input: Input) -> Output {
@@ -273,7 +273,7 @@ final class PostViewModel: InjectableViewModel {
                 return Driver.just(url)
             }
 
-        let showToast = Driver.merge(freeSubscriptionSuccess, freeSubscriptionError)
+        let toastMessage = Driver.merge(freeSubscriptionSuccess, freeSubscriptionError)
 
         let contentOffset = Driver.combineLatest(input.contentOffset, input.viewDidAppear)
             .map { $0.0 }
@@ -298,7 +298,7 @@ final class PostViewModel: InjectableViewModel {
             openFanPassListViewController: openFanPassListViewController,
             reloadPost: reloadPost,
             sharePost: sharePost,
-            showToast: showToast
+            toastMessage: toastMessage
         )
     }
 }

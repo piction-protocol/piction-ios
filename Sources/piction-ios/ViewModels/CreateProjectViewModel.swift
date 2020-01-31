@@ -68,7 +68,7 @@ final class CreateProjectViewModel: InjectableViewModel {
         let popViewController: Driver<Void>
         let activityIndicator: Driver<Bool>
         let dismissKeyboard: Driver<Bool>
-        let showToast: Driver<String>
+        let toastMessage: Driver<String>
     }
 
     func build(input: Input) -> Output {
@@ -240,7 +240,7 @@ final class CreateProjectViewModel: InjectableViewModel {
             uploadThumbnailImageAction.isExecuting,
             saveButtonAction.isExecuting)
 
-        let showToast = Driver.merge(
+        let toastMessage = Driver.merge(
             uploadWideThumbnailError,
             uploadThumbnailError,
             changeProjectInfoError)
@@ -262,7 +262,7 @@ final class CreateProjectViewModel: InjectableViewModel {
             popViewController: changeProjectInfoSuccess,
             activityIndicator: activityIndicator,
             dismissKeyboard: dismissKeyboard,
-            showToast: showToast
+            toastMessage: toastMessage
         )
     }
 }

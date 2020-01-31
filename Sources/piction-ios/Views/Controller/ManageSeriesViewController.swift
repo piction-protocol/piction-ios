@@ -235,11 +235,8 @@ extension ManageSeriesViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .showToast
-            .drive(onNext: { message in
-                guard message != "" else { return }
-                Toast.showToast(message)
-            })
+            .toastMessage
+            .showToast()
             .disposed(by: disposeBag)
 
         output

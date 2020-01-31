@@ -78,3 +78,13 @@ extension SharedSequence where E == Bool {
             })
     }
 }
+
+extension SharedSequence where E == String {
+    public func showToast() -> Disposable {
+        return asDriver(onErrorDriveWith: .empty())
+            .drive(onNext: { message in
+                guard message != "" else { return }
+                Toast.showToast(message)
+            })
+    }
+}

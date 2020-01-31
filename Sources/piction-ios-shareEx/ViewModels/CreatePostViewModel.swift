@@ -55,7 +55,7 @@ final class CreatePostViewModel: ViewModel {
         let enableSaveButton: Driver<Void>
         let keyboardWillChangeFrame: Driver<ChangedKeyboardFrame>
         let activityIndicator: Driver<Bool>
-        let showToast: Driver<String>
+        let toastMessage: Driver<String>
         let dismissViewController: Driver<String?>
     }
 
@@ -317,7 +317,7 @@ final class CreatePostViewModel: ViewModel {
             uploadContentImage.isExecuting,
             saveAction.isExecuting)
 
-        let showToast = Driver.merge(saveBtnDidTap, openSeriesError, uploadCoverImageError, saveError, uploadContentImageError)
+        let toastMessage = Driver.merge(saveBtnDidTap, openSeriesError, uploadCoverImageError, saveError, uploadContentImageError)
 
         let dismissViewController = Driver.merge(saveSuccess, userMeError, cancelAction, projectListError)
 
@@ -335,7 +335,7 @@ final class CreatePostViewModel: ViewModel {
             enableSaveButton: enableSaveButton,
             keyboardWillChangeFrame: keyboardWillChangeFrame,
             activityIndicator: activityIndicator,
-            showToast: showToast,
+            toastMessage: toastMessage,
             dismissViewController: dismissViewController
         )
     }

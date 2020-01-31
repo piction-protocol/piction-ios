@@ -83,7 +83,7 @@ final class CreatePostViewModel: InjectableViewModel {
         let popViewController: Driver<Void>
         let activityIndicator: Driver<Bool>
         let dismissKeyboard: Driver<Bool>
-        let showToast: Driver<String>
+        let toastMessage: Driver<String>
     }
 
     func build(input: Input) -> Output {
@@ -304,7 +304,7 @@ final class CreatePostViewModel: InjectableViewModel {
             uploadContentImageAction.isExecuting,
             savePostAction.isExecuting)
 
-        let showToast = Driver.merge(
+        let toastMessage = Driver.merge(
             uploadCoverImageError,
             uploadContentImageError,
             changePostInfoError)
@@ -332,7 +332,7 @@ final class CreatePostViewModel: InjectableViewModel {
             popViewController: changePostInfoSuccess,
             activityIndicator: activityIndicator,
             dismissKeyboard: dismissKeyboard,
-            showToast: showToast
+            toastMessage: toastMessage
         )
     }
 }

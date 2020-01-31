@@ -194,13 +194,13 @@ extension ChangePasswordViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .showToast
-            .drive(onNext: { [weak self] message in
+            .toastMessage
+            .do(onNext: { [weak self] message in
                 self?.passwordTextField.resignFirstResponder()
                 self?.newPasswordTextField.resignFirstResponder()
                 self?.passwordCheckTextField.resignFirstResponder()
-                Toast.showToast(message)
             })
+            .showToast()
             .disposed(by: disposeBag)
     }
 }

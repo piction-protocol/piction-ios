@@ -31,7 +31,7 @@ final class UserInfoViewModel: InjectableViewModel {
         let viewWillAppear: Driver<Void>
         let userInfo: Driver<UserModel>
         let walletInfo: Driver<WalletModel>
-        let showToast: Driver<String>
+        let toastMessage: Driver<String>
     }
 
     func build(input: Input) -> Output {
@@ -68,13 +68,13 @@ final class UserInfoViewModel: InjectableViewModel {
             .map { try? $0.map(to: WalletModel.self) }
             .flatMap(Driver.from)
 
-        let showToast = Driver.merge(userInfoError, walletInfoError)
+        let toastMessage = Driver.merge(userInfoError, walletInfoError)
 
         return Output(
             viewWillAppear: input.viewWillAppear,
             userInfo: userInfoSuccess,
             walletInfo: walletInfoSuccess,
-            showToast: showToast
+            toastMessage: toastMessage
         )
     }
 }

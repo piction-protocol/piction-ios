@@ -41,7 +41,7 @@ final class ManageSeriesViewModel: InjectableViewModel {
         let openDeleteConfirmPopup: Driver<IndexPath>
         let selectedIndexPath: Driver<IndexPath>
         let embedEmptyViewController: Driver<EmptyViewStyle>
-        let showToast: Driver<String>
+        let toastMessage: Driver<String>
         let dismissViewController: Driver<Void>
     }
 
@@ -130,7 +130,7 @@ final class ManageSeriesViewModel: InjectableViewModel {
                 return Driver.empty()
             }
 
-        let showToast = Driver.merge(updateSeriesSuccess, deleteSeriesSuccess)
+        let toastMessage = Driver.merge(updateSeriesSuccess, deleteSeriesSuccess)
 
         return Output(
             viewWillAppear: input.viewWillAppear,
@@ -139,7 +139,7 @@ final class ManageSeriesViewModel: InjectableViewModel {
             openDeleteConfirmPopup: openDeleteConfirmPopup,
             selectedIndexPath: input.selectedIndexPath,
             embedEmptyViewController: embedEmptyView,
-            showToast: showToast,
+            toastMessage: toastMessage,
             dismissViewController: input.closeBtnDidTap
         )
     }
