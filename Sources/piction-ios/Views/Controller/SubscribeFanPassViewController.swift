@@ -82,13 +82,13 @@ extension SubscribeFanPassViewController: ViewModelBindable {
             .fanPassInfo
             .drive(onNext: { [weak self] (fanPassItem, fees) in
                 let price = fanPassItem.subscriptionPrice ?? 0
-                let cdFee = Double(price) * (Double(fees.contentsDistributorRate ?? 0) / 100)
-                let userAdoptionPoolFee = Double(price) * (Double(fees.userAdoptionPoolRate ?? 0) / 100)
-                let depositPoolFee = Double(price) * (Double(fees.depositPoolRate ?? 0) / 100)
-                let ecosystemFundFee = Double(price) * (Double(fees.ecosystemFundRate ?? 0) / 100)
-                let supportPoolFee = Double(price) * (Double(fees.supportPoolRate ?? 0) / 100)
-                let translatorFee = Double(price) * (Double(fees.translatorRate ?? 0) / 100)
-                let marketerFee = Double(price) * (Double(fees.marketerRate ?? 0) / 100)
+                let cdFee = Double(price) * ((fees.contentsDistributorRate ?? 0) / 100)
+                let userAdoptionPoolFee = Double(price) * ((fees.userAdoptionPoolRate ?? 0) / 100)
+                let depositPoolFee = Double(price) * ((fees.depositPoolRate ?? 0) / 100)
+                let ecosystemFundFee = Double(price) * ((fees.ecosystemFundRate ?? 0) / 100)
+                let supportPoolFee = Double(price) * ((fees.supportPoolRate ?? 0) / 100)
+                let translatorFee = Double(price) * ((fees.translatorRate ?? 0) / 100)
+                let marketerFee = Double(price) * ((fees.marketerRate ?? 0) / 100)
 
                 let totalFeePxl = cdFee + userAdoptionPoolFee + depositPoolFee + ecosystemFundFee + supportPoolFee + translatorFee + marketerFee
                 let writerPxl = Double(price) - totalFeePxl
