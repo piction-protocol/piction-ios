@@ -158,10 +158,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
-        print("fcmToken: \(fcmToken)")
-    }
-
      // [START receive_message]
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
       // If you are receiving a notification message while your app is in the background,
@@ -277,6 +273,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 // [END ios_10_message_handling]
 
 extension AppDelegate: MessagingDelegate {
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        print("fcmToken: \(fcmToken)")
+    }
+
     // [START refresh_token]
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
         print("Firebase registration token: \(fcmToken)")
