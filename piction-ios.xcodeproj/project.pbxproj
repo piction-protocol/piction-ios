@@ -21,6 +21,7 @@
 		43125A3723AB65F80060928F /* HomeTrendingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43125A3523AB65F80060928F /* HomeTrendingTableViewCell.swift */; };
 		43125A4023AC932E0060928F /* HomeHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43125A3F23AC932E0060928F /* HomeHeaderTableViewCell.swift */; };
 		43125A4123AC932E0060928F /* HomeHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43125A3F23AC932E0060928F /* HomeHeaderTableViewCell.swift */; };
+		4322CA7A23EA6AD200838A98 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4322CA7923EA6AD200838A98 /* GoogleService-Info.plist */; };
 		4323FA5C233A165600243655 /* UIViewController.Container+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F97F233A165600243655 /* UIViewController.Container+Extension.swift */; };
 		4323FA5D233A165600243655 /* UIViewController.Container+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F97F233A165600243655 /* UIViewController.Container+Extension.swift */; };
 		4323FA5E233A165600243655 /* ViewControllerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F980233A165600243655 /* ViewControllerAssembly.swift */; };
@@ -557,6 +558,7 @@
 		43125A3523AB65F80060928F /* HomeTrendingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTrendingTableViewCell.swift; sourceTree = "<group>"; };
 		43125A3F23AC932E0060928F /* HomeHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		4317A40622E172A200A5C725 /* piction-ios-test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "piction-ios-test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4322CA7923EA6AD200838A98 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4323F97F233A165600243655 /* UIViewController.Container+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController.Container+Extension.swift"; sourceTree = "<group>"; };
 		4323F980233A165600243655 /* ViewControllerAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerAssembly.swift; sourceTree = "<group>"; };
 		4323F981233A165600243655 /* ViewModelAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModelAssembly.swift; sourceTree = "<group>"; };
@@ -1396,6 +1398,7 @@
 			isa = PBXGroup;
 			children = (
 				43C41F662373B84F00D012A7 /* piction-ios.entitlements */,
+				4322CA7923EA6AD200838A98 /* GoogleService-Info.plist */,
 				43C41F652373B84F00D012A7 /* piction-ios_Info.plist */,
 			);
 			path = Live;
@@ -1606,7 +1609,6 @@
 					};
 					432CAC7722B725F00007EE03 = {
 						CreatedOnToolsVersion = 10.2.1;
-						DevelopmentTeam = TVSPDRR58A;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1759,6 +1761,7 @@
 				4323FAEE233A165C00243655 /* ProjectHeaderView.xib in Resources */,
 				436C75A72387C39300902F08 /* ManageFanPass.storyboard in Resources */,
 				4323FB5E233A166100243655 /* UserInfo.storyboard in Resources */,
+				4322CA7A23EA6AD200838A98 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2346,7 +2349,7 @@
 				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/Sources/piction-ios-shareEx/SupportingFiles/Live/piction-ios-shareEx.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TVSPDRR58A;
+				DEVELOPMENT_TEAM = 7NU7MY8AU2;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -2371,7 +2374,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.pictionnetwork.piction.shareEx;
+				PRODUCT_BUNDLE_IDENTIFIER = "network.piction.piction-ios.shareEx";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -2417,7 +2420,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = TVSPDRR58A;
+				DEVELOPMENT_TEAM = 7NU7MY8AU2;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -2437,7 +2440,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.pictionnetwork.piction.shareEx;
+				PRODUCT_BUNDLE_IDENTIFIER = "network.piction.piction-ios.shareEx";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -2643,7 +2646,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = TVSPDRR58A;
+				DEVELOPMENT_TEAM = 7NU7MY8AU2;
 				ENABLE_BITCODE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -2677,7 +2680,7 @@
 					"$(OTHER_LDFLAGS)",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.pictionnetwork.piction;
+				PRODUCT_BUNDLE_IDENTIFIER = "network.piction.piction-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -2728,7 +2731,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = TVSPDRR58A;
+				DEVELOPMENT_TEAM = 7NU7MY8AU2;
 				ENABLE_BITCODE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2757,7 +2760,7 @@
 					"$(OTHER_LDFLAGS)",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.pictionnetwork.piction;
+				PRODUCT_BUNDLE_IDENTIFIER = "network.piction.piction-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
