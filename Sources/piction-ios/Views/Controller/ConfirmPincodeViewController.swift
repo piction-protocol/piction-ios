@@ -85,6 +85,8 @@ final class ConfirmPincodeViewController: UIViewController {
             alert.addAction(cancelAction)
 
             present(alert, animated: false, completion: nil)
+        } else {
+            self.changeComplete.onNext(())
         }
     }
 }
