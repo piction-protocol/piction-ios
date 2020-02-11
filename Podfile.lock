@@ -9,6 +9,9 @@ PODS:
     - FirebaseAnalytics (= 6.2.2)
   - Firebase/CoreOnly (6.16.0):
     - FirebaseCore (= 6.6.1)
+  - Firebase/Crashlytics (6.16.0):
+    - Firebase/CoreOnly
+    - FirebaseCrashlytics (~> 4.0.0-beta.2)
   - Firebase/Messaging (6.16.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 4.2.0)
@@ -41,6 +44,11 @@ PODS:
     - GoogleUtilities/Logger (~> 6.5)
     - nanopb (~> 0.3.901)
   - FirebaseCoreDiagnosticsInterop (1.2.0)
+  - FirebaseCrashlytics (4.0.0-beta.3):
+    - FirebaseAnalyticsInterop (~> 1.2)
+    - FirebaseCore (~> 6.6)
+    - FirebaseInstanceID (~> 4.3)
+    - PromisesObjC (~> 1.2)
   - FirebaseInstallations (1.1.0):
     - FirebaseCore (~> 6.6)
     - GoogleUtilities/UserDefaults (~> 6.5)
@@ -168,6 +176,7 @@ PODS:
 DEPENDENCIES:
   - CropViewController
   - Firebase/Analytics
+  - Firebase/Crashlytics
   - Firebase/Messaging
   - Firebase/RemoteConfig
   - Gridicons
@@ -207,6 +216,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseCoreDiagnosticsInterop
+    - FirebaseCrashlytics
     - FirebaseInstallations
     - FirebaseInstanceID
     - FirebaseMessaging
@@ -250,6 +260,7 @@ SPEC CHECKSUMS:
   FirebaseCore: 85064903ed6c28e47fec9c7bd149d94ba1b6b6e7
   FirebaseCoreDiagnostics: 5e78803ab276bc5b50340e3c539c06c3de35c649
   FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
+  FirebaseCrashlytics: 81ac4950302353dc6b5f8d5cc287397725b54c97
   FirebaseInstallations: 575cd32f2aec0feeb0e44f5d0110a09e5e60b47b
   FirebaseInstanceID: 6668efc1655a4052c083f287a7141f1ead12f9c2
   FirebaseMessaging: 448cf4c727f3c95f4f90816907d67306ba785cfe
@@ -283,6 +294,6 @@ SPEC CHECKSUMS:
   WordPress-Aztec-iOS: 419ebf7a333fe147da33e4754978f20a5fd08a86
   WSTagsField: 35923c87c8bbf11e3c12ef3d3e3107425fb0ac2c
 
-PODFILE CHECKSUM: ae524ad1bdd9a409db414ae8b37b8c16eba96470
+PODFILE CHECKSUM: ec56874855c795b9e37b02ed10df47577bdfcd90
 
 COCOAPODS: 1.8.4

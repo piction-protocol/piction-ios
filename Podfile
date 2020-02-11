@@ -23,6 +23,7 @@ def util_pods
   pod 'Firebase/Analytics'
   pod 'Firebase/Messaging'
   pod 'Firebase/RemoteConfig'
+  pod 'Firebase/Crashlytics'
   pod 'ViewModelBindable', :git => 'https://github.com/jhseo/ViewModelBindable.git', :commit => '82811d20fd9a802605c38009e356878f251b0124'
 end
 

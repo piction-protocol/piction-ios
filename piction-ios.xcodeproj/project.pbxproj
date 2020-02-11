@@ -1546,6 +1546,7 @@
 				4317A3D122E172A200A5C725 /* Frameworks */,
 				4317A3E622E172A200A5C725 /* Resources */,
 				55E58BDDDC2631E8F5568046 /* [CP] Embed Pods Frameworks */,
+				43DCB24623F27BFD00F5BE18 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1566,6 +1567,7 @@
 				432CAC7622B725F00007EE03 /* Resources */,
 				4323F90F2339B3C500243655 /* Embed Frameworks */,
 				056DC58C2BF0E19CD8C00EB1 /* [CP] Embed Pods Frameworks */,
+				43DCB24723F27D1D00F5BE18 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1800,6 +1802,42 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-piction-ios/Pods-piction-ios-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		43DCB24623F27BFD00F5BE18 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
+		43DCB24723F27D1D00F5BE18 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 		55E58BDDDC2631E8F5568046 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
