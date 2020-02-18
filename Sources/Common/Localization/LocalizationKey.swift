@@ -77,7 +77,7 @@ enum LocalizationKey {
 
     // Button
     case btn_new_post
-    case btn_subs
+    case btn_subs_sponsorship_plan
     case btn_subs_free
     case btn_user_sponsorship
     case btn_user_sponsorship_history
@@ -127,6 +127,7 @@ enum LocalizationKey {
     case str_banner_header_info
 
     case str_project_subscribing
+    case str_project_sponsorship_plan
     case str_project_subscrition_complete
     case str_project_cancel_subscrition
     case str_series_posts_count

@@ -281,7 +281,7 @@ extension PostViewController: ViewModelBindable {
                     if (postInfo.plan?.level ?? 0) == 0 {
                         return LocalizationKey.btn_subs_free.localized()
                     }
-                    return LocalizationKey.btn_subs.localized()
+                    return LocalizationKey.btn_subs_sponsorship_plan.localized()
                 }
                 var description: String {
                     return (postInfo.plan?.level ?? 0) == 0 ? LocalizationKey.str_subs_only.localized() : LocalizationKey.str_subs_only_with_sponsorship_plan.localized(with: postInfo.plan?.name ?? "")

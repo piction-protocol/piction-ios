@@ -119,13 +119,13 @@ class SponsorshipPlanListTableViewCell: ReuseTableViewCell {
             if let subscriptionLevel = subscriptionInfo?.plan?.level,
                 let sponsorshipPlanLevel = sponsorshipPlan.level,
                 subscriptionLevel == sponsorshipPlanLevel {
-                return LocalizationKey.str_project_subscribing.localized()
+                return LocalizationKey.str_project_sponsorship_plan.localized()
             }
             if let price = sponsorshipPlan.sponsorshipPrice,
                 price > 0 {
                 return "\(price.commaRepresentation) \(LocalizationKey.str_sponsorship_plan_sponsorship_button.localized())"
             }
-            return LocalizationKey.btn_subs.localized()
+            return LocalizationKey.btn_subs_sponsorship_plan.localized()
         }
 
         levelLabel.text = (sponsorshipPlan.level ?? 0) == 0 ? LocalizationKey.str_sponsorship_plan_free_tier.localized() : LocalizationKey.str_sponsorship_plan_current_tier.localized(with: sponsorshipPlan.level ?? 0)

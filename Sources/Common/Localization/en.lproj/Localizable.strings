@@ -77,7 +77,7 @@
 
 // Button
 "btn_new_post" = "새 포스트";
-"btn_subs" = "Subscribe for free";
+"btn_subs_sponsorship_plan" = "Subscribe for free";
 "btn_subs_free" = "Subscribe";
 "btn_user_sponsorship" = "Sponsor";
 "btn_user_sponsorship_history" = "후원 기록";
@@ -127,6 +127,7 @@
 "str_banner_header_info" = "Updates and News from Piction";
 
 "str_project_subscribing" = "Subscribed";
+"str_project_sponsorship_plan" = "Sponsored";
 "str_project_subscrition_complete" = "구독 완료";
 "str_project_cancel_subscrition" = "구독이 취소되었습니다.";
 "str_series_posts_count" = "%@ posts";

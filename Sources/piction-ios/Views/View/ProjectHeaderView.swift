@@ -143,7 +143,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
                 managementButton.isHidden = true
                 subscriptionButton.isHidden = false
                 subscriptionButton.backgroundColor = UIColor(r: 51, g: 51, b: 51)
-                subscriptionButton.setTitle(sponsorshipPlanList.count > 1 ? LocalizationKey.btn_subs.localized() : LocalizationKey.btn_subs_free.localized(), for: .normal)
+                subscriptionButton.setTitle(sponsorshipPlanList.count > 1 ? LocalizationKey.btn_subs_sponsorship_plan.localized() : LocalizationKey.btn_subs_free.localized(), for: .normal)
                 subscriptionButton.setTitleColor(.white, for: .normal)
             }
         }

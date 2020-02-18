@@ -77,8 +77,8 @@
 
 // Button
 "btn_new_post" = "새 포스트";
-"btn_subs" = "구독하기";
-"btn_subs_free" = "무료로 구독하기";
+"btn_subs_sponsorship_plan" = "후원하기";
+"btn_subs_free" = "구독하기";
 "btn_user_sponsorship" = "후원하기";
 "btn_user_sponsorship_history" = "후원 기록";
 "btn_save_changed" = "변경사항 저장";
@@ -127,6 +127,7 @@
 "str_banner_header_info" = "픽션의 최신 정보와 특별한 혜택을 알려드립니다.";
 
 "str_project_subscribing" = "구독 중";
+"str_project_sponsorship_plan" = "후원 중";
 "str_project_subscrition_complete" = "구독 완료";
 "str_project_cancel_subscrition" = "구독이 취소되었습니다.";
 "str_series_posts_count" = "%@ 포스트";
