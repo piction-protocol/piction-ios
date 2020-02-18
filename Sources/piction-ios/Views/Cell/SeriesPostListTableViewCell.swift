@@ -22,20 +22,20 @@ final class SeriesPostListTableViewCell: ReuseTableViewCell {
         super.layoutSubviews()
     }
 
-    func configure(with model: Model, subscriptionInfo: SubscriptionModel?, number: Int) {
-        let (title, date, fanPass) = (model.title, model.createdAt, model.fanPass)
+    func configure(with model: Model, subscriptionInfo: SponsorshipModel?, number: Int) {
+        let (title, date, sponsorshipPlan) = (model.title, model.createdAt, model.plan)
 
         numberLabel.text = "#\(number)"
 
         titleLabel.text = title
 
-        if fanPass == nil || (subscriptionInfo?.fanPass?.level ?? 0) >= (fanPass?.level ?? 0) {
+        if sponsorshipPlan == nil || (subscriptionInfo?.plan?.level ?? 0) >= (sponsorshipPlan?.level ?? 0) {
             subTitleLabel.textColor = .pictionGray
             subTitleLabel.text = date?.toString(format: LocalizationKey.str_series_date_format.localized())
         } else {
             subTitleLabel.textColor = .pictionRed
-            if fanPass != nil {
-                subTitleLabel.text = (fanPass?.level ?? 0) == 0 ? LocalizationKey.str_series_subs_only.localized() :  LocalizationKey.str_series_fanpass_subs_only.localized(with: fanPass?.name ?? "")
+            if sponsorshipPlan != nil {
+                subTitleLabel.text = (sponsorshipPlan?.level ?? 0) == 0 ? LocalizationKey.str_series_subs_only.localized() :  LocalizationKey.str_series_sponsorship_plan_subs_only.localized(with: sponsorshipPlan?.name ?? "")
             }
         }
     }

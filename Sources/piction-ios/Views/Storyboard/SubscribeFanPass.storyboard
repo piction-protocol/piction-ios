@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,7 +14,7 @@
         </array>
     </customFonts>
     <scenes>
-        <!--FAN PASS 구매-->
+        <!--후원 플랜 결제-->
         <scene sceneID="QqL-1A-vEB">
             <objects>
                 <viewController storyboardIdentifier="SubscribeFanPassViewController" id="d3Z-cD-opx" customClass="SubscribeFanPassViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
@@ -34,13 +34,13 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Zdm-4u-iDg">
                                                         <rect key="frame" x="0.0" y="0.0" width="335" height="59.333333333333336"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="선택한 구독 상품" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Dr-lc-ylT">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="선택한 후원 플랜" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Dr-lc-ylT">
                                                                 <rect key="frame" x="0.0" y="0.0" width="130" height="24"/>
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                                 <color key="textColor" name="PictionDarkGray"/>
                                                                 <nil key="highlightedColor"/>
                                                                 <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_purchase_fanpass_select_fanpass"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan_select_sponsorship_plan"/>
                                                                 </userDefinedRuntimeAttributes>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eje-5W-NkW">
@@ -61,10 +61,26 @@
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NwH-2I-VyH">
                                                                         <rect key="frame" x="0.0" y="0.0" width="121" height="15"/>
                                                                         <attributedString key="attributedText">
-                                                                            <fragment content="상품 설명 보기">
+                                                                            <fragment content="설명">
                                                                                 <attributes>
-                                                                                    <color key="NSColor" red="0.1019607843" green="0.57254901960000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                    <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                                    <font key="NSFont" size="12" name=".AppleSDGothicNeoI-Regular"/>
+                                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                                    <integer key="NSUnderline" value="1"/>
+                                                                                </attributes>
+                                                                            </fragment>
+                                                                            <fragment content=" ">
+                                                                                <attributes>
+                                                                                    <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                                     <font key="NSFont" metaFont="label" size="12"/>
+                                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                                    <integer key="NSUnderline" value="1"/>
+                                                                                </attributes>
+                                                                            </fragment>
+                                                                            <fragment content="보기">
+                                                                                <attributes>
+                                                                                    <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                                    <font key="NSFont" size="12" name=".AppleSDGothicNeoI-Regular"/>
                                                                                     <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                                     <integer key="NSUnderline" value="1"/>
                                                                                 </attributes>
@@ -72,7 +88,7 @@
                                                                         </attributedString>
                                                                         <nil key="highlightedColor"/>
                                                                         <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_purchase_fanpass_show_description"/>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan_show_description"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rj2-Vx-adx">
@@ -116,7 +132,7 @@
                                                                 <color key="textColor" name="PictionDarkGray"/>
                                                                 <nil key="highlightedColor"/>
                                                                 <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_purchase_fanpass_payment"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan_payment"/>
                                                                 </userDefinedRuntimeAttributes>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="W2u-N3-sJT">
@@ -128,7 +144,7 @@
                                                                         <color key="textColor" name="PictionDarkGray"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_purchase_fanpass_payment_piction"/>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan_payment_piction"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="dWD-XU-eeK">
@@ -176,7 +192,7 @@
                                                                 <color key="textColor" name="PictionDarkGray"/>
                                                                 <nil key="highlightedColor"/>
                                                                 <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_purchase_fanpass_amount"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan_purchase_amount"/>
                                                                 </userDefinedRuntimeAttributes>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7j-dn-M8a">
@@ -186,19 +202,19 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="SP4-Zy-qPm">
-                                                                <rect key="frame" x="0.0" y="68" width="60" height="17"/>
+                                                                <rect key="frame" x="0.0" y="68" width="87.666666666666671" height="17"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="제공 기간" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CKL-hv-lsB">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="52" height="17"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="혜택 제공 기간" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CKL-hv-lsB">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="79.666666666666671" height="17"/>
                                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_purchase_fanpass_expire"/>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan_expire_title"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aJe-dq-TDo">
-                                                                        <rect key="frame" x="56" y="0.0" width="4" height="17"/>
+                                                                        <rect key="frame" x="83.666666666666671" y="0.0" width="4" height="17"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -224,6 +240,9 @@
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan_transfer_info"/>
+                                                        </userDefinedRuntimeAttributes>
                                                     </label>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q4V-kI-81b">
                                                         <rect key="frame" x="0.0" y="33" width="92" height="17"/>
@@ -233,6 +252,9 @@
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan_transfer_info_fees"/>
+                                                                </userDefinedRuntimeAttributes>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bdA-sE-T4J">
                                                                 <rect key="frame" x="88.333333333333329" y="0.0" width="3.6666666666666714" height="17"/>
@@ -287,7 +309,7 @@
                                                                 <color key="textColor" name="PictionDarkGray"/>
                                                                 <nil key="highlightedColor"/>
                                                                 <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_purchase_fanpass_agree"/>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan_agree"/>
                                                                 </userDefinedRuntimeAttributes>
                                                             </label>
                                                         </subviews>
@@ -315,7 +337,7 @@
                                                     <constraint firstAttribute="height" constant="53" id="NmX-5G-tNj"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                <state key="normal" title="구매하기">
+                                                <state key="normal" title="결제">
                                                     <color key="titleColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <userDefinedRuntimeAttributes>
@@ -349,9 +371,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lDP-Xc-5iI"/>
                     </view>
-                    <navigationItem key="navigationItem" title="FAN PASS 구매" id="sh9-UU-Ia7">
+                    <navigationItem key="navigationItem" title="후원 플랜 결제" id="sh9-UU-Ia7">
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_fan_pass_purchase"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan_purchase"/>
                         </userDefinedRuntimeAttributes>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>

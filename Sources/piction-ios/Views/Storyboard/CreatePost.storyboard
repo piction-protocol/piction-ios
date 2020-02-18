@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -270,13 +270,13 @@
                                                                             </userDefinedRuntimeAttribute>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="멤버십 구독자 공개" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dBl-SE-6ui">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="후원자 공개" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dBl-SE-6ui">
                                                                         <rect key="frame" x="28" y="1.3333333333333712" width="291" height="17"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                         <color key="textColor" name="PictionDarkGray"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_post_status_fanpass"/>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_post_status_sponsorship_plan"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                 </subviews>
@@ -584,10 +584,10 @@
                         <outlet property="publishNowCheckBoxView" destination="w5B-lH-Nal" id="AAl-9M-9PM"/>
                         <outlet property="saveBarButton" destination="uhc-GD-WVu" id="Xsq-HT-fuK"/>
                         <outlet property="scrollView" destination="vPr-7Y-ptz" id="qTn-re-B44"/>
-                        <outlet property="selectFanPassButton" destination="nph-s6-s5g" id="nAt-4c-nFb"/>
-                        <outlet property="selectFanPassLabel" destination="mOH-5I-K4v" id="kWJ-Yu-tBH"/>
-                        <outlet property="selectFanPassView" destination="GJJ-KA-em9" id="Ovm-KW-wSH"/>
                         <outlet property="selectSeriesButton" destination="wIE-2y-Vrn" id="SZo-xr-QxU"/>
+                        <outlet property="selectSponsorshipPlanButton" destination="nph-s6-s5g" id="7LZ-Un-sSW"/>
+                        <outlet property="selectSponsorshipPlanLabel" destination="mOH-5I-K4v" id="CES-2L-oTS"/>
+                        <outlet property="selectSponsorshipPlanView" destination="GJJ-KA-em9" id="sDb-4k-Al4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RVH-9c-PNQ" userLabel="First Responder" sceneMemberID="firstResponder"/>

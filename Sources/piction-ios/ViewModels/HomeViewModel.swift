@@ -18,7 +18,7 @@ enum HomeHeaderType {
 
 enum HomeSection {
     case header(type: HomeHeaderType)
-    case subscribingPosts(item: SubscribingPostModel)
+    case subscribingPosts(item: SponsoringPostModel)
     case trending(item: [ProjectModel])
 }
 
@@ -85,7 +85,7 @@ final class HomeViewModel: InjectableViewModel {
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let subscribingProjectsAction = Driver.merge(initialPage, loadRetry)
-            .map { SubscriberAPI.projects(page: 1, size: 10) }
+            .map { SponsorAPI.projects(page: 1, size: 10) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -110,12 +110,12 @@ final class HomeViewModel: InjectableViewModel {
             .map { _ in Void() }
 
         let subscribingPostAction = Driver.merge(subscribingPostLoad, loadNext)
-            .map { SubscriberAPI.latestPosts(page: self.page + 1, size: 20) }
+            .map { SponsorAPI.latestPosts(page: self.page + 1, size: 20) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let subscribingPostSuccess = subscribingPostAction.elements
-            .map { try? $0.map(to: PageViewResponse<SubscribingPostModel>.self) }
+            .map { try? $0.map(to: PageViewResponse<SponsoringPostModel>.self) }
             .flatMap(Driver.from)
             .do(onNext: { [weak self] pageList in
                 guard

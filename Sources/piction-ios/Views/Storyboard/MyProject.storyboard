@@ -145,8 +145,8 @@
                                 <connections>
                                     <outlet property="lockView" destination="nC7-zK-hhG" id="lfp-ea-ZAY"/>
                                     <outlet property="maskImage" destination="ewY-Nb-71i" id="hci-pr-tlg"/>
+                                    <outlet property="sponsorCountLabel" destination="UXg-tv-Adg" id="nUf-0d-cd0"/>
                                     <outlet property="statusLabel" destination="QP8-L8-4BV" id="gSQ-3J-Ort"/>
-                                    <outlet property="subscriptionCountLabel" destination="UXg-tv-Adg" id="47A-kv-mh4"/>
                                     <outlet property="thumbnailImageView" destination="fq2-1a-w8w" id="ucU-zh-S7h"/>
                                     <outlet property="titleLabel" destination="9ID-R2-SvL" id="Rks-dE-7tf"/>
                                 </connections>

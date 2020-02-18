@@ -25,7 +25,7 @@ final class SubscriptionUserViewModel: InjectableViewModel {
     }
 
     var page = 0
-    var items: [SubscriberModel] = []
+    var items: [SponsorModel] = []
     var shouldInfiniteScroll = true
 
     var loadTrigger = PublishSubject<Void>()
@@ -38,7 +38,7 @@ final class SubscriptionUserViewModel: InjectableViewModel {
 
     struct Output {
         let viewWillAppear: Driver<Void>
-        let subscriptionUserList: Driver<[SubscriberModel]>
+        let subscriptionUserList: Driver<[SponsorModel]>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let isFetching: Driver<Bool>
         let dismissViewController: Driver<Void>
@@ -65,12 +65,12 @@ final class SubscriptionUserViewModel: InjectableViewModel {
             .filter { self.shouldInfiniteScroll }
 
         let subscriptionUserListAction = Driver.merge(initialPage, loadNext)
-            .map { CreatorAPI.projectSubscriptions(uri: uri, page: self.page + 1, size: 30) }
+            .map { CreatorAPI.projectSponsors(uri: uri, page: self.page + 1, size: 30) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let subscriptionUserListSuccess = subscriptionUserListAction.elements
-            .map { try? $0.map(to: PageViewResponse<SubscriberModel>.self) }
+            .map { try? $0.map(to: PageViewResponse<SponsorModel>.self) }
             .do(onNext: { [weak self] pageList in
                 guard
                     let `self` = self,
@@ -87,7 +87,7 @@ final class SubscriptionUserViewModel: InjectableViewModel {
             .map { self.items }
 
         let subscriptionUserListError = subscriptionUserListAction.error
-            .map { _ in [SubscriberModel]() }
+            .map { _ in [SponsorModel]() }
 
         let subscriptionUserList = Driver.merge(subscriptionUserListSuccess, subscriptionUserListError)
 

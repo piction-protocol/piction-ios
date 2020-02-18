@@ -252,8 +252,8 @@ final class ViewModelAssembly: Assembly {
             )
         }
 
-        container.register(FanPassListViewModel.self) { (resolver, uri: String, postId: Int?) in
-            return FanPassListViewModel(dependency: (
+        container.register(SponsorshipPlanListViewModel.self) { (resolver, uri: String, postId: Int?) in
+            return SponsorshipPlanListViewModel(dependency: (
                 resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 uri: uri,
@@ -261,31 +261,31 @@ final class ViewModelAssembly: Assembly {
             )
         }
 
-        container.register(SubscribeFanPassViewModel.self) { (resolver, uri: String, selectedFanPass: FanPassModel) in
-            return SubscribeFanPassViewModel(dependency: (
+        container.register(PurchaseSponsorshipPlanViewModel.self) { (resolver, uri: String, selectedSponsorshipPlan: PlanModel) in
+            return PurchaseSponsorshipPlanViewModel(dependency: (
                 resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 resolver.resolve(KeychainManagerProtocol.self)!,
                 uri: uri,
-                selectedFanPass: selectedFanPass)
+                selectedSponsorshipPlan: selectedSponsorshipPlan)
             )
         }
 
-        container.register(ManageFanPassViewModel.self) { (resolver, uri: String, fanPassId: Int?) in
-            return ManageFanPassViewModel(dependency: (
+        container.register(ManageSponsorshipPlanViewModel.self) { (resolver, uri: String, planId: Int?) in
+            return ManageSponsorshipPlanViewModel(dependency: (
                 resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 uri: uri,
-                fanPassId: fanPassId)
+                planId: planId)
             )
         }
 
-        container.register(CreateFanPassViewModel.self) { (resolver, uri: String, fanPass: FanPassModel?) in
-            return CreateFanPassViewModel(dependency: (
+        container.register(CreateSponsorshipPlanViewModel.self) { (resolver, uri: String, sponsorshipPlan: PlanModel?) in
+            return CreateSponsorshipPlanViewModel(dependency: (
                 resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 uri: uri,
-                fanPass: fanPass)
+                sponsorshipPlan: sponsorshipPlan)
             )
         }
     }

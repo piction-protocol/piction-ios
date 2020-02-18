@@ -89,16 +89,16 @@ final class SeriesPostViewModel: InjectableViewModel {
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let subscriptionInfoAction = Driver.merge(initialPage, loadNext, loadRetry)
-            .map { FanPassAPI.getSubscribedFanPass(uri: uri) }
+            .map { SponsorshipPlanAPI.getSponsoredPlan(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let subscriptionInfoSuccess = subscriptionInfoAction.elements
-            .map { try? $0.map(to: SubscriptionModel.self) }
-            .flatMap(Driver<SubscriptionModel?>.from)
+            .map { try? $0.map(to: SponsorshipModel.self) }
+            .flatMap(Driver<SponsorshipModel?>.from)
 
         let SubscriptionInfoError = subscriptionInfoAction.error
-            .map { _ in SubscriptionModel?(nil) }
+            .map { _ in SponsorshipModel?(nil) }
 
         let subscriptionInfo = Driver.merge(subscriptionInfoSuccess, SubscriptionInfoError)
 

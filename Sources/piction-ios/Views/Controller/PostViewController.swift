@@ -278,13 +278,13 @@ extension PostViewController: ViewModelBindable {
             .drive(onNext: { [weak self] (userInfo, postInfo, _) in
                 guard let `self` = self else { return }
                 var buttonTitle: String {
-                    if (postInfo.fanPass?.level ?? 0) == 0 {
+                    if (postInfo.plan?.level ?? 0) == 0 {
                         return LocalizationKey.btn_subs_free.localized()
                     }
                     return LocalizationKey.btn_subs.localized()
                 }
                 var description: String {
-                    return (postInfo.fanPass?.level ?? 0) == 0 ? LocalizationKey.str_subs_only.localized() : LocalizationKey.str_subs_only_with_fanpass.localized(with: postInfo.fanPass?.name ?? "")
+                    return (postInfo.plan?.level ?? 0) == 0 ? LocalizationKey.str_subs_only.localized() : LocalizationKey.str_subs_only_with_sponsorship_plan.localized(with: postInfo.plan?.name ?? "")
                 }
                 self.subscriptionButton.setTitle(buttonTitle, for: .normal)
                 self.subscriptionDescriptionLabel.text = description
@@ -322,9 +322,9 @@ extension PostViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .openFanPassListViewController
+            .openSponsorshipPlanListViewController
             .drive(onNext: { [weak self] (uri, postId) in
-                self?.openFanPassListViewController(uri: uri, postId: postId)
+                self?.openSponsorshipPlanListViewController(uri: uri, postId: postId)
             })
             .disposed(by: disposeBag)
 

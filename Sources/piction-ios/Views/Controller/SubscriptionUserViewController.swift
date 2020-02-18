@@ -33,8 +33,8 @@ final class SubscriptionUserViewController: UIViewController {
         embed(vc, to: emptyView)
     }
 
-    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, SubscriberModel>> {
-        return RxTableViewSectionedReloadDataSource<SectionModel<String, SubscriberModel>>(
+    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, SponsorModel>> {
+        return RxTableViewSectionedReloadDataSource<SectionModel<String, SponsorModel>>(
             configureCell: { dataSource, tableView, indexPath, model in
                 let cell: SubscriptionUserTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
                 cell.configure(with: model)

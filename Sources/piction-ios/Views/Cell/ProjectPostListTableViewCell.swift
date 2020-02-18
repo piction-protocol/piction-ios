@@ -35,8 +35,8 @@ final class ProjectPostListTableViewCell: ReuseTableViewCell {
         super.layoutSubviews()
     }
 
-    func configure(with model: Model, subscriptionInfo: SubscriptionModel?) {
-        let (thumbnail, seriesName, title, publishedAt, likeCount, fanPass, status) = (model.cover, model.series?.name, model.title, model.publishedAt, model.likeCount, model.fanPass, model.status)
+    func configure(with model: Model, subscriptionInfo: SponsorshipModel?) {
+        let (thumbnail, seriesName, title, publishedAt, likeCount, sponsorshipPlan, status) = (model.cover, model.series?.name, model.title, model.publishedAt, model.likeCount, model.plan, model.status)
 
         if let thumbnail = thumbnail {
             let coverImageWithIC = "\(thumbnail)?w=656&h=246&quality=80&output=webp"
@@ -70,20 +70,20 @@ final class ProjectPostListTableViewCell: ReuseTableViewCell {
             lockView.backgroundColor = thumbnail == nil ? UIColor(r: 51, g: 51, b: 51, a: 0.2) : .clear
         } else {
             var needSubscription: Bool {
-                if fanPass == nil {
+                if sponsorshipPlan == nil {
                     return false
                 }
-                if (fanPass?.level != nil) && (subscriptionInfo?.fanPass?.level == nil) {
+                if (sponsorshipPlan?.level != nil) && (subscriptionInfo?.plan?.level == nil) {
                     return true
                 }
-                if (fanPass?.level ?? 0) <= (subscriptionInfo?.fanPass?.level ?? 0) {
+                if (sponsorshipPlan?.level ?? 0) <= (subscriptionInfo?.plan?.level ?? 0) {
                     return false
                 }
                 return true
             }
 
             if needSubscription {
-                lockMessageLabel.text = (fanPass?.level == 0) ? LocalizationKey.str_subs_only.localized() :  LocalizationKey.str_subs_only_with_fanpass.localized(with: fanPass?.name ?? "")
+                lockMessageLabel.text = (sponsorshipPlan?.level == 0) ? LocalizationKey.str_subs_only.localized() :  LocalizationKey.str_subs_only_with_sponsorship_plan.localized(with: sponsorshipPlan?.name ?? "")
                 thumbnailView.isHidden = false
                 maskImage.isHidden = false
                 lockView.isHidden = false

@@ -75,7 +75,7 @@ final class TransactionDetailViewModel: InjectableViewModel {
         let transactionSubscriptionAction = Driver.merge(initialLoad, loadRetry)
             .filter { transaction.transactionType != "VALUE_TRANSFER" }
             .filter { transaction.transactionType == "SUBSCRIPTION" }
-            .map { WalletAPI.subscriptionTransaction(txHash: transaction.transactionHash ?? "") }
+            .map { WalletAPI.sponsorshipTransaction(txHash: transaction.transactionHash ?? "") }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -92,7 +92,7 @@ final class TransactionDetailViewModel: InjectableViewModel {
             ] }
 
         let transactionSubscriptionSuccess = transactionSubscriptionAction.elements
-            .map { try? $0.map(to: TransactionSubscriptionModel.self) }
+            .map { try? $0.map(to: TransactionSponsorshipModel.self) }
             .map { [
                 TransactionDetailSection.header(title: transaction.inOut ?? "" == "IN" ? LocalizationKey.str_sponsorship_plan_sell_info.localized() : LocalizationKey.str_sponsorship_plan_buy_info.localized()),
                 TransactionDetailSection.list(title: LocalizationKey.str_order_id.localized(), description: "\($0?.orderNo ?? 0)", link: ""),

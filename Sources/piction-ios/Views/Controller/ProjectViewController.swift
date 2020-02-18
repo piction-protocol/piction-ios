@@ -18,7 +18,7 @@ import PictionSDK
 enum ManageMenu {
     case project
     case series
-    case fanpass
+    case sponsorshipPlan
 }
 
 final class ProjectViewController: UIViewController {
@@ -330,8 +330,8 @@ extension ProjectViewController: ViewModelBindable {
 
         output
             .subscriptionInfo
-            .drive(onNext: { [weak self] (isWriter, fanPassList, subscriptionInfo) in
-                self?.stretchyHeader?.configureSubscription(isWriter: isWriter, fanPassList: fanPassList, subscriptionInfo: subscriptionInfo)
+            .drive(onNext: { [weak self] (isWriter, sponsorshipPlanList, subscriptionInfo) in
+                self?.stretchyHeader?.configureSubscription(isWriter: isWriter, sponsorshipPlanList: sponsorshipPlanList, subscriptionInfo: subscriptionInfo)
             })
             .disposed(by: disposeBag)
 
@@ -373,9 +373,9 @@ extension ProjectViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .openFanPassListViewController
+            .openSponsorshipPlanListViewController
             .drive(onNext: { [weak self] uri in
-                self?.openFanPassListViewController(uri: uri)
+                self?.openSponsorshipPlanListViewController(uri: uri)
             })
             .disposed(by: disposeBag)
 
@@ -466,11 +466,11 @@ extension ProjectViewController: ProjectHeaderViewDelegate {
                 self?.openManageSeriesViewController(uri: uri)
             })
 
-        let manageFanPassAction = UIAlertAction(
-            title: "FanPass 관리",
+        let manageSponsorshipPlanAction = UIAlertAction(
+            title: "SponsorshipPlan 관리",
             style: UIAlertAction.Style.default,
             handler: { [weak self] action in
-                self?.openManageFanPassViewController(uri: uri)
+                self?.openManageSponsorshipPlanViewController(uri: uri)
             })
 
         let cancelAction = UIAlertAction(
@@ -481,7 +481,7 @@ extension ProjectViewController: ProjectHeaderViewDelegate {
 
         alertController.addAction(manageProjectAction)
         alertController.addAction(manageSeriesAction)
-        alertController.addAction(manageFanPassAction)
+        alertController.addAction(manageSponsorshipPlanAction)
         alertController.addAction(cancelAction)
 
         present(alertController, animated: true, completion: nil)

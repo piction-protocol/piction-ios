@@ -17,7 +17,7 @@ final class HomeSubscribingPostsTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var writerLabel: UILabel!
     @IBOutlet weak var publishedAtLabel: UILabel!
 
-    typealias Model = SubscribingPostModel
+    typealias Model = SponsoringPostModel
 
     override func prepareForReuse() {
         super.prepareForReuse()

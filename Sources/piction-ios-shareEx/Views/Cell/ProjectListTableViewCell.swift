@@ -12,7 +12,7 @@ import PictionSDK
 final class ProjectListTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subscriptionCountLabel: UILabel!
+    @IBOutlet weak var sponsorshipCountLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var lockView: UIView!
     @IBOutlet weak var maskImage: VisualEffectView! {
@@ -41,7 +41,7 @@ final class ProjectListTableViewCell: ReuseTableViewCell {
         }
 
         titleLabel.text = title
-        subscriptionCountLabel.text = LocalizationKey.str_subs_count_plural.localized(with: subscriptionUserCount?.commaRepresentation)
+        sponsorshipCountLabel.text = LocalizationKey.str_subs_count_plural.localized(with: subscriptionUserCount?.commaRepresentation)
 
         if status == "HIDDEN" || status == "DEPRECATED" {
             lockView.isHidden = false

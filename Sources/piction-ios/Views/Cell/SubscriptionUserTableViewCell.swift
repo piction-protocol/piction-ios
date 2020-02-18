@@ -22,10 +22,10 @@ class SubscriptionUserTableViewCell: ReuseTableViewCell {
         profileImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
     }
 
-    typealias Model = SubscriberModel
+    typealias Model = SponsorModel
 
     func configure(with model: Model) {
-        let (profileImage, username, loginId, level, fanPassName, subscriptionDate) = (model.subscriber?.picture, model.subscriber?.username, model.subscriber?.loginId, model.fanPass?.level, model.fanPass?.name, model.startedAt)
+        let (profileImage, username, loginId, level, sponsorshipPlanName, subscriptionDate) = (model.sponsor?.picture, model.sponsor?.username, model.sponsor?.loginId, model.plan?.level, model.plan?.name, model.startedAt)
 
         if let profileImage = profileImage {
             let userPictureWithIC = "\(profileImage)?w=240&h=240&quality=80&output=webp"
@@ -43,7 +43,7 @@ class SubscriptionUserTableViewCell: ReuseTableViewCell {
                 return LocalizationKey.str_sponsorship_plan_current_tier.localized(with: level ?? 0)
             }
         }
-        levelLabel.text = "\(levelText) - \(fanPassName ?? "")"
+        levelLabel.text = "\(levelText) - \(sponsorshipPlanName ?? "")"
         subscriptionDateLabel.text = subscriptionDate?.toString(format: "YYYY-MM-dd hh:mm")
     }
 }

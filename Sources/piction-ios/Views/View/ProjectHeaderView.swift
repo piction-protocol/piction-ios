@@ -41,10 +41,10 @@ class ProjectHeaderView: GSKStretchyHeaderView {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var writerLabel: UILabel!
     @IBOutlet weak var loginIdLabel: UILabel!
-    @IBOutlet weak var subscriptionCountLabel: UILabel!
+    @IBOutlet weak var sponsorCountLabel: UILabel!
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var seriesButton: UIButton!
-    @IBOutlet weak var subscriptionUserButton: UIButton!
+    @IBOutlet weak var sponsorButton: UIButton!
 
     @IBOutlet weak var maskImage: VisualEffectView!
     @IBOutlet weak var naviView: UIView!
@@ -89,7 +89,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
     }
 
     func configureProjectInfo(model: ProjectModel) {
-        let (thumbnail, title, profileImage, writerName, writerloginId, subscriptionUserCount) = (model.thumbnail, model.title, model.user?.picture, model.user?.username, model.user?.loginId, model.subscriptionUserCount)
+        let (thumbnail, title, profileImage, writerName, writerloginId, sponsorCount) = (model.thumbnail, model.title, model.user?.picture, model.user?.username, model.user?.loginId, model.sponsorCount)
 
         if let thumbnail = thumbnail {
             let thumbnailWithIC = "\(thumbnail)?w=720&h=720&quality=80&output=webp"
@@ -113,13 +113,13 @@ class ProjectHeaderView: GSKStretchyHeaderView {
         }
         writerLabel.text = writerName
         loginIdLabel.text = "@\(writerloginId ?? "")"
-        subscriptionCountLabel.text = LocalizationKey.str_subs_count_plural.localized(with: subscriptionUserCount?.commaRepresentation ?? "0")
+        sponsorCountLabel.text = LocalizationKey.str_subs_count_plural.localized(with: sponsorCount?.commaRepresentation ?? "0")
     }
 
-    func configureSubscription(isWriter: Bool, fanPassList: [FanPassModel], subscriptionInfo: SubscriptionModel?) {
+    func configureSubscription(isWriter: Bool, sponsorshipPlanList: [PlanModel], subscriptionInfo: SponsorshipModel?) {
 
         if subscriptionInfo != nil {
-            subscriptionUserButton.isHidden = true
+            sponsorButton.isHidden = true
             managementButton.isHidden = true
             subscriptionButton.isHidden = false
             subscriptionButton.backgroundColor = .pictionLightGray
@@ -128,7 +128,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
         } else {
             if isWriter {
                 if FEATURE_EDITOR {
-                    subscriptionUserButton.isHidden = false
+                    sponsorButton.isHidden = false
                     managementButton.isHidden = false
                     subscriptionButton.isHidden = false
                     subscriptionButton.backgroundColor = UIColor(r: 51, g: 51, b: 51)
@@ -139,11 +139,11 @@ class ProjectHeaderView: GSKStretchyHeaderView {
                     subscriptionButton.isHidden = true
                 }
             } else {
-                subscriptionUserButton.isHidden = true
+                sponsorButton.isHidden = true
                 managementButton.isHidden = true
                 subscriptionButton.isHidden = false
                 subscriptionButton.backgroundColor = UIColor(r: 51, g: 51, b: 51)
-                subscriptionButton.setTitle(fanPassList.count > 1 ? LocalizationKey.btn_subs.localized() : LocalizationKey.btn_subs_free.localized(), for: .normal)
+                subscriptionButton.setTitle(sponsorshipPlanList.count > 1 ? LocalizationKey.btn_subs.localized() : LocalizationKey.btn_subs_free.localized(), for: .normal)
                 subscriptionButton.setTitleColor(.white, for: .normal)
             }
         }

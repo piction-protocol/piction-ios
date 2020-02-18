@@ -12,8 +12,8 @@ import RxCocoa
 import PictionSDK
 
 enum ContentsSection {
-    case postList(post: PostModel, subscriptionInfo: SubscriptionModel?)
-    case seriesPostList(post: PostModel, subscriptionInfo: SubscriptionModel?, number: Int)
+    case postList(post: PostModel, subscriptionInfo: SponsorshipModel?)
+    case seriesPostList(post: PostModel, subscriptionInfo: SponsorshipModel?, number: Int)
     case seriesList(series: SeriesModel)
 }
 
@@ -57,7 +57,7 @@ final class ProjectViewModel: InjectableViewModel {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
         let projectInfo: Driver<ProjectModel>
-        let subscriptionInfo: Driver<(Bool, [FanPassModel], SubscriptionModel?)>
+        let subscriptionInfo: Driver<(Bool, [PlanModel], SponsorshipModel?)>
         let openCancelSubscriptionPopup: Driver<Void>
         let openSignInViewController: Driver<Void>
         let openCreatePostViewController: Driver<String>
@@ -66,7 +66,7 @@ final class ProjectViewModel: InjectableViewModel {
         let selectedIndexPath: Driver<IndexPath>
         let openProjectInfoViewController: Driver<String>
         let openSubscriptionUserViewController: Driver<String>
-        let openFanPassListViewController: Driver<String>
+        let openSponsorshipPlanListViewController: Driver<String>
         let activityIndicator: Driver<Bool>
         let toastMessage: Driver<String>
     }
@@ -120,16 +120,16 @@ final class ProjectViewModel: InjectableViewModel {
             .filter { $0 == 1 }
 
         let subscriptionInfoAction = Driver.merge(postSubscriptionInfoAction, seriesSubscriptionInfoAction)
-            .map{ _ in FanPassAPI.getSubscribedFanPass(uri: uri) }
+            .map{ _ in SponsorshipPlanAPI.getSponsoredPlan(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let subscriptionInfoSuccess = subscriptionInfoAction.elements
-            .map { try? $0.map(to: SubscriptionModel.self) }
-            .flatMap(Driver<SubscriptionModel?>.from)
+            .map { try? $0.map(to: SponsorshipModel.self) }
+            .flatMap(Driver<SponsorshipModel?>.from)
 
         let subscriptionInfoError = subscriptionInfoAction.error
-            .map { _ in SubscriptionModel?(nil) }
+            .map { _ in SponsorshipModel?(nil) }
 
         let projectSubscriptionInfo = Driver.merge(subscriptionInfoSuccess, subscriptionInfoError)
 
@@ -203,16 +203,16 @@ final class ProjectViewModel: InjectableViewModel {
                 self?.page = page + 1
             })
 
-        let fanPassListAction = initialLoad
-            .map { FanPassAPI.all(uri: uri) }
+        let sponsorshipPlanListAction = initialLoad
+            .map { SponsorshipPlanAPI.all(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
-        let fanPassListSuccess = fanPassListAction.elements
-            .map { try? $0.map(to: [FanPassModel].self) }
+        let sponsorshipPlanListSuccess = sponsorshipPlanListAction.elements
+            .map { try? $0.map(to: [PlanModel].self) }
             .flatMap(Driver.from)
 
-        let subscriptionInfo = Driver.combineLatest(isWriter, fanPassListSuccess, projectSubscriptionInfo)
+        let subscriptionInfo = Driver.combineLatest(isWriter, sponsorshipPlanListSuccess, projectSubscriptionInfo)
 
         let subscriptionAction = input.subscriptionBtnDidTap
             .withLatestFrom(isWriter)
@@ -221,9 +221,9 @@ final class ProjectViewModel: InjectableViewModel {
             .filter { $0.loginId != nil }
             .withLatestFrom(projectSubscriptionInfo)
             .filter { $0 == nil }
-            .withLatestFrom(fanPassListSuccess)
+            .withLatestFrom(sponsorshipPlanListSuccess)
             .filter { $0.count == 1 }
-            .map { FanPassAPI.subscription(uri: uri, fanPassId: $0[safe: 0]?.id ?? 0, subscriptionPrice: $0[safe: 0]?.subscriptionPrice ?? 0) }
+            .map { SponsorshipPlanAPI.sponsorship(uri: uri, planId: $0[safe: 0]?.id ?? 0, sponsorshipPrice: $0[safe: 0]?.sponsorshipPrice ?? 0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -245,15 +245,15 @@ final class ProjectViewModel: InjectableViewModel {
             .filter { $0.loginId != nil }
             .withLatestFrom(projectSubscriptionInfo)
             .filter { $0 != nil }
-            .withLatestFrom(fanPassListSuccess)
+            .withLatestFrom(sponsorshipPlanListSuccess)
             .filter { $0.count == 1 }
             .map { _ in Void() }
 
         let cancelSubscriptionAction = input.cancelSubscriptionBtnDidTap
             .withLatestFrom(projectSubscriptionInfo)
             .filter { $0 != nil }
-            .filter { ($0?.fanPass?.level ?? 0) == 0 }
-            .map { FanPassAPI.cancelSubscription(uri: uri, fanPassId: $0?.fanPass?.id ?? 0) }
+            .filter { ($0?.plan?.level ?? 0) == 0 }
+            .map { SponsorshipPlanAPI.cancelSponsorship(uri: uri, planId: $0?.plan?.id ?? 0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -269,7 +269,7 @@ final class ProjectViewModel: InjectableViewModel {
             .flatMap(Driver.from)
 
         let openSignInViewController = input.subscriptionBtnDidTap
-            .withLatestFrom(fanPassListSuccess)
+            .withLatestFrom(sponsorshipPlanListSuccess)
             .filter { $0.count == 1 }
             .withLatestFrom(currentUserInfo)
             .filter { $0.loginId == nil }
@@ -372,10 +372,10 @@ final class ProjectViewModel: InjectableViewModel {
             .map { _ in uri }
             .flatMap(Driver<String>.from)
 
-        let openFanPassListViewController = input.subscriptionBtnDidTap
+        let openSponsorshipPlanListViewController = input.subscriptionBtnDidTap
             .withLatestFrom(isWriter)
             .filter { !$0 }
-            .withLatestFrom(fanPassListSuccess)
+            .withLatestFrom(sponsorshipPlanListSuccess)
             .filter { $0.count > 1 }
             .map { _ in uri }
             .flatMap(Driver<String>.from)
@@ -393,7 +393,7 @@ final class ProjectViewModel: InjectableViewModel {
             selectedIndexPath: input.selectedIndexPath,
             openProjectInfoViewController: openProjectInfoViewController,
             openSubscriptionUserViewController: openSubscriptionUserViewController,
-            openFanPassListViewController: openFanPassListViewController,
+            openSponsorshipPlanListViewController: openSponsorshipPlanListViewController,
             activityIndicator: activityIndicator,
             toastMessage: toastMessage
         )

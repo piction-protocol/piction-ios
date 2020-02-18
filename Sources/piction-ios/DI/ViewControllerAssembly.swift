@@ -205,27 +205,27 @@ final class ViewControllerAssembly: Assembly {
             return vc
         }
 
-        container.register(FanPassListViewController.self) { (resolver, uri: String, postId: Int?) in
-            let vc = Storyboard.FanPassList.instantiate(FanPassListViewController.self)
-            vc.viewModel = resolver.resolve(FanPassListViewModel.self, arguments: uri, postId)!
+        container.register(SponsorshipPlanListViewController.self) { (resolver, uri: String, postId: Int?) in
+            let vc = Storyboard.SponsorshipPlanList.instantiate(SponsorshipPlanListViewController.self)
+            vc.viewModel = resolver.resolve(SponsorshipPlanListViewModel.self, arguments: uri, postId)!
             return vc
         }
 
-        container.register(SubscribeFanPassViewController.self) { (resolver, uri: String, selectedFanPass: FanPassModel) in
-            let vc = Storyboard.SubscribeFanPass.instantiate(SubscribeFanPassViewController.self)
-            vc.viewModel = resolver.resolve(SubscribeFanPassViewModel.self, arguments: uri, selectedFanPass)!
+        container.register(PurchaseSponsorshipPlanViewController.self) { (resolver, uri: String, selectedSponsorshipPlan: PlanModel) in
+            let vc = Storyboard.PurchaseSponsorshipPlan.instantiate(PurchaseSponsorshipPlanViewController.self)
+            vc.viewModel = resolver.resolve(PurchaseSponsorshipPlanViewModel.self, arguments: uri, selectedSponsorshipPlan)!
             return vc
         }
 
-        container.register(ManageFanPassViewController.self) { (resolver, uri: String, fanPassId: Int?) in
-            let vc = Storyboard.ManageFanPass.instantiate(ManageFanPassViewController.self)
-            vc.viewModel = resolver.resolve(ManageFanPassViewModel.self, arguments: uri, fanPassId)!
+        container.register(ManageSponsorshipPlanViewController.self) { (resolver, uri: String, planId: Int?) in
+            let vc = Storyboard.ManageSponsorshipPlan.instantiate(ManageSponsorshipPlanViewController.self)
+            vc.viewModel = resolver.resolve(ManageSponsorshipPlanViewModel.self, arguments: uri, planId)!
             return vc
         }
 
-        container.register(CreateFanPassViewController.self) { (resolver, uri: String, fanPass: FanPassModel?) in
-            let vc = Storyboard.CreateFanPass.instantiate(CreateFanPassViewController.self)
-            vc.viewModel = resolver.resolve(CreateFanPassViewModel.self, arguments: uri, fanPass)!
+        container.register(CreateSponsorshipPlanViewController.self) { (resolver, uri: String, sponsorshipPlan: PlanModel?) in
+            let vc = Storyboard.CreateSponsorshipPlan.instantiate(CreateSponsorshipPlanViewController.self)
+            vc.viewModel = resolver.resolve(CreateSponsorshipPlanViewModel.self, arguments: uri, sponsorshipPlan)!
             return vc
         }
     }

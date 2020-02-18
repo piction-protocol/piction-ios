@@ -219,8 +219,8 @@ extension UIViewController {
         }
     }
 
-    func openManageFanPassViewController(uri: String, fanPassId: Int? = nil, delegate: ManageFanPassDelegate? = nil) {
-        let vc = ManageFanPassViewController.make(uri: uri, fanPassId: fanPassId)
+    func openManageSponsorshipPlanViewController(uri: String, planId: Int? = nil, delegate: ManageSponsorshipPlanDelegate? = nil) {
+        let vc = ManageSponsorshipPlanViewController.make(uri: uri, planId: planId)
         vc.delegate = delegate
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .swipePresent)
@@ -269,8 +269,8 @@ extension UIViewController {
         }
     }
 
-    func openFanPassListViewController(uri: String, postId: Int? = nil) {
-        let vc = FanPassListViewController.make(uri: uri, postId: postId)
+    func openSponsorshipPlanListViewController(uri: String, postId: Int? = nil) {
+        let vc = SponsorshipPlanListViewController.make(uri: uri, postId: postId)
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .present)
         }
@@ -283,15 +283,15 @@ extension UIViewController {
         }
     }
 
-    func openSubscribeFanPassViewController(uri: String, selectedFanPass: FanPassModel) {
-        let vc = SubscribeFanPassViewController.make(uri: uri, selectedFanPass: selectedFanPass)
+    func openPurchaseSponsorshipPlanViewController(uri: String, selectedSponsorshipPlan: PlanModel) {
+        let vc = PurchaseSponsorshipPlanViewController.make(uri: uri, selectedSponsorshipPlan: selectedSponsorshipPlan)
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .push)
         }
     }
 
-    func openCreateFanPassViewController(uri: String, fanPass: FanPassModel? = nil) {
-        let vc = CreateFanPassViewController.make(uri: uri, fanPass: fanPass)
+    func openCreateSponsorshipPlanViewController(uri: String, sponsorshipPlan: PlanModel? = nil) {
+        let vc = CreateSponsorshipPlanViewController.make(uri: uri, sponsorshipPlan: sponsorshipPlan)
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .push)
         }

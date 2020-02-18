@@ -49,7 +49,7 @@ final class PostViewModel: InjectableViewModel {
         let viewWillDisappear: Driver<Void>
         let prevNextLink: Driver<PostLinkModel>
         let showPostContent: Driver<String>
-        let showNeedSubscription: Driver<(UserModel, PostModel, SubscriptionModel?)>
+        let showNeedSubscription: Driver<(UserModel, PostModel, SponsorshipModel?)>
         let hideNeedSubscription: Driver<Bool>
         let headerInfo: Driver<(PostModel, UserModel)>
         let footerInfo: Driver<(String, PostModel)>
@@ -58,7 +58,7 @@ final class PostViewModel: InjectableViewModel {
         let willBeginDecelerating: Driver<Void>
         let changeReadmode: Driver<Void>
         let openSignInViewController: Driver<Void>
-        let openFanPassListViewController: Driver<(String, Int)>
+        let openSponsorshipPlanListViewController: Driver<(String, Int)>
         let reloadPost: Driver<Void>
         let sharePost: Driver<String>
         let toastMessage: Driver<String>
@@ -173,16 +173,16 @@ final class PostViewModel: InjectableViewModel {
         let userInfo = Driver.merge(userInfoSuccess, userInfoError)
 
         let subscriptionInfoAction = Driver.merge(initialLoad, refreshContent, refreshSession)
-            .map { FanPassAPI.getSubscribedFanPass(uri: uri) }
+            .map { SponsorshipPlanAPI.getSponsoredPlan(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let subscriptionInfoSuccess = subscriptionInfoAction.elements
-            .map { try? $0.map(to: SubscriptionModel.self) }
-            .flatMap(Driver<SubscriptionModel?>.from)
+            .map { try? $0.map(to: SponsorshipModel.self) }
+            .flatMap(Driver<SponsorshipModel?>.from)
 
         let subscriptionInfoError = subscriptionInfoAction.error
-            .map { _ in SubscriptionModel?(nil) }
+            .map { _ in SponsorshipModel?(nil) }
 
         let subscriptionInfo = Driver.merge(subscriptionInfoSuccess, subscriptionInfoError)
 
@@ -191,13 +191,13 @@ final class PostViewModel: InjectableViewModel {
                 if currentUser.loginId ?? "" == writerInfo.loginId ?? "" {
                     return false
                 }
-                if postItem.fanPass == nil {
+                if postItem.plan == nil {
                     return false
                 }
-                if (postItem.fanPass?.level != nil) && (subscriptionInfo?.fanPass?.level == nil) {
+                if (postItem.plan?.level != nil) && (subscriptionInfo?.plan?.level == nil) {
                     return true
                 }
-                if (postItem.fanPass?.level ?? 0) <= (subscriptionInfo?.fanPass?.level ?? 0) {
+                if (postItem.plan?.level ?? 0) <= (subscriptionInfo?.plan?.level ?? 0) {
                     return false
                 }
                 return true
@@ -206,13 +206,13 @@ final class PostViewModel: InjectableViewModel {
         let footerInfo = postItemSuccess
             .map { (uri, $0) }
 
-        let fanPassListAction = Driver.merge(initialLoad, refreshContent, refreshSession)
-            .map { FanPassAPI.all(uri: uri) }
+        let sponsorshipPlanListAction = Driver.merge(initialLoad, refreshContent, refreshSession)
+            .map { SponsorshipPlanAPI.all(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
-        let fanPassListSuccess = fanPassListAction.elements
-            .map { try? $0.map(to: [FanPassModel].self) }
+        let sponsorshipPlanListSuccess = sponsorshipPlanListAction.elements
+            .map { try? $0.map(to: [PlanModel].self) }
             .flatMap(Driver.from)
 
         let needSubscriptionInfo = Driver.combineLatest(userInfo, postItemSuccess, subscriptionInfo)
@@ -229,10 +229,10 @@ final class PostViewModel: InjectableViewModel {
             .withLatestFrom(userInfo)
             .filter { $0.loginId != nil }
             .withLatestFrom(postItemSuccess)
-            .filter { ($0.fanPass?.level ?? 0) == 0 }
-            .withLatestFrom(fanPassListSuccess)
+            .filter { ($0.plan?.level ?? 0) == 0 }
+            .withLatestFrom(sponsorshipPlanListSuccess)
             .map { $0.filter { ($0.level ?? 0) == 0 }.first?.id ?? 0 }
-            .map { FanPassAPI.subscription(uri: uri, fanPassId: $0, subscriptionPrice: 0) }
+            .map { SponsorshipPlanAPI.sponsorship(uri: uri, planId: $0, sponsorshipPrice: 0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -247,11 +247,11 @@ final class PostViewModel: InjectableViewModel {
             .map { $0?.message }
             .flatMap(Driver.from)
 
-        let openFanPassListViewController = input.subscriptionBtnDidTap
+        let openSponsorshipPlanListViewController = input.subscriptionBtnDidTap
             .withLatestFrom(userInfo)
             .filter { $0.loginId != nil }
             .withLatestFrom(postItemSuccess)
-            .filter { ($0.fanPass?.level ?? 0) > 0 }
+            .filter { ($0.plan?.level ?? 0) > 0 }
             .map { _ in (uri, self.postId) }
 
         let activityIndicator = Driver.merge(
@@ -295,7 +295,7 @@ final class PostViewModel: InjectableViewModel {
             willBeginDecelerating: willBeginDecelerating,
             changeReadmode: input.readmodeBarButton,
             openSignInViewController: openSignInViewController,
-            openFanPassListViewController: openFanPassListViewController,
+            openSponsorshipPlanListViewController: openSponsorshipPlanListViewController,
             reloadPost: reloadPost,
             sharePost: sharePost,
             toastMessage: toastMessage

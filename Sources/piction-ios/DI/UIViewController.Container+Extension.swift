@@ -202,26 +202,26 @@ extension SubscriptionUserViewController {
     }
 }
 
-extension FanPassListViewController {
-    static func make(uri: String, postId: Int? = nil) -> FanPassListViewController {
-        return Container.shared.resolve(FanPassListViewController.self, arguments: uri, postId)!
+extension SponsorshipPlanListViewController {
+    static func make(uri: String, postId: Int? = nil) -> SponsorshipPlanListViewController {
+        return Container.shared.resolve(SponsorshipPlanListViewController.self, arguments: uri, postId)!
     }
 }
 
-extension SubscribeFanPassViewController {
-    static func make(uri: String, selectedFanPass: FanPassModel) -> SubscribeFanPassViewController {
-        return Container.shared.resolve(SubscribeFanPassViewController.self, arguments: uri, selectedFanPass)!
+extension PurchaseSponsorshipPlanViewController {
+    static func make(uri: String, selectedSponsorshipPlan: PlanModel) -> PurchaseSponsorshipPlanViewController {
+        return Container.shared.resolve(PurchaseSponsorshipPlanViewController.self, arguments: uri, selectedSponsorshipPlan)!
     }
 }
 
-extension ManageFanPassViewController {
-    static func make(uri: String, fanPassId: Int? = nil) -> ManageFanPassViewController {
-        return Container.shared.resolve(ManageFanPassViewController.self, arguments: uri, fanPassId)!
+extension ManageSponsorshipPlanViewController {
+    static func make(uri: String, planId: Int? = nil) -> ManageSponsorshipPlanViewController {
+        return Container.shared.resolve(ManageSponsorshipPlanViewController.self, arguments: uri, planId)!
     }
 }
 
-extension CreateFanPassViewController {
-    static func make(uri: String, fanPass: FanPassModel? = nil) -> CreateFanPassViewController {
-        return Container.shared.resolve(CreateFanPassViewController.self, arguments: uri, fanPass)!
+extension CreateSponsorshipPlanViewController {
+    static func make(uri: String, sponsorshipPlan: PlanModel? = nil) -> CreateSponsorshipPlanViewController {
+        return Container.shared.resolve(CreateSponsorshipPlanViewController.self, arguments: uri, sponsorshipPlan)!
     }
 }

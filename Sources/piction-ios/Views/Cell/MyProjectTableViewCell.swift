@@ -12,7 +12,7 @@ import PictionSDK
 final class MyProjectTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subscriptionCountLabel: UILabel!
+    @IBOutlet weak var sponsorCountLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var lockView: UIView!
     @IBOutlet weak var maskImage: VisualEffectView! {
@@ -30,7 +30,7 @@ final class MyProjectTableViewCell: ReuseTableViewCell {
     typealias Model = ProjectModel
 
     func configure(with model: Model) {
-        let (wideThumbnail, title, subscriptionUserCount, status) = (model.wideThumbnail, model.title, model.subscriptionUserCount, model.status)
+        let (wideThumbnail, title, sponsorCount, status) = (model.wideThumbnail, model.title, model.sponsorCount, model.status)
 
         if let wideThumbnail = wideThumbnail {
             let wideThumbnailWithIC = "\(wideThumbnail)?w=720&h=360&quality=80&output=webp"
@@ -40,7 +40,7 @@ final class MyProjectTableViewCell: ReuseTableViewCell {
         }
 
         titleLabel.text = title
-        subscriptionCountLabel.text = LocalizationKey.str_subs_count_plural.localized(with: subscriptionUserCount?.commaRepresentation ?? "0")
+        sponsorCountLabel.text = LocalizationKey.str_subs_count_plural.localized(with: sponsorCount?.commaRepresentation ?? "0")
 
         if status == "HIDDEN" || status == "DEPRECATED" {
             lockView.isHidden = false
