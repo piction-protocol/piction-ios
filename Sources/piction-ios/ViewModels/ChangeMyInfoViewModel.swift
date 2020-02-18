@@ -28,6 +28,7 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
     }
 
     private let imageId = PublishSubject<String?>()
+    private let email = PublishSubject<String>()
     private let username = PublishSubject<String>()
     private let changeInfo = PublishSubject<Bool>()
     private let password = PublishSubject<String?>()
@@ -85,6 +86,7 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
             .flatMap(Driver.from)
             .do(onNext: { [weak self] userInfo in
                 self?.imageId.onNext("")
+                self?.email.onNext(userInfo.email ?? "")
                 self?.username.onNext(userInfo.username ?? "")
                 self?.changeInfo.onNext(false)
             })
@@ -120,7 +122,17 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
                 self?.changeInfo.onNext(true)
             })
 
-        let userName = Driver.combineLatest(input.userNameTextFieldDidInput, username.asDriver(onErrorDriveWith: .empty()))
+        let changedEmail = Driver.combineLatest(input.emailTextFieldDidInput, email.asDriver(onErrorDriveWith: .empty()))
+            .do(onNext: { [weak self] inputEmail, email in
+                if inputEmail != "" && inputEmail != email {
+                    self?.changeInfo.onNext(true)
+                } else {
+                    self?.changeInfo.onNext(false)
+                }
+            })
+            .map { $0 == "" ? $1 : $0 }
+
+        let changedUsername = Driver.combineLatest(input.userNameTextFieldDidInput, username.asDriver(onErrorDriveWith: .empty()))
             .do(onNext: { [weak self] inputUsername, username in
                 if inputUsername != "" && inputUsername != username {
                     self?.changeInfo.onNext(true)
@@ -133,18 +145,16 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
         let changePicture = Driver.merge(uploadPictureSuccess, deletePicture)
             .withLatestFrom(input.pictureImageDidPick)
 
-        let changeUserInfo = Driver.combineLatest(userName, imageId.asDriver(onErrorDriveWith: .empty())) { (username: $0, imageId: $1) }
+        let changeUserInfo = Driver.combineLatest(changedEmail, changedUsername, imageId.asDriver(onErrorDriveWith: .empty())) { (email: $0, username: $1, imageId: $2) }
 
         let enableSaveButton = changeInfo.asDriver(onErrorDriveWith: .empty())
-            .filter { $0 }
-
-        let password = input.password
 
         let openPasswordPopup = input.saveBtnDidTap
 
-        let saveButtonAction = Driver.combineLatest(password, changeUserInfo) { (password: $0, userInfo: $1) }
+        let saveButtonAction = input.password
+            .withLatestFrom(changeUserInfo) { (password: $0, userInfo: $1) }
             .filter { $0.password != nil }
-            .map { UserAPI.update(username: $1.username, password: $0 ?? "", picture: $1.imageId) }
+            .map { UserAPI.update(email: $1.email, username: $1.username, password: $0 ?? "", picture: $1.imageId) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

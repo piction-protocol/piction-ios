@@ -108,11 +108,15 @@ extension ChangeMyInfoViewController: ViewModelBindable {
 
         output
             .enableSaveButton
-            .filter { $0 }
-            .drive(onNext: { [weak self] _ in
-                self?.saveButton.isEnabled = true
-                self?.saveButton.setTitleColor(.white, for: .normal)
-                self?.saveButton.backgroundColor = UIColor(r: 51, g: 51, b: 51)
+            .drive(onNext: { [weak self] isEnabled in
+                self?.saveButton.isEnabled = isEnabled
+                if isEnabled {
+                    self?.saveButton.setTitleColor(.white, for: .normal)
+                    self?.saveButton.backgroundColor = .pictionDarkGray
+                } else {
+                    self?.saveButton.setTitleColor(.pictionGray, for: .normal)
+                    self?.saveButton.backgroundColor = .pictionLightGray
+                }
             })
             .disposed(by: disposeBag)
 
