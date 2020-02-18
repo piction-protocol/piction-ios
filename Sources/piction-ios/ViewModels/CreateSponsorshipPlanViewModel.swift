@@ -1,5 +1,5 @@
 //
-//  CreateFanPassViewModel.swift
+//  CreateSponsorshipPlanViewModel.swift
 //  piction-ios
 //
 //  Created by jhseo on 2019/11/22.
@@ -10,19 +10,19 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
-final class CreateFanPassViewModel: InjectableViewModel {
+final class CreateSponsorshipPlanViewModel: InjectableViewModel {
 
     typealias Dependency = (
         FirebaseManagerProtocol,
         UpdaterProtocol,
         String,
-        FanPassModel?
+        PlanModel?
     )
 
     private let firebaseManager: FirebaseManagerProtocol
     private let updater: UpdaterProtocol
     private let uri: String
-    private let fanPass: FanPassModel?
+    private let sponsorshipPlan: PlanModel?
 
     private let name = PublishSubject<String>()
     private let price = PublishSubject<String?>()
@@ -30,22 +30,22 @@ final class CreateFanPassViewModel: InjectableViewModel {
     private let limit = PublishSubject<String?>()
 
     init(dependency: Dependency) {
-        (firebaseManager, updater, uri, fanPass) = dependency
+        (firebaseManager, updater, uri, sponsorshipPlan) = dependency
     }
 
     struct Input {
         let viewWillAppear: Driver<Void>
-        let fanPassName: Driver<String>
-        let fanPassPrice: Driver<String?>
-        let fanPassDescription: Driver<String?>
-        let fanPassLimit: Driver<String?>
+        let sponsorshipPlanName: Driver<String>
+        let sponsorshipPlanPrice: Driver<String?>
+        let sponsorshipPlanDescription: Driver<String?>
+        let sponsorshipPlanLimit: Driver<String?>
         let limitBtnDidTap: Driver<Void>
         let saveBtnDidTap: Driver<Void>
     }
 
     struct Output {
         let viewWillAppear: Driver<Void>
-        let loadFanPass: Driver<FanPassModel>
+        let loadSponsorshipPlan: Driver<PlanModel>
         let limitBtnDidTap: Driver<Void>
         let popViewController: Driver<Void>
         let activityIndicator: Driver<Bool>
@@ -54,35 +54,35 @@ final class CreateFanPassViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (firebaseManager, updater, uri, fanPass) = (self.firebaseManager, self.updater, self.uri, self.fanPass)
+        let (firebaseManager, updater, uri, sponsorshipPlan) = (self.firebaseManager, self.updater, self.uri, self.sponsorshipPlan)
 
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
-                firebaseManager.screenName("FANPASS생성")
+                firebaseManager.screenName("SponsorshipPlan생성")
             })
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
 
-        let loadFanPass = initialLoad
-            .map { fanPass }
+        let loadSponsorshipPlan = initialLoad
+            .map { sponsorshipPlan }
             .flatMap(Driver.from)
-            .do(onNext: { [weak self] fanPass in
-                self?.name.onNext(fanPass.name ?? "")
-                self?.price.onNext(String(fanPass.subscriptionPrice ?? 0))
-                self?.description.onNext(fanPass.description ?? "")
-                if fanPass.subscriptionLimit == nil {
+            .do(onNext: { [weak self] sponsorshipPlan in
+                self?.name.onNext(sponsorshipPlan.name ?? "")
+                self?.price.onNext(String(sponsorshipPlan.sponsorshipPrice ?? 0))
+                self?.description.onNext(sponsorshipPlan.description ?? "")
+                if sponsorshipPlan.sponsorshipLimit == nil {
                     self?.limit.onNext(nil)
                 } else {
-                    self?.limit.onNext(String(fanPass.subscriptionLimit ?? 0))
+                    self?.limit.onNext(String(sponsorshipPlan.sponsorshipLimit ?? 0))
                 }
             })
 
-        let nameChanged = Driver.merge(input.fanPassName, name.asDriver(onErrorDriveWith: .empty()))
+        let nameChanged = Driver.merge(input.sponsorshipPlanName, name.asDriver(onErrorDriveWith: .empty()))
 
-        let priceChanged = Driver.merge(input.fanPassPrice,
+        let priceChanged = Driver.merge(input.sponsorshipPlanPrice,
             price.asDriver(onErrorDriveWith: .empty()))
 
-        let descriptionChanged = Driver.merge(input.fanPassDescription,
+        let descriptionChanged = Driver.merge(input.sponsorshipPlanDescription,
             description.asDriver(onErrorDriveWith: .empty()))
 
         let noLimit = input.limitBtnDidTap
@@ -91,7 +91,7 @@ final class CreateFanPassViewModel: InjectableViewModel {
                 self?.limit.onNext(nil)
             })
 
-        let inputLimit = input.fanPassLimit
+        let inputLimit = input.sponsorshipPlanLimit
             .do(onNext: { [weak self] limit in
                 self?.limit.onNext(limit)
             })
@@ -101,46 +101,46 @@ final class CreateFanPassViewModel: InjectableViewModel {
                 self?.limit.onNext(limit)
             })
 
-        let fanPassInfo = Driver.combineLatest(
+        let sponsorshipPlanInfo = Driver.combineLatest(
             nameChanged,
             priceChanged,
             descriptionChanged,
             limitChanged) { (name: $0, price: $1, description: $2, limit: $3) }
 
-        let createFanPassAction = input.saveBtnDidTap
-            .filter { fanPass == nil }
-            .withLatestFrom(fanPassInfo)
-            .map { FanPassAPI.create(uri: uri, name: $0.name, description: $0.description, thumbnail: nil, subscriptionLimit: Int($0.limit ?? "") ?? nil, subscriptionPrice: Int($0.price ?? "") ?? nil) }
+        let createSponsorshipPlanAction = input.saveBtnDidTap
+            .filter { sponsorshipPlan == nil }
+            .withLatestFrom(sponsorshipPlanInfo)
+            .map { SponsorshipPlanAPI.create(uri: uri, name: $0.name, description: $0.description, thumbnail: nil, sponsorshipLimit: Int($0.limit ?? "") ?? nil, sponsorshipPrice: Int($0.price ?? "") ?? nil) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
-        let updateFanPassAction = input.saveBtnDidTap
-            .filter { fanPass != nil }
-            .withLatestFrom(fanPassInfo)
-            .map { FanPassAPI.update(uri: uri, fanPassId: fanPass?.id ?? 0, name: $0.name, description: $0.description, thumbnail: nil, subscriptionLimit: Int($0.limit ?? "") ?? nil, subscriptionPrice: Int($0.price ?? "") ?? nil) }
+        let updateSponsorshipPlanAction = input.saveBtnDidTap
+            .filter { sponsorshipPlan != nil }
+            .withLatestFrom(sponsorshipPlanInfo)
+            .map { SponsorshipPlanAPI.update(uri: uri, planId: sponsorshipPlan?.id ?? 0, name: $0.name, description: $0.description, thumbnail: nil, sponsorshipLimit: Int($0.limit ?? "") ?? nil, sponsorshipPrice: Int($0.price ?? "") ?? nil) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
-        let saveFanPassAction = Driver.merge(createFanPassAction, updateFanPassAction)
+        let saveSponsorshipPlanAction = Driver.merge(createSponsorshipPlanAction, updateSponsorshipPlanAction)
 
         let dismissKeyboard = Driver.merge(input.saveBtnDidTap, input.limitBtnDidTap)
 
-        let popViewController = saveFanPassAction.elements
+        let popViewController = saveSponsorshipPlanAction.elements
             .map { _ in Void() }
             .do(onNext: { _ in
                 updater.refreshContent.onNext(())
             })
 
-        let toastMessage = saveFanPassAction.error
+        let toastMessage = saveSponsorshipPlanAction.error
             .map { $0 as? ErrorType }
             .map { $0?.message }
             .flatMap(Driver.from)
 
-        let activityIndicator = saveFanPassAction.isExecuting
+        let activityIndicator = saveSponsorshipPlanAction.isExecuting
 
         return Output(
             viewWillAppear: viewWillAppear,
-            loadFanPass: loadFanPass,
+            loadSponsorshipPlan: loadSponsorshipPlan,
             limitBtnDidTap: input.limitBtnDidTap,
             popViewController: popViewController,
             activityIndicator: activityIndicator,

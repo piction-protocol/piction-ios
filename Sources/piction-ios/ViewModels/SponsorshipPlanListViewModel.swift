@@ -1,5 +1,5 @@
 //
-//  FanPassListViewModel.swift
+//  SponsorshipPlanListViewModel.swift
 //  piction-ios
 //
 //  Created by jhseo on 2019/11/19.
@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
-final class FanPassListViewModel: InjectableViewModel {
+final class SponsorshipPlanListViewModel: InjectableViewModel {
 
     typealias Dependency = (
         FirebaseManagerProtocol,
@@ -34,19 +34,19 @@ final class FanPassListViewModel: InjectableViewModel {
     struct Input {
         let viewWillAppear: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
-        let showAllFanPassBtnDidTap: Driver<Void>
+        let showAllSponsorshipPlanBtnDidTap: Driver<Void>
         let subscribeFreeBtnDidTap: Driver<Void>
         let closeBtnDidTap: Driver<Void>
     }
 
     struct Output {
         let viewWillAppear: Driver<Void>
-        let subscriptionInfo: Driver<SubscriptionModel?>
+        let subscriptionInfo: Driver<SponsorshipModel?>
         let postItem: Driver<PostModel>
-        let showAllFanPassBtnDidTap: Driver<Void>
-        let fanPassList: Driver<[FanPassModel]>
+        let showAllSponsorshipPlanBtnDidTap: Driver<Void>
+        let sponsorshipPlanList: Driver<[PlanModel]>
         let projectInfo: Driver<ProjectModel>
-        let fanPassTableItems: Driver<[FanPassListTableViewCellModel]>
+        let sponsorshipPlanTableItems: Driver<[SponsorshipPlanListTableViewCellModel]>
         let selectedIndexPath: Driver<IndexPath>
         let openSignInViewController: Driver<Void>
         let showErrorPopup: Driver<Void>
@@ -60,7 +60,7 @@ final class FanPassListViewModel: InjectableViewModel {
 
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
-                firebaseManager.screenName("FANPASS목록_\(uri)")
+                firebaseManager.screenName("SponsorshipPlan목록_\(uri)")
             })
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
@@ -99,44 +99,44 @@ final class FanPassListViewModel: InjectableViewModel {
             .map { try? $0.map(to: PostModel.self) }
             .flatMap(Driver.from)
             .do(onNext: { [weak self] postItem in
-                guard let fanPassLevel = postItem.fanPass?.level else { return }
-                self?.levelLimit.onNext(fanPassLevel)
+                guard let sponsorshipPlanLevel = postItem.plan?.level else { return }
+                self?.levelLimit.onNext(sponsorshipPlanLevel)
             })
 
         let subscriptionInfoAction = loadPage
-            .map { FanPassAPI.getSubscribedFanPass(uri: uri) }
+            .map { SponsorshipPlanAPI.getSponsoredPlan(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let subscriptionInfoSuccess = subscriptionInfoAction.elements
-            .map { try? $0.map(to: SubscriptionModel.self) }
-            .flatMap(Driver<SubscriptionModel?>.from)
+            .map { try? $0.map(to: SponsorshipModel.self) }
+            .flatMap(Driver<SponsorshipModel?>.from)
 
         let subscriptionInfoError = subscriptionInfoAction.error
-            .map { _ in SubscriptionModel?(nil) }
+            .map { _ in SponsorshipModel?(nil) }
 
         let subscriptionInfo = Driver.merge(subscriptionInfoSuccess, subscriptionInfoError)
 
-        let fanPassListAction = loadPage
-            .map { FanPassAPI.all(uri: uri) }
+        let sponsorshipPlanListAction = loadPage
+            .map { SponsorshipPlanAPI.all(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
-        let fanPassListSuccess = fanPassListAction.elements
-            .map { try? $0.map(to: [FanPassModel].self) }
+        let sponsorshipPlanListSuccess = sponsorshipPlanListAction.elements
+            .map { try? $0.map(to: [PlanModel].self) }
             .flatMap(Driver.from)
 
-        let fanPassListError = fanPassListAction.error
+        let sponsorshipPlanListError = sponsorshipPlanListAction.error
             .map { _ in Void() }
 
-        let freeFanPassItem = fanPassListSuccess
+        let freeSponsorshipPlanItem = sponsorshipPlanListSuccess
             .map { $0.filter { ($0.level ?? 0) == 0 }.first }
 
-        let fanPassTableItems = Driver.combineLatest(fanPassListSuccess, subscriptionInfo, levelLimitChanged)
-            .map { arg -> [FanPassListTableViewCellModel] in
-                let (fanPassList, subscriptionInfo, levelLimit) = arg
-                let cellList = fanPassList.enumerated().map { (index, element) in FanPassListTableViewCellModel(fanPass: element, subscriptionInfo: subscriptionInfo, postCount: fanPassList[0...index].reduce(0) { $0 + ($1.postCount ?? 0) }) }
-                return cellList.filter { ($0.fanPass.level ?? 0) >= levelLimit }
+        let sponsorshipPlanTableItems = Driver.combineLatest(sponsorshipPlanListSuccess, subscriptionInfo, levelLimitChanged)
+            .map { arg -> [SponsorshipPlanListTableViewCellModel] in
+                let (sponsorshipPlanList, subscriptionInfo, levelLimit) = arg
+                let cellList = sponsorshipPlanList.enumerated().map { (index, element) in SponsorshipPlanListTableViewCellModel(sponsorshipPlan: element, subscriptionInfo: subscriptionInfo, postCount: sponsorshipPlanList[0...index].reduce(0) { $0 + ($1.postCount ?? 0) }) }
+                return cellList.filter { ($0.sponsorshipPlan.level ?? 0) >= levelLimit }
             }
 
         let projectInfoAction = loadPage
@@ -153,8 +153,8 @@ final class FanPassListViewModel: InjectableViewModel {
             .filter { $0.loginId != nil }
             .withLatestFrom(subscriptionInfo)
             .filter { $0 == nil }
-            .withLatestFrom(freeFanPassItem)
-            .map { FanPassAPI.subscription(uri: uri, fanPassId: $0?.id ?? 0, subscriptionPrice: $0?.subscriptionPrice ?? 0) }
+            .withLatestFrom(freeSponsorshipPlanItem)
+            .map { SponsorshipPlanAPI.sponsorship(uri: uri, planId: $0?.id ?? 0, sponsorshipPrice: $0?.sponsorshipPrice ?? 0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -171,9 +171,9 @@ final class FanPassListViewModel: InjectableViewModel {
 
         let cancelSubscriptionFreeAction = input.subscribeFreeBtnDidTap
             .withLatestFrom(subscriptionInfo)
-            .filter { $0 != nil && ($0?.fanPass?.level ?? 0) == 0 }
-            .withLatestFrom(freeFanPassItem)
-            .map { FanPassAPI.cancelSubscription(uri: uri, fanPassId:
+            .filter { $0 != nil && ($0?.plan?.level ?? 0) == 0 }
+            .withLatestFrom(freeSponsorshipPlanItem)
+            .map { SponsorshipPlanAPI.cancelSponsorship(uri: uri, planId:
                 $0?.id ?? 0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -199,12 +199,12 @@ final class FanPassListViewModel: InjectableViewModel {
             .filter { $0.loginId == nil }
             .map { _ in Void() }
 
-        let showErrorPopup = fanPassListError
+        let showErrorPopup = sponsorshipPlanListError
 
         let toastMessage = Driver.merge(subscriptionFreeSuccess, subscriptionFreeError, cancelSubscriptionFreeSuccess, cancelSubscriptionFreeError)
 
         let activityIndicator = Driver.merge(
-            fanPassListAction.isExecuting,
+            sponsorshipPlanListAction.isExecuting,
             subscriptionFreeAction.isExecuting,
             cancelSubscriptionFreeAction.isExecuting)
 
@@ -214,10 +214,10 @@ final class FanPassListViewModel: InjectableViewModel {
             viewWillAppear: viewWillAppear,
             subscriptionInfo: subscriptionInfoSuccess,
             postItem: postItemSuccess,
-            showAllFanPassBtnDidTap: input.showAllFanPassBtnDidTap,
-            fanPassList: fanPassListSuccess,
+            showAllSponsorshipPlanBtnDidTap: input.showAllSponsorshipPlanBtnDidTap,
+            sponsorshipPlanList: sponsorshipPlanListSuccess,
             projectInfo: projectInfoSuccess,
-            fanPassTableItems: fanPassTableItems,
+            sponsorshipPlanTableItems: sponsorshipPlanTableItems,
             selectedIndexPath: selectedIndexPath,
             openSignInViewController: openSignInViewController,
             showErrorPopup: showErrorPopup,

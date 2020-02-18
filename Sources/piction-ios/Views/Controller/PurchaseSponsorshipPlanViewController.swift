@@ -1,5 +1,5 @@
 //
-//  SubscribeFanPassViewController.swift
+//  PurchaseSponsorshipPlanViewController.swift
 //  piction-ios
 //
 //  Created by jhseo on 2019/11/19.
@@ -13,11 +13,11 @@ import ViewModelBindable
 import RxDataSources
 import PictionSDK
 
-final class SubscribeFanPassViewController: UIViewController {
+final class PurchaseSponsorshipPlanViewController: UIViewController {
     var disposeBag = DisposeBag()
 
-    @IBOutlet weak var fanPassTitleLabel: UILabel!
-    @IBOutlet weak var fanPassDescriptionLabel: UILabel!
+    @IBOutlet weak var sponsorshipPlanTitleLabel: UILabel!
+    @IBOutlet weak var sponsorshipPlanDescriptionLabel: UILabel!
     @IBOutlet weak var descriptionButton: UIButton!
     @IBOutlet weak var descriptionButtonLabel: UILabel!
     @IBOutlet weak var descriptionStackView: UIView!
@@ -26,7 +26,7 @@ final class SubscribeFanPassViewController: UIViewController {
     @IBOutlet weak var expireDateLabel: UILabel! {
         didSet  {
             if let expireDate = Calendar.current.date(byAdding: .day, value: 30, to: Date()) {
-                expireDateLabel.text = expireDate.toString(format: LocalizationKey.str_purchase_fanpass_expire_description.localized())
+                expireDateLabel.text = expireDate.toString(format: LocalizationKey.str_sponsorship_plan_expire_description.localized())
             }
         }
     }
@@ -41,11 +41,11 @@ final class SubscribeFanPassViewController: UIViewController {
     private let authSuccessWithPincode = PublishSubject<Void>()
 }
 
-extension SubscribeFanPassViewController: ViewModelBindable {
-    typealias ViewModel = SubscribeFanPassViewModel
+extension PurchaseSponsorshipPlanViewController: ViewModelBindable {
+    typealias ViewModel = PurchaseSponsorshipPlanViewModel
 
     func bindViewModel(viewModel: ViewModel) {
-        let input = SubscribeFanPassViewModel.Input(
+        let input = PurchaseSponsorshipPlanViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
             descriptionBtnDidTap: descriptionButton.rx.tap.asDriver(),
             agreeBtnDidTap: agreeButton.rx.tap.asDriver(),
@@ -74,14 +74,14 @@ extension SubscribeFanPassViewController: ViewModelBindable {
             .drive(onNext: { [weak self] projectInfo in
                 self?.transferInfoWriterLabel.text = "▪︎ \(projectInfo.user?.username ?? "") : "
 
-                self?.transferInfoDescriptionLabel.text = LocalizationKey.str_purchase_fanpass_guide.localized(with: projectInfo.user?.username ?? "")
+                self?.transferInfoDescriptionLabel.text = LocalizationKey.str_sponsorship_plan_purchase_guide.localized(with: projectInfo.user?.username ?? "")
             })
             .disposed(by: disposeBag)
 
         output
-            .fanPassInfo
-            .drive(onNext: { [weak self] (fanPassItem, fees) in
-                let price = fanPassItem.subscriptionPrice ?? 0
+            .sponsorshipPlanInfo
+            .drive(onNext: { [weak self] (sponsorshipPlanItem, fees) in
+                let price = sponsorshipPlanItem.sponsorshipPrice ?? 0
                 let cdFee = Double(price) * ((fees.contentsDistributorRate ?? 0) / 100)
                 let userAdoptionPoolFee = Double(price) * ((fees.userAdoptionPoolRate ?? 0) / 100)
                 let depositPoolFee = Double(price) * ((fees.depositPoolRate ?? 0) / 100)
@@ -97,9 +97,9 @@ extension SubscribeFanPassViewController: ViewModelBindable {
                 self?.transferInfoWriterPxlLabel.text = "\(writerPxl.commaRepresentation) PXL"
                 self?.transferInfoFeeLabel.text = "\(totalFeePxl.commaRepresentation) PXL"
 
-                self?.fanPassTitleLabel.text = "\(LocalizationKey.str_fanpass_current_tier.localized(with: fanPassItem.level ?? 0)) - \(fanPassItem.name ?? "")"
-                self?.fanPassDescriptionLabel.text = fanPassItem.description
-                self?.descriptionStackView.isHidden = fanPassItem.description == ""
+                self?.sponsorshipPlanTitleLabel.text = "\(LocalizationKey.str_sponsorship_plan_current_tier.localized(with: sponsorshipPlanItem.level ?? 0)) - \(sponsorshipPlanItem.name ?? "")"
+                self?.sponsorshipPlanDescriptionLabel.text = sponsorshipPlanItem.description
+                self?.descriptionStackView.isHidden = sponsorshipPlanItem.description == ""
             })
             .disposed(by: disposeBag)
 
@@ -107,9 +107,9 @@ extension SubscribeFanPassViewController: ViewModelBindable {
             .descriptionBtnDidTap
             .drive(onNext: { [weak self] _ in
                 guard let `self` = self else { return }
-                self.fanPassDescriptionLabel.isHidden = !self.fanPassDescriptionLabel.isHidden
+                self.sponsorshipPlanDescriptionLabel.isHidden = !self.sponsorshipPlanDescriptionLabel.isHidden
 
-                let labelText = self.fanPassDescriptionLabel.isHidden ? LocalizationKey.str_purchase_fanpass_show_description.localized() : LocalizationKey.str_purchase_fanpass_hide_description.localized()
+                let labelText = self.sponsorshipPlanDescriptionLabel.isHidden ? LocalizationKey.str_sponsorship_plan_show_description.localized() : LocalizationKey.str_sponsorship_plan_hide_description.localized()
 
                 let attributedStr = NSMutableAttributedString(string: labelText)
                 attributedStr.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: attributedStr.mutableString.range(of: labelText))
@@ -181,7 +181,7 @@ extension SubscribeFanPassViewController: ViewModelBindable {
     }
 }
 
-extension SubscribeFanPassViewController: CheckPincodeDelegate {
+extension PurchaseSponsorshipPlanViewController: CheckPincodeDelegate {
     func authSuccess() {
         self.authSuccessWithPincode.onNext(())
     }

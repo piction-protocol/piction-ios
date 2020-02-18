@@ -1,5 +1,5 @@
 //
-//  SubscribeFanPassViewModel.swift
+//  PurchaseSponsorshipPlanViewModel.swift
 //  piction-ios
 //
 //  Created by jhseo on 2019/11/19.
@@ -10,26 +10,26 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
-final class SubscribeFanPassViewModel: InjectableViewModel {
+final class PurchaseSponsorshipPlanViewModel: InjectableViewModel {
 
     typealias Dependency = (
         FirebaseManagerProtocol,
         UpdaterProtocol,
         KeychainManagerProtocol,
         String,
-        FanPassModel
+        PlanModel
     )
 
     private let firebaseManager: FirebaseManagerProtocol
     private let updater: UpdaterProtocol
     private let keychainManager: KeychainManagerProtocol
     private let uri: String
-    private let selectedFanPass: FanPassModel
+    private let selectedSponsorshipPlan: PlanModel
 
     var loadRetryTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
-        (firebaseManager, updater, keychainManager, uri, selectedFanPass) = dependency
+        (firebaseManager, updater, keychainManager, uri, selectedSponsorshipPlan) = dependency
     }
 
     struct Input {
@@ -42,7 +42,7 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
 
     struct Output {
         let viewWillAppear: Driver<Void>
-        let fanPassInfo: Driver<(FanPassModel, FeesModel)>
+        let sponsorshipPlanInfo: Driver<(PlanModel, FeesModel)>
         let walletInfo: Driver<WalletModel>
         let projectInfo: Driver<ProjectModel>
         let descriptionBtnDidTap: Driver<Void>
@@ -54,11 +54,11 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (firebaseManager, updater, keychainManager, uri, selectedFanPass) = (self.firebaseManager, self.updater, self.keychainManager, self.uri, self.selectedFanPass)
+        let (firebaseManager, updater, keychainManager, uri, selectedSponsorshipPlan) = (self.firebaseManager, self.updater, self.keychainManager, self.uri, self.selectedSponsorshipPlan)
 
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
-                firebaseManager.screenName("FANPASS구매_\(uri)")
+                firebaseManager.screenName("SponsorshipPlan구매_\(uri)")
             })
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
@@ -67,8 +67,8 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
 
         let loadPage = Driver.merge(initialLoad, loadRetry)
 
-        let fanPassItem = loadPage
-            .map { selectedFanPass }
+        let sponsorshipPlanItem = loadPage
+            .map { selectedSponsorshipPlan }
             .flatMap(Driver.from)
 
         let walletInfoAction = loadPage
@@ -104,7 +104,7 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
         let purchaseWithPincode = input.authSuccessWithPincode
 
         let purchaseAction = Driver.merge(purchaseWithoutPicode, purchaseWithPincode)
-            .map { FanPassAPI.subscription(uri: uri, fanPassId: selectedFanPass.id ?? 0, subscriptionPrice: selectedFanPass.subscriptionPrice ?? 0) }
+            .map { SponsorshipPlanAPI.sponsorship(uri: uri, planId: selectedSponsorshipPlan.id ?? 0, sponsorshipPrice: selectedSponsorshipPlan.sponsorshipPrice ?? 0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -128,7 +128,7 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
             .map { try? $0.map(to: FeesModel.self) }
             .flatMap(Driver.from)
 
-        let fanPassInfo = Driver.combineLatest(fanPassItem, feesInfoSuccess)
+        let sponsorshipPlanInfo = Driver.combineLatest(sponsorshipPlanItem, feesInfoSuccess)
 
         let activityIndicator = Driver.merge(
             walletInfoAction.isExecuting,
@@ -143,7 +143,7 @@ final class SubscribeFanPassViewModel: InjectableViewModel {
 
         return Output(
             viewWillAppear: viewWillAppear,
-            fanPassInfo: fanPassInfo,
+            sponsorshipPlanInfo: sponsorshipPlanInfo,
             walletInfo: walletInfoSuccess,
             projectInfo: projectInfoSuccess,
             descriptionBtnDidTap: input.descriptionBtnDidTap,

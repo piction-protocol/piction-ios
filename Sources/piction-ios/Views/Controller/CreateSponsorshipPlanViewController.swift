@@ -1,5 +1,5 @@
 //
-//  CreateFanPassViewController.swift
+//  CreateSponsorshipPlanViewController.swift
 //  piction-ios
 //
 //  Created by jhseo on 2019/11/22.
@@ -12,7 +12,7 @@ import RxCocoa
 import ViewModelBindable
 import PictionSDK
 
-final class CreateFanPassViewController: UIViewController {
+final class CreateSponsorshipPlanViewController: UIViewController {
     var disposeBag = DisposeBag()
 
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -25,16 +25,16 @@ final class CreateFanPassViewController: UIViewController {
     @IBOutlet weak var limitStackView: UIStackView!
 }
 
-extension CreateFanPassViewController: ViewModelBindable {
-    typealias ViewModel = CreateFanPassViewModel
+extension CreateSponsorshipPlanViewController: ViewModelBindable {
+    typealias ViewModel = CreateSponsorshipPlanViewModel
 
     func bindViewModel(viewModel: ViewModel) {
-        let input = CreateFanPassViewModel.Input(
+        let input = CreateSponsorshipPlanViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
-            fanPassName: nameTextField.rx.text.orEmpty.asDriver(),
-            fanPassPrice: priceTextField.rx.text.asDriver(),
-            fanPassDescription: descriptionTextField.rx.text.asDriver(),
-            fanPassLimit: limitTextField.rx.text.asDriver(),
+            sponsorshipPlanName: nameTextField.rx.text.orEmpty.asDriver(),
+            sponsorshipPlanPrice: priceTextField.rx.text.asDriver(),
+            sponsorshipPlanDescription: descriptionTextField.rx.text.asDriver(),
+            sponsorshipPlanLimit: limitTextField.rx.text.asDriver(),
             limitBtnDidTap: limitButton.rx.tap.asDriver(),
             saveBtnDidTap: saveButton.rx.tap.asDriver()
         )
@@ -49,7 +49,7 @@ extension CreateFanPassViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .loadFanPass
+            .loadSponsorshipPlan
             .map { $0.level ?? 0 == 0 ? .pictionGray : .pictionDarkGrayDM }
             .drive(onNext: { [weak self] textColor in
                 self?.priceTextField.textColor = textColor
@@ -57,50 +57,50 @@ extension CreateFanPassViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .loadFanPass
+            .loadSponsorshipPlan
             .map { $0.name ?? "" }
             .drive(nameTextField.rx.text)
             .disposed(by: disposeBag)
 
         output
-            .loadFanPass
-            .map { String($0.subscriptionPrice ?? 0) }
+            .loadSponsorshipPlan
+            .map { String($0.sponsorshipPrice ?? 0) }
             .drive(priceTextField.rx.text)
             .disposed(by: disposeBag)
 
         output
-            .loadFanPass
+            .loadSponsorshipPlan
             .map { $0.description }
             .filter { $0 != nil }
             .drive(descriptionTextField.rx.text)
             .disposed(by: disposeBag)
 
         output
-            .loadFanPass
-            .map { String($0.subscriptionLimit ?? 0) }
+            .loadSponsorshipPlan
+            .map { String($0.sponsorshipLimit ?? 0) }
             .drive(limitTextField.rx.text)
             .disposed(by: disposeBag)
 
         output
-            .loadFanPass
-            .map { $0.subscriptionLimit == nil }
+            .loadSponsorshipPlan
+            .map { $0.sponsorshipLimit == nil }
             .drive(limitTextField.rx.isHidden)
             .disposed(by: disposeBag)
 
         output
-            .loadFanPass
-            .map { $0.subscriptionLimit == nil ? #imageLiteral(resourceName: "checkboxOn") : #imageLiteral(resourceName: "checkboxOff") }
+            .loadSponsorshipPlan
+            .map { $0.sponsorshipLimit == nil ? #imageLiteral(resourceName: "checkboxOn") : #imageLiteral(resourceName: "checkboxOff") }
             .drive(checkboxImageView.rx.image)
             .disposed(by: disposeBag)
 
         output
-            .loadFanPass
+            .loadSponsorshipPlan
             .map { ($0.level ?? 0) == 0 }
             .drive(limitStackView.rx.isHidden)
             .disposed(by: disposeBag)
 
         output
-            .loadFanPass
+            .loadSponsorshipPlan
             .map { ($0.level ?? 0) > 0 }
             .drive(priceTextField.rx.isEnabled)
             .disposed(by: disposeBag)

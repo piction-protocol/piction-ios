@@ -14,10 +14,10 @@
         </array>
     </customFonts>
     <scenes>
-        <!--FAN PASS 목록-->
+        <!--후원 플랜-->
         <scene sceneID="2nl-Mi-rnN">
             <objects>
-                <viewController storyboardIdentifier="FanPassListViewController" id="QFh-4V-M9r" customClass="FanPassListViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SponsorshipPlanListViewController" id="QFh-4V-M9r" customClass="SponsorshipPlanListViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="e8W-7f-nZh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -51,16 +51,19 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="ieO-UB-qDf">
-                                                            <rect key="frame" x="85" y="132" width="204.5" height="63"/>
+                                                            <rect key="frame" x="105" y="132" width="164.5" height="63"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FAN PASS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zKh-Gg-OTh">
-                                                                    <rect key="frame" x="17.5" y="0.0" width="169" height="42"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="후원 플랜" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zKh-Gg-OTh">
+                                                                    <rect key="frame" x="14.5" y="0.0" width="135" height="42"/>
                                                                     <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="36"/>
                                                                     <color key="textColor" name="PictionDarkGray"/>
                                                                     <nil key="highlightedColor"/>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan"/>
+                                                                    </userDefinedRuntimeAttributes>
                                                                 </label>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AeU-xl-HB7">
-                                                                    <rect key="frame" x="0.0" y="46" width="204.5" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="46" width="164.5" height="17"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l75-du-SCL">
                                                                             <rect key="frame" x="0.0" y="0.0" width="3.5" height="17"/>
@@ -68,13 +71,13 @@
                                                                             <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="님의 창작 활동을 직접 응원해보세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Yd-H6-gwo">
-                                                                            <rect key="frame" x="3.5" y="0.0" width="201" height="17"/>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="님의 창작 활동을 후원하세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Yd-H6-gwo">
+                                                                            <rect key="frame" x="3.5" y="0.0" width="161" height="17"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                             <color key="textColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                             <userDefinedRuntimeAttributes>
-                                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_fanpasslist_description"/>
+                                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan_description"/>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </label>
                                                                     </subviews>
@@ -98,13 +101,13 @@
                                                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FAN PASS를 업그레이드 하는 경우, 현재 사용 중인 상품의 남은 기간은 환불되지 않습니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ksk-ab-Ng2">
-                                                                            <rect key="frame" x="0.0" y="8" width="503" height="0.0"/>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="후원 플랜을 업그레이드 하는 경우, 현재 후원 중인 플랜의 남은 기간은 환불되지 않습니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ksk-ab-Ng2">
+                                                                            <rect key="frame" x="6.5" y="8" width="490" height="0.0"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                             <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                             <userDefinedRuntimeAttributes>
-                                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_fanpasslist_warning_description"/>
+                                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan_warning_description"/>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </label>
                                                                     </subviews>
@@ -133,21 +136,21 @@
                                                                     <rect key="frame" x="24" y="24" width="503" height="65"/>
                                                                     <subviews>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="eht-Dn-gNK">
-                                                                            <rect key="frame" x="104" y="0.0" width="295" height="8"/>
+                                                                            <rect key="frame" x="124.5" y="0.0" width="254" height="8"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y1N-Sv-Boc">
-                                                                                    <rect key="frame" x="146" y="0.0" width="3.5" height="0.0"/>
+                                                                                    <rect key="frame" x="125.5" y="0.0" width="3.5" height="0.0"/>
                                                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="포스트를 볼 수 있는\nFAN PASS 상품만 출력됩니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kmM-Jo-tLA">
-                                                                                    <rect key="frame" x="0.0" y="8" width="295" height="0.0"/>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="포스트를 볼 수 있는\n후원 플랜만 출력합니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kmM-Jo-tLA">
+                                                                                    <rect key="frame" x="0.0" y="8" width="254" height="0.0"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                     <userDefinedRuntimeAttributes>
-                                                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_fanpasslist_current_post_description"/>
+                                                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan_current_post_description"/>
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </label>
                                                                             </subviews>
@@ -209,7 +212,7 @@
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FanPassListTableViewCell" id="WUJ-ew-4lc" customClass="FanPassListTableViewCell" customModule="piction_ios" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SponsorshipPlanListTableViewCell" id="WUJ-ew-4lc" customClass="SponsorshipPlanListTableViewCell" customModule="piction_ios" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="315" width="414" height="286.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WUJ-ew-4lc" id="BCq-pP-ziU">
@@ -361,24 +364,24 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Vi7-kK-GBP"/>
                     </view>
-                    <navigationItem key="navigationItem" title="FAN PASS 목록" id="LOb-WS-6jv">
+                    <navigationItem key="navigationItem" title="후원 플랜" id="LOb-WS-6jv">
                         <barButtonItem key="leftBarButtonItem" title="닫기" id="AaT-qZ-5Z7">
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="close"/>
                             </userDefinedRuntimeAttributes>
                         </barButtonItem>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_fan_pass_list"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan"/>
                         </userDefinedRuntimeAttributes>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="closeButton" destination="AaT-qZ-5Z7" id="vGB-BA-xsT"/>
-                        <outlet property="currentPostFanPassInfo" destination="Ebe-Ou-45t" id="jor-0y-Jen"/>
+                        <outlet property="currentPostSponsorshipPlanInfo" destination="Ebe-Ou-45t" id="NOy-Yp-5Ui"/>
                         <outlet property="currentPostTitleLabel" destination="y1N-Sv-Boc" id="wna-zu-HTb"/>
-                        <outlet property="currentSubscriptionFanPassTitleLabel" destination="w4C-Bh-3Ru" id="Z0I-x3-ff1"/>
-                        <outlet property="currentSubscriptionFanPassView" destination="dex-zJ-X4H" id="1ga-v2-fVu"/>
-                        <outlet property="showAllFanPassButton" destination="aiT-UH-naG" id="oQQ-qA-Mn7"/>
+                        <outlet property="currentSubscriptionSponsorshipPlanTitleLabel" destination="w4C-Bh-3Ru" id="Su3-fY-RTn"/>
+                        <outlet property="currentSubscriptionSponsorshipPlanView" destination="dex-zJ-X4H" id="NTd-LR-Wdg"/>
+                        <outlet property="showAllSponsorshipPlanButton" destination="aiT-UH-naG" id="dr1-Hm-Dq8"/>
                         <outlet property="tableView" destination="KBQ-fV-FWh" id="Plh-7F-fdJ"/>
                         <outlet property="thumbnailImageView" destination="UXr-9p-0hZ" id="kDc-tR-0em"/>
                         <outlet property="writerLabel" destination="l75-du-SCL" id="GWl-eN-n8M"/>

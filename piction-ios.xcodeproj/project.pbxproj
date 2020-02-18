@@ -314,20 +314,20 @@
 		4369F8D323CF045D008D5825 /* ReuseCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4369F8D123CF045D008D5825 /* ReuseCollectionReusableView.xib */; };
 		4369F8D523CF0A67008D5825 /* ProjectListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4369F8D423CF0A67008D5825 /* ProjectListCollectionViewCell.xib */; };
 		4369F8D623CF0A67008D5825 /* ProjectListCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4369F8D423CF0A67008D5825 /* ProjectListCollectionViewCell.xib */; };
-		436C75A12387C37F00902F08 /* ManageFanPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A02387C37F00902F08 /* ManageFanPassViewController.swift */; };
-		436C75A22387C37F00902F08 /* ManageFanPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A02387C37F00902F08 /* ManageFanPassViewController.swift */; };
-		436C75A42387C38A00902F08 /* ManageFanPassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A32387C38900902F08 /* ManageFanPassViewModel.swift */; };
-		436C75A52387C38A00902F08 /* ManageFanPassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A32387C38900902F08 /* ManageFanPassViewModel.swift */; };
-		436C75A72387C39300902F08 /* ManageFanPass.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 436C75A62387C39300902F08 /* ManageFanPass.storyboard */; };
-		436C75A82387C39300902F08 /* ManageFanPass.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 436C75A62387C39300902F08 /* ManageFanPass.storyboard */; };
-		436C75AA2387C55900902F08 /* ManageFanPassTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A92387C55900902F08 /* ManageFanPassTableViewCell.swift */; };
-		436C75AB2387C55900902F08 /* ManageFanPassTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A92387C55900902F08 /* ManageFanPassTableViewCell.swift */; };
-		436C75AE2387C72A00902F08 /* CreateFanPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75AD2387C72A00902F08 /* CreateFanPassViewController.swift */; };
-		436C75AF2387C72A00902F08 /* CreateFanPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75AD2387C72A00902F08 /* CreateFanPassViewController.swift */; };
-		436C75B12387C73600902F08 /* CreateFanPassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75B02387C73600902F08 /* CreateFanPassViewModel.swift */; };
-		436C75B22387C73600902F08 /* CreateFanPassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75B02387C73600902F08 /* CreateFanPassViewModel.swift */; };
-		436C75B42387C74500902F08 /* CreateFanPass.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 436C75B32387C74500902F08 /* CreateFanPass.storyboard */; };
-		436C75B52387C74500902F08 /* CreateFanPass.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 436C75B32387C74500902F08 /* CreateFanPass.storyboard */; };
+		436C75A12387C37F00902F08 /* ManageSponsorshipPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A02387C37F00902F08 /* ManageSponsorshipPlanViewController.swift */; };
+		436C75A22387C37F00902F08 /* ManageSponsorshipPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A02387C37F00902F08 /* ManageSponsorshipPlanViewController.swift */; };
+		436C75A42387C38A00902F08 /* ManageSponsorshipPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A32387C38900902F08 /* ManageSponsorshipPlanViewModel.swift */; };
+		436C75A52387C38A00902F08 /* ManageSponsorshipPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A32387C38900902F08 /* ManageSponsorshipPlanViewModel.swift */; };
+		436C75A72387C39300902F08 /* ManageSponsorshipPlan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 436C75A62387C39300902F08 /* ManageSponsorshipPlan.storyboard */; };
+		436C75A82387C39300902F08 /* ManageSponsorshipPlan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 436C75A62387C39300902F08 /* ManageSponsorshipPlan.storyboard */; };
+		436C75AA2387C55900902F08 /* ManageSponsorshipPlanViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A92387C55900902F08 /* ManageSponsorshipPlanViewCell.swift */; };
+		436C75AB2387C55900902F08 /* ManageSponsorshipPlanViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A92387C55900902F08 /* ManageSponsorshipPlanViewCell.swift */; };
+		436C75AE2387C72A00902F08 /* CreateSponsorshipPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75AD2387C72A00902F08 /* CreateSponsorshipPlanViewController.swift */; };
+		436C75AF2387C72A00902F08 /* CreateSponsorshipPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75AD2387C72A00902F08 /* CreateSponsorshipPlanViewController.swift */; };
+		436C75B12387C73600902F08 /* CreateSponsorshipPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75B02387C73600902F08 /* CreateSponsorshipPlanViewModel.swift */; };
+		436C75B22387C73600902F08 /* CreateSponsorshipPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75B02387C73600902F08 /* CreateSponsorshipPlanViewModel.swift */; };
+		436C75B42387C74500902F08 /* CreateSponsorshipPlan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 436C75B32387C74500902F08 /* CreateSponsorshipPlan.storyboard */; };
+		436C75B52387C74500902F08 /* CreateSponsorshipPlan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 436C75B32387C74500902F08 /* CreateSponsorshipPlan.storyboard */; };
 		436CAC6C234C2E1200C84373 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436CAC6B234C2E1200C84373 /* FirebaseManager.swift */; };
 		436CAC6D234C2E1200C84373 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436CAC6B234C2E1200C84373 /* FirebaseManager.swift */; };
 		4372268D237E7F610054C777 /* RxDataSources+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4372268C237E7F610054C777 /* RxDataSources+Extension.swift */; };
@@ -352,14 +352,14 @@
 		438E764A2366B6650062D004 /* SubscriptionUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E76482366B6650062D004 /* SubscriptionUserTableViewCell.swift */; };
 		438E764C2366B7B30062D004 /* SubscriptionUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E764B2366B7B20062D004 /* SubscriptionUserViewController.swift */; };
 		438E764D2366B7B30062D004 /* SubscriptionUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438E764B2366B7B20062D004 /* SubscriptionUserViewController.swift */; };
-		439029262383EE6A00A3121B /* FanPassListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439029252383EE6A00A3121B /* FanPassListViewController.swift */; };
-		439029272383EE6A00A3121B /* FanPassListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439029252383EE6A00A3121B /* FanPassListViewController.swift */; };
-		439029292383EE7600A3121B /* FanPassListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439029282383EE7600A3121B /* FanPassListViewModel.swift */; };
-		4390292A2383EE7600A3121B /* FanPassListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439029282383EE7600A3121B /* FanPassListViewModel.swift */; };
-		4390292C2383EE8600A3121B /* FanPassList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4390292B2383EE8600A3121B /* FanPassList.storyboard */; };
-		4390292D2383EE8600A3121B /* FanPassList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4390292B2383EE8600A3121B /* FanPassList.storyboard */; };
-		4390292F2383EEBF00A3121B /* FanPassListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390292E2383EEBF00A3121B /* FanPassListTableViewCell.swift */; };
-		439029302383EEBF00A3121B /* FanPassListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390292E2383EEBF00A3121B /* FanPassListTableViewCell.swift */; };
+		439029262383EE6A00A3121B /* SponsorshipPlanListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439029252383EE6A00A3121B /* SponsorshipPlanListViewController.swift */; };
+		439029272383EE6A00A3121B /* SponsorshipPlanListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439029252383EE6A00A3121B /* SponsorshipPlanListViewController.swift */; };
+		439029292383EE7600A3121B /* SponsorshipPlanListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439029282383EE7600A3121B /* SponsorshipPlanListViewModel.swift */; };
+		4390292A2383EE7600A3121B /* SponsorshipPlanListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439029282383EE7600A3121B /* SponsorshipPlanListViewModel.swift */; };
+		4390292C2383EE8600A3121B /* SponsorshipPlanList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4390292B2383EE8600A3121B /* SponsorshipPlanList.storyboard */; };
+		4390292D2383EE8600A3121B /* SponsorshipPlanList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4390292B2383EE8600A3121B /* SponsorshipPlanList.storyboard */; };
+		4390292F2383EEBF00A3121B /* SponsorshipPlanListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390292E2383EEBF00A3121B /* SponsorshipPlanListTableViewCell.swift */; };
+		439029302383EEBF00A3121B /* SponsorshipPlanListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390292E2383EEBF00A3121B /* SponsorshipPlanListTableViewCell.swift */; };
 		4390495223E01E7700C33A29 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43C41F622373B84F00D012A7 /* GoogleService-Info.plist */; };
 		4391D87523E3D80C008A4DE4 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4391D87423E3D80C008A4DE4 /* UIScrollView+Extension.swift */; };
 		4391D87623E3D80C008A4DE4 /* UIScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4391D87423E3D80C008A4DE4 /* UIScrollView+Extension.swift */; };
@@ -464,12 +464,12 @@
 		43C41F772373EB4900D012A7 /* CheckPincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C41F762373EB4900D012A7 /* CheckPincodeViewController.swift */; };
 		43C41F792373EB5400D012A7 /* CheckPincodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C41F782373EB5400D012A7 /* CheckPincodeViewModel.swift */; };
 		43C41F7B2373EB5D00D012A7 /* CheckPincode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C41F7A2373EB5D00D012A7 /* CheckPincode.storyboard */; };
-		43C5C93E2383BDB1004BACFC /* SubscribeFanPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C5C93D2383BDB1004BACFC /* SubscribeFanPassViewController.swift */; };
-		43C5C93F2383BDB1004BACFC /* SubscribeFanPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C5C93D2383BDB1004BACFC /* SubscribeFanPassViewController.swift */; };
-		43C5C9412383BDC6004BACFC /* SubscribeFanPassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C5C9402383BDC6004BACFC /* SubscribeFanPassViewModel.swift */; };
-		43C5C9422383BDC6004BACFC /* SubscribeFanPassViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C5C9402383BDC6004BACFC /* SubscribeFanPassViewModel.swift */; };
-		43C5C9442383BDD6004BACFC /* SubscribeFanPass.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C5C9432383BDD6004BACFC /* SubscribeFanPass.storyboard */; };
-		43C5C9452383BDD6004BACFC /* SubscribeFanPass.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C5C9432383BDD6004BACFC /* SubscribeFanPass.storyboard */; };
+		43C5C93E2383BDB1004BACFC /* PurchaseSponsorshipPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C5C93D2383BDB1004BACFC /* PurchaseSponsorshipPlanViewController.swift */; };
+		43C5C93F2383BDB1004BACFC /* PurchaseSponsorshipPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C5C93D2383BDB1004BACFC /* PurchaseSponsorshipPlanViewController.swift */; };
+		43C5C9412383BDC6004BACFC /* PurchaseSponsorshipPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C5C9402383BDC6004BACFC /* PurchaseSponsorshipPlanViewModel.swift */; };
+		43C5C9422383BDC6004BACFC /* PurchaseSponsorshipPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C5C9402383BDC6004BACFC /* PurchaseSponsorshipPlanViewModel.swift */; };
+		43C5C9442383BDD6004BACFC /* PurchaseSponsorshipPlan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C5C9432383BDD6004BACFC /* PurchaseSponsorshipPlan.storyboard */; };
+		43C5C9452383BDD6004BACFC /* PurchaseSponsorshipPlan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43C5C9432383BDD6004BACFC /* PurchaseSponsorshipPlan.storyboard */; };
 		43DB2289235969F300E69C0F /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB2288235969F300E69C0F /* UILabel+Extension.swift */; };
 		43DB228A235969F400E69C0F /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB2288235969F300E69C0F /* UILabel+Extension.swift */; };
 		43DB22922359ADBE00E69C0F /* SearchTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DB22912359ADBE00E69C0F /* SearchTagTableViewCell.swift */; };
@@ -708,13 +708,13 @@
 		4369F8A223CC64A6008D5825 /* ExploreViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
 		4369F8D123CF045D008D5825 /* ReuseCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReuseCollectionReusableView.xib; sourceTree = "<group>"; };
 		4369F8D423CF0A67008D5825 /* ProjectListCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProjectListCollectionViewCell.xib; sourceTree = "<group>"; };
-		436C75A02387C37F00902F08 /* ManageFanPassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFanPassViewController.swift; sourceTree = "<group>"; };
-		436C75A32387C38900902F08 /* ManageFanPassViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFanPassViewModel.swift; sourceTree = "<group>"; };
-		436C75A62387C39300902F08 /* ManageFanPass.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ManageFanPass.storyboard; sourceTree = "<group>"; };
-		436C75A92387C55900902F08 /* ManageFanPassTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageFanPassTableViewCell.swift; sourceTree = "<group>"; };
-		436C75AD2387C72A00902F08 /* CreateFanPassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFanPassViewController.swift; sourceTree = "<group>"; };
-		436C75B02387C73600902F08 /* CreateFanPassViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFanPassViewModel.swift; sourceTree = "<group>"; };
-		436C75B32387C74500902F08 /* CreateFanPass.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreateFanPass.storyboard; sourceTree = "<group>"; };
+		436C75A02387C37F00902F08 /* ManageSponsorshipPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageSponsorshipPlanViewController.swift; sourceTree = "<group>"; };
+		436C75A32387C38900902F08 /* ManageSponsorshipPlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageSponsorshipPlanViewModel.swift; sourceTree = "<group>"; };
+		436C75A62387C39300902F08 /* ManageSponsorshipPlan.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ManageSponsorshipPlan.storyboard; sourceTree = "<group>"; };
+		436C75A92387C55900902F08 /* ManageSponsorshipPlanViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageSponsorshipPlanViewCell.swift; sourceTree = "<group>"; };
+		436C75AD2387C72A00902F08 /* CreateSponsorshipPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSponsorshipPlanViewController.swift; sourceTree = "<group>"; };
+		436C75B02387C73600902F08 /* CreateSponsorshipPlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSponsorshipPlanViewModel.swift; sourceTree = "<group>"; };
+		436C75B32387C74500902F08 /* CreateSponsorshipPlan.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreateSponsorshipPlan.storyboard; sourceTree = "<group>"; };
 		436CAC6B234C2E1200C84373 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		4372268C237E7F610054C777 /* RxDataSources+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxDataSources+Extension.swift"; sourceTree = "<group>"; };
 		438E762B2362BCF50062D004 /* DynamicCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -727,10 +727,10 @@
 		438E76452366B6260062D004 /* SubscriptionUser.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SubscriptionUser.storyboard; sourceTree = "<group>"; };
 		438E76482366B6650062D004 /* SubscriptionUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionUserTableViewCell.swift; sourceTree = "<group>"; };
 		438E764B2366B7B20062D004 /* SubscriptionUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionUserViewController.swift; sourceTree = "<group>"; };
-		439029252383EE6A00A3121B /* FanPassListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FanPassListViewController.swift; sourceTree = "<group>"; };
-		439029282383EE7600A3121B /* FanPassListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FanPassListViewModel.swift; sourceTree = "<group>"; };
-		4390292B2383EE8600A3121B /* FanPassList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FanPassList.storyboard; sourceTree = "<group>"; };
-		4390292E2383EEBF00A3121B /* FanPassListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FanPassListTableViewCell.swift; sourceTree = "<group>"; };
+		439029252383EE6A00A3121B /* SponsorshipPlanListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorshipPlanListViewController.swift; sourceTree = "<group>"; };
+		439029282383EE7600A3121B /* SponsorshipPlanListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorshipPlanListViewModel.swift; sourceTree = "<group>"; };
+		4390292B2383EE8600A3121B /* SponsorshipPlanList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SponsorshipPlanList.storyboard; sourceTree = "<group>"; };
+		4390292E2383EEBF00A3121B /* SponsorshipPlanListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorshipPlanListTableViewCell.swift; sourceTree = "<group>"; };
 		4391D87423E3D80C008A4DE4 /* UIScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extension.swift"; sourceTree = "<group>"; };
 		439E7E3423794DAB00E4A475 /* CreatePostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostCollectionViewCell.swift; sourceTree = "<group>"; };
 		439E7E3623794DDA00E4A475 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
@@ -775,9 +775,9 @@
 		43C41F762373EB4900D012A7 /* CheckPincodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPincodeViewController.swift; sourceTree = "<group>"; };
 		43C41F782373EB5400D012A7 /* CheckPincodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPincodeViewModel.swift; sourceTree = "<group>"; };
 		43C41F7A2373EB5D00D012A7 /* CheckPincode.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CheckPincode.storyboard; sourceTree = "<group>"; };
-		43C5C93D2383BDB1004BACFC /* SubscribeFanPassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeFanPassViewController.swift; sourceTree = "<group>"; };
-		43C5C9402383BDC6004BACFC /* SubscribeFanPassViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeFanPassViewModel.swift; sourceTree = "<group>"; };
-		43C5C9432383BDD6004BACFC /* SubscribeFanPass.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SubscribeFanPass.storyboard; sourceTree = "<group>"; };
+		43C5C93D2383BDB1004BACFC /* PurchaseSponsorshipPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseSponsorshipPlanViewController.swift; sourceTree = "<group>"; };
+		43C5C9402383BDC6004BACFC /* PurchaseSponsorshipPlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseSponsorshipPlanViewModel.swift; sourceTree = "<group>"; };
+		43C5C9432383BDD6004BACFC /* PurchaseSponsorshipPlan.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PurchaseSponsorshipPlan.storyboard; sourceTree = "<group>"; };
 		43DB2288235969F300E69C0F /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		43DB22912359ADBE00E69C0F /* SearchTagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTagTableViewCell.swift; sourceTree = "<group>"; };
 		43E543682355930D00F2EC45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -1078,10 +1078,10 @@
 				4323F9D4233A165600243655 /* PostHeaderViewModel.swift */,
 				4323F9EB233A165600243655 /* PostFooterViewModel.swift */,
 				4323F9CB233A165600243655 /* CreatePostViewModel.swift */,
-				436C75B02387C73600902F08 /* CreateFanPassViewModel.swift */,
-				436C75A32387C38900902F08 /* ManageFanPassViewModel.swift */,
-				439029282383EE7600A3121B /* FanPassListViewModel.swift */,
-				43C5C9402383BDC6004BACFC /* SubscribeFanPassViewModel.swift */,
+				436C75B02387C73600902F08 /* CreateSponsorshipPlanViewModel.swift */,
+				436C75A32387C38900902F08 /* ManageSponsorshipPlanViewModel.swift */,
+				439029282383EE7600A3121B /* SponsorshipPlanListViewModel.swift */,
+				43C5C9402383BDC6004BACFC /* PurchaseSponsorshipPlanViewModel.swift */,
 				4323F9F2233A165600243655 /* CustomEmptyViewModel.swift */,
 			);
 			path = ViewModels;
@@ -1122,10 +1122,10 @@
 				4323F9D3233A165600243655 /* PostHeader.storyboard */,
 				4323F9EA233A165600243655 /* PostFooter.storyboard */,
 				4323F9CD233A165600243655 /* CreatePost.storyboard */,
-				436C75B32387C74500902F08 /* CreateFanPass.storyboard */,
-				436C75A62387C39300902F08 /* ManageFanPass.storyboard */,
-				4390292B2383EE8600A3121B /* FanPassList.storyboard */,
-				43C5C9432383BDD6004BACFC /* SubscribeFanPass.storyboard */,
+				436C75B32387C74500902F08 /* CreateSponsorshipPlan.storyboard */,
+				436C75A62387C39300902F08 /* ManageSponsorshipPlan.storyboard */,
+				4390292B2383EE8600A3121B /* SponsorshipPlanList.storyboard */,
+				43C5C9432383BDD6004BACFC /* PurchaseSponsorshipPlan.storyboard */,
 				4323F9F4233A165600243655 /* CustomEmptyView.storyboard */,
 			);
 			path = Storyboard;
@@ -1178,10 +1178,10 @@
 				4323F9D5233A165600243655 /* PostHeaderViewController.swift */,
 				4323F9E9233A165600243655 /* PostFooterViewController.swift */,
 				4323F9CC233A165600243655 /* CreatePostViewController.swift */,
-				436C75AD2387C72A00902F08 /* CreateFanPassViewController.swift */,
-				436C75A02387C37F00902F08 /* ManageFanPassViewController.swift */,
-				439029252383EE6A00A3121B /* FanPassListViewController.swift */,
-				43C5C93D2383BDB1004BACFC /* SubscribeFanPassViewController.swift */,
+				436C75AD2387C72A00902F08 /* CreateSponsorshipPlanViewController.swift */,
+				436C75A02387C37F00902F08 /* ManageSponsorshipPlanViewController.swift */,
+				439029252383EE6A00A3121B /* SponsorshipPlanListViewController.swift */,
+				43C5C93D2383BDB1004BACFC /* PurchaseSponsorshipPlanViewController.swift */,
 				4323F9F3233A165600243655 /* CustomEmptyViewController.swift */,
 			);
 			path = Controller;
@@ -1220,8 +1220,8 @@
 				438E763B2362FD050062D004 /* ManageSeriesTableViewCell.swift */,
 				4323F9DC233A165600243655 /* SeriesPostListTableViewCell.swift */,
 				43F186592342FEAC0050BA67 /* PostFooterSeriesPostListTableViewCell.swift */,
-				436C75A92387C55900902F08 /* ManageFanPassTableViewCell.swift */,
-				4390292E2383EEBF00A3121B /* FanPassListTableViewCell.swift */,
+				436C75A92387C55900902F08 /* ManageSponsorshipPlanViewCell.swift */,
+				4390292E2383EEBF00A3121B /* SponsorshipPlanListTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1665,7 +1665,7 @@
 				4323FB9B233A166400243655 /* SignIn.storyboard in Resources */,
 				4323FB19233A165E00243655 /* Deposit.storyboard in Resources */,
 				4323FB01233A165D00243655 /* PostFooter.storyboard in Resources */,
-				43C5C9452383BDD6004BACFC /* SubscribeFanPass.storyboard in Resources */,
+				43C5C9452383BDD6004BACFC /* PurchaseSponsorshipPlan.storyboard in Resources */,
 				4323FAA3233A165900243655 /* ConfirmPincode.storyboard in Resources */,
 				4323FB05233A165D00243655 /* CreateProject.storyboard in Resources */,
 				4323FB4F233A166000243655 /* TransactionHistory.storyboard in Resources */,
@@ -1687,8 +1687,8 @@
 				438E76472366B6270062D004 /* SubscriptionUser.storyboard in Resources */,
 				4323FADB233A165C00243655 /* PostHeader.storyboard in Resources */,
 				4323FB49233A166000243655 /* ChangeMyInfo.storyboard in Resources */,
-				436C75B52387C74500902F08 /* CreateFanPass.storyboard in Resources */,
-				4390292D2383EE8600A3121B /* FanPassList.storyboard in Resources */,
+				436C75B52387C74500902F08 /* CreateSponsorshipPlan.storyboard in Resources */,
+				4390292D2383EE8600A3121B /* SponsorshipPlanList.storyboard in Resources */,
 				438E763A2362FAB90062D004 /* ManageSeries.storyboard in Resources */,
 				4356F51C233DF184000710FC /* Localizable.strings in Resources */,
 				43502A9A238F520100586098 /* Poppins-SemiBold.ttf in Resources */,
@@ -1704,7 +1704,7 @@
 				43C153B823C7046000565FC4 /* CategorizedProjectHeaderView.xib in Resources */,
 				4323FAEB233A165C00243655 /* SeriesPost.storyboard in Resources */,
 				43E54396235713D700F2EC45 /* TaggingProject.storyboard in Resources */,
-				436C75A82387C39300902F08 /* ManageFanPass.storyboard in Resources */,
+				436C75A82387C39300902F08 /* ManageSponsorshipPlan.storyboard in Resources */,
 				4323FAEF233A165C00243655 /* ProjectHeaderView.xib in Resources */,
 				4323FB5F233A166100243655 /* UserInfo.storyboard in Resources */,
 				4390495223E01E7700C33A29 /* GoogleService-Info.plist in Resources */,
@@ -1720,7 +1720,7 @@
 				4369F8A523CC64A6008D5825 /* Explore.storyboard in Resources */,
 				4323FB42233A166000243655 /* ChangePassword.storyboard in Resources */,
 				4323FB9A233A166400243655 /* SignIn.storyboard in Resources */,
-				43C5C9442383BDD6004BACFC /* SubscribeFanPass.storyboard in Resources */,
+				43C5C9442383BDD6004BACFC /* PurchaseSponsorshipPlan.storyboard in Resources */,
 				4323FB18233A165E00243655 /* Deposit.storyboard in Resources */,
 				4323FB00233A165D00243655 /* PostFooter.storyboard in Resources */,
 				4323FAA2233A165900243655 /* ConfirmPincode.storyboard in Resources */,
@@ -1743,8 +1743,8 @@
 				4369F8D523CF0A67008D5825 /* ProjectListCollectionViewCell.xib in Resources */,
 				4323FADA233A165C00243655 /* PostHeader.storyboard in Resources */,
 				4323FB48233A166000243655 /* ChangeMyInfo.storyboard in Resources */,
-				436C75B42387C74500902F08 /* CreateFanPass.storyboard in Resources */,
-				4390292C2383EE8600A3121B /* FanPassList.storyboard in Resources */,
+				436C75B42387C74500902F08 /* CreateSponsorshipPlan.storyboard in Resources */,
+				4390292C2383EE8600A3121B /* SponsorshipPlanList.storyboard in Resources */,
 				4356F51B233DF184000710FC /* Localizable.strings in Resources */,
 				4323FB0E233A165E00243655 /* CustomEmptyView.storyboard in Resources */,
 				4323FB2C233A165F00243655 /* MyProject.storyboard in Resources */,
@@ -1761,7 +1761,7 @@
 				43C153B723C7046000565FC4 /* CategorizedProjectHeaderView.xib in Resources */,
 				43E54395235713D700F2EC45 /* TaggingProject.storyboard in Resources */,
 				4323FAEE233A165C00243655 /* ProjectHeaderView.xib in Resources */,
-				436C75A72387C39300902F08 /* ManageFanPass.storyboard in Resources */,
+				436C75A72387C39300902F08 /* ManageSponsorshipPlan.storyboard in Resources */,
 				4323FB5E233A166100243655 /* UserInfo.storyboard in Resources */,
 				4322CA7A23EA6AD200838A98 /* GoogleService-Info.plist in Resources */,
 			);
@@ -1964,10 +1964,10 @@
 				4323FB3F233A166000243655 /* MyPageViewModel.swift in Sources */,
 				4323FB07233A165D00243655 /* CreateProjectViewModel.swift in Sources */,
 				4323FA8B233A165800243655 /* AppDelegate.swift in Sources */,
-				439029302383EEBF00A3121B /* FanPassListTableViewCell.swift in Sources */,
+				439029302383EEBF00A3121B /* SponsorshipPlanListTableViewCell.swift in Sources */,
 				4323FAED233A165C00243655 /* SeriesPostViewController.swift in Sources */,
 				4323FA95233A165900243655 /* Injectable.swift in Sources */,
-				436C75A22387C37F00902F08 /* ManageFanPassViewController.swift in Sources */,
+				436C75A22387C37F00902F08 /* ManageSponsorshipPlanViewController.swift in Sources */,
 				4323FB0B233A165E00243655 /* CustomEmptyViewModel.swift in Sources */,
 				4323FB15233A165E00243655 /* DepositViewController.swift in Sources */,
 				438E76342362FAA20062D004 /* ManageSeriesViewController.swift in Sources */,
@@ -1980,8 +1980,8 @@
 				4323FAC9233A165B00243655 /* SubscriptionListCollectionViewCell.swift in Sources */,
 				4323FBC4233C876D00243655 /* Localization.swift in Sources */,
 				4323FB0D233A165E00243655 /* CustomEmptyViewController.swift in Sources */,
-				43C5C9422383BDC6004BACFC /* SubscribeFanPassViewModel.swift in Sources */,
-				436C75B22387C73600902F08 /* CreateFanPassViewModel.swift in Sources */,
+				43C5C9422383BDC6004BACFC /* PurchaseSponsorshipPlanViewModel.swift in Sources */,
+				436C75B22387C73600902F08 /* CreateSponsorshipPlanViewModel.swift in Sources */,
 				4323FAE7233A165C00243655 /* SeriesPostViewModel.swift in Sources */,
 				43125A4123AC932E0060928F /* HomeHeaderTableViewCell.swift in Sources */,
 				4323FAA1233A165900243655 /* ConfirmPincodeViewController.swift in Sources */,
@@ -1999,21 +1999,21 @@
 				438E764D2366B7B30062D004 /* SubscriptionUserViewController.swift in Sources */,
 				4356F4F8233D9CBB000710FC /* LocalizationKey.swift in Sources */,
 				4323FAAB233A165A00243655 /* TabBarViewController.swift in Sources */,
-				43C5C93F2383BDB1004BACFC /* SubscribeFanPassViewController.swift in Sources */,
+				43C5C93F2383BDB1004BACFC /* PurchaseSponsorshipPlanViewController.swift in Sources */,
 				4323FA79233A165800243655 /* UINavigationController+Extension.swift in Sources */,
 				4323FA75233A165700243655 /* UIView+Extension.swift in Sources */,
 				4323FA63233A165700243655 /* UtilityAssembly.swift in Sources */,
 				4323FA61233A165700243655 /* ViewModelAssembly.swift in Sources */,
 				4323FAE9233A165C00243655 /* SeriesPostListTableViewCell.swift in Sources */,
 				4323FA8D233A165800243655 /* VisualEffectView.swift in Sources */,
-				439029272383EE6A00A3121B /* FanPassListViewController.swift in Sources */,
+				439029272383EE6A00A3121B /* SponsorshipPlanListViewController.swift in Sources */,
 				4323FABB233A165A00243655 /* HomeViewController.swift in Sources */,
 				438E762D2362BCF50062D004 /* DynamicCollectionViewFlowLayout.swift in Sources */,
 				4323FB4D233A166000243655 /* TransactionHistoryListTypeTableViewCell.swift in Sources */,
 				4323FB03233A165D00243655 /* PostFooterViewModel.swift in Sources */,
 				4323FAE5233A165C00243655 /* ProjectInfoViewModel.swift in Sources */,
 				4323FA69233A165700243655 /* UIImageView+Extension.swift in Sources */,
-				436C75A52387C38A00902F08 /* ManageFanPassViewModel.swift in Sources */,
+				436C75A52387C38A00902F08 /* ManageSponsorshipPlanViewModel.swift in Sources */,
 				4323FA91233A165900243655 /* BorderLineConfigurable.swift in Sources */,
 				4323FB1F233A165E00243655 /* TransactionDetailItemTypeTableViewCell.swift in Sources */,
 				4369108A23C41A310045D020 /* URLCache+Extension.swift in Sources */,
@@ -2070,7 +2070,7 @@
 				43125A3423AB65D80060928F /* HomeSubscribingPostsTableViewCell.swift in Sources */,
 				4323FA5F233A165600243655 /* ViewControllerAssembly.swift in Sources */,
 				4323FA9B233A165900243655 /* CheckPincodeViewModel.swift in Sources */,
-				4390292A2383EE7600A3121B /* FanPassListViewModel.swift in Sources */,
+				4390292A2383EE7600A3121B /* SponsorshipPlanListViewModel.swift in Sources */,
 				4323FB35233A165F00243655 /* MyPagePresentTypeTableViewCell.swift in Sources */,
 				4323FA6F233A165700243655 /* Date+Extension.swift in Sources */,
 				4323FAA5233A165900243655 /* RegisterPincodeViewController.swift in Sources */,
@@ -2094,7 +2094,7 @@
 				438E764A2366B6650062D004 /* SubscriptionUserTableViewCell.swift in Sources */,
 				4323FA81233A165800243655 /* UICollectionView+Extension.swift in Sources */,
 				4323FA65233A165700243655 /* Container+Extension.swift in Sources */,
-				436C75AB2387C55900902F08 /* ManageFanPassTableViewCell.swift in Sources */,
+				436C75AB2387C55900902F08 /* ManageSponsorshipPlanViewCell.swift in Sources */,
 				4323FB57233A166100243655 /* TransactionHistoryViewController.swift in Sources */,
 				43C153A623C5CFF600565FC4 /* CategorizedProjectViewModel.swift in Sources */,
 				43E543792355AFDD00F2EC45 /* Double+Extension.swift in Sources */,
@@ -2105,7 +2105,7 @@
 				4323FB41233A166000243655 /* ChangePasswordViewController.swift in Sources */,
 				4323FAC5233A165B00243655 /* SubscriptionListViewController.swift in Sources */,
 				4323FB53233A166100243655 /* TransactionHistoryViewModel.swift in Sources */,
-				436C75AF2387C72A00902F08 /* CreateFanPassViewController.swift in Sources */,
+				436C75AF2387C72A00902F08 /* CreateSponsorshipPlanViewController.swift in Sources */,
 				4323FA89233A165800243655 /* StoryBoard.swift in Sources */,
 				436CAC6D234C2E1200C84373 /* FirebaseManager.swift in Sources */,
 				4391D87623E3D80C008A4DE4 /* UIScrollView+Extension.swift in Sources */,
@@ -2127,10 +2127,10 @@
 				4323FB3E233A166000243655 /* MyPageViewModel.swift in Sources */,
 				4323FB06233A165D00243655 /* CreateProjectViewModel.swift in Sources */,
 				4323FA8A233A165800243655 /* AppDelegate.swift in Sources */,
-				4390292F2383EEBF00A3121B /* FanPassListTableViewCell.swift in Sources */,
+				4390292F2383EEBF00A3121B /* SponsorshipPlanListTableViewCell.swift in Sources */,
 				4323FAEC233A165C00243655 /* SeriesPostViewController.swift in Sources */,
 				4323FA94233A165900243655 /* Injectable.swift in Sources */,
-				436C75A12387C37F00902F08 /* ManageFanPassViewController.swift in Sources */,
+				436C75A12387C37F00902F08 /* ManageSponsorshipPlanViewController.swift in Sources */,
 				4323FB0A233A165E00243655 /* CustomEmptyViewModel.swift in Sources */,
 				4323FB14233A165E00243655 /* DepositViewController.swift in Sources */,
 				438E76332362FAA20062D004 /* ManageSeriesViewController.swift in Sources */,
@@ -2143,8 +2143,8 @@
 				4323FAC8233A165B00243655 /* SubscriptionListCollectionViewCell.swift in Sources */,
 				4323FBC3233C876D00243655 /* Localization.swift in Sources */,
 				4323FB0C233A165E00243655 /* CustomEmptyViewController.swift in Sources */,
-				43C5C9412383BDC6004BACFC /* SubscribeFanPassViewModel.swift in Sources */,
-				436C75B12387C73600902F08 /* CreateFanPassViewModel.swift in Sources */,
+				43C5C9412383BDC6004BACFC /* PurchaseSponsorshipPlanViewModel.swift in Sources */,
+				436C75B12387C73600902F08 /* CreateSponsorshipPlanViewModel.swift in Sources */,
 				4323FAE6233A165C00243655 /* SeriesPostViewModel.swift in Sources */,
 				43125A4023AC932E0060928F /* HomeHeaderTableViewCell.swift in Sources */,
 				4323FAA0233A165900243655 /* ConfirmPincodeViewController.swift in Sources */,
@@ -2162,21 +2162,21 @@
 				438E764C2366B7B30062D004 /* SubscriptionUserViewController.swift in Sources */,
 				4356F4F7233D9CBB000710FC /* LocalizationKey.swift in Sources */,
 				4323FAAA233A165A00243655 /* TabBarViewController.swift in Sources */,
-				43C5C93E2383BDB1004BACFC /* SubscribeFanPassViewController.swift in Sources */,
+				43C5C93E2383BDB1004BACFC /* PurchaseSponsorshipPlanViewController.swift in Sources */,
 				4323FA78233A165800243655 /* UINavigationController+Extension.swift in Sources */,
 				4323FA74233A165700243655 /* UIView+Extension.swift in Sources */,
 				4323FA62233A165700243655 /* UtilityAssembly.swift in Sources */,
 				4323FA60233A165600243655 /* ViewModelAssembly.swift in Sources */,
 				4323FAE8233A165C00243655 /* SeriesPostListTableViewCell.swift in Sources */,
 				4323FA8C233A165800243655 /* VisualEffectView.swift in Sources */,
-				439029262383EE6A00A3121B /* FanPassListViewController.swift in Sources */,
+				439029262383EE6A00A3121B /* SponsorshipPlanListViewController.swift in Sources */,
 				4323FABA233A165A00243655 /* HomeViewController.swift in Sources */,
 				438E762C2362BCF50062D004 /* DynamicCollectionViewFlowLayout.swift in Sources */,
 				4323FB4C233A166000243655 /* TransactionHistoryListTypeTableViewCell.swift in Sources */,
 				4323FB02233A165D00243655 /* PostFooterViewModel.swift in Sources */,
 				4323FAE4233A165C00243655 /* ProjectInfoViewModel.swift in Sources */,
 				4323FA68233A165700243655 /* UIImageView+Extension.swift in Sources */,
-				436C75A42387C38A00902F08 /* ManageFanPassViewModel.swift in Sources */,
+				436C75A42387C38A00902F08 /* ManageSponsorshipPlanViewModel.swift in Sources */,
 				4323FA90233A165800243655 /* BorderLineConfigurable.swift in Sources */,
 				4323FB1E233A165E00243655 /* TransactionDetailItemTypeTableViewCell.swift in Sources */,
 				4369108923C41A310045D020 /* URLCache+Extension.swift in Sources */,
@@ -2233,7 +2233,7 @@
 				43125A3323AB65D80060928F /* HomeSubscribingPostsTableViewCell.swift in Sources */,
 				4323FA5E233A165600243655 /* ViewControllerAssembly.swift in Sources */,
 				4323FA9A233A165900243655 /* CheckPincodeViewModel.swift in Sources */,
-				439029292383EE7600A3121B /* FanPassListViewModel.swift in Sources */,
+				439029292383EE7600A3121B /* SponsorshipPlanListViewModel.swift in Sources */,
 				4323FB34233A165F00243655 /* MyPagePresentTypeTableViewCell.swift in Sources */,
 				4323FA6E233A165700243655 /* Date+Extension.swift in Sources */,
 				4323FAA4233A165900243655 /* RegisterPincodeViewController.swift in Sources */,
@@ -2257,7 +2257,7 @@
 				438E76492366B6650062D004 /* SubscriptionUserTableViewCell.swift in Sources */,
 				4323FA80233A165800243655 /* UICollectionView+Extension.swift in Sources */,
 				4323FA64233A165700243655 /* Container+Extension.swift in Sources */,
-				436C75AA2387C55900902F08 /* ManageFanPassTableViewCell.swift in Sources */,
+				436C75AA2387C55900902F08 /* ManageSponsorshipPlanViewCell.swift in Sources */,
 				4323FB56233A166100243655 /* TransactionHistoryViewController.swift in Sources */,
 				43C153A523C5CFF600565FC4 /* CategorizedProjectViewModel.swift in Sources */,
 				43E543782355AFDB00F2EC45 /* Double+Extension.swift in Sources */,
@@ -2268,7 +2268,7 @@
 				4323FB40233A166000243655 /* ChangePasswordViewController.swift in Sources */,
 				4323FAC4233A165B00243655 /* SubscriptionListViewController.swift in Sources */,
 				4323FB52233A166100243655 /* TransactionHistoryViewModel.swift in Sources */,
-				436C75AE2387C72A00902F08 /* CreateFanPassViewController.swift in Sources */,
+				436C75AE2387C72A00902F08 /* CreateSponsorshipPlanViewController.swift in Sources */,
 				4323FA88233A165800243655 /* StoryBoard.swift in Sources */,
 				436CAC6C234C2E1200C84373 /* FirebaseManager.swift in Sources */,
 				4391D87523E3D80C008A4DE4 /* UIScrollView+Extension.swift in Sources */,

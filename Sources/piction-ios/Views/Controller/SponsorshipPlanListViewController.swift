@@ -1,5 +1,5 @@
 //
-//  FanPassListViewController.swift
+//  SponsorshipPlanListViewController.swift
 //  piction-ios
 //
 //  Created by jhseo on 2019/11/19.
@@ -13,15 +13,15 @@ import ViewModelBindable
 import RxDataSources
 import PictionSDK
 
-final class FanPassListViewController: UIViewController {
+final class SponsorshipPlanListViewController: UIViewController {
     var disposeBag = DisposeBag()
 
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var writerLabel: UILabel!
-    @IBOutlet weak var currentSubscriptionFanPassTitleLabel: UILabel!
-    @IBOutlet weak var currentSubscriptionFanPassView: UIView!
-    @IBOutlet weak var showAllFanPassButton: UIButton!
-    @IBOutlet weak var currentPostFanPassInfo: UIView!
+    @IBOutlet weak var currentSubscriptionSponsorshipPlanTitleLabel: UILabel!
+    @IBOutlet weak var currentSubscriptionSponsorshipPlanView: UIView!
+    @IBOutlet weak var showAllSponsorshipPlanButton: UIButton!
+    @IBOutlet weak var currentPostSponsorshipPlanInfo: UIView!
     @IBOutlet weak var currentPostTitleLabel: UILabel!
     @IBOutlet weak var closeButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
@@ -49,26 +49,26 @@ final class FanPassListViewController: UIViewController {
         }
     }
 
-    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, FanPassListTableViewCellModel>> {
-        return RxTableViewSectionedReloadDataSource<SectionModel<String, FanPassListTableViewCellModel>>(
+    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, SponsorshipPlanListTableViewCellModel>> {
+        return RxTableViewSectionedReloadDataSource<SectionModel<String, SponsorshipPlanListTableViewCellModel>>(
             configureCell: { dataSource, tableView, indexPath, model in
-                let cell: FanPassListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                let cell: SponsorshipPlanListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
                 cell.configure(with: model)
                 return cell
         })
     }
 }
 
-extension FanPassListViewController: ViewModelBindable {
-    typealias ViewModel = FanPassListViewModel
+extension SponsorshipPlanListViewController: ViewModelBindable {
+    typealias ViewModel = SponsorshipPlanListViewModel
 
     func bindViewModel(viewModel: ViewModel) {
         let dataSource = configureDataSource()
 
-        let input = FanPassListViewModel.Input(
+        let input = SponsorshipPlanListViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
             selectedIndexPath: tableView.rx.itemSelected.asDriver().throttle(2),
-            showAllFanPassBtnDidTap: showAllFanPassButton.rx.tap.asDriver(),
+            showAllSponsorshipPlanBtnDidTap: showAllSponsorshipPlanButton.rx.tap.asDriver(),
             subscribeFreeBtnDidTap: subscribeFree.asDriver(onErrorDriveWith: .empty()),
             closeBtnDidTap: closeButton.rx.tap.asDriver()
         )
@@ -85,37 +85,37 @@ extension FanPassListViewController: ViewModelBindable {
         output
             .postItem
             .drive(onNext: { [weak self] postItem in
-                self?.currentPostFanPassInfo.isHidden = false
+                self?.currentPostSponsorshipPlanInfo.isHidden = false
                 self?.currentPostTitleLabel.text = "\(postItem.title ?? "")"
             })
             .disposed(by: disposeBag)
 
         output
-            .showAllFanPassBtnDidTap
+            .showAllSponsorshipPlanBtnDidTap
             .drive(onNext: { [weak self] _ in
                 guard let `self` = self else { return }
                 self.tableView.setContentOffset(CGPoint(x: 0, y: -self.statusHeight-self.navigationHeight), animated: false)
-                self.currentPostFanPassInfo.isHidden = true
+                self.currentPostSponsorshipPlanInfo.isHidden = true
                 self.viewModel?.levelLimit.onNext(0)
             })
             .disposed(by: disposeBag)
 
         output
-            .fanPassTableItems
+            .sponsorshipPlanTableItems
             .drive { $0 }
-            .map { [SectionModel(model: "fanPass", items: $0)] }
+            .map { [SectionModel(model: "sponsorshipPlan", items: $0)] }
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
         output
             .subscriptionInfo
             .drive(onNext: { [weak self] subscriptionInfo in
-                if let level = subscriptionInfo?.fanPass?.level,
-                    let fanPassName = subscriptionInfo?.fanPass?.name,
+                if let level = subscriptionInfo?.plan?.level,
+                    let sponsorshipPlanName = subscriptionInfo?.plan?.name,
                     level > 0 {
-                    self?.currentSubscriptionFanPassTitleLabel.text =
-                        "\(LocalizationKey.str_fanpass_current_tier.localized(with: level)) -  \(LocalizationKey.str_fanpasslist_warning_current_fanpass.localized(with: fanPassName))"
-                    self?.currentSubscriptionFanPassView.isHidden = false
+                    self?.currentSubscriptionSponsorshipPlanTitleLabel.text =
+                        "\(LocalizationKey.str_sponsorship_plan_current_tier.localized(with: level)) -  \(LocalizationKey.str_sponsorship_plan_warning_current_sponsorship_plan.localized(with: sponsorshipPlanName))"
+                    self?.currentSubscriptionSponsorshipPlanView.isHidden = false
                 }
             })
             .disposed(by: disposeBag)
@@ -138,20 +138,20 @@ extension FanPassListViewController: ViewModelBindable {
         output
             .selectedIndexPath
             .drive(onNext: { [weak self] indexPath in
-                let (fanPass, subscriptionInfo) = (dataSource[indexPath].fanPass, dataSource[indexPath].subscriptionInfo)
-                if fanPass.subscriptionLimit == 0 { return } // 판매종료
-                if let subscriptionLimit = fanPass.subscriptionLimit,
-                    let subscriptionCount = fanPass.subscriptionCount,
-                    subscriptionLimit <= subscriptionCount { return } // 판매종료
-                if let subscriptionLevel = subscriptionInfo?.fanPass?.level,
-                    let fanPassLevel = fanPass.level,
-                    fanPassLevel > 0 && fanPassLevel <= subscriptionLevel { return } // 구독 중
+                let (sponsorshipPlan, subscriptionInfo) = (dataSource[indexPath].sponsorshipPlan, dataSource[indexPath].subscriptionInfo)
+                if sponsorshipPlan.sponsorshipLimit == 0 { return } // 판매종료
+                if let sponsorshipLimit = sponsorshipPlan.sponsorshipLimit,
+                    let sponsorshipCount = sponsorshipPlan.sponsorshipCount,
+                    sponsorshipLimit <= sponsorshipCount { return } // 판매종료
+                if let subscriptionLevel = subscriptionInfo?.plan?.level,
+                    let sponsorshipPlanLevel = sponsorshipPlan.level,
+                    sponsorshipPlanLevel > 0 && sponsorshipPlanLevel <= subscriptionLevel { return } // 구독 중
 
-                if let fanPassLevel = fanPass.level,
-                    fanPassLevel == 0 {
+                if let sponsorshipPlanLevel = sponsorshipPlan.level,
+                    sponsorshipPlanLevel == 0 {
                     self?.subscribeFree.onNext(())
                 } else {
-                    self?.openSubscribeFanPassViewController(uri: self?.viewModel?.uri ?? "", selectedFanPass: fanPass)
+                    self?.openPurchaseSponsorshipPlanViewController(uri: self?.viewModel?.uri ?? "", selectedSponsorshipPlan: sponsorshipPlan)
                 }
             })
             .disposed(by: disposeBag)

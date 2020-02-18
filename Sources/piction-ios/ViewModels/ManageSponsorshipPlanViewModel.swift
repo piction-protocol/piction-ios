@@ -1,5 +1,5 @@
 //
-//  ManageFanPassViewModel.swift
+//  ManageSponsorshipPlanViewModel.swift
 //  piction-ios
 //
 //  Created by jhseo on 2019/11/22.
@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
-final class ManageFanPassViewModel: InjectableViewModel {
+final class ManageSponsorshipPlanViewModel: InjectableViewModel {
 
     typealias Dependency = (
         FirebaseManagerProtocol,
@@ -22,27 +22,27 @@ final class ManageFanPassViewModel: InjectableViewModel {
     private let firebaseManager: FirebaseManagerProtocol
     private let updater: UpdaterProtocol
     let uri: String
-    let fanPassId: Int?
+    let planId: Int?
 
     var loadRetryTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
-        (firebaseManager, updater, uri, fanPassId) = dependency
+        (firebaseManager, updater, uri, planId) = dependency
     }
 
     struct Input {
         let viewWillAppear: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
         let createBtnDidTap: Driver<Void>
-        let deleteFanPass: Driver<(String, Int)>
+        let deleteSponsorshipPlan: Driver<(String, Int)>
         let closeBtnDidTap: Driver<Void>
     }
 
     struct Output {
         let viewWillAppear: Driver<Void>
-        let fanPassList: Driver<[FanPassModel]>
+        let sponsorshipPlanList: Driver<[PlanModel]>
         let selectedIndexPath: Driver<IndexPath>
-        let openCreateFanPassViewController: Driver<String>
+        let openCreateSponsorshipPlanViewController: Driver<String>
         let showErrorPopup: Driver<Void>
         let activityIndicator: Driver<Bool>
         let dismissViewController: Driver<Void>
@@ -50,11 +50,11 @@ final class ManageFanPassViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (firebaseManager, updater, uri, fanPassId) = (self.firebaseManager, self.updater, self.uri, self.fanPassId)
+        let (firebaseManager, updater, uri, planId) = (self.firebaseManager, self.updater, self.uri, self.planId)
 
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
-                firebaseManager.screenName("FANPASS관리_\(uri)_\(fanPassId ?? 0)")
+                firebaseManager.screenName("SponsorshipPlan관리_\(uri)_\(planId ?? 0)")
             })
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
@@ -65,28 +65,28 @@ final class ManageFanPassViewModel: InjectableViewModel {
 
         let loadPage = Driver.merge(initialLoad, loadRetry, refreshContent)
 
-        let fanPassListAction = loadPage
-            .map { FanPassAPI.all(uri: uri) }
+        let sponsorshipPlanListAction = loadPage
+            .map { SponsorshipPlanAPI.all(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
-        let fanPassListSuccess = fanPassListAction.elements
-            .map { try? $0.map(to: [FanPassModel].self) }
+        let sponsorshipPlanListSuccess = sponsorshipPlanListAction.elements
+            .map { try? $0.map(to: [PlanModel].self) }
             .flatMap(Driver.from)
 
-        let fanPassListError = fanPassListAction.error
+        let sponsorshipPlanListError = sponsorshipPlanListAction.error
             .map { _ in Void() }
 
-        let openCreateFanPassViewController = input.createBtnDidTap
+        let openCreateSponsorshipPlanViewController = input.createBtnDidTap
             .map { uri }
 
-        let deleteAction = input.deleteFanPass
-            .map { FanPassAPI.delete(uri: $0, fanPassId: $1) }
+        let deleteAction = input.deleteSponsorshipPlan
+            .map { SponsorshipPlanAPI.delete(uri: $0, planId: $1) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let deleteSuccess = deleteAction.elements
-            .map { _ in LocalizationKey.msg_delete_fanpass_success.localized() }
+            .map { _ in LocalizationKey.msg_delete_sponsorship_plan_success.localized() }
             .do(onNext: { _ in
                 updater.refreshContent.onNext(())
             })
@@ -96,9 +96,9 @@ final class ManageFanPassViewModel: InjectableViewModel {
             .map { $0?.message }
             .flatMap(Driver.from)
 
-        let showErrorPopup = fanPassListError
+        let showErrorPopup = sponsorshipPlanListError
 
-        let activityIndicator = fanPassListAction.isExecuting
+        let activityIndicator = sponsorshipPlanListAction.isExecuting
 
         let dismissViewController = input.closeBtnDidTap
 
@@ -106,9 +106,9 @@ final class ManageFanPassViewModel: InjectableViewModel {
 
         return Output(
             viewWillAppear: viewWillAppear,
-            fanPassList: fanPassListSuccess,
+            sponsorshipPlanList: sponsorshipPlanListSuccess,
             selectedIndexPath: input.selectedIndexPath,
-            openCreateFanPassViewController: openCreateFanPassViewController,
+            openCreateSponsorshipPlanViewController: openCreateSponsorshipPlanViewController,
             showErrorPopup: showErrorPopup,
             activityIndicator: activityIndicator,
             dismissViewController: dismissViewController,

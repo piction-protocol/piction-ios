@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--FanPass 관리-->
+        <!--후원 플랜 관리-->
         <scene sceneID="StY-2R-ZgA">
             <objects>
-                <viewController storyboardIdentifier="ManageFanPassViewController" id="Hq7-ze-gNp" customClass="ManageFanPassViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ManageSponsorshipPlanViewController" id="Hq7-ze-gNp" customClass="ManageSponsorshipPlanViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="M84-T0-af5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ManageFanPassTableViewCell" id="ZfU-y3-W3Q" customClass="ManageFanPassTableViewCell" customModule="piction_ios" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ManageSponsorshipPlanTableViewCell" id="ZfU-y3-W3Q" customClass="ManageSponsorshipPlanTableViewCell" customModule="piction_ios" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="180"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZfU-y3-W3Q" id="ahV-HS-HZX">
@@ -127,8 +127,8 @@
                                             <outlet property="levelLabel" destination="jeP-tW-bo3" id="B55-aW-IbO"/>
                                             <outlet property="postCountLabel" destination="i4j-US-mA2" id="6tw-aO-n6M"/>
                                             <outlet property="priceLabel" destination="0Rr-ze-tuw" id="Akr-Cs-VPg"/>
-                                            <outlet property="subscriptionCountLabel" destination="u6Y-Sx-TTH" id="rB8-gy-6KD"/>
-                                            <outlet property="subscriptionLimitLabel" destination="n55-Vl-bZi" id="Ii4-8J-uXg"/>
+                                            <outlet property="sponsorshipCountLabel" destination="u6Y-Sx-TTH" id="VRo-VJ-D2G"/>
+                                            <outlet property="sponsorshipLimitLabel" destination="n55-Vl-bZi" id="K2E-NM-pQK"/>
                                             <outlet property="titleLabel" destination="Vfr-rS-7dk" id="eum-gC-zNO"/>
                                         </connections>
                                     </tableViewCell>
@@ -144,7 +144,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eDU-GY-ieF"/>
                     </view>
-                    <navigationItem key="navigationItem" title="FanPass 관리" id="qtK-nb-Bd0">
+                    <navigationItem key="navigationItem" title="후원 플랜 관리" id="qtK-nb-Bd0">
                         <barButtonItem key="leftBarButtonItem" title="닫기" id="kJS-Z6-EAX">
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="close"/>
