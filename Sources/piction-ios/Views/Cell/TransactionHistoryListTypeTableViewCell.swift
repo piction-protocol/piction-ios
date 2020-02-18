@@ -18,11 +18,15 @@ final class TransactionHistoryListTypeTableViewCell: ReuseTableViewCell {
     typealias Model = TransactionModel
 
     func configure(with model: Model, dateTitle: Bool) {
-        let (createdAt, amount, inOut) = (model.createdAt, model.amount, model.inOut)
+        let (createdAt, amount, transactionType, inOut) = (model.createdAt, model.amount, model.transactionType, model.inOut)
 
         dateLabel.text = dateTitle ? createdAt?.toString(format: "MM.dd") : ""
         amountLabel.text = (inOut == "IN" ? "+" : "-") + amount.commaRepresentation + " PXL"
-        inOutLabel.text = (inOut == "IN" ? LocalizationKey.str_deposit_format.localized() : LocalizationKey.str_withdraw_format.localized()) + (createdAt?.toString(format: "h:mm") ?? "")
+        if transactionType == "SUBSCRIPTION" {
+            inOutLabel.text = (inOut == "IN" ? LocalizationKey.str_sponsorship_plan_revenue.localized() : LocalizationKey.str_sponsorship_plan.localized()) + (createdAt?.toString(format: " h:mm") ?? "")
+        } else {
+            inOutLabel.text = (inOut == "IN" ? LocalizationKey.str_deposit_format.localized() : LocalizationKey.str_withdraw_format.localized()) + (createdAt?.toString(format: " h:mm") ?? "")
+        }
         statusLabel.text = LocalizationKey.str_completed.localized()
     }
 }

@@ -192,8 +192,9 @@
 "str_deposit_guide_3" = "▪︎ Be careful not to deposit ethereum PXL token.";
 "str_deposit_guide_4_piction" = "▪︎ This address is for Klaytn Compatible PXL token. Please note that it is impossible to revert transaction from ethereum.";
 "str_have_pxl_amount" = "보유 중";
-"str_deposit_format" = "Deposit ";
-"str_withdraw_format" = "Withdraw ";
+"str_deposit_format" = "Deposit";
+"str_withdraw_format" = "Withdraw";
+"str_sponsorship_plan_revenue" = "후원 수익";
 "str_project_no_post" = "No posts";
 "str_project_update_n_now" = "Update now";
 "str_project_update_n_minute" = "Update %d minutes ago";

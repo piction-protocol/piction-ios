@@ -192,8 +192,9 @@
 "str_deposit_guide_3" = "▪︎ 해당 주소는 Klaytn 네트워크 상에서 동작하는 지갑 주소입니다. 이더리움 네트워크 상의 PXL 토큰은 주소로 다른 암호화폐 입금 시 발생하는 오류 손실은 복구해드리지 않습니다.";
 "str_deposit_guide_4_piction" = "▪︎ 이 주소는 PXL 토큰만 입금 가능합니다. 해당 지갑 주소로 다른 암호 화폐 입금 시 발생하는 오류 및 손실은 복구해 드리지 않습니다.";
 "str_have_pxl_amount" = "보유 중";
-"str_deposit_format" = "입금 ";
-"str_withdraw_format" = "출금 ";
+"str_deposit_format" = "입금";
+"str_withdraw_format" = "출금";
+"str_sponsorship_plan_revenue" = "후원 수익";
 "str_project_no_post" = "포스트 없음";
 "str_project_update_n_now" = "방금 업데이트";
 "str_project_update_n_minute" = "%d분 전 업데이트";

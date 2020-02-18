@@ -194,6 +194,7 @@ enum LocalizationKey {
     case str_have_pxl_amount
     case str_deposit_format
     case str_withdraw_format
+    case str_sponsorship_plan_revenue
     case str_project_no_post
     case str_project_update_n_now
     case str_project_update_n_minute
