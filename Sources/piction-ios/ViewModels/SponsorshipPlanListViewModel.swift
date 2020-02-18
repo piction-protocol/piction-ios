@@ -47,6 +47,7 @@ final class SponsorshipPlanListViewModel: InjectableViewModel {
         let sponsorshipPlanList: Driver<[PlanModel]>
         let projectInfo: Driver<ProjectModel>
         let sponsorshipPlanTableItems: Driver<[SponsorshipPlanListTableViewCellModel]>
+        let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let selectedIndexPath: Driver<IndexPath>
         let openSignInViewController: Driver<Void>
         let showErrorPopup: Driver<Void>
@@ -139,6 +140,11 @@ final class SponsorshipPlanListViewModel: InjectableViewModel {
                 return cellList.filter { ($0.sponsorshipPlan.level ?? 0) >= levelLimit }
             }
 
+        let embedEmptyViewController = sponsorshipPlanTableItems
+            .map { $0.isEmpty }
+            .map { _ in .sponsorshipPlanEmpty }
+            .flatMap(Driver<CustomEmptyViewStyle>.from)
+
         let projectInfoAction = loadPage
             .map { ProjectAPI.get(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
@@ -218,6 +224,7 @@ final class SponsorshipPlanListViewModel: InjectableViewModel {
             sponsorshipPlanList: sponsorshipPlanListSuccess,
             projectInfo: projectInfoSuccess,
             sponsorshipPlanTableItems: sponsorshipPlanTableItems,
+            embedEmptyViewController: embedEmptyViewController,
             selectedIndexPath: selectedIndexPath,
             openSignInViewController: openSignInViewController,
             showErrorPopup: showErrorPopup,

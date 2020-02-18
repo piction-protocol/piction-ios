@@ -211,6 +211,10 @@
                                         <constraint firstAttribute="trailing" secondItem="6Ys-Bb-6W9" secondAttribute="trailing" constant="20" id="b1j-Gp-3wd"/>
                                     </constraints>
                                 </view>
+                                <containerView key="tableFooterView" opaque="NO" contentMode="scaleToFill" id="Akz-fh-SxP">
+                                    <rect key="frame" x="0.0" y="629.5" width="414" height="0.0"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                </containerView>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SponsorshipPlanListTableViewCell" id="WUJ-ew-4lc" customClass="SponsorshipPlanListTableViewCell" customModule="piction_ios" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="315" width="414" height="286.5"/>
@@ -381,6 +385,7 @@
                         <outlet property="currentPostTitleLabel" destination="y1N-Sv-Boc" id="wna-zu-HTb"/>
                         <outlet property="currentSubscriptionSponsorshipPlanTitleLabel" destination="w4C-Bh-3Ru" id="Su3-fY-RTn"/>
                         <outlet property="currentSubscriptionSponsorshipPlanView" destination="dex-zJ-X4H" id="NTd-LR-Wdg"/>
+                        <outlet property="emptyView" destination="Akz-fh-SxP" id="bWd-BM-P7g"/>
                         <outlet property="showAllSponsorshipPlanButton" destination="aiT-UH-naG" id="dr1-Hm-Dq8"/>
                         <outlet property="tableView" destination="KBQ-fV-FWh" id="Plh-7F-fdJ"/>
                         <outlet property="thumbnailImageView" destination="UXr-9p-0hZ" id="kDc-tR-0em"/>

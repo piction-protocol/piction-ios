@@ -156,6 +156,7 @@
 "str_series_empty" = "등록된 시리즈가 없습니다.";
 "str_project_empty" = "등록된 프로젝트가 없습니다.";
 "str_subscribing_project_empty" = "구독한 프로젝트가 없습니다.";
+"str_sponsorship_plan_empty" = "등록된 후원 플랜이 없습니다.";
 
 "str_creator" = "Creator";
 "str_project_synopsis" = "Synopsis";

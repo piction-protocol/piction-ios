@@ -159,6 +159,7 @@
 "str_series_empty" = "등록된 시리즈가 없습니다.";
 "str_project_empty" = "등록된 프로젝트가 없습니다.";
 "str_subscribing_project_empty" = "구독한 프로젝트가 없습니다.";
+"str_sponsorship_plan_empty" = "등록된 후원 플랜이 없습니다.";
 
 "str_qrcode_scan" = "QR 코드 스캔";
 "str_qrcode_help" = "픽션 또는 픽션 파트너 서비스에 있는\n크리에이터 QR코드를 인식시켜 주세요";

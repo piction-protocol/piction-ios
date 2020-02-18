@@ -21,6 +21,7 @@ enum CustomEmptyViewStyle {
     case transactionListEmpty
     case myProjectListEmpty
     case searchSponsorEmpty
+    case sponsorshipPlanEmpty
 
     var image: UIImage {
         switch self {
@@ -31,7 +32,8 @@ enum CustomEmptyViewStyle {
              .searchListEmpty,
              .transactionListEmpty,
              .myProjectListEmpty,
-             .searchSponsorEmpty:
+             .searchSponsorEmpty,
+             .sponsorshipPlanEmpty:
             return #imageLiteral(resourceName: "icMoodBad")
         case .searchProjectGuide,
              .searchTagGuide:
@@ -60,6 +62,8 @@ enum CustomEmptyViewStyle {
             return LocalizationKey.str_project_search_info.localized()
         case .searchTagGuide:
             return LocalizationKey.str_tag_search_info.localized()
+        case .sponsorshipPlanEmpty:
+            return LocalizationKey.str_sponsorship_plan_empty.localized()
         }
     }
 
@@ -75,7 +79,8 @@ enum CustomEmptyViewStyle {
              .myProjectListEmpty,
              .searchSponsorEmpty,
              .searchProjectGuide,
-             .searchTagGuide:
+             .searchTagGuide,
+             .sponsorshipPlanEmpty:
             return nil
         }
     }

@@ -16,6 +16,8 @@ import PictionSDK
 final class SponsorshipPlanListViewController: UIViewController {
     var disposeBag = DisposeBag()
 
+    @IBOutlet weak var emptyView: UIView!
+
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var writerLabel: UILabel!
     @IBOutlet weak var currentSubscriptionSponsorshipPlanTitleLabel: UILabel!
@@ -56,6 +58,13 @@ final class SponsorshipPlanListViewController: UIViewController {
                 cell.configure(with: model)
                 return cell
         })
+    }
+
+    private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
+        _ = emptyView.subviews.map { $0.removeFromSuperview() }
+        emptyView.frame.size.height = 350
+        let vc = CustomEmptyViewController.make(style: style)
+        embed(vc, to: emptyView)
     }
 }
 
@@ -102,6 +111,10 @@ extension SponsorshipPlanListViewController: ViewModelBindable {
 
         output
             .sponsorshipPlanTableItems
+            .do(onNext: { [weak self] _ in
+                _ = self?.emptyView.subviews.map { $0.removeFromSuperview() }
+                self?.emptyView.frame.size.height = 0
+            })
             .drive { $0 }
             .map { [SectionModel(model: "sponsorshipPlan", items: $0)] }
             .bind(to: tableView.rx.items(dataSource: dataSource))
@@ -132,6 +145,14 @@ extension SponsorshipPlanListViewController: ViewModelBindable {
                     self?.thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-square-500-x-500")
                 }
                 self?.writerLabel.text = projectInfo.user?.username ?? ""
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .embedEmptyViewController
+            .drive(onNext: { [weak self] style in
+                guard let `self` = self else { return }
+                self.embedCustomEmptyViewController(style: style)
             })
             .disposed(by: disposeBag)
 

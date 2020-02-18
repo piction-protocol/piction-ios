@@ -159,6 +159,7 @@ enum LocalizationKey {
     case str_series_empty
     case str_project_empty
     case str_subscribing_project_empty
+    case str_sponsorship_plan_empty
 
     case str_qrcode_scan
     case str_qrcode_help
