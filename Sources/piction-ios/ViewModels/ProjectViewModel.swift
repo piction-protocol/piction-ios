@@ -44,6 +44,7 @@ final class ProjectViewModel: InjectableViewModel {
         let viewWillDisappear: Driver<Void>
         let subscriptionBtnDidTap: Driver<Void>
         let cancelSubscriptionBtnDidTap: Driver<Void>
+        let sponsorshipPlanBtnDidTap: Driver<Void>
         let changeMenu: Driver<Int>
         let infoBtnDidTap: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
@@ -57,7 +58,7 @@ final class ProjectViewModel: InjectableViewModel {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
         let projectInfo: Driver<ProjectModel>
-        let subscriptionInfo: Driver<(Bool, [PlanModel], SponsorshipModel?)>
+        let subscriptionInfo: Driver<(Bool, [PlanModel], SponsorshipModel?, Bool)>
         let openCancelSubscriptionPopup: Driver<Void>
         let openSignInViewController: Driver<Void>
         let openCreatePostViewController: Driver<String>
@@ -170,6 +171,10 @@ final class ProjectViewModel: InjectableViewModel {
                 self?.isWriter = isWriter
             })
 
+        let isActivePlan = loadProjectInfo
+            .map { $0.activePlan }
+            .flatMap(Driver.from)
+
         let loadOthersPostAction = Driver.zip(Driver.merge(selectPostMenu, loadNext), isWriter)
             .filter { !$0.1 }
             .map { _ in PostAPI.all(uri: uri, page: self.page + 1, size: 20) }
@@ -212,7 +217,7 @@ final class ProjectViewModel: InjectableViewModel {
             .map { try? $0.map(to: [PlanModel].self) }
             .flatMap(Driver.from)
 
-        let subscriptionInfo = Driver.combineLatest(isWriter, sponsorshipPlanListSuccess, projectSubscriptionInfo)
+        let subscriptionInfo = Driver.combineLatest(isWriter, sponsorshipPlanListSuccess, projectSubscriptionInfo, isActivePlan)
 
         let subscriptionAction = input.subscriptionBtnDidTap
             .withLatestFrom(isWriter)
@@ -372,11 +377,9 @@ final class ProjectViewModel: InjectableViewModel {
             .map { _ in uri }
             .flatMap(Driver<String>.from)
 
-        let openSponsorshipPlanListViewController = input.subscriptionBtnDidTap
+        let openSponsorshipPlanListViewController = input.sponsorshipPlanBtnDidTap
             .withLatestFrom(isWriter)
             .filter { !$0 }
-            .withLatestFrom(sponsorshipPlanListSuccess)
-            .filter { $0.count > 1 }
             .map { _ in uri }
             .flatMap(Driver<String>.from)
 

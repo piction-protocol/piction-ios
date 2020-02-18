@@ -14,6 +14,7 @@ protocol ProjectHeaderViewDelegate: class {
     func postBtnDidTap()
     func seriesBtnDidTap()
     func subscriptionBtnDidTap()
+    func sponsorshipPlanBtnDidTap()
     func shareBtnDidTap()
     func managementBtnDidTap()
     func subscriptionUserBtnDidTap()
@@ -24,6 +25,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
     weak var delegate: ProjectHeaderViewDelegate?
 
     @IBOutlet weak var subscriptionButton: UIButton!
+    @IBOutlet weak var sponsorshipPlanButton: UIButton!
     @IBOutlet weak var managementButton: UIButton!
     @IBOutlet weak var thumbnailImageView: UIImageView! {
         didSet {
@@ -75,6 +77,10 @@ class ProjectHeaderView: GSKStretchyHeaderView {
         delegate?.subscriptionUserBtnDidTap()
     }
 
+    @IBAction func sponsorshipPlanBtnDidTap(_ sender: Any) {
+        delegate?.sponsorshipPlanBtnDidTap()
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         minimumContentHeight = STATUS_HEIGHT + DEFAULT_NAVIGATION_HEIGHT + 52
@@ -89,7 +95,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
     }
 
     func configureProjectInfo(model: ProjectModel) {
-        let (thumbnail, title, profileImage, writerName, writerloginId, sponsorCount) = (model.thumbnail, model.title, model.user?.picture, model.user?.username, model.user?.loginId, model.sponsorCount)
+        let (thumbnail, title, profileImage, writerName, writerloginId, sponsorCount, activePlan) = (model.thumbnail, model.title, model.user?.picture, model.user?.username, model.user?.loginId, model.sponsorCount, model.activePlan)
 
         if let thumbnail = thumbnail {
             let thumbnailWithIC = "\(thumbnail)?w=720&h=720&quality=80&output=webp"
@@ -116,15 +122,25 @@ class ProjectHeaderView: GSKStretchyHeaderView {
         sponsorCountLabel.text = LocalizationKey.str_subs_count_plural.localized(with: sponsorCount?.commaRepresentation ?? "0")
     }
 
-    func configureSubscription(isWriter: Bool, sponsorshipPlanList: [PlanModel], subscriptionInfo: SponsorshipModel?) {
-
+    func configureSubscription(isWriter: Bool, sponsorshipPlanList: [PlanModel], subscriptionInfo: SponsorshipModel?, isActivePlan: Bool) {
+        sponsorshipPlanButton.isHidden = !isActivePlan || isWriter
         if subscriptionInfo != nil {
+            let activeButton: UIButton?
+            if subscriptionInfo?.plan?.level ?? 0 > 0 {
+                subscriptionButton.isHidden = true
+                sponsorshipPlanButton.setTitle(LocalizationKey.str_project_sponsorship_plan.localized(), for: .normal)
+                activeButton = sponsorshipPlanButton
+            } else {
+                subscriptionButton.setTitle(LocalizationKey.str_project_subscribing.localized(), for: .normal)
+                subscriptionButton.isHidden = false
+                activeButton = subscriptionButton
+            }
+            activeButton?.layer.borderColor = UIColor.pictionDarkGray.cgColor
+            activeButton?.layer.borderWidth = 2
+            activeButton?.backgroundColor = .white
+            activeButton?.setTitleColor(.pictionDarkGray, for: .normal)
             sponsorButton.isHidden = true
             managementButton.isHidden = true
-            subscriptionButton.isHidden = false
-            subscriptionButton.backgroundColor = .pictionLightGray
-            subscriptionButton.setTitle(LocalizationKey.str_project_subscribing.localized(), for: .normal)
-            subscriptionButton.setTitleColor(.pictionGray, for: .normal)
         } else {
             if isWriter {
                 if FEATURE_EDITOR {
@@ -143,9 +159,16 @@ class ProjectHeaderView: GSKStretchyHeaderView {
                 managementButton.isHidden = true
                 subscriptionButton.isHidden = false
                 subscriptionButton.backgroundColor = UIColor(r: 51, g: 51, b: 51)
-                subscriptionButton.setTitle(sponsorshipPlanList.count > 1 ? LocalizationKey.btn_subs_sponsorship_plan.localized() : LocalizationKey.btn_subs_free.localized(), for: .normal)
                 subscriptionButton.setTitleColor(.white, for: .normal)
             }
+            subscriptionButton.layer.borderWidth = 0
+            subscriptionButton.layer.borderColor = UIColor.clear.cgColor
+            subscriptionButton.backgroundColor = .pictionDarkGray
+            subscriptionButton.setTitleColor(.white, for: .normal)
+            sponsorshipPlanButton.layer.borderWidth = 0
+            sponsorshipPlanButton.layer.borderColor = UIColor.clear.cgColor
+            sponsorshipPlanButton.backgroundColor = .pictionDarkGray
+            sponsorshipPlanButton.setTitleColor(.white, for: .normal)
         }
     }
 

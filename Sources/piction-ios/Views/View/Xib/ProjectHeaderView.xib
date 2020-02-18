@@ -124,17 +124,16 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9rs-ac-l7o">
                                     <rect key="frame" x="0.0" y="120" width="295" height="83"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lr1-RG-rur">
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lr1-RG-rur">
                                             <rect key="frame" x="0.0" y="0.0" width="295" height="53"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zb3-FI-Y5R" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="295" height="53"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="53" id="dWm-yX-GDg"/>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" id="nQ6-Tn-amY"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                    <state key="normal" title=" ">
+                                                    <state key="normal" title="구독하기">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <userDefinedRuntimeAttributes>
@@ -144,16 +143,39 @@
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                             <real key="value" value="8"/>
                                                         </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="btn_subs_free"/>
                                                     </userDefinedRuntimeAttributes>
                                                     <connections>
                                                         <action selector="subscriptionBtnDidTap:" destination="jfW-sf-3xv" eventType="touchUpInside" id="t0X-8y-ok0"/>
                                                     </connections>
                                                 </button>
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="plP-Ni-F0Z" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="53"/>
+                                                    <color key="backgroundColor" name="PictionDarkGray"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="53" id="PPR-k4-6YV"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                    <state key="normal" title="후원하기">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="0.0"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="8"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="btn_subs_sponsorship_plan"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="sponsorshipPlanBtnDidTap:" destination="jfW-sf-3xv" eventType="touchUpInside" id="naV-Ve-90H"/>
+                                                    </connections>
+                                                </button>
                                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Vv-YC-J7I" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="53"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="53"/>
                                                     <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="80" id="5eV-q9-fPM"/>
                                                         <constraint firstAttribute="height" constant="53" id="aGf-ZZ-Cx0"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
@@ -400,6 +422,7 @@
                 <outlet property="seriesButton" destination="zuZ-fe-55M" id="cvT-Uc-5nT"/>
                 <outlet property="sponsorButton" destination="94I-FC-Zf3" id="vN8-7J-9F4"/>
                 <outlet property="sponsorCountLabel" destination="6KZ-Qy-nnM" id="fZc-8f-Lbx"/>
+                <outlet property="sponsorshipPlanButton" destination="plP-Ni-F0Z" id="9n4-Fj-dNl"/>
                 <outlet property="subscriptionButton" destination="zb3-FI-Y5R" id="Vm0-zh-PrC"/>
                 <outlet property="thumbnailImageView" destination="1k4-fI-Xqy" id="e5I-qw-nQM"/>
                 <outlet property="titleLabel" destination="9UD-yf-gRK" id="ygm-vb-wZf"/>

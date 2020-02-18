@@ -35,6 +35,7 @@ final class ProjectViewController: UIViewController {
     private let changeMenu = BehaviorSubject<Int>(value: 0)
     private let subscription = PublishSubject<Void>()
     private let cancelSubscription = PublishSubject<Void>()
+    private let sponsorshipPlan = PublishSubject<Void>()
     private let deletePost = PublishSubject<Int>()
     private let deleteSeries = PublishSubject<Int>()
     private let updateSeries = PublishSubject<(String, SeriesModel)>()
@@ -232,6 +233,8 @@ extension ProjectViewController: ViewModelBindable {
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
             subscriptionBtnDidTap: subscription.asDriver(onErrorDriveWith: .empty()),
             cancelSubscriptionBtnDidTap: cancelSubscription.asDriver(onErrorDriveWith: .empty()),
+            sponsorshipPlanBtnDidTap:
+                sponsorshipPlan.asDriver(onErrorDriveWith: .empty()),
             changeMenu: changeMenu.asDriver(onErrorDriveWith: .empty()),
             infoBtnDidTap: infoBarButton.rx.tap.asDriver(),
             selectedIndexPath: tableView.rx.itemSelected.asDriver(),
@@ -330,8 +333,8 @@ extension ProjectViewController: ViewModelBindable {
 
         output
             .subscriptionInfo
-            .drive(onNext: { [weak self] (isWriter, sponsorshipPlanList, subscriptionInfo) in
-                self?.stretchyHeader?.configureSubscription(isWriter: isWriter, sponsorshipPlanList: sponsorshipPlanList, subscriptionInfo: subscriptionInfo)
+            .drive(onNext: { [weak self] (isWriter, sponsorshipPlanList, subscriptionInfo, isActivePlan) in
+                self?.stretchyHeader?.configureSubscription(isWriter: isWriter, sponsorshipPlanList: sponsorshipPlanList, subscriptionInfo: subscriptionInfo, isActivePlan: isActivePlan)
             })
             .disposed(by: disposeBag)
 
@@ -433,6 +436,10 @@ extension ProjectViewController: ProjectHeaderViewDelegate {
 
     func subscriptionBtnDidTap() {
         self.subscription.onNext(())
+    }
+
+    func sponsorshipPlanBtnDidTap() {
+        self.sponsorshipPlan.onNext(())
     }
 
     func shareBtnDidTap() {
