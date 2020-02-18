@@ -156,14 +156,14 @@
                                                                             </subviews>
                                                                         </stackView>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aiT-UH-naG" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
-                                                                            <rect key="frame" x="195" y="24" width="113" height="41"/>
+                                                                            <rect key="frame" x="186.5" y="24" width="130" height="41"/>
                                                                             <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="41" id="KQw-mp-rXB"/>
-                                                                                <constraint firstAttribute="width" constant="113" id="pws-qX-ZnS"/>
+                                                                                <constraint firstAttribute="width" constant="130" id="pws-qX-ZnS"/>
                                                                             </constraints>
                                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                                                            <state key="normal" title="전체 상품 보기">
+                                                                            <state key="normal" title="전체 후원 플랜 보기">
                                                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             </state>
                                                                             <userDefinedRuntimeAttributes>
@@ -173,6 +173,7 @@
                                                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                                                     <real key="value" value="8"/>
                                                                                 </userDefinedRuntimeAttribute>
+                                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan_show_all"/>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </button>
                                                                     </subviews>

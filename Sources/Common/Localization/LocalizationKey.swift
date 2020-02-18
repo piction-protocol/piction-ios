@@ -251,6 +251,7 @@ enum LocalizationKey {
     case str_sponsorship_plan_transfer_info
     case str_sponsorship_plan_transfer_info_fees
     case str_sponsorship_plan_purchase_guide
+    case str_sponsorship_plan_show_all
     case str_sponsorship_plan_cancel
     case str_sponsorship_plan_purchase_complete
 

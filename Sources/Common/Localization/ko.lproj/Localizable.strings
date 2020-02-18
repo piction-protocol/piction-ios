@@ -253,6 +253,7 @@
 "str_sponsorship_plan_transfer_info" = "송금 안내";
 "str_sponsorship_plan_transfer_info_fees" = "▪︎ 기본 수수료";
 "str_sponsorship_plan_purchase_guide" = "결제 완료 시 결제 금액이 즉시 %@님의 계좌로 송금되며, 환불은 불가능합니다.";
+"str_sponsorship_plan_show_all" = "전체 후원 플랜 보기";
 
 "str_authenticate_by_face_id" = "Face ID로 인증합니다.";
 "str_authenticate_by_touch_id" = "Touch ID로 인증합니다.";
