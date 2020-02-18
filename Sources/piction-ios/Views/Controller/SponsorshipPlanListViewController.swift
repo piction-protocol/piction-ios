@@ -28,8 +28,6 @@ final class SponsorshipPlanListViewController: UIViewController {
     @IBOutlet weak var closeButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
 
-    private let subscribeFree = PublishSubject<Void>()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.configureNavigationBar(transparent: false, shadow: true)
@@ -78,7 +76,6 @@ extension SponsorshipPlanListViewController: ViewModelBindable {
             viewWillAppear: rx.viewWillAppear.asDriver(),
             selectedIndexPath: tableView.rx.itemSelected.asDriver().throttle(2),
             showAllSponsorshipPlanBtnDidTap: showAllSponsorshipPlanButton.rx.tap.asDriver(),
-            subscribeFreeBtnDidTap: subscribeFree.asDriver(onErrorDriveWith: .empty()),
             closeBtnDidTap: closeButton.rx.tap.asDriver()
         )
 
@@ -166,14 +163,11 @@ extension SponsorshipPlanListViewController: ViewModelBindable {
                     sponsorshipLimit <= sponsorshipCount { return } // 판매종료
                 if let subscriptionLevel = subscriptionInfo?.plan?.level,
                     let sponsorshipPlanLevel = sponsorshipPlan.level,
-                    sponsorshipPlanLevel > 0 && sponsorshipPlanLevel <= subscriptionLevel { return } // 구독 중
+                    sponsorshipPlanLevel > 0 && sponsorshipPlanLevel <= subscriptionLevel {
+                    return
+                } // 구독 중
 
-                if let sponsorshipPlanLevel = sponsorshipPlan.level,
-                    sponsorshipPlanLevel == 0 {
-                    self?.subscribeFree.onNext(())
-                } else {
-                    self?.openPurchaseSponsorshipPlanViewController(uri: self?.viewModel?.uri ?? "", selectedSponsorshipPlan: sponsorshipPlan)
-                }
+                self?.openPurchaseSponsorshipPlanViewController(uri: self?.viewModel?.uri ?? "", selectedSponsorshipPlan: sponsorshipPlan)
             })
             .disposed(by: disposeBag)
 
@@ -207,11 +201,6 @@ extension SponsorshipPlanListViewController: ViewModelBindable {
             .drive(onNext: { [weak self] message in
                 self?.dismiss(animated: true)
             })
-            .disposed(by: disposeBag)
-
-        output
-            .toastMessage
-            .showToast()
             .disposed(by: disposeBag)
     }
 }

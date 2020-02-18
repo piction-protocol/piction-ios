@@ -35,7 +35,6 @@ final class SponsorshipPlanListViewModel: InjectableViewModel {
         let viewWillAppear: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
         let showAllSponsorshipPlanBtnDidTap: Driver<Void>
-        let subscribeFreeBtnDidTap: Driver<Void>
         let closeBtnDidTap: Driver<Void>
     }
 
@@ -53,7 +52,6 @@ final class SponsorshipPlanListViewModel: InjectableViewModel {
         let showErrorPopup: Driver<Void>
         let activityIndicator: Driver<Bool>
         let dismissViewController: Driver<Void>
-        let toastMessage: Driver<String>
     }
 
     func build(input: Input) -> Output {
@@ -125,13 +123,11 @@ final class SponsorshipPlanListViewModel: InjectableViewModel {
 
         let sponsorshipPlanListSuccess = sponsorshipPlanListAction.elements
             .map { try? $0.map(to: [PlanModel].self) }
+            .map { $0?.filter { $0.level != 0 } }
             .flatMap(Driver.from)
 
         let sponsorshipPlanListError = sponsorshipPlanListAction.error
             .map { _ in Void() }
-
-        let freeSponsorshipPlanItem = sponsorshipPlanListSuccess
-            .map { $0.filter { ($0.level ?? 0) == 0 }.first }
 
         let sponsorshipPlanTableItems = Driver.combineLatest(sponsorshipPlanListSuccess, subscriptionInfo, levelLimitChanged)
             .map { arg -> [SponsorshipPlanListTableViewCellModel] in
@@ -154,47 +150,6 @@ final class SponsorshipPlanListViewModel: InjectableViewModel {
             .map { try? $0.map(to: ProjectModel.self) }
             .flatMap(Driver.from)
 
-        let subscriptionFreeAction = input.subscribeFreeBtnDidTap
-            .withLatestFrom(currentUserInfo)
-            .filter { $0.loginId != nil }
-            .withLatestFrom(subscriptionInfo)
-            .filter { $0 == nil }
-            .withLatestFrom(freeSponsorshipPlanItem)
-            .map { SponsorshipPlanAPI.sponsorship(uri: uri, planId: $0?.id ?? 0, sponsorshipPrice: $0?.sponsorshipPrice ?? 0) }
-            .map(PictionSDK.rx.requestAPI)
-            .flatMap(Action.makeDriver)
-
-        let subscriptionFreeSuccess = subscriptionFreeAction.elements
-            .map { _ in LocalizationKey.str_project_subscrition_complete.localized() }
-            .do(onNext: { _ in
-                updater.refreshContent.onNext(())
-            })
-        
-        let subscriptionFreeError = subscriptionFreeAction.error
-            .map { $0 as? ErrorType }
-            .map { $0?.message }
-            .flatMap(Driver.from)
-
-        let cancelSubscriptionFreeAction = input.subscribeFreeBtnDidTap
-            .withLatestFrom(subscriptionInfo)
-            .filter { $0 != nil && ($0?.plan?.level ?? 0) == 0 }
-            .withLatestFrom(freeSponsorshipPlanItem)
-            .map { SponsorshipPlanAPI.cancelSponsorship(uri: uri, planId:
-                $0?.id ?? 0) }
-            .map(PictionSDK.rx.requestAPI)
-            .flatMap(Action.makeDriver)
-
-        let cancelSubscriptionFreeSuccess = cancelSubscriptionFreeAction.elements
-            .map { _ in LocalizationKey.str_project_cancel_subscrition.localized() }
-            .do(onNext: { _ in
-                updater.refreshContent.onNext(())
-            })
-
-        let cancelSubscriptionFreeError = cancelSubscriptionFreeAction.error
-            .map { $0 as? ErrorType }
-            .map { $0?.message }
-            .flatMap(Driver.from)
-
         let selectedIndexPath = input.selectedIndexPath
             .withLatestFrom(currentUserInfo)
             .filter { $0.loginId != nil }
@@ -207,12 +162,7 @@ final class SponsorshipPlanListViewModel: InjectableViewModel {
 
         let showErrorPopup = sponsorshipPlanListError
 
-        let toastMessage = Driver.merge(subscriptionFreeSuccess, subscriptionFreeError, cancelSubscriptionFreeSuccess, cancelSubscriptionFreeError)
-
-        let activityIndicator = Driver.merge(
-            sponsorshipPlanListAction.isExecuting,
-            subscriptionFreeAction.isExecuting,
-            cancelSubscriptionFreeAction.isExecuting)
+        let activityIndicator = sponsorshipPlanListAction.isExecuting
 
         let dismissViewController = input.closeBtnDidTap
 
@@ -229,8 +179,7 @@ final class SponsorshipPlanListViewModel: InjectableViewModel {
             openSignInViewController: openSignInViewController,
             showErrorPopup: showErrorPopup,
             activityIndicator: activityIndicator,
-            dismissViewController: dismissViewController,
-            toastMessage: toastMessage
+            dismissViewController: dismissViewController
         )
     }
 }
