@@ -38,9 +38,9 @@ class SubscriptionUserTableViewCell: ReuseTableViewCell {
         idLabel.text = "@\(loginId ?? "")"
         var levelText: String {
             if level == 0 {
-                return LocalizationKey.str_fanpass_free_tier.localized()
+                return LocalizationKey.str_sponsorship_plan_free_tier.localized()
             } else {
-                return LocalizationKey.str_fanpass_current_tier.localized(with: level ?? 0)
+                return LocalizationKey.str_sponsorship_plan_current_tier.localized(with: level ?? 0)
             }
         }
         levelLabel.text = "\(levelText) - \(fanPassName ?? "")"

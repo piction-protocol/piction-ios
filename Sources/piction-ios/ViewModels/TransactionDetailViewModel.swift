@@ -94,11 +94,11 @@ final class TransactionDetailViewModel: InjectableViewModel {
         let transactionSubscriptionSuccess = transactionSubscriptionAction.elements
             .map { try? $0.map(to: TransactionSubscriptionModel.self) }
             .map { [
-                TransactionDetailSection.header(title: transaction.inOut ?? "" == "IN" ? LocalizationKey.str_fan_pass_sell_info.localized() : LocalizationKey.str_fan_pass_buy_info.localized()),
+                TransactionDetailSection.header(title: transaction.inOut ?? "" == "IN" ? LocalizationKey.str_sponsorship_plan_sell_info.localized() : LocalizationKey.str_sponsorship_plan_buy_info.localized()),
                 TransactionDetailSection.list(title: LocalizationKey.str_order_id.localized(), description: "\($0?.orderNo ?? 0)", link: ""),
                 TransactionDetailSection.list(title: LocalizationKey.str_project.localized(), description: "\($0?.projectName ?? "")", link: ""),
-                TransactionDetailSection.list(title: "FAN PASS", description: "\($0?.fanPassName ?? "")", link: ""),
-                TransactionDetailSection.list(title: transaction.inOut ?? "" == "IN" ? LocalizationKey.str_buyer.localized() : LocalizationKey.str_seller.localized(), description: transaction.inOut ?? "" == "IN" ? "\($0?.subscriber?.loginId ?? "")" : "\($0?.creator?.loginId ?? "")", link: ""),
+                TransactionDetailSection.list(title: LocalizationKey.str_sponsorship_plan.localized(), description: "\($0?.planName ?? "")", link: ""),
+                TransactionDetailSection.list(title: transaction.inOut ?? "" == "IN" ? LocalizationKey.str_sponsorship_plan_buyer.localized() : LocalizationKey.str_sponsorship_plan_seller.localized(), description: transaction.inOut ?? "" == "IN" ? "\($0?.sponsor?.loginId ?? "")" : "\($0?.creator?.loginId ?? "")", link: ""),
                 TransactionDetailSection.footer,
             ] }
 

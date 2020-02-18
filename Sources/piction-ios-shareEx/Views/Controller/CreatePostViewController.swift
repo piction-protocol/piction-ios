@@ -97,7 +97,7 @@ final class CreatePostViewController: UIViewController {
             })
 
         let fanPassAction = UIAlertAction(
-            title: LocalizationKey.str_post_status_fanpass.localized(),
+            title: LocalizationKey.str_post_status_sponsorship_plan.localized(),
             style: UIAlertAction.Style.default,
             handler: { [weak self] action in
                 self?.selectedStatus.onNext("FAN_PASS")
@@ -293,7 +293,7 @@ extension CreatePostViewController: ViewModelBindable {
                     case "PUBLIC":
                         return LocalizationKey.str_post_status_public.localized()
                     case "FAN_PASS":
-                        return LocalizationKey.str_post_status_fanpass.localized()
+                        return LocalizationKey.str_post_status_sponsorship_plan.localized()
                     case "PRIVATE":
                         return LocalizationKey.str_post_status_private.localized()
                     default:
