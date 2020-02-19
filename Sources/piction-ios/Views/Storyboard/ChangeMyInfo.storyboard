@@ -145,6 +145,12 @@
                                                                     </view>
                                                                 </subviews>
                                                             </stackView>
+                                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jaR-Gh-kk1">
+                                                                <rect key="frame" x="0.0" y="63" width="335" height="0.0"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                                <color key="textColor" red="0.83529411760000005" green="0.074509803920000006" blue="0.08235294118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Dio-i6-Ddn">
@@ -245,6 +251,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="cancelBarButton" destination="nwU-Y3-Gfx" id="qkB-4z-udP"/>
+                        <outlet property="emailErrorLabel" destination="jaR-Gh-kk1" id="1VP-r7-s20"/>
                         <outlet property="emailTextField" destination="aCp-19-iIE" id="gHg-A2-2qb"/>
                         <outlet property="pictureImageButton" destination="F7m-WN-X4u" id="uIo-ac-I7U"/>
                         <outlet property="profileImageView" destination="RoT-0Y-EoG" id="lue-KZ-2F9"/>

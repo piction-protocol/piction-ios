@@ -24,6 +24,7 @@ final class ChangeMyInfoViewController: UIViewController {
     @IBOutlet weak var userNameUnderlineView: UIView!
     @IBOutlet weak var pictureImageButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var emailErrorLabel: UILabel!
 
     private let chosenImage = PublishSubject<UIImage?>()
     private let password = PublishSubject<String?>()
@@ -149,6 +150,24 @@ extension ChangeMyInfoViewController: ViewModelBindable {
             .dismissViewController
             .drive(onNext: { [weak self] in
                 self?.dismiss(animated: true)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .showErrorLabel
+            .drive(onNext: { [weak self] errorMessage in
+                self?.password.onNext(nil)
+                self?.view.endEditing(true)
+                self?.emailErrorLabel.isHidden = false
+                self?.emailErrorLabel.text = errorMessage
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .hideErrorLabel
+            .drive(onNext: { [weak self] in
+                self?.emailErrorLabel.isHidden = true
+                self?.emailErrorLabel.text = ""
             })
             .disposed(by: disposeBag)
 

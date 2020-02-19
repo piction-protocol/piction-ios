@@ -54,6 +54,8 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
         let enableSaveButton: Driver<Bool>
         let openPasswordPopup: Driver<Void>
         let openWarningPopup: Driver<Void>
+        let showErrorLabel: Driver<String>
+        let hideErrorLabel: Driver<Void>
         let keyboardWillChangeFrame: Driver<ChangedKeyboardFrame>
         let activityIndicator: Driver<Bool>
         let dismissViewController: Driver<Void>
@@ -159,9 +161,15 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
             .flatMap(Action.makeDriver)
 
         let changeUserInfoError = saveButtonAction.error
-            .map { $0 as? ErrorType }
-            .map { $0?.message }
-            .flatMap(Driver.from)
+            .flatMap { response -> Driver<String> in
+                let errorType = response as? ErrorType
+                switch errorType {
+                case .badRequest(let error) where error.field == "email":
+                    return Driver.empty()
+                default:
+                    return Driver.just(errorType?.message ?? "")
+                }
+            }
 
         let changeUserInfoSuccess = saveButtonAction.elements
             .map { _ in Void() }
@@ -169,6 +177,20 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
             .do(onNext: { _ in
                 updater.refreshSession.onNext(())
             })
+
+        let showErrorLabel = saveButtonAction.error
+            .flatMap { response -> Driver<String> in
+                let errorType = response as? ErrorType
+                switch errorType {
+                case .badRequest(let error) where error.field == "email":
+                    return Driver.just(errorType?.message ?? "")
+                default:
+                    return Driver.empty()
+                }
+            }
+
+        let hideErrorLabel = input.emailTextFieldDidInput
+            .map { _ in Void() }
 
         let openWarningPopup = input.cancelBtnDidTap
             .withLatestFrom(changeInfo.asDriver(onErrorDriveWith: .empty()))
@@ -191,7 +213,7 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
             uploadPictureAction.isExecuting,
             saveButtonAction.isExecuting)
 
-        let toastMessage = Driver.merge(changeUserInfoError, uploadPictureError)
+        let toastMessage = Driver.merge(uploadPictureError, changeUserInfoError)
 
         return Output(
             viewWillAppear: viewWillAppear,
@@ -202,6 +224,8 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
             enableSaveButton: enableSaveButton,
             openPasswordPopup: openPasswordPopup,
             openWarningPopup: openWarningPopup,
+            showErrorLabel: showErrorLabel,
+            hideErrorLabel: hideErrorLabel,
             keyboardWillChangeFrame: keyboardWillChangeFrame,
             activityIndicator: activityIndicator,
             dismissViewController: dismissViewController,
