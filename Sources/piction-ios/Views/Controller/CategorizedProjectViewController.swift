@@ -175,7 +175,7 @@ extension CategorizedProjectViewController: ViewModelBindable {
                 self?.showPopup(
                     title: LocalizationKey.popup_title_network_error.localized(),
                     message: LocalizationKey.msg_api_internal_server_error.localized(),
-                    action: LocalizationKey.retry.localized()) { [weak self] in
+                    action: [LocalizationKey.retry.localized(), LocalizationKey.cancel.localized()]) { [weak self] in
                         self?.viewModel?.loadRetryTrigger.onNext(())
                     }
             })
