@@ -1,15 +1,15 @@
 //
-//  ProjectPostListTableViewCell.swift
-//  PictionView
+//  ProjectPostListTypeListTableViewCell.swift
+//  piction-ios
 //
-//  Created by jhseo on 03/07/2019.
-//  Copyright © 2019 Piction Network. All rights reserved.
+//  Created by jhseo on 2020/02/18.
+//  Copyright © 2020 Piction Network. All rights reserved.
 //
 
 import UIKit
 import PictionSDK
 
-final class ProjectPostListTableViewCell: ReuseTableViewCell {
+final class ProjectPostListTypeListTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var thumbnailView: UIView!
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var seriesLabel: UILabel!
@@ -18,7 +18,6 @@ final class ProjectPostListTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var likeStackView: UIStackView!
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var lockView: UIView!
-    @IBOutlet weak var lockMessageLabel: UILabel!
     @IBOutlet weak var maskImage: VisualEffectView!
 
     override func prepareForReuse() {
@@ -36,13 +35,18 @@ final class ProjectPostListTableViewCell: ReuseTableViewCell {
     }
 
     func configure(with model: Model, subscriptionInfo: SponsorshipModel?) {
-        let (thumbnail, seriesName, title, publishedAt, likeCount, sponsorshipPlan, status) = (model.cover, model.series?.name, model.title, model.publishedAt, model.likeCount, model.plan, model.status)
+        let (thumbnail, seriesName, title, publishedAt, likeCount, membership, status) = (model.cover, model.series?.name, model.title, model.publishedAt, model.likeCount, model.membership, model.status)
 
         if let thumbnail = thumbnail {
+            thumbnailImageView.isHidden = false
+            thumbnailView.backgroundColor = .pictionLightGray
             let coverImageWithIC = "\(thumbnail)?w=656&h=246&quality=80&output=webp"
             if let url = URL(string: coverImageWithIC) {
                 thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-post-960-x-360"), completed: nil)
             }
+        } else {
+            thumbnailImageView.isHidden = true
+            thumbnailView.backgroundColor = .clear
         }
 
         seriesLabel.isHidden = seriesName == nil
@@ -62,7 +66,6 @@ final class ProjectPostListTableViewCell: ReuseTableViewCell {
         likeLabel.text = "\(likeCount ?? 0)"
 
         if status == "PRIVATE" {
-            lockMessageLabel.text = LocalizationKey.str_private_only.localized()
             thumbnailView.isHidden = false
             maskImage.isHidden = false
             lockView.isHidden = false
@@ -70,20 +73,19 @@ final class ProjectPostListTableViewCell: ReuseTableViewCell {
             lockView.backgroundColor = thumbnail == nil ? UIColor(r: 51, g: 51, b: 51, a: 0.2) : .clear
         } else {
             var needSubscription: Bool {
-                if sponsorshipPlan == nil {
+                if membership == nil {
                     return false
                 }
-                if (sponsorshipPlan?.level != nil) && (subscriptionInfo?.plan?.level == nil) {
+                if (membership?.level != nil) && (subscriptionInfo?.membership?.level == nil) {
                     return true
                 }
-                if (sponsorshipPlan?.level ?? 0) <= (subscriptionInfo?.plan?.level ?? 0) {
+                if (membership?.level ?? 0) <= (subscriptionInfo?.membership?.level ?? 0) {
                     return false
                 }
                 return true
             }
 
             if needSubscription {
-                lockMessageLabel.text = (sponsorshipPlan?.level == 0) ? LocalizationKey.str_subs_only.localized() :  LocalizationKey.str_subs_only_with_sponsorship_plan.localized(with: sponsorshipPlan?.name ?? "")
                 thumbnailView.isHidden = false
                 maskImage.isHidden = false
                 lockView.isHidden = false
