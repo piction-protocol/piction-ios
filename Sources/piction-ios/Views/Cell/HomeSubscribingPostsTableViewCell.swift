@@ -14,6 +14,8 @@ final class HomeSubscribingPostsTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var smallThumbnailImageView: UIImageView!
     @IBOutlet weak var projectLabel: UILabel!
     @IBOutlet weak var postLabel: UILabel!
+    @IBOutlet weak var contentContainerView: UIView!
+    @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var writerLabel: UILabel!
     @IBOutlet weak var publishedAtLabel: UILabel!
 
@@ -28,7 +30,7 @@ final class HomeSubscribingPostsTableViewCell: ReuseTableViewCell {
     }
 
     func configure(with model: Model) {
-        let (categories, thumbnail, projectName, seriesName, postName, writerName, publishedAt) = (model.project?.categories, model.cover, model.project?.title, model.series?.name, model.title, model.project?.user?.username, model.publishedAt)
+        let (categories, thumbnail, projectName, seriesName, postName, content, writerName, publishedAt) = (model.project?.categories, model.cover, model.project?.title, model.series?.name, model.title, model.previewText, model.project?.user?.username, model.publishedAt)
 
         var isLargeType: Bool {
             guard thumbnail != nil else { return false }
@@ -40,8 +42,11 @@ final class HomeSubscribingPostsTableViewCell: ReuseTableViewCell {
         largeThumbnailImageView.isHidden = !isLargeType
         smallThumbnailImageView.isHidden = isLargeType || thumbnail == nil
 
+        contentContainerView.isHidden = isLargeType || content?.isEmpty ?? true
+        contentLabel.text = content
+
         if let thumbnail = thumbnail {
-            let coverImageWithIC = "\(thumbnail)?w=656&h=246&quality=80&output=webp"
+            let coverImageWithIC = "\(thumbnail)?w=656&h=656&quality=80&output=webp"
             if let url = URL(string: coverImageWithIC) {
                 if isLargeType {
                     largeThumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-post-960-x-360"), completed: nil)
