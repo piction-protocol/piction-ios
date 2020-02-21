@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import ViewModelBindable
 import RxDataSources
+import PictionSDK
 
 final class ProjectInfoViewController: UIViewController {
     var disposeBag = DisposeBag()
@@ -21,10 +22,21 @@ final class ProjectInfoViewController: UIViewController {
     @IBOutlet weak var synopsisLabel: UILabel!
     @IBOutlet weak var creatorInfoStackView: UIStackView!
     @IBOutlet weak var synopsisStackView: UIStackView!
+    @IBOutlet weak var categoryStackView: UIStackView!
     @IBOutlet weak var tagStackView: UIStackView!
+    @IBOutlet weak var categoryCollectionView: UICollectionView!
     @IBOutlet weak var tagCollectionView: UICollectionView!
 
-    private func configureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>> {
+    private func categoryConfigureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, CategoryModel>> {
+        return RxCollectionViewSectionedReloadDataSource<SectionModel<String, CategoryModel>>(
+            configureCell: { dataSource, collectionView, indexPath, model in
+                let cell: ProjectInfoCategoryCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+                cell.configure(with: model)
+                return cell
+        })
+    }
+
+    private func tagConfigureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>> {
         return RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>>(
             configureCell: { dataSource, collectionView, indexPath, model in
                 let cell: ProjectInfoTagCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
@@ -38,14 +50,18 @@ extension ProjectInfoViewController: ViewModelBindable {
     typealias ViewModel = ProjectInfoViewModel
 
     func bindViewModel(viewModel: ViewModel) {
-        let dataSource = configureDataSource()
+        let categoryDataSource = categoryConfigureDataSource()
+        let tagDataSource = tagConfigureDataSource()
 
+        categoryCollectionView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
         tagCollectionView.rx.setDelegate(self)
             .disposed(by: disposeBag)
 
         let input = ProjectInfoViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
-            selectedIndexPath: tagCollectionView.rx.itemSelected.asDriver()
+            categoryCollectionViewSelectedIndexPath: categoryCollectionView.rx.itemSelected.asDriver(),
+            tagCollectionViewSelectedIndexPath: tagCollectionView.rx.itemSelected.asDriver(),
         )
 
         let output = viewModel.build(input: input)
@@ -72,7 +88,8 @@ extension ProjectInfoViewController: ViewModelBindable {
                 self?.loginIdLabel.text = "@\(projectInfo.user?.loginId ?? "")"
                 self?.synopsisStackView.isHidden = projectInfo.synopsis == ""
                 self?.synopsisLabel.text = projectInfo.synopsis ?? ""
-                self?.tagStackView.isHidden = projectInfo.tags?.count == 0
+                self?.categoryStackView.isHidden = projectInfo.categories?.isEmpty ?? true
+                self?.tagStackView.isHidden = projectInfo.tags?.isEmpty ?? true
                 self?.creatorInfoStackView.isHidden = projectInfo.user == nil
             })
             .disposed(by: disposeBag)
@@ -80,14 +97,29 @@ extension ProjectInfoViewController: ViewModelBindable {
         output
             .projectInfo
             .drive { $0 }
-            .map { [SectionModel(model: "tags", items: $0.tags ?? [])] }
-            .bind(to: tagCollectionView.rx.items(dataSource: dataSource))
+            .map { [SectionModel(model: "tag", items: $0.tags ?? [])] }
+            .bind(to: tagCollectionView.rx.items(dataSource: tagDataSource))
             .disposed(by: disposeBag)
 
         output
-            .selectedIndexPath
+            .projectInfo
+            .drive { $0 }
+            .map { [SectionModel(model: "category", items: $0.categories ?? [])] }
+            .bind(to: categoryCollectionView.rx.items(dataSource: categoryDataSource))
+            .disposed(by: disposeBag)
+
+        output
+            .categoryCollectionViewSelectedIndexPath
             .drive(onNext: { [weak self] indexPath in
-                let tag = dataSource[indexPath]
+                guard let categoryId = categoryDataSource[indexPath].id else { return }
+                self?.openCategorizedProjectViewController(id: categoryId)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .tagCollectionViewSelectedIndexPath
+            .drive(onNext: { [weak self] indexPath in
+                let tag = tagDataSource[indexPath]
                 self?.openTaggingProjectViewController(tag: tag)
             })
             .disposed(by: disposeBag)
@@ -114,7 +146,11 @@ extension ProjectInfoViewController: ViewModelBindable {
 
 extension ProjectInfoViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if let cell = collectionView.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? ProjectInfoTagCollectionViewCell {
+        if let cell = collectionView.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? ProjectInfoCategoryCollectionViewCell {
+            let text = cell.categoryLabel.text ?? ""
+            let cellWidth = text.size(withAttributes:[.font: UIFont.systemFont(ofSize: 14.0)]).width + 60.0
+            return CGSize(width: cellWidth, height: 36.0)
+        } else if let cell = collectionView.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? ProjectInfoTagCollectionViewCell {
             let text = cell.tagLabel.text ?? ""
             let cellWidth = text.size(withAttributes:[.font: UIFont.systemFont(ofSize: 14.0)]).width + 30.0
             return CGSize(width: cellWidth, height: 30.0)

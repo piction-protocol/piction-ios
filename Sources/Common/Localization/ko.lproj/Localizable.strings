@@ -28,6 +28,7 @@
 "menu_project_info" = "프로젝트 정보";
 "menu_my_info" = "마이페이지";
 "menu_tags" = "태그";
+"menu_category" = "카테고리";
 "menu_my_project" = "나의 프로젝트";
 
 "tab_home" = "홈";

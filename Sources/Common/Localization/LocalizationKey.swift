@@ -28,6 +28,7 @@ enum LocalizationKey {
     case menu_project_info
     case menu_my_info
     case menu_tags
+    case menu_category
     case menu_my_project
 
     case tab_home
