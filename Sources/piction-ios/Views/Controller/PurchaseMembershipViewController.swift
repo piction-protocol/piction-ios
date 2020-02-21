@@ -1,5 +1,5 @@
 //
-//  PurchaseSponsorshipPlanViewController.swift
+//  PurchaseMembershipViewController.swift
 //  piction-ios
 //
 //  Created by jhseo on 2019/11/19.
@@ -13,11 +13,11 @@ import ViewModelBindable
 import RxDataSources
 import PictionSDK
 
-final class PurchaseSponsorshipPlanViewController: UIViewController {
+final class PurchaseMembershipViewController: UIViewController {
     var disposeBag = DisposeBag()
 
-    @IBOutlet weak var sponsorshipPlanTitleLabel: UILabel!
-    @IBOutlet weak var sponsorshipPlanDescriptionLabel: UILabel!
+    @IBOutlet weak var membershipTitleLabel: UILabel!
+    @IBOutlet weak var membershipDescriptionLabel: UILabel!
     @IBOutlet weak var descriptionButton: UIButton!
     @IBOutlet weak var descriptionButtonLabel: UILabel!
     @IBOutlet weak var descriptionStackView: UIView!
@@ -26,7 +26,7 @@ final class PurchaseSponsorshipPlanViewController: UIViewController {
     @IBOutlet weak var expireDateLabel: UILabel! {
         didSet  {
             if let expireDate = Calendar.current.date(byAdding: .day, value: 30, to: Date()) {
-                expireDateLabel.text = expireDate.toString(format: LocalizationKey.str_sponsorship_plan_expire_description.localized())
+                expireDateLabel.text = expireDate.toString(format: LocalizationKey.str_membership_expire_description.localized())
             }
         }
     }
@@ -41,11 +41,11 @@ final class PurchaseSponsorshipPlanViewController: UIViewController {
     private let authSuccessWithPincode = PublishSubject<Void>()
 }
 
-extension PurchaseSponsorshipPlanViewController: ViewModelBindable {
-    typealias ViewModel = PurchaseSponsorshipPlanViewModel
+extension PurchaseMembershipViewController: ViewModelBindable {
+    typealias ViewModel = PurchaseMembershipViewModel
 
     func bindViewModel(viewModel: ViewModel) {
-        let input = PurchaseSponsorshipPlanViewModel.Input(
+        let input = PurchaseMembershipViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
             descriptionBtnDidTap: descriptionButton.rx.tap.asDriver(),
             agreeBtnDidTap: agreeButton.rx.tap.asDriver(),
@@ -74,14 +74,14 @@ extension PurchaseSponsorshipPlanViewController: ViewModelBindable {
             .drive(onNext: { [weak self] projectInfo in
                 self?.transferInfoWriterLabel.text = "▪︎ \(projectInfo.user?.username ?? "") : "
 
-                self?.transferInfoDescriptionLabel.text = LocalizationKey.str_sponsorship_plan_purchase_guide.localized(with: projectInfo.user?.username ?? "")
+                self?.transferInfoDescriptionLabel.text = LocalizationKey.str_membership_purchase_guide.localized(with: projectInfo.user?.username ?? "")
             })
             .disposed(by: disposeBag)
 
         output
-            .sponsorshipPlanInfo
-            .drive(onNext: { [weak self] (sponsorshipPlanItem, fees) in
-                let price = sponsorshipPlanItem.sponsorshipPrice ?? 0
+            .membershipInfo
+            .drive(onNext: { [weak self] (membershipItem, fees) in
+                let price = membershipItem.price ?? 0
                 let cdFee = Double(price) * ((fees.contentsDistributorRate ?? 0) / 100)
                 let userAdoptionPoolFee = Double(price) * ((fees.userAdoptionPoolRate ?? 0) / 100)
                 let depositPoolFee = Double(price) * ((fees.depositPoolRate ?? 0) / 100)
@@ -97,9 +97,9 @@ extension PurchaseSponsorshipPlanViewController: ViewModelBindable {
                 self?.transferInfoWriterPxlLabel.text = "\(writerPxl.commaRepresentation) PXL"
                 self?.transferInfoFeeLabel.text = "\(totalFeePxl.commaRepresentation) PXL"
 
-                self?.sponsorshipPlanTitleLabel.text = "\(LocalizationKey.str_sponsorship_plan_current_tier.localized(with: sponsorshipPlanItem.level ?? 0)) - \(sponsorshipPlanItem.name ?? "")"
-                self?.sponsorshipPlanDescriptionLabel.text = sponsorshipPlanItem.description
-                self?.descriptionStackView.isHidden = sponsorshipPlanItem.description == ""
+                self?.membershipTitleLabel.text = "\(LocalizationKey.str_membership_current_tier.localized(with: membershipItem.level ?? 0)) - \(membershipItem.name ?? "")"
+                self?.membershipDescriptionLabel.text = membershipItem.description
+                self?.descriptionStackView.isHidden = membershipItem.description == ""
             })
             .disposed(by: disposeBag)
 
@@ -107,9 +107,9 @@ extension PurchaseSponsorshipPlanViewController: ViewModelBindable {
             .descriptionBtnDidTap
             .drive(onNext: { [weak self] _ in
                 guard let `self` = self else { return }
-                self.sponsorshipPlanDescriptionLabel.isHidden = !self.sponsorshipPlanDescriptionLabel.isHidden
+                self.membershipDescriptionLabel.isHidden = !self.membershipDescriptionLabel.isHidden
 
-                let labelText = self.sponsorshipPlanDescriptionLabel.isHidden ? LocalizationKey.str_sponsorship_plan_show_description.localized() : LocalizationKey.str_sponsorship_plan_hide_description.localized()
+                let labelText = self.membershipDescriptionLabel.isHidden ? LocalizationKey.str_membership_show_description.localized() : LocalizationKey.str_membership_hide_description.localized()
 
                 let attributedStr = NSMutableAttributedString(string: labelText)
                 attributedStr.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: attributedStr.mutableString.range(of: labelText))
@@ -181,7 +181,7 @@ extension PurchaseSponsorshipPlanViewController: ViewModelBindable {
     }
 }
 
-extension PurchaseSponsorshipPlanViewController: CheckPincodeDelegate {
+extension PurchaseMembershipViewController: CheckPincodeDelegate {
     func authSuccess() {
         self.authSuccessWithPincode.onNext(())
     }

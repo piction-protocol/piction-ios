@@ -45,14 +45,14 @@ final class CreatePostViewController: UIViewController {
     @IBOutlet weak var publishDateLabel: UILabel!
     @IBOutlet weak var publishDatePickerButton: UIButton!
     @IBOutlet weak var publishDatePicker: UIDatePicker!
-    @IBOutlet weak var selectSponsorshipPlanView: UIView!
-    @IBOutlet weak var selectSponsorshipPlanButton: UIButton!
-    @IBOutlet weak var selectSponsorshipPlanLabel: UILabel!
+    @IBOutlet weak var selectMembershipView: UIView!
+    @IBOutlet weak var selectMembershipButton: UIButton!
+    @IBOutlet weak var selectMembershipLabel: UILabel!
 
     private let chosenCoverImage = PublishSubject<UIImage>()
     private let chosenContentImage = PublishSubject<UIImage>()
     private let chosenSeries = PublishSubject<SeriesModel?>()
-    private let chosenSponsorshipPlan = PublishSubject<PlanModel?>()
+    private let chosenMembership = PublishSubject<MembershipModel?>()
     private let chosenDateTime = PublishSubject<Date?>()
 
     fileprivate var mediaErrorMode = false
@@ -154,7 +154,7 @@ final class CreatePostViewController: UIViewController {
             self.forSubscriptionCheckboxImageView.backgroundColor = .clear
             self.forPrivateCheckboxImageView.image = UIImage()
             self.forPrivateCheckboxImageView.backgroundColor = .clear
-            self.selectSponsorshipPlanView.isHidden = true
+            self.selectMembershipView.isHidden = true
         case "PRIVATE":
             self.forAllCheckboxImageView.image = UIImage()
             self.forAllCheckboxImageView.backgroundColor = .clear
@@ -162,16 +162,16 @@ final class CreatePostViewController: UIViewController {
             self.forSubscriptionCheckboxImageView.backgroundColor = .clear
             self.forPrivateCheckboxImageView.image = #imageLiteral(resourceName: "ic-check")
             self.forPrivateCheckboxImageView.backgroundColor = .pictionBlue
-            self.selectSponsorshipPlanView.isHidden = true
-        case "PLAN":
+            self.selectMembershipView.isHidden = true
+        case "MEMBERSHIP":
             self.forAllCheckboxImageView.image = UIImage()
             self.forAllCheckboxImageView.backgroundColor = .clear
             self.forSubscriptionCheckboxImageView.image = #imageLiteral(resourceName: "ic-check")
             self.forSubscriptionCheckboxImageView.backgroundColor = .pictionBlue
             self.forPrivateCheckboxImageView.image = UIImage()
             self.forPrivateCheckboxImageView.backgroundColor = .clear
-            self.selectSponsorshipPlanLabel.text = "무료 구독"
-            self.selectSponsorshipPlanView.isHidden = false
+            self.selectMembershipLabel.text = "무료 구독"
+            self.selectMembershipView.isHidden = false
         default:
             break
         }
@@ -198,7 +198,7 @@ extension CreatePostViewController: ViewModelBindable {
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
             selectSeriesBtnDidTap: selectSeriesButton.rx.tap.asDriver(),
             seriesChanged: chosenSeries.asDriver(onErrorDriveWith: .empty()),
-            sponsorshipPlanChanged: chosenSponsorshipPlan.asDriver(onErrorDriveWith: .empty()),
+            membershipChanged: chosenMembership.asDriver(onErrorDriveWith: .empty()),
             inputPostTitle: postTitleTextField.rx.text.orEmpty.asDriver(),
             inputContent: richTextView.rx.text.orEmpty.map { _ in self.editorView.getHTML() }.asDriver(onErrorDriveWith: .empty()),
             contentImageDidPick: chosenContentImage.asDriver(onErrorDriveWith: .empty()),
@@ -208,7 +208,7 @@ extension CreatePostViewController: ViewModelBindable {
             forAllCheckBtnDidTap: forAllCheckboxButton.rx.tap.asDriver(),
             forSubscriptionCheckBtnDidTap: forSubscriptionCheckboxButton.rx.tap.asDriver(),
             forPrivateCheckBtnDidTap: forPrivateCheckboxButton.rx.tap.asDriver(),
-            selectSponsorshipPlanBtnDidTap: selectSponsorshipPlanButton.rx.tap.asDriver(),
+            selectMembershipBtnDidTap: selectMembershipButton.rx.tap.asDriver(),
             publishNowCheckBtnDidTap: publishNowCheckBoxButton.rx.tap.asDriver(),
             publishDatePickerBtnDidTap: publishDatePickerButton.rx.tap.asDriver(),
             publishDatePickerValueChanged: publishDatePicker.rx.date.asDriver(),
@@ -261,7 +261,7 @@ extension CreatePostViewController: ViewModelBindable {
 
                 self?.selectSeriesButton.setTitle(postInfo.series?.name ?? LocalizationKey.str_select_series.localized(), for: .normal)
 
-                self?.selectSponsorshipPlanLabel.text = postInfo.plan?.name ?? ""
+                self?.selectMembershipLabel.text = postInfo.membership?.name ?? ""
 
                 self?.publishNowCheckBoxView.isHidden = true
                 self?.publishDateView.isHidden = false
@@ -323,17 +323,17 @@ extension CreatePostViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .sponsorshipPlanChanged
-            .drive(onNext: { [weak self] sponsorshipPlan in
-                self?.selectSponsorshipPlanLabel.text = sponsorshipPlan?.name ?? ""
+            .membershipChanged
+            .drive(onNext: { [weak self] membership in
+                self?.selectMembershipLabel.text = membership?.name ?? ""
             })
             .disposed(by: disposeBag)
 
         output
-            .openManageSponsorshipPlanViewController
-            .drive(onNext: { [weak self] (uri, planId) in
+            .openManageMembershipViewController
+            .drive(onNext: { [weak self] (uri, membershipId) in
                 guard let `self` = self else { return }
-                self.openManageSponsorshipPlanViewController(uri: uri, planId: planId, delegate: self)
+                self.openManageMembershipViewController(uri: uri, membershipId: membershipId, delegate: self)
             })
             .disposed(by: disposeBag)
 
@@ -445,9 +445,9 @@ extension CreatePostViewController: ManageSeriesDelegate {
     }
 }
 
-extension CreatePostViewController: ManageSponsorshipPlanDelegate {
-    func selectSponsorshipPlan(with sponshipPlan: PlanModel?) {
-        self.chosenSponsorshipPlan.onNext(sponshipPlan)
+extension CreatePostViewController: ManageMembershipDelegate {
+    func selectMembership(with membership: MembershipModel?) {
+        self.chosenMembership.onNext(membership)
     }
 }
 

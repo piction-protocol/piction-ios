@@ -252,8 +252,8 @@ final class ViewModelAssembly: Assembly {
             )
         }
 
-        container.register(SponsorshipPlanListViewModel.self) { (resolver, uri: String, postId: Int?) in
-            return SponsorshipPlanListViewModel(dependency: (
+        container.register(MembershipListViewModel.self) { (resolver, uri: String, postId: Int?) in
+            return MembershipListViewModel(dependency: (
                 resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 uri: uri,
@@ -261,31 +261,31 @@ final class ViewModelAssembly: Assembly {
             )
         }
 
-        container.register(PurchaseSponsorshipPlanViewModel.self) { (resolver, uri: String, selectedSponsorshipPlan: PlanModel) in
-            return PurchaseSponsorshipPlanViewModel(dependency: (
+        container.register(PurchaseMembershipViewModel.self) { (resolver, uri: String, selectedMembership: MembershipModel) in
+            return PurchaseMembershipViewModel(dependency: (
                 resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 resolver.resolve(KeychainManagerProtocol.self)!,
                 uri: uri,
-                selectedSponsorshipPlan: selectedSponsorshipPlan)
+                selectedMembership: selectedMembership)
             )
         }
 
-        container.register(ManageSponsorshipPlanViewModel.self) { (resolver, uri: String, planId: Int?) in
-            return ManageSponsorshipPlanViewModel(dependency: (
+        container.register(ManageMembershipViewModel.self) { (resolver, uri: String, membershipId: Int?) in
+            return ManageMembershipViewModel(dependency: (
                 resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 uri: uri,
-                planId: planId)
+                membershipId: membershipId)
             )
         }
 
-        container.register(CreateSponsorshipPlanViewModel.self) { (resolver, uri: String, sponsorshipPlan: PlanModel?) in
-            return CreateSponsorshipPlanViewModel(dependency: (
+        container.register(CreateMembershipViewModel.self) { (resolver, uri: String, membership: MembershipModel?) in
+            return CreateMembershipViewModel(dependency: (
                 resolver.resolve(FirebaseManagerProtocol.self)!,
                 resolver.resolve(UpdaterProtocol.self)!,
                 uri: uri,
-                sponsorshipPlan: sponsorshipPlan)
+                membership: membership)
             )
         }
     }

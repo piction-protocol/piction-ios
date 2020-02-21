@@ -25,7 +25,7 @@ class SubscriptionUserTableViewCell: ReuseTableViewCell {
     typealias Model = SponsorModel
 
     func configure(with model: Model) {
-        let (profileImage, username, loginId, level, sponsorshipPlanName, subscriptionDate) = (model.sponsor?.picture, model.sponsor?.username, model.sponsor?.loginId, model.plan?.level, model.plan?.name, model.startedAt)
+        let (profileImage, username, loginId, level, membershipName, subscriptionDate) = (model.sponsor?.picture, model.sponsor?.username, model.sponsor?.loginId, model.membership?.level, model.membership?.name, model.startedAt)
 
         if let profileImage = profileImage {
             let userPictureWithIC = "\(profileImage)?w=240&h=240&quality=80&output=webp"
@@ -38,12 +38,12 @@ class SubscriptionUserTableViewCell: ReuseTableViewCell {
         idLabel.text = "@\(loginId ?? "")"
         var levelText: String {
             if level == 0 {
-                return LocalizationKey.str_sponsorship_plan_free_tier.localized()
+                return LocalizationKey.str_membership_free_tier.localized()
             } else {
-                return LocalizationKey.str_sponsorship_plan_current_tier.localized(with: level ?? 0)
+                return LocalizationKey.str_membership_current_tier.localized(with: level ?? 0)
             }
         }
-        levelLabel.text = "\(levelText) - \(sponsorshipPlanName ?? "")"
+        levelLabel.text = "\(levelText) - \(membershipName ?? "")"
         subscriptionDateLabel.text = subscriptionDate?.toString(format: "YYYY-MM-dd hh:mm")
     }
 }

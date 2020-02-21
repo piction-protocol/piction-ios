@@ -17,7 +17,7 @@
         <!--후원 플랜-->
         <scene sceneID="2nl-Mi-rnN">
             <objects>
-                <viewController storyboardIdentifier="SponsorshipPlanListViewController" id="QFh-4V-M9r" customClass="SponsorshipPlanListViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MembershipListViewController" id="QFh-4V-M9r" customClass="MembershipListViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="e8W-7f-nZh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -59,7 +59,7 @@
                                                                     <color key="textColor" name="PictionDarkGray"/>
                                                                     <nil key="highlightedColor"/>
                                                                     <userDefinedRuntimeAttributes>
-                                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan"/>
+                                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_membership"/>
                                                                     </userDefinedRuntimeAttributes>
                                                                 </label>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AeU-xl-HB7">
@@ -77,7 +77,7 @@
                                                                             <color key="textColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                             <userDefinedRuntimeAttributes>
-                                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan_description"/>
+                                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_membership_description"/>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </label>
                                                                     </subviews>
@@ -107,7 +107,7 @@
                                                                             <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                             <userDefinedRuntimeAttributes>
-                                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan_warning_description"/>
+                                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_membership_warning_description"/>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </label>
                                                                     </subviews>
@@ -150,7 +150,7 @@
                                                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                     <userDefinedRuntimeAttributes>
-                                                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan_current_post_description"/>
+                                                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_membership_current_post_description"/>
                                                                                     </userDefinedRuntimeAttributes>
                                                                                 </label>
                                                                             </subviews>
@@ -173,7 +173,7 @@
                                                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                                                     <real key="value" value="8"/>
                                                                                 </userDefinedRuntimeAttribute>
-                                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan_show_all"/>
+                                                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_membership_show_all"/>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </button>
                                                                     </subviews>
@@ -217,7 +217,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 </containerView>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SponsorshipPlanListTableViewCell" id="WUJ-ew-4lc" customClass="SponsorshipPlanListTableViewCell" customModule="piction_ios" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MembershipListTableViewCell" id="WUJ-ew-4lc" customClass="MembershipListTableViewCell" customModule="piction_ios" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="315" width="414" height="286.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WUJ-ew-4lc" id="BCq-pP-ziU">
@@ -376,18 +376,18 @@
                             </userDefinedRuntimeAttributes>
                         </barButtonItem>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_sponsorship_plan"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_membership"/>
                         </userDefinedRuntimeAttributes>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="closeButton" destination="AaT-qZ-5Z7" id="vGB-BA-xsT"/>
-                        <outlet property="currentPostSponsorshipPlanInfo" destination="Ebe-Ou-45t" id="NOy-Yp-5Ui"/>
+                        <outlet property="currentPostMembershipInfo" destination="Ebe-Ou-45t" id="gUL-N0-Bl5"/>
                         <outlet property="currentPostTitleLabel" destination="y1N-Sv-Boc" id="wna-zu-HTb"/>
-                        <outlet property="currentSubscriptionSponsorshipPlanTitleLabel" destination="w4C-Bh-3Ru" id="Su3-fY-RTn"/>
-                        <outlet property="currentSubscriptionSponsorshipPlanView" destination="dex-zJ-X4H" id="NTd-LR-Wdg"/>
+                        <outlet property="currentSubscriptionMembershipTitleLabel" destination="w4C-Bh-3Ru" id="qR2-6n-ebk"/>
+                        <outlet property="currentSubscriptionMembershipView" destination="dex-zJ-X4H" id="A8T-K9-YWa"/>
                         <outlet property="emptyView" destination="Akz-fh-SxP" id="bWd-BM-P7g"/>
-                        <outlet property="showAllSponsorshipPlanButton" destination="aiT-UH-naG" id="dr1-Hm-Dq8"/>
+                        <outlet property="showAllMembershipButton" destination="aiT-UH-naG" id="9BR-Kz-nkT"/>
                         <outlet property="tableView" destination="KBQ-fV-FWh" id="Plh-7F-fdJ"/>
                         <outlet property="thumbnailImageView" destination="UXr-9p-0hZ" id="kDc-tR-0em"/>
                         <outlet property="writerLabel" destination="l75-du-SCL" id="GWl-eN-n8M"/>

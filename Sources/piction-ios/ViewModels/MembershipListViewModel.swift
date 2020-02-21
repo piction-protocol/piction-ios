@@ -1,5 +1,5 @@
 //
-//  SponsorshipPlanListViewModel.swift
+//  MembershipListViewModel.swift
 //  piction-ios
 //
 //  Created by jhseo on 2019/11/19.
@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
-final class SponsorshipPlanListViewModel: InjectableViewModel {
+final class MembershipListViewModel: InjectableViewModel {
 
     typealias Dependency = (
         FirebaseManagerProtocol,
@@ -34,7 +34,7 @@ final class SponsorshipPlanListViewModel: InjectableViewModel {
     struct Input {
         let viewWillAppear: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
-        let showAllSponsorshipPlanBtnDidTap: Driver<Void>
+        let showAllMembershipBtnDidTap: Driver<Void>
         let closeBtnDidTap: Driver<Void>
     }
 
@@ -42,10 +42,10 @@ final class SponsorshipPlanListViewModel: InjectableViewModel {
         let viewWillAppear: Driver<Void>
         let subscriptionInfo: Driver<SponsorshipModel?>
         let postItem: Driver<PostModel>
-        let showAllSponsorshipPlanBtnDidTap: Driver<Void>
-        let sponsorshipPlanList: Driver<[PlanModel]>
+        let showAllMembershipBtnDidTap: Driver<Void>
+        let membershipList: Driver<[MembershipModel]>
         let projectInfo: Driver<ProjectModel>
-        let sponsorshipPlanTableItems: Driver<[SponsorshipPlanListTableViewCellModel]>
+        let membershipTableItems: Driver<[MembershipListTableViewCellModel]>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let selectedIndexPath: Driver<IndexPath>
         let openSignInViewController: Driver<Void>
@@ -59,7 +59,7 @@ final class SponsorshipPlanListViewModel: InjectableViewModel {
 
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
-                firebaseManager.screenName("SponsorshipPlan목록_\(uri)")
+                firebaseManager.screenName("Membership목록_\(uri)")
             })
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
@@ -98,12 +98,12 @@ final class SponsorshipPlanListViewModel: InjectableViewModel {
             .map { try? $0.map(to: PostModel.self) }
             .flatMap(Driver.from)
             .do(onNext: { [weak self] postItem in
-                guard let sponsorshipPlanLevel = postItem.plan?.level else { return }
-                self?.levelLimit.onNext(sponsorshipPlanLevel)
+                guard let membershipLevel = postItem.membership?.level else { return }
+                self?.levelLimit.onNext(membershipLevel)
             })
 
         let subscriptionInfoAction = loadPage
-            .map { SponsorshipPlanAPI.getSponsoredPlan(uri: uri) }
+            .map { MembershipAPI.getSponsoredMembership(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -116,29 +116,29 @@ final class SponsorshipPlanListViewModel: InjectableViewModel {
 
         let subscriptionInfo = Driver.merge(subscriptionInfoSuccess, subscriptionInfoError)
 
-        let sponsorshipPlanListAction = loadPage
-            .map { SponsorshipPlanAPI.all(uri: uri) }
+        let membershipListAction = loadPage
+            .map { MembershipAPI.all(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
-        let sponsorshipPlanListSuccess = sponsorshipPlanListAction.elements
-            .map { try? $0.map(to: [PlanModel].self) }
+        let membershipListSuccess = membershipListAction.elements
+            .map { try? $0.map(to: [MembershipModel].self) }
             .map { $0?.filter { $0.level != 0 } }
             .flatMap(Driver.from)
 
-        let sponsorshipPlanListError = sponsorshipPlanListAction.error
+        let membershipListError = membershipListAction.error
             .map { _ in Void() }
 
-        let sponsorshipPlanTableItems = Driver.combineLatest(sponsorshipPlanListSuccess, subscriptionInfo, levelLimitChanged)
-            .map { arg -> [SponsorshipPlanListTableViewCellModel] in
-                let (sponsorshipPlanList, subscriptionInfo, levelLimit) = arg
-                let cellList = sponsorshipPlanList.enumerated().map { (index, element) in SponsorshipPlanListTableViewCellModel(sponsorshipPlan: element, subscriptionInfo: subscriptionInfo, postCount: sponsorshipPlanList[0...index].reduce(0) { $0 + ($1.postCount ?? 0) }) }
-                return cellList.filter { ($0.sponsorshipPlan.level ?? 0) >= levelLimit }
+        let membershipTableItems = Driver.combineLatest(membershipListSuccess, subscriptionInfo, levelLimitChanged)
+            .map { arg -> [MembershipListTableViewCellModel] in
+                let (membershipList, subscriptionInfo, levelLimit) = arg
+                let cellList = membershipList.enumerated().map { (index, element) in MembershipListTableViewCellModel(membership: element, subscriptionInfo: subscriptionInfo, postCount: membershipList[0...index].reduce(0) { $0 + ($1.postCount ?? 0) }) }
+                return cellList.filter { ($0.membership.level ?? 0) >= levelLimit }
             }
 
-        let embedEmptyViewController = sponsorshipPlanTableItems
+        let embedEmptyViewController = membershipTableItems
             .map { $0.isEmpty }
-            .map { _ in .sponsorshipPlanEmpty }
+            .map { _ in .membershipEmpty }
             .flatMap(Driver<CustomEmptyViewStyle>.from)
 
         let projectInfoAction = loadPage
@@ -160,9 +160,9 @@ final class SponsorshipPlanListViewModel: InjectableViewModel {
             .filter { $0.loginId == nil }
             .map { _ in Void() }
 
-        let showErrorPopup = sponsorshipPlanListError
+        let showErrorPopup = membershipListError
 
-        let activityIndicator = sponsorshipPlanListAction.isExecuting
+        let activityIndicator = membershipListAction.isExecuting
 
         let dismissViewController = input.closeBtnDidTap
 
@@ -170,10 +170,10 @@ final class SponsorshipPlanListViewModel: InjectableViewModel {
             viewWillAppear: viewWillAppear,
             subscriptionInfo: subscriptionInfoSuccess,
             postItem: postItemSuccess,
-            showAllSponsorshipPlanBtnDidTap: input.showAllSponsorshipPlanBtnDidTap,
-            sponsorshipPlanList: sponsorshipPlanListSuccess,
+            showAllMembershipBtnDidTap: input.showAllMembershipBtnDidTap,
+            membershipList: membershipListSuccess,
             projectInfo: projectInfoSuccess,
-            sponsorshipPlanTableItems: sponsorshipPlanTableItems,
+            membershipTableItems: membershipTableItems,
             embedEmptyViewController: embedEmptyViewController,
             selectedIndexPath: selectedIndexPath,
             openSignInViewController: openSignInViewController,

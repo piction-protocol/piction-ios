@@ -1,5 +1,5 @@
 //
-//  ManageSponsorshipPlanViewModel.swift
+//  ManageMembershipViewModel.swift
 //  piction-ios
 //
 //  Created by jhseo on 2019/11/22.
@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
-final class ManageSponsorshipPlanViewModel: InjectableViewModel {
+final class ManageMembershipViewModel: InjectableViewModel {
 
     typealias Dependency = (
         FirebaseManagerProtocol,
@@ -22,27 +22,27 @@ final class ManageSponsorshipPlanViewModel: InjectableViewModel {
     private let firebaseManager: FirebaseManagerProtocol
     private let updater: UpdaterProtocol
     let uri: String
-    let planId: Int?
+    let membershipId: Int?
 
     var loadRetryTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
-        (firebaseManager, updater, uri, planId) = dependency
+        (firebaseManager, updater, uri, membershipId) = dependency
     }
 
     struct Input {
         let viewWillAppear: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
         let createBtnDidTap: Driver<Void>
-        let deleteSponsorshipPlan: Driver<(String, Int)>
+        let deleteMembership: Driver<(String, Int)>
         let closeBtnDidTap: Driver<Void>
     }
 
     struct Output {
         let viewWillAppear: Driver<Void>
-        let sponsorshipPlanList: Driver<[PlanModel]>
+        let membershipList: Driver<[MembershipModel]>
         let selectedIndexPath: Driver<IndexPath>
-        let openCreateSponsorshipPlanViewController: Driver<String>
+        let openCreateMembershipViewController: Driver<String>
         let showErrorPopup: Driver<Void>
         let activityIndicator: Driver<Bool>
         let dismissViewController: Driver<Void>
@@ -50,11 +50,11 @@ final class ManageSponsorshipPlanViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (firebaseManager, updater, uri, planId) = (self.firebaseManager, self.updater, self.uri, self.planId)
+        let (firebaseManager, updater, uri, membershipId) = (self.firebaseManager, self.updater, self.uri, self.membershipId)
 
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
-                firebaseManager.screenName("SponsorshipPlan관리_\(uri)_\(planId ?? 0)")
+                firebaseManager.screenName("Membership관리_\(uri)_\(membershipId ?? 0)")
             })
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
@@ -65,28 +65,28 @@ final class ManageSponsorshipPlanViewModel: InjectableViewModel {
 
         let loadPage = Driver.merge(initialLoad, loadRetry, refreshContent)
 
-        let sponsorshipPlanListAction = loadPage
-            .map { SponsorshipPlanAPI.all(uri: uri) }
+        let membershipListAction = loadPage
+            .map { MembershipAPI.all(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
-        let sponsorshipPlanListSuccess = sponsorshipPlanListAction.elements
-            .map { try? $0.map(to: [PlanModel].self) }
+        let membershipListSuccess = membershipListAction.elements
+            .map { try? $0.map(to: [MembershipModel].self) }
             .flatMap(Driver.from)
 
-        let sponsorshipPlanListError = sponsorshipPlanListAction.error
+        let membershipListError = membershipListAction.error
             .map { _ in Void() }
 
-        let openCreateSponsorshipPlanViewController = input.createBtnDidTap
+        let openCreateMembershipViewController = input.createBtnDidTap
             .map { uri }
 
-        let deleteAction = input.deleteSponsorshipPlan
-            .map { SponsorshipPlanAPI.delete(uri: $0, planId: $1) }
+        let deleteAction = input.deleteMembership
+            .map { MembershipAPI.delete(uri: $0, membershipId: $1) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
         let deleteSuccess = deleteAction.elements
-            .map { _ in LocalizationKey.msg_delete_sponsorship_plan_success.localized() }
+            .map { _ in LocalizationKey.msg_delete_membership_success.localized() }
             .do(onNext: { _ in
                 updater.refreshContent.onNext(())
             })
@@ -96,9 +96,9 @@ final class ManageSponsorshipPlanViewModel: InjectableViewModel {
             .map { $0?.message }
             .flatMap(Driver.from)
 
-        let showErrorPopup = sponsorshipPlanListError
+        let showErrorPopup = membershipListError
 
-        let activityIndicator = sponsorshipPlanListAction.isExecuting
+        let activityIndicator = membershipListAction.isExecuting
 
         let dismissViewController = input.closeBtnDidTap
 
@@ -106,9 +106,9 @@ final class ManageSponsorshipPlanViewModel: InjectableViewModel {
 
         return Output(
             viewWillAppear: viewWillAppear,
-            sponsorshipPlanList: sponsorshipPlanListSuccess,
+            membershipList: membershipListSuccess,
             selectedIndexPath: input.selectedIndexPath,
-            openCreateSponsorshipPlanViewController: openCreateSponsorshipPlanViewController,
+            openCreateMembershipViewController: openCreateMembershipViewController,
             showErrorPopup: showErrorPopup,
             activityIndicator: activityIndicator,
             dismissViewController: dismissViewController,

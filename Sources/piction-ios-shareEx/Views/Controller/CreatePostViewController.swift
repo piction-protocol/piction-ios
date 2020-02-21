@@ -96,11 +96,11 @@ final class CreatePostViewController: UIViewController {
                 self?.selectedStatus.onNext("PUBLIC")
             })
 
-        let sponsorshipPlanAction = UIAlertAction(
-            title: LocalizationKey.str_post_status_sponsorship_plan.localized(),
+        let membershipAction = UIAlertAction(
+            title: LocalizationKey.str_post_status_membership.localized(),
             style: UIAlertAction.Style.default,
             handler: { [weak self] action in
-                self?.selectedStatus.onNext("PLAN")
+                self?.selectedStatus.onNext("MEMBERSHIP")
             })
 
         let privateAction = UIAlertAction(
@@ -117,7 +117,7 @@ final class CreatePostViewController: UIViewController {
             })
 
         alertController.addAction(publicAction)
-        alertController.addAction(sponsorshipPlanAction)
+        alertController.addAction(membershipAction)
         alertController.addAction(privateAction)
         alertController.addAction(cancelAction)
 
@@ -292,8 +292,8 @@ extension CreatePostViewController: ViewModelBindable {
                     switch status {
                     case "PUBLIC":
                         return LocalizationKey.str_post_status_public.localized()
-                    case "PLAN":
-                        return LocalizationKey.str_post_status_sponsorship_plan.localized()
+                    case "MEMBERSHIP":
+                        return LocalizationKey.str_post_status_membership.localized()
                     case "PRIVATE":
                         return LocalizationKey.str_post_status_private.localized()
                     default:

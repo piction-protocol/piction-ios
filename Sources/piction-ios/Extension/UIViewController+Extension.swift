@@ -219,8 +219,8 @@ extension UIViewController {
         }
     }
 
-    func openManageSponsorshipPlanViewController(uri: String, planId: Int? = nil, delegate: ManageSponsorshipPlanDelegate? = nil) {
-        let vc = ManageSponsorshipPlanViewController.make(uri: uri, planId: planId)
+    func openManageMembershipViewController(uri: String, membershipId: Int? = nil, delegate: ManageMembershipDelegate? = nil) {
+        let vc = ManageMembershipViewController.make(uri: uri, membershipId: membershipId)
         vc.delegate = delegate
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .swipePresent)
@@ -269,8 +269,8 @@ extension UIViewController {
         }
     }
 
-    func openSponsorshipPlanListViewController(uri: String, postId: Int? = nil) {
-        let vc = SponsorshipPlanListViewController.make(uri: uri, postId: postId)
+    func openMembershipListViewController(uri: String, postId: Int? = nil) {
+        let vc = MembershipListViewController.make(uri: uri, postId: postId)
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .present)
         }
@@ -283,15 +283,15 @@ extension UIViewController {
         }
     }
 
-    func openPurchaseSponsorshipPlanViewController(uri: String, selectedSponsorshipPlan: PlanModel) {
-        let vc = PurchaseSponsorshipPlanViewController.make(uri: uri, selectedSponsorshipPlan: selectedSponsorshipPlan)
+    func openPurchaseMembershipViewController(uri: String, selectedMembership: MembershipModel) {
+        let vc = PurchaseMembershipViewController.make(uri: uri, selectedMembership: selectedMembership)
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .push)
         }
     }
 
-    func openCreateSponsorshipPlanViewController(uri: String, sponsorshipPlan: PlanModel? = nil) {
-        let vc = CreateSponsorshipPlanViewController.make(uri: uri, sponsorshipPlan: sponsorshipPlan)
+    func openCreateMembershipViewController(uri: String, membership: MembershipModel? = nil) {
+        let vc = CreateMembershipViewController.make(uri: uri, membership: membership)
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .push)
         }

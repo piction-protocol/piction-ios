@@ -202,26 +202,26 @@ extension SubscriptionUserViewController {
     }
 }
 
-extension SponsorshipPlanListViewController {
-    static func make(uri: String, postId: Int? = nil) -> SponsorshipPlanListViewController {
-        return Container.shared.resolve(SponsorshipPlanListViewController.self, arguments: uri, postId)!
+extension MembershipListViewController {
+    static func make(uri: String, postId: Int? = nil) -> MembershipListViewController {
+        return Container.shared.resolve(MembershipListViewController.self, arguments: uri, postId)!
     }
 }
 
-extension PurchaseSponsorshipPlanViewController {
-    static func make(uri: String, selectedSponsorshipPlan: PlanModel) -> PurchaseSponsorshipPlanViewController {
-        return Container.shared.resolve(PurchaseSponsorshipPlanViewController.self, arguments: uri, selectedSponsorshipPlan)!
+extension PurchaseMembershipViewController {
+    static func make(uri: String, selectedMembership: MembershipModel) -> PurchaseMembershipViewController {
+        return Container.shared.resolve(PurchaseMembershipViewController.self, arguments: uri, selectedMembership)!
     }
 }
 
-extension ManageSponsorshipPlanViewController {
-    static func make(uri: String, planId: Int? = nil) -> ManageSponsorshipPlanViewController {
-        return Container.shared.resolve(ManageSponsorshipPlanViewController.self, arguments: uri, planId)!
+extension ManageMembershipViewController {
+    static func make(uri: String, membershipId: Int? = nil) -> ManageMembershipViewController {
+        return Container.shared.resolve(ManageMembershipViewController.self, arguments: uri, membershipId)!
     }
 }
 
-extension CreateSponsorshipPlanViewController {
-    static func make(uri: String, sponsorshipPlan: PlanModel? = nil) -> CreateSponsorshipPlanViewController {
-        return Container.shared.resolve(CreateSponsorshipPlanViewController.self, arguments: uri, sponsorshipPlan)!
+extension CreateMembershipViewController {
+    static func make(uri: String, membership: MembershipModel? = nil) -> CreateMembershipViewController {
+        return Container.shared.resolve(CreateMembershipViewController.self, arguments: uri, membership)!
     }
 }

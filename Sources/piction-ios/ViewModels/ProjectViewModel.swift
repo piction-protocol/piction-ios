@@ -44,7 +44,7 @@ final class ProjectViewModel: InjectableViewModel {
         let viewWillDisappear: Driver<Void>
         let subscriptionBtnDidTap: Driver<Void>
         let cancelSubscriptionBtnDidTap: Driver<Void>
-        let sponsorshipPlanBtnDidTap: Driver<Void>
+        let membershipBtnDidTap: Driver<Void>
         let changeMenu: Driver<Int>
         let infoBtnDidTap: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
@@ -58,7 +58,7 @@ final class ProjectViewModel: InjectableViewModel {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
         let projectInfo: Driver<ProjectModel>
-        let subscriptionInfo: Driver<(Bool, [PlanModel], SponsorshipModel?, Bool)>
+        let subscriptionInfo: Driver<(Bool, [MembershipModel], SponsorshipModel?, Bool)>
         let openCancelSubscriptionPopup: Driver<Void>
         let openSignInViewController: Driver<Void>
         let openCreatePostViewController: Driver<String>
@@ -67,7 +67,7 @@ final class ProjectViewModel: InjectableViewModel {
         let selectedIndexPath: Driver<IndexPath>
         let openProjectInfoViewController: Driver<String>
         let openSubscriptionUserViewController: Driver<String>
-        let openSponsorshipPlanListViewController: Driver<String>
+        let openMembershipListViewController: Driver<String>
         let activityIndicator: Driver<Bool>
         let toastMessage: Driver<String>
     }
@@ -121,7 +121,7 @@ final class ProjectViewModel: InjectableViewModel {
             .filter { $0 == 1 }
 
         let subscriptionInfoAction = Driver.merge(postSubscriptionInfoAction, seriesSubscriptionInfoAction)
-            .map{ _ in SponsorshipPlanAPI.getSponsoredPlan(uri: uri) }
+            .map{ _ in MembershipAPI.getSponsoredMembership(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -171,8 +171,8 @@ final class ProjectViewModel: InjectableViewModel {
                 self?.isWriter = isWriter
             })
 
-        let isActivePlan = loadProjectInfo
-            .map { $0.activePlan }
+        let isActiveMembership = loadProjectInfo
+            .map { $0.activeMembership }
             .flatMap(Driver.from)
 
         let loadOthersPostAction = Driver.zip(Driver.merge(selectPostMenu, loadNext), isWriter)
@@ -208,16 +208,16 @@ final class ProjectViewModel: InjectableViewModel {
                 self?.page = page + 1
             })
 
-        let sponsorshipPlanListAction = initialLoad
-            .map { SponsorshipPlanAPI.all(uri: uri) }
+        let membershipListAction = initialLoad
+            .map { MembershipAPI.all(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
-        let sponsorshipPlanListSuccess = sponsorshipPlanListAction.elements
-            .map { try? $0.map(to: [PlanModel].self) }
+        let membershipListSuccess = membershipListAction.elements
+            .map { try? $0.map(to: [MembershipModel].self) }
             .flatMap(Driver.from)
 
-        let subscriptionInfo = Driver.combineLatest(isWriter, sponsorshipPlanListSuccess, projectSubscriptionInfo, isActivePlan)
+        let subscriptionInfo = Driver.combineLatest(isWriter, membershipListSuccess, projectSubscriptionInfo, isActiveMembership)
 
         let subscriptionAction = input.subscriptionBtnDidTap
             .withLatestFrom(isWriter)
@@ -226,9 +226,9 @@ final class ProjectViewModel: InjectableViewModel {
             .filter { $0.loginId != nil }
             .withLatestFrom(projectSubscriptionInfo)
             .filter { $0 == nil }
-            .withLatestFrom(sponsorshipPlanListSuccess)
+            .withLatestFrom(membershipListSuccess)
             .filter { $0.count == 1 }
-            .map { SponsorshipPlanAPI.sponsorship(uri: uri, planId: $0[safe: 0]?.id ?? 0, sponsorshipPrice: $0[safe: 0]?.sponsorshipPrice ?? 0) }
+            .map { MembershipAPI.sponsorship(uri: uri, membershipId: $0[safe: 0]?.id ?? 0, price: $0[safe: 0]?.price ?? 0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -250,15 +250,15 @@ final class ProjectViewModel: InjectableViewModel {
             .filter { $0.loginId != nil }
             .withLatestFrom(projectSubscriptionInfo)
             .filter { $0 != nil }
-            .withLatestFrom(sponsorshipPlanListSuccess)
+            .withLatestFrom(membershipListSuccess)
             .filter { $0.count == 1 }
             .map { _ in Void() }
 
         let cancelSubscriptionAction = input.cancelSubscriptionBtnDidTap
             .withLatestFrom(projectSubscriptionInfo)
             .filter { $0 != nil }
-            .filter { ($0?.plan?.level ?? 0) == 0 }
-            .map { SponsorshipPlanAPI.cancelSponsorship(uri: uri, planId: $0?.plan?.id ?? 0) }
+            .filter { ($0?.membership?.level ?? 0) == 0 }
+            .map { MembershipAPI.cancelSponsorship(uri: uri, membershipId: $0?.membership?.id ?? 0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -274,7 +274,7 @@ final class ProjectViewModel: InjectableViewModel {
             .flatMap(Driver.from)
 
         let openSignInViewController = input.subscriptionBtnDidTap
-            .withLatestFrom(sponsorshipPlanListSuccess)
+            .withLatestFrom(membershipListSuccess)
             .filter { $0.count == 1 }
             .withLatestFrom(currentUserInfo)
             .filter { $0.loginId == nil }
@@ -377,7 +377,7 @@ final class ProjectViewModel: InjectableViewModel {
             .map { _ in uri }
             .flatMap(Driver<String>.from)
 
-        let openSponsorshipPlanListViewController = input.sponsorshipPlanBtnDidTap
+        let openMembershipListViewController = input.membershipBtnDidTap
             .withLatestFrom(isWriter)
             .filter { !$0 }
             .map { _ in uri }
@@ -396,7 +396,7 @@ final class ProjectViewModel: InjectableViewModel {
             selectedIndexPath: input.selectedIndexPath,
             openProjectInfoViewController: openProjectInfoViewController,
             openSubscriptionUserViewController: openSubscriptionUserViewController,
-            openSponsorshipPlanListViewController: openSponsorshipPlanListViewController,
+            openMembershipListViewController: openMembershipListViewController,
             activityIndicator: activityIndicator,
             toastMessage: toastMessage
         )

@@ -44,7 +44,7 @@ enum LocalizationKey {
     case popup_title_pincode_confirm
     case popup_title_notsupport_multiwindow
     case popup_title_delete_post
-    case popup_title_delete_sponsorship_plan
+    case popup_title_delete_membership
 
     // Popup & Toast
     case msg_api_internal_server_error
@@ -54,7 +54,7 @@ enum LocalizationKey {
     case msg_pincode_reg_warning
     case msg_already_sign_in
     case msg_delete_post_success
-    case msg_delete_sponsorship_plan_success
+    case msg_delete_membership_success
 
     case msg_creator_not_found
     case msg_not_piction_cp
@@ -77,7 +77,7 @@ enum LocalizationKey {
 
     // Button
     case btn_new_post
-    case btn_subs_sponsorship_plan
+    case btn_subs_membership
     case btn_subs_free
     case btn_user_sponsorship
     case btn_user_sponsorship_history
@@ -116,10 +116,10 @@ enum LocalizationKey {
     case str_popular_tag
     case str_project_count
     case str_subs_count_plural
-    case str_subs_only_with_sponsorship_plan
+    case str_subs_only_with_membership
     case str_subs_only
     case str_series_subs_only
-    case str_series_sponsorship_plan_subs_only
+    case str_series_membership_subs_only
     case str_sort_with_direction
     case str_private_only
 
@@ -127,7 +127,7 @@ enum LocalizationKey {
     case str_banner_header_info
 
     case str_project_subscribing
-    case str_project_sponsorship_plan
+    case str_project_membership
     case str_project_subscrition_complete
     case str_project_cancel_subscrition
     case str_series_posts_count
@@ -159,7 +159,7 @@ enum LocalizationKey {
     case str_series_empty
     case str_project_empty
     case str_subscribing_project_empty
-    case str_sponsorship_plan_empty
+    case str_membership_empty
 
     case str_qrcode_scan
     case str_qrcode_help
@@ -196,7 +196,7 @@ enum LocalizationKey {
     case str_have_pxl_amount
     case str_deposit_format
     case str_withdraw_format
-    case str_sponsorship_plan_revenue
+    case str_membership_revenue
     case str_project_no_post
     case str_project_update_n_now
     case str_project_update_n_minute
@@ -218,42 +218,42 @@ enum LocalizationKey {
     case str_sponsorship_user
     case str_order_id
     case str_project
-    case str_sponsorship_plan
-    case str_sponsorship_plan_purchase
-    case str_sponsorship_plan_sell_info
-    case str_sponsorship_plan_buy_info
-    case str_sponsorship_plan_seller
-    case str_sponsorship_plan_buyer
+    case str_membership
+    case str_membership_purchase
+    case str_membership_sell_info
+    case str_membership_buy_info
+    case str_membership_seller
+    case str_membership_buyer
 
-    case str_sponsorship_plan_description
-    case str_sponsorship_plan_limit
-    case str_sponsorship_plan_postcount
-    case str_sponsorship_plan_remain
-    case str_sponsorship_plan_expire
-    case str_sponsorship_plan_not_avaliable
-    case str_sponsorship_plan_free_tier
-    case str_sponsorship_plan_current_tier
-    case str_sponsorship_plan_sponsorship_button
-    case str_sponsorship_plan_warning_current_sponsorship_plan
-    case str_sponsorship_plan_warning_description
-    case str_sponsorship_plan_current_post_description
+    case str_membership_description
+    case str_membership_limit
+    case str_membership_postcount
+    case str_membership_remain
+    case str_membership_expire
+    case str_membership_not_avaliable
+    case str_membership_free_tier
+    case str_membership_current_tier
+    case str_membership_sponsorship_button
+    case str_membership_warning_current_membership
+    case str_membership_warning_description
+    case str_membership_current_post_description
 
-    case str_sponsorship_plan_select_sponsorship_plan
-    case str_sponsorship_plan_show_description
-    case str_sponsorship_plan_hide_description
-    case str_sponsorship_plan_payment
-    case str_sponsorship_plan_payment_piction
-    case str_sponsorship_plan_purchase_amount
-    case str_sponsorship_plan_expire_title
-    case str_sponsorship_plan_expire_description
-    case str_sponsorship_plan_agree
+    case str_membership_select_membership
+    case str_membership_show_description
+    case str_membership_hide_description
+    case str_membership_payment
+    case str_membership_payment_piction
+    case str_membership_purchase_amount
+    case str_membership_expire_title
+    case str_membership_expire_description
+    case str_membership_agree
     case str_purchase
-    case str_sponsorship_plan_transfer_info
-    case str_sponsorship_plan_transfer_info_fees
-    case str_sponsorship_plan_purchase_guide
-    case str_sponsorship_plan_show_all
-    case str_sponsorship_plan_cancel
-    case str_sponsorship_plan_purchase_complete
+    case str_membership_transfer_info
+    case str_membership_transfer_info_fees
+    case str_membership_purchase_guide
+    case str_membership_show_all
+    case str_membership_cancel
+    case str_membership_purchase_complete
 
     case str_authenticate_by_face_id
     case str_authenticate_by_touch_id
@@ -267,7 +267,7 @@ enum LocalizationKey {
     case str_change_profile_image
 
     case str_post_status_public
-    case str_post_status_sponsorship_plan
+    case str_post_status_membership
     case str_post_status_private
     case str_post_status_deprecated
     case str_cancel_creation_post

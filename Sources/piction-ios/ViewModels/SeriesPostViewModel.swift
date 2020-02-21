@@ -89,7 +89,7 @@ final class SeriesPostViewModel: InjectableViewModel {
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let subscriptionInfoAction = Driver.merge(initialPage, loadNext, loadRetry)
-            .map { SponsorshipPlanAPI.getSponsoredPlan(uri: uri) }
+            .map { MembershipAPI.getSponsoredMembership(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

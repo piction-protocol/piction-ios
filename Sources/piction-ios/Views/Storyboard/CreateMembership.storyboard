@@ -12,7 +12,7 @@
         <!--후원 플랜 생성-->
         <scene sceneID="dE8-gD-L92">
             <objects>
-                <viewController storyboardIdentifier="CreateSponsorshipPlanViewController" id="bzH-lR-BUS" customClass="CreateSponsorshipPlanViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateMembershipViewController" id="bzH-lR-BUS" customClass="CreateMembershipViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hiZ-O3-OQA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -205,27 +205,27 @@ final class ViewControllerAssembly: Assembly {
             return vc
         }
 
-        container.register(SponsorshipPlanListViewController.self) { (resolver, uri: String, postId: Int?) in
-            let vc = Storyboard.SponsorshipPlanList.instantiate(SponsorshipPlanListViewController.self)
-            vc.viewModel = resolver.resolve(SponsorshipPlanListViewModel.self, arguments: uri, postId)!
+        container.register(MembershipListViewController.self) { (resolver, uri: String, postId: Int?) in
+            let vc = Storyboard.MembershipList.instantiate(MembershipListViewController.self)
+            vc.viewModel = resolver.resolve(MembershipListViewModel.self, arguments: uri, postId)!
             return vc
         }
 
-        container.register(PurchaseSponsorshipPlanViewController.self) { (resolver, uri: String, selectedSponsorshipPlan: PlanModel) in
-            let vc = Storyboard.PurchaseSponsorshipPlan.instantiate(PurchaseSponsorshipPlanViewController.self)
-            vc.viewModel = resolver.resolve(PurchaseSponsorshipPlanViewModel.self, arguments: uri, selectedSponsorshipPlan)!
+        container.register(PurchaseMembershipViewController.self) { (resolver, uri: String, selectedMembership: MembershipModel) in
+            let vc = Storyboard.PurchaseMembership.instantiate(PurchaseMembershipViewController.self)
+            vc.viewModel = resolver.resolve(PurchaseMembershipViewModel.self, arguments: uri, selectedMembership)!
             return vc
         }
 
-        container.register(ManageSponsorshipPlanViewController.self) { (resolver, uri: String, planId: Int?) in
-            let vc = Storyboard.ManageSponsorshipPlan.instantiate(ManageSponsorshipPlanViewController.self)
-            vc.viewModel = resolver.resolve(ManageSponsorshipPlanViewModel.self, arguments: uri, planId)!
+        container.register(ManageMembershipViewController.self) { (resolver, uri: String, membershipId: Int?) in
+            let vc = Storyboard.ManageMembership.instantiate(ManageMembershipViewController.self)
+            vc.viewModel = resolver.resolve(ManageMembershipViewModel.self, arguments: uri, membershipId)!
             return vc
         }
 
-        container.register(CreateSponsorshipPlanViewController.self) { (resolver, uri: String, sponsorshipPlan: PlanModel?) in
-            let vc = Storyboard.CreateSponsorshipPlan.instantiate(CreateSponsorshipPlanViewController.self)
-            vc.viewModel = resolver.resolve(CreateSponsorshipPlanViewModel.self, arguments: uri, sponsorshipPlan)!
+        container.register(CreateMembershipViewController.self) { (resolver, uri: String, membership: MembershipModel?) in
+            let vc = Storyboard.CreateMembership.instantiate(CreateMembershipViewController.self)
+            vc.viewModel = resolver.resolve(CreateMembershipViewModel.self, arguments: uri, membership)!
             return vc
         }
     }

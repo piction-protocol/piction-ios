@@ -276,7 +276,7 @@
                                                                         <color key="textColor" name="PictionDarkGray"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_post_status_sponsorship_plan"/>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_post_status_membership"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                 </subviews>
@@ -584,10 +584,10 @@
                         <outlet property="publishNowCheckBoxView" destination="w5B-lH-Nal" id="AAl-9M-9PM"/>
                         <outlet property="saveBarButton" destination="uhc-GD-WVu" id="Xsq-HT-fuK"/>
                         <outlet property="scrollView" destination="vPr-7Y-ptz" id="qTn-re-B44"/>
+                        <outlet property="selectMembershipButton" destination="nph-s6-s5g" id="PfG-zB-9ED"/>
+                        <outlet property="selectMembershipLabel" destination="mOH-5I-K4v" id="bBG-fj-gfW"/>
+                        <outlet property="selectMembershipView" destination="GJJ-KA-em9" id="rqq-jq-Osx"/>
                         <outlet property="selectSeriesButton" destination="wIE-2y-Vrn" id="SZo-xr-QxU"/>
-                        <outlet property="selectSponsorshipPlanButton" destination="nph-s6-s5g" id="7LZ-Un-sSW"/>
-                        <outlet property="selectSponsorshipPlanLabel" destination="mOH-5I-K4v" id="CES-2L-oTS"/>
-                        <outlet property="selectSponsorshipPlanView" destination="GJJ-KA-em9" id="sDb-4k-Al4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RVH-9c-PNQ" userLabel="First Responder" sceneMemberID="firstResponder"/>

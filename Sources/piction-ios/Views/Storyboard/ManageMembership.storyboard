@@ -12,7 +12,7 @@
         <!--후원 플랜 관리-->
         <scene sceneID="StY-2R-ZgA">
             <objects>
-                <viewController storyboardIdentifier="ManageSponsorshipPlanViewController" id="Hq7-ze-gNp" customClass="ManageSponsorshipPlanViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ManageMembershipViewController" id="Hq7-ze-gNp" customClass="ManageMembershipViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="M84-T0-af5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ManageSponsorshipPlanTableViewCell" id="ZfU-y3-W3Q" customClass="ManageSponsorshipPlanTableViewCell" customModule="piction_ios" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ManageMembershipTableViewCell" id="ZfU-y3-W3Q" customClass="ManageMembershipTableViewCell" customModule="piction_ios" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="180"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZfU-y3-W3Q" id="ahV-HS-HZX">

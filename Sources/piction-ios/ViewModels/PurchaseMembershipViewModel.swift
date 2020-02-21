@@ -1,5 +1,5 @@
 //
-//  PurchaseSponsorshipPlanViewModel.swift
+//  PurchaseMembershipViewModel.swift
 //  piction-ios
 //
 //  Created by jhseo on 2019/11/19.
@@ -10,26 +10,26 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
-final class PurchaseSponsorshipPlanViewModel: InjectableViewModel {
+final class PurchaseMembershipViewModel: InjectableViewModel {
 
     typealias Dependency = (
         FirebaseManagerProtocol,
         UpdaterProtocol,
         KeychainManagerProtocol,
         String,
-        PlanModel
+        MembershipModel
     )
 
     private let firebaseManager: FirebaseManagerProtocol
     private let updater: UpdaterProtocol
     private let keychainManager: KeychainManagerProtocol
     private let uri: String
-    private let selectedSponsorshipPlan: PlanModel
+    private let selectedMembership: MembershipModel
 
     var loadRetryTrigger = PublishSubject<Void>()
 
     init(dependency: Dependency) {
-        (firebaseManager, updater, keychainManager, uri, selectedSponsorshipPlan) = dependency
+        (firebaseManager, updater, keychainManager, uri, selectedMembership) = dependency
     }
 
     struct Input {
@@ -42,7 +42,7 @@ final class PurchaseSponsorshipPlanViewModel: InjectableViewModel {
 
     struct Output {
         let viewWillAppear: Driver<Void>
-        let sponsorshipPlanInfo: Driver<(PlanModel, FeesModel)>
+        let membershipInfo: Driver<(MembershipModel, FeesModel)>
         let walletInfo: Driver<WalletModel>
         let projectInfo: Driver<ProjectModel>
         let descriptionBtnDidTap: Driver<Void>
@@ -54,11 +54,11 @@ final class PurchaseSponsorshipPlanViewModel: InjectableViewModel {
     }
 
     func build(input: Input) -> Output {
-        let (firebaseManager, updater, keychainManager, uri, selectedSponsorshipPlan) = (self.firebaseManager, self.updater, self.keychainManager, self.uri, self.selectedSponsorshipPlan)
+        let (firebaseManager, updater, keychainManager, uri, selectedMembership) = (self.firebaseManager, self.updater, self.keychainManager, self.uri, self.selectedMembership)
 
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
-                firebaseManager.screenName("SponsorshipPlan구매_\(uri)")
+                firebaseManager.screenName("Membership구매_\(uri)")
             })
 
         let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
@@ -67,8 +67,8 @@ final class PurchaseSponsorshipPlanViewModel: InjectableViewModel {
 
         let loadPage = Driver.merge(initialLoad, loadRetry)
 
-        let sponsorshipPlanItem = loadPage
-            .map { selectedSponsorshipPlan }
+        let membershipItem = loadPage
+            .map { selectedMembership }
             .flatMap(Driver.from)
 
         let walletInfoAction = loadPage
@@ -104,7 +104,7 @@ final class PurchaseSponsorshipPlanViewModel: InjectableViewModel {
         let purchaseWithPincode = input.authSuccessWithPincode
 
         let purchaseAction = Driver.merge(purchaseWithoutPicode, purchaseWithPincode)
-            .map { SponsorshipPlanAPI.sponsorship(uri: uri, planId: selectedSponsorshipPlan.id ?? 0, sponsorshipPrice: selectedSponsorshipPlan.sponsorshipPrice ?? 0) }
+            .map { MembershipAPI.sponsorship(uri: uri, membershipId: selectedMembership.id ?? 0, price: selectedMembership.price ?? 0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -128,7 +128,7 @@ final class PurchaseSponsorshipPlanViewModel: InjectableViewModel {
             .map { try? $0.map(to: FeesModel.self) }
             .flatMap(Driver.from)
 
-        let sponsorshipPlanInfo = Driver.combineLatest(sponsorshipPlanItem, feesInfoSuccess)
+        let membershipInfo = Driver.combineLatest(membershipItem, feesInfoSuccess)
 
         let activityIndicator = Driver.merge(
             walletInfoAction.isExecuting,
@@ -143,7 +143,7 @@ final class PurchaseSponsorshipPlanViewModel: InjectableViewModel {
 
         return Output(
             viewWillAppear: viewWillAppear,
-            sponsorshipPlanInfo: sponsorshipPlanInfo,
+            membershipInfo: membershipInfo,
             walletInfo: walletInfoSuccess,
             projectInfo: projectInfoSuccess,
             descriptionBtnDidTap: input.descriptionBtnDidTap,

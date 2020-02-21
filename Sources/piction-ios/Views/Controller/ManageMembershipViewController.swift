@@ -1,5 +1,5 @@
 //
-//  ManageSponsorshipPlanViewController.swift
+//  ManageMembershipViewController.swift
 //  piction-ios
 //
 //  Created by jhseo on 2019/11/22.
@@ -13,30 +13,30 @@ import ViewModelBindable
 import RxDataSources
 import PictionSDK
 
-protocol ManageSponsorshipPlanDelegate: class {
-    func selectSponsorshipPlan(with plan: PlanModel?)
+protocol ManageMembershipDelegate: class {
+    func selectMembership(with membership: MembershipModel?)
 }
 
-final class ManageSponsorshipPlanViewController: UIViewController {
+final class ManageMembershipViewController: UIViewController {
     var disposeBag = DisposeBag()
 
     @IBOutlet weak var closeButton: UIBarButtonItem!
     @IBOutlet weak var createButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
 
-    weak var delegate: ManageSponsorshipPlanDelegate?
+    weak var delegate: ManageMembershipDelegate?
 
-    private let deleteSponsorshipPlan = PublishSubject<(String, Int)>()
+    private let deleteMembership = PublishSubject<(String, Int)>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.configureNavigationBar(transparent: false, shadow: true)
     }
 
-    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, PlanModel>> {
-        return RxTableViewSectionedReloadDataSource<SectionModel<String, PlanModel>>(
+    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, MembershipModel>> {
+        return RxTableViewSectionedReloadDataSource<SectionModel<String, MembershipModel>>(
             configureCell: { dataSource, tableView, indexPath, model in
-                let cell: ManageSponsorshipPlanTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                let cell: ManageMembershipTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
                 cell.configure(with: model)
                 return cell
         }, canEditRowAtIndexPath: { (_, _) in
@@ -44,12 +44,12 @@ final class ManageSponsorshipPlanViewController: UIViewController {
         })
     }
 
-    private func openDeletePopup(uri: String, sponsorshipPlan: PlanModel) {
-        let alertController = UIAlertController(title: nil, message: LocalizationKey.popup_title_delete_sponsorship_plan.localized(), preferredStyle: .alert)
+    private func openDeletePopup(uri: String, membership: MembershipModel) {
+        let alertController = UIAlertController(title: nil, message: LocalizationKey.popup_title_delete_membership.localized(), preferredStyle: .alert)
         let cancelButton = UIAlertAction(title: LocalizationKey.cancel.localized(), style: .cancel)
         let confirmButton = UIAlertAction(title: LocalizationKey.confirm.localized(), style: .default) { [weak self] _ in
-            guard let planId = sponsorshipPlan.id else { return }
-            self?.deleteSponsorshipPlan.onNext((uri, planId))
+            guard let membershipId = membership.id else { return }
+            self?.deleteMembership.onNext((uri, membershipId))
         }
 
         alertController.addAction(confirmButton)
@@ -57,15 +57,15 @@ final class ManageSponsorshipPlanViewController: UIViewController {
 
         self.present(alertController, animated: true, completion: nil)
 
-        let vc = CreateSponsorshipPlanViewController.make(uri: uri, sponsorshipPlan: sponsorshipPlan)
+        let vc = CreateMembershipViewController.make(uri: uri, membership: membership)
         if let topViewController = UIApplication.topViewController() {
             topViewController.openViewController(vc, type: .push)
         }
     }
 }
 
-extension ManageSponsorshipPlanViewController: ViewModelBindable {
-    typealias ViewModel = ManageSponsorshipPlanViewModel
+extension ManageMembershipViewController: ViewModelBindable {
+    typealias ViewModel = ManageMembershipViewModel
 
     func bindViewModel(viewModel: ViewModel) {
         let dataSource = configureDataSource()
@@ -73,11 +73,11 @@ extension ManageSponsorshipPlanViewController: ViewModelBindable {
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
 
-        let input = ManageSponsorshipPlanViewModel.Input(
+        let input = ManageMembershipViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
             selectedIndexPath: tableView.rx.itemSelected.asDriver(),
             createBtnDidTap: createButton.rx.tap.asDriver(),
-            deleteSponsorshipPlan: deleteSponsorshipPlan.asDriver(onErrorDriveWith: .empty()),
+            deleteMembership: deleteMembership.asDriver(onErrorDriveWith: .empty()),
             closeBtnDidTap: closeButton.rx.tap.asDriver()
         )
 
@@ -93,17 +93,17 @@ extension ManageSponsorshipPlanViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .sponsorshipPlanList
+            .membershipList
             .drive { $0 }
-            .map { [SectionModel(model: "sponsorshipPlan", items: $0)] }
+            .map { [SectionModel(model: "membership", items: $0)] }
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
         output
-            .sponsorshipPlanList
-            .drive(onNext: { [weak self] sponsorshipPlanList in
-                let selectedSponsorshipPlanId = self?.viewModel?.planId ?? 0
-                guard let seriesIndex = sponsorshipPlanList.firstIndex(where: { $0.id == selectedSponsorshipPlanId }) else { return }
+            .membershipList
+            .drive(onNext: { [weak self] membershipList in
+                let selectedMembershipId = self?.viewModel?.membershipId ?? 0
+                guard let seriesIndex = membershipList.firstIndex(where: { $0.id == selectedMembershipId }) else { return }
                 let indexPath = IndexPath(row: seriesIndex, section: 0)
                 self?.tableView.selectRow(at: indexPath, animated: false, scrollPosition: .middle)
             })
@@ -113,15 +113,15 @@ extension ManageSponsorshipPlanViewController: ViewModelBindable {
             .selectedIndexPath
             .drive(onNext: { [weak self] indexPath in
                 guard let delegate = self?.delegate else { return }
-                let sponsorshipPlan = dataSource[indexPath]
-                delegate.selectSponsorshipPlan(with: sponsorshipPlan)
+                let membership = dataSource[indexPath]
+                delegate.selectMembership(with: membership)
             })
             .disposed(by: disposeBag)
 
         output
-            .openCreateSponsorshipPlanViewController
+            .openCreateMembershipViewController
             .drive(onNext: { [weak self] uri in
-                self?.openCreateSponsorshipPlanViewController(uri: uri)
+                self?.openCreateMembershipViewController(uri: uri)
             })
             .disposed(by: disposeBag)
 
@@ -137,7 +137,7 @@ extension ManageSponsorshipPlanViewController: ViewModelBindable {
                 self?.showPopup(
                     title: LocalizationKey.popup_title_network_error.localized(),
                     message: LocalizationKey.msg_api_internal_server_error.localized(),
-                    action: LocalizationKey.retry.localized()) { [weak self] in
+                    action: [LocalizationKey.retry.localized(), LocalizationKey.cancel.localized()]) { [weak self] in
                         self?.viewModel?.loadRetryTrigger.onNext(())
                     }
             })
@@ -157,19 +157,19 @@ extension ManageSponsorshipPlanViewController: ViewModelBindable {
     }
 }
 
-extension ManageSponsorshipPlanViewController: UITableViewDelegate {
+extension ManageMembershipViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let editAction = UIContextualAction(style: .normal, title: LocalizationKey.edit.localized(), handler: { [weak self] (action, view, completionHandler) in
             guard let uri = self?.viewModel?.uri else { return }
-            if let sponsorshipPlan: PlanModel = try? self?.tableView.rx.model(at: indexPath) {
-                self?.openCreateSponsorshipPlanViewController(uri: uri, sponsorshipPlan: sponsorshipPlan)
+            if let membership: MembershipModel = try? self?.tableView.rx.model(at: indexPath) {
+                self?.openCreateMembershipViewController(uri: uri, membership: membership)
                 completionHandler(true)
             }
         })
         let deleteAction = UIContextualAction(style: .destructive, title: LocalizationKey.delete.localized(), handler: { [weak self] (action, view, completionHandler) in
             guard let uri = self?.viewModel?.uri else { return }
-            if let sponsorshipPlan: PlanModel = try? self?.tableView.rx.model(at: indexPath) {
-                self?.openDeletePopup(uri: uri, sponsorshipPlan: sponsorshipPlan)
+            if let membership: MembershipModel = try? self?.tableView.rx.model(at: indexPath) {
+                self?.openDeletePopup(uri: uri, membership: membership)
                 completionHandler(true)
             }
         })

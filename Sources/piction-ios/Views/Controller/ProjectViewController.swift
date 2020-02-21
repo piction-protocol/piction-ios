@@ -18,7 +18,7 @@ import PictionSDK
 enum ManageMenu {
     case project
     case series
-    case sponsorshipPlan
+    case membership
 }
 
 final class ProjectViewController: UIViewController {
@@ -35,7 +35,7 @@ final class ProjectViewController: UIViewController {
     private let changeMenu = BehaviorSubject<Int>(value: 0)
     private let subscription = PublishSubject<Void>()
     private let cancelSubscription = PublishSubject<Void>()
-    private let sponsorshipPlan = PublishSubject<Void>()
+    private let membership = PublishSubject<Void>()
     private let deletePost = PublishSubject<Int>()
     private let deleteSeries = PublishSubject<Int>()
     private let updateSeries = PublishSubject<(String, SeriesModel)>()
@@ -233,8 +233,8 @@ extension ProjectViewController: ViewModelBindable {
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
             subscriptionBtnDidTap: subscription.asDriver(onErrorDriveWith: .empty()),
             cancelSubscriptionBtnDidTap: cancelSubscription.asDriver(onErrorDriveWith: .empty()),
-            sponsorshipPlanBtnDidTap:
-                sponsorshipPlan.asDriver(onErrorDriveWith: .empty()),
+            membershipBtnDidTap:
+                membership.asDriver(onErrorDriveWith: .empty()),
             changeMenu: changeMenu.asDriver(onErrorDriveWith: .empty()),
             infoBtnDidTap: infoBarButton.rx.tap.asDriver(),
             selectedIndexPath: tableView.rx.itemSelected.asDriver(),
@@ -333,8 +333,8 @@ extension ProjectViewController: ViewModelBindable {
 
         output
             .subscriptionInfo
-            .drive(onNext: { [weak self] (isWriter, sponsorshipPlanList, subscriptionInfo, isActivePlan) in
-                self?.stretchyHeader?.configureSubscription(isWriter: isWriter, sponsorshipPlanList: sponsorshipPlanList, subscriptionInfo: subscriptionInfo, isActivePlan: isActivePlan)
+            .drive(onNext: { [weak self] (isWriter, membershipList, subscriptionInfo, isActiveMembership) in
+                self?.stretchyHeader?.configureSubscription(isWriter: isWriter, membershipList: membershipList, subscriptionInfo: subscriptionInfo, isActiveMembership: isActiveMembership)
             })
             .disposed(by: disposeBag)
 
@@ -376,9 +376,9 @@ extension ProjectViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .openSponsorshipPlanListViewController
+            .openMembershipListViewController
             .drive(onNext: { [weak self] uri in
-                self?.openSponsorshipPlanListViewController(uri: uri)
+                self?.openMembershipListViewController(uri: uri)
             })
             .disposed(by: disposeBag)
 
@@ -438,8 +438,8 @@ extension ProjectViewController: ProjectHeaderViewDelegate {
         self.subscription.onNext(())
     }
 
-    func sponsorshipPlanBtnDidTap() {
-        self.sponsorshipPlan.onNext(())
+    func membershipBtnDidTap() {
+        self.membership.onNext(())
     }
 
     func shareBtnDidTap() {
@@ -473,11 +473,11 @@ extension ProjectViewController: ProjectHeaderViewDelegate {
                 self?.openManageSeriesViewController(uri: uri)
             })
 
-        let manageSponsorshipPlanAction = UIAlertAction(
-            title: "SponsorshipPlan 관리",
+        let manageMembershipAction = UIAlertAction(
+            title: "Membership 관리",
             style: UIAlertAction.Style.default,
             handler: { [weak self] action in
-                self?.openManageSponsorshipPlanViewController(uri: uri)
+                self?.openManageMembershipViewController(uri: uri)
             })
 
         let cancelAction = UIAlertAction(
@@ -488,7 +488,7 @@ extension ProjectViewController: ProjectHeaderViewDelegate {
 
         alertController.addAction(manageProjectAction)
         alertController.addAction(manageSeriesAction)
-        alertController.addAction(manageSponsorshipPlanAction)
+        alertController.addAction(manageMembershipAction)
         alertController.addAction(cancelAction)
 
         present(alertController, animated: true, completion: nil)

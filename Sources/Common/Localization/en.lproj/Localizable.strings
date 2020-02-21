@@ -44,7 +44,7 @@
 "popup_title_pincode_confirm" = "Confirm PIN";
 "popup_title_notsupport_multiwindow" = "QR 코드 스캐너는 멀티윈도우를 지원하지 않습니다.";
 "popup_title_delete_post" = "포스트를 삭제하시겠습니까?";
-"popup_title_delete_sponsorship_plan" = "후원 플랜을 삭제하시겠습니까?";
+"popup_title_delete_membership" = "후원 플랜을 삭제하시겠습니까?";
 
 // Popup & Toast
 "msg_api_internal_server_error" = "Not available now.\nPlease try again later.";
@@ -53,9 +53,9 @@
 "msg_pincode_error_end" = "Too many wrong attempts. Signing out for your security.";
 "msg_pincode_reg_warning" = "Register PIN code to keep\nyour transactions safe.";
 "msg_delete_post_success" = "포스트가 삭제되었습니다.";
-"msg_delete_sponsorship_plan_success" = "후원플랜이 삭제되었습니다.";
+"msg_delete_membership_success" = "후원플랜이 삭제되었습니다.";
 
-"msg_creator_not_found" = "No result found.";
+"msg_creator_not_found" = "등록된 크리에이터 정보가 없습니다.";
 "msg_not_piction_cp" = "Not valid QR code";
 
 "msg_title_confirm" = "변경된 내용이 저장되지 않습니다.\n계속하시겠습니까?";
@@ -77,7 +77,7 @@
 
 // Button
 "btn_new_post" = "새 포스트";
-"btn_subs_sponsorship_plan" = "Subscribe for free";
+"btn_subs_membership" = "Subscribe for free";
 "btn_subs_free" = "Subscribe";
 "btn_user_sponsorship" = "Sponsor";
 "btn_user_sponsorship_history" = "후원 기록";
@@ -116,10 +116,10 @@
 "str_popular_tag" = "인기 태그";
 "str_project_count" = "%d 프로젝트";
 "str_subs_count_plural" = "%@ subscribers";
-"str_subs_only_with_sponsorship_plan" = "%@ 이상\n후원자만 이용 가능한 콘텐츠입니다.";
+"str_subs_only_with_membership" = "%@ 이상\n후원자만 이용 가능한 콘텐츠입니다.";
 "str_subs_only" = "Unlock this by becoming subscriber.";
 "str_series_subs_only" = "구독자 전용";
-"str_series_sponsorship_plan_subs_only" = "%@ 이상 구독자 전용";
+"str_series_membership_subs_only" = "%@ 이상 구독자 전용";
 "str_sort_with_direction" = "정렬 %@";
 "str_private_only" = "비공개 포스트입니다.";
 
@@ -127,7 +127,7 @@
 "str_banner_header_info" = "Updates and News from Piction";
 
 "str_project_subscribing" = "Subscribed";
-"str_project_sponsorship_plan" = "Sponsored";
+"str_project_membership" = "Sponsored";
 "str_project_subscrition_complete" = "구독 완료";
 "str_project_cancel_subscrition" = "구독이 취소되었습니다.";
 "str_series_posts_count" = "%@ posts";
@@ -156,7 +156,7 @@
 "str_series_empty" = "등록된 시리즈가 없습니다.";
 "str_project_empty" = "등록된 프로젝트가 없습니다.";
 "str_subscribing_project_empty" = "구독한 프로젝트가 없습니다.";
-"str_sponsorship_plan_empty" = "등록된 후원 플랜이 없습니다.";
+"str_membership_empty" = "등록된 후원 플랜이 없습니다.";
 
 "str_creator" = "Creator";
 "str_project_synopsis" = "Synopsis";
@@ -196,7 +196,7 @@
 "str_have_pxl_amount" = "보유 중";
 "str_deposit_format" = "Deposit";
 "str_withdraw_format" = "Withdraw";
-"str_sponsorship_plan_revenue" = "후원 수익";
+"str_membership_revenue" = "후원 수익";
 "str_project_no_post" = "No posts";
 "str_project_update_n_now" = "Update now";
 "str_project_update_n_minute" = "Update %d minutes ago";
@@ -218,42 +218,42 @@
 "str_sponsorship_user" = "후원자";
 "str_order_id" = "주문번호";
 "str_project" = "Project";
-"str_sponsorship_plan" = "후원 플랜";
-"str_sponsorship_plan_purchase" = "후원 플랜 결제";
-"str_sponsorship_plan_sell_info" = "후원 수익 정보";
-"str_sponsorship_plan_buy_info" = "후원 정보";
-"str_sponsorship_plan_seller" = "후원 대상";
-"str_sponsorship_plan_buyer" = "후원자";
+"str_membership" = "후원 플랜";
+"str_membership_purchase" = "후원 플랜 결제";
+"str_membership_sell_info" = "후원 수익 정보";
+"str_membership_buy_info" = "후원 정보";
+"str_membership_seller" = "후원 대상";
+"str_membership_buyer" = "후원자";
 
-"str_sponsorship_plan_description" = "님의 창작 활동을 후원해보세요.";
-"str_sponsorship_plan_limit" = "%d명 한정";
-"str_sponsorship_plan_postcount" = "%d 포스트 조회 가능";
-"str_sponsorship_plan_remain" = "%d명 남음";
-"str_sponsorship_plan_expire" = "M월 d일 만료";
-"str_sponsorship_plan_not_avaliable" = "후원 불가능";
-"str_sponsorship_plan_sponsorship_button" = "PXL / 30일";
-"str_sponsorship_plan_free_tier" = "무료 티어";
-"str_sponsorship_plan_current_tier" = "티어 %d";
-"str_sponsorship_plan_warning_current_sponsorship_plan" = "%@ 후원 중";
-"str_sponsorship_plan_warning_description" = "후원 플랜을 업그레이드 하는 경우, 현재 후원 중인 플랜의 남은 기간은 환불되지 않습니다.";
-"str_sponsorship_plan_current_post_description" = "포스트를 볼 수 있는\n후원 플랜만 출력합니다.";
+"str_membership_description" = "님의 창작 활동을 후원해보세요.";
+"str_membership_limit" = "%d명 한정";
+"str_membership_postcount" = "%d 포스트 조회 가능";
+"str_membership_remain" = "%d명 남음";
+"str_membership_expire" = "M월 d일 만료";
+"str_membership_not_avaliable" = "후원 불가능";
+"str_membership_sponsorship_button" = "PXL / 30일";
+"str_membership_free_tier" = "무료 티어";
+"str_membership_current_tier" = "티어 %d";
+"str_membership_warning_current_membership" = "%@ 후원 중";
+"str_membership_warning_description" = "후원 플랜을 업그레이드 하는 경우, 현재 후원 중인 플랜의 남은 기간은 환불되지 않습니다.";
+"str_membership_current_post_description" = "포스트를 볼 수 있는 후원 플랜만\n출력합니다.";
 
-"str_sponsorship_plan_select_sponsorship_plan" = "선택한 후원 플랜";
-"str_sponsorship_plan_show_description" = "상품 설명 보기";
-"str_sponsorship_plan_hide_description" = "상품 설명 닫기";
-"str_sponsorship_plan_payment" = "결제 방법";
-"str_sponsorship_plan_payment_piction" = "픽션 지갑";
-"str_sponsorship_plan_purchase_amount" = "결제 금액";
-"str_sponsorship_plan_expire_title" = "혜택 제공 기간";
-"str_sponsorship_plan_expire_description" = "YYYY년 M월 d일까지 (30일)";
-"str_sponsorship_plan_agree" = "상품 설명 및 환불에 대한 내용을 확인하였으며, 이에 동의합니다.";
+"str_membership_select_membership" = "선택한 후원 플랜";
+"str_membership_show_description" = "상품 설명 보기";
+"str_membership_hide_description" = "상품 설명 닫기";
+"str_membership_payment" = "결제 방법";
+"str_membership_payment_piction" = "픽션 지갑";
+"str_membership_purchase_amount" = "결제 금액";
+"str_membership_expire_title" = "혜택 제공 기간";
+"str_membership_expire_description" = "YYYY년 M월 d일까지 (30일)";
+"str_membership_agree" = "상품 설명 및 환불에 대한 내용을 확인하였으며, 이에 동의합니다.";
 "str_purchase" = "결제";
-"str_sponsorship_plan_transfer_info" = "송금 안내";
-"str_sponsorship_plan_transfer_info_fees" = "▪︎ 기본 수수료";
-"str_sponsorship_plan_purchase_guide" = "결제 완료 시 결제 금액이 즉시 %@님의 계좌로 송금되며, 환불은 불가능합니다.";
-"str_sponsorship_plan_show_all" = "전체 후원 플랜 보기";
-"str_sponsorship_plan_cancel" = "후원 플랜 결제를\n취소하시겠습니까?";
-"str_sponsorship_plan_purchase_complete" = "후원 플랜 결제가 완료되었습니다.";
+"str_membership_transfer_info" = "송금 안내";
+"str_membership_transfer_info_fees" = "▪︎ 기본 수수료";
+"str_membership_purchase_guide" = "결제 완료 시 결제 금액이 즉시 %@님의 계좌로 송금되며, 환불은 불가능합니다.";
+"str_membership_show_all" = "전체 후원 플랜 보기";
+"str_membership_cancel" = "후원 플랜 결제를\n취소하시겠습니까?";
+"str_membership_purchase_complete" = "후원 플랜 결제가 완료되었습니다.";
 
 "str_authenticate_by_face_id" = "Face ID로 인증합니다.";
 "str_authenticate_by_touch_id" = "Touch ID로 인증합니다.";
@@ -267,7 +267,7 @@
 "str_change_profile_image" = "프로필 변경";
 
 "str_post_status_public" = "전체 공개";
-"str_post_status_sponsorship_plan" = "후원자 공개";
+"str_post_status_membership" = "후원자 공개";
 "str_post_status_private" = "비공개";
 "str_post_status_deprecated" = "부적절한 콘텐츠";
 

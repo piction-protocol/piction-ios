@@ -124,23 +124,23 @@ final class CreatePostViewModel: ViewModel {
 
         let selectedProject = Driver.merge(selectedProjectSuccess, selectedProjectError)
 
-        let sponsorshipPlanAction = selectedProject
+        let membershipAction = selectedProject
             .flatMap { project -> Driver<Action<ResponseData>> in
                 guard let uri = project?.uri else { return Driver.empty() }
-                let response = PictionSDK.rx.requestAPI(SponsorshipPlanAPI.all(uri: uri))
+                let response = PictionSDK.rx.requestAPI(MembershipAPI.all(uri: uri))
                 return Action.makeDriver(response)
             }
 
-        let sponsorshipPlanSuccess = sponsorshipPlanAction.elements
+        let membershipSuccess = membershipAction.elements
             .flatMap { response -> Driver<Int?> in
-                guard let sponsorshipPlan = try? response.map(to: [PlanModel].self) else { return Driver.empty() }
-                return Driver.just(sponsorshipPlan.first?.id)
+                guard let membership = try? response.map(to: [MembershipModel].self) else { return Driver.empty() }
+                return Driver.just(membership.first?.id)
             }
 
-        let sponsorshipPlanError = sponsorshipPlanAction.error
+        let membershipError = membershipAction.error
             .flatMap { _ in Driver<Int?>.just(nil) }
 
-        let sponsorshipPlanId = Driver.merge(sponsorshipPlanSuccess, sponsorshipPlanError)
+        let mnembershipId = Driver.merge(membershipSuccess, membershipError)
 
         let openManageSeriesViewController = input.seriesBtnDidTap
             .withLatestFrom(selectedProject)
@@ -178,9 +178,9 @@ final class CreatePostViewModel: ViewModel {
                 coverImageId.asDriver(onErrorDriveWith: .empty()),
                 selectedImages,
                 input.contentText,
-                planId,
+                membershipId,
                 selectedStatus
-        ) { (project: $0, series: $1, title: $2, coverId: $3, images: $4, contentText: $5, planId: $6, status: $7) }
+        ) { (project: $0, series: $1, title: $2, coverId: $3, images: $4, contentText: $5, membershipId: $6, status: $7) }
 
         let enableSaveButton = postItems
             .flatMap { _ in Driver.just(()) }
@@ -290,7 +290,7 @@ final class CreatePostViewModel: ViewModel {
                 guard let `self` = self else { return Driver.empty() }
                 guard let uri = postItems.project?.uri else { return Driver.empty() }
                 let contentHtml = "\(self.contentHtml)<p>\(postItems.contentText.parseSpecialStrToHtmlStr)</p>"
-                let response = PictionSDK.rx.requestAPI(PostAPI.create(uri: uri, title: postItems.title, content: contentHtml, cover: postItems.coverId, seriesId: postItems.series?.id, planId: postItems.status == "PLAN" ? postItems.planId : nil, status: postItems.status, publishedAt: Date().millisecondsSince1970))
+                let response = PictionSDK.rx.requestAPI(PostAPI.create(uri: uri, title: postItems.title, content: contentHtml, cover: postItems.coverId, seriesId: postItems.series?.id, membershipId: postItems.status == "MEMBERSHIP" ? postItems.membershipId : nil, status: postItems.status, publishedAt: Date().millisecondsSince1970))
                 return Action.makeDriver(response)
             }
 

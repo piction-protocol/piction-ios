@@ -23,19 +23,19 @@ final class SeriesPostListTableViewCell: ReuseTableViewCell {
     }
 
     func configure(with model: Model, subscriptionInfo: SponsorshipModel?, number: Int) {
-        let (title, date, sponsorshipPlan) = (model.title, model.createdAt, model.plan)
+        let (title, date, membership) = (model.title, model.createdAt, model.membership)
 
         numberLabel.text = "#\(number)"
 
         titleLabel.text = title
 
-        if sponsorshipPlan == nil || (subscriptionInfo?.plan?.level ?? 0) >= (sponsorshipPlan?.level ?? 0) {
+        if membership == nil || (subscriptionInfo?.membership?.level ?? 0) >= (membership?.level ?? 0) {
             subTitleLabel.textColor = .pictionGray
             subTitleLabel.text = date?.toString(format: LocalizationKey.str_series_date_format.localized())
         } else {
             subTitleLabel.textColor = .pictionRed
-            if sponsorshipPlan != nil {
-                subTitleLabel.text = (sponsorshipPlan?.level ?? 0) == 0 ? LocalizationKey.str_series_subs_only.localized() :  LocalizationKey.str_series_sponsorship_plan_subs_only.localized(with: sponsorshipPlan?.name ?? "")
+            if membership != nil {
+                subTitleLabel.text = (membership?.level ?? 0) == 0 ? LocalizationKey.str_series_subs_only.localized() :  LocalizationKey.str_series_membership_subs_only.localized(with: membership?.name ?? "")
             }
         }
     }

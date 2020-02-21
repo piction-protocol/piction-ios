@@ -166,10 +166,10 @@
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                             <real key="value" value="8"/>
                                                         </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="btn_subs_sponsorship_plan"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="btn_subs_membership"/>
                                                     </userDefinedRuntimeAttributes>
                                                     <connections>
-                                                        <action selector="sponsorshipPlanBtnDidTap:" destination="jfW-sf-3xv" eventType="touchUpInside" id="naV-Ve-90H"/>
+                                                        <action selector="membershipBtnDidTap:" destination="jfW-sf-3xv" eventType="touchUpInside" id="RkO-t6-ZaY"/>
                                                     </connections>
                                                 </button>
                                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Vv-YC-J7I" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
@@ -414,6 +414,7 @@
                 <outlet property="loginIdLabel" destination="rJL-1a-642" id="1Lf-9V-bsp"/>
                 <outlet property="managementButton" destination="2Vv-YC-J7I" id="aqL-cR-4tJ"/>
                 <outlet property="maskImage" destination="mUZ-gk-6mM" id="sUE-kg-4Yh"/>
+                <outlet property="membershipButton" destination="plP-Ni-F0Z" id="lBs-2c-VJz"/>
                 <outlet property="naviView" destination="uNI-65-gk2" id="Bpn-ZM-apC"/>
                 <outlet property="naviViewImageHeight" destination="Hdg-nL-2zT" id="tdC-sM-PiU"/>
                 <outlet property="postButton" destination="AUk-Yf-g1T" id="oB9-gN-8NW"/>
@@ -422,7 +423,6 @@
                 <outlet property="seriesButton" destination="zuZ-fe-55M" id="cvT-Uc-5nT"/>
                 <outlet property="sponsorButton" destination="94I-FC-Zf3" id="vN8-7J-9F4"/>
                 <outlet property="sponsorCountLabel" destination="6KZ-Qy-nnM" id="fZc-8f-Lbx"/>
-                <outlet property="sponsorshipPlanButton" destination="plP-Ni-F0Z" id="9n4-Fj-dNl"/>
                 <outlet property="subscriptionButton" destination="zb3-FI-Y5R" id="Vm0-zh-PrC"/>
                 <outlet property="thumbnailImageView" destination="1k4-fI-Xqy" id="e5I-qw-nQM"/>
                 <outlet property="titleLabel" destination="9UD-yf-gRK" id="ygm-vb-wZf"/>

@@ -1,5 +1,5 @@
 //
-//  CreateSponsorshipPlanViewController.swift
+//  CreateMembershipViewController.swift
 //  piction-ios
 //
 //  Created by jhseo on 2019/11/22.
@@ -12,7 +12,7 @@ import RxCocoa
 import ViewModelBindable
 import PictionSDK
 
-final class CreateSponsorshipPlanViewController: UIViewController {
+final class CreateMembershipViewController: UIViewController {
     var disposeBag = DisposeBag()
 
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -25,16 +25,16 @@ final class CreateSponsorshipPlanViewController: UIViewController {
     @IBOutlet weak var limitStackView: UIStackView!
 }
 
-extension CreateSponsorshipPlanViewController: ViewModelBindable {
-    typealias ViewModel = CreateSponsorshipPlanViewModel
+extension CreateMembershipViewController: ViewModelBindable {
+    typealias ViewModel = CreateMembershipViewModel
 
     func bindViewModel(viewModel: ViewModel) {
-        let input = CreateSponsorshipPlanViewModel.Input(
+        let input = CreateMembershipViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
-            sponsorshipPlanName: nameTextField.rx.text.orEmpty.asDriver(),
-            sponsorshipPlanPrice: priceTextField.rx.text.asDriver(),
-            sponsorshipPlanDescription: descriptionTextField.rx.text.asDriver(),
-            sponsorshipPlanLimit: limitTextField.rx.text.asDriver(),
+            membershipName: nameTextField.rx.text.orEmpty.asDriver(),
+            membershipPrice: priceTextField.rx.text.asDriver(),
+            membershipDescription: descriptionTextField.rx.text.asDriver(),
+            membershipLimit: limitTextField.rx.text.asDriver(),
             limitBtnDidTap: limitButton.rx.tap.asDriver(),
             saveBtnDidTap: saveButton.rx.tap.asDriver()
         )
@@ -49,7 +49,7 @@ extension CreateSponsorshipPlanViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .loadSponsorshipPlan
+            .loadMembership
             .map { $0.level ?? 0 == 0 ? .pictionGray : .pictionDarkGrayDM }
             .drive(onNext: { [weak self] textColor in
                 self?.priceTextField.textColor = textColor
@@ -57,50 +57,50 @@ extension CreateSponsorshipPlanViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .loadSponsorshipPlan
+            .loadMembership
             .map { $0.name ?? "" }
             .drive(nameTextField.rx.text)
             .disposed(by: disposeBag)
 
         output
-            .loadSponsorshipPlan
-            .map { String($0.sponsorshipPrice ?? 0) }
+            .loadMembership
+            .map { String($0.price ?? 0) }
             .drive(priceTextField.rx.text)
             .disposed(by: disposeBag)
 
         output
-            .loadSponsorshipPlan
+            .loadMembership
             .map { $0.description }
             .filter { $0 != nil }
             .drive(descriptionTextField.rx.text)
             .disposed(by: disposeBag)
 
         output
-            .loadSponsorshipPlan
-            .map { String($0.sponsorshipLimit ?? 0) }
+            .loadMembership
+            .map { String($0.sponsorLimit ?? 0) }
             .drive(limitTextField.rx.text)
             .disposed(by: disposeBag)
 
         output
-            .loadSponsorshipPlan
-            .map { $0.sponsorshipLimit == nil }
+            .loadMembership
+            .map { $0.sponsorLimit == nil }
             .drive(limitTextField.rx.isHidden)
             .disposed(by: disposeBag)
 
         output
-            .loadSponsorshipPlan
-            .map { $0.sponsorshipLimit == nil ? #imageLiteral(resourceName: "checkboxOn") : #imageLiteral(resourceName: "checkboxOff") }
+            .loadMembership
+            .map { $0.sponsorLimit == nil ? #imageLiteral(resourceName: "checkboxOn") : #imageLiteral(resourceName: "checkboxOff") }
             .drive(checkboxImageView.rx.image)
             .disposed(by: disposeBag)
 
         output
-            .loadSponsorshipPlan
+            .loadMembership
             .map { ($0.level ?? 0) == 0 }
             .drive(limitStackView.rx.isHidden)
             .disposed(by: disposeBag)
 
         output
-            .loadSponsorshipPlan
+            .loadMembership
             .map { ($0.level ?? 0) > 0 }
             .drive(priceTextField.rx.isEnabled)
             .disposed(by: disposeBag)

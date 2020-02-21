@@ -58,7 +58,7 @@ final class PostViewModel: InjectableViewModel {
         let willBeginDecelerating: Driver<Void>
         let changeReadmode: Driver<Void>
         let openSignInViewController: Driver<Void>
-        let openSponsorshipPlanListViewController: Driver<(String, Int)>
+        let openMembershipListViewController: Driver<(String, Int)>
         let reloadPost: Driver<Void>
         let sharePost: Driver<String>
         let toastMessage: Driver<String>
@@ -173,7 +173,7 @@ final class PostViewModel: InjectableViewModel {
         let userInfo = Driver.merge(userInfoSuccess, userInfoError)
 
         let subscriptionInfoAction = Driver.merge(initialLoad, refreshContent, refreshSession)
-            .map { SponsorshipPlanAPI.getSponsoredPlan(uri: uri) }
+            .map { MembershipAPI.getSponsoredMembership(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -191,13 +191,13 @@ final class PostViewModel: InjectableViewModel {
                 if currentUser.loginId ?? "" == writerInfo.loginId ?? "" {
                     return false
                 }
-                if postItem.plan == nil {
+                if postItem.membership == nil {
                     return false
                 }
-                if (postItem.plan?.level != nil) && (subscriptionInfo?.plan?.level == nil) {
+                if (postItem.membership?.level != nil) && (subscriptionInfo?.membership?.level == nil) {
                     return true
                 }
-                if (postItem.plan?.level ?? 0) <= (subscriptionInfo?.plan?.level ?? 0) {
+                if (postItem.membership?.level ?? 0) <= (subscriptionInfo?.membership?.level ?? 0) {
                     return false
                 }
                 return true
@@ -206,13 +206,13 @@ final class PostViewModel: InjectableViewModel {
         let footerInfo = postItemSuccess
             .map { (uri, $0) }
 
-        let sponsorshipPlanListAction = Driver.merge(initialLoad, refreshContent, refreshSession)
-            .map { SponsorshipPlanAPI.all(uri: uri) }
+        let membershipListAction = Driver.merge(initialLoad, refreshContent, refreshSession)
+            .map { MembershipAPI.all(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
-        let sponsorshipPlanListSuccess = sponsorshipPlanListAction.elements
-            .map { try? $0.map(to: [PlanModel].self) }
+        let membershipListSuccess = membershipListAction.elements
+            .map { try? $0.map(to: [MembershipModel].self) }
             .flatMap(Driver.from)
 
         let needSubscriptionInfo = Driver.combineLatest(userInfo, postItemSuccess, subscriptionInfo)
@@ -229,10 +229,10 @@ final class PostViewModel: InjectableViewModel {
             .withLatestFrom(userInfo)
             .filter { $0.loginId != nil }
             .withLatestFrom(postItemSuccess)
-            .filter { ($0.plan?.level ?? 0) == 0 }
-            .withLatestFrom(sponsorshipPlanListSuccess)
+            .filter { ($0.membership?.level ?? 0) == 0 }
+            .withLatestFrom(membershipListSuccess)
             .map { $0.filter { ($0.level ?? 0) == 0 }.first?.id ?? 0 }
-            .map { SponsorshipPlanAPI.sponsorship(uri: uri, planId: $0, sponsorshipPrice: 0) }
+            .map { MembershipAPI.sponsorship(uri: uri, membershipId: $0, price: 0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
@@ -247,11 +247,11 @@ final class PostViewModel: InjectableViewModel {
             .map { $0?.message }
             .flatMap(Driver.from)
 
-        let openSponsorshipPlanListViewController = input.subscriptionBtnDidTap
+        let openMembershipListViewController = input.subscriptionBtnDidTap
             .withLatestFrom(userInfo)
             .filter { $0.loginId != nil }
             .withLatestFrom(postItemSuccess)
-            .filter { ($0.plan?.level ?? 0) > 0 }
+            .filter { ($0.membership?.level ?? 0) > 0 }
             .map { _ in (uri, self.postId) }
 
         let activityIndicator = Driver.merge(
@@ -295,7 +295,7 @@ final class PostViewModel: InjectableViewModel {
             willBeginDecelerating: willBeginDecelerating,
             changeReadmode: input.readmodeBarButton,
             openSignInViewController: openSignInViewController,
-            openSponsorshipPlanListViewController: openSponsorshipPlanListViewController,
+            openMembershipListViewController: openMembershipListViewController,
             reloadPost: reloadPost,
             sharePost: sharePost,
             toastMessage: toastMessage

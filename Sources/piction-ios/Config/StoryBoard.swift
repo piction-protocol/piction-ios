@@ -42,10 +42,10 @@ public enum Storyboard: String {
     case TaggingProject
     case ManageSeries
     case SubscriptionUser
-    case SponsorshipPlanList
-    case PurchaseSponsorshipPlan
-    case ManageSponsorshipPlan
-    case CreateSponsorshipPlan
+    case MembershipList
+    case PurchaseMembership
+    case ManageMembership
+    case CreateMembership
 
     public func instantiate<VC: UIViewController>(_ viewController: VC.Type) -> VC {
         guard

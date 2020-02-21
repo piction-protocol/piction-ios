@@ -31,7 +31,7 @@ final class CreatePostViewModel: InjectableViewModel {
     private let content = PublishSubject<String>()
     private let coverImageId = PublishSubject<String?>()
     private let status = PublishSubject<String>()
-    private let planId = PublishSubject<Int?>()
+    private let membershipId = PublishSubject<Int?>()
     private let publishedAt = PublishSubject<Date?>()
     private let seriesId = PublishSubject<Int?>()
 
@@ -44,7 +44,7 @@ final class CreatePostViewModel: InjectableViewModel {
         let viewWillDisappear: Driver<Void>
         let selectSeriesBtnDidTap: Driver<Void>
         let seriesChanged: Driver<SeriesModel?>
-        let sponsorshipPlanChanged: Driver<PlanModel?>
+        let membershipChanged: Driver<MembershipModel?>
         let inputPostTitle: Driver<String>
         let inputContent: Driver<String>
         let contentImageDidPick: Driver<UIImage>
@@ -54,7 +54,7 @@ final class CreatePostViewModel: InjectableViewModel {
         let forAllCheckBtnDidTap: Driver<Void>
         let forSubscriptionCheckBtnDidTap: Driver<Void>
         let forPrivateCheckBtnDidTap: Driver<Void>
-        let selectSponsorshipPlanBtnDidTap: Driver<Void>
+        let selectMembershipBtnDidTap: Driver<Void>
         let publishNowCheckBtnDidTap: Driver<Void>
         let publishDatePickerBtnDidTap: Driver<Void>
         let publishDatePickerValueChanged: Driver<Date>
@@ -73,8 +73,8 @@ final class CreatePostViewModel: InjectableViewModel {
         let changeCoverImage: Driver<UIImage?>
         let statusChanged: Driver<String>
         let seriesChanged: Driver<SeriesModel?>
-        let sponsorshipPlanChanged: Driver<PlanModel?>
-        let openManageSponsorshipPlanViewController: Driver<(String, Int?)>
+        let membershipChanged: Driver<MembershipModel?>
+        let openManageMembershipViewController: Driver<(String, Int?)>
         let publishNowChanged: Driver<Void>
         let openDatePicker: Driver<Date>
         let publishDatePickerValueChanged: Driver<Date>
@@ -105,7 +105,7 @@ final class CreatePostViewModel: InjectableViewModel {
                 self?.title.onNext("")
                 self?.coverImageId.onNext("")
                 self?.content.onNext("")
-                self?.planId.onNext(nil)
+                self?.membershipId.onNext(nil)
                 self?.status.onNext("PUBLIC")
                 self?.publishedAt.onNext(nil)
                 self?.seriesId.onNext(nil)
@@ -127,7 +127,7 @@ final class CreatePostViewModel: InjectableViewModel {
                 self?.title.onNext(post.title ?? "")
                 self?.coverImageId.onNext("")
                 self?.publishedAt.onNext(post.publishedAt)
-                self?.planId.onNext(post.plan?.id ?? nil)
+                self?.membershipId.onNext(post.membership?.id ?? nil)
                 self?.status.onNext(post.status ?? "PUBLIC")
                 self?.seriesId.onNext(post.series?.id ?? nil)
             })
@@ -147,13 +147,13 @@ final class CreatePostViewModel: InjectableViewModel {
                 self?.content.onNext(content)
             })
 
-        let loadSponsorshipPlanAction = initialLoad
-            .map { SponsorshipPlanAPI.all(uri: uri) }
+        let loadMembershipAction = initialLoad
+            .map { MembershipAPI.all(uri: uri) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
-        let loadSponsorshipPlanSuccess = loadSponsorshipPlanAction.elements
-            .map { try? $0.map(to: [PlanModel].self) }
+        let loadMembershipSuccess = loadMembershipAction.elements
+            .map { try? $0.map(to: [MembershipModel].self) }
             .flatMap(Driver.from)
 
         let loadPostInfo = Driver.combineLatest(loadPostSuccess, loadContentSuccess)
@@ -215,28 +215,28 @@ final class CreatePostViewModel: InjectableViewModel {
             .flatMap(Driver<String>.from)
             .do(onNext: { [weak self] _ in
                 self?.status.onNext("PUBLIC")
-                self?.planId.onNext(nil)
+                self?.membershipId.onNext(nil)
             })
 
         let checkforSubscription = input.forSubscriptionCheckBtnDidTap
-            .withLatestFrom(loadSponsorshipPlanSuccess)
-            .do(onNext: { [weak self] sponsorshipPlanInfo in
-                self?.status.onNext("PLAN")
-                let planId = sponsorshipPlanInfo[safe: 0]?.id ?? nil
-                self?.planId.onNext(planId)
+            .withLatestFrom(loadMembershipSuccess)
+            .do(onNext: { [weak self] membershipInfo in
+                self?.status.onNext("MEMBERSHIP")
+                let membershipId = membershipInfo[safe: 0]?.id ?? nil
+                self?.membershipId.onNext(membershipId)
             })
-            .map { _ in "PLAN" }
+            .map { _ in "MEMBERSHIP" }
 
         let checkforPrivate = input.forPrivateCheckBtnDidTap
             .map { "PRIVATE" }
             .flatMap(Driver<String>.from)
             .do(onNext: { [weak self] _ in
                 self?.status.onNext("PRIVATE")
-                self?.planId.onNext(nil)
+                self?.membershipId.onNext(nil)
             })
 
-        let openManageSponsorshipPlanViewController = input.selectSponsorshipPlanBtnDidTap
-            .withLatestFrom(planId.asDriver(onErrorDriveWith: .empty()))
+        let openManageMembershipViewController = input.selectMembershipBtnDidTap
+            .withLatestFrom(membershipId.asDriver(onErrorDriveWith: .empty()))
             .map { (uri, $0) }
 
         let publishNowChanged = input.publishNowCheckBtnDidTap
@@ -248,9 +248,9 @@ final class CreatePostViewModel: InjectableViewModel {
                 self?.seriesId.onNext(series?.id)
             })
 
-        let sponsorshipPlanChanged = input.sponsorshipPlanChanged
-            .do(onNext: { [weak self] sponsorshipPlan in
-                self?.planId.onNext(sponsorshipPlan?.id)
+        let membershipChanged = input.membershipChanged
+            .do(onNext: { [weak self] membership in
+                self?.membershipId.onNext(membership?.id)
             })
 
         let publishDateChanged = input.publishDateChanged
@@ -258,12 +258,12 @@ final class CreatePostViewModel: InjectableViewModel {
                 self?.publishedAt.onNext(date)
             })
 
-        let changePostInfo = Driver.combineLatest(postTitleChanged, postContentChanged, coverImageId.asDriver(onErrorDriveWith: .empty()), planId.asDriver(onErrorDriveWith: .empty()), status.asDriver(onErrorDriveWith: .empty()), publishedAt.asDriver(onErrorDriveWith: .empty()), seriesId.asDriver(onErrorDriveWith: .empty())) { (title: $0, content: $1, coverImageId: $2, planId: $3, status: $4, publishedAt: $5, seriesId: $6) }
+        let changePostInfo = Driver.combineLatest(postTitleChanged, postContentChanged, coverImageId.asDriver(onErrorDriveWith: .empty()), membershipId.asDriver(onErrorDriveWith: .empty()), status.asDriver(onErrorDriveWith: .empty()), publishedAt.asDriver(onErrorDriveWith: .empty()), seriesId.asDriver(onErrorDriveWith: .empty())) { (title: $0, content: $1, coverImageId: $2, membershipId: $3, status: $4, publishedAt: $5, seriesId: $6) }
 
         let createPostAction = input.saveBtnDidTap
             .withLatestFrom(changePostInfo)
             .filter { _ in postId == 0 }
-            .map { PostAPI.create(uri: uri, title: $0.title, content: $0.content, cover: $0.coverImageId, seriesId: $0.seriesId, planId: $0.planId, status: $0.status, publishedAt: $0.publishedAt?.millisecondsSince1970  ?? Date().millisecondsSince1970)
+            .map { PostAPI.create(uri: uri, title: $0.title, content: $0.content, cover: $0.coverImageId, seriesId: $0.seriesId, membershipId: $0.membershipId, status: $0.status, publishedAt: $0.publishedAt?.millisecondsSince1970  ?? Date().millisecondsSince1970)
             }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -271,7 +271,7 @@ final class CreatePostViewModel: InjectableViewModel {
         let updatePostAction = input.saveBtnDidTap
             .withLatestFrom(changePostInfo)
             .filter { _ in postId != 0 }
-            .map { PostAPI.update(uri: uri, postId: postId, title: $0.title, content: $0.content, cover: $0.coverImageId, seriesId: $0.seriesId, planId: $0.planId, status: $0.status, publishedAt: $0.publishedAt?.millisecondsSince1970 ?? Date().millisecondsSince1970)
+            .map { PostAPI.update(uri: uri, postId: postId, title: $0.title, content: $0.content, cover: $0.coverImageId, seriesId: $0.seriesId, membershipId: $0.membershipId, status: $0.status, publishedAt: $0.publishedAt?.millisecondsSince1970 ?? Date().millisecondsSince1970)
             }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -322,8 +322,8 @@ final class CreatePostViewModel: InjectableViewModel {
             changeCoverImage: coverImage,
             statusChanged: statusChanged,
             seriesChanged: seriesChanged,
-            sponsorshipPlanChanged: sponsorshipPlanChanged,
-            openManageSponsorshipPlanViewController: openManageSponsorshipPlanViewController,
+            membershipChanged: membershipChanged,
+            openManageMembershipViewController: openManageMembershipViewController,
             publishNowChanged: publishNowChanged,
             openDatePicker: openDatePicker,
             publishDatePickerValueChanged: input.publishDatePickerValueChanged,
