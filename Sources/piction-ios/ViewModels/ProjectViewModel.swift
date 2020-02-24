@@ -43,13 +43,9 @@ final class ProjectViewModel: InjectableViewModel {
     struct Input {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
-        let subscriptionBtnDidTap: Driver<Void>
-        let cancelSubscriptionBtnDidTap: Driver<Void>
-        let membershipBtnDidTap: Driver<Void>
         let changeMenu: Driver<Int>
         let infoBtnDidTap: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
-        let subscriptionUser: Driver<Void>
         let deletePost: Driver<Int>
         let deleteSeries: Driver<Int>
         let updateSeries: Driver<(String, SeriesModel)>
@@ -60,16 +56,10 @@ final class ProjectViewModel: InjectableViewModel {
         let viewWillDisappear: Driver<Void>
         let embedProjectDetailViewController: Driver<String>
         let projectInfo: Driver<ProjectModel>
-        let subscriptionInfo: Driver<(Bool, [MembershipModel], SponsorshipModel?, Bool)>
-        let openCancelSubscriptionPopup: Driver<Void>
-        let openSignInViewController: Driver<Void>
-        let openCreatePostViewController: Driver<String>
         let contentList: Driver<SectionType<ContentsSection>>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let selectedIndexPath: Driver<IndexPath>
         let openProjectInfoViewController: Driver<String>
-        let openSubscriptionUserViewController: Driver<String>
-        let openMembershipListViewController: Driver<String>
         let activityIndicator: Driver<Bool>
         let toastMessage: Driver<String>
     }
@@ -213,83 +203,6 @@ final class ProjectViewModel: InjectableViewModel {
                 self?.page = page + 1
             })
 
-        let membershipListAction = initialLoad
-            .map { MembershipAPI.all(uri: uri) }
-            .map(PictionSDK.rx.requestAPI)
-            .flatMap(Action.makeDriver)
-
-        let membershipListSuccess = membershipListAction.elements
-            .map { try? $0.map(to: [MembershipModel].self) }
-            .flatMap(Driver.from)
-
-        let subscriptionInfo = Driver.combineLatest(isWriter, membershipListSuccess, projectSubscriptionInfo, isActiveMembership)
-
-        let subscriptionAction = input.subscriptionBtnDidTap
-            .withLatestFrom(isWriter)
-            .filter { !$0 }
-            .withLatestFrom(currentUserInfo)
-            .filter { $0.loginId != nil }
-            .withLatestFrom(projectSubscriptionInfo)
-            .filter { $0 == nil }
-            .withLatestFrom(membershipListSuccess)
-            .filter { $0.count == 1 }
-            .map { MembershipAPI.sponsorship(uri: uri, membershipId: $0[safe: 0]?.id ?? 0, price: $0[safe: 0]?.price ?? 0) }
-            .map(PictionSDK.rx.requestAPI)
-            .flatMap(Action.makeDriver)
-
-        let subscriptionSuccess = subscriptionAction.elements
-            .map { _ in LocalizationKey.str_project_subscrition_complete.localized() }
-            .do(onNext: { _ in
-                updater.refreshContent.onNext(())
-            })
-
-        let subscriptionError = subscriptionAction.error
-            .map { $0 as? ErrorType }
-            .map { $0?.message }
-            .flatMap(Driver.from)
-
-        let openCancelSubscriptionPopup = input.subscriptionBtnDidTap
-            .withLatestFrom(isWriter)
-            .filter { !$0 }
-            .withLatestFrom(currentUserInfo)
-            .filter { $0.loginId != nil }
-            .withLatestFrom(projectSubscriptionInfo)
-            .filter { $0 != nil }
-            .withLatestFrom(membershipListSuccess)
-            .filter { $0.count == 1 }
-            .map { _ in Void() }
-
-        let cancelSubscriptionAction = input.cancelSubscriptionBtnDidTap
-            .withLatestFrom(projectSubscriptionInfo)
-            .filter { $0 != nil }
-            .filter { ($0?.membership?.level ?? 0) == 0 }
-            .map { MembershipAPI.cancelSponsorship(uri: uri, membershipId: $0?.membership?.id ?? 0) }
-            .map(PictionSDK.rx.requestAPI)
-            .flatMap(Action.makeDriver)
-
-        let cancelSubscriptionSuccess = cancelSubscriptionAction.elements
-            .map { _ in LocalizationKey.str_project_cancel_subscrition.localized() }
-            .do(onNext: { _ in
-                updater.refreshContent.onNext(())
-            })
- 
-        let cancelSubscriptionError = cancelSubscriptionAction.error
-            .map { $0 as? ErrorType }
-            .map { $0?.message }
-            .flatMap(Driver.from)
-
-        let openSignInViewController = input.subscriptionBtnDidTap
-            .withLatestFrom(membershipListSuccess)
-            .filter { $0.count == 1 }
-            .withLatestFrom(currentUserInfo)
-            .filter { $0.loginId == nil }
-            .map { _ in Void() }
-
-        let openCreatePostViewController = input.subscriptionBtnDidTap
-            .withLatestFrom(isWriter)
-            .filter { $0 }
-            .map { _ in uri }
-
         let postCardTypeSection = loadPostSuccess
             .withLatestFrom(loadProjectInfo) { ($0, $1) }
             .filter { $1.viewType == "CARD" }
@@ -380,38 +293,21 @@ final class ProjectViewModel: InjectableViewModel {
 
         let activityIndicator = Driver.merge(
             userInfoAction.isExecuting,
-            subscriptionAction.isExecuting,
-            cancelSubscriptionAction.isExecuting,
             deletePostAction.isExecuting,
             deleteSeriesAction.isExecuting,
             updateSeriesAction.isExecuting)
 
-        let toastMessage = Driver.merge(subscriptionSuccess, cancelSubscriptionSuccess, subscriptionError, cancelSubscriptionError, deletePostSuccess, deleteSeriesSuccess, updateSeriesSuccess, deletePostError, deleteSeriesError, updateSeriesError)
-
-        let openSubscriptionUserViewController = input.subscriptionUser
-            .map { _ in uri }
-            .flatMap(Driver<String>.from)
-
-        let openMembershipListViewController = input.membershipBtnDidTap
-            .withLatestFrom(isWriter)
-            .filter { !$0 }
-            .map { _ in uri }
-            .flatMap(Driver<String>.from)
+        let toastMessage = Driver.merge(deletePostSuccess, deleteSeriesSuccess, updateSeriesSuccess, deletePostError, deleteSeriesError, updateSeriesError)
 
         return Output(
             viewWillAppear: viewWillAppear,
             viewWillDisappear: input.viewWillDisappear,
+            embedProjectDetailViewController: embedProjectDetailViewController,
             projectInfo: loadProjectInfo,
-            subscriptionInfo: subscriptionInfo,
-            openCancelSubscriptionPopup: openCancelSubscriptionPopup,
-            openSignInViewController: openSignInViewController,
-            openCreatePostViewController: openCreatePostViewController,
             contentList: contentList,
             embedEmptyViewController: embedEmptyViewController,
             selectedIndexPath: input.selectedIndexPath,
             openProjectInfoViewController: openProjectInfoViewController,
-            openSubscriptionUserViewController: openSubscriptionUserViewController,
-            openMembershipListViewController: openMembershipListViewController,
             activityIndicator: activityIndicator,
             toastMessage: toastMessage
         )

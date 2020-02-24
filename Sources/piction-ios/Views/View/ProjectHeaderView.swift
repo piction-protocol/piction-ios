@@ -13,20 +13,13 @@ import GSKStretchyHeaderView
 protocol ProjectHeaderViewDelegate: class {
     func postBtnDidTap()
     func seriesBtnDidTap()
-    func subscriptionBtnDidTap()
-    func membershipBtnDidTap()
-    func shareBtnDidTap()
-    func managementBtnDidTap()
-    func subscriptionUserBtnDidTap()
 }
 
 class ProjectHeaderView: GSKStretchyHeaderView {
-
     weak var delegate: ProjectHeaderViewDelegate?
 
-    @IBOutlet weak var subscriptionButton: UIButton!
-    @IBOutlet weak var membershipButton: UIButton!
-    @IBOutlet weak var managementButton: UIButton!
+    let menuHeight: CGFloat = 48
+
     @IBOutlet weak var thumbnailImageView: UIImageView! {
         didSet {
             let gradientLayer = CAGradientLayer()
@@ -39,14 +32,9 @@ class ProjectHeaderView: GSKStretchyHeaderView {
             thumbnailImageView.layer.addSublayer(gradientLayer)
         }
     }
-    @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var writerLabel: UILabel!
-    @IBOutlet weak var loginIdLabel: UILabel!
-    @IBOutlet weak var sponsorCountLabel: UILabel!
+
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var seriesButton: UIButton!
-    @IBOutlet weak var sponsorButton: UIButton!
 
     @IBOutlet weak var maskImage: VisualEffectView!
     @IBOutlet weak var naviView: UIView!
@@ -61,32 +49,12 @@ class ProjectHeaderView: GSKStretchyHeaderView {
         delegate?.seriesBtnDidTap()
     }
 
-    @IBAction func subscriptionBtnDidTap(_ sender: Any) {
-        delegate?.subscriptionBtnDidTap()
-    }
-
-    @IBAction func shareBtnDidTap(_ sender: Any) {
-        delegate?.shareBtnDidTap()
-    }
-
-    @IBAction func managementBtnDidTap(_ sender: Any) {
-        delegate?.managementBtnDidTap()
-    }
-
-    @IBAction func subscriptionUserBtnDidTap(_ sender: Any) {
-        delegate?.subscriptionUserBtnDidTap()
-    }
-
-    @IBAction func membershipBtnDidTap(_ sender: Any) {
-        delegate?.membershipBtnDidTap()
-    }
-
     override func awakeFromNib() {
         super.awakeFromNib()
-        minimumContentHeight = STATUS_HEIGHT + DEFAULT_NAVIGATION_HEIGHT + 52
-        let thumbnailWidth = SCREEN_W < SCREEN_H ? SCREEN_W : SCREEN_H
-        let projectInfoPosY = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad ? thumbnailWidth / 2 - 55 : thumbnailWidth
-        maximumContentHeight = projectInfoPosY + projectInfoView.frame.size.height + 52 - STATUS_HEIGHT - DEFAULT_NAVIGATION_HEIGHT
+        minimumContentHeight = STATUS_HEIGHT + DEFAULT_NAVIGATION_HEIGHT + menuHeight
+
+        setMaximumContentHeight(detailHeight: projectDetailView.frame.size.height)
+
         naviViewImageHeight.constant = STATUS_HEIGHT + DEFAULT_NAVIGATION_HEIGHT
 
         expansionMode = .topOnly
@@ -94,87 +62,19 @@ class ProjectHeaderView: GSKStretchyHeaderView {
         thumbnailImageView.contentMode = .scaleAspectFill
     }
 
-    func configureProjectInfo(model: ProjectModel) {
-        let (thumbnail, title, profileImage, writerName, writerloginId, sponsorCount) = (model.thumbnail, model.title, model.user?.picture, model.user?.username, model.user?.loginId, model.sponsorCount)
-
-        if let thumbnail = thumbnail {
+    func configure(with projectInfo: ProjectModel) {
+        if let thumbnail = projectInfo.thumbnail {
             let thumbnailWithIC = "\(thumbnail)?w=720&h=720&quality=80&output=webp"
             if let url = URL(string: thumbnailWithIC) {
-                thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450"), completed: nil)
+                thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-post-960-x-360"), completed: nil)
             }
-        } else {
-            thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450")
         }
-
-        titleLabel.text = title
-        titleLabel.textColor = .pictionDarkGrayDM
-
-        if let profileImage = profileImage {
-            let userPictureWithIC = "\(profileImage)?w=240&h=240&quality=80&output=webp"
-            if let url = URL(string: userPictureWithIC) {
-                profileImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-userprofile-500-x-500"), completed: nil)
-            }
-        } else {
-           profileImageView.image = #imageLiteral(resourceName: "img-dummy-userprofile-500-x-500")
-        }
-        writerLabel.text = writerName
-        loginIdLabel.text = "@\(writerloginId ?? "")"
-        sponsorCountLabel.text = LocalizationKey.str_subs_count_plural.localized(with: sponsorCount?.commaRepresentation ?? "0")
     }
 
-    func configureSubscription(isWriter: Bool, membershipList: [MembershipModel], subscriptionInfo: SponsorshipModel?, isActiveMembership: Bool) {
-        membershipButton.isHidden = !isActiveMembership || isWriter
-        if subscriptionInfo != nil {
-            if subscriptionInfo?.membership?.level ?? 0 > 0 {
-                subscriptionButton.isHidden = true
-                membershipButton.setTitle(LocalizationKey.str_project_membership.localized(), for: .normal)
-                membershipButton.layer.borderColor = UIColor.pictionDarkGray.cgColor
-                membershipButton.layer.borderWidth = 2
-                membershipButton.backgroundColor = .white
-                membershipButton.setTitleColor(.pictionDarkGray, for: .normal)
-            } else {
-                subscriptionButton.setTitle(LocalizationKey.str_project_subscribing.localized(), for: .normal)
-                subscriptionButton.isHidden = false
-                subscriptionButton.layer.borderColor = UIColor.pictionDarkGray.cgColor
-                subscriptionButton.layer.borderWidth = 2
-                subscriptionButton.backgroundColor = .white
-                subscriptionButton.setTitleColor(.pictionDarkGray, for: .normal)
-                membershipButton.layer.borderColor = UIColor.clear.cgColor
-                membershipButton.layer.borderWidth = 0
-                membershipButton.backgroundColor = .pictionDarkGray
-                membershipButton.setTitleColor(.white, for: .normal)
-            }
-            sponsorButton.isHidden = true
-            managementButton.isHidden = true
-        } else {
-            if isWriter {
-                if FEATURE_EDITOR {
-                    sponsorButton.isHidden = false
-                    managementButton.isHidden = false
-                    subscriptionButton.isHidden = false
-                    subscriptionButton.backgroundColor = .pictionDarkGray
-                    subscriptionButton.setTitle(LocalizationKey.btn_new_post.localized(), for: .normal)
-                    subscriptionButton.setTitleColor(.white, for: .normal)
-                } else {
-                    managementButton.isHidden = true
-                    subscriptionButton.isHidden = true
-                }
-            } else {
-                sponsorButton.isHidden = true
-                managementButton.isHidden = true
-                subscriptionButton.isHidden = false
-                subscriptionButton.backgroundColor = .pictionDarkGray
-                subscriptionButton.setTitleColor(.white, for: .normal)
-            }
-            subscriptionButton.layer.borderWidth = 0
-            subscriptionButton.layer.borderColor = UIColor.clear.cgColor
-            subscriptionButton.backgroundColor = .pictionDarkGray
-            subscriptionButton.setTitleColor(.white, for: .normal)
-            membershipButton.layer.borderWidth = 0
-            membershipButton.layer.borderColor = UIColor.clear.cgColor
-            membershipButton.backgroundColor = .pictionDarkGray
-            membershipButton.setTitleColor(.white, for: .normal)
-        }
+    func setMaximumContentHeight(detailHeight: CGFloat) {
+        let thumbnailWidth = SCREEN_W < SCREEN_H ? SCREEN_W : SCREEN_H
+        let projectDetailPosY = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad ? thumbnailWidth / 2 - 55 : thumbnailWidth - 30
+        maximumContentHeight = projectDetailPosY + detailHeight + menuHeight - STATUS_HEIGHT - DEFAULT_NAVIGATION_HEIGHT
     }
 
     func controlMenuButton(menu: Int) {
@@ -185,8 +85,8 @@ class ProjectHeaderView: GSKStretchyHeaderView {
             postButton.backgroundColor = menu == 0 ? .clear : .white
             seriesButton.backgroundColor = menu == 0 ? .white : .clear
         }
-        postButton.setTitleColor(menu == 0 ? .pictionDarkGrayDM : .pictionGray, for: .normal)
-        seriesButton.setTitleColor(menu == 0 ? .pictionGray : .pictionDarkGrayDM, for: .normal)
+        postButton.setTitleColor(menu == 0 ? .pictionBlue : .pictionGray, for: .normal)
+        seriesButton.setTitleColor(menu == 0 ? .pictionGray : .pictionBlue, for: .normal)
     }
 }
 

@@ -24,7 +24,6 @@ enum ManageMenu {
 final class ProjectViewController: UIViewController {
     var disposeBag = DisposeBag()
 
-    private let menuHeight: CGFloat = 52
     private var contentOffset: CGPoint?
 
     @IBOutlet weak var infoBarButton: UIBarButtonItem!
@@ -34,14 +33,10 @@ final class ProjectViewController: UIViewController {
     private var projectDetailView: ProjectDetailViewController?
 
     private let changeMenu = BehaviorSubject<Int>(value: 0)
-    private let subscription = PublishSubject<Void>()
-    private let cancelSubscription = PublishSubject<Void>()
-    private let membership = PublishSubject<Void>()
     private let deletePost = PublishSubject<Int>()
     private let deleteSeries = PublishSubject<Int>()
     private let updateSeries = PublishSubject<(String, SeriesModel)>()
     private let manageMenu = PublishSubject<ManageMenu>()
-    private let subscriptionUser = PublishSubject<Void>()
 
     @IBOutlet weak var tableView: UITableView! {
         didSet {
@@ -133,49 +128,10 @@ final class ProjectViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
 
-    private func openCancelSubscriptionPopup() {
-        let alertController = UIAlertController(title: nil, message: LocalizationKey.msg_want_to_unsubscribe.localized(), preferredStyle: .alert)
-        let cancelButton = UIAlertAction(title: LocalizationKey.cancel.localized(), style: .cancel)
-        let confirmButton = UIAlertAction(title: LocalizationKey.confirm.localized(), style: .default) { [weak self] _ in
-            self?.cancelSubscription.onNext(())
-        }
-
-        alertController.addAction(confirmButton)
-        alertController.addAction(cancelButton)
-
-        self.present(alertController, animated: true, completion: nil)
-    }
-
     private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
         let vc = CustomEmptyViewController.make(style: style)
         if let footerView = self.tableView.tableFooterView {
             self.embed(vc, to: footerView)
-        }
-    }
-
-    private func openSharePopup(url: String) {
-        let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: [])
-
-        activityViewController.excludedActivityTypes = [
-            UIActivity.ActivityType.print,
-            UIActivity.ActivityType.assignToContact,
-            UIActivity.ActivityType.saveToCameraRoll,
-            UIActivity.ActivityType.addToReadingList,
-            UIActivity.ActivityType.postToFlickr,
-            UIActivity.ActivityType.postToVimeo,
-            UIActivity.ActivityType.openInIBooks
-        ]
-
-        if let topController = UIApplication.topViewController() {
-            if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad {
-                activityViewController.modalPresentationStyle = .popover
-                if let popover = activityViewController.popoverPresentationController {
-                    popover.permittedArrowDirections = .up
-                    popover.sourceView = topController.view
-                    popover.sourceRect = CGRect(x: SCREEN_W, y: 64, width: 0, height: 0)
-                }
-            }
-            topController.present(activityViewController, animated: true, completion: nil)
         }
     }
 
@@ -245,14 +201,9 @@ extension ProjectViewController: ViewModelBindable {
         let input = ProjectViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
-            subscriptionBtnDidTap: subscription.asDriver(onErrorDriveWith: .empty()),
-            cancelSubscriptionBtnDidTap: cancelSubscription.asDriver(onErrorDriveWith: .empty()),
-            membershipBtnDidTap:
-                membership.asDriver(onErrorDriveWith: .empty()),
             changeMenu: changeMenu.asDriver(onErrorDriveWith: .empty()),
             infoBtnDidTap: infoBarButton.rx.tap.asDriver(),
             selectedIndexPath: tableView.rx.itemSelected.asDriver(),
-            subscriptionUser: subscriptionUser.asDriver(onErrorDriveWith: .empty()),
             deletePost: deletePost.asDriver(onErrorDriveWith: .empty()),
             deleteSeries: deleteSeries.asDriver(onErrorDriveWith: .empty()),
             updateSeries: updateSeries.asDriver(onErrorDriveWith: .empty())
@@ -312,7 +263,7 @@ extension ProjectViewController: ViewModelBindable {
             .contentList
             .do(onNext: { [weak self] _ in
                 guard let `self` = self else { return }
-                let footerHeight = SCREEN_H - self.statusHeight - self.navigationHeight - self.tabbarHeight - self.menuHeight
+                let footerHeight = SCREEN_H - self.statusHeight - self.navigationHeight - self.tabbarHeight - (self.stretchyHeader?.menuHeight ?? 0)
                 self.tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: footerHeight))
             })
             .drive { $0 }
@@ -324,7 +275,7 @@ extension ProjectViewController: ViewModelBindable {
             .contentList
             .drive(onNext: { [weak self] list in
                 guard let `self` = self else { return }
-                let footerHeight = SCREEN_H - self.statusHeight - self.navigationHeight - self.tabbarHeight - self.menuHeight
+                let footerHeight = SCREEN_H - self.statusHeight - self.navigationHeight - self.tabbarHeight - (self.stretchyHeader?.menuHeight ?? 0)
                 let height = self.preferredContentSize.height - (self.tableView.tableFooterView?.frame.size.height ?? 0)
                 if height < footerHeight {
                     self.tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: footerHeight - height))
@@ -354,60 +305,9 @@ extension ProjectViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
-            .projectInfo
-            .drive(onNext: { [weak self] projectInfo in
-                self?.stretchyHeader?.configureProjectInfo(model: projectInfo)
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .subscriptionInfo
-            .drive(onNext: { [weak self] (isWriter, membershipList, subscriptionInfo, isActiveMembership) in
-                self?.stretchyHeader?.configureSubscription(isWriter: isWriter, membershipList: membershipList, subscriptionInfo: subscriptionInfo, isActiveMembership: isActiveMembership)
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .openCancelSubscriptionPopup
-            .drive(onNext: { [weak self] _ in
-                self?.openCancelSubscriptionPopup()
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .openSignInViewController
-            .drive(onNext: { [weak self] _ in
-                self?.openSignInViewController()
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .openCreatePostViewController
-            .drive(onNext: { [weak self] uri in
-                self?.openCreatePostViewController(uri: uri)
-            })
-            .disposed(by: disposeBag)
-
-        output
             .openProjectInfoViewController
             .drive(onNext: { [weak self] uri in
                 self?.openProjectInfoViewController(uri: uri)
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .openSubscriptionUserViewController
-            .drive(onNext: { [weak self] uri in
-                if FEATURE_EDITOR {
-                    self?.openSubscriptionUserViewController(uri: uri)
-                }
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .openMembershipListViewController
-            .drive(onNext: { [weak self] uri in
-                self?.openMembershipListViewController(uri: uri)
             })
             .disposed(by: disposeBag)
 
@@ -442,7 +342,7 @@ extension ProjectViewController: ProjectHeaderViewDelegate {
             self.stretchyHeader?.controlMenuButton(menu: 0)
             self.changeMenu.onNext(0)
         }
-        let menuTopPosition = self.statusHeight + self.navigationHeight + self.menuHeight
+        let menuTopPosition = self.statusHeight + self.navigationHeight + (self.stretchyHeader?.menuHeight ?? 0)
         if tableView.contentOffset.y >= -menuTopPosition {
             contentOffset = CGPoint(x: 0, y: -menuTopPosition)
         } else {
@@ -455,76 +355,12 @@ extension ProjectViewController: ProjectHeaderViewDelegate {
             self.stretchyHeader?.controlMenuButton(menu: 1)
             self.changeMenu.onNext(1)
         }
-        let menuTopPosition = self.statusHeight + self.navigationHeight + self.menuHeight
+        let menuTopPosition = self.statusHeight + self.navigationHeight + (self.stretchyHeader?.menuHeight ?? 0)
         if tableView.contentOffset.y >= -menuTopPosition {
             contentOffset = CGPoint(x: 0, y: -menuTopPosition)
         } else {
             contentOffset = tableView.contentOffset
         }
-    }
-
-    func subscriptionBtnDidTap() {
-        self.subscription.onNext(())
-    }
-
-    func membershipBtnDidTap() {
-        self.membership.onNext(())
-    }
-
-    func shareBtnDidTap() {
-        guard let uri = self.viewModel?.uri else { return }
-        guard let title = stretchyHeader?.titleLabel.text else { return }
-        let stagingPath = AppInfo.isStaging ? "staging." : ""
-
-        let url = "\(title) - Piction\nhttps://\(stagingPath)piction.network/project/\(uri)"
-
-        self.openSharePopup(url: url)
-    }
-
-    func managementBtnDidTap() {
-        guard let uri = self.viewModel?.uri else { return }
-        let alertController = UIAlertController(
-        title: nil,
-        message: nil,
-        preferredStyle: UIAlertController.Style.actionSheet)
-
-        let manageProjectAction = UIAlertAction(
-            title: "프로젝트 관리",
-            style: UIAlertAction.Style.default,
-            handler: { [weak self] action in
-                self?.openCreateProjectViewController(uri: uri)
-            })
-
-        let manageSeriesAction = UIAlertAction(
-            title: "시리즈 관리",
-            style: UIAlertAction.Style.default,
-            handler: { [weak self] action in
-                self?.openManageSeriesViewController(uri: uri)
-            })
-
-        let manageMembershipAction = UIAlertAction(
-            title: "Membership 관리",
-            style: UIAlertAction.Style.default,
-            handler: { [weak self] action in
-                self?.openManageMembershipViewController(uri: uri)
-            })
-
-        let cancelAction = UIAlertAction(
-            title: "취소",
-            style:UIAlertAction.Style.cancel,
-            handler:{ action in
-            })
-
-        alertController.addAction(manageProjectAction)
-        alertController.addAction(manageSeriesAction)
-        alertController.addAction(manageMembershipAction)
-        alertController.addAction(cancelAction)
-
-        present(alertController, animated: true, completion: nil)
-    }
-
-    func subscriptionUserBtnDidTap() {
-        self.subscriptionUser.onNext(())
     }
 }
 
