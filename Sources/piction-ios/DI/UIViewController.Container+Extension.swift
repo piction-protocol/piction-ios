@@ -100,6 +100,12 @@ extension ProjectViewController {
     }
 }
 
+extension ProjectDetailViewController {
+    static func make(uri: String) -> ProjectDetailViewController {
+        return Container.shared.resolve(ProjectDetailViewController.self, argument: uri)!
+    }
+}
+
 extension ProjectInfoViewController {
     static func make(uri: String) -> ProjectInfoViewController {
         return Container.shared.resolve(ProjectInfoViewController.self, argument: uri)!

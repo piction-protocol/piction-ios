@@ -63,6 +63,7 @@
 "msg_title_confirm_password" = "변경된 내용을 저장하기 위해 비밀번호를 입력해주세요.";
 
 "msg_want_to_unsubscribe" = "구독을 해지하시겠습니까?";
+"msg_no_cancellation_subscription" = "후원 기간 동안 구독을\n해제할 수 없습니다.";
 "msg_already_sign_in" = "이미 로그인 되어있습니다.";
 
 // hint

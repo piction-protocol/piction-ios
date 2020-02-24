@@ -64,6 +64,7 @@ enum LocalizationKey {
     case msg_title_confirm_password
 
     case msg_want_to_unsubscribe
+    case msg_no_cancellation_subscription
 
     // hint
     case hint_input_id_guide

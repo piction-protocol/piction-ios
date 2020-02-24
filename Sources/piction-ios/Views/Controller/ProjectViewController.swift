@@ -31,6 +31,7 @@ final class ProjectViewController: UIViewController {
     @IBOutlet weak var emptyView: UIView!
 
     private var stretchyHeader: ProjectHeaderView?
+    private var projectDetailView: ProjectDetailViewController?
 
     private let changeMenu = BehaviorSubject<Int>(value: 0)
     private let subscription = PublishSubject<Void>()
@@ -50,6 +51,14 @@ final class ProjectViewController: UIViewController {
                 stretchyHeader.stretchDelegate = self
                 tableView.addSubview(stretchyHeader)
             }
+        }
+    }
+
+    private func embedProjectDetailViewController(uri: String) {
+        let projectDetailView = ProjectDetailViewController.make(uri: uri)
+        self.projectDetailView = projectDetailView
+        if let projectDetailContainerView = stretchyHeader?.projectDetailView {
+            self.embed(projectDetailView, to: projectDetailContainerView)
         }
     }
 
@@ -173,6 +182,7 @@ final class ProjectViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         stretchyHeader?.frame.size.width = view.frame.size.width
+        stretchyHeader?.setMaximumContentHeight(detailHeight: projectDetailView?.projectDetailContainerView.frame.size.height ?? 0)
     }
 
     private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionType<ContentsSection>> {
@@ -265,6 +275,20 @@ extension ProjectViewController: ViewModelBindable {
             .drive(onNext: { [weak self] in
                 self?.navigationController?.navigationBar.barStyle = .default
                 self?.navigationController?.navigationBar.tintColor = UIView().tintColor
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .projectInfo
+            .drive(onNext: { [weak self] projectInfo in
+                self?.stretchyHeader?.configure(with: projectInfo)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .embedProjectDetailViewController
+            .drive(onNext: { [weak self] uri in
+                self?.embedProjectDetailViewController(uri: uri)
             })
             .disposed(by: disposeBag)
 

@@ -103,6 +103,12 @@ final class ViewControllerAssembly: Assembly {
             return vc
         }
 
+        container.register(ProjectDetailViewController.self) { (resolver, uri: String) in
+            let vc = Storyboard.ProjectDetail.instantiate(ProjectDetailViewController.self)
+            vc.viewModel = resolver.resolve(ProjectDetailViewModel.self, argument: uri)!
+            return vc
+        }
+
         container.register(ProjectInfoViewController.self) { (resolver, uri: String) in
             let vc = Storyboard.ProjectInfo.instantiate(ProjectInfoViewController.self)
             vc.viewModel = resolver.resolve(ProjectInfoViewModel.self, argument: uri)!

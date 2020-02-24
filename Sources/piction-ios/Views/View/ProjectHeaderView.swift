@@ -51,7 +51,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
     @IBOutlet weak var maskImage: VisualEffectView!
     @IBOutlet weak var naviView: UIView!
     @IBOutlet var naviViewImageHeight: NSLayoutConstraint!
-    @IBOutlet weak var projectInfoView: UIView!
+    @IBOutlet weak var projectDetailView: UIView!
 
     @IBAction func postBtnDidTap(_ sender: Any) {
         delegate?.postBtnDidTap()

@@ -122,6 +122,13 @@ final class ViewModelAssembly: Assembly {
             )
         }
 
+        container.register(ProjectDetailViewModel.self) { (resolver, uri: String) in
+            return ProjectDetailViewModel(dependency: (
+                resolver.resolve(UpdaterProtocol.self)!,
+                uri: uri)
+            )
+        }
+
         container.register(ProjectInfoViewModel.self) { (resolver, uri: String) in
             return ProjectInfoViewModel(dependency: (
                 resolver.resolve(FirebaseManagerProtocol.self)!,

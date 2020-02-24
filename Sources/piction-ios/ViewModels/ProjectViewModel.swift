@@ -58,6 +58,7 @@ final class ProjectViewModel: InjectableViewModel {
     struct Output {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
+        let embedProjectDetailViewController: Driver<String>
         let projectInfo: Driver<ProjectModel>
         let subscriptionInfo: Driver<(Bool, [MembershipModel], SponsorshipModel?, Bool)>
         let openCancelSubscriptionPopup: Driver<Void>
@@ -93,6 +94,9 @@ final class ProjectViewModel: InjectableViewModel {
 
         let loadNext = loadTrigger.asDriver(onErrorDriveWith: .empty())
             .filter { self.shouldInfiniteScroll }
+
+        let embedProjectDetailViewController = initialLoad
+            .map { self.uri }
 
         let loadNextMenu = loadNext
             .withLatestFrom(updateSelectedProjectMenu)
