@@ -38,48 +38,65 @@
                                         <color key="textColor" name="PictionDarkGray"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="87P-hZ-2MY">
-                                        <rect key="frame" x="169" y="37" width="36" height="24"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QaP-JQ-eLd">
+                                        <rect key="frame" x="0.0" y="37" width="374" height="24"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-dummy-userprofile-500-x-500" translatesAutoresizingMaskIntoConstraints="NO" id="PQx-3R-dNJ" customClass="UIImageViewExtension" customModule="piction_ios" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="24" id="OtQ-Tf-aOj"/>
-                                                    <constraint firstAttribute="width" constant="24" id="YfJ-Ka-LhP"/>
-                                                </constraints>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="12"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                        <real key="value" value="0.0"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MXD-Ku-cMN">
-                                                <rect key="frame" x="32" y="3.5" width="4" height="17"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="17" id="Flo-qu-5oA"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="textColor" name="PictionDarkGray"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="87P-hZ-2MY">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="24"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-dummy-userprofile-500-x-500" translatesAutoresizingMaskIntoConstraints="NO" id="PQx-3R-dNJ" customClass="UIImageViewExtension" customModule="piction_ios" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="24" id="OtQ-Tf-aOj"/>
+                                                            <constraint firstAttribute="width" constant="24" id="YfJ-Ka-LhP"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                <real key="value" value="12"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                                <real key="value" value="0.0"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MXD-Ku-cMN">
+                                                        <rect key="frame" x="32" y="3.5" width="342" height="17"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="17" id="Flo-qu-5oA"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <color key="textColor" name="PictionDarkGray"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7iI-tb-KeC">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="24"/>
+                                            </button>
                                         </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="24" id="2PY-wA-nRE"/>
+                                            <constraint firstItem="7iI-tb-KeC" firstAttribute="leading" secondItem="QaP-JQ-eLd" secondAttribute="leading" id="2Jm-fq-tKS"/>
+                                            <constraint firstAttribute="bottom" secondItem="7iI-tb-KeC" secondAttribute="bottom" id="7iN-Kp-0M8"/>
+                                            <constraint firstAttribute="bottom" secondItem="87P-hZ-2MY" secondAttribute="bottom" id="Ory-TQ-Bn6"/>
+                                            <constraint firstAttribute="height" constant="24" id="QGY-nS-iAO"/>
+                                            <constraint firstAttribute="trailing" secondItem="87P-hZ-2MY" secondAttribute="trailing" id="ZVP-qz-lXz"/>
+                                            <constraint firstItem="87P-hZ-2MY" firstAttribute="leading" secondItem="QaP-JQ-eLd" secondAttribute="leading" id="gEz-gJ-RWk"/>
+                                            <constraint firstItem="7iI-tb-KeC" firstAttribute="top" secondItem="QaP-JQ-eLd" secondAttribute="top" id="pVi-pG-n25"/>
+                                            <constraint firstAttribute="trailing" secondItem="7iI-tb-KeC" secondAttribute="trailing" id="w9R-1V-axE"/>
+                                            <constraint firstItem="87P-hZ-2MY" firstAttribute="top" secondItem="QaP-JQ-eLd" secondAttribute="top" id="ywc-pm-AJZ"/>
                                         </constraints>
-                                    </stackView>
+                                    </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="OGz-E2-h7L" secondAttribute="trailing" id="5Tc-aJ-bsz"/>
                                     <constraint firstItem="OGz-E2-h7L" firstAttribute="leading" secondItem="TCN-oM-f4h" secondAttribute="leading" id="HkU-yp-haD"/>
-                                    <constraint firstItem="87P-hZ-2MY" firstAttribute="centerX" secondItem="TCN-oM-f4h" secondAttribute="centerX" id="JgY-iP-D2V"/>
-                                    <constraint firstItem="87P-hZ-2MY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TCN-oM-f4h" secondAttribute="leading" priority="250" id="M39-vp-2c7"/>
                                     <constraint firstAttribute="trailing" secondItem="ULW-oE-7ha" secondAttribute="trailing" id="bDo-Ot-U18"/>
                                     <constraint firstItem="ULW-oE-7ha" firstAttribute="leading" secondItem="TCN-oM-f4h" secondAttribute="leading" id="dSS-dy-fgp"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="QaP-JQ-eLd" secondAttribute="trailing" id="fsP-N1-DJI"/>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="120" id="fsa-TE-6nx"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="87P-hZ-2MY" secondAttribute="trailing" priority="250" id="r2U-7d-naU"/>
+                                    <constraint firstItem="QaP-JQ-eLd" firstAttribute="centerX" secondItem="TCN-oM-f4h" secondAttribute="centerX" id="p2c-rq-CF6"/>
+                                    <constraint firstItem="QaP-JQ-eLd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TCN-oM-f4h" secondAttribute="leading" id="x5G-sv-vOu"/>
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y9C-EG-1v5">
@@ -103,6 +120,7 @@
                     </view>
                     <size key="freeformSize" width="414" height="220"/>
                     <connections>
+                        <outlet property="creatorButton" destination="7iI-tb-KeC" id="cG7-CB-EZO"/>
                         <outlet property="profileImageView" destination="PQx-3R-dNJ" id="PeI-2j-Rvi"/>
                         <outlet property="seriesNameLabel" destination="OGz-E2-h7L" id="eqW-28-ufN"/>
                         <outlet property="titleLabel" destination="ULW-oE-7ha" id="Oey-wk-EOc"/>

@@ -18,6 +18,7 @@ final class PostHeaderViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var writerLabel: UILabel!
+    @IBOutlet weak var creatorButton: UIButton!
 }
 
 extension PostHeaderViewController: ViewModelBindable {
@@ -26,7 +27,8 @@ extension PostHeaderViewController: ViewModelBindable {
     func bindViewModel(viewModel: ViewModel) {
 
         let input = PostHeaderViewModel.Input(
-            viewWillAppear: rx.viewWillAppear.asDriver()
+            viewWillAppear: rx.viewWillAppear.asDriver(),
+            creatorBtnDidTap: creatorButton.rx.tap.asDriver()
         )
 
         let output = viewModel.build(input: input)
@@ -48,5 +50,13 @@ extension PostHeaderViewController: ViewModelBindable {
                 self?.titleLabel.text = postItem.title
             })
             .disposed(by: disposeBag)
+
+        output
+            .openCreatorProfileViewController
+            .drive(onNext: { [weak self] loginId in
+                self?.openCreatorProfileViewController(loginId: loginId)
+            })
+            .disposed(by: disposeBag)
+
     }
 }

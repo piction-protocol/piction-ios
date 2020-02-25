@@ -27,10 +27,12 @@ final class PostHeaderViewModel: InjectableViewModel {
 
     struct Input {
         let viewWillAppear: Driver<Void>
+        let creatorBtnDidTap: Driver<Void>
     }
 
     struct Output {
         let headerInfo: Driver<(PostModel, UserModel)>
+        let openCreatorProfileViewController: Driver<String>
     }
 
     func build(input: Input) -> Output {
@@ -39,8 +41,13 @@ final class PostHeaderViewModel: InjectableViewModel {
         let headerInfo = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
             .map { (postItem, userInfo) }
 
+        let openCreatorProfileViewController = input.creatorBtnDidTap
+            .map { userInfo.loginId }
+            .flatMap(Driver.from)
+
         return Output(
-            headerInfo: headerInfo
+            headerInfo: headerInfo,
+            openCreatorProfileViewController: openCreatorProfileViewController
         )
     }
 }
