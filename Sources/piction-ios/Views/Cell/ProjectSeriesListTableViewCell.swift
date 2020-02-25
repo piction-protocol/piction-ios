@@ -29,14 +29,14 @@ final class ProjectSeriesListTableViewCell: ReuseTableViewCell {
         let (thumbnails, seriesName, postCount) = (model.thumbnails, model.name, model.postCount)
 
         if let thumbnail = thumbnails?[safe: 0] {
-            let coverImageWithIC = "\(thumbnail)?w=656&h=246&quality=80&output=webp"
+            let coverImageWithIC = "\(thumbnail)?w=720&h=720&quality=80&output=webp"
             if let url = URL(string: coverImageWithIC) {
                 thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-post-960-x-360"), completed: nil)
             }
         }
 
         if let backgroundThumbnail = thumbnails?[safe: 1] {
-            let coverImageWithIC = "\(backgroundThumbnail)?w=656&h=246&quality=80&output=webp"
+            let coverImageWithIC = "\(backgroundThumbnail)?w=720&h=720&quality=80&output=webp"
             if let url = URL(string: coverImageWithIC) {
                 backgroundThumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: nil, completed: nil)
             }

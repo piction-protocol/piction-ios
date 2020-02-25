@@ -39,7 +39,7 @@ final class ProjectPostCardTypeListTableViewCell: ReuseTableViewCell {
         let (thumbnail, seriesName, title, publishedAt, likeCount, membership, status) = (model.cover, model.series?.name, model.title, model.publishedAt, model.likeCount, model.membership, model.status)
 
         if let thumbnail = thumbnail {
-            let coverImageWithIC = "\(thumbnail)?w=656&h=656&quality=80&output=webp"
+            let coverImageWithIC = "\(thumbnail)?w=720&h=720&quality=80&output=webp"
             if let url = URL(string: coverImageWithIC) {
                 thumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-post-960-x-360"), completed: nil)
             }

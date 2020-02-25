@@ -46,7 +46,7 @@ final class HomeSubscribingPostsTableViewCell: ReuseTableViewCell {
         contentLabel.text = content
 
         if let thumbnail = thumbnail {
-            let coverImageWithIC = "\(thumbnail)?w=656&h=656&quality=80&output=webp"
+            let coverImageWithIC = "\(thumbnail)?w=720&h=720&quality=80&output=webp"
             if let url = URL(string: coverImageWithIC) {
                 if isLargeType {
                     largeThumbnailImageView.sd_setImageWithFade(with: url, placeholderImage: #imageLiteral(resourceName: "img-dummy-post-960-x-360"), completed: nil)
