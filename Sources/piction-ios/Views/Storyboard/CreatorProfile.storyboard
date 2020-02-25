@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Creator Profile View Controller-->
+        <scene sceneID="Bpa-If-bO5">
+            <objects>
+                <viewController storyboardIdentifier="CreatorProfileViewController" id="Xac-Cz-vQ5" customClass="CreatorProfileViewController" customModule="piction_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uyD-BN-NEq">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="T4N-b8-brh">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="7" id="kb3-QV-DXQ">
+                                    <size key="itemSize" width="164" height="208"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="20" minY="20" maxX="20" maxY="20"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                                <connections>
+                                    <outlet property="delegate" destination="Xac-Cz-vQ5" id="dml-Lm-WnS"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="T4N-b8-brh" secondAttribute="bottom" id="NHD-0u-4pX"/>
+                            <constraint firstItem="T4N-b8-brh" firstAttribute="leading" secondItem="LVu-fY-Btz" secondAttribute="leading" id="Xfm-z0-uh6"/>
+                            <constraint firstItem="T4N-b8-brh" firstAttribute="trailing" secondItem="LVu-fY-Btz" secondAttribute="trailing" id="nLo-vD-Jh7"/>
+                            <constraint firstItem="T4N-b8-brh" firstAttribute="top" secondItem="uyD-BN-NEq" secondAttribute="top" id="vQe-H4-u38"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="LVu-fY-Btz"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="WWj-e8-eQX"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="collectionView" destination="T4N-b8-brh" id="ZVd-Ur-m1y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="biZ-YY-fK8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="786.95652173913049" y="98.4375"/>
+        </scene>
+    </scenes>
+</document>
