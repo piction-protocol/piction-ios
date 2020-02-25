@@ -296,4 +296,11 @@ extension UIViewController {
             topViewController.openViewController(vc, type: .push)
         }
     }
+
+    func openCreatorProfileViewController(loginId: String) {
+        let vc = CreatorProfileViewController.make(loginId: loginId)
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.openViewController(vc, type: .push)
+        }
+    }
 }

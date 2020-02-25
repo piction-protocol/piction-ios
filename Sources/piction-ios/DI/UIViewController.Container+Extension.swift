@@ -231,3 +231,15 @@ extension CreateMembershipViewController {
         return Container.shared.resolve(CreateMembershipViewController.self, arguments: uri, membership)!
     }
 }
+
+extension CreatorProfileViewController {
+    static func make(loginId: String) -> CreatorProfileViewController {
+        return Container.shared.resolve(CreatorProfileViewController.self, argument: loginId)!
+    }
+}
+
+extension CreatorProfileHeaderViewController {
+    static func make(loginId: String) -> CreatorProfileHeaderViewController {
+        return Container.shared.resolve(CreatorProfileHeaderViewController.self, argument: loginId)!
+    }
+}

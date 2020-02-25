@@ -234,5 +234,17 @@ final class ViewControllerAssembly: Assembly {
             vc.viewModel = resolver.resolve(CreateMembershipViewModel.self, arguments: uri, membership)!
             return vc
         }
+
+        container.register(CreatorProfileViewController.self) { (resolver, loginId: String) in
+            let vc = Storyboard.CreatorProfile.instantiate(CreatorProfileViewController.self)
+            vc.viewModel = resolver.resolve(CreatorProfileViewModel.self, argument: loginId)!
+            return vc
+        }
+
+        container.register(CreatorProfileHeaderViewController.self) { (resolver, loginId: String) in
+            let vc = Storyboard.CreatorProfileHeader.instantiate(CreatorProfileHeaderViewController.self)
+            vc.viewModel = resolver.resolve(CreatorProfileHeaderViewModel.self, argument: loginId)!
+            return vc
+        }
     }
 }

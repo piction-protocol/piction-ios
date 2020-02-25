@@ -295,5 +295,19 @@ final class ViewModelAssembly: Assembly {
                 membership: membership)
             )
         }
+
+        container.register(CreatorProfileViewModel.self) { (resolver, loginId: String) in
+            return CreatorProfileViewModel(dependency: (
+                resolver.resolve(FirebaseManagerProtocol.self)!,
+                loginId: loginId)
+            )
+        }
+
+        container.register(CreatorProfileHeaderViewModel.self) { (resolver, loginId: String) in
+            return CreatorProfileHeaderViewModel(dependency: (
+                resolver.resolve(UpdaterProtocol.self)!,
+                loginId: loginId)
+            )
+        }
     }
 }

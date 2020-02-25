@@ -47,6 +47,8 @@ public enum Storyboard: String {
     case PurchaseMembership
     case ManageMembership
     case CreateMembership
+    case CreatorProfile
+    case CreatorProfileHeader
 
     public func instantiate<VC: UIViewController>(_ viewController: VC.Type) -> VC {
         guard
