@@ -50,7 +50,7 @@ final class ProjectPostListTypeListTableViewCell: ReuseTableViewCell {
         }
 
         seriesLabel.isHidden = seriesName == nil
-        seriesLabel.text = "\(LocalizationKey.tab_series.localized()) · \(seriesName ?? "")"
+        seriesLabel.text = seriesName
 
         titleLabel.text = title
 
