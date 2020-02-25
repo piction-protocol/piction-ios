@@ -29,16 +29,7 @@ final class SeriesPostViewController: UIViewController {
 
     private var stretchyHeader: SeriesPostHeaderView?
 
-    @IBOutlet weak var coverView: UIView! {
-        didSet {
-            coverView.backgroundColor = UIColor(r: 51, g: 51, b: 51, a: 0.2)
-        }
-    }
-    @IBOutlet weak var coverImageView: UIImageView!
-    @IBOutlet weak var coverMaskImage: VisualEffectView!
-
-    @IBOutlet weak var seriesTitleLabel: UILabel!
-    @IBOutlet weak var postCountLabel: UILabel!
+    @IBOutlet weak var sortImage: UIImageView!
     @IBOutlet weak var sortButton: UIButton!
     @IBOutlet weak var emptyView: UIView!
 
@@ -126,7 +117,7 @@ extension SeriesPostViewController: ViewModelBindable {
         output
             .isDescending
             .drive(onNext: { [weak self] isDescending in
-                self?.sortButton.setTitle(isDescending ? LocalizationKey.str_sort_with_direction.localized(with: "↓") : LocalizationKey.str_sort_with_direction.localized(with: "↑"), for: .normal)
+                self?.sortImage.image = isDescending ? #imageLiteral(resourceName: "btnSortDown") : #imageLiteral(resourceName: "btnSortUp")
             })
             .disposed(by: disposeBag)
 
