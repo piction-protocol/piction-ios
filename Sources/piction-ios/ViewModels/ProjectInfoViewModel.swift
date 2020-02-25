@@ -30,13 +30,17 @@ final class ProjectInfoViewModel: InjectableViewModel {
 
     struct Input {
         let viewWillAppear: Driver<Void>
-        let selectedIndexPath: Driver<IndexPath>
+        let categoryCollectionViewSelectedIndexPath: Driver<IndexPath>
+        let tagCollectionViewSelectedIndexPath: Driver<IndexPath>
+        let creatorBtnDidTap: Driver<Void>
     }
 
     struct Output {
         let viewWillAppear: Driver<Void>
         let projectInfo: Driver<ProjectModel>
-        let selectedIndexPath: Driver<IndexPath>
+        let categoryCollectionViewSelectedIndexPath: Driver<IndexPath>
+        let tagCollectionViewSelectedIndexPath: Driver<IndexPath>
+        let openCreatorProfileViewController: Driver<String>
         let showErrorPopup: Driver<Void>
         let activityIndicator: Driver<Bool>
     }
@@ -67,6 +71,11 @@ final class ProjectInfoViewModel: InjectableViewModel {
         let projectInfoError = projectInfoAction.error
             .map { _ in Void() }
 
+        let openCreatorProfileViewController = input.creatorBtnDidTap
+            .withLatestFrom(projectInfoSuccess)
+            .map { $0.user?.loginId }
+            .flatMap(Driver.from)
+
         let showErrorPopup = projectInfoError
 
         let activityIndicator = projectInfoAction.isExecuting
@@ -74,7 +83,9 @@ final class ProjectInfoViewModel: InjectableViewModel {
         return Output(
             viewWillAppear: viewWillAppear,
             projectInfo: projectInfoSuccess,
-            selectedIndexPath: input.selectedIndexPath,
+            categoryCollectionViewSelectedIndexPath: input.categoryCollectionViewSelectedIndexPath,
+            tagCollectionViewSelectedIndexPath: input.tagCollectionViewSelectedIndexPath,
+            openCreatorProfileViewController: openCreatorProfileViewController,
             showErrorPopup: showErrorPopup,
             activityIndicator: activityIndicator
         )

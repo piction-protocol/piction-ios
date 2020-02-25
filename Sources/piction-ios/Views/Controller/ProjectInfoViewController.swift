@@ -19,6 +19,7 @@ final class ProjectInfoViewController: UIViewController {
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var writerLabel: UILabel!
     @IBOutlet weak var loginIdLabel: UILabel!
+    @IBOutlet weak var creatorButton: UIButton!
     @IBOutlet weak var synopsisLabel: UILabel!
     @IBOutlet weak var creatorInfoStackView: UIStackView!
     @IBOutlet weak var synopsisStackView: UIStackView!
@@ -62,6 +63,7 @@ extension ProjectInfoViewController: ViewModelBindable {
             viewWillAppear: rx.viewWillAppear.asDriver(),
             categoryCollectionViewSelectedIndexPath: categoryCollectionView.rx.itemSelected.asDriver(),
             tagCollectionViewSelectedIndexPath: tagCollectionView.rx.itemSelected.asDriver(),
+            creatorBtnDidTap: creatorButton.rx.tap.asDriver()
         )
 
         let output = viewModel.build(input: input)
@@ -121,6 +123,13 @@ extension ProjectInfoViewController: ViewModelBindable {
             .drive(onNext: { [weak self] indexPath in
                 let tag = tagDataSource[indexPath]
                 self?.openTaggingProjectViewController(tag: tag)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .openCreatorProfileViewController
+            .drive(onNext: { [weak self] loginId in
+                self?.openCreatorProfileViewController(loginId: loginId)
             })
             .disposed(by: disposeBag)
 
