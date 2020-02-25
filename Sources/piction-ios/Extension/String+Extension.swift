@@ -44,3 +44,13 @@ extension String {
         return NSLocalizedString(self, tableName: tableName, value: "**\(self)**", comment: "")
     }
 }
+
+extension String {
+    func components(separatedBy separators: [String]) -> [String] {
+        var output: [String] = [self]
+        for separator in separators {
+            output = output.flatMap { $0.components(separatedBy: separator) }
+        }
+        return output.map { $0.trimmingCharacters(in: .whitespaces)}
+    }
+}
