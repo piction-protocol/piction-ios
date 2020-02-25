@@ -19,6 +19,7 @@ final class ProjectPostListTypeListTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var lockView: UIView!
     @IBOutlet weak var maskImage: VisualEffectView!
+    @IBOutlet weak var leftLockView: UIView!
 
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -86,13 +87,16 @@ final class ProjectPostListTypeListTableViewCell: ReuseTableViewCell {
             }
 
             if needSubscription {
-                thumbnailView.isHidden = false
-                maskImage.isHidden = false
-                lockView.isHidden = false
+                thumbnailView.isHidden = thumbnail == nil
+                maskImage.isHidden = thumbnail == nil
+                lockView.isHidden = thumbnail == nil
+                leftLockView.isHidden = thumbnail != nil
+
                 maskImage.blurRadius = thumbnail == nil ? 0 : 5
                 lockView.backgroundColor = thumbnail == nil ? UIColor(r: 51, g: 51, b: 51, a: 0.2) : .clear
             } else {
                 thumbnailView.isHidden = thumbnail == nil
+                leftLockView.isHidden = true
                 maskImage.isHidden = true
                 lockView.isHidden = true
             }
