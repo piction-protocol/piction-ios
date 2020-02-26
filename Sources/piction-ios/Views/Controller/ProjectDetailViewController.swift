@@ -147,20 +147,19 @@ extension ProjectDetailViewController: ViewModelBindable {
             .sponsoredMembership
             .drive(onNext: { [weak self] sponsoredMembership in
                 guard let `self` = self else { return }
-                guard let membershipLevel = sponsoredMembership?.membership?.level else {
+                guard let sponsoredMembershipLevel = sponsoredMembership?.membership?.level else {
                     self.configureButtonStyle(button: self.subscriptionButton, style: .default)
-                    self.subscriptionButton.setTitle("구독", for: .normal)
-                    self.membershipButton.setTitle("후원하기", for: .normal)
+                    self.subscriptionButton.setTitle(LocalizationKey.tab_subscription.localized(), for: .normal)
+                    self.membershipButton.setTitle(LocalizationKey.btn_subs_membership.localized(), for: .normal)
                     return
                 }
                 self.configureButtonStyle(button: self.subscriptionButton, style: .dimmed)
-                self.subscriptionButton.setTitle("구독 중", for: .normal)
+                self.subscriptionButton.setTitle(LocalizationKey.str_project_subscribing.localized(), for: .normal)
 
-                if membershipLevel == 0 {
-                    self.membershipButton.setTitle("후원하기", for: .normal)
+                if sponsoredMembershipLevel == 0 {
+                    self.membershipButton.setTitle(LocalizationKey.btn_subs_membership.localized(), for: .normal)
                 } else {
-//                    self.subscriptionButton.isHidden = true
-                    self.membershipButton.setTitle("내 후원 정보", for: .normal)
+                    self.membershipButton.setTitle(LocalizationKey.btn_subs_my_membership_info.localized(), for: .normal)
                 }
             })
             .disposed(by: disposeBag)
@@ -314,8 +313,8 @@ extension ProjectDetailViewController {
             })
 
         let cancelAction = UIAlertAction(
-            title: "취소",
-            style:UIAlertAction.Style.cancel,
+            title: LocalizationKey.cancel.localized(),
+            style: UIAlertAction.Style.cancel,
             handler:{ action in
             })
 

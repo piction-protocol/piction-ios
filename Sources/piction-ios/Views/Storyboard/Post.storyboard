@@ -122,7 +122,7 @@
                     </view>
                     <toolbarItems>
                         <barButtonItem width="100" id="xFd-Am-xYT">
-                            <view key="customView" contentMode="scaleToFill" id="bQl-LA-AUu">
+                            <view key="customView" contentMode="scaleToFill" ambiguous="YES" id="bQl-LA-AUu">
                                 <rect key="frame" x="20" y="27" width="366" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>

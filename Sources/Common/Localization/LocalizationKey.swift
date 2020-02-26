@@ -80,6 +80,7 @@ enum LocalizationKey {
     // Button
     case btn_new_post
     case btn_subs_membership
+    case btn_subs_my_membership_info
     case btn_subs_free
     case btn_user_sponsorship
     case btn_user_sponsorship_history

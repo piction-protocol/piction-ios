@@ -80,6 +80,7 @@
 // Button
 "btn_new_post" = "새 포스트";
 "btn_subs_membership" = "후원하기";
+"btn_subs_my_membership_info" = "내 후원 정보";
 "btn_subs_free" = "구독하기";
 "btn_user_sponsorship" = "후원하기";
 "btn_user_sponsorship_history" = "후원 기록";
