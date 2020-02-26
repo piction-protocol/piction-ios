@@ -137,7 +137,7 @@ final class MembershipListViewModel: InjectableViewModel {
             }
 
         let embedEmptyViewController = membershipTableItems
-            .map { $0.isEmpty }
+            .filter { $0.isEmpty }
             .map { _ in .membershipEmpty }
             .flatMap(Driver<CustomEmptyViewStyle>.from)
 

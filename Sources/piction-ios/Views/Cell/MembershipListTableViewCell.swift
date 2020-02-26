@@ -27,7 +27,7 @@ enum MembershipButtonStyle {
         case .default:
             return .pictionDarkGray
         case .subscribing:
-            return .white
+            return UIColor(r: 209, g: 233, b: 255)
         }
     }
 
@@ -38,21 +38,8 @@ enum MembershipButtonStyle {
         case .default:
             return .white
         case .subscribing:
-            return .pictionDarkGray
+            return .pictionBlue
         }
-    }
-
-    var borderColor: CGColor {
-        switch self {
-        case .subscribing:
-            return UIColor.pictionDarkGray.cgColor
-        default:
-            return UIColor.clear.cgColor
-        }
-    }
-
-    var borderWidth: CGFloat {
-        return self == .subscribing ? 2 : 0
     }
 }
 
@@ -96,6 +83,17 @@ class MembershipListTableViewCell: ReuseTableViewCell {
             return ""
         }
 
+        var statusTextColor: UIColor {
+            if let _ = subscriptionInfo?.expireDate,
+                let membershipLevel = subscriptionInfo?.membership?.level,
+                let subscriptionLevel = subscriptionInfo?.membership?.level,
+                membershipLevel == subscriptionLevel {
+                return .pictionBlue
+            } else {
+                return UIColor(r: 153, g: 153, b: 153)
+            }
+        }
+
         var buttonStyle: MembershipButtonStyle {
             if let subscriptionLevel = subscriptionInfo?.membership?.level,
                 let membershipLevel = membership.level,
@@ -137,10 +135,9 @@ class MembershipListTableViewCell: ReuseTableViewCell {
         descriptionLabel.isHidden = (membership.description ?? "") == ""
         statusLabel.text = status
         statusLabel.isHidden = status == ""
+        statusLabel.textColor = statusTextColor
         subscriptionLabel.text = subscriptionText
         subscriptionLabel.backgroundColor = buttonStyle.backgroundColor
         subscriptionLabel.textColor = buttonStyle.textColor
-        subscriptionLabel.layer.borderColor = buttonStyle.borderColor
-        subscriptionLabel.layer.borderWidth = buttonStyle.borderWidth
     }
 }

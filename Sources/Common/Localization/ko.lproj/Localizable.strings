@@ -237,8 +237,8 @@
 "str_membership_free_tier" = "무료 티어";
 "str_membership_current_tier" = "티어 %d";
 "str_membership_warning_current_membership" = "%@ 후원 중";
-"str_membership_warning_description" = "후원 플랜을 업그레이드 하는 경우, 현재 후원 중인 플랜의 남은 기간은 환불되지 않습니다.";
-"str_membership_current_post_description" = "포스트를 볼 수 있는 후원 플랜만\n출력합니다.";
+"str_membership_warning_description" = "후원 플랜을 업그레이드 하는 경우, 현재 후원 중인 플랜의\n남은 기간은 환불되지 않습니다.";
+"str_membership_current_post_description" = "포스트를 볼 수 있는 후원 플랜만 출력합니다.";
 
 "str_membership_select_membership" = "선택한 후원 플랜";
 "str_membership_show_description" = "설명 보기";
@@ -253,7 +253,7 @@
 "str_membership_transfer_info" = "송금 안내";
 "str_membership_transfer_info_fees" = "▪︎ 기본 수수료";
 "str_membership_purchase_guide" = "결제 완료 시 결제 금액이 즉시 %@님의 계좌로 송금되며, 환불은 불가능합니다.";
-"str_membership_show_all" = "전체 후원 플랜 보기";
+"str_membership_show_all" = "전체 상품 보기";
 "str_membership_cancel" = "후원 플랜 결제를\n취소하시겠습니까?";
 "str_membership_purchase_complete" = "후원 플랜 결제가 완료되었습니다.";
 
