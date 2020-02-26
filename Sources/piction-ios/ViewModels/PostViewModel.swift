@@ -232,7 +232,7 @@ final class PostViewModel: InjectableViewModel {
             .filter { ($0.membership?.level ?? 0) == 0 }
             .withLatestFrom(membershipListSuccess)
             .map { $0.filter { ($0.level ?? 0) == 0 }.first?.id ?? 0 }
-            .map { MembershipAPI.sponsorship(uri: uri, membershipId: $0, price: 0) }
+            .map { MembershipAPI.sponsorship(uri: uri, membershipId: $0, sponsorshipPrice: 0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

@@ -131,7 +131,7 @@ final class ProjectDetailViewModel: InjectableViewModel {
             .withLatestFrom(sponsoredMembership)
             .filter { $0 == nil }
             .withLatestFrom(membershipListSuccess)
-            .map { MembershipAPI.sponsorship(uri: uri, membershipId: $0[safe: 0]?.id ?? 0, price: $0[safe: 0]?.price ?? 0) }
+            .map { MembershipAPI.sponsorship(uri: uri, membershipId: $0[safe: 0]?.id ?? 0, sponsorshipPrice: $0[safe: 0]?.price ?? 0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
