@@ -104,7 +104,7 @@ final class PurchaseMembershipViewModel: InjectableViewModel {
         let purchaseWithPincode = input.authSuccessWithPincode
 
         let purchaseAction = Driver.merge(purchaseWithoutPicode, purchaseWithPincode)
-            .map { MembershipAPI.sponsorship(uri: uri, membershipId: selectedMembership.id ?? 0, price: selectedMembership.price ?? 0) }
+            .map { MembershipAPI.sponsorship(uri: uri, membershipId: selectedMembership.id ?? 0, sponsorshipPrice: selectedMembership.price ?? 0) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 

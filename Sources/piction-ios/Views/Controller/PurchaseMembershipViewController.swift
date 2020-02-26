@@ -72,7 +72,7 @@ extension PurchaseMembershipViewController: ViewModelBindable {
         output
             .projectInfo
             .drive(onNext: { [weak self] projectInfo in
-                self?.transferInfoWriterLabel.text = "▪︎ \(projectInfo.user?.username ?? "") : "
+                self?.transferInfoWriterLabel.text = "▪︎ \(projectInfo.user?.username ?? "")"
 
                 self?.transferInfoDescriptionLabel.text = LocalizationKey.str_membership_purchase_guide.localized(with: projectInfo.user?.username ?? "")
             })
@@ -129,7 +129,7 @@ extension PurchaseMembershipViewController: ViewModelBindable {
                     self?.purchaseButton.setTitleColor(.pictionGray, for: .normal)
                 } else {
                     self?.checkboxImageView.image = #imageLiteral(resourceName: "checkboxOn")
-                    self?.purchaseButton.backgroundColor = UIColor(r: 51, g: 51, b: 51)
+                    self?.purchaseButton.backgroundColor = .pictionDarkGray
                     self?.purchaseButton.setTitleColor(.white, for: .normal)
                 }
                 self?.purchaseButton.isEnabled = !isEnabled
