@@ -34,6 +34,8 @@ final class PostViewController: UIViewController {
     @IBOutlet weak var nextPostButton: UIButton!
     @IBOutlet weak var shareBarButton: UIBarButtonItem!
     @IBOutlet weak var readmodeBarButton: UIBarButtonItem!
+    @IBOutlet weak var subscriptionNameStackView: UIStackView!
+    @IBOutlet weak var subscriptionNameLabel: UILabel!
 
     private let loadPost = PublishSubject<Int>()
 
@@ -278,14 +280,23 @@ extension PostViewController: ViewModelBindable {
             .drive(onNext: { [weak self] (userInfo, postInfo, _) in
                 guard let `self` = self else { return }
                 var buttonTitle: String {
-                    if (postInfo.membership?.level ?? 0) == 0 {
+                    if userInfo.loginId == nil {
+                        return LocalizationKey.login.localized()
+                    } else if (postInfo.membership?.level ?? 0) == 0 {
                         return LocalizationKey.btn_subs_free.localized()
+                    } else {
+                        return LocalizationKey.btn_subs_membership.localized()
                     }
-                    return LocalizationKey.btn_subs_membership.localized()
                 }
                 var description: String {
-                    return (postInfo.membership?.level ?? 0) == 0 ? LocalizationKey.str_subs_only.localized() : LocalizationKey.str_subs_only_with_membership.localized(with: postInfo.membership?.name ?? "")
+                    if (postInfo.membership?.level ?? 0) == 0 {
+                         return LocalizationKey.str_subs_only.localized()
+                    } else {
+                        return LocalizationKey.str_subs_only_with_membership.localized(with: postInfo.membership?.name ?? "")
+                    }
                 }
+                self.subscriptionNameLabel.text = postInfo.membership?.name
+                self.subscriptionNameStackView.isHidden = !((postInfo.membership?.level ?? 0) > 0)
                 self.subscriptionButton.setTitle(buttonTitle, for: .normal)
                 self.subscriptionDescriptionLabel.text = description
                 self.subscriptionView.isHidden = false

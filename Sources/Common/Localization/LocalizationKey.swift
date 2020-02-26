@@ -118,6 +118,7 @@ enum LocalizationKey {
     case str_popular_tag
     case str_project_count
     case str_subs_count_plural
+    case str_subs_only_with_membership_name
     case str_subs_only_with_membership
     case str_subs_only
     case str_series_subs_only

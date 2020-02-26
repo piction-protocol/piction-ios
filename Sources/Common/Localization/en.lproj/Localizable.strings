@@ -118,7 +118,8 @@
 "str_popular_tag" = "인기 태그";
 "str_project_count" = "%d 프로젝트";
 "str_subs_count_plural" = "%@ subscribers";
-"str_subs_only_with_membership" = "%@ 이상\n후원자만 이용 가능한 콘텐츠입니다.";
+"str_subs_only_with_membership_name" = "이상";
+"str_subs_only_with_membership" = "후원자만 이용 가능한 콘텐츠입니다.";
 "str_subs_only" = "Unlock this by becoming subscriber.";
 "str_series_subs_only" = "구독자 전용";
 "str_series_membership_subs_only" = "%@ 이상 구독자 전용";

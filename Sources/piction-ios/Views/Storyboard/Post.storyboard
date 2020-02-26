@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -30,29 +30,51 @@
                                 <rect key="frame" x="0.0" y="343" width="414" height="310"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="6bE-0R-bal">
-                                        <rect key="frame" x="20" y="52.5" width="374" height="205"/>
+                                        <rect key="frame" x="20" y="39.5" width="374" height="231.5"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icLockedGrey" translatesAutoresizingMaskIntoConstraints="NO" id="CUj-MR-LaS">
-                                                <rect key="frame" x="147" y="0.0" width="80" height="80"/>
+                                                <rect key="frame" x="135" y="0.0" width="104" height="104"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="80" id="QC4-oo-bb0"/>
-                                                    <constraint firstAttribute="width" constant="80" id="RGv-JU-us3"/>
+                                                    <constraint firstAttribute="height" constant="104" id="QC4-oo-bb0"/>
+                                                    <constraint firstAttribute="width" constant="104" id="RGv-JU-us3"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="구독자만 이용 가능한 콘텐츠 입니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpX-Jx-aKJ">
-                                                <rect key="frame" x="58.5" y="96" width="257.5" height="52"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="52" id="hoh-Vg-1yC"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <nil key="highlightedColor"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_subs_only"/>
-                                                </userDefinedRuntimeAttributes>
-                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="dd9-ib-bJT">
+                                                <rect key="frame" x="128.5" y="120" width="117" height="54.5"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="nXi-r9-4tL">
+                                                        <rect key="frame" x="42.5" y="0.0" width="32" height="17"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gSY-DY-FR8">
+                                                                <rect key="frame" x="0.0" y="0.0" width="3.5" height="17"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                                <color key="textColor" name="PictionDarkGray"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이상" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zXj-pB-wiJ">
+                                                                <rect key="frame" x="7.5" y="0.0" width="24.5" height="17"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <color key="textColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_subs_only_with_membership_name"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="구독자만 이용 가능한 콘텐츠 입니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpX-Jx-aKJ">
+                                                        <rect key="frame" x="0.0" y="21" width="117" height="33.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_subs_only"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lyf-Ue-cna" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
-                                                <rect key="frame" x="153" y="164" width="68" height="41"/>
+                                                <rect key="frame" x="153" y="190.5" width="68" height="41"/>
                                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="41" id="GTi-Ek-Zii"/>
@@ -68,7 +90,7 @@
                                                         <real key="value" value="0.0"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                        <real key="value" value="8"/>
+                                                        <real key="value" value="4"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </button>
@@ -100,7 +122,7 @@
                     </view>
                     <toolbarItems>
                         <barButtonItem width="100" id="xFd-Am-xYT">
-                            <view key="customView" contentMode="scaleToFill" ambiguous="YES" id="bQl-LA-AUu">
+                            <view key="customView" contentMode="scaleToFill" id="bQl-LA-AUu">
                                 <rect key="frame" x="20" y="27" width="366" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -179,6 +201,8 @@
                         <outlet property="shareBarButton" destination="Fr8-1K-Ymg" id="GA4-4h-y8J"/>
                         <outlet property="subscriptionButton" destination="Lyf-Ue-cna" id="nw7-TC-AT6"/>
                         <outlet property="subscriptionDescriptionLabel" destination="hpX-Jx-aKJ" id="FaU-ZJ-eMo"/>
+                        <outlet property="subscriptionNameLabel" destination="gSY-DY-FR8" id="UxP-SK-BoA"/>
+                        <outlet property="subscriptionNameStackView" destination="nXi-r9-4tL" id="E6V-XR-cae"/>
                         <outlet property="subscriptionView" destination="ZiD-ey-720" id="ijL-Vh-wHw"/>
                     </connections>
                 </viewController>
