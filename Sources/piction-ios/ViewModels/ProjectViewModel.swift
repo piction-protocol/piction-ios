@@ -45,6 +45,7 @@ final class ProjectViewModel: InjectableViewModel {
         let viewWillDisappear: Driver<Void>
         let changeMenu: Driver<Int>
         let infoBtnDidTap: Driver<Void>
+        let shareBtnDidTap: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
         let deletePost: Driver<Int>
         let deleteSeries: Driver<Int>
@@ -60,6 +61,7 @@ final class ProjectViewModel: InjectableViewModel {
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let selectedIndexPath: Driver<IndexPath>
         let openProjectInfoViewController: Driver<String>
+        let openSharePopup: Driver<ProjectModel>
         let activityIndicator: Driver<Bool>
         let toastMessage: Driver<String>
     }
@@ -128,9 +130,6 @@ final class ProjectViewModel: InjectableViewModel {
             .map { _ in SponsorshipModel?(nil) }
 
         let projectSubscriptionInfo = Driver.merge(subscriptionInfoSuccess, subscriptionInfoError)
-
-        let openProjectInfoViewController = input.infoBtnDidTap
-            .map { uri }
 
         let loadProjectInfoAction = Driver.merge(selectPostMenu, selectSeriesMenu, loadNext)
             .map { ProjectAPI.get(uri: uri) }
@@ -229,6 +228,12 @@ final class ProjectViewModel: InjectableViewModel {
             .map { self.sections = $0 }
             .map { SectionType<ContentsSection>.Section(title: "series", items: self.sections) }
 
+        let openProjectInfoViewController = input.infoBtnDidTap
+            .map { uri }
+
+        let openSharePopup = input.shareBtnDidTap
+            .withLatestFrom(loadProjectInfo)
+
         let embedPostEmptyView = loadPostSuccess
             .map { $0.content?.isEmpty }
             .map { _ in .projectPostListEmpty }
@@ -308,6 +313,7 @@ final class ProjectViewModel: InjectableViewModel {
             embedEmptyViewController: embedEmptyViewController,
             selectedIndexPath: input.selectedIndexPath,
             openProjectInfoViewController: openProjectInfoViewController,
+            openSharePopup: openSharePopup,
             activityIndicator: activityIndicator,
             toastMessage: toastMessage
         )

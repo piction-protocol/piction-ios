@@ -558,12 +558,16 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="fHn-Rs-49J">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="icInfo" id="9mq-jx-KNx"/>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" image="icInfo" id="9mq-jx-KNx"/>
+                            <barButtonItem title="Item" image="icShare" id="DjW-UK-HZ2"/>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="emptyView" destination="Ddh-ES-J1n" id="PjG-2F-yu5"/>
                         <outlet property="infoBarButton" destination="9mq-jx-KNx" id="shF-tf-MKb"/>
+                        <outlet property="shareBarButton" destination="DjW-UK-HZ2" id="j9k-RK-fIO"/>
                         <outlet property="tableView" destination="xSZ-31-hXv" id="DP5-Vx-1ZW"/>
                     </connections>
                 </viewController>
@@ -576,6 +580,7 @@
         <image name="icFavoriteOff" width="24" height="24"/>
         <image name="icInfo" width="22" height="22"/>
         <image name="icLockedWh" width="24" height="24"/>
+        <image name="icShare" width="22" height="22"/>
         <image name="img-dummy-post-960-x-360" width="960" height="360"/>
         <namedColor name="PictionDarkGray">
             <color red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

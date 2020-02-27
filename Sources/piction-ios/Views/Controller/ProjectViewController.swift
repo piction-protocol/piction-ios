@@ -26,6 +26,7 @@ final class ProjectViewController: UIViewController {
 
     private var contentOffset: CGPoint?
 
+    @IBOutlet weak var shareBarButton: UIBarButtonItem!
     @IBOutlet weak var infoBarButton: UIBarButtonItem!
     @IBOutlet weak var emptyView: UIView!
 
@@ -57,77 +58,6 @@ final class ProjectViewController: UIViewController {
         if let projectDetailContainerView = stretchyHeader?.projectDetailView {
             self.embed(projectDetailView, to: projectDetailContainerView)
         }
-    }
-
-    private func openDeletePostPopup(postId: Int) {
-        let alertController = UIAlertController(title: nil, message: LocalizationKey.popup_title_delete_post.localized(), preferredStyle: .alert)
-        let cancelButton = UIAlertAction(title: LocalizationKey.cancel.localized(), style: .cancel)
-        let confirmButton = UIAlertAction(title: LocalizationKey.confirm.localized(), style: .default) { [weak self] _ in
-            self?.deletePost.onNext(postId)
-        }
-
-        alertController.addAction(confirmButton)
-        alertController.addAction(cancelButton)
-
-        self.present(alertController, animated: true, completion: nil)
-    }
-
-    private func openDeleteSeriesPopup(seriesId: Int) {
-        let alertController = UIAlertController(
-        title: LocalizationKey.str_delete_series.localized(),
-        message: nil,
-        preferredStyle: UIAlertController.Style.alert)
-
-        let deleteAction = UIAlertAction(
-            title: LocalizationKey.delete.localized(),
-            style: UIAlertAction.Style.destructive,
-            handler: { [weak self] action in
-                self?.deleteSeries.onNext(seriesId)
-            })
-
-        let cancelAction = UIAlertAction(
-            title: LocalizationKey.cancel.localized(),
-            style:UIAlertAction.Style.cancel,
-            handler:{ action in
-            })
-
-        alertController.addAction(deleteAction)
-        alertController.addAction(cancelAction)
-
-        present(alertController, animated: true, completion: nil)
-    }
-
-    private func openUpdateSeriesPopup(series: SeriesModel) {
-        let alertController = UIAlertController(
-            title: LocalizationKey.str_modify_series.localized(),
-            message: nil,
-            preferredStyle: UIAlertController.Style.alert)
-
-        alertController.addTextField(configurationHandler: { textField in
-            textField.clearButtonMode = UITextField.ViewMode.always
-            textField.text = series.name ?? ""
-        })
-
-        let insertAction = UIAlertAction(
-            title: LocalizationKey.str_modify.localized(),
-            style: UIAlertAction.Style.default,
-            handler: { [weak self] action in
-                guard let textFields = alertController.textFields else {
-                    return
-                }
-                self?.updateSeries.onNext((textFields[0].text ?? "", series))
-            })
-
-        let cancelAction = UIAlertAction(
-            title: LocalizationKey.cancel.localized(),
-            style: UIAlertAction.Style.cancel,
-            handler: { action in
-            })
-
-        alertController.addAction(insertAction)
-        alertController.addAction(cancelAction)
-
-        present(alertController, animated: true, completion: nil)
     }
 
     private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
@@ -204,6 +134,7 @@ extension ProjectViewController: ViewModelBindable {
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
             changeMenu: changeMenu.asDriver(onErrorDriveWith: .empty()),
             infoBtnDidTap: infoBarButton.rx.tap.asDriver(),
+            shareBtnDidTap: shareBarButton.rx.tap.asDriver(),
             selectedIndexPath: tableView.rx.itemSelected.asDriver(),
             deletePost: deletePost.asDriver(onErrorDriveWith: .empty()),
             deleteSeries: deleteSeries.asDriver(onErrorDriveWith: .empty()),
@@ -302,6 +233,22 @@ extension ProjectViewController: ViewModelBindable {
             .drive(onNext: { [weak self] style in
                 guard let `self` = self else { return }
                 self.embedCustomEmptyViewController(style: style)
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .openSharePopup
+            .drive(onNext: { [weak self] projectInfo in
+                guard
+                    let uri = projectInfo.uri,
+                    let title = projectInfo.title
+                else { return }
+
+                let stagingPath = AppInfo.isStaging ? "staging." : ""
+
+                let url = "\(title) - Piction\nhttps://\(stagingPath)piction.network/project/\(uri)"
+
+                self?.openSharePopup(url: url)
             })
             .disposed(by: disposeBag)
 
@@ -412,5 +359,104 @@ extension ProjectViewController: UITableViewDelegate {
         })
 
         return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
+    }
+}
+
+extension ProjectViewController {
+    private func openDeletePostPopup(postId: Int) {
+        let alertController = UIAlertController(title: nil, message: LocalizationKey.popup_title_delete_post.localized(), preferredStyle: .alert)
+        let cancelButton = UIAlertAction(title: LocalizationKey.cancel.localized(), style: .cancel)
+        let confirmButton = UIAlertAction(title: LocalizationKey.confirm.localized(), style: .default) { [weak self] _ in
+            self?.deletePost.onNext(postId)
+        }
+
+        alertController.addAction(confirmButton)
+        alertController.addAction(cancelButton)
+
+        self.present(alertController, animated: true, completion: nil)
+    }
+
+    private func openDeleteSeriesPopup(seriesId: Int) {
+        let alertController = UIAlertController(
+        title: LocalizationKey.str_delete_series.localized(),
+        message: nil,
+        preferredStyle: UIAlertController.Style.alert)
+
+        let deleteAction = UIAlertAction(
+            title: LocalizationKey.delete.localized(),
+            style: UIAlertAction.Style.destructive,
+            handler: { [weak self] action in
+                self?.deleteSeries.onNext(seriesId)
+            })
+
+        let cancelAction = UIAlertAction(
+            title: LocalizationKey.cancel.localized(),
+            style:UIAlertAction.Style.cancel,
+            handler:{ action in
+            })
+
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+
+        present(alertController, animated: true, completion: nil)
+    }
+
+    private func openUpdateSeriesPopup(series: SeriesModel) {
+        let alertController = UIAlertController(
+            title: LocalizationKey.str_modify_series.localized(),
+            message: nil,
+            preferredStyle: UIAlertController.Style.alert)
+
+        alertController.addTextField(configurationHandler: { textField in
+            textField.clearButtonMode = UITextField.ViewMode.always
+            textField.text = series.name ?? ""
+        })
+
+        let insertAction = UIAlertAction(
+            title: LocalizationKey.str_modify.localized(),
+            style: UIAlertAction.Style.default,
+            handler: { [weak self] action in
+                guard let textFields = alertController.textFields else {
+                    return
+                }
+                self?.updateSeries.onNext((textFields[0].text ?? "", series))
+            })
+
+        let cancelAction = UIAlertAction(
+            title: LocalizationKey.cancel.localized(),
+            style: UIAlertAction.Style.cancel,
+            handler: { action in
+            })
+
+        alertController.addAction(insertAction)
+        alertController.addAction(cancelAction)
+
+        present(alertController, animated: true, completion: nil)
+    }
+
+    private func openSharePopup(url: String) {
+        let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: [])
+
+        activityViewController.excludedActivityTypes = [
+            UIActivity.ActivityType.print,
+            UIActivity.ActivityType.assignToContact,
+            UIActivity.ActivityType.saveToCameraRoll,
+            UIActivity.ActivityType.addToReadingList,
+            UIActivity.ActivityType.postToFlickr,
+            UIActivity.ActivityType.postToVimeo,
+            UIActivity.ActivityType.openInIBooks
+        ]
+
+        if let topController = UIApplication.topViewController() {
+            if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad {
+                activityViewController.modalPresentationStyle = .popover
+                if let popover = activityViewController.popoverPresentationController {
+                    popover.permittedArrowDirections = .up
+                    popover.sourceView = topController.view
+                    popover.sourceRect = CGRect(x: SCREEN_W, y: 64, width: 0, height: 0)
+                }
+            }
+            topController.present(activityViewController, animated: true, completion: nil)
+        }
     }
 }
