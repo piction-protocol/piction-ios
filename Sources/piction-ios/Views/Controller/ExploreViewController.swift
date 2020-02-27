@@ -30,6 +30,7 @@ final class ExploreViewController: UIViewController {
             collectionView.registerXib(ProjectListCollectionViewCell.self)
             collectionView.registerReusableView(ReuseCollectionReusableView.self, kind: .header)
             collectionView.registerReusableView(ReuseCollectionReusableView.self, kind: .footer)
+            collectionView.isHidden = true
         }
     }
 
@@ -218,6 +219,7 @@ extension ExploreViewController: ViewModelBindable {
 extension ExploreViewController: CategoryListViewDelegate {
     func loadComplete() {
         collectionView.reloadData()
+        collectionView.isHidden = false
     }
 }
 
