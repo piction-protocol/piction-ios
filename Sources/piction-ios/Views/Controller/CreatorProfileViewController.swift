@@ -22,6 +22,7 @@ final class CreatorProfileViewController: UIViewController {
         didSet {
             collectionView.registerXib(ProjectListCollectionViewCell.self)
             collectionView.registerReusableView(ReuseCollectionReusableView.self, kind: .header)
+            collectionView.isHidden = true
         }
     }
 
@@ -142,6 +143,7 @@ extension CreatorProfileViewController: ViewModelBindable {
 extension CreatorProfileViewController: CreatorHeaderViewDelegate {
     func loadComplete() {
         collectionView.reloadData()
+        collectionView.isHidden = false
     }
 
     func setNavigationTitle(title: String) {
