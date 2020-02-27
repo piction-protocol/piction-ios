@@ -13,6 +13,10 @@ import ViewModelBindable
 import RxDataSources
 import PictionSDK
 
+protocol ProjectDetailViewDelegate: class {
+    func layoutIfNeeded()
+}
+
 enum ProjectDetailButtonStyle {
     case dimmed
     case `default`
@@ -51,6 +55,8 @@ enum ProjectDetailButtonStyle {
 
 final class ProjectDetailViewController: UIViewController {
     var disposeBag = DisposeBag()
+
+    weak var delegate: ProjectDetailViewDelegate?
 
     @IBOutlet weak var projectDetailContainerView: UIView!
     @IBOutlet weak var categoryCollectionView: UICollectionView!
@@ -168,6 +174,7 @@ extension ProjectDetailViewController: ViewModelBindable {
             .membershipBtnHidden
             .drive(onNext: { [weak self] status in
                 self?.membershipButton.isHidden = status
+                self?.delegate?.layoutIfNeeded()
             })
             .disposed(by: disposeBag)
 

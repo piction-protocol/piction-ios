@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1KD-Lq-uHE">
-                                <rect key="frame" x="24" y="56.666666666666657" width="366" height="168"/>
+                                <rect key="frame" x="24" y="66.666666666666686" width="366" height="168"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="27f-nG-nqF">
                                         <rect key="frame" x="20" y="24" width="326" height="120"/>
@@ -261,20 +261,16 @@
                                                                     <constraint firstAttribute="width" constant="80" id="k5o-Jk-lgG"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                                                <state key="normal" title="구독">
+                                                                <state key="normal" title=" ">
                                                                     <color key="titleColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 </state>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                        <real key="value" value="2"/>
+                                                                        <real key="value" value="0.0"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                                         <real key="value" value="4"/>
                                                                     </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                        <color key="value" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="tab_subscription"/>
                                                                 </userDefinedRuntimeAttributes>
                                                             </button>
                                                         </subviews>
@@ -288,7 +284,7 @@
                                                     <constraint firstAttribute="height" constant="53" id="zUJ-rY-O2B"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                <state key="normal" title="후원하기">
+                                                <state key="normal" title=" ">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <userDefinedRuntimeAttributes>
@@ -307,7 +303,6 @@
                                 <constraints>
                                     <constraint firstItem="27f-nG-nqF" firstAttribute="leading" secondItem="1KD-Lq-uHE" secondAttribute="leading" constant="20" id="0tc-Lr-LHG"/>
                                     <constraint firstAttribute="bottom" secondItem="27f-nG-nqF" secondAttribute="bottom" constant="24" id="9aP-c2-WQa"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" id="PcY-sy-4FL"/>
                                     <constraint firstItem="27f-nG-nqF" firstAttribute="top" secondItem="1KD-Lq-uHE" secondAttribute="top" constant="24" id="PtI-Z0-flF"/>
                                     <constraint firstAttribute="trailing" secondItem="27f-nG-nqF" secondAttribute="trailing" constant="20" id="bZV-NK-ctP"/>
                                 </constraints>
@@ -315,10 +310,10 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="1KD-Lq-uHE" firstAttribute="centerY" secondItem="Got-07-Ytp" secondAttribute="centerY" constant="-10" id="2q1-oi-VDB"/>
                             <constraint firstItem="1KD-Lq-uHE" firstAttribute="leading" secondItem="Got-07-Ytp" secondAttribute="leading" constant="24" id="DOB-Vp-Ht3"/>
                             <constraint firstAttribute="trailing" secondItem="1KD-Lq-uHE" secondAttribute="trailing" constant="24" id="RA7-b3-LSk"/>
                             <constraint firstItem="1KD-Lq-uHE" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Got-07-Ytp" secondAttribute="top" id="ct6-Gc-b6Z"/>
+                            <constraint firstItem="1KD-Lq-uHE" firstAttribute="centerY" secondItem="Got-07-Ytp" secondAttribute="centerY" id="lSO-xI-fg1"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="rLy-d9-izs"/>
                     </view>
@@ -338,7 +333,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ueo-ud-WVf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="62" y="130"/>
+            <point key="canvasLocation" x="60.799999999999997" y="129.67980295566502"/>
         </scene>
     </scenes>
     <resources>

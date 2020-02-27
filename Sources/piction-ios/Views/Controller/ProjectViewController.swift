@@ -42,6 +42,7 @@ final class ProjectViewController: UIViewController {
         didSet {
             stretchyHeader = ProjectHeaderView.getView()
             stretchyHeader?.delegate = self
+            stretchyHeader?.isHidden = true
             if let stretchyHeader = stretchyHeader {
                 stretchyHeader.stretchDelegate = self
                 tableView.addSubview(stretchyHeader)
@@ -51,6 +52,7 @@ final class ProjectViewController: UIViewController {
 
     private func embedProjectDetailViewController(uri: String) {
         let projectDetailView = ProjectDetailViewController.make(uri: uri)
+        projectDetailView.delegate = self
         self.projectDetailView = projectDetailView
         if let projectDetailContainerView = stretchyHeader?.projectDetailView {
             self.embed(projectDetailView, to: projectDetailContainerView)
@@ -138,7 +140,6 @@ final class ProjectViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         stretchyHeader?.frame.size.width = view.frame.size.width
-        stretchyHeader?.setMaximumContentHeight(detailHeight: projectDetailView?.projectDetailContainerView.frame.size.height ?? 0)
     }
 
     private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionType<ContentsSection>> {
@@ -361,6 +362,13 @@ extension ProjectViewController: ProjectHeaderViewDelegate {
         } else {
             contentOffset = tableView.contentOffset
         }
+    }
+}
+
+extension ProjectViewController: ProjectDetailViewDelegate {
+    func layoutIfNeeded() {
+        stretchyHeader?.setMaximumContentHeight(detailHeight: projectDetailView?.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height ?? 0)
+        stretchyHeader?.isHidden = false
     }
 }
 
