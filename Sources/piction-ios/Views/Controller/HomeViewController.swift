@@ -87,9 +87,23 @@ final class HomeViewController: UIViewController {
                     cell.configure(with: type)
                     return cell
                 case .subscribingPosts(let model):
-                    let cell: HomeSubscribingPostsTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    cell.configure(with: model)
-                    return cell
+                    var isLargeType: Bool {
+                        guard
+                            model.cover != nil,
+                            let categories = model.project?.categories,
+                            (categories.filter { ($0.name ?? "") == "일러스트" || ($0.name ?? "") == "웹툰" || ($0.name ?? "") == "사진" || ($0.name ?? "") == "영상" }.count) > 0
+                            else { return false }
+                        return true
+                    }
+                    if isLargeType {
+                        let cell: HomeSubscribingPostsLargeTypeTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                        cell.configure(with: model)
+                        return cell
+                    } else {
+                        let cell: HomeSubscribingPostsSmallTypeTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                        cell.configure(with: model)
+                        return cell
+                    }
                 case .trending(let model):
                     let cell: HomeTrendingTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
                     cell.configure(with: model)
