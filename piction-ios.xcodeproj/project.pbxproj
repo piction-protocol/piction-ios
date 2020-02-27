@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B15F4CA2407865300B77464 /* CenterAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B15F4C92407865300B77464 /* CenterAlignedCollectionViewFlowLayout.swift */; };
+		3B15F4CB2407865300B77464 /* CenterAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B15F4C92407865300B77464 /* CenterAlignedCollectionViewFlowLayout.swift */; };
 		4309234C2372B5A200716AF8 /* ShareEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4309234B2372B5A200716AF8 /* ShareEntryViewController.swift */; };
 		430924222372CB9000716AF8 /* ManageSeries.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 430924212372CB9000716AF8 /* ManageSeries.storyboard */; };
 		430924242372CB9F00716AF8 /* ManageSeriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430924232372CB9F00716AF8 /* ManageSeriesViewController.swift */; };
@@ -566,6 +568,7 @@
 /* Begin PBXFileReference section */
 		253016FC00AF42FB8CD49BCE /* Pods-piction-ios-test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-piction-ios-test.release.xcconfig"; path = "Target Support Files/Pods-piction-ios-test/Pods-piction-ios-test.release.xcconfig"; sourceTree = "<group>"; };
 		39BA2EF518F7FB530A38CAFD /* Pods_piction_ios_test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_piction_ios_test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B15F4C92407865300B77464 /* CenterAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		4309233C2372B42F00716AF8 /* piction-ios-shareEx.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "piction-ios-shareEx.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4309234B2372B5A200716AF8 /* ShareEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareEntryViewController.swift; sourceTree = "<group>"; };
 		4309235A2372BAB000716AF8 /* UIViewController.Container+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController.Container+Extension.swift"; sourceTree = "<group>"; };
@@ -1363,6 +1366,7 @@
 			isa = PBXGroup;
 			children = (
 				438E762B2362BCF50062D004 /* DynamicCollectionViewFlowLayout.swift */,
+				3B15F4C92407865300B77464 /* CenterAlignedCollectionViewFlowLayout.swift */,
 			);
 			path = DynamicCollectionViewFlowLayout;
 			sourceTree = "<group>";
@@ -2065,6 +2069,7 @@
 				4323FA8D233A165800243655 /* VisualEffectView.swift in Sources */,
 				439029272383EE6A00A3121B /* MembershipListViewController.swift in Sources */,
 				4323FABB233A165A00243655 /* HomeViewController.swift in Sources */,
+				3B15F4CB2407865300B77464 /* CenterAlignedCollectionViewFlowLayout.swift in Sources */,
 				438E762D2362BCF50062D004 /* DynamicCollectionViewFlowLayout.swift in Sources */,
 				4323FB4D233A166000243655 /* TransactionHistoryListTypeTableViewCell.swift in Sources */,
 				4323FB03233A165D00243655 /* PostFooterViewModel.swift in Sources */,
@@ -2237,6 +2242,7 @@
 				4323FA8C233A165800243655 /* VisualEffectView.swift in Sources */,
 				439029262383EE6A00A3121B /* MembershipListViewController.swift in Sources */,
 				4323FABA233A165A00243655 /* HomeViewController.swift in Sources */,
+				3B15F4CA2407865300B77464 /* CenterAlignedCollectionViewFlowLayout.swift in Sources */,
 				438E762C2362BCF50062D004 /* DynamicCollectionViewFlowLayout.swift in Sources */,
 				4323FB4C233A166000243655 /* TransactionHistoryListTypeTableViewCell.swift in Sources */,
 				4323FB02233A165D00243655 /* PostFooterViewModel.swift in Sources */,
