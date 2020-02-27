@@ -73,7 +73,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
 
     func setMaximumContentHeight(detailHeight: CGFloat) {
         let thumbnailWidth = SCREEN_W < SCREEN_H ? SCREEN_W : SCREEN_H
-        let projectDetailPosY = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad ? thumbnailWidth / 2 - 55 : thumbnailWidth - 30
+        let projectDetailPosY = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad ? thumbnailWidth / 2 - 70 : thumbnailWidth - 30
         maximumContentHeight = projectDetailPosY + detailHeight + menuHeight - STATUS_HEIGHT - DEFAULT_NAVIGATION_HEIGHT
     }
 
