@@ -74,7 +74,6 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="24"/>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
                                             <constraint firstItem="7iI-tb-KeC" firstAttribute="leading" secondItem="QaP-JQ-eLd" secondAttribute="leading" id="2Jm-fq-tKS"/>
                                             <constraint firstAttribute="bottom" secondItem="7iI-tb-KeC" secondAttribute="bottom" id="7iN-Kp-0M8"/>
@@ -107,7 +106,6 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="Y9C-EG-1v5" secondAttribute="bottom" constant="39.5" id="AA2-9p-JSJ"/>
                             <constraint firstAttribute="trailing" secondItem="Y9C-EG-1v5" secondAttribute="trailing" constant="20" id="gzN-7k-B0P"/>

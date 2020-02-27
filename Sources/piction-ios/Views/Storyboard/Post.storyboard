@@ -122,7 +122,7 @@
                     </view>
                     <toolbarItems>
                         <barButtonItem width="100" id="xFd-Am-xYT">
-                            <view key="customView" contentMode="scaleToFill" ambiguous="YES" id="bQl-LA-AUu">
+                            <view key="customView" contentMode="scaleToFill" id="bQl-LA-AUu">
                                 <rect key="frame" x="20" y="27" width="366" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -153,7 +153,7 @@
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="6ag-z0-BlJ"/>
                         <barButtonItem width="100" id="woe-ZJ-c72">
-                            <view key="customView" contentMode="scaleToFill" ambiguous="YES" id="LBT-hY-17x">
+                            <view key="customView" contentMode="scaleToFill" id="LBT-hY-17x">
                                 <rect key="frame" x="394" y="27" width="0.0" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -185,8 +185,8 @@
                     </toolbarItems>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="F9X-at-yXF">
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="bookmarks" id="vqZ-bV-VGy">
-                                <color key="tintColor" name="PictionDarkGray"/>
+                            <barButtonItem image="ic-read" style="plain" id="vqZ-bV-VGy">
+                                <color key="tintColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </barButtonItem>
                             <barButtonItem title="        " id="Fr8-1K-Ymg"/>
                         </rightBarButtonItems>
@@ -212,6 +212,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ic-read" width="24" height="24"/>
         <image name="icChevronLeftBlack" width="8" height="13"/>
         <image name="icChevronRightBlack" width="8" height="13"/>
         <image name="icLockedGrey" width="24" height="24"/>

@@ -33,7 +33,11 @@ final class PostViewController: UIViewController {
     @IBOutlet weak var prevPostButton: UIButton!
     @IBOutlet weak var nextPostButton: UIButton!
     @IBOutlet weak var shareBarButton: UIBarButtonItem!
-    @IBOutlet weak var readmodeBarButton: UIBarButtonItem!
+    @IBOutlet weak var readmodeBarButton: UIBarButtonItem! {
+        didSet {
+            readmodeBarButton.tintColor = .pictionGray
+        }
+    }
     @IBOutlet weak var subscriptionNameStackView: UIStackView!
     @IBOutlet weak var subscriptionNameLabel: UILabel!
 
@@ -123,6 +127,7 @@ final class PostViewController: UIViewController {
         if #available(iOS 13.0, *) {
             if previousTraitCollection?.hasDifferentColorAppearance(comparedTo: traitCollection) ?? false {
                 setWebviewColor()
+                setWebviewBackgroundColor()
             }
         }
     }
@@ -153,8 +158,24 @@ final class PostViewController: UIViewController {
         postWebView.evaluateJavaScript("document.getElementsByTagName('body')[0].style.color =\"\(fontColor ?? "#333333")\"")
     }
 
+    private func setWebviewBackgroundColor() {
+        if readmodeBarButton.tintColor == .pictionGray {
+            if #available(iOS 13.0, *) {
+                postWebView.backgroundColor = .systemBackground
+            } else {
+                postWebView.backgroundColor = .white
+            }
+        } else {
+            if #available(iOS 13.0, *) {
+                postWebView.backgroundColor = .PictionReaderGrayDM
+            } else {
+                postWebView.backgroundColor = UIColor(r: 232, g: 239, b: 244)
+            }
+        }
+    }
+
     private func changeReadmode() {
-        if readmodeBarButton.tintColor == .pictionDarkGrayDM {
+        if readmodeBarButton.tintColor == .pictionGray {
             let style = [
                 "document.getElementsByTagName('body')[0].style.fontFamily =\"RIDIBatang\"",
                 "document.getElementsByTagName('body')[0].style.lineHeight =\"35px\"",
@@ -173,8 +194,9 @@ final class PostViewController: UIViewController {
                 "document.body.style.marginRight =\"20px\""
             ]
             style.forEach { postWebView.evaluateJavaScript($0) }
-            readmodeBarButton.tintColor = .pictionDarkGrayDM
+            readmodeBarButton.tintColor = .pictionGray
         }
+        setWebviewBackgroundColor()
         resizeFooter()
     }
 
@@ -423,6 +445,7 @@ extension PostViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if #available(iOS 13.0, *) {
             setWebviewColor()
+            setWebviewBackgroundColor()
         }
         webView.evaluateJavaScript("document.readyState") { (complete, error) in
             if complete != nil {

@@ -15,6 +15,8 @@ extension UIColor {
     static let pictionGray = UIColor(r: 191, g: 191, b: 191)
     static let pictionLightGray = UIColor(r: 242, g: 242, b: 242)
     static let pictionRed = UIColor(r: 213, g: 19, b: 21)
+    static let PictionReaderGrayDM = UIColor(named: "PictionReaderGray") ?? UIColor(r: 232, g: 239, b: 244)
+    static let PictionReaderGray = UIColor(r: 232, g: 239, b: 244)
 
     convenience init(red: Int, green: Int, blue: Int) {
         assert(red >= 0 && red <= 255, "Invalid red component")
