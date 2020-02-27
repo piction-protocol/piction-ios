@@ -172,6 +172,9 @@ final class PostViewController: UIViewController {
                 postWebView.backgroundColor = UIColor(r: 232, g: 239, b: 244)
             }
         }
+        if let backgroundColor = postWebView.backgroundColor {
+            footerViewController?.changeBackgroundColor(color: backgroundColor)
+        }
     }
 
     private func changeReadmode() {

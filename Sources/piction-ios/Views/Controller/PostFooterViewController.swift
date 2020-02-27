@@ -149,4 +149,9 @@ extension PostFooterViewController {
         seriesTitleLabel.text = postItem.series?.name
         seriesPostCountLabel.text = LocalizationKey.str_series_posts_count.localized(with: postItem.series?.postCount.commaRepresentation ?? "0")
     }
+
+    func changeBackgroundColor(color: UIColor) {
+        guard let likeView = likeView else { return }
+        likeView.backgroundColor = color
+    }
 }
