@@ -446,6 +446,8 @@
                                             <outlet property="seriesLabel" destination="pM1-4V-6mo" id="9gu-MQ-nAk"/>
                                             <outlet property="thumbnailImageView" destination="l5o-oQ-dTD" id="Wve-vD-ChI"/>
                                             <outlet property="thumbnailView" destination="AVD-MJ-GTZ" id="5mQ-Ra-kvP"/>
+                                            <outlet property="titleContainerStackView" destination="lzq-we-aae" id="zwI-2L-3x7"/>
+                                            <outlet property="titleContainerView" destination="LSC-PZ-FSh" id="Ehh-yf-FOn"/>
                                             <outlet property="titleLabel" destination="M3d-wX-uPI" id="cUz-Yj-6dT"/>
                                         </connections>
                                     </tableViewCell>
