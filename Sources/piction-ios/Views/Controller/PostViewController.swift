@@ -28,6 +28,7 @@ final class PostViewController: UIViewController {
             postWebView.scrollView.delegate = self
             postWebView.isOpaque = false
             postWebView.scrollView.contentInsetAdjustmentBehavior = .never
+            postWebView.isHidden = true
         }
     }
     @IBOutlet weak var prevPostButton: UIButton!
@@ -177,8 +178,24 @@ final class PostViewController: UIViewController {
         }
     }
 
-    private func changeReadmode() {
-        if readmodeBarButton.tintColor == .pictionGray {
+    private func isReadmode() -> Bool {
+        guard
+            let viewModel = self.viewModel,
+            let userDefault = UserDefaults(suiteName: "group.\(BUNDLEID)")
+        else { return false }
+        return userDefault.bool(forKey: "readmode_\(viewModel.uri)")
+    }
+
+    private func setReadmode(status: Bool) {
+        guard
+            let viewModel = self.viewModel,
+            let userDefault = UserDefaults(suiteName: "group.\(BUNDLEID)")
+        else { return }
+        return userDefault.set(status, forKey: "readmode_\(viewModel.uri)")
+    }
+
+    private func changeReadmode(status: Bool) {
+        if status {
             let style = [
                 "document.getElementsByTagName('body')[0].style.fontFamily =\"RIDIBatang\"",
                 "document.getElementsByTagName('body')[0].style.lineHeight =\"35px\"",
@@ -345,8 +362,10 @@ extension PostViewController: ViewModelBindable {
 
         output
             .changeReadmode
-            .drive(onNext: { [weak self] in
-                self?.changeReadmode()
+            .drive(onNext: { [weak self] postId in
+                let status = self?.isReadmode() ?? true
+                self?.changeReadmode(status: !status)
+                self?.setReadmode(status: !status)
             })
             .disposed(by: disposeBag)
 
@@ -446,6 +465,8 @@ extension PostViewController: ViewModelBindable {
 extension PostViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        let status = self.isReadmode()
+        self.changeReadmode(status: status)
         if #available(iOS 13.0, *) {
             setWebviewColor()
             setWebviewBackgroundColor()
@@ -458,6 +479,7 @@ extension PostViewController: WKNavigationDelegate {
                         let height = height as? CGFloat
                     else { return }
                     self.embedPostFooterViewController(height: height)
+                    self.postWebView.isHidden = false
                 })
             }
         }

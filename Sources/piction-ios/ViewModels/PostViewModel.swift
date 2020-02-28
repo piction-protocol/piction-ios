@@ -22,7 +22,7 @@ final class PostViewModel: InjectableViewModel {
 
     private let firebaseManager: FirebaseManagerProtocol
     private let updater: UpdaterProtocol
-    private let uri: String
+    let uri: String
     var postId: Int = 0
 
     init(dependency: Dependency) {
