@@ -118,7 +118,7 @@ extension ProjectDetailViewController: ViewModelBindable {
 
         output
             .projectInfo
-            .map { ($0.categories?.isEmpty ?? true) }
+            .map { ($0.status ?? "" == "HIDDEN") || ($0.categories?.isEmpty ?? true) }
             .drive(categoryCollectionView.rx.isHidden)
             .disposed(by: disposeBag)
 
