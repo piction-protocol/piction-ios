@@ -57,7 +57,7 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </imageView>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="ioY-WB-70S">
-                                                                        <rect key="frame" x="55" y="3.6666666666666714" width="288" height="41"/>
+                                                                        <rect key="frame" x="55" y="3.6666666666666572" width="288" height="41"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gka-gI-r9w">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="288" height="17"/>
@@ -69,7 +69,7 @@
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="atd-s0-iQu">
-                                                                                <rect key="frame" x="0.0" y="23.999999999999986" width="288" height="17"/>
+                                                                                <rect key="frame" x="0.0" y="24" width="288" height="17"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="17" id="REN-0F-5JV"/>
                                                                                 </constraints>
@@ -119,7 +119,7 @@
                                                             <constraint firstItem="01D-ql-mJD" firstAttribute="leading" secondItem="tvM-kS-QID" secondAttribute="leading" id="wvu-EC-sn3"/>
                                                         </constraints>
                                                     </view>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="설명" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mbg-N7-0lt">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="정보" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mbg-N7-0lt">
                                                         <rect key="frame" x="0.0" y="34" width="343" height="0.0"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                                         <color key="textColor" name="PictionDarkGray"/>

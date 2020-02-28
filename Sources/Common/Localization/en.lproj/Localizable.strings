@@ -163,7 +163,7 @@
 "str_membership_empty" = "등록된 후원 플랜이 없습니다.";
 
 "str_creator" = "Creator";
-"str_project_synopsis" = "Synopsis";
+"str_project_synopsis" = "정보";
 
 "str_qrcode_scan" = "Scan QR code";
 "str_qrcode_help" = "Please scan Creator's\n QR code from Piction";
