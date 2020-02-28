@@ -90,8 +90,8 @@ extension ProjectInfoViewController: ViewModelBindable {
                 self?.loginIdLabel.text = "@\(projectInfo.user?.loginId ?? "")"
                 self?.synopsisStackView.isHidden = projectInfo.synopsis == ""
                 self?.synopsisLabel.text = projectInfo.synopsis ?? ""
-                self?.categoryStackView.isHidden = projectInfo.categories?.isEmpty ?? true
-                self?.tagStackView.isHidden = projectInfo.tags?.isEmpty ?? true
+                self?.categoryStackView.isHidden = (projectInfo.categories?.isEmpty ?? true) || (projectInfo.status ?? "" == "HIDDEN")
+                self?.tagStackView.isHidden = (projectInfo.tags?.isEmpty ?? true) || (projectInfo.status ?? "" == "HIDDEN")
                 self?.creatorInfoStackView.isHidden = projectInfo.user == nil
             })
             .disposed(by: disposeBag)
