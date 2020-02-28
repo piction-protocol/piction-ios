@@ -27,16 +27,13 @@ final class ProjectPostListTypeListTableViewCell: ReuseTableViewCell {
         thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360")
     }
 
-    typealias Model = PostModel
-
     override func layoutSubviews() {
         self.contentView.autoresizingMask = [.flexibleHeight]
-
         super.layoutSubviews()
     }
 
-    func configure(with model: Model, subscriptionInfo: SponsorshipModel?) {
-        let (thumbnail, seriesName, title, publishedAt, likeCount, membership, status) = (model.cover, model.series?.name, model.title, model.publishedAt, model.likeCount, model.membership, model.status)
+    func configure(post: PostModel, subscriptionInfo: SponsorshipModel?, isWriter: Bool) {
+        let (thumbnail, seriesName, title, publishedAt, likeCount, membership, status) = (post.cover, post.series?.name, post.title, post.publishedAt, post.likeCount, post.membership, post.status)
 
         if let thumbnail = thumbnail {
             thumbnailImageView.isHidden = false
@@ -67,13 +64,16 @@ final class ProjectPostListTypeListTableViewCell: ReuseTableViewCell {
         likeLabel.text = "\(likeCount ?? 0)"
 
         if status == "PRIVATE" {
-            thumbnailView.isHidden = false
-            maskImage.isHidden = false
-            lockView.isHidden = false
-            maskImage.blurRadius = thumbnail == nil ? 0 : 5
-            lockView.backgroundColor = thumbnail == nil ? UIColor(r: 51, g: 51, b: 51, a: 0.2) : .clear
+            thumbnailView.isHidden = thumbnail == nil
+            maskImage.isHidden = true
+            lockView.isHidden = true
+            maskImage.blurRadius = 0
+            lockView.backgroundColor = .clear
         } else {
             var needSubscription: Bool {
+                if isWriter {
+                    return false
+                }
                 if membership == nil {
                     return false
                 }

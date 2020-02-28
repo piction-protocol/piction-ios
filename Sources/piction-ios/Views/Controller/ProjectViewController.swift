@@ -76,13 +76,13 @@ final class ProjectViewController: UIViewController {
         let dataSource = RxTableViewSectionedReloadDataSource<SectionType<ContentsSection>>(
             configureCell: { dataSource, tableView, indexPath, model in
                 switch dataSource[indexPath] {
-                case .postCardTypeList(let post, let subscriptionInfo):
+                case .postCardTypeList(let post, let subscriptionInfo, let isWriter):
                     let cell: ProjectPostCardTypeListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    cell.configure(with: post, subscriptionInfo: subscriptionInfo)
+                    cell.configure(post: post, subscriptionInfo: subscriptionInfo, isWriter: isWriter)
                     return cell
-                case .postListTypeList(let post, let subscriptionInfo):
+                case .postListTypeList(let post, let subscriptionInfo, let isWriter):
                     let cell: ProjectPostListTypeListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    cell.configure(with: post, subscriptionInfo: subscriptionInfo)
+                    cell.configure(post: post, subscriptionInfo: subscriptionInfo, isWriter: isWriter)
                     return cell
                 case .seriesList(let series):
                     let cell: ProjectSeriesListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
@@ -180,8 +180,8 @@ extension ProjectViewController: ViewModelBindable {
             .drive(onNext: { [weak self] indexPath in
                 guard let uri = self?.viewModel?.uri else { return }
                 switch dataSource[indexPath] {
-                case .postCardTypeList(let post, _),
-                     .postListTypeList(let post, _):
+                case .postCardTypeList(let post, _, _),
+                     .postListTypeList(let post, _, _):
                     self?.openPostViewController(uri: uri, postId: post.id ?? 0)
                 case .seriesList(let series):
                     self?.openSeriesPostViewController(uri: uri, seriesId: series.id ?? 0)
@@ -331,8 +331,8 @@ extension ProjectViewController: UITableViewDelegate {
         let editAction = UIContextualAction(style: .normal, title: LocalizationKey.edit.localized(), handler: { [weak self] (action, view, completionHandler) in
 
             switch section {
-            case .postCardTypeList(let post, _),
-                 .postListTypeList(let post, _):
+            case .postCardTypeList(let post, _, _),
+                 .postListTypeList(let post, _, _):
                 self?.openCreatePostViewController(uri: uri, postId: post.id ?? 0)
                 completionHandler(true)
             case .seriesList(let series):
@@ -346,8 +346,8 @@ extension ProjectViewController: UITableViewDelegate {
         let deleteAction = UIContextualAction(style: .destructive, title: LocalizationKey.delete.localized(), handler: { [weak self] (action, view, completionHandler) in
 
             switch section {
-            case .postCardTypeList(let post, _),
-                 .postListTypeList(let post, _):
+            case .postCardTypeList(let post, _, _),
+                 .postListTypeList(let post, _, _):
                 self?.openDeletePostPopup(postId: post.id ?? 0)
                 completionHandler(true)
             case .seriesList(let series):

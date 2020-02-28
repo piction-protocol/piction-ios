@@ -12,8 +12,8 @@ import RxCocoa
 import PictionSDK
 
 enum ContentsSection {
-    case postCardTypeList(post: PostModel, subscriptionInfo: SponsorshipModel?)
-    case postListTypeList(post: PostModel, subscriptionInfo: SponsorshipModel?)
+    case postCardTypeList(post: PostModel, subscriptionInfo: SponsorshipModel?, isWriter: Bool)
+    case postListTypeList(post: PostModel, subscriptionInfo: SponsorshipModel?, isWriter: Bool)
     case seriesPostList(post: PostModel, subscriptionInfo: SponsorshipModel?, number: Int)
     case seriesList(series: SeriesModel)
 }
@@ -206,7 +206,8 @@ final class ProjectViewModel: InjectableViewModel {
             .withLatestFrom(loadProjectInfo) { ($0, $1) }
             .filter { $1.viewType == "CARD" }
             .withLatestFrom(projectSubscriptionInfo) { ($0.0, $1) }
-            .map { (postList, subscriptionInfo) in (postList.content ?? []).map { .postCardTypeList(post: $0, subscriptionInfo: subscriptionInfo) } }
+            .withLatestFrom(isWriter) { ($0.0, $0.1, $1) }
+            .map { (postList, subscriptionInfo, isWriter) in (postList.content ?? []).map { .postCardTypeList(post: $0, subscriptionInfo: subscriptionInfo, isWriter: isWriter) } }
             .map { self.sections.append(contentsOf: $0) }
             .map { SectionType<ContentsSection>.Section(title: "post", items: self.sections) }
 
@@ -214,7 +215,8 @@ final class ProjectViewModel: InjectableViewModel {
             .withLatestFrom(loadProjectInfo) { ($0, $1) }
             .filter { $1.viewType == "LIST" }
             .withLatestFrom(projectSubscriptionInfo) { ($0.0, $1) }
-            .map { (postList, subscriptionInfo) in (postList.content ?? []).map { .postListTypeList(post: $0, subscriptionInfo: subscriptionInfo) } }
+            .withLatestFrom(isWriter) { ($0.0, $0.1, $1) }
+            .map { (postList, subscriptionInfo, isWriter) in (postList.content ?? []).map { .postListTypeList(post: $0, subscriptionInfo: subscriptionInfo, isWriter: isWriter) } }
             .map { self.sections.append(contentsOf: $0) }
             .map { SectionType<ContentsSection>.Section(title: "post", items: self.sections) }
 
