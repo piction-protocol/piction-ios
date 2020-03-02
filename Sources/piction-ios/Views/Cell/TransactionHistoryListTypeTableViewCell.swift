@@ -22,7 +22,7 @@ final class TransactionHistoryListTypeTableViewCell: ReuseTableViewCell {
 
         dateLabel.text = dateTitle ? createdAt?.toString(format: "MM.dd") : ""
         amountLabel.text = (inOut == "IN" ? "+" : "-") + amount.commaRepresentation + " PXL"
-        if transactionType == "SUBSCRIPTION" {
+        if transactionType == "SPONSORSHIP" {
             inOutLabel.text = (inOut == "IN" ? LocalizationKey.str_membership_revenue.localized() : LocalizationKey.str_membership.localized()) + (createdAt?.toString(format: " h:mm") ?? "")
         } else {
             inOutLabel.text = (inOut == "IN" ? LocalizationKey.str_deposit_format.localized() : LocalizationKey.str_withdraw_format.localized()) + (createdAt?.toString(format: " h:mm") ?? "")
