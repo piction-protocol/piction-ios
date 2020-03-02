@@ -50,6 +50,7 @@ final class PostViewModel: InjectableViewModel {
         let prevNextLink: Driver<PostLinkModel>
         let showPostContent: Driver<String>
         let showNeedSubscription: Driver<(UserModel, PostModel, SponsorshipModel?)>
+        let hideMembershipButton: Driver<Bool>
         let hideNeedSubscription: Driver<Bool>
         let headerInfo: Driver<(PostModel, UserModel)>
         let footerInfo: Driver<(String, PostModel)>
@@ -142,9 +143,12 @@ final class PostViewModel: InjectableViewModel {
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
-        let writerInfo = projectInfoAction.elements
+        let projectInfo = projectInfoAction.elements
             .map { try? $0.map(to: ProjectModel.self) }
-            .map { $0?.user }
+            .flatMap(Driver.from)
+
+        let writerInfo = projectInfo
+            .map { $0.user }
             .flatMap(Driver.from)
 
         let postItemAction = Driver.merge(initialLoad, refreshContent, refreshSession)
@@ -221,6 +225,9 @@ final class PostViewModel: InjectableViewModel {
             .filter { $0 }
             .withLatestFrom(needSubscriptionInfo)
 
+        let hideMembershipButton = projectInfo
+            .map { !($0.activeMembership ?? false) }
+
         let hideNeedSubscription = needSubscription
             .filter { !$0 }
             .map { !$0 }
@@ -287,6 +294,7 @@ final class PostViewModel: InjectableViewModel {
             prevNextLink: prevNextLink,
             showPostContent: showPostContent,
             showNeedSubscription: showNeedSubscription,
+            hideMembershipButton: hideMembershipButton,
             hideNeedSubscription: hideNeedSubscription,
             headerInfo: headerInfo,
             footerInfo: footerInfo,

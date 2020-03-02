@@ -353,6 +353,11 @@ extension PostViewController: ViewModelBindable {
             .disposed(by: disposeBag)
 
         output
+            .hideMembershipButton
+            .drive(subscriptionButton.rx.isHidden)
+            .disposed(by: disposeBag)
+
+        output
             .hideNeedSubscription
             .drive(onNext: { [weak self] _ in
                 self?.subscriptionView.isHidden = true
