@@ -66,15 +66,7 @@ final class TransactionDetailViewModel: InjectableViewModel {
         let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
 
         let transactionSponsorshipAction = Driver.merge(initialLoad, loadRetry)
-            .filter { transaction.transactionType != "VALUE_TRANSFER" }
             .filter { transaction.transactionType == "SPONSORSHIP" }
-            .map { WalletAPI.sponsorshipTransaction(txHash: transaction.transactionHash ?? "") }
-            .map(PictionSDK.rx.requestAPI)
-            .flatMap(Action.makeDriver)
-
-        let transactionSubscriptionAction = Driver.merge(initialLoad, loadRetry)
-            .filter { transaction.transactionType != "VALUE_TRANSFER" }
-            .filter { transaction.transactionType == "SUBSCRIPTION" }
             .map { WalletAPI.sponsorshipTransaction(txHash: transaction.transactionHash ?? "") }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
@@ -86,14 +78,6 @@ final class TransactionDetailViewModel: InjectableViewModel {
         let transactionSponsorshipSuccess = transactionSponsorshipAction.elements
             .map { try? $0.map(to: TransactionSponsorshipModel.self) }
             .map { [
-                TransactionDetailSection.header(title: LocalizationKey.str_sponsorship_info.localized()),
-                TransactionDetailSection.list(title: transaction.inOut ?? "" == "IN" ? LocalizationKey.str_sponsoredship_to.localized() : LocalizationKey.str_sponsorship_user.localized(), description: transaction.inOut ?? "" == "IN" ? "@\($0?.sponsor?.loginId ?? "")" : "@\($0?.creator?.loginId ?? "")", link: ""),
-                TransactionDetailSection.footer,
-            ] }
-
-        let transactionSubscriptionSuccess = transactionSubscriptionAction.elements
-            .map { try? $0.map(to: TransactionSponsorshipModel.self) }
-            .map { [
                 TransactionDetailSection.header(title: transaction.inOut ?? "" == "IN" ? LocalizationKey.str_membership_sell_info.localized() : LocalizationKey.str_membership_buy_info.localized()),
                 TransactionDetailSection.list(title: LocalizationKey.str_order_id.localized(), description: "\($0?.orderNo ?? 0)", link: ""),
                 TransactionDetailSection.list(title: LocalizationKey.str_project.localized(), description: "\($0?.projectName ?? "")", link: ""),
@@ -102,9 +86,9 @@ final class TransactionDetailViewModel: InjectableViewModel {
                 TransactionDetailSection.footer,
             ] }
 
-        let otherTypeInfo = Driver.merge(transactionSponsorshipSuccess, transactionSubscriptionSuccess)
+        let sponsorshipTypeInfo = transactionSponsorshipSuccess
 
-        let transactionInfo = Driver.merge(valueTypeInfo, otherTypeInfo)
+        let transactionInfo = Driver.merge(valueTypeInfo, sponsorshipTypeInfo)
             .map { typeSection -> [TransactionDetailSection] in
                 var sections: [TransactionDetailSection] = [
                     TransactionDetailSection.info(transaction: transaction),
@@ -126,16 +110,12 @@ final class TransactionDetailViewModel: InjectableViewModel {
             }
             .map { SectionType<TransactionDetailSection>.Section(title: "transactionInfo", items: $0) }
 
-        let transactionInfoError = Driver.merge(
-            transactionSponsorshipAction.error,
-            transactionSubscriptionAction.error)
+        let transactionInfoError = transactionSponsorshipAction.error
             .map { _ in Void() }
 
         let showErrorPopup = transactionInfoError
 
-        let activityIndicator = Driver.merge(
-            transactionSponsorshipAction.isExecuting,
-            transactionSubscriptionAction.isExecuting)
+        let activityIndicator = transactionSponsorshipAction.isExecuting
 
         return Output(
             viewWillAppear: input.viewWillAppear,
