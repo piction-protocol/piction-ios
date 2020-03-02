@@ -131,7 +131,7 @@
 "str_banner_header_info" = "Updates and News from Piction";
 
 "str_project_subscribing" = "Subscribed";
-"str_project_membership" = "Sponsored";
+"str_project_membership" = "Sponsored";
 "str_project_subscrition_complete" = "구독 완료";
 "str_project_cancel_subscrition" = "구독이 취소되었습니다.";
 "str_series_posts_count" = "%@ posts";
