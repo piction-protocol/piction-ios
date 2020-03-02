@@ -63,7 +63,7 @@
                                                             </state>
                                                         </button>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="EI4-9g-Zi3" secondAttribute="bottom" id="56M-GU-MKc"/>
                                                         <constraint firstItem="EI4-9g-Zi3" firstAttribute="leading" secondItem="Rcm-io-YXX" secondAttribute="leading" id="9SG-gv-0DE"/>

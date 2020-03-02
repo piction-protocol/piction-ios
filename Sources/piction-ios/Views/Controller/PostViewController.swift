@@ -127,7 +127,7 @@ final class PostViewController: UIViewController {
 
         if #available(iOS 13.0, *) {
             if previousTraitCollection?.hasDifferentColorAppearance(comparedTo: traitCollection) ?? false {
-                setWebviewColor()
+                setWebviewFontColor()
                 setWebviewBackgroundColor()
             }
         }
@@ -154,7 +154,7 @@ final class PostViewController: UIViewController {
     }
 
     @available(iOS 13.0, *)
-    private func setWebviewColor() {
+    private func setWebviewFontColor() {
         let fontColor = UIColor.pictionDarkGrayDM.hexString
         postWebView.evaluateJavaScript("document.getElementsByTagName('body')[0].style.color =\"\(fontColor ?? "#333333")\"")
     }
@@ -173,8 +173,8 @@ final class PostViewController: UIViewController {
                 postWebView.backgroundColor = UIColor(r: 232, g: 239, b: 244)
             }
         }
-        if let backgroundColor = postWebView.backgroundColor {
-            footerViewController?.changeBackgroundColor(color: backgroundColor)
+        if let backgroundColor = self.postWebView.backgroundColor {
+            self.footerViewController?.changeBackgroundColor(color: backgroundColor)
         }
     }
 
@@ -468,8 +468,7 @@ extension PostViewController: WKNavigationDelegate {
         let status = self.isReadmode()
         self.changeReadmode(status: status)
         if #available(iOS 13.0, *) {
-            setWebviewColor()
-            setWebviewBackgroundColor()
+            setWebviewFontColor()
         }
         webView.evaluateJavaScript("document.readyState") { (complete, error) in
             if complete != nil {
@@ -479,6 +478,7 @@ extension PostViewController: WKNavigationDelegate {
                         let height = height as? CGFloat
                     else { return }
                     self.embedPostFooterViewController(height: height)
+                    self.setWebviewBackgroundColor()
                     self.postWebView.isHidden = false
                 })
             }
