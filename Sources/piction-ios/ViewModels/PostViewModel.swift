@@ -225,8 +225,8 @@ final class PostViewModel: InjectableViewModel {
             .filter { $0 }
             .withLatestFrom(needSubscriptionInfo)
 
-        let hideMembershipButton = projectInfo
-            .map { !($0.activeMembership ?? false) }
+        let hideMembershipButton = Driver.combineLatest(projectInfo, postItemSuccess)
+            .map { !($0.activeMembership ?? false) && ($1.membership?.level ?? 0) > 0 }
 
         let hideNeedSubscription = needSubscription
             .filter { !$0 }
