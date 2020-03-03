@@ -20,8 +20,6 @@ final class ProjectPostListTypeListTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var lockView: UIView!
     @IBOutlet weak var maskImage: VisualEffectView!
     @IBOutlet weak var leftLockView: UIView!
-    @IBOutlet weak var titleContainerView: UIView!
-    @IBOutlet weak var titleContainerStackView: UIStackView!
 
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -64,12 +62,6 @@ final class ProjectPostListTypeListTableViewCell: ReuseTableViewCell {
 
         likeStackView.isHidden = (likeCount ?? 0) == 0
         likeLabel.text = "\(likeCount ?? 0)"
-
-        if thumbnail != nil {
-            titleContainerStackView.bottomAnchor.constraint(equalTo: titleContainerView.bottomAnchor).isActive = true
-        } else {
-            titleContainerStackView.bottomAnchor.constraint(greaterThanOrEqualTo: titleContainerView.bottomAnchor).isActive = true
-        }
 
         if status == "PRIVATE" {
             thumbnailView.isHidden = thumbnail == nil

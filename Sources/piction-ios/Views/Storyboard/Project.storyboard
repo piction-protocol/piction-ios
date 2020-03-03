@@ -98,10 +98,10 @@
                                                             <rect key="frame" x="0.0" y="358" width="343" height="80"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="ZHH-wC-HRT">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="49"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="80"/>
                                                                     <subviews>
                                                                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X13-JM-zHJ" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.66666666666668561" width="48" height="48"/>
+                                                                            <rect key="frame" x="0.0" y="16" width="48" height="48"/>
                                                                             <subviews>
                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icLockedWh" translatesAutoresizingMaskIntoConstraints="NO" id="kgZ-Wl-cfV">
                                                                                     <rect key="frame" x="14" y="14" width="20" height="20"/>
@@ -128,7 +128,7 @@
                                                                             </userDefinedRuntimeAttributes>
                                                                         </view>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="uh8-y7-18C">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="343" height="49"/>
+                                                                            <rect key="frame" x="0.0" y="15.666666666666686" width="343" height="49"/>
                                                                             <subviews>
                                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="A60-sp-3Vd">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="343" height="21"/>
@@ -172,7 +172,7 @@
                                                                 <constraint firstAttribute="trailing" secondItem="ZHH-wC-HRT" secondAttribute="trailing" id="GGy-Of-hsI"/>
                                                                 <constraint firstItem="ZHH-wC-HRT" firstAttribute="leading" secondItem="Wes-Cd-ef1" secondAttribute="leading" id="Ixg-YD-ZjR"/>
                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="64" id="VOj-Ph-WQd"/>
-                                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ZHH-wC-HRT" secondAttribute="bottom" id="Y5s-tR-SJS"/>
+                                                                <constraint firstAttribute="bottom" secondItem="ZHH-wC-HRT" secondAttribute="bottom" id="Y5s-tR-SJS"/>
                                                                 <constraint firstItem="ZHH-wC-HRT" firstAttribute="top" secondItem="Wes-Cd-ef1" secondAttribute="top" id="hLm-YC-jGW"/>
                                                             </constraints>
                                                         </view>
@@ -315,10 +315,10 @@
                                                             <rect key="frame" x="104" y="8" width="239" height="64"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="lzq-we-aae">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="239" height="49"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="239" height="64"/>
                                                                     <subviews>
                                                                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ztX-yB-p1R" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.6666666666666643" width="48" height="48"/>
+                                                                            <rect key="frame" x="0.0" y="8" width="48" height="48"/>
                                                                             <subviews>
                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icLockedWh" translatesAutoresizingMaskIntoConstraints="NO" id="hgV-5q-xGU">
                                                                                     <rect key="frame" x="14" y="14" width="20" height="20"/>
@@ -345,7 +345,7 @@
                                                                             </userDefinedRuntimeAttributes>
                                                                         </view>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="dHc-D6-yeN">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="239" height="49"/>
+                                                                            <rect key="frame" x="0.0" y="7.6666666666666643" width="239" height="49"/>
                                                                             <subviews>
                                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Bd0-kR-vto">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="239" height="21"/>
@@ -371,7 +371,7 @@
                                                                                     </subviews>
                                                                                 </stackView>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fYu-O0-f1u">
-                                                                                    <rect key="frame" x="0.0" y="32" width="239" height="17"/>
+                                                                                    <rect key="frame" x="0.0" y="32.000000000000007" width="239" height="17"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="height" constant="17" id="Xce-lu-PPT"/>
                                                                                     </constraints>
@@ -386,7 +386,7 @@
                                                             </subviews>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="lzq-we-aae" secondAttribute="bottom" id="IBY-II-b1H"/>
+                                                                <constraint firstAttribute="bottom" secondItem="lzq-we-aae" secondAttribute="bottom" id="IBY-II-b1H"/>
                                                                 <constraint firstAttribute="trailing" secondItem="lzq-we-aae" secondAttribute="trailing" id="TGT-aM-i48"/>
                                                                 <constraint firstItem="lzq-we-aae" firstAttribute="leading" secondItem="LSC-PZ-FSh" secondAttribute="leading" id="lpu-aY-pId"/>
                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="64" id="uYd-Fr-b5e"/>
@@ -446,8 +446,6 @@
                                             <outlet property="seriesLabel" destination="pM1-4V-6mo" id="9gu-MQ-nAk"/>
                                             <outlet property="thumbnailImageView" destination="l5o-oQ-dTD" id="Wve-vD-ChI"/>
                                             <outlet property="thumbnailView" destination="AVD-MJ-GTZ" id="5mQ-Ra-kvP"/>
-                                            <outlet property="titleContainerStackView" destination="lzq-we-aae" id="zwI-2L-3x7"/>
-                                            <outlet property="titleContainerView" destination="LSC-PZ-FSh" id="Ehh-yf-FOn"/>
                                             <outlet property="titleLabel" destination="M3d-wX-uPI" id="cUz-Yj-6dT"/>
                                         </connections>
                                     </tableViewCell>
@@ -581,7 +579,7 @@
     <resources>
         <image name="icFavoriteOff" width="24" height="24"/>
         <image name="icInfo" width="22" height="22"/>
-        <image name="icLockedWh" width="24" height="24"/>
+        <image name="icLockedWh" width="80" height="80"/>
         <image name="icShare" width="22" height="22"/>
         <image name="img-dummy-post-960-x-360" width="960" height="360"/>
         <namedColor name="PictionDarkGray">
