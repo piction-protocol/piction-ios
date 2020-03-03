@@ -59,7 +59,7 @@ class MembershipListTableViewCell: ReuseTableViewCell {
 
         var status: String {
             if let expireDate = subscriptionInfo?.expireDate,
-                let membershipLevel = subscriptionInfo?.membership?.level,
+                let membershipLevel = membership.level,
                 let subscriptionLevel = subscriptionInfo?.membership?.level,
                 membershipLevel == subscriptionLevel {
                 return expireDate.toString(format: LocalizationKey.str_membership_expire.localized())
