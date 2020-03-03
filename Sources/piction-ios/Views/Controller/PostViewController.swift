@@ -95,16 +95,18 @@ final class PostViewController: UIViewController {
     private func resizeFooter() {
         guard
             !postWebView.isLoading,
-            self.subscriptionView.isHidden
+            subscriptionView.isHidden
         else { return }
-        postWebView.evaluateJavaScript("document.body.style.marginBottom =\"747px\"", completionHandler: { (complete, error) in
-            self.postWebView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { (height, error) in
-                if let height = height as? CGFloat {
-                    self.embedPostFooterViewController(height: height)
-                    self.loadComplete()
-                }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.postWebView.evaluateJavaScript("document.body.style.marginBottom =\"747px\"", completionHandler: { (complete, error) in
+                self.postWebView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { (height, error) in
+                    if let height = height as? CGFloat {
+                        self.embedPostFooterViewController(height: height)
+                        self.loadComplete()
+                    }
+                })
             })
-        })
+        }
     }
 
     func cacheWebview() {
