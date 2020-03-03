@@ -9,54 +9,52 @@
 import UIKit
 
 class DynamicCollectionViewFlowLayout: UICollectionViewFlowLayout {
-    var tempCellAttributesArray = [UICollectionViewLayoutAttributes]()
-    let leftEdgeInset: CGFloat = 0
-
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        let cellAttributesArray = super.layoutAttributesForElements(in: rect)
-        //Oth position cellAttr is InConvience Emoji Cell, from 1st onwards info cells are there, thats why we start count from 2nd position.
-        if(cellAttributesArray != nil && cellAttributesArray!.count > 1) {
-            for i in 1..<(cellAttributesArray!.count) {
-                let prevLayoutAttributes: UICollectionViewLayoutAttributes = cellAttributesArray![i - 1]
-                let currentLayoutAttributes: UICollectionViewLayoutAttributes = cellAttributesArray![i]
-                let maximumSpacing: CGFloat = 8
-                let prevCellMaxX: CGFloat = prevLayoutAttributes.frame.maxX
-                //UIEdgeInset 30 from left
-                let collectionViewSectionWidth = self.collectionViewContentSize.width - leftEdgeInset
-                let currentCellExpectedMaxX = prevCellMaxX + maximumSpacing + (currentLayoutAttributes.frame.size.width )
-                if currentCellExpectedMaxX < collectionViewSectionWidth {
-                    var frame: CGRect? = currentLayoutAttributes.frame
-                    frame?.origin.x = prevCellMaxX + maximumSpacing
-                    frame?.origin.y = prevLayoutAttributes.frame.origin.y
-                    currentLayoutAttributes.frame = frame ?? CGRect.zero
-                } else {
-                    // self.shiftCellsToCenter()
-                    currentLayoutAttributes.frame.origin.x = leftEdgeInset
-                    //To Avoid InConvience Emoji Cell
-                    if (prevLayoutAttributes.frame.origin.x != 0) {
-                        currentLayoutAttributes.frame.origin.y = prevLayoutAttributes.frame.origin.y + prevLayoutAttributes.frame.size.height + 08
-                    }
-                }
-                // print(currentLayoutAttributes.frame)
-            }
-            //print("Main For Loop End")
-        }
-        // self.shiftCellsToCenter()
-        return cellAttributesArray
+        return super.layoutAttributesForElements(in: rect)?.map { $0.representedElementKind == nil ? layoutAttributesForItem(at: $0.indexPath)! : $0 }
     }
 
-    func shiftCellsToCenter() {
-        if (tempCellAttributesArray.count == 0) {return}
-        let lastCellLayoutAttributes = self.tempCellAttributesArray[self.tempCellAttributesArray.count-1]
-        let lastCellMaxX: CGFloat = lastCellLayoutAttributes.frame.maxX
-        let collectionViewSectionWidth = self.collectionViewContentSize.width - leftEdgeInset
-        let xAxisDifference = collectionViewSectionWidth - lastCellMaxX
-        if xAxisDifference > 0 {
-            for each in self.tempCellAttributesArray{
-                each.frame.origin.x += xAxisDifference/2
-            }
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        guard let currentItemAttributes = super.layoutAttributesForItem(at: indexPath)?.copy() as? UICollectionViewLayoutAttributes,
+            let collectionView = self.collectionView else {
+            // should never happen
+            return nil
         }
 
+        let sectionInset = evaluatedSectionInsetForSection(at: indexPath.section)
+
+        guard indexPath.item != 0 else {
+            currentItemAttributes.leftAlignFrame(withSectionInset: sectionInset)
+            return currentItemAttributes
+        }
+
+        guard let previousFrame = layoutAttributesForItem(at: IndexPath(item: indexPath.item - 1, section: indexPath.section))?.frame else {
+            // should never happen
+            return nil
+        }
+
+        // if the current frame, once left aligned to the left and stretched to the full collection view
+        // width intersects the previous frame then they are on the same line
+        guard previousFrame.intersects(CGRect(x: sectionInset.left, y: currentItemAttributes.frame.origin.y, width: collectionView.frame.width - sectionInset.left - sectionInset.right, height: currentItemAttributes.frame.size.height)) else {
+            // make sure the first item on a line is left aligned
+            currentItemAttributes.leftAlignFrame(withSectionInset: sectionInset)
+            return currentItemAttributes
+        }
+
+        currentItemAttributes.frame.origin.x = previousFrame.origin.x + previousFrame.size.width + evaluatedMinimumInteritemSpacingForSection(at: indexPath.section)
+        return currentItemAttributes
+    }
+
+    func evaluatedMinimumInteritemSpacingForSection(at section: NSInteger) -> CGFloat {
+        return (collectionView?.delegate as? UICollectionViewDelegateFlowLayout)?.collectionView?(collectionView!, layout: self, minimumInteritemSpacingForSectionAt: section) ?? minimumInteritemSpacing
+    }
+
+    func evaluatedSectionInsetForSection(at index: NSInteger) -> UIEdgeInsets {
+        return (collectionView?.delegate as? UICollectionViewDelegateFlowLayout)?.collectionView?(collectionView!, layout: self, insetForSectionAt: index) ?? sectionInset
     }
 }
 
+extension UICollectionViewLayoutAttributes {
+    func leftAlignFrame(withSectionInset sectionInset: UIEdgeInsets) {
+        frame.origin.x = sectionInset.left
+    }
+}
