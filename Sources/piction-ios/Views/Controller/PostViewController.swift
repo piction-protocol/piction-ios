@@ -161,25 +161,6 @@ final class PostViewController: UIViewController {
         postWebView.evaluateJavaScript("document.getElementsByTagName('body')[0].style.color =\"\(fontColor ?? "#333333")\"")
     }
 
-    private func setWebviewBackgroundColor() {
-        if readmodeBarButton.tintColor == .pictionGray {
-            if #available(iOS 13.0, *) {
-                postWebView.backgroundColor = .systemBackground
-            } else {
-                postWebView.backgroundColor = .white
-            }
-        } else {
-            if #available(iOS 13.0, *) {
-                postWebView.backgroundColor = .PictionReaderGrayDM
-            } else {
-                postWebView.backgroundColor = UIColor(r: 232, g: 239, b: 244)
-            }
-        }
-        if let backgroundColor = self.postWebView.backgroundColor {
-            self.footerViewController?.changeBackgroundColor(color: backgroundColor)
-        }
-    }
-
     private func isReadmode() -> Bool {
         guard
             let viewModel = self.viewModel,
@@ -311,6 +292,7 @@ extension PostViewController: ViewModelBindable {
             .reloadPost
             .drive(onNext: { [weak self] _ in
                 guard let `self` = self else { return }
+                self.postWebView.isHidden = true
                 self.subscriptionView.isHidden = true
                 self.postWebView.scrollView.isScrollEnabled = true
                 self.removeHeaderFooter()
@@ -323,6 +305,9 @@ extension PostViewController: ViewModelBindable {
             .showNeedSubscription
             .drive(onNext: { [weak self] (userInfo, postInfo, _) in
                 guard let `self` = self else { return }
+                self.readmodeBarButtonIsHidden(status: true)
+                self.postWebView.isHidden = false
+
                 var buttonTitle: String {
                     if userInfo.loginId == nil {
                         return LocalizationKey.login.localized()
@@ -362,6 +347,7 @@ extension PostViewController: ViewModelBindable {
         output
             .hideNeedSubscription
             .drive(onNext: { [weak self] _ in
+                self?.readmodeBarButtonIsHidden(status: false)
                 self?.subscriptionView.isHidden = true
                 self?.postWebView.scrollView.isScrollEnabled = true
             })
@@ -562,5 +548,40 @@ extension PostViewController {
             }
         }
         button?.setTitleColor(buttonColor, for: .normal)
+    }
+    // 다크모드, 읽기모드 등에 따른 Webview의 배경색 변경
+    private func setWebviewBackgroundColor() {
+        // 잠겨있을 때는 readmode 설정에 따르지 않음
+        guard readmodeBarButton.isEnabled else {
+            if #available(iOS 13.0, *) {
+                postWebView.backgroundColor = .systemBackground
+            } else {
+                postWebView.backgroundColor = .white
+            }
+            return
+        }
+
+        // 잠겨있지 않을 때 readmode가 활성화 되어 있지 않으면 기본 색
+        if readmodeBarButton.tintColor == .pictionGray {
+            if #available(iOS 13.0, *) {
+                postWebView.backgroundColor = .systemBackground
+            } else {
+                postWebView.backgroundColor = .white
+            }
+        } else { // 잠겨있지 않을 때 readmode가 활성화 되어 있으면 읽기모드 배경색
+            if #available(iOS 13.0, *) {
+                postWebView.backgroundColor = .PictionReaderGrayDM
+            } else {
+                postWebView.backgroundColor = UIColor(r: 232, g: 239, b: 244)
+            }
+        }
+        // footer의 배경 색도 변경
+        if let backgroundColor = self.postWebView.backgroundColor {
+            self.footerViewController?.changeBackgroundColor(color: backgroundColor)
+        }
+    }
+    private func readmodeBarButtonIsHidden(status: Bool) {
+        readmodeBarButton.isEnabled = !status
+        readmodeBarButton.image = status ? nil : #imageLiteral(resourceName: "ic-read")
     }
 }
