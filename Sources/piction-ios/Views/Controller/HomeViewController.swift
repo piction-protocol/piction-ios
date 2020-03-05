@@ -79,9 +79,11 @@ extension HomeViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 화면이 보여질 때
         output
             .viewDidAppear
             .drive(onNext: { [weak self] in
+                // iOS 13 이전 버전에서는 화면이 보여질 때 navigation설정을 다시 해줘야 함
                 if #available(iOS 13, *) {
                 } else {
                     self?.navigationItem.hidesSearchBarWhenScrolling = true
