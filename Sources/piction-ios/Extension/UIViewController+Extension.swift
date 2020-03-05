@@ -105,96 +105,106 @@ extension UIViewController {
 }
 
 extension UIViewController {
-    func openRegisterPincodeViewController(type: ViewOpenType = .present) {
-        let vc = RegisterPincodeViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: type)
-        }
+    enum ViewType {
+        case registerPincode
+        case checkPincode(delegate: CheckPincodeDelegate? = nil)
+        case confirmPincode(inputPincode: String)
+        case signIn
+        case signUp
+        case signUpComplete(loginId: String)
+        case taggingProject(tag: String)
+        case project(uri: String)
+        case categorizedProject(id: Int)
+        case myProject
+        case transactionHistory
+        case deposit
+        case changeMyInfo
+        case changePassword
+        case transactionDetail(transaction: TransactionModel)
+        case seriesPost(uri: String, seriesId: Int)
+        case post(uri: String, postId: Int)
+        case projectInfo(uri: String)
+        case subscriptionUser(uri: String)
+        case membershipList(uri: String, postId: Int? = nil)
+        case purchaseMembership(uri: String, selectedMembership: MembershipModel)
+        case creatorProfile(loginId: String)
+        case createProject(uri: String)
+        case createPost(uri: String, postId: Int = 0)
+        case manageSeries(uri: String, seriesId: Int? = nil, delegate: ManageSeriesDelegate? = nil)
+        case manageMembership(uri: String, membershipId: Int? = nil, delegate: ManageMembershipDelegate? = nil)
+        case createMembership(uri: String, membership: MembershipModel? = nil)
     }
 
-    func openConfirmPincodeViewController(inputPincode: String) {
-        let vc = ConfirmPincodeViewController.make(inputPincode: inputPincode)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
+    func openView(type: ViewType , openType: ViewOpenType) {
+        var viewController: UIViewController?
 
-    func openSignUpViewController() {
-        let vc = SignUpViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
+        switch type {
+        case .registerPincode:
+            viewController = RegisterPincodeViewController.make()
+        case .checkPincode(let delegate):
+            let style: CheckPincodeStyle = delegate == nil ? .change : .check
+            let vc = CheckPincodeViewController.make(style: style)
+            vc.delegate = delegate
+            viewController = vc
+        case .confirmPincode(let inputPincode):
+            viewController = ConfirmPincodeViewController.make(inputPincode: inputPincode)
+        case .signIn:
+            viewController = SignInViewController.make()
+        case .signUp:
+            viewController = SignUpViewController.make()
+        case .signUpComplete(let loginId):
+            viewController = SignUpCompleteViewController.make(loginId: loginId)
+        case .taggingProject(let tag):
+            viewController = TaggingProjectViewController.make(tag: tag)
+        case .project(let uri):
+            viewController = ProjectViewController.make(uri: uri)
+        case .categorizedProject(let id):
+            viewController = CategorizedProjectViewController.make(categoryId: id)
+        case .myProject:
+            viewController = MyProjectViewController.make()
+        case .transactionHistory:
+            viewController = TransactionHistoryViewController.make()
+        case .deposit:
+            viewController = DepositViewController.make()
+        case .changeMyInfo:
+            viewController = ChangeMyInfoViewController.make()
+        case .changePassword:
+            viewController = ChangePasswordViewController.make()
+        case .transactionDetail(let transaction):
+            viewController = TransactionDetailViewController.make(transaction: transaction)
+        case .seriesPost(let uri, let seriesId):
+            viewController = SeriesPostViewController.make(uri: uri, seriesId: seriesId)
+        case .post(let uri, let postId):
+            viewController = PostViewController.make(uri: uri, postId: postId)
+        case .projectInfo(let uri):
+            viewController = ProjectInfoViewController.make(uri: uri)
+        case .subscriptionUser(let uri):
+            viewController = SubscriptionUserViewController.make(uri: uri)
+        case .membershipList(let uri, let postId):
+            viewController = MembershipListViewController.make(uri: uri, postId: postId)
+        case .purchaseMembership(let uri, let selectedMembership):
+            viewController = PurchaseMembershipViewController.make(uri: uri, selectedMembership: selectedMembership)
+        case .creatorProfile(let loginId):
+            viewController = CreatorProfileViewController.make(loginId: loginId)
+        case .createProject(let uri):
+            viewController = CreateProjectViewController.make(uri: uri)
+        case .createPost(let uri, let postId):
+            viewController = CreatePostViewController.make(uri: uri, postId: postId)
+        case .manageSeries(let uri, let seriesId, let delegate):
+            let vc = ManageSeriesViewController.make(uri: uri, seriesId: seriesId)
+            vc.delegate = delegate
+            viewController = vc
+        case .manageMembership(let uri, let membershipId, let delegate):
+            let vc = ManageMembershipViewController.make(uri: uri, membershipId: membershipId)
+            vc.delegate = delegate
+            viewController = vc
+        case .createMembership(let uri, let membership):
+            viewController = CreateMembershipViewController.make(uri: uri, membership: membership)
         }
-    }
 
-    func openSignUpCompleteViewController(loginId: String) {
-        let vc = SignUpCompleteViewController.make(loginId: loginId)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    func openTaggingProjectViewController(tag: String) {
-        let vc = TaggingProjectViewController.make(tag: tag)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    func openProjectViewController(uri: String) {
-        let vc = ProjectViewController.make(uri: uri)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    func openCategorizedProjectViewController(id: Int) {
-        let vc = CategorizedProjectViewController.make(categoryId: id)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    func openMyProjectViewController() {
-        let vc = MyProjectViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    func openTransactionHistoryListViewController() {
-        let vc = TransactionHistoryViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    func openDepositViewController() {
-        let vc = DepositViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    func openChangeMyInfoViewController() {
-        let vc = ChangeMyInfoViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
-        }
-    }
-
-    func openChangePasswordViewController() {
-        let vc = ChangePasswordViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
-        }
-    }
-
-    func openCheckPincodeViewController(delegate: CheckPincodeDelegate? = nil) {
-        let style: CheckPincodeStyle = delegate == nil ? .change : .check
-        let vc = CheckPincodeViewController.make(style: style)
-        vc.delegate = delegate
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
+        if let viewController = viewController,
+            let topViewController = UIApplication.topViewController() {
+            topViewController.openViewController(viewController, type: openType)
         }
     }
 
@@ -202,105 +212,5 @@ extension UIViewController {
         guard let url = URL(string: urlString) else { return }
         let safariViewController = SFSafariViewController(url: url)
         self.present(safariViewController, animated: true, completion: nil)
-    }
-
-    func openCreateProjectViewController(uri: String) {
-        let vc = CreateProjectViewController.make(uri: uri)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    func openManageSeriesViewController(uri: String, seriesId: Int? = nil, delegate: ManageSeriesDelegate? = nil) {
-        let vc = ManageSeriesViewController.make(uri: uri, seriesId: seriesId)
-        vc.delegate = delegate
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .swipePresent)
-        }
-    }
-
-    func openManageMembershipViewController(uri: String, membershipId: Int? = nil, delegate: ManageMembershipDelegate? = nil) {
-        let vc = ManageMembershipViewController.make(uri: uri, membershipId: membershipId)
-        vc.delegate = delegate
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .swipePresent)
-        }
-    }
-
-    func openTransactionDetailViewController(transaction: TransactionModel) {
-        let vc = TransactionDetailViewController.make(transaction: transaction)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    func openSeriesPostViewController(uri: String, seriesId: Int) {
-        let vc = SeriesPostViewController.make(uri: uri, seriesId: seriesId)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    func openPostViewController(uri: String, postId: Int) {
-        let vc = PostViewController.make(uri: uri, postId: postId)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    func openCreatePostViewController(uri: String, postId: Int = 0) {
-        let vc = CreatePostViewController.make(uri: uri, postId: postId)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    func openProjectInfoViewController(uri: String) {
-        let vc = ProjectInfoViewController.make(uri: uri)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    func openSubscriptionUserViewController(uri: String) {
-        let vc = SubscriptionUserViewController.make(uri: uri)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .swipePresent)
-        }
-    }
-
-    func openMembershipListViewController(uri: String, postId: Int? = nil) {
-        let vc = MembershipListViewController.make(uri: uri, postId: postId)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .present)
-        }
-    }
-
-    func openSignInViewController() {
-        let vc = SignInViewController.make()
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .swipePresent)
-        }
-    }
-
-    func openPurchaseMembershipViewController(uri: String, selectedMembership: MembershipModel) {
-        let vc = PurchaseMembershipViewController.make(uri: uri, selectedMembership: selectedMembership)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    func openCreateMembershipViewController(uri: String, membership: MembershipModel? = nil) {
-        let vc = CreateMembershipViewController.make(uri: uri, membership: membership)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
-    }
-
-    func openCreatorProfileViewController(loginId: String) {
-        let vc = CreatorProfileViewController.make(loginId: loginId)
-        if let topViewController = UIApplication.topViewController() {
-            topViewController.openViewController(vc, type: .push)
-        }
     }
 }
