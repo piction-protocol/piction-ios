@@ -68,6 +68,14 @@ final class SignUpViewController: UIViewController {
             attributedStr.addAttribute(.link, value: privacyURL, range: attributedStr.mutableString.range(of: LocalizationKey.str_privacy.localized())) // url 설정
 
             agreementTextView.textContainerInset = .zero // 기본 여백 제거
+
+            // 상단 정렬
+            let fittingSize = CGSize(width: agreementTextView.bounds.width, height: CGFloat.greatestFiniteMagnitude)
+            let size = agreementTextView.sizeThatFits(fittingSize)
+            let topOffset = (agreementTextView.bounds.size.height - size.height * agreementTextView.zoomScale) / 2
+            let positiveTopOffset = max(0, topOffset)
+            agreementTextView.contentInset.top = positiveTopOffset
+
             agreementTextView.attributedText = attributedStr
         }
     }
