@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import ViewModelBindable
 
+// MARK: - UIViewController
 final class UserInfoViewController: UIViewController {
     var disposeBag = DisposeBag()
 
@@ -19,20 +20,25 @@ final class UserInfoViewController: UIViewController {
     @IBOutlet weak var loginIdLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var profileImageButton: UIButton!
+
+    deinit {
+        // 메모리 해제되는지 확인
+        print("[deinit] \(String(describing: type(of: self)))")
+    }
 }
 
+// MARK: - ViewModelBindable
 extension UserInfoViewController: ViewModelBindable {
-
     typealias ViewModel = UserInfoViewModel
 
     func bindViewModel(viewModel: ViewModel) {
-
         let input = UserInfoViewModel.Input(
-            viewWillAppear: rx.viewWillAppear.asDriver()
+            viewWillAppear: rx.viewWillAppear.asDriver() // 화면이 보여지기 전에
         )
 
         let output = viewModel.build(input: input)
 
+        // user 정보를 불러와서 프로필 이미지, 닉네임, 로그인ID를 설정
         output
             .userInfo
             .drive(onNext: { [weak self] userInfo in
@@ -50,11 +56,11 @@ extension UserInfoViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // wallet 정보를 불러와서 amount 설정
         output
             .walletInfo
-            .drive(onNext: { [weak self] walletInfo in
-                self?.amountLabel.text = "\(walletInfo.amount.commaRepresentation) PXL"
-            })
+            .map { "\($0.amount.commaRepresentation) PXL" }
+            .drive(amountLabel.rx.text)
             .disposed(by: disposeBag)
     }
 }
