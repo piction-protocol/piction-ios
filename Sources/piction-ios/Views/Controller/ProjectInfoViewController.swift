@@ -13,6 +13,7 @@ import ViewModelBindable
 import RxDataSources
 import PictionSDK
 
+// MARK: - UIViewController
 final class ProjectInfoViewController: UIViewController {
     var disposeBag = DisposeBag()
 
@@ -28,25 +29,13 @@ final class ProjectInfoViewController: UIViewController {
     @IBOutlet weak var categoryCollectionView: UICollectionView!
     @IBOutlet weak var tagCollectionView: UICollectionView!
 
-    private func categoryConfigureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, CategoryModel>> {
-        return RxCollectionViewSectionedReloadDataSource<SectionModel<String, CategoryModel>>(
-            configureCell: { dataSource, collectionView, indexPath, model in
-                let cell: ProjectInfoCategoryCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.configure(with: model)
-                return cell
-        })
-    }
-
-    private func tagConfigureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>> {
-        return RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>>(
-            configureCell: { dataSource, collectionView, indexPath, model in
-                let cell: ProjectInfoTagCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.configure(with: model)
-                return cell
-        })
+    deinit {
+        // 메모리 해제되는지 확인
+        print("[deinit] \(String(describing: type(of: self)))")
     }
 }
 
+// MARK: - ViewModelBindable
 extension ProjectInfoViewController: ViewModelBindable {
     typealias ViewModel = ProjectInfoViewModel
 
@@ -54,20 +43,16 @@ extension ProjectInfoViewController: ViewModelBindable {
         let categoryDataSource = categoryConfigureDataSource()
         let tagDataSource = tagConfigureDataSource()
 
-        categoryCollectionView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
-        tagCollectionView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
-
         let input = ProjectInfoViewModel.Input(
-            viewWillAppear: rx.viewWillAppear.asDriver(),
-            categoryCollectionViewSelectedIndexPath: categoryCollectionView.rx.itemSelected.asDriver(),
-            tagCollectionViewSelectedIndexPath: tagCollectionView.rx.itemSelected.asDriver(),
-            creatorBtnDidTap: creatorButton.rx.tap.asDriver()
+            viewWillAppear: rx.viewWillAppear.asDriver(), // 화면이 보여지기 전에
+            categoryCollectionViewSelectedIndexPath: categoryCollectionView.rx.itemSelected.asDriver(), // categoryCollectionView의 item을 눌렀을 때
+            tagCollectionViewSelectedIndexPath: tagCollectionView.rx.itemSelected.asDriver(), // tagCollectionView의 item을 눌렀을 때
+            creatorBtnDidTap: creatorButton.rx.tap.asDriver() // Creator를 눌렀을 때
         )
 
         let output = viewModel.build(input: input)
 
+        // 화면이 보여지기 전에 NavigationBar 설정
         output
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
@@ -75,6 +60,7 @@ extension ProjectInfoViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 프로젝트 정보를 불러와서 설정
         output
             .projectInfo
             .drive(onNext: { [weak self] projectInfo in
@@ -96,6 +82,7 @@ extension ProjectInfoViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 프로젝트 정보를 불러와서 tag 목록을 tagCollectionView에 출력
         output
             .projectInfo
             .drive { $0 }
@@ -103,6 +90,7 @@ extension ProjectInfoViewController: ViewModelBindable {
             .bind(to: tagCollectionView.rx.items(dataSource: tagDataSource))
             .disposed(by: disposeBag)
 
+        // 프로젝트 정보를 불러와서 category 목록을 categoryCollectionView에 출력
         output
             .projectInfo
             .drive { $0 }
@@ -110,42 +98,53 @@ extension ProjectInfoViewController: ViewModelBindable {
             .bind(to: categoryCollectionView.rx.items(dataSource: categoryDataSource))
             .disposed(by: disposeBag)
 
+        // categoryCollectionView의 item을 선택할 때
         output
             .categoryCollectionViewSelectedIndexPath
-            .drive(onNext: { [weak self] indexPath in
-                guard let categoryId = categoryDataSource[indexPath].id else { return }
-                self?.openCategorizedProjectViewController(id: categoryId)
+            .map { categoryDataSource[$0].id }
+            .flatMap(Driver.from)
+            .map { .categorizedProject(id: $0) } // categorizedProject 화면으로 push
+            .drive(onNext: { [weak self] in
+                self?.openView(type: $0, openType: .push)
             })
             .disposed(by: disposeBag)
 
+        // tagCollectionView의 item을 선택할 때
         output
             .tagCollectionViewSelectedIndexPath
-            .drive(onNext: { [weak self] indexPath in
-                let tag = tagDataSource[indexPath]
-                self?.openTaggingProjectViewController(tag: tag)
+            .map { tagDataSource[$0] }
+            .flatMap(Driver.from)
+            .map { .taggingProject(tag: $0) } // taggingProject 화면으로 push
+            .drive(onNext: { [weak self] in
+                self?.openView(type: $0, openType: .push)
             })
             .disposed(by: disposeBag)
 
+        // creator profile 화면으로 push
         output
             .openCreatorProfileViewController
-            .drive(onNext: { [weak self] loginId in
-                self?.openCreatorProfileViewController(loginId: loginId)
+            .map { .creatorProfile(loginId: $0) }
+            .drive(onNext: { [weak self] in
+                self?.openView(type: $0, openType: .push)
             })
             .disposed(by: disposeBag)
 
+        // 네트워크 오류 시 에러 팝업 출력
         output
             .showErrorPopup
             .drive(onNext: { [weak self] in
-                Toast.loadingActivity(false)
+                Toast.loadingActivity(false) // 로딩 뷰 로딩 중이면 로딩 해제
                 self?.showPopup(
                     title: LocalizationKey.popup_title_network_error.localized(),
                     message: LocalizationKey.msg_api_internal_server_error.localized(),
                     action: [LocalizationKey.retry.localized(), LocalizationKey.cancel.localized()]) { [weak self] in
+                        // 다시 로딩
                         self?.viewModel?.loadRetryTrigger.onNext(())
                     }
             })
             .disposed(by: disposeBag)
 
+        // 로딩 뷰
         output
             .activityIndicator
             .loadingActivity()
@@ -153,7 +152,9 @@ extension ProjectInfoViewController: ViewModelBindable {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension ProjectInfoViewController: UICollectionViewDelegateFlowLayout {
+    // category, tag cell size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if let cell = collectionView.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? ProjectInfoCategoryCollectionViewCell {
             let text = cell.categoryLabel.text ?? ""
@@ -165,5 +166,30 @@ extension ProjectInfoViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: cellWidth, height: 30.0)
         }
         return .zero
+    }
+}
+
+// MARK: - DataSource
+extension ProjectInfoViewController {
+    // category data source
+    private func categoryConfigureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, CategoryModel>> {
+        return RxCollectionViewSectionedReloadDataSource<SectionModel<String, CategoryModel>>(
+            // cell 설정
+            configureCell: { dataSource, collectionView, indexPath, model in
+                let cell: ProjectInfoCategoryCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+                cell.configure(with: model)
+                return cell
+        })
+    }
+
+    // tag data source
+    private func tagConfigureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>> {
+        return RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>>(
+            // cell 설정
+            configureCell: { dataSource, collectionView, indexPath, model in
+                let cell: ProjectInfoTagCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+                cell.configure(with: model)
+                return cell
+        })
     }
 }
