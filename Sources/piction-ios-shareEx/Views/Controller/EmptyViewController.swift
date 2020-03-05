@@ -11,6 +11,8 @@ import RxSwift
 import RxCocoa
 import ViewModelBindable
 
+// 현재 사용하지 않는 화면입니다. (에디터 기능 지원안함)
+
 final class EmptyViewController: UIViewController {
     var disposeBag = DisposeBag()
 

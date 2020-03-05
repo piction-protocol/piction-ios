@@ -13,6 +13,8 @@ import ViewModelBindable
 import RxDataSources
 import PictionSDK
 
+// 현재 사용하지 않는 화면입니다. (에디터 기능 지원안함)
+
 protocol ProjectListDelegate: class {
     func selectProject(with project: ProjectModel?)
 }
@@ -26,6 +28,7 @@ final class ProjectListViewController: UITableViewController {
 
     private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, ProjectModel>> {
         return RxTableViewSectionedReloadDataSource<SectionModel<String, ProjectModel>>(
+            // cell 설정
             configureCell: { dataSource, tableView, indexPath, model in
                 let cell: ProjectListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
                 cell.configure(with: model)
@@ -40,6 +43,7 @@ extension ProjectListViewController: ViewModelBindable {
     func bindViewModel(viewModel: ViewModel) {
         let dataSource = configureDataSource()
 
+        // UITableViewController의 경우 UITableViewDelegate, UITableViewDataSource가 자동으로 적용되므로 사용하지 않으면 제거
         tableView.dataSource = nil
         tableView.delegate = nil
 
@@ -77,6 +81,7 @@ extension ProjectListViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 화면을 닫음
         output
             .dismissViewController
             .drive(onNext: { [weak self] _ in

@@ -11,6 +11,8 @@ import PictionSDK
 
 @objc(ShareEntryViewController)
 
+// 현재 사용하지 않는 화면입니다. (에디터 기능 지원안함)
+
 class ShareEntryViewController: UINavigationController {
 
     init() {

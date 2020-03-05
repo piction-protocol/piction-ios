@@ -15,6 +15,8 @@ import PictionSDK
 import Toast_Swift
 import MobileCoreServices
 
+// 현재 사용하지 않는 화면입니다. (에디터 기능 지원안함)
+
 final class CreatePostViewController: UIViewController {
     var disposeBag = DisposeBag()
 
@@ -143,10 +145,6 @@ final class CreatePostViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
 
-    @IBAction func tapGesture(_ sender: Any) {
-        view.endEditing(true)
-    }
-
     func getExtensionItemText(completion: @escaping (String?) -> Void) {
         var textContent: String?
 
@@ -191,14 +189,12 @@ final class CreatePostViewController: UIViewController {
             }
         }
     }
+}
 
-    private func configureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, UIImage>> {
-        return RxCollectionViewSectionedReloadDataSource<SectionModel<String, UIImage>>(
-            configureCell: { dataSource, collectionView, indexPath, model in
-                let cell: CreatePostCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.configure(with: model, index: indexPath.row)
-                return cell
-        })
+// MARK: - IBAction
+extension CreatePostViewController {
+    @IBAction func tapGesture(_ sender: Any) {
+        view.endEditing(true)
     }
 }
 
@@ -328,6 +324,7 @@ extension CreatePostViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // keyboard가 나타나거나 사라질때 scrollView의 크기 조정
         output
             .keyboardWillChangeFrame
             .drive(onNext: { [weak self] changedFrameInfo in
@@ -355,6 +352,7 @@ extension CreatePostViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 화면을 닫음
         output
             .dismissViewController
             .drive(onNext: { [weak self] message in
@@ -362,6 +360,7 @@ extension CreatePostViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 토스트 메시지 출력
         output
             .toastMessage
             .drive(onNext: { [weak self] message in
@@ -382,6 +381,20 @@ extension CreatePostViewController: ViewModelBindable {
                 }
             })
             .disposed(by: disposeBag)
+    }
+}
+
+// MARK: - DataSource
+extension CreatePostViewController {
+    // collectionView에 출력할 dataSource 설정
+    private func configureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, UIImage>> {
+        return RxCollectionViewSectionedReloadDataSource<SectionModel<String, UIImage>>(
+            // cell 설정
+            configureCell: { dataSource, collectionView, indexPath, model in
+                let cell: CreatePostCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+                cell.configure(with: model, index: indexPath.row)
+                return cell
+        })
     }
 }
 

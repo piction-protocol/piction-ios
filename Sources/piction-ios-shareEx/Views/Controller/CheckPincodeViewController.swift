@@ -12,6 +12,8 @@ import RxCocoa
 import ViewModelBindable
 import LocalAuthentication
 
+// 현재 사용하지 않는 화면입니다. (에디터 기능 지원안함)
+
 protocol CheckPincodeDelegate: class {
     func authSuccess()
 }
@@ -34,6 +36,8 @@ final class CheckPincodeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // present 타입의경우 viewDidLoad에서 navigation을 설정
         self.navigationController?.configureNavigationBar(transparent: true, shadow: false)
     }
 
@@ -200,6 +204,7 @@ extension CheckPincodeViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 화면을 닫음
         output
             .dismissViewController
             .drive(onNext: { [weak self] in

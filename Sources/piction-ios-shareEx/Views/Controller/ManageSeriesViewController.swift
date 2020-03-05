@@ -13,6 +13,8 @@ import ViewModelBindable
 import RxDataSources
 import PictionSDK
 
+// 현재 사용하지 않는 화면입니다. (에디터 기능 지원안함)
+
 protocol ManageSeriesDelegate: class {
     func selectSeries(with series: SeriesModel?)
 }
@@ -41,13 +43,16 @@ final class ManageSeriesViewController: UIViewController {
 
     private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, SeriesModel>> {
         return RxTableViewSectionedReloadDataSource<SectionModel<String, SeriesModel>>(
+            // cell 설정
             configureCell: { dataSource, tableView, indexPath, model in
                 let cell: ManageSeriesTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
                 cell.configure(with: model)
                 return cell
-        }, canEditRowAtIndexPath: { (_, _) in
-            return true
-        })
+            },
+            // swipe 액션 사용 (에디터 기능 지원 안함)
+            canEditRowAtIndexPath: { (_, _) in
+                return true
+            })
     }
 
     private func openDeleteConfirmPopup(seriesId: Int) {
@@ -180,6 +185,7 @@ extension ManageSeriesViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // emptyView 출력
         output
             .embedEmptyViewController
             .drive(onNext: { [weak self] style in
@@ -188,6 +194,7 @@ extension ManageSeriesViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 화면을 닫음
         output
             .dismissViewController
             .drive(onNext: { [weak self] _ in
