@@ -49,6 +49,7 @@ class SeriesPostHeaderView: GSKStretchyHeaderView {
 
 // MARK: - Public Method
 extension SeriesPostHeaderView {
+    // series 정보를 가져와서 설정
     func configureSeriesInfo(with model: SeriesModel) {
         let (thumbnails, title, postCount) = (model.thumbnails, model.name, model.postCount)
 
