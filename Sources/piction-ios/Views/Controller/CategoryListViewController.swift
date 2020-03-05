@@ -77,7 +77,7 @@ extension CategoryListViewController: ViewModelBindable {
             .selectedIndexPath
             .map { dataSource[$0].id }
             .flatMap(Driver.from)
-            .map { .categorizedProject(id: $0) }
+            .map { .categorizedProject(id: $0) } // categorizedProject 화면으로 push
             .drive(onNext: { [weak self] in
                 self?.openView(type: $0, openType: .push)
             })
