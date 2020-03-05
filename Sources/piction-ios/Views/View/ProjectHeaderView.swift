@@ -10,11 +10,13 @@ import Foundation
 import PictionSDK
 import GSKStretchyHeaderView
 
+// MARK: - ProjectHeaderViewDelegate
 protocol ProjectHeaderViewDelegate: class {
     func postBtnDidTap()
     func seriesBtnDidTap()
 }
 
+// MARK: - GSKStretchyHeaderView
 class ProjectHeaderView: GSKStretchyHeaderView {
     weak var delegate: ProjectHeaderViewDelegate?
 
@@ -22,6 +24,7 @@ class ProjectHeaderView: GSKStretchyHeaderView {
 
     @IBOutlet weak var thumbnailImageView: UIImageView! {
         didSet {
+            // 그라데이션 효과
             let gradientLayer = CAGradientLayer()
             let color1 = UIColor(white: 0.0, alpha: 0.38).cgColor
             let color2 = UIColor.clear.cgColor
@@ -38,30 +41,26 @@ class ProjectHeaderView: GSKStretchyHeaderView {
 
     @IBOutlet weak var maskImage: VisualEffectView!
     @IBOutlet weak var naviView: UIView!
-    @IBOutlet var naviViewImageHeight: NSLayoutConstraint!
     @IBOutlet weak var projectDetailView: UIView!
 
-    @IBAction func postBtnDidTap(_ sender: Any) {
-        delegate?.postBtnDidTap()
-    }
-
-    @IBAction func seriesBtnDidTap(_ sender: Any) {
-        delegate?.seriesBtnDidTap()
-    }
+    @IBOutlet var naviViewImageHeight: NSLayoutConstraint!
 
     override func awakeFromNib() {
         super.awakeFromNib()
+
+        // GSKStretchyHeaderView 설정
         minimumContentHeight = STATUS_HEIGHT + DEFAULT_NAVIGATION_HEIGHT + menuHeight
-
         setMaximumContentHeight(detailHeight: projectDetailView.frame.size.height)
-
-        naviViewImageHeight.constant = STATUS_HEIGHT + DEFAULT_NAVIGATION_HEIGHT
-
         expansionMode = .topOnly
 
+        naviViewImageHeight.constant = STATUS_HEIGHT + DEFAULT_NAVIGATION_HEIGHT
         thumbnailImageView.contentMode = .scaleAspectFill
     }
+}
 
+// MARK: - public method
+extension ProjectHeaderView {
+    // 프로젝트 정보를 가져와서 설정
     func configure(with projectInfo: ProjectModel) {
         if let thumbnail = projectInfo.thumbnail {
             let thumbnailWithIC = "\(thumbnail)?w=720&h=720&quality=80&output=webp"
@@ -71,12 +70,14 @@ class ProjectHeaderView: GSKStretchyHeaderView {
         }
     }
 
+    // GSKStretchyHeaderView의 maximumContentHeight 값을 변경하기 위함
     func setMaximumContentHeight(detailHeight: CGFloat) {
         let thumbnailWidth = SCREEN_W < SCREEN_H ? SCREEN_W : SCREEN_H
         let projectDetailPosY = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad ? thumbnailWidth / 2 - 70 : thumbnailWidth - 30
         maximumContentHeight = projectDetailPosY + detailHeight + menuHeight - STATUS_HEIGHT - DEFAULT_NAVIGATION_HEIGHT
     }
 
+    // menu 변경 시
     func controlMenuButton(menu: Int) {
         if #available(iOS 13.0, *) {
             postButton.backgroundColor = menu == 0 ? .clear : .systemBackground
@@ -90,6 +91,18 @@ class ProjectHeaderView: GSKStretchyHeaderView {
     }
 }
 
+// MARK: - IBAction
+extension ProjectHeaderView {
+    @IBAction func postBtnDidTap(_ sender: Any) {
+        delegate?.postBtnDidTap()
+    }
+
+    @IBAction func seriesBtnDidTap(_ sender: Any) {
+        delegate?.seriesBtnDidTap()
+    }
+}
+
+// MARK: - Static Method
 extension ProjectHeaderView {
     static func getView() -> ProjectHeaderView {
         let view = Bundle.main.loadNibNamed("ProjectHeaderView", owner: self, options: nil)!.first as! ProjectHeaderView
