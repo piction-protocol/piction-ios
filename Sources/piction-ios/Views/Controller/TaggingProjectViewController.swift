@@ -128,7 +128,7 @@ extension TaggingProjectViewController: ViewModelBindable {
             .selectedIndexPath
             .map { dataSource[$0].uri }
             .flatMap(Driver.from)
-            .map { .project(uri: $0) }
+            .map { .project(uri: $0) } // project 화면으로 push
             .drive(onNext: { [weak self] in
                 self?.openView(type: $0, openType: .push)
             })
