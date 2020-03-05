@@ -137,8 +137,10 @@ extension HomeViewController: ViewModelBindable {
                         let index = self?.navigationController?.viewControllers.count
                     else { return }
 
+                    // post 화면으로 push
                     self?.openView(type: .post(uri: uri, postId: postId), openType: .push)
 
+                    // background에는 project 화면을 insert
                     let backgroundProject = ProjectViewController.make(uri: uri)
                     self?.navigationController?.viewControllers.insert(backgroundProject, at: index)
                 default:
