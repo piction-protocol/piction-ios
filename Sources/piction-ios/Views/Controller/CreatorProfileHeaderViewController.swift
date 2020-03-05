@@ -13,11 +13,13 @@ import ViewModelBindable
 import RxDataSources
 import PictionSDK
 
+// MARK: - CreatorHeaderViewDelegate
 protocol CreatorHeaderViewDelegate: class {
     func loadComplete()
     func setNavigationTitle(title: String)
 }
 
+// MARK: - UIViewController
 final class CreatorProfileHeaderViewController: UIViewController {
     var disposeBag = DisposeBag()
 
@@ -28,6 +30,7 @@ final class CreatorProfileHeaderViewController: UIViewController {
     @IBOutlet weak var greetingStackView: UIStackView!
     @IBOutlet weak var greetingTextView: UITextView! {
         didSet {
+            // 기본으로 적용되어 있는 TextView의 패딩과 라인간격을 없앰
             greetingTextView.textContainerInset = .zero
             greetingTextView.textContainer.lineFragmentPadding = 0
         }
@@ -35,22 +38,13 @@ final class CreatorProfileHeaderViewController: UIViewController {
 
     weak var delegate: CreatorHeaderViewDelegate?
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-
-    }
-
-    private func configureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, CreatorLinkModel>> {
-        return RxCollectionViewSectionedReloadDataSource<SectionModel<String, CreatorLinkModel>>(
-
-            configureCell: { dataSource, collectionView, indexPath, model in
-                let cell: CreatorProfileLinkCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.configure(with: model)
-                return cell
-            })
+    deinit {
+        // 메모리 해제되는지 확인
+        print("[deinit] \(String(describing: type(of: self)))")
     }
 }
 
+// MARK: - ViewModelBindable
 extension CreatorProfileHeaderViewController: ViewModelBindable {
     typealias ViewModel = CreatorProfileHeaderViewModel
 
@@ -58,13 +52,13 @@ extension CreatorProfileHeaderViewController: ViewModelBindable {
         let dataSource = configureDataSource()
 
         let input = CreatorProfileHeaderViewModel.Input(
-            viewWillAppear: rx.viewWillAppear.asDriver(),
-            viewWillDisappear: rx.viewWillDisappear.asDriver(),
-            selectedIndexPath: linkCollectionView.rx.itemSelected.asDriver()
+            viewWillAppear: rx.viewWillAppear.asDriver(), // 화면이 보여지기 전에
+            selectedIndexPath: linkCollectionView.rx.itemSelected.asDriver() // collectionView의 item을 눌렀을 때
         )
 
         let output = viewModel.build(input: input)
 
+        // creatorProfile 정보를 받아와서 각 항목에 설정
         output
             .creatorProfile
             .drive(onNext: { [weak self] creatorProfile in
@@ -74,6 +68,7 @@ extension CreatorProfileHeaderViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // Creator 정보를 가져와서 각 항목에 설정
         output
             .creatorInfo
             .drive(onNext: { [weak self] creatorInfo in
@@ -92,6 +87,7 @@ extension CreatorProfileHeaderViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // Creator 정보의 Link 목록을 가져와서 collectionView에 출력
         output
             .creatorLinkList
             .drive { $0 }
@@ -99,6 +95,7 @@ extension CreatorProfileHeaderViewController: ViewModelBindable {
             .bind(to: linkCollectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
+        // collectionView에 출력되면 loadComplete delegate를 호출
         output
             .creatorLinkList
             .drive(onNext: { [weak self] _ in
@@ -107,12 +104,28 @@ extension CreatorProfileHeaderViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // Creator 정보의 Link를 누르면 SafariView에서 해당 링크로 이동
         output
             .selectedIndexPath
             .map { dataSource[$0].url }
             .filter { $0 != nil }
             .flatMap(Driver.from)
-            .drive(onNext: { self.openSafariViewController(url: $0) })
+            .drive(onNext: { [weak self] in
+                self?.openSafariViewController(url: $0)
+            })
             .disposed(by: disposeBag)
+    }
+}
+
+// MARK: - DataSource
+extension CreatorProfileHeaderViewController {
+    private func configureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, CreatorLinkModel>> {
+        return RxCollectionViewSectionedReloadDataSource<SectionModel<String, CreatorLinkModel>>(
+            // cell 설정
+            configureCell: { dataSource, collectionView, indexPath, model in
+                let cell: CreatorProfileLinkCollectionViewCell = collectionView.dequeueReusableCell(forIndexPath: indexPath)
+                cell.configure(with: model)
+                return cell
+            })
     }
 }
