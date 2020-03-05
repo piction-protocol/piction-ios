@@ -21,6 +21,7 @@ enum ManageMenu {
     case membership
 }
 
+// MARK: - UIViewController
 final class ProjectViewController: UIViewController {
     var disposeBag = DisposeBag()
 
@@ -33,14 +34,15 @@ final class ProjectViewController: UIViewController {
     private var stretchyHeader: ProjectHeaderView?
     private var projectDetailView: ProjectDetailViewController?
 
-    private let changeMenu = BehaviorSubject<Int>(value: 0)
-    private let deletePost = PublishSubject<Int>()
-    private let deleteSeries = PublishSubject<Int>()
-    private let updateSeries = PublishSubject<(String, SeriesModel)>()
-    private let manageMenu = PublishSubject<ManageMenu>()
+    private let changeMenu = BehaviorSubject<Int>(value: 0) // 메뉴 변경 시
+    private let deletePost = PublishSubject<Int>() // swipe로 post 삭제 시 (에디터 기능 지원 안함)
+    private let deleteSeries = PublishSubject<Int>() // swipe로 post 삭제 시 (에디터 기능 지원 안함)
+    private let updateSeries = PublishSubject<(String, SeriesModel)>() // swipe로 시리즈 수정 시 (에디터 기능 지원 안함)
+    private let manageMenu = PublishSubject<ManageMenu>() // 관리 메뉴 눌렀을 때 (에디터 기능 지원 안함)
 
     @IBOutlet weak var tableView: UITableView! {
         didSet {
+            // stretchHeader 생성하고 tableView에 add
             stretchyHeader = ProjectHeaderView.getView()
             stretchyHeader?.delegate = self
             stretchyHeader?.isHidden = true
@@ -51,53 +53,7 @@ final class ProjectViewController: UIViewController {
         }
     }
 
-    private func embedProjectDetailViewController(uri: String) {
-        let projectDetailView = ProjectDetailViewController.make(uri: uri)
-        projectDetailView.delegate = self
-        self.projectDetailView = projectDetailView
-        if let projectDetailContainerView = stretchyHeader?.projectDetailView {
-            self.embed(projectDetailView, to: projectDetailContainerView)
-        }
-    }
-
-    private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
-        let vc = CustomEmptyViewController.make(style: style)
-        if let footerView = self.tableView.tableFooterView {
-            self.embed(vc, to: footerView)
-        }
-    }
-
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        stretchyHeader?.frame.size.width = view.frame.size.width
-    }
-
-    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionType<ContentsSection>> {
-        let dataSource = RxTableViewSectionedReloadDataSource<SectionType<ContentsSection>>(
-            configureCell: { dataSource, tableView, indexPath, model in
-                switch dataSource[indexPath] {
-                case .postCardTypeList(let post, let subscriptionInfo, let isWriter):
-                    let cell: ProjectPostCardTypeListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    cell.configure(post: post, subscriptionInfo: subscriptionInfo, isWriter: isWriter)
-                    return cell
-                case .postListTypeList(let post, let subscriptionInfo, let isWriter):
-                    let cell: ProjectPostListTypeListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    cell.configure(post: post, subscriptionInfo: subscriptionInfo, isWriter: isWriter)
-                    return cell
-                case .seriesList(let series):
-                    let cell: ProjectSeriesListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                    cell.configure(with: series)
-                    return cell
-                default:
-                    let cell = UITableViewCell()
-                    return cell
-                }
-        }, canEditRowAtIndexPath: { [weak self] (_, _) in
-            return (self?.viewModel?.isWriter ?? false && FEATURE_EDITOR)
-        })
-        return dataSource
-    }
-
+    // tableView의 contentSize 확인
     override var preferredContentSize: CGSize {
         get {
             guard let tableView = self.tableView else { return .zero }
@@ -107,42 +63,45 @@ final class ProjectViewController: UIViewController {
         set {}
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        tableView.setInfiniteScrollStyle()
+    deinit {
+        // 메모리 해제되는지 확인
+        print("[deinit] \(String(describing: type(of: self)))")
     }
 }
 
+// MARK: - ViewModelBindable
 extension ProjectViewController: ViewModelBindable {
     typealias ViewModel = ProjectViewModel
 
     func bindViewModel(viewModel: ViewModel) {
         let dataSource = configureDataSource()
 
-        tableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
-
+        // infiniteScroll이 동작할 때
         tableView.addInfiniteScroll { [weak self] _ in
             self?.viewModel?.loadTrigger.onNext(())
         }
+        // infiniteScroll이 동작하는 조건
         tableView.setShouldShowInfiniteScrollHandler { [weak self] _ in
             return self?.viewModel?.shouldInfiniteScroll ?? false
         }
 
         let input = ProjectViewModel.Input(
-            viewWillAppear: rx.viewWillAppear.asDriver(),
-            viewWillDisappear: rx.viewWillDisappear.asDriver(),
-            changeMenu: changeMenu.asDriver(onErrorDriveWith: .empty()),
-            infoBtnDidTap: infoBarButton.rx.tap.asDriver(),
-            shareBtnDidTap: shareBarButton.rx.tap.asDriver(),
-            selectedIndexPath: tableView.rx.itemSelected.asDriver(),
-            deletePost: deletePost.asDriver(onErrorDriveWith: .empty()),
-            deleteSeries: deleteSeries.asDriver(onErrorDriveWith: .empty()),
-            updateSeries: updateSeries.asDriver(onErrorDriveWith: .empty())
+            viewWillAppear: rx.viewWillAppear.asDriver(), // 화면이 보여지기 전에
+            viewWillDisappear: rx.viewWillDisappear.asDriver(), // 화면이 사라지기 전에
+            viewWillLayoutSubviews: rx.viewWillLayoutSubviews.asDriver(), // subview의 layout이 갱신되기 전에
+            traitCollectionDidChange: rx.traitCollectionDidChange.asDriver(), // 일반/다크모드 전환 시
+            changeMenu: changeMenu.asDriver(onErrorDriveWith: .empty()), // menu를 변경할 때
+            infoBtnDidTap: infoBarButton.rx.tap.asDriver(), // 상단의 info버튼을 눌렀을 때
+            shareBtnDidTap: shareBarButton.rx.tap.asDriver(), // 상단의 share버튼을 눌렀을 때
+            selectedIndexPath: tableView.rx.itemSelected.asDriver(), // tableView의 row를 눌렀을 때
+            deletePost: deletePost.asDriver(onErrorDriveWith: .empty()), // 포스트 삭제 액션을 할때 (에디터 기능 지원안함)
+            deleteSeries: deleteSeries.asDriver(onErrorDriveWith: .empty()), // 시리즈 삭제 액션을 할때 (에디터 기능 지원안함)
+            updateSeries: updateSeries.asDriver(onErrorDriveWith: .empty()) // 시리즈가 업데이트 될 때 (에디터 기능 지원안함)
         )
 
         let output = viewModel.build(input: input)
 
+        // 화면이 보여지기 전에 NavigationBar 설정
         output
             .viewWillAppear
             .drive(onNext: { [weak self] in
@@ -153,6 +112,7 @@ extension ProjectViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 화면이 사라지기 전에 navigationBar를 기본값으로 변경
         output
             .viewWillDisappear
             .drive(onNext: { [weak self] in
@@ -161,20 +121,40 @@ extension ProjectViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // subview의 layout이 갱신되기 전에
+        output
+            .viewWillLayoutSubviews
+            .drive(onNext: { [weak self] in
+                guard let `self` = self else { return }
+                self.stretchyHeader?.frame.size.width = self.view.frame.size.width
+            })
+            .disposed(by: disposeBag)
+
+        // 일반/다크모드 전환 시 Infinite scroll 색 변경
+        output
+            .traitCollectionDidChange
+            .drive(onNext: { [weak self] in
+                self?.tableView.setInfiniteScrollStyle()
+            })
+            .disposed(by: disposeBag)
+
+        // 프로젝트 정보를 불러와서 header에 설정
         output
             .projectInfo
-            .drive(onNext: { [weak self] projectInfo in
-                self?.stretchyHeader?.configure(with: projectInfo)
+            .drive(onNext: { [weak self] in
+                self?.stretchyHeader?.configure(with: $0)
             })
             .disposed(by: disposeBag)
 
+        // ProjectDetailViewController를 생성
         output
             .embedProjectDetailViewController
-            .drive(onNext: { [weak self] uri in
-                self?.embedProjectDetailViewController(uri: uri)
+            .drive(onNext: { [weak self] in
+                self?.embedProjectDetailViewController(uri: $0)
             })
             .disposed(by: disposeBag)
 
+        // tableView의 row를 선택할 때
         output
             .selectedIndexPath
             .drive(onNext: { [weak self] indexPath in
@@ -182,15 +162,16 @@ extension ProjectViewController: ViewModelBindable {
                 switch dataSource[indexPath] {
                 case .postCardTypeList(let post, _, _),
                      .postListTypeList(let post, _, _):
-                    self?.openPostViewController(uri: uri, postId: post.id ?? 0)
+                    self?.openView(type: .post(uri: uri, postId: post.id ?? 0), openType: .push)
                 case .seriesList(let series):
-                    self?.openSeriesPostViewController(uri: uri, seriesId: series.id ?? 0)
+                    self?.openView(type: .seriesPost(uri: uri, seriesId: series.id ?? 0), openType: .push)
                 default:
                     break
                 }
             })
             .disposed(by: disposeBag)
 
+        // post, series의 정보를 tableView에 출력
         output
             .contentList
             .do(onNext: { [weak self] _ in
@@ -203,6 +184,7 @@ extension ProjectViewController: ViewModelBindable {
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
+        // post, series의 정보를 출력한 후 footer size를 조정 (row가 적더라도 끝까지 스크롤 되도록)
         output
             .contentList
             .drive(onNext: { [weak self] list in
@@ -228,14 +210,15 @@ extension ProjectViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // emptyView 출력
         output
             .embedEmptyViewController
-            .drive(onNext: { [weak self] style in
-                guard let `self` = self else { return }
-                self.embedCustomEmptyViewController(style: style)
+            .drive(onNext: { [weak self] in
+                self?.embedCustomEmptyViewController(style: $0)
             })
             .disposed(by: disposeBag)
 
+        // 공유 팝업 출력
         output
             .openSharePopup
             .drive(onNext: { [weak self] projectInfo in
@@ -252,18 +235,22 @@ extension ProjectViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 프로젝트 정보 화면으로 push
         output
             .openProjectInfoViewController
-            .drive(onNext: { [weak self] uri in
-                self?.openProjectInfoViewController(uri: uri)
+            .map { .projectInfo(uri: $0) }
+            .drive(onNext: { [weak self] in
+                self?.openView(type: $0, openType: .push)
             })
             .disposed(by: disposeBag)
 
+        // 로딩 뷰
         output
             .activityIndicator
             .loadingActivity()
             .disposed(by: disposeBag)
 
+        // 토스트 메시지 출력
         output
             .toastMessage
             .showToast()
@@ -273,24 +260,29 @@ extension ProjectViewController: ViewModelBindable {
 
 // MARK: - GSKStretchyHeaderViewStretchDelegate
 extension ProjectViewController: GSKStretchyHeaderViewStretchDelegate {
+    // stretchHeader의 크기가 변경 될 때
     func stretchyHeaderView(_ headerView: GSKStretchyHeaderView, didChangeStretchFactor stretchFactor: CGFloat) {
         stretchyHeader?.maskImage.isHidden = false
         if stretchFactor > 0.1 {
             stretchyHeader?.maskImage.blurRadius = 0
         } else {
-//            print((1 - min(1, stretchFactor)) - 90 / 10)
             stretchyHeader?.maskImage.blurRadius = (1 - min(1, stretchFactor) - 0.9) * 50
         }
     }
 }
 
+// MARK: - ProjectHeaderViewDelegate
 extension ProjectViewController: ProjectHeaderViewDelegate {
+    // 메뉴의 post 버튼 눌렀을 때
     func postBtnDidTap() {
+        // 버튼 변경
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.stretchyHeader?.controlMenuButton(menu: 0)
             self.changeMenu.onNext(0)
         }
         let menuTopPosition = self.statusHeight + self.navigationHeight + (self.stretchyHeader?.menuHeight ?? 0)
+
+        // 현재 contentOffset 유지
         if tableView.contentOffset.y >= -menuTopPosition {
             contentOffset = CGPoint(x: 0, y: -menuTopPosition)
         } else {
@@ -298,12 +290,16 @@ extension ProjectViewController: ProjectHeaderViewDelegate {
         }
     }
 
+    // 메뉴의 series 버튼 눌렀을 때
     func seriesBtnDidTap() {
+        // 버튼 변경
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.stretchyHeader?.controlMenuButton(menu: 1)
             self.changeMenu.onNext(1)
         }
         let menuTopPosition = self.statusHeight + self.navigationHeight + (self.stretchyHeader?.menuHeight ?? 0)
+
+        // 현재 contentOffset 유지
         if tableView.contentOffset.y >= -menuTopPosition {
             contentOffset = CGPoint(x: 0, y: -menuTopPosition)
         } else {
@@ -312,14 +308,18 @@ extension ProjectViewController: ProjectHeaderViewDelegate {
     }
 }
 
+// MARK: - ProjectDetailViewDelegate
 extension ProjectViewController: ProjectDetailViewDelegate {
+    // projectDetail에서 layout변경이 필요할 때
     func layoutIfNeeded() {
         stretchyHeader?.setMaximumContentHeight(detailHeight: projectDetailView?.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height ?? 0)
         stretchyHeader?.isHidden = false
     }
 }
 
+// MARK: - UITableViewDelegate
 extension ProjectViewController: UITableViewDelegate {
+    // cell을 swipe하여 수정, 삭제 액션을 추가 (에디터 기능 지원 안함)
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard let section = self.viewModel?.sections[indexPath.row] else {
             return UISwipeActionsConfiguration()
@@ -328,12 +328,13 @@ extension ProjectViewController: UITableViewDelegate {
             return UISwipeActionsConfiguration()
         }
 
+        // 수정
         let editAction = UIContextualAction(style: .normal, title: LocalizationKey.edit.localized(), handler: { [weak self] (action, view, completionHandler) in
 
             switch section {
             case .postCardTypeList(let post, _, _),
                  .postListTypeList(let post, _, _):
-                self?.openCreatePostViewController(uri: uri, postId: post.id ?? 0)
+                self?.openView(type: .createPost(uri: uri, postId: post.id ?? 0), openType: .push)
                 completionHandler(true)
             case .seriesList(let series):
                 self?.openUpdateSeriesPopup(series: series)
@@ -343,6 +344,7 @@ extension ProjectViewController: UITableViewDelegate {
             }
         })
 
+        // 삭제
         let deleteAction = UIContextualAction(style: .destructive, title: LocalizationKey.delete.localized(), handler: { [weak self] (action, view, completionHandler) in
 
             switch section {
@@ -362,7 +364,57 @@ extension ProjectViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - DataSource
 extension ProjectViewController {
+    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionType<ContentsSection>> {
+        return RxTableViewSectionedReloadDataSource<SectionType<ContentsSection>>(
+            // cell 설정
+            configureCell: { dataSource, tableView, indexPath, model in
+                switch dataSource[indexPath] {
+                case .postCardTypeList(let post, let subscriptionInfo, let isWriter):
+                    let cell: ProjectPostCardTypeListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.configure(post: post, subscriptionInfo: subscriptionInfo, isWriter: isWriter)
+                    return cell
+                case .postListTypeList(let post, let subscriptionInfo, let isWriter):
+                    let cell: ProjectPostListTypeListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.configure(post: post, subscriptionInfo: subscriptionInfo, isWriter: isWriter)
+                    return cell
+                case .seriesList(let series):
+                    let cell: ProjectSeriesListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                    cell.configure(with: series)
+                    return cell
+                default:
+                    let cell = UITableViewCell()
+                    return cell
+                }
+            },
+            // swipe 액션 사용 (에디터 기능 지원 안함)
+            canEditRowAtIndexPath: { [weak self] (_, _) in
+                return (self?.viewModel?.isWriter ?? false && FEATURE_EDITOR)
+            })
+    }
+}
+
+// MARK: - Private Method
+extension ProjectViewController {
+    private func embedProjectDetailViewController(uri: String) {
+        let projectDetailView = ProjectDetailViewController.make(uri: uri)
+        projectDetailView.delegate = self
+        self.projectDetailView = projectDetailView
+        if let projectDetailContainerView = stretchyHeader?.projectDetailView {
+            self.embed(projectDetailView, to: projectDetailContainerView)
+        }
+    }
+
+    // emptyView를 embed
+    private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
+        let vc = CustomEmptyViewController.make(style: style)
+        if let footerView = self.tableView.tableFooterView {
+            self.embed(vc, to: footerView)
+        }
+    }
+
+    // post를 swipe해서 삭제 시 팝업 (에디터 기능 지원 안함)
     private func openDeletePostPopup(postId: Int) {
         let alertController = UIAlertController(title: nil, message: LocalizationKey.popup_title_delete_post.localized(), preferredStyle: .alert)
         let cancelButton = UIAlertAction(title: LocalizationKey.cancel.localized(), style: .cancel)
@@ -376,6 +428,7 @@ extension ProjectViewController {
         self.present(alertController, animated: true, completion: nil)
     }
 
+    // series를 swipe해서 삭제 시 팝업 (에디터 기능 지원 안함)
     private func openDeleteSeriesPopup(seriesId: Int) {
         let alertController = UIAlertController(
         title: LocalizationKey.str_delete_series.localized(),
@@ -401,6 +454,7 @@ extension ProjectViewController {
         present(alertController, animated: true, completion: nil)
     }
 
+    // series를 swipe해서 수정 시 팝업 (에디터 기능 지원 안함)
     private func openUpdateSeriesPopup(series: SeriesModel) {
         let alertController = UIAlertController(
             title: LocalizationKey.str_modify_series.localized(),
@@ -434,6 +488,7 @@ extension ProjectViewController {
         present(alertController, animated: true, completion: nil)
     }
 
+    // 공유 팝업
     private func openSharePopup(url: String) {
         let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: [])
 
