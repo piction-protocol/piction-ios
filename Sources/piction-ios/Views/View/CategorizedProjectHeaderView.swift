@@ -10,9 +10,11 @@ import Foundation
 import PictionSDK
 import GSKStretchyHeaderView
 
+// MARK: - GSKStretchyHeaderView
 class CategorizedProjectHeaderView: GSKStretchyHeaderView {
     @IBOutlet weak var coverImageView: UIImageView! {
         didSet {
+            // 그라데이션 효과
             let gradientLayer = CAGradientLayer()
             let color1 = UIColor(white: 0.0, alpha: 0.38).cgColor
             let color2 = UIColor.clear.cgColor
@@ -28,20 +30,25 @@ class CategorizedProjectHeaderView: GSKStretchyHeaderView {
 
     @IBOutlet weak var maskImage: VisualEffectView!
     @IBOutlet weak var naviView: UIView!
+    
     @IBOutlet var naviViewImageHeight: NSLayoutConstraint!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         let width = SCREEN_W < SCREEN_H ? SCREEN_W : SCREEN_H
+
+        // GSKStretchyHeaderView 설정
         minimumContentHeight = STATUS_HEIGHT + DEFAULT_NAVIGATION_HEIGHT
         maximumContentHeight = width / 2 - STATUS_HEIGHT - DEFAULT_NAVIGATION_HEIGHT
-        naviViewImageHeight.constant = STATUS_HEIGHT + DEFAULT_NAVIGATION_HEIGHT
-
         expansionMode = .topOnly
 
+        naviViewImageHeight.constant = STATUS_HEIGHT + DEFAULT_NAVIGATION_HEIGHT
         coverImageView.contentMode = .scaleAspectFill
     }
-
+}
+// MARK: - Public Method
+extension CategorizedProjectHeaderView {
+    // 카테고리 정보를 가져와서 설정
     func configureCategoryInfo(with model: CategoryModel) {
         let (thumbnail, title, categorizedCount) = (model.thumbnail, model.name, model.categorizedCount)
 
@@ -59,6 +66,7 @@ class CategorizedProjectHeaderView: GSKStretchyHeaderView {
     }
 }
 
+// MARK: - Static Method
 extension CategorizedProjectHeaderView {
     static func getView() -> CategorizedProjectHeaderView {
         let view = Bundle.main.loadNibNamed("CategorizedProjectHeaderView", owner: self, options: nil)!.first as! CategorizedProjectHeaderView
