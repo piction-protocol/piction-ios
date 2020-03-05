@@ -171,7 +171,7 @@
                                                                                     <constraint firstAttribute="height" constant="20" id="bVv-1s-orq"/>
                                                                                 </constraints>
                                                                             </stackView>
-                                                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gO5-MH-it6">
+                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gO5-MH-it6">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="326" height="20"/>
                                                                             </button>
                                                                         </subviews>
@@ -330,6 +330,7 @@
                         <outlet property="projectDetailContainerView" destination="1KD-Lq-uHE" id="vpY-jk-Lm1"/>
                         <outlet property="sponsorCountLabel" destination="m45-BY-bQJ" id="OXE-4i-6jc"/>
                         <outlet property="subscriptionButton" destination="nxi-En-SSP" id="XFm-SX-NPU"/>
+                        <outlet property="subscriptionUserButton" destination="gO5-MH-it6" id="tIj-Ge-6fM"/>
                         <outlet property="titleLabel" destination="soP-CV-UpH" id="eDc-qj-VTx"/>
                         <outlet property="usernameLabel" destination="DhD-Gs-NRn" id="Vfl-lV-v9e"/>
                     </connections>
