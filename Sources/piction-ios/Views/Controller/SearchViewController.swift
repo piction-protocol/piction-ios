@@ -134,8 +134,10 @@ extension SearchViewController: ViewModelBindable {
                 switch dataSource[indexPath] {
                 case .project(let project): // 현재 dataSource가 project의 data이면
                     guard let uri = project.uri else { return }
+                    // project 화면으로 push
                     self?.openView(type: .project(uri: uri), openType: .push)
                 case .tag(let tag): // 현재 dataSource가 tag의 data이면
+                    // taggingProject 화면으로 push
                     self?.openView(type: .taggingProject(tag: tag.name ?? ""), openType: .push)
                 }
             })
