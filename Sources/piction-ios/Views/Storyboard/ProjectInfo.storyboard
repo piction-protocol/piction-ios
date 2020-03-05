@@ -264,6 +264,9 @@
                                                                 </connections>
                                                             </collectionViewCell>
                                                         </cells>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="QW2-s7-cB4" id="NsU-TG-Wn7"/>
+                                                        </connections>
                                                     </collectionView>
                                                 </subviews>
                                             </stackView>
@@ -363,6 +366,9 @@
                                                                 </connections>
                                                             </collectionViewCell>
                                                         </cells>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="QW2-s7-cB4" id="MPN-3J-0S6"/>
+                                                        </connections>
                                                     </collectionView>
                                                 </subviews>
                                             </stackView>

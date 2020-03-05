@@ -135,6 +135,9 @@
                                                                         <color key="textColor" name="PictionDarkGray"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                         <textInputTraits key="textInputTraits"/>
+                                                                        <connections>
+                                                                            <outlet property="delegate" destination="H2Y-TP-zKj" id="VvV-vf-O0F"/>
+                                                                        </connections>
                                                                     </textField>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mtj-Qp-XjW">
                                                                         <rect key="frame" x="0.0" y="35" width="335" height="1"/>
@@ -179,6 +182,9 @@
                                                                         <color key="textColor" name="PictionDarkGray"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                         <textInputTraits key="textInputTraits"/>
+                                                                        <connections>
+                                                                            <outlet property="delegate" destination="H2Y-TP-zKj" id="HuB-Ku-fwo"/>
+                                                                        </connections>
                                                                     </textField>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gVx-5R-Cw2">
                                                                         <rect key="frame" x="0.0" y="35" width="335" height="1"/>

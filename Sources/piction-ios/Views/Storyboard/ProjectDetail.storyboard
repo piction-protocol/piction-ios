@@ -128,6 +128,9 @@
                                                                         </connections>
                                                                     </collectionViewCell>
                                                                 </cells>
+                                                                <connections>
+                                                                    <outlet property="delegate" destination="zVP-ya-L1C" id="d70-zs-7fP"/>
+                                                                </connections>
                                                             </collectionView>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="qlh-1k-YJs">
                                                                 <rect key="frame" x="0.0" y="0.0" width="326" height="54"/>
