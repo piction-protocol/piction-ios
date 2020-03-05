@@ -259,6 +259,7 @@
                         <outlet property="cancelBarButton" destination="nwU-Y3-Gfx" id="qkB-4z-udP"/>
                         <outlet property="emailErrorLabel" destination="jaR-Gh-kk1" id="1VP-r7-s20"/>
                         <outlet property="emailTextField" destination="aCp-19-iIE" id="gHg-A2-2qb"/>
+                        <outlet property="emailUnderlineView" destination="Mtj-Qp-XjW" id="xdI-8g-dqG"/>
                         <outlet property="pictureImageButton" destination="F7m-WN-X4u" id="uIo-ac-I7U"/>
                         <outlet property="profileImageView" destination="RoT-0Y-EoG" id="lue-KZ-2F9"/>
                         <outlet property="saveButton" destination="dDA-WR-8zx" id="Vko-PZ-WVd"/>
