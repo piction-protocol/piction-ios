@@ -13,6 +13,7 @@ import ViewModelBindable
 import RxDataSources
 import PictionSDK
 
+// MARK: - UIViewController
 final class PurchaseMembershipViewController: UIViewController {
     var disposeBag = DisposeBag()
 
@@ -25,6 +26,7 @@ final class PurchaseMembershipViewController: UIViewController {
     @IBOutlet weak var paymentPxlLabel: UILabel!
     @IBOutlet weak var expireDateLabel: UILabel! {
         didSet  {
+            // 현재 날짜에서 30일을 더해서 보여줌
             if let expireDate = Calendar.current.date(byAdding: .day, value: 30, to: Date()) {
                 expireDateLabel.text = expireDate.toString(format: LocalizationKey.str_membership_expire_description.localized())
             }
@@ -38,23 +40,31 @@ final class PurchaseMembershipViewController: UIViewController {
     @IBOutlet weak var agreeButton: UIButton!
     @IBOutlet weak var purchaseButton: UIButton!
 
+    // pincode가 설정되어 있고 인증되었을 때 Observable
     private let authSuccessWithPincode = PublishSubject<Void>()
+
+    deinit {
+        // 메모리 해제되는지 확인
+        print("[deinit] \(String(describing: type(of: self)))")
+    }
 }
 
+// MARK: - ViewModelBindable
 extension PurchaseMembershipViewController: ViewModelBindable {
     typealias ViewModel = PurchaseMembershipViewModel
 
     func bindViewModel(viewModel: ViewModel) {
         let input = PurchaseMembershipViewModel.Input(
-            viewWillAppear: rx.viewWillAppear.asDriver(),
-            descriptionBtnDidTap: descriptionButton.rx.tap.asDriver(),
-            agreeBtnDidTap: agreeButton.rx.tap.asDriver(),
-            purchaseBtnDidTap: purchaseButton.rx.tap.asDriver().throttle(0.5),
-            authSuccessWithPincode: authSuccessWithPincode.asDriver(onErrorDriveWith: .empty())
+            viewWillAppear: rx.viewWillAppear.asDriver(), // 화면이 보여지기 전에
+            descriptionBtnDidTap: descriptionButton.rx.tap.asDriver(), // 설명 보기/닫기 버튼 누를 때
+            agreeBtnDidTap: agreeButton.rx.tap.asDriver(), // 동의 버튼 누를 때
+            purchaseBtnDidTap: purchaseButton.rx.tap.asDriver().throttle(0.5), // 구매 버튼 누를 때
+            authSuccessWithPincode: authSuccessWithPincode.asDriver(onErrorDriveWith: .empty()) // Pincode가 정상적으로 입력되었을 때
         )
 
         let output = viewModel.build(input: input)
 
+        // 화면이 보여지기 전에 NavigationBar 설정
         output
             .viewWillAppear
             .drive(onNext: { [weak self] in
@@ -62,13 +72,14 @@ extension PurchaseMembershipViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // Wallet 정보를 받아오면 pxlLabel에 출력
         output
             .walletInfo
-            .drive(onNext: { [weak self] walletInfo in
-                self?.pxlLabel.text = "\(walletInfo.amount.commaRepresentation) PXL"
-            })
+            .map { "\($0.amount.commaRepresentation) PXL" }
+            .drive(pxlLabel.rx.text)
             .disposed(by: disposeBag)
 
+        // 프로젝트 정보를 받아와서 하단 송금안내에 크리에이터 이름 출력
         output
             .projectInfo
             .drive(onNext: { [weak self] projectInfo in
@@ -78,6 +89,7 @@ extension PurchaseMembershipViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 멤버쉽 정보를 받아와서 후원플랜 제목/설명, 수수료 계산, 결제 금액 출력
         output
             .membershipInfo
             .drive(onNext: { [weak self] (membershipItem, fees) in
@@ -103,9 +115,10 @@ extension PurchaseMembershipViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 설명 보기 버튼 눌렀을때 설명 보기/숨기기 설정
         output
             .descriptionBtnDidTap
-            .drive(onNext: { [weak self] _ in
+            .drive(onNext: { [weak self] in
                 guard let `self` = self else { return }
                 self.membershipDescriptionLabel.isHidden = !self.membershipDescriptionLabel.isHidden
 
@@ -117,9 +130,10 @@ extension PurchaseMembershipViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 하단 동의버튼 눌렀을때 결제 버튼 활성/비활성화 설정
         output
             .agreeBtnDidTap
-            .drive(onNext: { [weak self] _ in
+            .drive(onNext: { [weak self] in
                 guard let isEnabled = self?.purchaseButton.isEnabled else {
                     return
                 }
@@ -136,11 +150,13 @@ extension PurchaseMembershipViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 로딩 뷰
         output
             .activityIndicator
             .loadingActivity()
             .disposed(by: disposeBag)
 
+        // 에러 발생 시 팝업 출력
         output
             .showErrorPopup
             .drive(onNext: { [weak self] message in
@@ -155,18 +171,19 @@ extension PurchaseMembershipViewController: ViewModelBindable {
                 alert.addAction(okAction)
 
                 self?.present(alert, animated: false, completion: nil)
-
             })
             .disposed(by: disposeBag)
 
+        // 결제 시 Pincode가 있다면 Pincode 입력 화면 출력
         output
             .openCheckPincodeViewController
-            .drive(onNext: { [weak self] _ in
+            .drive(onNext: { [weak self] in
                 guard let `self` = self else { return }
-                self.openCheckPincodeViewController(delegate: self)
+                self.openView(type: .checkPincode(delegate: self), openType: .present)
             })
             .disposed(by: disposeBag)
 
+        // 결제 완료 시 화면 닫기
         output
             .dismissViewController
             .drive(onNext: { [weak self] message in
@@ -181,7 +198,9 @@ extension PurchaseMembershipViewController: ViewModelBindable {
     }
 }
 
+// MARK: - CheckPincodeDelegate
 extension PurchaseMembershipViewController: CheckPincodeDelegate {
+    // Pincode check 완료 delegate
     func authSuccess() {
         self.authSuccessWithPincode.onNext(())
     }
