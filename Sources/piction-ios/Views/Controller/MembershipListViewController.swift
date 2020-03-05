@@ -13,6 +13,7 @@ import ViewModelBindable
 import RxDataSources
 import PictionSDK
 
+// MARK: - UIViewController
 final class MembershipListViewController: UIViewController {
     var disposeBag = DisposeBag()
 
@@ -30,42 +31,18 @@ final class MembershipListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // present 타입의 경우 viewDidLoad에서 navigation을 설정
         self.navigationController?.configureNavigationBar(transparent: false, shadow: true)
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        if let headerView = tableView.tableHeaderView {
-            let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-            var headerFrame = headerView.frame
-
-            //Comparison necessary to avoid infinite loop
-            if height != headerFrame.size.height {
-                headerFrame.size.height = height
-                headerView.frame = headerFrame
-                tableView.tableHeaderView = headerView
-            }
-        }
-    }
-
-    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, MembershipListTableViewCellModel>> {
-        return RxTableViewSectionedReloadDataSource<SectionModel<String, MembershipListTableViewCellModel>>(
-            configureCell: { dataSource, tableView, indexPath, model in
-                let cell: MembershipListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.configure(with: model)
-                return cell
-        })
-    }
-
-    private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
-        _ = emptyView.subviews.map { $0.removeFromSuperview() }
-        emptyView.frame.size.height = 350
-        let vc = CustomEmptyViewController.make(style: style)
-        embed(vc, to: emptyView)
+    deinit {
+        // 메모리 해제되는지 확인
+        print("[deinit] \(String(describing: type(of: self)))")
     }
 }
 
+// MARK: - ViewModelBindable
 extension MembershipListViewController: ViewModelBindable {
     typealias ViewModel = MembershipListViewModel
 
@@ -73,21 +50,30 @@ extension MembershipListViewController: ViewModelBindable {
         let dataSource = configureDataSource()
 
         let input = MembershipListViewModel.Input(
-            viewWillAppear: rx.viewWillAppear.asDriver(),
-            selectedIndexPath: tableView.rx.itemSelected.asDriver().throttle(2),
-            showAllMembershipBtnDidTap: showAllMembershipButton.rx.tap.asDriver(),
-            closeBtnDidTap: closeButton.rx.tap.asDriver()
+            viewWillAppear: rx.viewWillAppear.asDriver(), // 화면이 보여지기 전에
+            viewWillLayoutSubviews: rx.viewWillLayoutSubviews.asDriver(), // subview의 layout이 갱신되기 전에
+            selectedIndexPath: tableView.rx.itemSelected.asDriver().throttle(2), // tableView의 row를 눌렀을 때
+            showAllMembershipBtnDidTap: showAllMembershipButton.rx.tap.asDriver(), // 전체 상품 보기 버튼 눌렀을 때
+            closeBtnDidTap: closeButton.rx.tap.asDriver() // 닫기 버튼 눌렀을 때
         )
 
         let output = viewModel.build(input: input)
 
+        // 화면이 보여지기 전에
         output
             .viewWillAppear
+            .drive()
+            .disposed(by: disposeBag)
+
+        // subview의 layout이 갱신되기 전에
+        output
+            .viewWillLayoutSubviews
             .drive(onNext: { [weak self] in
-                self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
+                self?.changeLayoutSubviews()
             })
             .disposed(by: disposeBag)
 
+        // post 정보를 불러와서 설정
         output
             .postItem
             .drive(onNext: { [weak self] postItem in
@@ -96,6 +82,7 @@ extension MembershipListViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 전체 상품 보기 버튼 눌렀을 때
         output
             .showAllMembershipBtnDidTap
             .drive(onNext: { [weak self] _ in
@@ -106,8 +93,9 @@ extension MembershipListViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 멤버십 목록을 tableView에 출력
         output
-            .membershipTableItems
+            .membershipList
             .do(onNext: { [weak self] _ in
                 _ = self?.emptyView.subviews.map { $0.removeFromSuperview() }
                 self?.emptyView.frame.size.height = 0
@@ -117,16 +105,19 @@ extension MembershipListViewController: ViewModelBindable {
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
+        // 구독자 정보 불러와서 설정
         output
             .subscriptionInfo
             .drive(onNext: { [weak self] subscriptionInfo in
-                if let level = subscriptionInfo?.membership?.level,
+                 guard
+                    let level = subscriptionInfo?.membership?.level,
                     let membershipName = subscriptionInfo?.membership?.name,
-                    level > 0 {
-                    self?.currentSubscriptionMembershipTitleLabel.text =
-                        "\(LocalizationKey.str_membership_current_tier.localized(with: level)) -  \(LocalizationKey.str_membership_warning_current_membership.localized(with: membershipName))"
-                    self?.currentSubscriptionMembershipView.isHidden = false
-                }
+                    level > 0
+                else { return }
+
+                self?.currentSubscriptionMembershipTitleLabel.text =
+                    "\(LocalizationKey.str_membership_current_tier.localized(with: level)) -  \(LocalizationKey.str_membership_warning_current_membership.localized(with: membershipName))"
+                self?.currentSubscriptionMembershipView.isHidden = false
             })
             .disposed(by: disposeBag)
 
@@ -145,14 +136,15 @@ extension MembershipListViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // emptyView 출력
         output
             .embedEmptyViewController
-            .drive(onNext: { [weak self] style in
-                guard let `self` = self else { return }
-                self.embedCustomEmptyViewController(style: style)
+            .drive(onNext: { [weak self] in
+                self?.embedCustomEmptyViewController(style: $0)
             })
             .disposed(by: disposeBag)
 
+        // tableView의 row를 선택할 때
         output
             .selectedIndexPath
             .drive(onNext: { [weak self] indexPath in
@@ -167,22 +159,26 @@ extension MembershipListViewController: ViewModelBindable {
                     return
                 } // 구독 중
 
-                self?.openPurchaseMembershipViewController(uri: self?.viewModel?.uri ?? "", selectedMembership: membership)
+                self?.openView(type: .purchaseMembership(uri: self?.viewModel?.uri ?? "", selectedMembership: membership), openType: .push)
             })
             .disposed(by: disposeBag)
 
+        // 로그인 화면 출력
         output
             .openSignInViewController
-            .drive(onNext: { [weak self] _ in
-                self?.openSignInViewController()
+            .map { .signIn }
+            .drive(onNext: { [weak self] in
+                self?.openView(type: $0, openType: .swipePresent)
             })
             .disposed(by: disposeBag)
 
+        // 로딩 뷰
         output
             .activityIndicator
             .loadingActivity()
             .disposed(by: disposeBag)
 
+        // 네트워크 오류 시 에러 팝업 출력
         output
             .showErrorPopup
             .drive(onNext: { [weak self] in
@@ -196,11 +192,51 @@ extension MembershipListViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 화면을 닫음
         output
             .dismissViewController
             .drive(onNext: { [weak self] message in
                 self?.dismiss(animated: true)
             })
             .disposed(by: disposeBag)
+    }
+}
+
+// MARK: - DataSource
+extension MembershipListViewController {
+    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, MembershipListTableViewCellModel>> {
+        return RxTableViewSectionedReloadDataSource<SectionModel<String, MembershipListTableViewCellModel>>(
+            // cell 설정
+            configureCell: { dataSource, tableView, indexPath, model in
+                let cell: MembershipListTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                cell.configure(with: model)
+                return cell
+        })
+    }
+}
+
+// MARK: - Private Method
+extension MembershipListViewController {
+    // Pad에서 가로/세로모드 변경 시 header size 변경
+    private func changeLayoutSubviews() {
+        if let headerView = tableView.tableHeaderView {
+            let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+            var headerFrame = headerView.frame
+
+            // Comparison necessary to avoid infinite loop
+            if height != headerFrame.size.height {
+                headerFrame.size.height = height
+                headerView.frame = headerFrame
+                tableView.tableHeaderView = headerView
+            }
+        }
+    }
+
+    // emptyView를 embed
+    private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
+        _ = emptyView.subviews.map { $0.removeFromSuperview() }
+        emptyView.frame.size.height = 350
+        let vc = CustomEmptyViewController.make(style: style)
+        embed(vc, to: emptyView)
     }
 }
