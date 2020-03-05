@@ -16,18 +16,34 @@ extension Reactive where Base: UIViewController {
     }
 
     var viewDidLoad: ControlEvent<Void> {
-        return controlEvent(for: #selector(UIViewController.viewDidLoad))
+        return controlEvent(for: #selector(Base.viewDidLoad))
     }
 
     var viewWillAppear: ControlEvent<Void> {
-        return controlEvent(for: #selector(UIViewController.viewWillAppear))
+        return controlEvent(for: #selector(Base.viewWillAppear))
     }
 
     var viewDidAppear: ControlEvent<Void> {
-        return controlEvent(for: #selector(UIViewController.viewDidAppear))
+        return controlEvent(for: #selector(Base.viewDidAppear))
     }
 
     var viewWillDisappear: ControlEvent<Void> {
-        return controlEvent(for: #selector(UIViewController.viewWillDisappear))
+        return controlEvent(for: #selector(Base.viewWillDisappear))
+    }
+
+    var viewDidDisappear: ControlEvent<Void> {
+        return controlEvent(for: #selector(Base.viewDidDisappear))
+    }
+
+    var viewWillLayoutSubviews: ControlEvent<Void> {
+        return controlEvent(for: #selector(Base.viewWillLayoutSubviews))
+    }
+
+    var viewDidLayoutSubviews: ControlEvent<Void> {
+        return controlEvent(for: #selector(Base.viewDidLayoutSubviews))
+    }
+
+    var traitCollectionDidChange: ControlEvent<Void> {
+        return controlEvent(for: #selector(Base.traitCollectionDidChange))
     }
 }
