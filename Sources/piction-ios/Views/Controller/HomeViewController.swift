@@ -13,6 +13,7 @@ import ViewModelBindable
 import RxDataSources
 import PictionSDK
 
+// MARK: - UIViewController
 final class HomeViewController: UIViewController {
     var disposeBag = DisposeBag()
 
@@ -22,6 +23,7 @@ final class HomeViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView! {
         didSet {
+            // pull to refresh 추가
             tableView.refreshControl = refreshControl
         }
     }
@@ -29,57 +31,139 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // searchController 설정
         self.configureSearchController()
-
+        // 스토어 리뷰 팝업 설정
         StoreReviewManager().askForReview(navigationController: self.navigationController)
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if #available(iOS 13, *) {
-        } else {
-            self.navigationItem.hidesSearchBarWhenScrolling = true
-            self.navigationController?.configureNavigationBar(transparent: false, shadow: false)
+    deinit {
+        // 메모리 해제되는지 확인
+        print("[deinit] \(String(describing: type(of: self)))")
+    }
+}
+
+// MARK: - ViewModelBindable
+extension HomeViewController: ViewModelBindable {
+    typealias ViewModel = HomeViewModel
+
+    func bindViewModel(viewModel: ViewModel) {
+        let dataSource = configureDataSource()
+
+        // infiniteScroll이 동작할 때
+        tableView.addInfiniteScroll { [weak self] tableView in
+            self?.viewModel?.loadNextTrigger.onNext(())
         }
-    }
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        self.tableView.layoutIfNeeded()
-    }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        tableView.setInfiniteScrollStyle()
-    }
-
-    private func configureSearchController() {
-        self.searchController = UISearchController(searchResultsController: self.searchResultsController)
-
-        self.searchController?.hidesNavigationBarDuringPresentation = true
-        self.searchController?.dimsBackgroundDuringPresentation = false
-        self.searchController?.searchResultsUpdater = self.searchResultsController
-
-        self.navigationItem.searchController = self.searchController
-        if #available(iOS 13, *) {
-            self.navigationItem.hidesSearchBarWhenScrolling = true
-        } else {
-            self.navigationItem.hidesSearchBarWhenScrolling = false
+        // infiniteScroll이 동작하는 조건
+        tableView.setShouldShowInfiniteScrollHandler { [weak self] _ in
+            return self?.viewModel?.shouldInfiniteScroll ?? false
         }
-        self.definesPresentationContext = true
 
-        self.searchController?.isActive = true
+        let input = HomeViewModel.Input(
+            viewWillAppear: rx.viewWillAppear.asDriver(), // 화면이 보여지기 전에
+            viewDidAppear: rx.viewDidAppear.asDriver(), // 화면이 보여질 때
+            viewWillLayoutSubviews: rx.viewWillLayoutSubviews.asDriver(), // subview의 layout이 갱신되기 전에
+            traitCollectionDidChange: rx.traitCollectionDidChange.asDriver(), // 일반/다크모드 전환 시
+            selectedIndexPath: tableView.rx.itemSelected.asDriver(), // tableView의 row를 눌렀을 때
+            refreshControlDidRefresh: refreshControl.rx.controlEvent(.valueChanged).asDriver() // pull to refresh 액션 시
+        )
 
-        self.searchController?.searchBar.placeholder = LocalizationKey.hint_project_and_tag_search.localized()
+        let output = viewModel.build(input: input)
+
+        // 화면이 보여지기 전에 NavigationBar 설정
+        output
+            .viewWillAppear
+            .drive(onNext: { [weak self] in
+                self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
+                self?.tableView.setInfiniteScrollStyle()
+            })
+            .disposed(by: disposeBag)
+
+        output
+            .viewDidAppear
+            .drive(onNext: { [weak self] in
+                if #available(iOS 13, *) {
+                } else {
+                    self?.navigationItem.hidesSearchBarWhenScrolling = true
+                    self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
+                }
+            })
+            .disposed(by: disposeBag)
+
+        // subview의 layout이 갱신되기 전에
+        output
+            .viewWillLayoutSubviews
+            .drive(onNext: { [weak self] in
+                self?.tableView.layoutIfNeeded()
+            })
+            .disposed(by: disposeBag)
+
+        // 일반/다크모드 전환 시 Infinite scroll 색 변경
+        output
+            .traitCollectionDidChange
+            .drive(onNext: { [weak self] in
+                self?.tableView.setInfiniteScrollStyle()
+            })
+            .disposed(by: disposeBag)
+
+        // section의 테이터를 tableView에 출력
+        output
+            .homeSection
+            .drive { $0 }
+            .map { [$0] }
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+
+        // section의 테이터를 출력 후 infiniteScroll 로딩 해제
+        output
+            .homeSection
+            .drive(onNext: { [weak self] _ in
+                self?.tableView.layoutIfNeeded()
+                self?.tableView.finishInfiniteScroll()
+            })
+            .disposed(by: disposeBag)
+
+        // tableView의 row를 선택할 때
+        output
+            .selectedIndexPath
+            .drive(onNext: { [weak self] indexPath in
+                switch dataSource[indexPath] {
+                case .subscribingPosts(let item):
+                    guard
+                        let postId = item.id,
+                        let uri = item.project?.uri,
+                        let index = self?.navigationController?.viewControllers.count
+                    else { return }
+
+                    self?.openView(type: .post(uri: uri, postId: postId), openType: .push)
+
+                    let backgroundProject = ProjectViewController.make(uri: uri)
+                    self?.navigationController?.viewControllers.insert(backgroundProject, at: index)
+                default:
+                    break
+                }
+            })
+            .disposed(by: disposeBag)
+
+        // pull to refresh 로딩 및 해제
+        output
+            .isFetching
+            .drive(refreshControl.rx.isRefreshing)
+            .disposed(by: disposeBag)
+
+        // 로딩 뷰
+        output
+            .activityIndicator
+            .loadingActivity()
+            .disposed(by: disposeBag)
     }
+}
 
-    func openSearchBar() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.searchController?.searchBar.becomeFirstResponder()
-        }
-    }
-
+// MARK: - DataSource
+extension HomeViewController {
     private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionType<HomeSection>> {
         return RxTableViewSectionedReloadDataSource<SectionType<HomeSection>>(
+            // cell 설정
             configureCell: { dataSource, tableView, indexPath, model in
                 switch dataSource[indexPath] {
                 case .header(let type):
@@ -87,7 +171,7 @@ final class HomeViewController: UIViewController {
                     cell.configure(with: type)
                     return cell
                 case .subscribingPosts(let model):
-                    var isLargeType: Bool {
+                    var isLargeType: Bool { // 카테고리에 따라 라지타입으로 출력해야 함
                         guard
                             model.cover != nil,
                             let categories = model.project?.categories,
@@ -114,92 +198,36 @@ final class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController: ViewModelBindable {
-    typealias ViewModel = HomeViewModel
+// MARK: - Private Method
+extension HomeViewController {
+    // searchController 설정
+    private func configureSearchController() {
+        self.searchController = UISearchController(searchResultsController: self.searchResultsController)
 
-    func bindViewModel(viewModel: ViewModel) {
-        let dataSource = configureDataSource()
+        self.searchController?.hidesNavigationBarDuringPresentation = true
+        self.searchController?.dimsBackgroundDuringPresentation = false
+        self.searchController?.searchResultsUpdater = self.searchResultsController
 
-        tableView.addInfiniteScroll { [weak self] tableView in
-            self?.viewModel?.loadNextTrigger.onNext(())
+        self.navigationItem.searchController = self.searchController
+        if #available(iOS 13, *) {
+            self.navigationItem.hidesSearchBarWhenScrolling = true
+        } else {
+            self.navigationItem.hidesSearchBarWhenScrolling = false
         }
-        tableView.setShouldShowInfiniteScrollHandler { [weak self] _ in
-            return self?.viewModel?.shouldInfiniteScroll ?? false
-        }
+        self.definesPresentationContext = true
 
-        let input = HomeViewModel.Input(
-            viewWillAppear: rx.viewWillAppear.asDriver(),
-            viewWillDisappear: rx.viewWillDisappear.asDriver(),
-            selectedIndexPath: tableView.rx.itemSelected.asDriver(),
-            refreshControlDidRefresh: refreshControl.rx.controlEvent(.valueChanged).asDriver()
-        )
+        self.searchController?.isActive = true
 
-        let output = viewModel.build(input: input)
-
-        output
-            .viewWillAppear
-            .drive(onNext: { [weak self] in
-                self?.navigationController?.configureNavigationBar(transparent: false, shadow: false)
-                self?.tableView.setInfiniteScrollStyle()
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .homeSection
-            .drive { $0 }
-            .map { [$0] }
-            .bind(to: tableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-
-        output
-            .homeSection
-            .drive(onNext: { [weak self] _ in
-                self?.tableView.layoutIfNeeded()
-                self?.tableView.finishInfiniteScroll()
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .selectedIndexPath
-            .drive(onNext: { [weak self] indexPath in
-                switch dataSource[indexPath] {
-                case .subscribingPosts(let item):
-                    guard
-                        let postId = item.id,
-                        let uri = item.project?.uri,
-                        let index = self?.navigationController?.viewControllers.count
-                    else { return }
-
-                    self?.openPostViewController(uri: uri, postId: postId)
-
-                    let backgroundProject = ProjectViewController.make(uri: uri)
-                    self?.navigationController?.viewControllers.insert(backgroundProject, at: index)
-                default:
-                    break
-                }
-            })
-            .disposed(by: disposeBag)
-
-        output
-            .isFetching
-            .drive(refreshControl.rx.isRefreshing)
-            .disposed(by: disposeBag)
-
-        output
-            .activityIndicator
-            .loadingActivity()
-            .disposed(by: disposeBag)
+        self.searchController?.searchBar.placeholder = LocalizationKey.hint_project_and_tag_search.localized()
     }
 }
 
+// MARK: - Public Method
 extension HomeViewController {
-    func showErrorPopup() {
-        Toast.loadingActivity(false)
-        showPopup(
-            title: LocalizationKey.popup_title_network_error.localized(),
-            message: LocalizationKey.msg_api_internal_server_error.localized(),
-            action: [LocalizationKey.retry.localized(), LocalizationKey.cancel.localized()]) { [weak self] in
-            self?.viewModel?.loadRetryTrigger.onNext(())
+    // deeplink를 통해 searchBar를 열어야 할 때 사용
+    func openSearchBar() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.searchController?.searchBar.becomeFirstResponder()
         }
     }
 }
