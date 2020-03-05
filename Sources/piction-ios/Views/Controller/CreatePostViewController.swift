@@ -18,6 +18,9 @@ import SafariServices
 import PictionSDK
 import MobileCoreServices
 
+// 현재 사용하지 않는 화면입니다. (에디터 기능 지원안함)
+
+// MARK: - UIViewController
 final class CreatePostViewController: UIViewController {
     var disposeBag = DisposeBag()
 
@@ -114,11 +117,19 @@ final class CreatePostViewController: UIViewController {
 
     private let formattingIdentifiersWithOptions: [FormattingIdentifier] = [.orderedlist, .unorderedlist]
 
-    private func formattingIdentifierHasOptions(_ formattingIdentifier: FormattingIdentifier) -> Bool {
-        return formattingIdentifiersWithOptions.contains(formattingIdentifier)
-    }
-
     fileprivate var currentSelectedAttachment: MediaAttachment?
+
+    var mediaMessageAttributes: [NSAttributedString.Key: Any] {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 15, weight: .semibold),
+            .paragraphStyle: paragraphStyle,
+            .foregroundColor: UIColor.white
+        ]
+        return attributes
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -145,54 +156,17 @@ final class CreatePostViewController: UIViewController {
         for itemProvider in itemProviders { loadContent(itemProvider) }
     }
 
-    private func controlStatusCheckBox(_ status: String) {
-        switch status {
-        case "PUBLIC":
-            self.forAllCheckboxImageView.image = #imageLiteral(resourceName: "ic-check")
-            self.forAllCheckboxImageView.backgroundColor = .pictionBlue
-            self.forSubscriptionCheckboxImageView.image = UIImage()
-            self.forSubscriptionCheckboxImageView.backgroundColor = .clear
-            self.forPrivateCheckboxImageView.image = UIImage()
-            self.forPrivateCheckboxImageView.backgroundColor = .clear
-            self.selectMembershipView.isHidden = true
-        case "PRIVATE":
-            self.forAllCheckboxImageView.image = UIImage()
-            self.forAllCheckboxImageView.backgroundColor = .clear
-            self.forSubscriptionCheckboxImageView.image = UIImage()
-            self.forSubscriptionCheckboxImageView.backgroundColor = .clear
-            self.forPrivateCheckboxImageView.image = #imageLiteral(resourceName: "ic-check")
-            self.forPrivateCheckboxImageView.backgroundColor = .pictionBlue
-            self.selectMembershipView.isHidden = true
-        case "MEMBERSHIP":
-            self.forAllCheckboxImageView.image = UIImage()
-            self.forAllCheckboxImageView.backgroundColor = .clear
-            self.forSubscriptionCheckboxImageView.image = #imageLiteral(resourceName: "ic-check")
-            self.forSubscriptionCheckboxImageView.backgroundColor = .pictionBlue
-            self.forPrivateCheckboxImageView.image = UIImage()
-            self.forPrivateCheckboxImageView.backgroundColor = .clear
-            self.selectMembershipLabel.text = "무료 구독"
-            self.selectMembershipView.isHidden = false
-        default:
-            break
-        }
-    }
-
-    @IBAction func tapGesture(_ sender: Any) {
-        view.endEditing(true)
-    }
-
-    private func getYoutubePosterUrlString(_ url: String) -> String {
-        let youtubeIds = url.getRegexMatches(pattern: String.youtubeIdRegex)
-        return "https://img.youtube.com/vi/\(youtubeIds.first ?? "")/maxresdefault.jpg"
+    deinit {
+        // 메모리 해제되는지 확인
+        print("[deinit] \(String(describing: type(of: self)))")
     }
 }
 
+// MARK: - ViewModelBindable
 extension CreatePostViewController: ViewModelBindable {
-
     typealias ViewModel = CreatePostViewModel
 
     func bindViewModel(viewModel: ViewModel) {
-
         let input = CreatePostViewModel.Input(
             viewWillAppear: rx.viewWillAppear.asDriver(),
             viewWillDisappear: rx.viewWillDisappear.asDriver(),
@@ -218,19 +192,19 @@ extension CreatePostViewController: ViewModelBindable {
 
         let output = viewModel.build(input: input)
 
+        // 화면이 보여지기 전에 NavigationBar 설정
         output
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
                 self?.navigationController?.configureNavigationBar(transparent: false, shadow: true)
-//                self?.tabBarController?.tabBar.isHidden = true
                 self?.publishDateLabel.text = "\(Date().toString(format: "yyyy.MM.dd. a hh:mm:ss"))"
             })
             .disposed(by: disposeBag)
 
+        // 화면이 사라지기전에 viewModel에서 keyboard를 숨기고 disposed하기 위함
         output
             .viewWillDisappear
-            .drive(onNext: { _ in
-            })
+            .drive()
             .disposed(by: disposeBag)
 
         output
@@ -310,30 +284,28 @@ extension CreatePostViewController: ViewModelBindable {
 
         output
             .statusChanged
-            .drive(onNext: { [weak self] status in
-                self?.controlStatusCheckBox(status)
+            .drive(onNext: { [weak self] in
+                self?.controlStatusCheckBox($0)
             })
             .disposed(by: disposeBag)
 
         output
             .seriesChanged
-            .drive(onNext: { [weak self] series in
-                self?.selectSeriesButton.setTitle(series?.name ?? LocalizationKey.str_select_series.localized(), for: .normal)
-            })
+            .map { $0?.name ?? LocalizationKey.str_select_series.localized() }
+            .drive(selectSeriesButton.rx.title(for: .normal))
             .disposed(by: disposeBag)
 
         output
             .membershipChanged
-            .drive(onNext: { [weak self] membership in
-                self?.selectMembershipLabel.text = membership?.name ?? ""
-            })
+            .map { $0?.name ?? "" }
+            .drive(selectMembershipLabel.rx.text)
             .disposed(by: disposeBag)
 
         output
             .openManageMembershipViewController
-            .drive(onNext: { [weak self] (uri, membershipId) in
-                guard let `self` = self else { return }
-                self.openManageMembershipViewController(uri: uri, membershipId: membershipId, delegate: self)
+            .map { .manageMembership(uri: $0, membershipId: $1, delegate: self) }
+            .drive(onNext: { [weak self] in
+                self?.openView(type: $0, openType: .swipePresent)
             })
             .disposed(by: disposeBag)
 
@@ -371,8 +343,8 @@ extension CreatePostViewController: ViewModelBindable {
 
         output
             .publishDatePickerValueChanged
-            .drive(onNext: { [weak self] date in
-                self?.chosenDateTime.onNext(date)
+            .drive(onNext: { [weak self] in
+                self?.chosenDateTime.onNext($0)
             })
             .disposed(by: disposeBag)
 
@@ -388,11 +360,13 @@ extension CreatePostViewController: ViewModelBindable {
 
         output
             .openManageSeriesViewController
-            .drive(onNext: { [weak self] (uri, seriesId) in
-                self?.openManageSeriesViewController(uri: uri, seriesId: seriesId, delegate: self)
+            .map { .manageSeries(uri: $0, seriesId: $1, delegate: self) }
+            .drive(onNext: { [weak self] in
+                self?.openView(type: $0, openType: .swipePresent)
             })
             .disposed(by: disposeBag)
 
+        // keyboard가 나타나거나 사라질때 scrollView의 크기 조정
         output
             .keyboardWillChangeFrame
             .drive(onNext: { [weak self] changedFrameInfo in
@@ -427,11 +401,13 @@ extension CreatePostViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 토스트 메시지 출력
         output
             .toastMessage
             .showToast()
             .disposed(by: disposeBag)
 
+        // 로딩 뷰
         output
             .activityIndicator
             .loadingActivity()
@@ -439,18 +415,34 @@ extension CreatePostViewController: ViewModelBindable {
     }
 }
 
+// MARK: - IBAction
+extension CreatePostViewController {
+    // 화면 tap 시 키보드 숨기기
+    @IBAction func tapGesture(_ sender: Any) {
+        view.endEditing(true)
+    }
+
+    @IBAction func toggleEditingMode() {
+        formatBar.overflowToolbar(expand: true)
+        editorView.toggleEditingMode()
+    }
+}
+
+// MARK: - ManageSeriesDelegate
 extension CreatePostViewController: ManageSeriesDelegate {
     func selectSeries(with series: SeriesModel?) {
         self.chosenSeries.onNext(series)
     }
 }
 
+// MARK: - ManageMembershipDelegate
 extension CreatePostViewController: ManageMembershipDelegate {
     func selectMembership(with membership: MembershipModel?) {
         self.chosenMembership.onNext(membership)
     }
 }
 
+// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
@@ -466,6 +458,7 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, UINavigatio
     }
 }
 
+// MARK: - CropViewControllerDelegate
 extension CreatePostViewController: CropViewControllerDelegate {
     func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
         let imgData = NSData(data: image.jpegData(compressionQuality: 1)!)
@@ -486,6 +479,7 @@ extension CreatePostViewController: CropViewControllerDelegate {
     }
 }
 
+// MARK: - Private Method
 extension CreatePostViewController {
     private func setupRichTextView(_ textView: TextView) {
         let accessibilityLabel = NSLocalizedString("Rich Content", comment: "Post Rich content")
@@ -524,7 +518,7 @@ extension CreatePostViewController {
         }
     }
 
-    func createToolbar() -> Aztec.FormatBar {
+    private func createToolbar() -> Aztec.FormatBar {
 //        let mediaItem = makeToolbarButton(identifier: .media)
         let scrollableItems = scrollableItemsForToolbar
 
@@ -558,7 +552,7 @@ extension CreatePostViewController {
         return toolbar
     }
 
-    func makeToolbarButton(identifier: FormattingIdentifier) -> FormatBarItem {
+    private func makeToolbarButton(identifier: FormattingIdentifier) -> FormatBarItem {
         let button = FormatBarItem(image: identifier.iconImage, identifier: identifier.rawValue)
         button.accessibilityLabel = identifier.accessibilityLabel
         button.accessibilityIdentifier = identifier.accessibilityIdentifier
@@ -574,23 +568,22 @@ extension CreatePostViewController {
             }
             let generator = AVAssetImageGenerator(asset: asset)
             generator.appliesPreferredTrackTransform = true
-            generator.generateCGImagesAsynchronously(forTimes: [NSValue(time: CMTimeMake(value: 2, timescale: 1))],
-                                                     completionHandler: { (time, cgImage, actualTime, result, error) in
-                                                        guard let cgImage = cgImage else {
-                                                            DispatchQueue.main.async {
-                                                                onError()
-                                                            }
-                                                            return
-                                                        }
-                                                        let image = UIImage(cgImage: cgImage)
-                                                        DispatchQueue.main.async {
-                                                            onCompletion(image)
-                                                        }
+            generator.generateCGImagesAsynchronously(forTimes: [NSValue(time: CMTimeMake(value: 2, timescale: 1))], completionHandler: { (time, cgImage, actualTime, result, error) in
+                guard let cgImage = cgImage else {
+                    DispatchQueue.main.async {
+                        onError()
+                    }
+                    return
+                }
+                let image = UIImage(cgImage: cgImage)
+                DispatchQueue.main.async {
+                    onCompletion(image)
+                }
             })
         }
     }
 
-    func downloadImage(from url: URL, success: @escaping (UIImage) -> Void, onFailure failure: @escaping () -> Void) {
+    private func downloadImage(from url: URL, success: @escaping (UIImage) -> Void, onFailure failure: @escaping () -> Void) {
         let task = URLSession.shared.dataTask(with: url) { [weak self] (data, _, error) in
             DispatchQueue.main.async {
                 guard self != nil else {
@@ -610,23 +603,6 @@ extension CreatePostViewController {
 
         task.resume()
     }
-}
-
-
-extension CreatePostViewController {
-
-    struct Constants {
-        static let defaultContentFont   = UIFont.systemFont(ofSize: 14)
-        static let defaultHtmlFont      = UIFont.systemFont(ofSize: 24)
-        static let defaultMissingImage  = Gridicon.iconOfType(.image)
-        static let formatBarIconSize    = CGSize(width: 20.0, height: 20.0)
-        static let lists                = [TextList.Style.unordered, .ordered]
-    }
-
-    struct MediaProgressKey {
-        static let mediaID = ProgressUserInfoKey("mediaID")
-        static let videoURL = ProgressUserInfoKey("videoURL")
-    }
 
     private func configureDefaultProperties(for textView: UITextView, accessibilityLabel: String) {
         textView.accessibilityLabel = accessibilityLabel
@@ -636,7 +612,7 @@ extension CreatePostViewController {
         textView.linkTextAttributes = [.foregroundColor: UIColor(red: 0x01 / 255.0, green: 0x60 / 255.0, blue: 0x87 / 255.0, alpha: 1), NSAttributedString.Key.underlineStyle: NSNumber(value: NSUnderlineStyle.single.rawValue)]
     }
 
-    func handleAction(for barItem: FormatBarItem) {
+    private func handleAction(for barItem: FormatBarItem) {
         guard let identifier = barItem.identifier,
             let formattingIdentifier = FormattingIdentifier(rawValue: identifier) else {
                 return
@@ -668,75 +644,11 @@ extension CreatePostViewController {
         updateFormatBar()
     }
 
-    @objc func toggleBold() {
-        richTextView.toggleBold(range: richTextView.selectedRange)
-    }
-
-    @objc func toggleItalic() {
-        richTextView.toggleItalic(range: richTextView.selectedRange)
-    }
-
-    func toggleUnderline() {
+    private func toggleUnderline() {
         richTextView.toggleUnderline(range: richTextView.selectedRange)
     }
 
-    @objc func toggleLink() {
-        var linkTitle = ""
-        var linkURL: URL? = nil
-        var linkRange = richTextView.selectedRange
-        // Let's check if the current range already has a link assigned to it.
-        if let expandedRange = richTextView.linkFullRange(forRange: richTextView.selectedRange) {
-            linkRange = expandedRange
-            linkURL = richTextView.linkURL(forRange: expandedRange)
-        }
-        let target = richTextView.linkTarget(forRange: richTextView.selectedRange)
-        linkTitle = richTextView.attributedText.attributedSubstring(from: linkRange).string
-        let allowTextEdit = !richTextView.attributedText.containsAttachments(in: linkRange)
-        showLinkDialog(forURL: linkURL, text: linkTitle, target: target, range: linkRange, allowTextEdit: allowTextEdit)
-    }
-
-    @objc func toggleImage() {
-        let picker = UIImagePickerController()
-        picker.delegate = self
-        picker.sourceType = UIImagePickerController.SourceType.photoLibrary
-        picker.view.tag = 0
-        self.present(picker, animated: true, completion: nil)
-    }
-
-    @objc func toggleVideo() {
-        var linkTitle = ""
-        var linkURL: URL? = nil
-        var linkRange = richTextView.selectedRange
-        // Let's check if the current range already has a link assigned to it.
-        if let expandedRange = richTextView.linkFullRange(forRange: richTextView.selectedRange) {
-            linkRange = expandedRange
-            linkURL = richTextView.linkURL(forRange: expandedRange)
-        }
-        let target = richTextView.linkTarget(forRange: richTextView.selectedRange)
-        linkTitle = richTextView.attributedText.attributedSubstring(from: linkRange).string
-        let allowTextEdit = !richTextView.attributedText.containsAttachments(in: linkRange)
-        showVideoDialog(forURL: linkURL, text: linkTitle, target: target, range: linkRange, allowTextEdit: allowTextEdit)
-    }
-
-    @objc func toggleUnorderedList() {
-        richTextView.toggleUnorderedList(range: richTextView.selectedRange)
-    }
-
-    @objc func toggleOrderedList() {
-        richTextView.toggleOrderedList(range: richTextView.selectedRange)
-    }
-
-    @IBAction func toggleEditingMode() {
-        formatBar.overflowToolbar(expand: true)
-        editorView.toggleEditingMode()
-    }
-
-    @objc func toggleCode() {
-
-//        richTextView.toggleCode(range: richTextView.selectedRange)
-    }
-
-    func updateFormatBar() {
+    private func updateFormatBar() {
         guard let toolbar = richTextView.inputAccessoryView as? Aztec.FormatBar else {
             return
         }
@@ -751,7 +663,7 @@ extension CreatePostViewController {
         toolbar.selectItemsMatchingIdentifiers(identifiers.map({ $0.rawValue }))
     }
 
-    func listTypeForSelectedText() -> TextList.Style? {
+    private func listTypeForSelectedText() -> TextList.Style? {
         var identifiers = Set<FormattingIdentifier>()
         if (richTextView.selectedRange.length > 0) {
             identifiers = richTextView.formattingIdentifiersSpanningRange(richTextView.selectedRange)
@@ -771,7 +683,7 @@ extension CreatePostViewController {
         return nil
     }
 
-    func showLinkDialog(forURL url: URL?, text: String?, target: String?, range: NSRange, allowTextEdit: Bool = true) {
+    private func showLinkDialog(forURL url: URL?, text: String?, target: String?, range: NSRange, allowTextEdit: Bool = true) {
 
         let isInsertingNewLink = (url == nil)
         let urlToUse = url
@@ -845,7 +757,7 @@ extension CreatePostViewController {
         present(alertController, animated: true, completion: nil)
     }
 
-    func showVideoDialog(forURL url: URL?, text: String?, target: String?, range: NSRange, allowTextEdit: Bool = true) {
+    private func showVideoDialog(forURL url: URL?, text: String?, target: String?, range: NSRange, allowTextEdit: Bool = true) {
 
         let isInsertingNewLink = (url == nil)
         let urlToUse = url
@@ -924,7 +836,7 @@ extension CreatePostViewController {
         present(alertController, animated: true, completion: nil)
     }
 
-    func changeRichTextInputView(to: UIView?) {
+    private func changeRichTextInputView(to: UIView?) {
         if richTextView.inputView == to {
             return
         }
@@ -933,7 +845,7 @@ extension CreatePostViewController {
         richTextView.reloadInputViews()
     }
 
-    func saveToDisk(image: UIImage) -> URL {
+    private func saveToDisk(image: UIImage) -> URL {
         let fileName = "\(ProcessInfo.processInfo.globallyUniqueString)_file.jpg"
 
         guard let data = image.jpegData(compressionQuality: 0.9) else {
@@ -948,7 +860,102 @@ extension CreatePostViewController {
         return fileURL
     }
 
-    @objc func timerFireMethod(_ timer: Timer) {
+    private func displayActions(forAttachment attachment: MediaAttachment, position: CGPoint) {
+        let mediaID = attachment.identifier
+        let title: String = NSLocalizedString("Media Options", comment: "Title for action sheet with media options.")
+        let message: String? = nil
+        let alertController = UIAlertController(title: title, message:message, preferredStyle: .actionSheet)
+        let dismissAction = UIAlertAction(title: NSLocalizedString("Dismiss", comment: "User action to dismiss media options."), style: .cancel, handler: { [weak self] (action) in
+            self?.resetMediaAttachmentOverlay(attachment)
+            self?.richTextView.refresh(attachment)
+        })
+        alertController.addAction(dismissAction)
+
+        let removeAction = UIAlertAction(title: NSLocalizedString("Remove Media", comment: "User action to remove media."), style: .destructive, handler: { [weak self] (action) in
+            self?.richTextView.remove(attachmentID: mediaID)
+        })
+        alertController.addAction(removeAction)
+
+        if let videoAttachment = attachment as? VideoAttachment, let videoURL = videoAttachment.mediaURL {
+            let detailsAction = UIAlertAction(title:NSLocalizedString("Play Video", comment: "User action to play video."), style: .default, handler: { [weak self] (action) in
+                self?.displayVideoPlayer(for: videoURL)
+            })
+            alertController.addAction(detailsAction)
+        }
+
+        alertController.title = title
+        alertController.message = message
+        alertController.popoverPresentationController?.sourceView = richTextView
+        alertController.popoverPresentationController?.sourceRect = CGRect(origin: position, size: CGSize(width: 1, height: 1))
+        alertController.popoverPresentationController?.permittedArrowDirections = .any
+        present(alertController, animated:true, completion: nil)
+    }
+
+    private func fakeUpdateEditorView() {
+        richTextView.toggleBold(range: NSRange(location: 0, length: 1))
+        richTextView.toggleBold(range: NSRange(location: 0, length: 1))
+    }
+
+    @objc private func toggleBold() {
+        richTextView.toggleBold(range: richTextView.selectedRange)
+    }
+
+    @objc private func toggleItalic() {
+        richTextView.toggleItalic(range: richTextView.selectedRange)
+    }
+
+    @objc private func toggleLink() {
+        var linkTitle = ""
+        var linkURL: URL? = nil
+        var linkRange = richTextView.selectedRange
+        // Let's check if the current range already has a link assigned to it.
+        if let expandedRange = richTextView.linkFullRange(forRange: richTextView.selectedRange) {
+            linkRange = expandedRange
+            linkURL = richTextView.linkURL(forRange: expandedRange)
+        }
+        let target = richTextView.linkTarget(forRange: richTextView.selectedRange)
+        linkTitle = richTextView.attributedText.attributedSubstring(from: linkRange).string
+        let allowTextEdit = !richTextView.attributedText.containsAttachments(in: linkRange)
+        showLinkDialog(forURL: linkURL, text: linkTitle, target: target, range: linkRange, allowTextEdit: allowTextEdit)
+    }
+
+    @objc private func toggleImage() {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.sourceType = UIImagePickerController.SourceType.photoLibrary
+        picker.view.tag = 0
+        self.present(picker, animated: true, completion: nil)
+    }
+
+    @objc private func toggleVideo() {
+        var linkTitle = ""
+        var linkURL: URL? = nil
+        var linkRange = richTextView.selectedRange
+        // Let's check if the current range already has a link assigned to it.
+        if let expandedRange = richTextView.linkFullRange(forRange: richTextView.selectedRange) {
+            linkRange = expandedRange
+            linkURL = richTextView.linkURL(forRange: expandedRange)
+        }
+        let target = richTextView.linkTarget(forRange: richTextView.selectedRange)
+        linkTitle = richTextView.attributedText.attributedSubstring(from: linkRange).string
+        let allowTextEdit = !richTextView.attributedText.containsAttachments(in: linkRange)
+        showVideoDialog(forURL: linkURL, text: linkTitle, target: target, range: linkRange, allowTextEdit: allowTextEdit)
+    }
+
+    @objc private func toggleUnorderedList() {
+        richTextView.toggleUnorderedList(range: richTextView.selectedRange)
+    }
+
+    @objc private func toggleOrderedList() {
+        richTextView.toggleOrderedList(range: richTextView.selectedRange)
+    }
+
+    @objc private func toggleCode() {
+
+//        richTextView.toggleCode(range: richTextView.selectedRange)
+    }
+
+    @objc private func timerFireMethod(_ timer: Timer) {
         guard let progress = timer.userInfo as? Progress,
             let imageId = progress.userInfo[MediaProgressKey.mediaID] as? String,
             let attachment = richTextView.attachment(withId: imageId)
@@ -975,57 +982,119 @@ extension CreatePostViewController {
         richTextView.refresh(attachment, overlayUpdateOnly: true)
     }
 
-    var mediaMessageAttributes: [NSAttributedString.Key: Any] {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .center
-
-        let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 15, weight: .semibold),
-                                                         .paragraphStyle: paragraphStyle,
-                                                         .foregroundColor: UIColor.white]
-        return attributes
+    private func formattingIdentifierHasOptions(_ formattingIdentifier: FormattingIdentifier) -> Bool {
+        return formattingIdentifiersWithOptions.contains(formattingIdentifier)
     }
 
-    func displayActions(forAttachment attachment: MediaAttachment, position: CGPoint) {
-        let mediaID = attachment.identifier
-        let title: String = NSLocalizedString("Media Options", comment: "Title for action sheet with media options.")
-        let message: String? = nil
-        let alertController = UIAlertController(title: title, message:message, preferredStyle: .actionSheet)
-        let dismissAction = UIAlertAction(title: NSLocalizedString("Dismiss", comment: "User action to dismiss media options."),
-                                          style: .cancel,
-                                          handler: { [weak self] (action) in
-                                            self?.resetMediaAttachmentOverlay(attachment)
-                                            self?.richTextView.refresh(attachment)
-            }
-        )
-        alertController.addAction(dismissAction)
-
-        let removeAction = UIAlertAction(title: NSLocalizedString("Remove Media", comment: "User action to remove media."),
-                                         style: .destructive,
-                                         handler: { [weak self] (action) in
-                                            self?.richTextView.remove(attachmentID: mediaID)
-        })
-        alertController.addAction(removeAction)
-
-        if let videoAttachment = attachment as? VideoAttachment, let videoURL = videoAttachment.mediaURL {
-            let detailsAction = UIAlertAction(title:NSLocalizedString("Play Video", comment: "User action to play video."),
-                                              style: .default,
-                                              handler: { [weak self] (action) in
-                                                self?.displayVideoPlayer(for: videoURL)
-            })
-            alertController.addAction(detailsAction)
+    private func controlStatusCheckBox(_ status: String) {
+        switch status {
+        case "PUBLIC":
+            self.forAllCheckboxImageView.image = #imageLiteral(resourceName: "ic-check")
+            self.forAllCheckboxImageView.backgroundColor = .pictionBlue
+            self.forSubscriptionCheckboxImageView.image = UIImage()
+            self.forSubscriptionCheckboxImageView.backgroundColor = .clear
+            self.forPrivateCheckboxImageView.image = UIImage()
+            self.forPrivateCheckboxImageView.backgroundColor = .clear
+            self.selectMembershipView.isHidden = true
+        case "PRIVATE":
+            self.forAllCheckboxImageView.image = UIImage()
+            self.forAllCheckboxImageView.backgroundColor = .clear
+            self.forSubscriptionCheckboxImageView.image = UIImage()
+            self.forSubscriptionCheckboxImageView.backgroundColor = .clear
+            self.forPrivateCheckboxImageView.image = #imageLiteral(resourceName: "ic-check")
+            self.forPrivateCheckboxImageView.backgroundColor = .pictionBlue
+            self.selectMembershipView.isHidden = true
+        case "MEMBERSHIP":
+            self.forAllCheckboxImageView.image = UIImage()
+            self.forAllCheckboxImageView.backgroundColor = .clear
+            self.forSubscriptionCheckboxImageView.image = #imageLiteral(resourceName: "ic-check")
+            self.forSubscriptionCheckboxImageView.backgroundColor = .pictionBlue
+            self.forPrivateCheckboxImageView.image = UIImage()
+            self.forPrivateCheckboxImageView.backgroundColor = .clear
+            self.selectMembershipLabel.text = "무료 구독"
+            self.selectMembershipView.isHidden = false
+        default:
+            break
         }
-
-        alertController.title = title
-        alertController.message = message
-        alertController.popoverPresentationController?.sourceView = richTextView
-        alertController.popoverPresentationController?.sourceRect = CGRect(origin: position, size: CGSize(width: 1, height: 1))
-        alertController.popoverPresentationController?.permittedArrowDirections = .any
-        present(alertController, animated:true, completion: nil)
     }
 
-    func fakeUpdateEditorView() {
-        richTextView.toggleBold(range: NSRange(location: 0, length: 1))
-        richTextView.toggleBold(range: NSRange(location: 0, length: 1))
+    private func getYoutubePosterUrlString(_ url: String) -> String {
+        let youtubeIds = url.getRegexMatches(pattern: String.youtubeIdRegex)
+        return "https://img.youtube.com/vi/\(youtubeIds.first ?? "")/maxresdefault.jpg"
+    }
+
+    private func openCropViewController(image: UIImage, tag: Int) {
+        let cropViewController = CropViewController(image: image)
+        cropViewController.delegate = self
+        cropViewController.view.tag = tag
+
+        if tag != 0 {
+            cropViewController.aspectRatioLockEnabled = true
+            cropViewController.aspectRatioPickerButtonHidden = true
+            cropViewController.customAspectRatio = CGSize(width: 960, height: 360)
+        }
+        self.present(cropViewController, animated: true, completion: nil)
+    }
+
+    private func openAttachImage(image: UIImage) {
+        let alertController = UIAlertController(
+        title: LocalizationKey.str_select_image_position.localized(),
+        message: nil,
+        preferredStyle: UIAlertController.Style.actionSheet)
+
+        let coverImageAction = UIAlertAction(
+            title: LocalizationKey.str_cover_image.localized(),
+            style: UIAlertAction.Style.default,
+            handler: { [weak self] action in
+                self?.openCropViewController(image: image, tag: 1)
+            })
+
+        let postImageAction = UIAlertAction(
+            title: LocalizationKey.str_post_content_image.localized(),
+            style: UIAlertAction.Style.default,
+            handler: { [weak self] action in
+                self?.openCropViewController(image: image, tag : 0)
+            })
+
+        let cancelAction = UIAlertAction(
+            title: LocalizationKey.cancel.localized(),
+            style:UIAlertAction.Style.cancel,
+            handler:{ action in
+            })
+
+        alertController.addAction(coverImageAction)
+        alertController.addAction(postImageAction)
+        alertController.addAction(cancelAction)
+
+        present(alertController, animated: true, completion: nil)
+    }
+
+    private func loadContent(_ itemProvider: NSItemProvider) {
+        if itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) { object, error in
+                if error != nil { print("Error loading image. \(error!.localizedDescription)"); return }
+                DispatchQueue.main.async {
+                    let image = object as! UIImage
+                    self.openAttachImage(image: image)
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Structure
+extension CreatePostViewController {
+    struct Constants {
+        static let defaultContentFont   = UIFont.systemFont(ofSize: 14)
+        static let defaultHtmlFont      = UIFont.systemFont(ofSize: 24)
+        static let defaultMissingImage  = Gridicon.iconOfType(.image)
+        static let formatBarIconSize    = CGSize(width: 20.0, height: 20.0)
+        static let lists                = [TextList.Style.unordered, .ordered]
+    }
+
+    struct MediaProgressKey {
+        static let mediaID = ProgressUserInfoKey("mediaID")
+        static let videoURL = ProgressUserInfoKey("videoURL")
     }
 }
 
@@ -1378,66 +1447,5 @@ private extension TextList.Style {
 
     var iconImage: UIImage? {
         return formattingIdentifier.iconImage
-    }
-}
-
-extension CreatePostViewController {
-
-    func openCropViewController(image: UIImage, tag: Int) {
-        let cropViewController = CropViewController(image: image)
-        cropViewController.delegate = self
-        cropViewController.view.tag = tag
-
-        if tag != 0 {
-            cropViewController.aspectRatioLockEnabled = true
-            cropViewController.aspectRatioPickerButtonHidden = true
-            cropViewController.customAspectRatio = CGSize(width: 960, height: 360)
-        }
-        self.present(cropViewController, animated: true, completion: nil)
-    }
-
-    func openAttachImage(image: UIImage) {
-        let alertController = UIAlertController(
-        title: LocalizationKey.str_select_image_position.localized(),
-        message: nil,
-        preferredStyle: UIAlertController.Style.actionSheet)
-
-        let coverImageAction = UIAlertAction(
-            title: LocalizationKey.str_cover_image.localized(),
-            style: UIAlertAction.Style.default,
-            handler: { [weak self] action in
-                self?.openCropViewController(image: image, tag: 1)
-            })
-
-        let postImageAction = UIAlertAction(
-            title: LocalizationKey.str_post_content_image.localized(),
-            style: UIAlertAction.Style.default,
-            handler: { [weak self] action in
-                self?.openCropViewController(image: image, tag : 0)
-            })
-
-        let cancelAction = UIAlertAction(
-            title: LocalizationKey.cancel.localized(),
-            style:UIAlertAction.Style.cancel,
-            handler:{ action in
-            })
-
-        alertController.addAction(coverImageAction)
-        alertController.addAction(postImageAction)
-        alertController.addAction(cancelAction)
-
-        present(alertController, animated: true, completion: nil)
-    }
-
-    func loadContent(_ itemProvider: NSItemProvider) {
-        if itemProvider.canLoadObject(ofClass: UIImage.self) {
-            itemProvider.loadObject(ofClass: UIImage.self) { object, error in
-                if error != nil { print("Error loading image. \(error!.localizedDescription)"); return }
-                DispatchQueue.main.async {
-                    let image = object as! UIImage
-                    self.openAttachImage(image: image)
-                }
-            }
-        }
     }
 }

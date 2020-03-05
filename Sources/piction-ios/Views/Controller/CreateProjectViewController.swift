@@ -14,6 +14,9 @@ import CropViewController
 import WSTagsField
 import MobileCoreServices
 
+// 현재 사용하지 않는 화면입니다. (에디터 기능 지원안함)
+
+// MARK: - UIViewController
 final class CreateProjectViewController: UIViewController {
     var disposeBag = DisposeBag()
 
@@ -57,7 +60,6 @@ final class CreateProjectViewController: UIViewController {
     private let chosenWideThumbnailImage = PublishSubject<UIImage>()
     private let inputTags = PublishSubject<[String]>()
 
-
     var tagsFieldIsActive: Bool = false
 
     override func viewDidLoad() {
@@ -95,38 +97,28 @@ final class CreateProjectViewController: UIViewController {
         view.pasteConfiguration = config
     }
 
+    // 이 화면에서 붙여넣기 또는 multi window의 다른 윈도우에서 드래그 했을 때
     override func paste(itemProviders: [NSItemProvider]) {
         for itemProvider in itemProviders { loadContent(itemProvider) }
     }
 
-    @IBAction func tapGesture(_ sender: Any) {
-        view.endEditing(true)
-    }
-
-    private func controlStatusCheckBox(_ status: String) {
-        self.privateProjectCheckBoxImageView.image = status == "HIDDEN" ? #imageLiteral(resourceName: "ic-check") : UIImage()
-        self.privateProjectCheckBoxImageView.backgroundColor = status == "HIDDEN" ? .pictionBlue : UIColor.clear
+    deinit {
+        // 메모리 해제되는지 확인
+        print("[deinit] \(String(describing: type(of: self)))")
     }
 }
 
-extension CreateProjectViewController: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        tagsFieldIsActive = true
-    }
-}
-
+// MARK: - ViewModelBindable
 extension CreateProjectViewController: ViewModelBindable {
-
     typealias ViewModel = CreateProjectViewModel
 
     func bindViewModel(viewModel: ViewModel) {
-
         let input = CreateProjectViewModel.Input(
-            viewWillAppear: rx.viewWillAppear.asDriver(),
-            viewWillDisappear: rx.viewWillDisappear.asDriver(),
-            inputProjectTitle: projectTitleTextField.rx.text.orEmpty.asDriver(),
-            inputProjectId: projectIdTextField.rx.text.orEmpty.asDriver(),
-            wideThumbnailBtnDidTap: wideThumbnailButton.rx.tap.asDriver(),
+            viewWillAppear: rx.viewWillAppear.asDriver(), // 화면이 보여지기 전에
+            viewWillDisappear: rx.viewWillDisappear.asDriver(), // 화면이 사라지기 전에
+            inputProjectTitle: projectTitleTextField.rx.text.orEmpty.asDriver(), // projectTitle textField 입력 시
+            inputProjectId: projectIdTextField.rx.text.orEmpty.asDriver(), // projectId textField 입력 시
+            wideThumbnailBtnDidTap: wideThumbnailButton.rx.tap.asDriver(), // projectId textField 입력 시
             thumbnailBtnDidTap: thumbnailButton.rx.tap.asDriver(),
             wideThumbnailImageDidPick: chosenWideThumbnailImage.asDriver(onErrorDriveWith: .empty()),
             thumbnailImageDidPick: chosenThumbnailImage.asDriver(onErrorDriveWith: .empty()),
@@ -140,6 +132,7 @@ extension CreateProjectViewController: ViewModelBindable {
 
         let output = viewModel.build(input: input)
 
+        // 화면이 보여지기 전에 NavigationBar 설정
         output
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
@@ -147,10 +140,10 @@ extension CreateProjectViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 화면이 사라지기전에 viewModel에서 keyboard를 숨기고 disposed하기 위함
         output
             .viewWillDisappear
-            .drive(onNext: { _ in
-            })
+            .drive()
             .disposed(by: disposeBag)
 
         output
@@ -200,9 +193,8 @@ extension CreateProjectViewController: ViewModelBindable {
 
         output
             .projectIdChanged
-            .drive(onNext: { [weak self] projectId in
-                self?.projectUrlLabel.text = "\(LocalizationKey.str_create_project_uri.localized()): https://piction.network/project/\(projectId)"
-            })
+            .map { "\(LocalizationKey.str_create_project_uri.localized()): https://piction.network/project/\($0)" }
+            .drive(self.projectUrlLabel.rx.text)
             .disposed(by: disposeBag)
 
         output
@@ -255,11 +247,12 @@ extension CreateProjectViewController: ViewModelBindable {
 
         output
             .statusChanged
-            .drive(onNext: { [weak self] status in
-                self?.controlStatusCheckBox(status)
+            .drive(onNext: { [weak self] in
+                self?.controlStatusCheckBox($0)
             })
             .disposed(by: disposeBag)
 
+        // keyboard가 나타나거나 사라질때 scrollView의 크기 조정
         output
             .keyboardWillChangeFrame
             .drive(onNext: { [weak self] changedFrameInfo in
@@ -284,6 +277,7 @@ extension CreateProjectViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 뒤로가기
         output
             .popViewController
             .drive(onNext: { [weak self] in
@@ -291,18 +285,21 @@ extension CreateProjectViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 로딩 뷰
         output
             .activityIndicator
             .loadingActivity()
             .disposed(by: disposeBag)
 
+        // 키보드 숨김
         output
             .dismissKeyboard
             .drive(onNext: { [weak self] _ in
                 self?.view.endEditing(true)
             })
             .disposed(by: disposeBag)
-        
+
+        // 토스트 메시지 출력
         output
             .toastMessage
             .showToast()
@@ -310,6 +307,15 @@ extension CreateProjectViewController: ViewModelBindable {
     }
 }
 
+// MARK: - IBAction
+extension CreateProjectViewController {
+    // 화면 tap 시 키보드 숨기기
+    @IBAction func tapGesture(_ sender: Any) {
+        view.endEditing(true)
+    }
+}
+
+// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 extension CreateProjectViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
@@ -325,6 +331,7 @@ extension CreateProjectViewController: UIImagePickerControllerDelegate, UINaviga
     }
 }
 
+// MARK: - CropViewControllerDelegate
 extension CreateProjectViewController: CropViewControllerDelegate {
     func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
         let imgData = NSData(data: image.jpegData(compressionQuality: 1)!)
@@ -345,8 +352,21 @@ extension CreateProjectViewController: CropViewControllerDelegate {
     }
 }
 
+// MARK: - UITextFieldDelegate
+extension CreateProjectViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        tagsFieldIsActive = true
+    }
+}
+
+// MARK: - Private Method
 extension CreateProjectViewController {
-    func openCropViewController(image: UIImage, tag: Int) {
+    private func controlStatusCheckBox(_ status: String) {
+        self.privateProjectCheckBoxImageView.image = status == "HIDDEN" ? #imageLiteral(resourceName: "ic-check") : UIImage()
+        self.privateProjectCheckBoxImageView.backgroundColor = status == "HIDDEN" ? .pictionBlue : UIColor.clear
+    }
+
+    private func openCropViewController(image: UIImage, tag: Int) {
         let cropViewController = CropViewController(image: image)
         cropViewController.delegate = self
         cropViewController.aspectRatioLockEnabled = true
@@ -360,7 +380,7 @@ extension CreateProjectViewController {
         self.present(cropViewController, animated: true, completion: nil)
     }
 
-    func openAttachImage(image: UIImage) {
+    private func openAttachImage(image: UIImage) {
         let alertController = UIAlertController(
             title: LocalizationKey.str_create_project_thumbnail_image.localized(),
         message: nil,
@@ -393,7 +413,7 @@ extension CreateProjectViewController {
         present(alertController, animated: true, completion: nil)
     }
 
-    func loadContent(_ itemProvider: NSItemProvider) {
+    private func loadContent(_ itemProvider: NSItemProvider) {
         if itemProvider.canLoadObject(ofClass: UIImage.self) {
             itemProvider.loadObject(ofClass: UIImage.self) { object, error in
                 if error != nil { print("Error loading image. \(error!.localizedDescription)"); return }

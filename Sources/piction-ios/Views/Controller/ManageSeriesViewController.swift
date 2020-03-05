@@ -13,10 +13,14 @@ import ViewModelBindable
 import RxDataSources
 import PictionSDK
 
+// 현재 사용하지 않는 화면입니다. (에디터 기능 지원안함)
+
+// MARK: - ManageSeriesDelegate
 protocol ManageSeriesDelegate: class {
     func selectSeries(with series: SeriesModel?)
 }
 
+// MARK: - UIViewController
 final class ManageSeriesViewController: UIViewController {
     var disposeBag = DisposeBag()
 
@@ -34,85 +38,13 @@ final class ManageSeriesViewController: UIViewController {
     private let deleteConfirm = PublishSubject<Int>()
     private let reorderItems = PublishSubject<[Int]>()
 
-    private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
-        _ = emptyView.subviews.map { $0.removeFromSuperview() }
-        emptyView.frame.size.height = visibleHeight
-        let vc = CustomEmptyViewController.make(style: style)
-        embed(vc, to: emptyView)
-    }
-
-    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, SeriesModel>> {
-        return RxTableViewSectionedReloadDataSource<SectionModel<String, SeriesModel>>(
-            configureCell: { dataSource, tableView, indexPath, model in
-                let cell: ManageSeriesTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
-                cell.configure(with: model)
-                return cell
-        }, canEditRowAtIndexPath: { (_, _) in
-            return true
-        }, canMoveRowAtIndexPath: { (dataSource, indexPath) in
-            return true
-        })
-    }
-
-    private func openDeleteConfirmPopup(seriesId: Int) {
-        let alertController = UIAlertController(
-            title: LocalizationKey.str_delete_series.localized(),
-            message: nil,
-            preferredStyle: UIAlertController.Style.alert)
-
-            let deleteAction = UIAlertAction(
-                title: LocalizationKey.delete.localized(),
-                style: UIAlertAction.Style.destructive,
-                handler: { [weak self] action in
-                    self?.deleteConfirm.onNext(seriesId)
-                })
-
-            let cancelAction = UIAlertAction(
-                title: LocalizationKey.cancel.localized(),
-                style:UIAlertAction.Style.cancel,
-                handler:{ action in
-                })
-
-            alertController.addAction(deleteAction)
-            alertController.addAction(cancelAction)
-
-            present(alertController, animated: true, completion: nil)
-    }
-
-    private func openUpdateSeriesPopup(series: SeriesModel?) {
-        let alertController = UIAlertController(
-            title: series == nil ? LocalizationKey.str_add_series.localized() : LocalizationKey.str_modify_series.localized(),
-            message: nil,
-            preferredStyle: UIAlertController.Style.alert)
-
-        alertController.addTextField(configurationHandler: { textField in
-            textField.clearButtonMode = UITextField.ViewMode.always
-            textField.text = series == nil ? "" : series?.name ?? ""
-        })
-
-        let insertAction = UIAlertAction(
-            title: series == nil ? LocalizationKey.create.localized() : LocalizationKey.str_modify.localized(),
-            style: UIAlertAction.Style.default,
-            handler: { [weak self] action in
-                guard let textFields = alertController.textFields else {
-                    return
-                }
-                self?.updateSeries.onNext((series?.id, textFields[0].text ?? ""))
-            })
-
-        let cancelAction = UIAlertAction(
-            title: LocalizationKey.cancel.localized(),
-            style: UIAlertAction.Style.cancel,
-            handler: { action in
-            })
-
-        alertController.addAction(insertAction)
-        alertController.addAction(cancelAction)
-
-        present(alertController, animated: true, completion: nil)
+    deinit {
+        // 메모리 해제되는지 확인
+        print("[deinit] \(String(describing: type(of: self)))")
     }
 }
 
+// MARK: - ViewModelBindable
 extension ManageSeriesViewController: ViewModelBindable {
     typealias ViewModel = ManageSeriesViewModel
 
@@ -137,6 +69,7 @@ extension ManageSeriesViewController: ViewModelBindable {
 
         let output = viewModel.build(input: input)
 
+        // 화면이 보여지기 전에 NavigationBar 설정
         output
             .viewWillAppear
             .drive(onNext: { [weak self] _ in
@@ -220,30 +153,34 @@ extension ManageSeriesViewController: ViewModelBindable {
 
         output
             .openDeleteConfirmPopup
-            .drive(onNext: { [weak self] indexPath in
-                guard let seriesId = dataSource[indexPath].id else { return }
-                self?.openDeleteConfirmPopup(seriesId: seriesId)
+            .map { dataSource[$0].id }
+            .flatMap(Driver.from)
+            .drive(onNext: { [weak self] in
+                self?.openDeleteConfirmPopup(seriesId: $0)
             })
             .disposed(by: disposeBag)
 
+        // emptyView 출력
         output
             .embedEmptyViewController
-            .drive(onNext: { [weak self] style in
-                guard let `self` = self else { return }
-                self.embedCustomEmptyViewController(style: style)
+            .drive(onNext: { [weak self] in
+                self?.embedCustomEmptyViewController(style: $0)
             })
             .disposed(by: disposeBag)
 
+        // 토스트 메시지 출력
         output
             .toastMessage
             .showToast()
             .disposed(by: disposeBag)
 
+        // 로딩 뷰
         output
             .activityIndicator
             .loadingActivity()
             .disposed(by: disposeBag)
 
+        // 화면을 닫음
         output
             .dismissViewController
             .drive(onNext: { [weak self] _ in
@@ -253,6 +190,7 @@ extension ManageSeriesViewController: ViewModelBindable {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension ManageSeriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let editAction = UIContextualAction(style: .normal, title: LocalizationKey.edit.localized(), handler: { [weak self] (action, view, completionHandler) in
@@ -283,5 +221,95 @@ extension ManageSeriesViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return false
+    }
+}
+
+// MARK: - DataSource
+extension ManageSeriesViewController {
+    private func configureDataSource() -> RxTableViewSectionedReloadDataSource<SectionModel<String, SeriesModel>> {
+        return RxTableViewSectionedReloadDataSource<SectionModel<String, SeriesModel>>(
+            // cell 설정
+            configureCell: { dataSource, tableView, indexPath, model in
+                let cell: ManageSeriesTableViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+                cell.configure(with: model)
+                return cell
+            },
+            // swipe 액션 사용
+            canEditRowAtIndexPath: { (_, _) in
+                return true
+            },
+            // cell 순서 변경
+            canMoveRowAtIndexPath: { (dataSource, indexPath) in
+                return true
+            })
+    }
+}
+
+// MARK: - Private Method
+extension ManageSeriesViewController {
+    // emptyView를 embed
+    private func embedCustomEmptyViewController(style: CustomEmptyViewStyle) {
+        _ = emptyView.subviews.map { $0.removeFromSuperview() }
+        emptyView.frame.size.height = visibleHeight
+        let vc = CustomEmptyViewController.make(style: style)
+        embed(vc, to: emptyView)
+    }
+
+    private func openDeleteConfirmPopup(seriesId: Int) {
+        let alertController = UIAlertController(
+            title: LocalizationKey.str_delete_series.localized(),
+            message: nil,
+            preferredStyle: UIAlertController.Style.alert)
+
+            let deleteAction = UIAlertAction(
+                title: LocalizationKey.delete.localized(),
+                style: UIAlertAction.Style.destructive,
+                handler: { [weak self] action in
+                    self?.deleteConfirm.onNext(seriesId)
+                })
+
+            let cancelAction = UIAlertAction(
+                title: LocalizationKey.cancel.localized(),
+                style:UIAlertAction.Style.cancel,
+                handler:{ action in
+                })
+
+            alertController.addAction(deleteAction)
+            alertController.addAction(cancelAction)
+
+            present(alertController, animated: true, completion: nil)
+    }
+
+    private func openUpdateSeriesPopup(series: SeriesModel?) {
+        let alertController = UIAlertController(
+            title: series == nil ? LocalizationKey.str_add_series.localized() : LocalizationKey.str_modify_series.localized(),
+            message: nil,
+            preferredStyle: UIAlertController.Style.alert)
+
+        alertController.addTextField(configurationHandler: { textField in
+            textField.clearButtonMode = UITextField.ViewMode.always
+            textField.text = series == nil ? "" : series?.name ?? ""
+        })
+
+        let insertAction = UIAlertAction(
+            title: series == nil ? LocalizationKey.create.localized() : LocalizationKey.str_modify.localized(),
+            style: UIAlertAction.Style.default,
+            handler: { [weak self] action in
+                guard let textFields = alertController.textFields else {
+                    return
+                }
+                self?.updateSeries.onNext((series?.id, textFields[0].text ?? ""))
+            })
+
+        let cancelAction = UIAlertAction(
+            title: LocalizationKey.cancel.localized(),
+            style: UIAlertAction.Style.cancel,
+            handler: { action in
+            })
+
+        alertController.addAction(insertAction)
+        alertController.addAction(cancelAction)
+
+        present(alertController, animated: true, completion: nil)
     }
 }

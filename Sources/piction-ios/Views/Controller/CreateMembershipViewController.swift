@@ -12,6 +12,9 @@ import RxCocoa
 import ViewModelBindable
 import PictionSDK
 
+// 현재 사용하지 않는 화면입니다. (에디터 기능 지원안함)
+
+// MARK: - UIViewController
 final class CreateMembershipViewController: UIViewController {
     var disposeBag = DisposeBag()
 
@@ -23,8 +26,14 @@ final class CreateMembershipViewController: UIViewController {
     @IBOutlet weak var limitTextField: UITextField!
     @IBOutlet weak var checkboxImageView: UIImageView!
     @IBOutlet weak var limitStackView: UIStackView!
+
+    deinit {
+        // 메모리 해제되는지 확인
+        print("[deinit] \(String(describing: type(of: self)))")
+    }
 }
 
+// MARK: - ViewModelBindable
 extension CreateMembershipViewController: ViewModelBindable {
     typealias ViewModel = CreateMembershipViewModel
 
@@ -41,6 +50,7 @@ extension CreateMembershipViewController: ViewModelBindable {
 
         let output = viewModel.build(input: input)
 
+        // 화면이 보여지기 전에 NavigationBar 설정
         output
             .viewWillAppear
             .drive(onNext: { [weak self] in
@@ -51,8 +61,8 @@ extension CreateMembershipViewController: ViewModelBindable {
         output
             .loadMembership
             .map { $0.level ?? 0 == 0 ? .pictionGray : .pictionDarkGrayDM }
-            .drive(onNext: { [weak self] textColor in
-                self?.priceTextField.textColor = textColor
+            .drive(onNext: { [weak self] in
+                self?.priceTextField.textColor = $0
             })
             .disposed(by: disposeBag)
 
@@ -116,6 +126,7 @@ extension CreateMembershipViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 로딩 뷰
         output
             .activityIndicator
             .loadingActivity()
@@ -136,6 +147,7 @@ extension CreateMembershipViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // 토스트 메시지 출력
         output
             .toastMessage
             .showToast()
