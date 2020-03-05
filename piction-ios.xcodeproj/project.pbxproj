@@ -102,8 +102,8 @@
 		4323FAA7233A165900243655 /* RegisterPincodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9AF233A165600243655 /* RegisterPincodeViewModel.swift */; };
 		4323FAA8233A165900243655 /* RegisterPincode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9B0233A165600243655 /* RegisterPincode.storyboard */; };
 		4323FAA9233A165A00243655 /* RegisterPincode.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9B0233A165600243655 /* RegisterPincode.storyboard */; };
-		4323FAAA233A165A00243655 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9B2233A165600243655 /* TabBarViewController.swift */; };
-		4323FAAB233A165A00243655 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9B2233A165600243655 /* TabBarViewController.swift */; };
+		4323FAAA233A165A00243655 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9B2233A165600243655 /* TabBarController.swift */; };
+		4323FAAB233A165A00243655 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9B2233A165600243655 /* TabBarController.swift */; };
 		4323FAAC233A165A00243655 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9B5233A165600243655 /* Search.storyboard */; };
 		4323FAAD233A165A00243655 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4323F9B5233A165600243655 /* Search.storyboard */; };
 		4323FAAE233A165A00243655 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4323F9B6233A165600243655 /* SearchViewModel.swift */; };
@@ -628,7 +628,7 @@
 		4323F9AE233A165600243655 /* RegisterPincodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterPincodeViewController.swift; sourceTree = "<group>"; };
 		4323F9AF233A165600243655 /* RegisterPincodeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterPincodeViewModel.swift; sourceTree = "<group>"; };
 		4323F9B0233A165600243655 /* RegisterPincode.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = RegisterPincode.storyboard; sourceTree = "<group>"; };
-		4323F9B2233A165600243655 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		4323F9B2233A165600243655 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		4323F9B5233A165600243655 /* Search.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		4323F9B6233A165600243655 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		4323F9B7233A165600243655 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -1194,7 +1194,7 @@
 		4369F8CE23CEF4D7008D5825 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				4323F9B2233A165600243655 /* TabBarViewController.swift */,
+				4323F9B2233A165600243655 /* TabBarController.swift */,
 				4323F9A8233A165600243655 /* CheckPincodeViewController.swift */,
 				4323F9AB233A165600243655 /* ConfirmPincodeViewController.swift */,
 				4323F9AE233A165600243655 /* RegisterPincodeViewController.swift */,
@@ -1219,21 +1219,21 @@
 				438E764B2366B7B20062D004 /* SubscriptionUserViewController.swift */,
 				4323F9E7233A165600243655 /* ProjectViewController.swift */,
 				4323F9D8233A165600243655 /* ProjectInfoViewController.swift */,
-				4323F9EF233A165600243655 /* CreateProjectViewController.swift */,
-				438E76322362FAA20062D004 /* ManageSeriesViewController.swift */,
 				4323F9DE233A165600243655 /* SeriesPostViewController.swift */,
 				4323F9D0233A165600243655 /* PostViewController.swift */,
 				4323F9D5233A165600243655 /* PostHeaderViewController.swift */,
 				4323F9E9233A165600243655 /* PostFooterViewController.swift */,
-				4323F9CC233A165600243655 /* CreatePostViewController.swift */,
-				436C75AD2387C72A00902F08 /* CreateMembershipViewController.swift */,
-				436C75A02387C37F00902F08 /* ManageMembershipViewController.swift */,
 				439029252383EE6A00A3121B /* MembershipListViewController.swift */,
 				43C5C93D2383BDB1004BACFC /* PurchaseMembershipViewController.swift */,
 				4323F9F3233A165600243655 /* CustomEmptyViewController.swift */,
 				43682B1D23FBEC9E006CE717 /* CreatorProfileViewController.swift */,
 				43682B2423FD3DC9006CE717 /* CreatorProfileHeaderViewController.swift */,
 				4365571C23FFB39C00F259F9 /* ProjectDetailViewController.swift */,
+				4323F9EF233A165600243655 /* CreateProjectViewController.swift */,
+				4323F9CC233A165600243655 /* CreatePostViewController.swift */,
+				438E76322362FAA20062D004 /* ManageSeriesViewController.swift */,
+				436C75A02387C37F00902F08 /* ManageMembershipViewController.swift */,
+				436C75AD2387C72A00902F08 /* CreateMembershipViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2063,7 +2063,7 @@
 				438E764D2366B7B30062D004 /* SubscriptionUserViewController.swift in Sources */,
 				4356F4F8233D9CBB000710FC /* LocalizationKey.swift in Sources */,
 				43682B2C23FE187B006CE717 /* CreatorProfileHeaderViewModel.swift in Sources */,
-				4323FAAB233A165A00243655 /* TabBarViewController.swift in Sources */,
+				4323FAAB233A165A00243655 /* TabBarController.swift in Sources */,
 				43C5C93F2383BDB1004BACFC /* PurchaseMembershipViewController.swift in Sources */,
 				4323FA79233A165800243655 /* UINavigationController+Extension.swift in Sources */,
 				4323FA75233A165700243655 /* UIView+Extension.swift in Sources */,
@@ -2237,7 +2237,7 @@
 				438E764C2366B7B30062D004 /* SubscriptionUserViewController.swift in Sources */,
 				4356F4F7233D9CBB000710FC /* LocalizationKey.swift in Sources */,
 				43682B2B23FE187B006CE717 /* CreatorProfileHeaderViewModel.swift in Sources */,
-				4323FAAA233A165A00243655 /* TabBarViewController.swift in Sources */,
+				4323FAAA233A165A00243655 /* TabBarController.swift in Sources */,
 				43C5C93E2383BDB1004BACFC /* PurchaseMembershipViewController.swift in Sources */,
 				4323FA78233A165800243655 /* UINavigationController+Extension.swift in Sources */,
 				4323FA74233A165700243655 /* UIView+Extension.swift in Sources */,
