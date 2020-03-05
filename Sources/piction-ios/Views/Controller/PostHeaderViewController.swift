@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import ViewModelBindable
 
+// MARK: - UIViewController
 final class PostHeaderViewController: UIViewController {
     var disposeBag = DisposeBag()
 
@@ -19,20 +20,26 @@ final class PostHeaderViewController: UIViewController {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var writerLabel: UILabel!
     @IBOutlet weak var creatorButton: UIButton!
+
+    deinit {
+        // 메모리 해제되는지 확인
+        print("[deinit] \(String(describing: type(of: self)))")
+    }
 }
 
+// MARK: - ViewModelBindable
 extension PostHeaderViewController: ViewModelBindable {
     typealias ViewModel = PostHeaderViewModel
 
     func bindViewModel(viewModel: ViewModel) {
-
         let input = PostHeaderViewModel.Input(
-            viewWillAppear: rx.viewWillAppear.asDriver(),
-            creatorBtnDidTap: creatorButton.rx.tap.asDriver()
+            viewWillAppear: rx.viewWillAppear.asDriver(), // 화면이 보여지기 전에
+            creatorBtnDidTap: creatorButton.rx.tap.asDriver() // creator 눌렀을 때
         )
 
         let output = viewModel.build(input: input)
 
+        // 헤더 정보 불러와서 설정
         output
             .headerInfo
             .drive(onNext: { [weak self] (postItem, userInfo) in
@@ -51,12 +58,13 @@ extension PostHeaderViewController: ViewModelBindable {
             })
             .disposed(by: disposeBag)
 
+        // creator profile 버튼 누르면 creator profile 화면으로 push
         output
             .openCreatorProfileViewController
-            .drive(onNext: { [weak self] loginId in
-                self?.openCreatorProfileViewController(loginId: loginId)
+            .map { .creatorProfile(loginId: $0) }
+            .drive(onNext: { [weak self] in
+                self?.openView(type: $0, openType: .push)
             })
             .disposed(by: disposeBag)
-
     }
 }
