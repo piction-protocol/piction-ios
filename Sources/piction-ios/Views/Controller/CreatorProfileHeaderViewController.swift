@@ -26,7 +26,7 @@ final class CreatorProfileHeaderViewController: UIViewController {
     @IBOutlet weak var profileImageView: UIImageViewExtension!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var loginIdLabel: UILabel!
-    @IBOutlet weak var linkCollectionView: UICollectionView!
+    @IBOutlet weak var linkCollectionView: SelfSizingCollectionView!
     @IBOutlet weak var greetingStackView: UIStackView!
     @IBOutlet weak var greetingTextView: UITextView! {
         didSet {
