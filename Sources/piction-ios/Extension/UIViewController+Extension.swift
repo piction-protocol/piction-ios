@@ -44,8 +44,16 @@ extension UIViewController {
     func embed(_ childViewController: UIViewController, to view: UIView) {
         childViewController.view.frame = view.bounds
         view.addSubview(childViewController.view)
+        childViewController.view.translatesAutoresizingMaskIntoConstraints = false
         addChild(childViewController)
         childViewController.didMove(toParent: self)
+
+        view.addConstraints([
+            NSLayoutConstraint(item: childViewController.view, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: childViewController.view, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: childViewController.view, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: childViewController.view, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0)
+            ])
     }
 
     func remove(_ childViewController: UIViewController) {
