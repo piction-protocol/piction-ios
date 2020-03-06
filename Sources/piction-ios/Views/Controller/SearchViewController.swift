@@ -69,12 +69,8 @@ extension SearchViewController: ViewModelBindable {
         // segmentControl 값에 따라 searchBar의 placeholder 설정
         output
             .setPlaceHolder
-            .drive(onNext: { menu in
-                if menu == 0 {
-                    UIApplication.topViewController()?.navigationItem.searchController?.searchBar.placeholder = LocalizationKey.hint_project_search.localized()
-                } else {
-                    UIApplication.topViewController()?.navigationItem.searchController?.searchBar.placeholder = LocalizationKey.hint_tag_search.localized()
-                }
+            .drive(onNext: { placeHolder in
+                UIApplication.topViewController()?.navigationItem.searchController?.searchBar.placeholder = placeHolder
             })
             .disposed(by: disposeBag)
 
