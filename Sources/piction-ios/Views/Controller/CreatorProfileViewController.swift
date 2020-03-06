@@ -142,15 +142,10 @@ extension CreatorProfileViewController: CreatorHeaderViewDelegate {
 extension CreatorProfileViewController: UICollectionViewDelegateFlowLayout {
     // creatorProfileHeaderView의 실제 Size를 계산해서 해당 size만큼 collectionView header의 size로 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let defaultHeight: CGFloat = 264.5
-
         if let headerView = creatorProfileHeaderView {
-            let height = headerView.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-            let linkCollectionViewHeight = headerView.linkCollectionView.contentSize.height
-            let greetingHeight = headerView.greetingTextView.sizeThatFits(CGSize(width: headerView.view.frame.size.width - 32, height: CGFloat.greatestFiniteMagnitude)).height
-            return CGSize(width: view.frame.size.width, height: height + greetingHeight + linkCollectionViewHeight)
+            return headerView.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
         }
-        return CGSize(width: view.frame.size.width, height: defaultHeight)
+        return CGSize(width: view.frame.size.width, height: 263.5)
      }
 }
 

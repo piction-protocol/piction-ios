@@ -27,7 +27,7 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                                 <connections>
-                                    <outlet property="delegate" destination="Xac-Cz-vQ5" id="dml-Lm-WnS"/>
+                                    <outlet property="delegate" destination="Xac-Cz-vQ5" id="dxu-pM-b7E"/>
                                 </connections>
                             </collectionView>
                         </subviews>
