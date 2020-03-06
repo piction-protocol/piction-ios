@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
+// MARK: - ViewModel
 final class SubscriptionUserViewModel: InjectableViewModel {
 
     typealias Dependency = (
@@ -29,30 +30,43 @@ final class SubscriptionUserViewModel: InjectableViewModel {
     var shouldInfiniteScroll = true
 
     var loadTrigger = PublishSubject<Void>()
+}
 
+// MARK: - Input & Output
+extension SubscriptionUserViewModel {
     struct Input {
         let viewWillAppear: Driver<Void>
+        let traitCollectionDidChange: Driver<Void>
         let refreshControlDidRefresh: Driver<Void>
         let closeBtnDidTap: Driver<Void>
     }
-
     struct Output {
         let viewWillAppear: Driver<Void>
+        let traitCollectionDidChange: Driver<Void>
         let subscriptionUserList: Driver<[SponsorModel]>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let isFetching: Driver<Bool>
         let dismissViewController: Driver<Void>
     }
+}
 
+// MARK: - ViewModel Build
+extension SubscriptionUserViewModel {
     func build(input: Input) -> Output {
         let (firebaseManager, uri) = (self.firebaseManager, self.uri)
 
+        // 화면이 보여지기 전에
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
+                // analytics screen event
                 firebaseManager.screenName("구독자 목록")
             })
 
-        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        // 최초 진입 시
+        let initialLoad = input.viewWillAppear
+            .asObservable()
+            .take(1)
+            .asDriver(onErrorDriveWith: .empty())
 
         let initialPage = Driver.merge(initialLoad, input.refreshControlDidRefresh)
             .do(onNext: { [weak self] _ in
@@ -61,7 +75,8 @@ final class SubscriptionUserViewModel: InjectableViewModel {
                 self?.shouldInfiniteScroll = true
             })
 
-        let loadNext = loadTrigger.asDriver(onErrorDriveWith: .empty())
+        let loadNext = loadTrigger
+            .asDriver(onErrorDriveWith: .empty())
             .filter { self.shouldInfiniteScroll }
 
         let subscriptionUserListAction = Driver.merge(initialPage, loadNext)
@@ -77,10 +92,12 @@ final class SubscriptionUserViewModel: InjectableViewModel {
                     let pageNumber = pageList?.pageable?.pageNumber,
                     let totalPages = pageList?.totalPages
                 else { return }
+
+                // 페이지 증가
                 self.page = self.page + 1
-                if pageNumber >= totalPages - 1 {
-                    self.shouldInfiniteScroll = false
-                }
+
+                // 현재 페이지가 전체페이지보다 작을때만 infiniteScroll 동작
+                self.shouldInfiniteScroll = pageNumber < totalPages - 1
             })
             .map { $0?.content ?? [] }
             .map { self.items.append(contentsOf: $0) }
@@ -91,6 +108,7 @@ final class SubscriptionUserViewModel: InjectableViewModel {
 
         let subscriptionUserList = Driver.merge(subscriptionUserListSuccess, subscriptionUserListError)
 
+        // pull to refresh 로딩 및 해제
         let refreshAction = input.refreshControlDidRefresh
             .withLatestFrom(subscriptionUserList)
             .map { _ in Void() }
@@ -104,6 +122,7 @@ final class SubscriptionUserViewModel: InjectableViewModel {
 
         return Output(
             viewWillAppear: viewWillAppear,
+            traitCollectionDidChange: input.traitCollectionDidChange,
             subscriptionUserList: subscriptionUserList,
             embedEmptyViewController: embedEmptyView,
             isFetching: refreshAction.isExecuting,
