@@ -12,6 +12,7 @@ import RxDataSources
 import PictionSDK
 import LocalAuthentication
 
+// MARK: - MyPageSection
 enum MyPageSection {
     case header(title: String)
     case pushType(title: String)
@@ -20,6 +21,7 @@ enum MyPageSection {
     case underline
 }
 
+// MARK: - ViewModel
 final class MyPageViewModel: InjectableViewModel {
 
     typealias Dependency = (
@@ -37,18 +39,20 @@ final class MyPageViewModel: InjectableViewModel {
     init(dependency: Dependency) {
         (firebaseManager, updater, keychainManager) = dependency
     }
+}
 
+// MARK: - Input & Output
+extension MyPageViewModel {
     struct Input {
         let viewWillAppear: Driver<Void>
-        let viewWillDisappear: Driver<Void>
+        let viewWillLayoutSubviews: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
         let logout: Driver<Void>
         let refreshControlDidRefresh: Driver<Void>
     }
-
     struct Output {
         let viewWillAppear: Driver<Void>
-        let viewWillDisappear: Driver<Void>
+        let viewWillLayoutSubviews: Driver<Void>
         let myPageList: Driver<[SectionType<MyPageSection>]>
         let selectedIndexPath: Driver<IndexPath>
         let embedUserInfoViewController: Driver<Void>
@@ -58,22 +62,36 @@ final class MyPageViewModel: InjectableViewModel {
         let activityIndicator: Driver<Bool>
         let showErrorPopup: Driver<Void>
     }
+}
 
+// MARK: - ViewModel Build
+extension MyPageViewModel {
     func build(input: Input) -> Output {
         let (firebaseManager, updater, keychainManager) = (self.firebaseManager, self.updater, self.keychainManager)
 
+        // 화면이 보여지기 전에
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
+                // analytics screen event
                 firebaseManager.screenName("마이페이지")
             })
 
-        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        // 최초 진입 시
+        let initialLoad = input.viewWillAppear
+            .asObservable()
+            .take(1)
+            .asDriver(onErrorDriveWith: .empty())
 
-        let refreshSession = updater.refreshSession.asDriver(onErrorDriveWith: .empty())
+        // 세션 갱신 시
+        let refreshSession = updater.refreshSession
+            .asDriver(onErrorDriveWith: .empty())
 
+        // pull to refresh 액션 시
         let refreshControlDidRefresh = input.refreshControlDidRefresh
 
-        let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
+        // 새로고침 필요 시
+        let loadRetry = loadRetryTrigger
+            .asDriver(onErrorDriveWith: .empty())
 
         let loadPage = Driver.merge(initialLoad, refreshSession, refreshControlDidRefresh)
 
@@ -170,6 +188,7 @@ final class MyPageViewModel: InjectableViewModel {
             .map { _ in [SectionType<MyPageSection>]() }
 
         let myPageList = Driver.merge(userMeSuccess, userMeEmpty)
+
         let showErrorPopup = userMeError
 
         let embedEmptyViewController = userMeAction.error
@@ -204,19 +223,24 @@ final class MyPageViewModel: InjectableViewModel {
         let embedUserInfoViewController = userMeAction.elements
             .map { _ in Void() }
 
-        let toastMessage = Driver.merge(signOutSuccess, signOutError)
+        // 토스트 메시지
+        let toastMessage = Driver.merge(
+            signOutSuccess,
+            signOutError)
 
+        // pull to refresh 로딩 및 해제
         let refreshAction = input.refreshControlDidRefresh
             .withLatestFrom(myPageList)
             .map { _ in Void() }
             .map(Driver.from)
             .flatMap(Action.makeDriver)
 
+        // 로딩 뷰
         let activityIndicator = userMeAction.isExecuting
 
         return Output(
             viewWillAppear: viewWillAppear,
-            viewWillDisappear: input.viewWillDisappear,
+            viewWillLayoutSubviews: input.viewWillLayoutSubviews,
             myPageList: myPageList,
             selectedIndexPath: input.selectedIndexPath,
             embedUserInfoViewController: embedUserInfoViewController,
