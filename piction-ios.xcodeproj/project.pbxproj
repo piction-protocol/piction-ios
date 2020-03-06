@@ -1124,22 +1124,22 @@
 				4323FA16233A165600243655 /* ChangePasswordViewModel.swift */,
 				438E76422366B6190062D004 /* SubscriptionUserViewModel.swift */,
 				4323F9E1233A165600243655 /* ProjectViewModel.swift */,
+				4365572223FFBA8E00F259F9 /* ProjectDetailViewModel.swift */,
 				4323F9D9233A165600243655 /* ProjectInfoViewModel.swift */,
-				4323F9EE233A165600243655 /* CreateProjectViewModel.swift */,
-				438E76352362FAAD0062D004 /* ManageSeriesViewModel.swift */,
 				4323F9DB233A165600243655 /* SeriesPostViewModel.swift */,
 				4323F9CF233A165600243655 /* PostViewModel.swift */,
 				4323F9D4233A165600243655 /* PostHeaderViewModel.swift */,
 				4323F9EB233A165600243655 /* PostFooterViewModel.swift */,
-				4323F9CB233A165600243655 /* CreatePostViewModel.swift */,
-				436C75B02387C73600902F08 /* CreateMembershipViewModel.swift */,
-				436C75A32387C38900902F08 /* ManageMembershipViewModel.swift */,
 				439029282383EE7600A3121B /* MembershipListViewModel.swift */,
 				43C5C9402383BDC6004BACFC /* PurchaseMembershipViewModel.swift */,
 				4323F9F2233A165600243655 /* CustomEmptyViewModel.swift */,
 				43682B1A23FBEC75006CE717 /* CreatorProfileViewModel.swift */,
 				43682B2A23FE187B006CE717 /* CreatorProfileHeaderViewModel.swift */,
-				4365572223FFBA8E00F259F9 /* ProjectDetailViewModel.swift */,
+				4323F9EE233A165600243655 /* CreateProjectViewModel.swift */,
+				4323F9CB233A165600243655 /* CreatePostViewModel.swift */,
+				438E76352362FAAD0062D004 /* ManageSeriesViewModel.swift */,
+				436C75A32387C38900902F08 /* ManageMembershipViewModel.swift */,
+				436C75B02387C73600902F08 /* CreateMembershipViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1230,6 +1230,7 @@
 				4323FA14233A165600243655 /* ChangePasswordViewController.swift */,
 				438E764B2366B7B20062D004 /* SubscriptionUserViewController.swift */,
 				4323F9E7233A165600243655 /* ProjectViewController.swift */,
+				4365571C23FFB39C00F259F9 /* ProjectDetailViewController.swift */,
 				4323F9D8233A165600243655 /* ProjectInfoViewController.swift */,
 				4323F9DE233A165600243655 /* SeriesPostViewController.swift */,
 				4323F9D0233A165600243655 /* PostViewController.swift */,
@@ -1240,7 +1241,6 @@
 				4323F9F3233A165600243655 /* CustomEmptyViewController.swift */,
 				43682B1D23FBEC9E006CE717 /* CreatorProfileViewController.swift */,
 				43682B2423FD3DC9006CE717 /* CreatorProfileHeaderViewController.swift */,
-				4365571C23FFB39C00F259F9 /* ProjectDetailViewController.swift */,
 				4323F9EF233A165600243655 /* CreateProjectViewController.swift */,
 				4323F9CC233A165600243655 /* CreatePostViewController.swift */,
 				438E76322362FAA20062D004 /* ManageSeriesViewController.swift */,
@@ -1579,8 +1579,8 @@
 			isa = PBXGroup;
 			children = (
 				43EBE1982373EDA50081C3B7 /* Common */,
-				430923582372BA8800716AF8 /* piction-ios-shareEx */,
 				4323F97D233A165600243655 /* piction-ios */,
+				430923582372BA8800716AF8 /* piction-ios-shareEx */,
 			);
 			path = Sources;
 			sourceTree = SOURCE_ROOT;
