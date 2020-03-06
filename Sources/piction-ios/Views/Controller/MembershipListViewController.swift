@@ -75,7 +75,7 @@ extension MembershipListViewController: ViewModelBindable {
 
         // post 정보를 불러와서 설정
         output
-            .postItem
+            .postInfo
             .drive(onNext: { [weak self] postItem in
                 self?.currentPostMembershipInfo.isHidden = false
                 self?.currentPostTitleLabel.text = "\(postItem.title ?? "")"
