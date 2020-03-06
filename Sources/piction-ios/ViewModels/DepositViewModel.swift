@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
+// MARK: - ViewModel
 final class DepositViewModel: InjectableViewModel {
 
     typealias Dependency = (
@@ -23,12 +24,14 @@ final class DepositViewModel: InjectableViewModel {
     }
 
     var loadRetryTrigger = PublishSubject<Void>()
+}
 
+// MARK: - Input & Output
+extension DepositViewModel {
     struct Input {
         let viewWillAppear: Driver<Void>
         let copyBtnDidTap: Driver<Void>
     }
-
     struct Output {
         let viewWillAppear: Driver<Void>
         let userInfo: Driver<UserModel>
@@ -37,17 +40,29 @@ final class DepositViewModel: InjectableViewModel {
         let showErrorPopup: Driver<Void>
         let activityIndicator: Driver<Bool>
     }
+}
 
+// MARK: - ViewModel Build
+extension DepositViewModel {
     func build(input: Input) -> Output {
         let firebaseManager = self.firebaseManager
 
+        // 화면이 보여지기 전에
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
+                // analytics screen event
                 firebaseManager.screenName("마이페이지_입금")
             })
 
-        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
-        let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
+        // 최초 진입 시
+        let initialLoad = input.viewWillAppear
+            .asObservable()
+            .take(1)
+            .asDriver(onErrorDriveWith: .empty())
+
+        // 새로고침 필요 시
+        let loadRetry = loadRetryTrigger
+            .asDriver(onErrorDriveWith: .empty())
 
         let userInfoAction = Driver.merge(initialLoad, loadRetry)
             .map { UserAPI.me }
@@ -77,6 +92,7 @@ final class DepositViewModel: InjectableViewModel {
             .map { $0.publicKey }
             .flatMap(Driver.from)
 
+        // 로딩 뷰
         let activityIndicator = walletInfoAction.isExecuting
 
         return Output(
