@@ -74,11 +74,14 @@ extension MyProjectViewModel {
         let loadRetry = loadRetryTrigger
             .asDriver(onErrorDriveWith: .empty())
 
+        // 최초 진입 시, 컨텐츠의 내용 갱신 필요 시, 새로고침 필요 시
+        // 내 프로젝트 목록 호출
         let myProjectAction = Driver.merge(initialLoad, refreshContent, loadRetry)
             .map { CreatorAPI.projects }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
+        // 내 프로젝트 목록 호출 성공 시
         let myProjectSuccess = myProjectAction.elements
             .map { try? $0.map(to: [ProjectModel].self) }
             .flatMap(Driver.from)
@@ -86,19 +89,26 @@ extension MyProjectViewModel {
                 self?.projectList = projects
             })
 
+        // 내 프로젝트 목록 호출 에러 시
         let myProjectError = myProjectAction.error
             .map { _ in Void() }
 
+        // 생성 버튼 눌렀을 때 (에디터 기능 지원 안함)
         let openCreateProject = input.createProjectBtnDidTap
             .map { _ in IndexPath?(nil) }
 
+        // swipe로 수정 눌렀을 때 (에디터 기능 지원 안함)
         let openEditProject = input.contextualAction
             .flatMap(Driver<IndexPath?>.from)
 
+        // 생성 버튼 눌렀을 때, 수정 눌렀을 때 (에디터 기능 지원 안함)
+        // CreatorProject 화면으로 이동
         let openCreateProjectViewController = Driver.merge(openCreateProject, openEditProject)
 
+        // 에러 팝업 출력
         let showErrorPopup = myProjectError
 
+        // 프로젝트 목록이 없을 때 emptyView 출력
         let embedEmptyView = myProjectSuccess
             .filter { $0.isEmpty }
             .map { _ in .myProjectListEmpty }
