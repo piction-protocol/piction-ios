@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
+// MARK: - ViewModel
 final class MyProjectViewModel: InjectableViewModel {
 
     typealias Dependency = (
@@ -26,35 +27,52 @@ final class MyProjectViewModel: InjectableViewModel {
     init(dependency: Dependency) {
         (firebaseManager, updater) = dependency
     }
+}
 
+// MARK: - Input & Output
+extension MyProjectViewModel {
     struct Input {
         let viewWillAppear: Driver<Void>
         let createProjectBtnDidTap: Driver<Void>
         let selectedIndexPath: Driver<IndexPath>
         let contextualAction: Driver<IndexPath>
     }
-
     struct Output {
         let viewWillAppear: Driver<Void>
         let projectList: Driver<[ProjectModel]>
         let openCreateProjectViewController: Driver<IndexPath?>
-        let openProjectViewController: Driver<IndexPath>
+        let selectedIndexPath: Driver<IndexPath>
         let embedEmptyViewController: Driver<CustomEmptyViewStyle>
         let showErrorPopup: Driver<Void>
         let activityIndicator: Driver<Bool>
     }
+}
 
+// MARK: - ViewModel Build
+extension MyProjectViewModel {
     func build(input: Input) -> Output {
         let (firebaseManager, updater) = (self.firebaseManager, self.updater)
 
+        // 화면이 보여지기 전에
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
+                // analytics screen event
                 firebaseManager.screenName("마이페이지_나의프로젝트")
             })
 
-        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
-        let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
-        let loadRetry = loadRetryTrigger.asDriver(onErrorDriveWith: .empty())
+        // 최초 진입 시
+        let initialLoad = input.viewWillAppear
+            .asObservable()
+            .take(1)
+            .asDriver(onErrorDriveWith: .empty())
+
+        // 컨텐츠의 내용 갱신 필요 시
+        let refreshContent = updater.refreshContent
+            .asDriver(onErrorDriveWith: .empty())
+
+        // 새로고침 필요 시
+        let loadRetry = loadRetryTrigger
+            .asDriver(onErrorDriveWith: .empty())
 
         let myProjectAction = Driver.merge(initialLoad, refreshContent, loadRetry)
             .map { CreatorAPI.projects }
@@ -86,13 +104,14 @@ final class MyProjectViewModel: InjectableViewModel {
             .map { _ in .myProjectListEmpty }
             .flatMap(Driver<CustomEmptyViewStyle>.from)
 
+        // 로딩 뷰
         let activityIndicator = myProjectAction.isExecuting
 
         return Output(
             viewWillAppear: viewWillAppear,
             projectList: myProjectSuccess,
             openCreateProjectViewController: openCreateProjectViewController,
-            openProjectViewController: input.selectedIndexPath,
+            selectedIndexPath: input.selectedIndexPath,
             embedEmptyViewController: embedEmptyView,
             showErrorPopup: showErrorPopup,
             activityIndicator: activityIndicator
