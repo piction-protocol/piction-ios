@@ -137,9 +137,18 @@ extension ProjectDetailViewController: ViewModelBindable {
                 // 후원하기 버튼 텍스트
                 if sponsoredMembershipLevel == 0 { // 구독했으면
                    // 후원하기
+                    self.membershipButton.borderWidth = 0
+                    self.membershipButton.backgroundColor = .pictionDarkGray
+                    self.membershipButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+                    self.membershipButton.setTitleColor(.white, for: .normal)
                     self.membershipButton.setTitle(LocalizationKey.btn_subs_membership.localized(), for: .normal)
                 } else { // 후원했으면
                     // 내 후원 정보
+                    self.membershipButton.borderColor = .pictionDarkGray
+                    self.membershipButton.borderWidth = 2
+                    self.membershipButton.backgroundColor = .white
+                    self.membershipButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+                    self.membershipButton.setTitleColor(.pictionDarkGray, for: .normal)
                     self.membershipButton.setTitle(LocalizationKey.btn_subs_my_membership_info.localized(), for: .normal)
                 }
             })
