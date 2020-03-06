@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+// MARK: - CustomEmptyViewStyle
 enum CustomEmptyViewStyle {
     case defaultLogin
     case projectPostListEmpty
@@ -93,6 +94,7 @@ enum CustomEmptyViewStyle {
     }
 }
 
+// MARK: - ViewModel
 final class CustomEmptyViewModel: ViewModel {
 
     private let style: CustomEmptyViewStyle
@@ -100,23 +102,32 @@ final class CustomEmptyViewModel: ViewModel {
     init(style: CustomEmptyViewStyle) {
         self.style = style
     }
+}
 
+// MARK: - Input & Output
+extension CustomEmptyViewModel {
     struct Input {
         let viewWillAppear: Driver<Void>
         let btnDidTap: Driver<Void>
     }
-
     struct Output {
         let emptyViewStyle: Driver<CustomEmptyViewStyle>
         let buttonAction: Driver<CustomEmptyViewStyle>
     }
+}
 
+// MARK: - ViewModel Build
+extension CustomEmptyViewModel {
     func build(input: Input) -> Output {
-        let emptyViewStyle = input.viewWillAppear
-            .flatMap { return Driver.just(self.style) }
+        let style = self.style
 
+        // 화면이 보여지기 전에 style 전달
+        let emptyViewStyle = input.viewWillAppear
+            .map { style }
+
+        // 버튼 눌렀을 때 style 전달
         let buttonAction = input.btnDidTap
-            .flatMap { return Driver.just(self.style) }
+            .map { style }
 
         return Output(
             emptyViewStyle: emptyViewStyle,
