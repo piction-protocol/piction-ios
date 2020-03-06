@@ -172,27 +172,28 @@
                                                             <constraint firstAttribute="height" constant="36" id="VWk-ht-jpj"/>
                                                         </constraints>
                                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="JCW-ji-OJI" customClass="DynamicCollectionViewFlowLayout" customModule="piction_ios" customModuleProvider="target">
-                                                            <size key="itemSize" width="150" height="36"/>
+                                                            <size key="itemSize" width="100" height="36"/>
+                                                            <size key="estimatedItemSize" width="100" height="36"/>
                                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                         </collectionViewFlowLayout>
                                                         <cells>
                                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ProjectInfoCategoryCollectionViewCell" id="c7A-02-LiZ" customClass="ProjectInfoCategoryCollectionViewCell" customModule="piction_ios" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="150" height="36"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="100" height="36"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="36"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="36"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                     <subviews>
-                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zg9-iA-PfW" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="150" height="36"/>
+                                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zg9-iA-PfW" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="100" height="36"/>
                                                                             <subviews>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hbu-sO-A31" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="36"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="83.333333333333329" height="36"/>
                                                                                     <subviews>
                                                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="1sc-0g-vEQ">
-                                                                                            <rect key="frame" x="12" y="9" width="126" height="18"/>
+                                                                                            <rect key="frame" x="12.000000000000004" y="9" width="59.333333333333343" height="18"/>
                                                                                             <subviews>
                                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icCategory" translatesAutoresizingMaskIntoConstraints="NO" id="jmo-VX-0rZ">
                                                                                                     <rect key="frame" x="0.0" y="0.0" width="18" height="18"/>
@@ -202,7 +203,7 @@
                                                                                                     </constraints>
                                                                                                 </imageView>
                                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DwW-lW-fkZ">
-                                                                                                    <rect key="frame" x="24" y="0.0" width="102" height="18"/>
+                                                                                                    <rect key="frame" x="24.000000000000004" y="0.0" width="35.333333333333343" height="18"/>
                                                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                                     <color key="textColor" red="0.1019607843" green="0.57254901960000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                                     <nil key="highlightedColor"/>
@@ -264,9 +265,6 @@
                                                                 </connections>
                                                             </collectionViewCell>
                                                         </cells>
-                                                        <connections>
-                                                            <outlet property="delegate" destination="QW2-s7-cB4" id="NsU-TG-Wn7"/>
-                                                        </connections>
                                                     </collectionView>
                                                 </subviews>
                                             </stackView>
@@ -307,6 +305,7 @@
                                                         </constraints>
                                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cMX-8A-nrk" customClass="DynamicCollectionViewFlowLayout" customModule="piction_ios" customModuleProvider="target">
                                                             <size key="itemSize" width="150" height="30"/>
+                                                            <size key="estimatedItemSize" width="150" height="30"/>
                                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -319,11 +318,11 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="30"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                     <subviews>
-                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NK4-aM-Q9Z" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
+                                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NK4-aM-Q9Z" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="0.0" width="150" height="30"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nf4-ts-AEX">
-                                                                                    <rect key="frame" x="10" y="5" width="130" height="20"/>
+                                                                                    <rect key="frame" x="10" y="5" width="35.333333333333336" height="17"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                     <nil key="highlightedColor"/>
@@ -366,9 +365,6 @@
                                                                 </connections>
                                                             </collectionViewCell>
                                                         </cells>
-                                                        <connections>
-                                                            <outlet property="delegate" destination="QW2-s7-cB4" id="MPN-3J-0S6"/>
-                                                        </connections>
                                                     </collectionView>
                                                 </subviews>
                                             </stackView>

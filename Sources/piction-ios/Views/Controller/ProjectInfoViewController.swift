@@ -152,23 +152,6 @@ extension ProjectInfoViewController: ViewModelBindable {
     }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
-extension ProjectInfoViewController: UICollectionViewDelegateFlowLayout {
-    // category, tag cell size
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if let cell = collectionView.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? ProjectInfoCategoryCollectionViewCell {
-            let text = cell.categoryLabel.text ?? ""
-            let cellWidth = text.size(withAttributes:[.font: UIFont.systemFont(ofSize: 14.0)]).width + 60.0
-            return CGSize(width: cellWidth, height: 36.0)
-        } else if let cell = collectionView.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? ProjectInfoTagCollectionViewCell {
-            let text = cell.tagLabel.text ?? ""
-            let cellWidth = text.size(withAttributes:[.font: UIFont.systemFont(ofSize: 14.0)]).width + 30.0
-            return CGSize(width: cellWidth, height: 30.0)
-        }
-        return .zero
-    }
-}
-
 // MARK: - DataSource
 extension ProjectInfoViewController {
     // category data source
