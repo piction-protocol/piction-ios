@@ -64,29 +64,38 @@ extension DepositViewModel {
         let loadRetry = loadRetryTrigger
             .asDriver(onErrorDriveWith: .empty())
 
+        // 최초 진입 시, 새로고침 필요 시
+        // 유저 정보 호출
         let userInfoAction = Driver.merge(initialLoad, loadRetry)
             .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
+        // 유저 정보 호출 성공 시
         let userInfoSuccess = userInfoAction.elements
             .map { try? $0.map(to: UserModel.self) }
             .flatMap(Driver.from)
 
+        // 최초 진입 시, 새로고침 필요 시
+        // 지갑 정보 호출
         let walletInfoAction = Driver.merge(initialLoad, loadRetry)
             .map { WalletAPI.get }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
+        // 지갑 정보 호출 성공 시
         let walletInfoSuccess = walletInfoAction.elements
             .map { try? $0.map(to: WalletModel.self) }
             .flatMap(Driver.from)
 
+        // 지갑 정보 호출 에러 시
         let walletInfoError = walletInfoAction.error
             .map { _ in Void() }
 
+        // 에러 팝업 출력
         let showErrorPopup = walletInfoError
 
+        // 주소 복사 버튼 눌렀을 때
         let copyAddress = input.copyBtnDidTap
             .withLatestFrom(walletInfoSuccess)
             .map { $0.publicKey }
