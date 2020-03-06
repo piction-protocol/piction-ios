@@ -9,6 +9,7 @@
 import RxSwift
 import RxCocoa
 
+// MARK: - ViewModel
 final class SignUpCompleteViewModel: InjectableViewModel {
 
     typealias Dependency = (
@@ -24,7 +25,10 @@ final class SignUpCompleteViewModel: InjectableViewModel {
     init(dependency: Dependency) {
         (firebaseManager, keychainManager, loginId) = dependency
     }
+}
 
+// MARK: - Input & Output
+extension SignUpCompleteViewModel {
     struct Input {
         let viewWillAppear: Driver<Void>
         let closeBtnDidTap: Driver<Void>
@@ -34,20 +38,23 @@ final class SignUpCompleteViewModel: InjectableViewModel {
         let viewWillAppear: Driver<Void>
         let dismissViewController: Driver<String>
     }
+}
 
+// MARK: - ViewModel Build
+extension SignUpCompleteViewModel {
     func build(input: Input) -> Output {
         let (firebaseManager, keychainManager, loginId) = (self.firebaseManager, self.keychainManager, self.loginId)
 
+        // 화면이 보여지기 전에
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
+                // analytics screen event
                 firebaseManager.screenName("회원가입완료_\(loginId)")
             })
 
-        let pincode = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
-            .map { keychainManager.get(key: .pincode) }
-
+        // 확인 버튼 눌렀을 때
         let dismissViewController = input.closeBtnDidTap
-            .withLatestFrom(pincode)
+            .map { keychainManager.get(key: .pincode) }
 
         return Output(
             viewWillAppear: viewWillAppear,
