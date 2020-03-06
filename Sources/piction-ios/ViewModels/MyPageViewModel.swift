@@ -93,14 +93,19 @@ extension MyPageViewModel {
         let loadRetry = loadRetryTrigger
             .asDriver(onErrorDriveWith: .empty())
 
+        // 최초 진입 시, 세션 갱신 시, pull to refresh 액션 시
         let loadPage = Driver.merge(initialLoad, refreshSession, refreshControlDidRefresh)
 
+        // 최초 진입 시, 세션 갱신 시, pull to refresh 액션 시, 새로고침 필요 시
+        // 유저 정보 호출
         let userMeAction = Driver.merge(loadPage, loadRetry)
             .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
+        // 유저 정보 호출 성공 시
         let userMeSuccess = userMeAction.elements
+            // 프로젝트 섹션
             .map { _ -> [SectionType<MyPageSection>] in
                 let projectItems: [MyPageSection] = [
                     MyPageSection.header(title: LocalizationKey.str_project.localized()),
@@ -108,6 +113,7 @@ extension MyPageViewModel {
                     MyPageSection.underline
                 ]
 
+                // 지갑 관리 섹션
                 let walletItems: [MyPageSection] = [
                     MyPageSection.header(title: LocalizationKey.str_piction_address_management.localized()),
                     MyPageSection.pushType(title: LocalizationKey.str_transactions.localized()),
@@ -115,12 +121,14 @@ extension MyPageViewModel {
                     MyPageSection.underline
                 ]
 
+                // 보안 섹션
                 var securityItems: [MyPageSection] = [
                     MyPageSection.header(title: LocalizationKey.str_security.localized()),
                     keychainManager.get(key: .pincode).isEmpty ? MyPageSection.presentType(title: LocalizationKey.str_create_pin.localized(), align: .left) : MyPageSection.presentType(title: LocalizationKey.str_change_pin.localized(), align: .left),
                     MyPageSection.underline
                 ]
 
+                // pincode가 저장되어 있으면 가능한 생채 인식 확인
                 if !keychainManager.get(key: .pincode).isEmpty {
                     let authContext = LAContext()
                     if authContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) {
@@ -136,6 +144,7 @@ extension MyPageViewModel {
                             break
                         }
 
+                        // 생채 인식이 가능하다면 생채인식 row 추가
                         if description != "" {
                             let element = MyPageSection.switchType(title: description, key: "isEnabledAuthBio")
                             securityItems.insert(element, at: 2)
@@ -143,6 +152,7 @@ extension MyPageViewModel {
                     }
                 }
 
+                // 회원 정보 섹션
                 let myInfoItems: [MyPageSection] = [
                     MyPageSection.header(title: LocalizationKey.str_user_profile.localized()),
                     MyPageSection.presentType(title: LocalizationKey.str_change_basic_info.localized(), align: .left),
@@ -150,6 +160,7 @@ extension MyPageViewModel {
                     MyPageSection.underline
                 ]
 
+                // 고객센터 섹션
                 let supportItems: [MyPageSection] = [
                     MyPageSection.header(title: LocalizationKey.str_service_center.localized()),
                     MyPageSection.presentType(title: LocalizationKey.str_terms.localized(), align: .left),
@@ -157,6 +168,7 @@ extension MyPageViewModel {
                     MyPageSection.underline
                 ]
 
+                // 로그아웃 섹션
                 let logoutItems: [MyPageSection] = [
                     MyPageSection.presentType(title: LocalizationKey.str_sign_out.localized(), align: .center),
                     MyPageSection.underline
@@ -173,6 +185,7 @@ extension MyPageViewModel {
                 return section
             }
 
+        // 유저 정보 호출 에러 시
         let userMeError = userMeAction.error
             .flatMap { response -> Driver<Void> in
                 let errorMsg = response as? ErrorType
@@ -184,13 +197,17 @@ extension MyPageViewModel {
                 }
             }
 
+        // 유저 정보 없을 때
         let userMeEmpty = userMeAction.error
             .map { _ in [SectionType<MyPageSection>]() }
 
+        // 마이페이지 리스트
         let myPageList = Driver.merge(userMeSuccess, userMeEmpty)
 
+        // 에러 팝업 출력
         let showErrorPopup = userMeError
 
+        // 유저 정보 호출 에러 시 unauthorized일 때 emptyView 출력
         let embedEmptyViewController = userMeAction.error
             .flatMap { response -> Driver<CustomEmptyViewStyle> in
                 let errorMsg = response as? ErrorType
@@ -202,16 +219,14 @@ extension MyPageViewModel {
                 }
             }
 
+        // 로그아웃 버튼 누르면
+        // 로그아웃 호출
         let signOutAction = input.logout
             .map { SessionAPI.delete }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
-        let signOutError = signOutAction.error
-            .map { $0 as? ErrorType }
-            .map { $0?.message }
-            .flatMap(Driver.from)
-
+        // 로그아웃 성공 시
         let signOutSuccess = signOutAction.elements
             .do(onNext: { _ in
                 keychainManager.set(key: .accessToken, value: "")
@@ -220,6 +235,13 @@ extension MyPageViewModel {
             })
             .map { _ in LocalizationKey.str_sign_out_success.localized() }
 
+        // 로그아웃 에러 시
+        let signOutError = signOutAction.error
+            .map { $0 as? ErrorType }
+            .map { $0?.message }
+            .flatMap(Driver.from)
+
+        // 유저 정보 호출 성공 시 UserInfoViewController embed
         let embedUserInfoViewController = userMeAction.elements
             .map { _ in Void() }
 
