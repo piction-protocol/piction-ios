@@ -29,7 +29,7 @@ final class SubscriptionUserViewModel: InjectableViewModel {
     var items: [SponsorModel] = []
     var shouldInfiniteScroll = true
 
-    var loadTrigger = PublishSubject<Void>()
+    var loadNextTrigger = PublishSubject<Void>()
 }
 
 // MARK: - Input & Output
@@ -68,22 +68,31 @@ extension SubscriptionUserViewModel {
             .take(1)
             .asDriver(onErrorDriveWith: .empty())
 
-        let initialPage = Driver.merge(initialLoad, input.refreshControlDidRefresh)
+        // pull to refresh 액션 시
+        let refreshControlDidRefresh = input.refreshControlDidRefresh
+
+        // 최초 진입 시, pull to refresh 액션 시
+        let initialPage = Driver.merge(initialLoad, refreshControlDidRefresh)
             .do(onNext: { [weak self] _ in
+                // 데이터 초기화
                 self?.page = 0
                 self?.items = []
                 self?.shouldInfiniteScroll = true
             })
 
-        let loadNext = loadTrigger
+        // infinite scroll로 다음 페이지 호출
+        let loadNext = loadNextTrigger
             .asDriver(onErrorDriveWith: .empty())
             .filter { self.shouldInfiniteScroll }
 
+        // 최초 진입 시, pull to refresh 액션 시, infinite scroll로 다음 페이지 호출
+        // 구독자 목록 호출
         let subscriptionUserListAction = Driver.merge(initialPage, loadNext)
             .map { CreatorAPI.projectSponsors(uri: uri, page: self.page + 1, size: 30) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
+        // 구독자 목록 호출 성공 시
         let subscriptionUserListSuccess = subscriptionUserListAction.elements
             .map { try? $0.map(to: PageViewResponse<SponsorModel>.self) }
             .do(onNext: { [weak self] pageList in
@@ -103,9 +112,11 @@ extension SubscriptionUserViewModel {
             .map { self.items.append(contentsOf: $0) }
             .map { self.items }
 
+        // 구독자 목록 호출 에러 시
         let subscriptionUserListError = subscriptionUserListAction.error
             .map { _ in [SponsorModel]() }
 
+        // 구독자 목록
         let subscriptionUserList = Driver.merge(subscriptionUserListSuccess, subscriptionUserListError)
 
         // pull to refresh 로딩 및 해제
@@ -115,6 +126,7 @@ extension SubscriptionUserViewModel {
             .map(Driver.from)
             .flatMap(Action.makeDriver)
 
+        // 구독자 목록이 없을 때 emptyView 출력
         let embedEmptyView = subscriptionUserList
             .filter { $0.isEmpty }
             .map { _ in .searchListEmpty }

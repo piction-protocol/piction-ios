@@ -43,7 +43,7 @@ extension SubscriptionUserViewController: ViewModelBindable {
 
         // infiniteScroll이 동작할 때
         tableView.addInfiniteScroll { [weak self] _ in
-            self?.viewModel?.loadTrigger.onNext(())
+            self?.viewModel?.loadNextTrigger.onNext(())
         }
         // infiniteScroll이 동작하는 조건
         tableView.setShouldShowInfiniteScrollHandler { [weak self] _ in
