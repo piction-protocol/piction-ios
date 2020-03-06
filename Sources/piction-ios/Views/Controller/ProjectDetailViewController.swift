@@ -220,19 +220,6 @@ extension ProjectDetailViewController: ViewModelBindable {
     }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
-extension ProjectDetailViewController: UICollectionViewDelegateFlowLayout {
-    // Category text에 따라 cell의 크기 조정
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if let cell = collectionView.dataSource?.collectionView(collectionView, cellForItemAt: indexPath) as? ProjectInfoCategoryCollectionViewCell {
-            let text = cell.categoryLabel.text ?? ""
-            let cellWidth = text.size(withAttributes:[.font: UIFont.systemFont(ofSize: 12.0)]).width + 35.0
-            return CGSize(width: cellWidth, height: 24.0)
-        }
-        return .zero
-    }
-}
-
 // MARK: - DataSource
 extension ProjectDetailViewController {
     private func configureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, CategoryModel>> {
