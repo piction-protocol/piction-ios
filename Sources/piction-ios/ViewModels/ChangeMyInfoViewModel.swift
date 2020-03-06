@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
+// MARK: - ViewModel
 final class ChangeMyInfoViewModel: InjectableViewModel {
 
     typealias Dependency = (
@@ -32,7 +33,10 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
     private let username = PublishSubject<String>()
     private let changeInfo = PublishSubject<Bool>()
     private let password = PublishSubject<String?>()
+}
 
+// MARK: - Input & Output
+extension ChangeMyInfoViewModel {
     struct Input {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
@@ -44,7 +48,6 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
         let saveBtnDidTap: Driver<Void>
         let password: Driver<String?>
     }
-
     struct Output {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
@@ -61,22 +64,33 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
         let dismissViewController: Driver<Void>
         let toastMessage: Driver<String>
     }
+}
 
+// MARK: - ViewModel Build
+extension ChangeMyInfoViewModel {
     func build(input: Input) -> Output {
         let (firebaseManager, updater, keyboardManager) = (self.firebaseManager, self.updater, self.keyboardManager)
 
+        // 화면이 보여지기 전에
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
+                // analytics screen event
                 firebaseManager.screenName("마이페이지_기본정보변경")
+                // 키보드가 올라오는지 모니터링
                 keyboardManager.beginMonitoring()
             })
 
         let viewWillDisappear = input.viewWillDisappear
             .do(onNext: { _ in
+                // 키보드 모니터링 중단
                 keyboardManager.stopMonitoring()
             })
 
-        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        // 최초 진입 시
+        let initialLoad = input.viewWillAppear
+            .asObservable()
+            .take(1)
+            .asDriver(onErrorDriveWith: .empty())
 
         let userInfoAction = initialLoad
             .map { UserAPI.me }
@@ -149,7 +163,8 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
 
         let changeUserInfo = Driver.combineLatest(changedEmail, changedUsername, imageId.asDriver(onErrorDriveWith: .empty())) { (email: $0, username: $1, imageId: $2) }
 
-        let enableSaveButton = changeInfo.asDriver(onErrorDriveWith: .empty())
+        let enableSaveButton = changeInfo
+            .asDriver(onErrorDriveWith: .empty())
 
         let openPasswordPopup = input.saveBtnDidTap
 
@@ -206,14 +221,20 @@ final class ChangeMyInfoViewModel: InjectableViewModel {
 
         let dismissViewController = Driver.merge(dismissWithCancel, changeUserInfoSuccess)
 
-        let keyboardWillChangeFrame = keyboardManager.keyboardWillChangeFrame.asDriver(onErrorDriveWith: .empty())
+        // 키보드로 인한 frame 변경 시
+        let keyboardWillChangeFrame = keyboardManager.keyboardWillChangeFrame
+            .asDriver(onErrorDriveWith: .empty())
 
+        // 로딩 뷰
         let activityIndicator = Driver.merge(
             userInfoAction.isExecuting,
             uploadPictureAction.isExecuting,
             saveButtonAction.isExecuting)
 
-        let toastMessage = Driver.merge(uploadPictureError, changeUserInfoError)
+        // 토스트 메시지
+        let toastMessage = Driver.merge(
+            uploadPictureError,
+            changeUserInfoError)
 
         return Output(
             viewWillAppear: viewWillAppear,
