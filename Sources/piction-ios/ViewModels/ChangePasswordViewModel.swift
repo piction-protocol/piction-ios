@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
+// MARK: - ViewModel
 final class ChangePasswordViewModel: InjectableViewModel {
 
     typealias Dependency = (
@@ -23,7 +24,10 @@ final class ChangePasswordViewModel: InjectableViewModel {
     init(dependency: Dependency) {
         (firebaseManager, keyboardManager) = dependency
     }
+}
 
+// MARK: - Input & Output
+extension ChangePasswordViewModel {
     struct Input {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
@@ -36,7 +40,6 @@ final class ChangePasswordViewModel: InjectableViewModel {
         let saveBtnDidTap: Driver<Void>
         let cancelBtnDidTap: Driver<Void>
     }
-
     struct Output {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
@@ -50,18 +53,25 @@ final class ChangePasswordViewModel: InjectableViewModel {
         let errorMsg: Driver<ErrorModel>
         let toastMessage: Driver<String>
     }
+}
 
+// MARK: - ViewModel Build
+extension ChangePasswordViewModel {
     func build(input: Input) -> Output {
         let (firebaseManager, keyboardManager) = (self.firebaseManager, self.keyboardManager)
 
+        // 화면이 보여지기 전에
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
+                // analytics screen event
                 firebaseManager.screenName("마이페이지_비밀번호변경")
+                // 키보드가 올라오는지 모니터링
                 keyboardManager.beginMonitoring()
             })
 
         let viewWillDisappear = input.viewWillDisappear
             .do(onNext: { _ in
+                // 키보드 모니터링 중단
                 keyboardManager.stopMonitoring()
             })
 
@@ -91,6 +101,21 @@ final class ChangePasswordViewModel: InjectableViewModel {
         let changePasswordSuccess = saveButtonAction.elements
             .map { _ in Void() }
 
+        let errorMsg = changePasswordError
+
+        // 로딩 뷰
+        let activityIndicator = saveButtonAction.isExecuting
+
+        let dismissWithCancel = input.cancelBtnDidTap
+
+        let dismissViewController = Driver.merge(dismissWithCancel, changePasswordSuccess)
+            .map { _ in Void() }
+
+        // 키보드로 인한 frame 변경 시
+        let keyboardWillChangeFrame = keyboardManager.keyboardWillChangeFrame
+            .asDriver(onErrorDriveWith: .empty())
+
+        // 토스트 메시지
         let toastMessage = saveButtonAction.error
             .flatMap { response -> Driver<String> in
                 let errorType = response as? ErrorType
@@ -101,17 +126,6 @@ final class ChangePasswordViewModel: InjectableViewModel {
                     return Driver.just(errorType?.message ?? "")
                 }
             }
-
-        let errorMsg = changePasswordError
-
-        let activityIndicator = saveButtonAction.isExecuting
-
-        let dismissWithCancel = input.cancelBtnDidTap
-
-        let dismissViewController = Driver.merge(dismissWithCancel, changePasswordSuccess)
-            .map { _ in Void() }
-
-        let keyboardWillChangeFrame = keyboardManager.keyboardWillChangeFrame.asDriver(onErrorDriveWith: .empty())
 
         return Output(
             viewWillAppear: viewWillAppear,
