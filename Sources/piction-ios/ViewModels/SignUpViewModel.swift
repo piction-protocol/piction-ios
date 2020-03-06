@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
+// MARK: - ViewModel
 final class SignUpViewModel: InjectableViewModel {
 
     typealias Dependency = (
@@ -27,7 +28,10 @@ final class SignUpViewModel: InjectableViewModel {
     init(dependency: Dependency) {
         (firebaseManager, updater, keyboardManager, keychainManager) = dependency
     }
+}
 
+// MARK: - Input & Output
+extension SignUpViewModel {
     struct Input {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
@@ -39,52 +43,74 @@ final class SignUpViewModel: InjectableViewModel {
         let nicknameTextFieldDidInput: Driver<String>
         let agreeBtnDidTap: Driver<Void>
     }
-
     struct Output {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
         let userInfo: Driver<UserModel>
         let signUpBtnEnable: Driver<Void>
-        let openSignUpComplete: Driver<Void>
+        let openSignUpComplete: Driver<String>
         let keyboardWillChangeFrame: Driver<ChangedKeyboardFrame>
         let activityIndicator: Driver<Bool>
         let errorMsg: Driver<ErrorModel>
     }
+}
 
+// MARK: - ViewModel Build
+extension SignUpViewModel {
     func build(input: Input) -> Output {
         let (firebaseManager, updater, keyboardManager, keychainManager) = (self.firebaseManager, self.updater, self.keyboardManager, self.keychainManager)
 
+        // 화면이 보여지기 전에
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
+                // analytics screen event
                 firebaseManager.screenName("회원가입")
+                // 키보드가 올라오는지 모니터링
                 keyboardManager.beginMonitoring()
             })
 
+        // 화면이 사라지기 전에
         let viewWillDisappear = input.viewWillDisappear
             .do(onNext: { _ in
+                // 키보드 모니터링 중단
                 keyboardManager.stopMonitoring()
             })
 
-        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        // 최초 진입 시
+        let initialLoad = input.viewWillAppear
+            .asObservable()
+            .take(1)
+            .asDriver(onErrorDriveWith: .empty())
 
+        // 유저 정보 호출
         let userInfoAction = initialLoad
             .map { UserAPI.me }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
+        // 유저 정보 호출 성공 시
         let userInfoSuccess = userInfoAction.elements
             .map { try? $0.map(to: UserModel.self) }
             .flatMap(Driver.from)
 
-        let signUpInfo = Driver.combineLatest(input.loginIdTextFieldDidInput, input.emailTextFieldDidInput, input.passwordTextFieldDidInput, input.passwordCheckTextFieldDidInput, input.nicknameTextFieldDidInput) { (loginId: $0, email: $1, password: $2, passwordCheck: $3, username: $4) }
+        // 입력한 유저 정보
+        let signUpInfo = Driver.combineLatest(
+            input.loginIdTextFieldDidInput,
+            input.emailTextFieldDidInput,
+            input.passwordTextFieldDidInput,
+            input.passwordCheckTextFieldDidInput,
+            input.nicknameTextFieldDidInput)
+            { (loginId: $0, email: $1, password: $2, passwordCheck: $3, username: $4) }
 
-        let signUpButtonAction = input.signUpBtnDidTap
+        // 회원가입 버튼 누르면 회원가입 호출
+        let signUpAction = input.signUpBtnDidTap
             .withLatestFrom(signUpInfo)
             .map { UserAPI.signup(loginId: $0.loginId, email: $0.email, username: $0.username, password: $0.password, passwordCheck: $0.passwordCheck) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
-        let signUpError = signUpButtonAction.error
+        // 회원가입 실패 시 badRequest일 때만
+        let signUpError = signUpAction.error
             .flatMap { response -> Driver<ErrorModel> in
                 let errorType = response as? ErrorType
                 switch errorType {
@@ -95,18 +121,15 @@ final class SignUpViewModel: InjectableViewModel {
                 }
             }
 
-        let clearErrorMsg = Driver.merge(input.loginIdTextFieldDidInput, input.emailTextFieldDidInput, input.passwordTextFieldDidInput, input.passwordCheckTextFieldDidInput, input.nicknameTextFieldDidInput)
-            .map { _ in ErrorModel.from([:])! }
-
-        let errorMsg = Driver.merge(signUpError, clearErrorMsg)
-
-        let signUpSuccessAction = signUpButtonAction.elements
+        // 세션 생성 호출
+        let signInAction = signUpAction.elements
             .withLatestFrom(signUpInfo)
             .map { SessionAPI.create(loginId: $0.loginId, password: $0.password, rememberme: true) }
             .map(PictionSDK.rx.requestAPI)
             .flatMap(Action.makeDriver)
 
-        let sessionCreateSuccess = signUpSuccessAction.elements
+        // 세션 생성 호출 성공 시
+        let signInSuccess = signInAction.elements
             .map { try? $0.map(to: AuthenticationViewResponse.self) }
             .map { $0?.accessToken ?? "" }
             .do(onNext: { token in
@@ -114,18 +137,33 @@ final class SignUpViewModel: InjectableViewModel {
                 PictionManager.setToken(token)
                 updater.refreshSession.onNext(())
             })
-            .map { _ in Void() }
+            .withLatestFrom(input.loginIdTextFieldDidInput)
 
-        let keyboardWillChangeFrame = keyboardManager.keyboardWillChangeFrame.asDriver(onErrorDriveWith: .empty())
+        // 키보드로 인한 frame 변경 시
+        let keyboardWillChangeFrame = keyboardManager.keyboardWillChangeFrame
+            .asDriver(onErrorDriveWith: .empty())
 
-        let activityIndicator = signUpSuccessAction.isExecuting
+        // 로딩 뷰
+        let activityIndicator = signInAction.isExecuting
+
+        // 입력 시 에러 메시지 필드 초기화
+        let clearErrorMsg = Driver.merge(
+            input.loginIdTextFieldDidInput,
+            input.emailTextFieldDidInput,
+            input.passwordTextFieldDidInput,
+            input.passwordCheckTextFieldDidInput,
+            input.nicknameTextFieldDidInput)
+            .map { _ in ErrorModel.from([:])! }
+
+        // 에러 메시지 필드에 출력
+        let errorMsg = Driver.merge(signUpError, clearErrorMsg)
 
         return Output(
             viewWillAppear: viewWillAppear,
             viewWillDisappear: viewWillDisappear,
             userInfo: userInfoSuccess,
             signUpBtnEnable: input.agreeBtnDidTap,
-            openSignUpComplete: sessionCreateSuccess,
+            openSignUpComplete: signInSuccess,
             keyboardWillChangeFrame: keyboardWillChangeFrame,
             activityIndicator: activityIndicator,
             errorMsg: errorMsg
