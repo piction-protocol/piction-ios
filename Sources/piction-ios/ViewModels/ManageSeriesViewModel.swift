@@ -10,6 +10,9 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
+// 현재 사용하지 않는 화면입니다. (에디터 기능 지원안함)
+
+// MARK: - ViewModel
 final class ManageSeriesViewModel: InjectableViewModel {
 
     typealias Dependency = (
@@ -27,7 +30,10 @@ final class ManageSeriesViewModel: InjectableViewModel {
     init(dependency: Dependency) {
         (firebaseManager, updater, uri, seriesId) = dependency
     }
+}
 
+// MARK: - Input & Output
+extension ManageSeriesViewModel {
     struct Input {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
@@ -40,7 +46,6 @@ final class ManageSeriesViewModel: InjectableViewModel {
         let reorderItems: Driver<[Int]>
         let closeBtnDidTap: Driver<Void>
     }
-
     struct Output {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
@@ -54,18 +59,29 @@ final class ManageSeriesViewModel: InjectableViewModel {
         let activityIndicator: Driver<Bool>
         let dismissViewController: Driver<Void>
     }
+}
 
+// MARK: - ViewModel Build
+extension ManageSeriesViewModel {
     func build(input: Input) -> Output {
         let (firebaseManager, updater, uri, seriesId) = (self.firebaseManager, self.updater, self.uri, self.seriesId)
 
+        // 화면이 보여지기 전에
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
+                // analytics screen event
                 firebaseManager.screenName("시리즈목록_\(uri)_\(seriesId ?? 0)")
             })
 
-        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        // 최초 진입 시
+        let initialLoad = input.viewWillAppear
+            .asObservable()
+            .take(1)
+            .asDriver(onErrorDriveWith: .empty())
 
-        let refreshContent = updater.refreshContent.asDriver(onErrorDriveWith: .empty())
+        // 컨텐츠의 내용 갱신 필요 시
+        let refreshContent = updater.refreshContent
+            .asDriver(onErrorDriveWith: .empty())
 
         let seriesListAction = Driver.merge(initialLoad, refreshContent)
             .map { SeriesAPI.all(uri: uri) }
@@ -147,11 +163,13 @@ final class ManageSeriesViewModel: InjectableViewModel {
             .map { _ in "" }
             .do(onNext: { _ in updater.refreshContent.onNext(()) })
 
+        // 로딩 뷰
         let activityIndicator = Driver.merge(
             seriesListAction.isExecuting,
             updateSeriesAction.isExecuting,
             deleteSeriesAction.isExecuting)
 
+        // 토스트 메시지
         let toastMessage = Driver.merge(
             updateSeriesSuccess,
             deleteSeriesSuccess,

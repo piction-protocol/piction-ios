@@ -10,6 +10,9 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
+// 현재 사용하지 않는 화면입니다. (에디터 기능 지원안함)
+
+// MARK: - ViewModel
 final class CreateMembershipViewModel: InjectableViewModel {
 
     typealias Dependency = (
@@ -32,7 +35,10 @@ final class CreateMembershipViewModel: InjectableViewModel {
     init(dependency: Dependency) {
         (firebaseManager, updater, uri, membership) = dependency
     }
+}
 
+// MARK: - Input & Output
+extension CreateMembershipViewModel{
     struct Input {
         let viewWillAppear: Driver<Void>
         let membershipName: Driver<String>
@@ -42,7 +48,6 @@ final class CreateMembershipViewModel: InjectableViewModel {
         let limitBtnDidTap: Driver<Void>
         let saveBtnDidTap: Driver<Void>
     }
-
     struct Output {
         let viewWillAppear: Driver<Void>
         let loadMembership: Driver<MembershipModel>
@@ -52,16 +57,25 @@ final class CreateMembershipViewModel: InjectableViewModel {
         let dismissKeyboard: Driver<Void>
         let toastMessage: Driver<String>
     }
+}
 
+// MARK: - ViewModel Build
+extension CreateMembershipViewModel {
     func build(input: Input) -> Output {
         let (firebaseManager, updater, uri, membership) = (self.firebaseManager, self.updater, self.uri, self.membership)
 
+        // 화면이 보여지기 전에
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
+                // analytics screen event
                 firebaseManager.screenName("Membership생성")
             })
 
-        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        // 최초 진입 시
+        let initialLoad = input.viewWillAppear
+            .asObservable()
+            .take(1)
+            .asDriver(onErrorDriveWith: .empty())
 
         let loadMembership = initialLoad
             .map { membership }
@@ -79,11 +93,9 @@ final class CreateMembershipViewModel: InjectableViewModel {
 
         let nameChanged = Driver.merge(input.membershipName, name.asDriver(onErrorDriveWith: .empty()))
 
-        let priceChanged = Driver.merge(input.membershipPrice,
-            price.asDriver(onErrorDriveWith: .empty()))
+        let priceChanged = Driver.merge(input.membershipPrice, price.asDriver(onErrorDriveWith: .empty()))
 
-        let descriptionChanged = Driver.merge(input.membershipDescription,
-            description.asDriver(onErrorDriveWith: .empty()))
+        let descriptionChanged = Driver.merge(input.membershipDescription, description.asDriver(onErrorDriveWith: .empty()))
 
         let noLimit = input.limitBtnDidTap
             .map { String?(nil) }
@@ -105,7 +117,8 @@ final class CreateMembershipViewModel: InjectableViewModel {
             nameChanged,
             priceChanged,
             descriptionChanged,
-            limitChanged) { (name: $0, price: $1, description: $2, limit: $3) }
+            limitChanged)
+            { (name: $0, price: $1, description: $2, limit: $3) }
 
         let createMembershipAction = input.saveBtnDidTap
             .filter { membership == nil }
@@ -131,12 +144,14 @@ final class CreateMembershipViewModel: InjectableViewModel {
                 updater.refreshContent.onNext(())
             })
 
+        // 로딩 뷰
+        let activityIndicator = saveMembershipAction.isExecuting
+
+        // 토스트 메시지
         let toastMessage = saveMembershipAction.error
             .map { $0 as? ErrorType }
             .map { $0?.message }
             .flatMap(Driver.from)
-
-        let activityIndicator = saveMembershipAction.isExecuting
 
         return Output(
             viewWillAppear: viewWillAppear,

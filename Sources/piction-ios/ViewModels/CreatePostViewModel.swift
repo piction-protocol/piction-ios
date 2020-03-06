@@ -12,6 +12,9 @@ import RxCocoa
 import Kanna
 import PictionSDK
 
+// 현재 사용하지 않는 화면입니다. (에디터 기능 지원안함)
+
+// MARK: - ViewModel
 final class CreatePostViewModel: InjectableViewModel {
     typealias Dependency = (
         FirebaseManagerProtocol,
@@ -38,7 +41,10 @@ final class CreatePostViewModel: InjectableViewModel {
     init(dependency: Dependency) {
         (firebaseManager, updater, keyboardManager, uri, postId) = dependency
     }
+}
 
+// MARK: - Input & Output
+extension CreatePostViewModel {
     struct Input {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
@@ -61,7 +67,6 @@ final class CreatePostViewModel: InjectableViewModel {
         let publishDateChanged: Driver<Date?>
         let saveBtnDidTap: Driver<Void>
     }
-
     struct Output {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
@@ -85,23 +90,35 @@ final class CreatePostViewModel: InjectableViewModel {
         let dismissKeyboard: Driver<Bool>
         let toastMessage: Driver<String>
     }
+}
 
+// MARK: - ViewModel Build
+extension CreatePostViewModel {
     func build(input: Input) -> Output {
         let (firebaseManager, updater, keyboardManager, uri, postId) = (self.firebaseManager, self.updater, self.keyboardManager, self.uri, self.postId)
 
+        // 화면이 보여지기 전에
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
+                // analytics screen event
                 firebaseManager.screenName("포스트작성_\(uri)")
+                // 키보드가 올라오는지 모니터링
                 keyboardManager.beginMonitoring()
             })
 
         let viewWillDisappear = input.viewWillDisappear
             .do(onNext: { _ in
+                // 키보드 모니터링 중단
                 keyboardManager.stopMonitoring()
             })
 
-        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
+        // 최초 진입 시
+        let initialLoad = input.viewWillAppear
+            .asObservable()
+            .take(1)
+            .asDriver(onErrorDriveWith: .empty())
             .do(onNext: { [weak self] _ in
+                // 각 Observable 초기화
                 self?.title.onNext("")
                 self?.coverImageId.onNext("")
                 self?.content.onNext("")
@@ -258,7 +275,15 @@ final class CreatePostViewModel: InjectableViewModel {
                 self?.publishedAt.onNext(date)
             })
 
-        let changePostInfo = Driver.combineLatest(postTitleChanged, postContentChanged, coverImageId.asDriver(onErrorDriveWith: .empty()), membershipId.asDriver(onErrorDriveWith: .empty()), status.asDriver(onErrorDriveWith: .empty()), publishedAt.asDriver(onErrorDriveWith: .empty()), seriesId.asDriver(onErrorDriveWith: .empty())) { (title: $0, content: $1, coverImageId: $2, membershipId: $3, status: $4, publishedAt: $5, seriesId: $6) }
+        let changePostInfo = Driver.combineLatest(
+            postTitleChanged,
+            postContentChanged,
+            coverImageId.asDriver(onErrorDriveWith: .empty()),
+            membershipId.asDriver(onErrorDriveWith: .empty()),
+            status.asDriver(onErrorDriveWith: .empty()),
+            publishedAt.asDriver(onErrorDriveWith: .empty()),
+            seriesId.asDriver(onErrorDriveWith: .empty()))
+            { (title: $0, content: $1, coverImageId: $2, membershipId: $3, status: $4, publishedAt: $5, seriesId: $6) }
 
         let createPostAction = input.saveBtnDidTap
             .withLatestFrom(changePostInfo)
@@ -297,13 +322,17 @@ final class CreatePostViewModel: InjectableViewModel {
             .withLatestFrom(seriesId.asDriver(onErrorDriveWith: .empty()))
             .map { (uri, $0) }
 
-        let keyboardWillChangeFrame = keyboardManager.keyboardWillChangeFrame.asDriver(onErrorDriveWith: .empty())
+        // 키보드로 인한 frame 변경 시
+        let keyboardWillChangeFrame = keyboardManager.keyboardWillChangeFrame
+            .asDriver(onErrorDriveWith: .empty())
 
+        // 로딩 뷰
         let activityIndicator = Driver.merge(
             uploadCoverImageAction.isExecuting,
             uploadContentImageAction.isExecuting,
             savePostAction.isExecuting)
 
+        // 토스트 메시지
         let toastMessage = Driver.merge(
             uploadCoverImageError,
             uploadContentImageError,

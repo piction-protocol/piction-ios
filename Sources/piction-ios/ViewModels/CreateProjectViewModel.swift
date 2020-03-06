@@ -11,6 +11,9 @@ import RxSwift
 import RxCocoa
 import PictionSDK
 
+// 현재 사용하지 않는 화면입니다. (에디터 기능 지원안함)
+
+// MARK: - ViewModel
 final class CreateProjectViewModel: InjectableViewModel {
     typealias Dependency = (
         FirebaseManagerProtocol,
@@ -35,7 +38,10 @@ final class CreateProjectViewModel: InjectableViewModel {
     init(dependency: Dependency) {
         (firebaseManager, updater, keyboardManager, uri) = dependency
     }
+}
 
+// MARK: - Input & Output
+extension CreateProjectViewModel {
     struct Input {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
@@ -52,7 +58,6 @@ final class CreateProjectViewModel: InjectableViewModel {
         let inputSynopsis: Driver<String>
         let saveBtnDidTap: Driver<Void>
     }
-
     struct Output {
         let viewWillAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
@@ -70,25 +75,33 @@ final class CreateProjectViewModel: InjectableViewModel {
         let dismissKeyboard: Driver<Bool>
         let toastMessage: Driver<String>
     }
+}
 
+// MARK: - ViewModel Build
+extension CreateProjectViewModel {
     func build(input: Input) -> Output {
         let (firebaseManager, updater, keyboardManager, uri) = (self.firebaseManager, self.updater, self.keyboardManager, self.uri)
 
+        // 화면이 보여지기 전에
         let viewWillAppear = input.viewWillAppear
             .do(onNext: { _ in
+                // analytics screen event
                 firebaseManager.screenName("프로젝트 생성")
+                // 키보드가 올라오는지 모니터링
                 keyboardManager.beginMonitoring()
             })
 
         let viewWillDisappear = input.viewWillDisappear
             .do(onNext: { _ in
+                // 키보드 모니터링 중단
                 keyboardManager.stopMonitoring()
             })
 
-        let initialLoad = input.viewWillAppear.asObservable().take(1).asDriver(onErrorDriveWith: .empty())
-            .do(onNext: { _ in
-                keyboardManager.beginMonitoring()
-            })
+        // 최초 진입 시
+        let initialLoad = input.viewWillAppear
+            .asObservable()
+            .take(1)
+            .asDriver(onErrorDriveWith: .empty())
 
         let isModify = initialLoad
             .map { uri != "" }
@@ -233,13 +246,17 @@ final class CreateProjectViewModel: InjectableViewModel {
             .map { $0?.message }
             .flatMap(Driver.from)
 
-        let keyboardWillChangeFrame = keyboardManager.keyboardWillChangeFrame.asDriver(onErrorDriveWith: .empty())
+        // 키보드로 인한 frame 변경 시
+        let keyboardWillChangeFrame = keyboardManager.keyboardWillChangeFrame
+            .asDriver(onErrorDriveWith: .empty())
 
+        // 로딩 뷰
         let activityIndicator = Driver.merge(
             uploadWideThumbnailImageAction.isExecuting,
             uploadThumbnailImageAction.isExecuting,
             saveButtonAction.isExecuting)
 
+        // 토스트 메시지
         let toastMessage = Driver.merge(
             uploadWideThumbnailError,
             uploadThumbnailError,
