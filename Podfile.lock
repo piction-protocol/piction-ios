@@ -141,10 +141,10 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
-  - PictionSDK/Core (1.0.0):
+  - PictionSDK/Core (1.0.1):
     - KeychainAccess (~> 3.2.0)
     - Moya-ModelMapper (~> 9.0.0)
-  - PictionSDK/RxSwift (1.0.0):
+  - PictionSDK/RxSwift (1.0.1):
     - Moya-ModelMapper/RxSwift (~> 9.0.0)
     - PictionSDK/Core
     - RxSwift
@@ -278,7 +278,7 @@ SPEC CHECKSUMS:
   Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
   Moya-ModelMapper: 4948625af7fc5eef41ad9fdfe0c3517170b50960
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
-  PictionSDK: 615546fd6c7e90db64b174021105d56e7bb9f5f0
+  PictionSDK: 593cb0a0ec03f6c3f45493d649186c0ffbecb419
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   Protobuf: 0e94afe3b47cb11876eb6aee296638711a24bf75
   Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
@@ -296,4 +296,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: ec56874855c795b9e37b02ed10df47577bdfcd90
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.0
