@@ -70,7 +70,7 @@ final class HomeTrendingTableViewCell: ReuseTableViewCell {
             .drive(onNext: { indexPath in
                 guard let uri = dataSource[indexPath].uri else { return }
                 if let topViewController = UIApplication.topViewController() {
-                    topViewController.openProjectViewController(uri: uri)
+                    topViewController.openView(type: .project(uri: uri), openType: .push)
                 }
             })
             .disposed(by: disposeBag)
