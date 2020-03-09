@@ -221,11 +221,7 @@ extension PostViewController: ViewModelBindable {
                 self.subscriptionView.isHidden = false
                 self.postWebView.scrollView.isScrollEnabled = false
 
-                for subview in self.postWebView.scrollView.subviews {
-                    if subview.tag == 1001 {
-                        subview.isHidden = true
-                    }
-                }
+                self.footerViewController?.view.isHidden = true
             })
             .disposed(by: disposeBag)
 
@@ -242,6 +238,7 @@ extension PostViewController: ViewModelBindable {
                 self?.readmodeBarButtonIsHidden(status: false)
                 self?.subscriptionView.isHidden = true
                 self?.postWebView.scrollView.isScrollEnabled = true
+                self?.footerViewController?.view.isHidden = false
             })
             .disposed(by: disposeBag)
 
