@@ -58,6 +58,12 @@ final class PostViewController: UIViewController {
         return self.navigationController?.isNavigationBarHidden ?? false
     }
 
+    // Pad에서 가로/세로모드 변경 시 footer size 변경
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        resizeFooter()
+    }
+
     deinit {
         // webView 캐시 제거
         cacheWebview()
@@ -76,7 +82,6 @@ extension PostViewController: ViewModelBindable {
             viewWillAppear: rx.viewWillAppear.asDriver(), // 화면이 보여지기 전에
             viewDidAppear: rx.viewDidAppear.asDriver(), // 화면이 보여질 때
             viewWillDisappear: rx.viewWillDisappear.asDriver(), // 화면이 사라지기 전에
-            viewWillLayoutSubviews: rx.viewWillLayoutSubviews.asDriver(), // subview의 layout이 갱신되기 전에
             traitCollectionDidChange: rx.traitCollectionDidChange.asDriver(), // 일반/다크모드 전환 시
             loadPost: loadPost.asDriver(onErrorDriveWith: .empty()),
             prevPostBtnDidTap: prevPostButton.rx.tap.asDriver().throttle(1, latest: true), // 툴바의 이전 포스트 눌렀을 때
@@ -119,14 +124,6 @@ extension PostViewController: ViewModelBindable {
                 self?.navigationController?.setNavigationBarHidden(false, animated: false)
                 self?.navigationController?.toolbar.isHidden = true
                 self?.navigationController?.setToolbarHidden(true, animated: false)
-            })
-            .disposed(by: disposeBag)
-
-        // subview의 layout이 갱신되기 전에
-        output
-            .viewWillLayoutSubviews
-            .drive(onNext: { [weak self] in
-                self?.changeLayoutSubviews()
             })
             .disposed(by: disposeBag)
 
@@ -351,22 +348,18 @@ extension PostViewController: ViewModelBindable {
 extension PostViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         let status = self.isReadmode()
-        self.changeReadmode(status: status)
+
         if #available(iOS 13.0, *) {
             setWebviewFontColor()
         }
         webView.evaluateJavaScript("document.readyState") { (complete, error) in
-            if complete != nil {
-                webView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { (height, error) in
-                    guard
-                        self.subscriptionView.isHidden,
-                        let height = height as? CGFloat
-                    else { return }
-                    self.embedPostFooterViewController(height: height)
-                    self.setWebviewBackgroundColor()
-                    self.postWebView.isHidden = false
-                })
-            }
+            guard
+                self.subscriptionView.isHidden,
+                self.headerViewController?.view.superview != nil
+            else { return }
+
+            self.changeReadmode(status: status)
+            self.setWebviewBackgroundColor()
         }
     }
 
@@ -406,6 +399,8 @@ extension PostViewController: PostFooterViewDelegate {
             let footerViewController = self.footerViewController,
             let contentHeight = footerViewController.tableView?.contentSize.height
         else { return }
+        footerViewController.view.isHidden = !subscriptionView.isHidden
+        postWebView.isHidden = false
         postWebView.evaluateJavaScript("document.body.style.marginBottom =\"\(contentHeight)px\"")
     }
     func reloadPost(postId: Int) {
@@ -435,18 +430,6 @@ extension PostViewController: UIGestureRecognizerDelegate {
 
 // MARK: - Private Method
 extension PostViewController {
-    // Pad에서 가로/세로모드 변경 시 header, footer size 변경
-    private func changeLayoutSubviews() {
-        guard
-            let headerView = headerViewController,
-            let footerView = footerViewController
-        else { return }
-
-        headerView.view.frame.size.width = view.frame.size.width
-        footerView.view.frame.size.width = view.frame.size.width
-        resizeFooter()
-    }
-
     // 이전, 다음 포스트 버튼 설정
     private func setLinkButton(button: UIButton?, postItem: PostModel?) {
         let isEnabled = postItem?.id != nil
@@ -469,19 +452,22 @@ extension PostViewController {
         headerViewController = PostHeaderViewController.make(postItem: postItem, userInfo: userInfo)
         let containerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 220))
         containerView.tag = 1000
+        containerView.autoresizingMask = [.flexibleWidth]
         embed(headerViewController!, to: containerView)
         self.postWebView.scrollView.addSubview(containerView)
     }
 
     // post footer를 embed
     private func embedPostFooterViewController(height: CGFloat) {
-        if let footerView = self.footerViewController {
-            remove(footerView)
+        if let footerViewController = self.footerViewController {
+            remove(footerViewController)
+            footerViewController.view.isHidden = true
 
             let posY = height - 747
             let containerView = UIView(frame: CGRect(x: 0, y: posY, width: view.frame.size.width, height: 747))
             containerView.tag = 1001
-            embed(footerView, to: containerView)
+            containerView.autoresizingMask = [.flexibleWidth]
+            embed(footerViewController, to: containerView)
             self.postWebView.scrollView.addSubview(containerView)
         }
     }

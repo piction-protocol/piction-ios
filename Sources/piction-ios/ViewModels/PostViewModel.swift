@@ -36,7 +36,6 @@ extension PostViewModel {
         let viewWillAppear: Driver<Void>
         let viewDidAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
-        let viewWillLayoutSubviews: Driver<Void>
         let traitCollectionDidChange: Driver<Void>
         let loadPost: Driver<Int>
         let prevPostBtnDidTap: Driver<Void>
@@ -51,7 +50,6 @@ extension PostViewModel {
         let viewWillAppear: Driver<Void>
         let viewDidAppear: Driver<Void>
         let viewWillDisappear: Driver<Void>
-        let viewWillLayoutSubviews: Driver<Void>
         let traitCollectionDidChange: Driver<Void>
         let prevNextLink: Driver<PostLinkModel>
         let showPostContent: Driver<String>
@@ -366,7 +364,6 @@ extension PostViewModel {
             viewWillAppear: viewWillAppear,
             viewDidAppear: input.viewDidAppear,
             viewWillDisappear: input.viewWillDisappear,
-            viewWillLayoutSubviews: input.viewWillLayoutSubviews,
             traitCollectionDidChange: input.traitCollectionDidChange,
             prevNextLink: prevNextLink,
             showPostContent: showPostContent,
