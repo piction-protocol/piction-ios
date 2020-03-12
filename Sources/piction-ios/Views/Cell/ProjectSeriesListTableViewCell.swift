@@ -9,6 +9,7 @@
 import UIKit
 import PictionSDK
 
+// MARK: - ReuseTableViewCell
 final class ProjectSeriesListTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var backgroundThumbnailImageView: UIImageView!
@@ -17,17 +18,22 @@ final class ProjectSeriesListTableViewCell: ReuseTableViewCell {
 
     typealias Model = SeriesModel
 
+    // cell이 재사용 될 때
     override func prepareForReuse() {
         super.prepareForReuse()
-        thumbnailImageView.sd_cancelCurrentImageLoad()
-        thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360")
-        backgroundThumbnailImageView.sd_cancelCurrentImageLoad()
-        backgroundThumbnailImageView.image = nil
+        thumbnailImageView.sd_cancelCurrentImageLoad() // 이미지 로딩 취소
+        thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-post-960-x-360") // 이미지를 placeholder 이미지로 교체
+        backgroundThumbnailImageView.sd_cancelCurrentImageLoad() // 이미지 로딩 취소
+        backgroundThumbnailImageView.image = nil // 이미지 제거
     }
+}
 
+// MARK: - Public Method
+extension ProjectSeriesListTableViewCell {
     func configure(with model: Model) {
         let (thumbnails, seriesName, postCount) = (model.thumbnails, model.name, model.postCount)
 
+        // 썸네일 출력
         if let thumbnail = thumbnails?[safe: 0] {
             let coverImageWithIC = "\(thumbnail)?w=720&h=720&quality=80&output=webp"
             if let url = URL(string: coverImageWithIC) {
@@ -35,6 +41,7 @@ final class ProjectSeriesListTableViewCell: ReuseTableViewCell {
             }
         }
 
+        // 썸네일 출력
         if let backgroundThumbnail = thumbnails?[safe: 1] {
             let coverImageWithIC = "\(backgroundThumbnail)?w=720&h=720&quality=80&output=webp"
             if let url = URL(string: coverImageWithIC) {
