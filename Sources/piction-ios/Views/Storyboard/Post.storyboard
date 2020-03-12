@@ -48,13 +48,13 @@
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gSY-DY-FR8">
                                                                 <rect key="frame" x="0.0" y="0.0" width="3.5" height="17"/>
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                                                <color key="textColor" name="PictionDarkGray"/>
+                                                                <color key="textColor" name="pictionDarkGrayDM"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이상" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zXj-pB-wiJ">
                                                                 <rect key="frame" x="7.5" y="0.0" width="24.5" height="17"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <color key="textColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="textColor" name="pictionGray"/>
                                                                 <nil key="highlightedColor"/>
                                                                 <userDefinedRuntimeAttributes>
                                                                     <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_subs_only_with_membership_name"/>
@@ -65,7 +65,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="구독자만 이용 가능한 콘텐츠 입니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpX-Jx-aKJ">
                                                         <rect key="frame" x="0.0" y="21" width="117" height="33.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="textColor" name="pictionGray"/>
                                                         <nil key="highlightedColor"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_subs_only"/>
@@ -75,7 +75,7 @@
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lyf-Ue-cna" customClass="UIButtonExtension" customModule="piction_ios" customModuleProvider="target">
                                                 <rect key="frame" x="153" y="190.5" width="68" height="41"/>
-                                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" name="pictionDarkGray"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="41" id="GTi-Ek-Zii"/>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="68" id="dzV-PA-1NA"/>
@@ -122,7 +122,7 @@
                     </view>
                     <toolbarItems>
                         <barButtonItem width="100" id="xFd-Am-xYT">
-                            <view key="customView" contentMode="scaleToFill" id="bQl-LA-AUu">
+                            <view key="customView" contentMode="scaleToFill" ambiguous="YES" id="bQl-LA-AUu">
                                 <rect key="frame" x="20" y="27" width="366" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -133,7 +133,7 @@
                                             <constraint firstAttribute="width" constant="150" id="F1r-xT-aWh"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="tintColor" name="PictionDarkGray"/>
+                                        <color key="tintColor" name="pictionDarkGrayDM"/>
                                         <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <inset key="imageEdgeInsets" minX="4" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" title="이전 포스트" image="icChevronLeftBlack">
@@ -153,7 +153,7 @@
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="6ag-z0-BlJ"/>
                         <barButtonItem width="100" id="woe-ZJ-c72">
-                            <view key="customView" contentMode="scaleToFill" id="LBT-hY-17x">
+                            <view key="customView" contentMode="scaleToFill" ambiguous="YES" id="LBT-hY-17x">
                                 <rect key="frame" x="394" y="27" width="0.0" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -164,7 +164,7 @@
                                             <constraint firstAttribute="width" constant="150" id="pRM-so-09X"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="tintColor" name="PictionDarkGray"/>
+                                        <color key="tintColor" name="pictionDarkGrayDM"/>
                                         <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="12" maxY="0.0"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
                                         <state key="normal" title="다음 포스트" image="icChevronRightBlack">
@@ -216,8 +216,14 @@
         <image name="icChevronLeftBlack" width="8" height="13"/>
         <image name="icChevronRightBlack" width="8" height="13"/>
         <image name="icLockedGrey" width="24" height="24"/>
-        <namedColor name="PictionDarkGray">
-            <color red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="pictionDarkGray">
+            <color red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="pictionDarkGrayDM">
+            <color red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="pictionGray">
+            <color red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

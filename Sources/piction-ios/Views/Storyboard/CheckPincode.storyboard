@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -23,13 +23,13 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NjY-99-YEV">
                                         <rect key="frame" x="185" y="0.0" width="5.3333333333333428" height="28.666666666666668"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                        <color key="textColor" name="PictionDarkGray"/>
+                                        <color key="textColor" name="pictionDarkGrayDM"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PIN 번호를 입력하세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YQd-62-CyN">
                                         <rect key="frame" x="104.00000000000001" y="44.666666666666657" width="167.33333333333337" height="21.666666666666671"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <color key="textColor" name="PictionDarkGray"/>
+                                        <color key="textColor" name="pictionDarkGrayDM"/>
                                         <nil key="highlightedColor"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="str_input_pincode"/>
@@ -55,7 +55,7 @@
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RX9-uM-ptq" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
-                                                                <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" name="pictionLightGray"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="20" id="ZkR-sw-Jhr"/>
                                                                     <constraint firstAttribute="height" constant="20" id="l02-Wg-yS4"/>
@@ -71,7 +71,7 @@
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zK6-HA-z4F" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
                                                                 <rect key="frame" x="44" y="0.0" width="20" height="20"/>
-                                                                <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" name="pictionLightGray"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="20" id="72L-Sb-iKG"/>
                                                                     <constraint firstAttribute="height" constant="20" id="fjE-vG-BDx"/>
@@ -87,7 +87,7 @@
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7vM-a1-0KF" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
                                                                 <rect key="frame" x="87.999999999999986" y="0.0" width="20" height="20"/>
-                                                                <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" name="pictionLightGray"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="3xi-06-39Q"/>
                                                                     <constraint firstAttribute="width" constant="20" id="zBg-i1-FT3"/>
@@ -103,7 +103,7 @@
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQO-af-K5k" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
                                                                 <rect key="frame" x="132" y="0.0" width="20" height="20"/>
-                                                                <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" name="pictionLightGray"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="PeE-l4-6oC"/>
                                                                     <constraint firstAttribute="width" constant="20" id="zfg-dc-WpZ"/>
@@ -119,7 +119,7 @@
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jEK-X5-w4Q" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
                                                                 <rect key="frame" x="176" y="0.0" width="20" height="20"/>
-                                                                <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" name="pictionLightGray"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="bbk-Ae-Quv"/>
                                                                     <constraint firstAttribute="width" constant="20" id="fql-XB-uZJ"/>
@@ -135,7 +135,7 @@
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CuY-bY-1f2" customClass="UIViewExtension" customModule="piction_ios" customModuleProvider="target">
                                                                 <rect key="frame" x="220" y="0.0" width="20" height="20"/>
-                                                                <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" name="pictionLightGray"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="Klt-Cl-lT7"/>
                                                                     <constraint firstAttribute="width" constant="20" id="zLt-GR-I9m"/>
@@ -215,8 +215,11 @@
         </scene>
     </scenes>
     <resources>
-        <namedColor name="PictionDarkGray">
-            <color red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="pictionDarkGrayDM">
+            <color red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="pictionLightGray">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

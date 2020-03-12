@@ -70,7 +70,7 @@
                                                                     </constraints>
                                                                 </view>
                                                             </subviews>
-                                                            <color key="backgroundColor" red="0.94867008919999996" green="0.94938892129999997" blue="0.94878143069999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" name="pictionLightGray"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="bottom" secondItem="RDQ-7Y-IlN" secondAttribute="bottom" id="3hS-Tv-m8C"/>
                                                                 <constraint firstItem="7hE-VF-jRg" firstAttribute="top" secondItem="vub-d3-ucr" secondAttribute="top" id="CfS-Z8-6S2"/>
@@ -139,7 +139,7 @@
                                                                                                 <constraint firstAttribute="height" constant="17" id="sIV-ZI-rMy"/>
                                                                                             </constraints>
                                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                                            <color key="textColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                            <color key="textColor" name="pictionBlue"/>
                                                                                             <nil key="highlightedColor"/>
                                                                                         </label>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xfj-bO-BJg">
@@ -148,7 +148,7 @@
                                                                                                 <constraint firstAttribute="height" constant="21" id="cP4-7I-Clh"/>
                                                                                             </constraints>
                                                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                                                            <color key="textColor" name="PictionDarkGray"/>
+                                                                                            <color key="textColor" name="pictionDarkGrayDM"/>
                                                                                             <nil key="highlightedColor"/>
                                                                                         </label>
                                                                                     </subviews>
@@ -159,7 +159,7 @@
                                                                                         <constraint firstAttribute="height" constant="17" id="j4U-66-IdV"/>
                                                                                     </constraints>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                                    <color key="textColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                    <color key="textColor" name="pictionGray"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
                                                                             </subviews>
@@ -194,7 +194,7 @@
                                                                 <constraint firstAttribute="height" constant="17" id="zSF-AJ-n79"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <color key="textColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="textColor" name="pictionGray"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -270,7 +270,7 @@
                                                                             </constraints>
                                                                         </imageView>
                                                                     </subviews>
-                                                                    <color key="backgroundColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <color key="backgroundColor" name="pictionGray"/>
                                                                     <constraints>
                                                                         <constraint firstItem="giJ-pa-33H" firstAttribute="centerX" secondItem="IRc-HZ-tXf" secondAttribute="centerX" id="qzv-bM-oi3"/>
                                                                         <constraint firstItem="giJ-pa-33H" firstAttribute="centerY" secondItem="IRc-HZ-tXf" secondAttribute="centerY" id="rjD-g6-4sz"/>
@@ -285,7 +285,7 @@
                                                                     </userDefinedRuntimeAttributes>
                                                                 </view>
                                                             </subviews>
-                                                            <color key="backgroundColor" red="0.94867008919999996" green="0.94938892129999997" blue="0.94878143069999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" name="pictionLightGray"/>
                                                             <constraints>
                                                                 <constraint firstItem="l5o-oQ-dTD" firstAttribute="top" secondItem="AVD-MJ-GTZ" secondAttribute="top" id="21I-WZ-3QJ"/>
                                                                 <constraint firstItem="l5o-oQ-dTD" firstAttribute="leading" secondItem="AVD-MJ-GTZ" secondAttribute="leading" id="5qb-E1-ECO"/>
@@ -356,7 +356,7 @@
                                                                                                 <constraint firstAttribute="height" constant="17" id="WiE-FK-qb7"/>
                                                                                             </constraints>
                                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                                            <color key="textColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                            <color key="textColor" name="pictionBlue"/>
                                                                                             <nil key="highlightedColor"/>
                                                                                         </label>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M3d-wX-uPI">
@@ -365,7 +365,7 @@
                                                                                                 <constraint firstAttribute="height" constant="21" id="rUA-PU-7R3"/>
                                                                                             </constraints>
                                                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                                                            <color key="textColor" name="PictionDarkGray"/>
+                                                                                            <color key="textColor" name="pictionDarkGrayDM"/>
                                                                                             <nil key="highlightedColor"/>
                                                                                         </label>
                                                                                     </subviews>
@@ -376,7 +376,7 @@
                                                                                         <constraint firstAttribute="height" constant="17" id="Xce-lu-PPT"/>
                                                                                     </constraints>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                                    <color key="textColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                    <color key="textColor" name="pictionGray"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
                                                                             </subviews>
@@ -411,7 +411,7 @@
                                                                 <constraint firstAttribute="height" constant="17" id="hF4-xW-Hn8"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <color key="textColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="textColor" name="pictionGray"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -461,7 +461,7 @@
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jc4-EX-SU8" customClass="UIImageViewExtension" customModule="piction_ios" customModuleProvider="target">
                                                             <rect key="frame" x="25" y="0.0" width="318" height="318"/>
-                                                            <color key="backgroundColor" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" name="pictionGray"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="jc4-EX-SU8" secondAttribute="height" multiplier="335:335" id="GuB-1c-xIy"/>
                                                             </constraints>
@@ -476,7 +476,7 @@
                                                         </imageView>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-dummy-post-960-x-360" translatesAutoresizingMaskIntoConstraints="NO" id="ukT-et-A0U" customClass="UIImageViewExtension" customModule="piction_ios" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="25" width="318" height="318"/>
-                                                            <color key="backgroundColor" red="0.94867008919999996" green="0.94938892129999997" blue="0.94878143069999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" name="pictionLightGray"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="ukT-et-A0U" secondAttribute="height" multiplier="335:335" id="soo-Ng-2aQ"/>
                                                             </constraints>
@@ -511,7 +511,7 @@
                                                                 <constraint firstAttribute="height" constant="21" id="7s7-S9-a6l"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                                            <color key="textColor" name="PictionDarkGray"/>
+                                                            <color key="textColor" name="pictionDarkGrayDM"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3LS-kZ-GGa">
@@ -520,7 +520,7 @@
                                                                 <constraint firstAttribute="height" constant="17" id="QPf-A4-IuR"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="textColor" name="pictionGray"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -585,8 +585,17 @@
         <image name="icLockedWh" width="80" height="80"/>
         <image name="icShare" width="22" height="22"/>
         <image name="img-dummy-post-960-x-360" width="960" height="360"/>
-        <namedColor name="PictionDarkGray">
-            <color red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="pictionBlue">
+            <color red="0.10196078431372549" green="0.5725490196078431" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="pictionDarkGrayDM">
+            <color red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="pictionGray">
+            <color red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="pictionLightGray">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

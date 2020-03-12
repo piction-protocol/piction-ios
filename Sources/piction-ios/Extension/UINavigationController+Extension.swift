@@ -33,7 +33,7 @@ extension UINavigationController {
                 navigationBar.standardAppearance = navBarAppearance
             } else {
                 UINavigationBar.appearance().largeTitleTextAttributes =
-                    [NSAttributedString.Key.foregroundColor: UIColor(r: 51, g: 51, b: 51),
+                    [NSAttributedString.Key.foregroundColor: UIColor.pictionDarkGray,
                      NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 34)]
 
                 navigationBar.isTranslucent = true

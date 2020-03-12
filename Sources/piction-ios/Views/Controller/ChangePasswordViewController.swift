@@ -140,7 +140,7 @@ extension ChangePasswordViewController: ViewModelBindable {
             .enableSaveButton
             .drive(onNext: { [weak self] in
                 self?.saveButton.setTitleColor(.white, for: .normal)
-                self?.saveButton.backgroundColor = UIColor(r: 51, g: 51, b: 51)
+                self?.saveButton.backgroundColor = .pictionDarkGray
                 self?.saveButton.isEnabled = true
             })
             .disposed(by: disposeBag)

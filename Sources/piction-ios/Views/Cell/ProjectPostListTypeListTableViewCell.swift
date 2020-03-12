@@ -105,7 +105,7 @@ extension ProjectPostListTypeListTableViewCell {
                 leftLockView.isHidden = thumbnail != nil
 
                 maskImage.blurRadius = thumbnail == nil ? 0 : 5
-                lockView.backgroundColor = thumbnail == nil ? UIColor(r: 51, g: 51, b: 51, a: 0.2) : .clear
+                lockView.backgroundColor = thumbnail == nil ? UIColor.pictionDarkGray.withAlphaComponent(0.2) : .clear
             } else { // 구독이 필요하지 않은 경우
                 thumbnailView.isHidden = thumbnail == nil
                 leftLockView.isHidden = true

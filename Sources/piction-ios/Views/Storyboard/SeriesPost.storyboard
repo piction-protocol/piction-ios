@@ -32,7 +32,7 @@
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="btnSortDown" translatesAutoresizingMaskIntoConstraints="NO" id="Phc-6n-rCY">
                                                             <rect key="frame" x="0.0" y="0.0" width="24" height="18"/>
-                                                            <color key="tintColor" name="PictionDarkGray"/>
+                                                            <color key="tintColor" name="pictionDarkGrayDM"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="24" id="G9q-uj-4uN"/>
                                                                 <constraint firstAttribute="height" constant="18" id="bXt-jy-Nma"/>
@@ -41,7 +41,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="정렬 변경" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SDs-IV-Tju">
                                                             <rect key="frame" x="28.000000000000004" y="0.0" width="52.333333333333343" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <color key="textColor" name="PictionDarkGray"/>
+                                                            <color key="textColor" name="pictionDarkGrayDM"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -64,7 +64,7 @@
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dbv-Eg-Qep">
                                             <rect key="frame" x="16" y="51" width="343" height="1"/>
-                                            <color key="backgroundColor" name="PictionDarkGray"/>
+                                            <color key="backgroundColor" name="pictionDarkGrayDM"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="1" id="kOz-vz-ECp"/>
                                             </constraints>
@@ -100,7 +100,7 @@
                                                                 <constraint firstAttribute="width" constant="50" id="rg0-Q9-HaS"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                                            <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="textColor" name="pictionGray"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="gAE-Rf-fyA">
@@ -112,7 +112,7 @@
                                                                         <constraint firstAttribute="height" constant="17" id="vXD-00-lmf"/>
                                                                     </constraints>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                    <color key="textColor" name="PictionDarkGray"/>
+                                                                    <color key="textColor" name="pictionDarkGrayDM"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="구독자 전용" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7E2-1E-ac9">
@@ -121,7 +121,7 @@
                                                                         <constraint firstAttribute="height" constant="15" id="QGD-El-XHj"/>
                                                                     </constraints>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                    <color key="textColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <color key="textColor" name="pictionGray"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
@@ -180,8 +180,11 @@
     </scenes>
     <resources>
         <image name="btnSortDown" width="24" height="18"/>
-        <namedColor name="PictionDarkGray">
-            <color red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="pictionDarkGrayDM">
+            <color red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="pictionGray">
+            <color red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

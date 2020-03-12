@@ -141,7 +141,7 @@ extension SignUpViewController: ViewModelBindable {
                     self?.signUpButton.setTitleColor(.pictionGray, for: .normal)
                 } else {
                     self?.checkboxImageView.image = #imageLiteral(resourceName: "checkboxOn")
-                    self?.signUpButton.backgroundColor = UIColor(r: 51, g: 51, b: 51)
+                    self?.signUpButton.backgroundColor = .pictionDarkGray
                     self?.signUpButton.setTitleColor(.white, for: .normal)
                 }
                 self?.signUpButton.isEnabled = !isEnabled

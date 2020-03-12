@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,8 +16,8 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-dummy-projectcover-1440-x-450" translatesAutoresizingMaskIntoConstraints="NO" id="1k4-fI-Xqy">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="450"/>
-                    <color key="backgroundColor" red="0.94867008919999996" green="0.94938892129999997" blue="0.94878143069999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="900"/>
+                    <color key="backgroundColor" name="pictionLightGray"/>
                 </imageView>
                 <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mUZ-gk-6mM" customClass="VisualEffectView" customModule="piction_ios" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
@@ -30,7 +31,7 @@
                     <blurEffect style="regular"/>
                 </visualEffectView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="le1-xN-Ewx">
-                    <rect key="frame" x="0.0" y="396" width="375" height="301"/>
+                    <rect key="frame" x="0.0" y="846" width="375" height="301"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="301" id="vfO-Hp-LAY"/>
@@ -60,7 +61,7 @@
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uk4-9z-Egv">
                                                             <rect key="frame" x="0.0" y="46" width="187.66666666666666" height="2"/>
-                                                            <color key="backgroundColor" red="0.1019607843" green="0.57254901960000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" name="pictionBlue"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="2" id="Rxv-0w-lDd"/>
                                                             </constraints>
@@ -69,7 +70,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="187.66666666666666" height="48"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                             <state key="normal" title="포스트">
-                                                                <color key="titleColor" red="0.1019607843" green="0.57254901960000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="titleColor" name="pictionBlue"/>
                                                             </state>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="tab_post"/>
@@ -95,7 +96,7 @@
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R6l-YQ-46n">
                                                             <rect key="frame" x="0.0" y="46" width="187.33333333333334" height="2"/>
-                                                            <color key="backgroundColor" red="0.1019607843" green="0.57254901960000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" name="pictionBlue"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="2" id="si2-3w-DbG"/>
                                                             </constraints>
@@ -105,7 +106,7 @@
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                             <state key="normal" title="시리즈">
-                                                                <color key="titleColor" red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="titleColor" name="pictionGray"/>
                                                             </state>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="string" keyPath="localizedId" value="tab_series"/>
@@ -193,5 +194,14 @@
     </objects>
     <resources>
         <image name="img-dummy-projectcover-1440-x-450" width="1440" height="450"/>
+        <namedColor name="pictionBlue">
+            <color red="0.10196078431372549" green="0.5725490196078431" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="pictionGray">
+            <color red="0.74901960784313726" green="0.74901960784313726" blue="0.74901960784313726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="pictionLightGray">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

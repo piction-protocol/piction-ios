@@ -44,7 +44,7 @@ final class CreateProjectViewController: UIViewController {
             tagsField.spaceBetweenTags = 5.0
             tagsField.spaceBetweenLines = 10.0
             tagsField.tintColor = .pictionLightGray
-            tagsField.textColor = UIColor(r: 51, g: 51, b: 51)
+            tagsField.textColor = .pictionDarkGray
             tagsField.selectedColor = .pictionBlue
             tagsField.fieldTextColor = .pictionDarkGrayDM
             tagsField.selectedTextColor = .white

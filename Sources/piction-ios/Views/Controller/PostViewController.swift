@@ -434,13 +434,7 @@ extension PostViewController {
     private func setLinkButton(button: UIButton?, postItem: PostModel?) {
         let isEnabled = postItem?.id != nil
         button?.isEnabled = isEnabled
-        var buttonColor: UIColor {
-            if #available(iOS 13.0, *) {
-                return isEnabled ? .pictionDarkGrayDM : UIColor(r: 151, g: 151, b: 151)
-            } else {
-                return isEnabled ? UIColor(r: 51, g: 51, b: 51) : UIColor(r: 151, g: 151, b: 151)
-            }
-        }
+        let buttonColor: UIColor = isEnabled ? .pictionDarkGrayDM : UIColor(r: 151, g: 151, b: 151)
         button?.setTitleColor(buttonColor, for: .normal)
     }
 
@@ -533,10 +527,8 @@ extension PostViewController {
 
     // webview의 font 색 변경
     private func setWebviewFontColor() {
-        if #available(iOS 13.0, *) {
-            let fontColor = UIColor.pictionDarkGrayDM.hexString
-            postWebView.evaluateJavaScript("document.getElementsByTagName('body')[0].style.color =\"\(fontColor ?? "#333333")\"")
-        }
+        let fontColor = UIColor.pictionDarkGrayDM.hexString
+        postWebView.evaluateJavaScript("document.getElementsByTagName('body')[0].style.color =\"\(fontColor ?? "#333333")\"")
     }
 
     // 다크모드, 읽기모드 등에 따른 Webview의 배경색 변경
@@ -560,9 +552,9 @@ extension PostViewController {
             }
         } else { // 잠겨있지 않을 때 readmode가 활성화 되어 있으면 읽기모드 배경색
             if #available(iOS 13.0, *) {
-                postWebView.backgroundColor = .PictionReaderGrayDM
+                postWebView.backgroundColor = .pictionReaderGrayDM
             } else {
-                postWebView.backgroundColor = UIColor(r: 232, g: 239, b: 244)
+                postWebView.backgroundColor = .pictionReaderGray
             }
         }
         // footer의 배경 색도 변경
