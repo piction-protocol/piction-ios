@@ -8,14 +8,16 @@
 
 import UIKit
 
+// MARK: - MyPagePresentTypeTableViewCell
 final class MyPagePresentTypeTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
 
     typealias Model = String
+}
 
-    func configure(with model: Model, align: NSTextAlignment) {
-        let (title) = (model)
-
+// MARK: - Public Method
+extension MyPagePresentTypeTableViewCell {
+    func configure(with title: Model, align: NSTextAlignment) {
         titleLabel.text = title
         titleLabel.textAlignment = align
     }
