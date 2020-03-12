@@ -8,5 +8,6 @@
 
 import Foundation
 
+// MARK: - ReuseTableViewCell
 final class TransactionDetailFooterTypeTableViewCell: ReuseTableViewCell {
 }
