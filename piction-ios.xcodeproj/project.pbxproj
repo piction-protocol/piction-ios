@@ -350,8 +350,8 @@
 		436C75A52387C38A00902F08 /* ManageMembershipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A32387C38900902F08 /* ManageMembershipViewModel.swift */; };
 		436C75A72387C39300902F08 /* ManageMembership.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 436C75A62387C39300902F08 /* ManageMembership.storyboard */; };
 		436C75A82387C39300902F08 /* ManageMembership.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 436C75A62387C39300902F08 /* ManageMembership.storyboard */; };
-		436C75AA2387C55900902F08 /* ManageMembershipViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A92387C55900902F08 /* ManageMembershipViewCell.swift */; };
-		436C75AB2387C55900902F08 /* ManageMembershipViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A92387C55900902F08 /* ManageMembershipViewCell.swift */; };
+		436C75AA2387C55900902F08 /* ManageMembershipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A92387C55900902F08 /* ManageMembershipTableViewCell.swift */; };
+		436C75AB2387C55900902F08 /* ManageMembershipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75A92387C55900902F08 /* ManageMembershipTableViewCell.swift */; };
 		436C75AE2387C72A00902F08 /* CreateMembershipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75AD2387C72A00902F08 /* CreateMembershipViewController.swift */; };
 		436C75AF2387C72A00902F08 /* CreateMembershipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75AD2387C72A00902F08 /* CreateMembershipViewController.swift */; };
 		436C75B12387C73600902F08 /* CreateMembershipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436C75B02387C73600902F08 /* CreateMembershipViewModel.swift */; };
@@ -756,7 +756,7 @@
 		436C75A02387C37F00902F08 /* ManageMembershipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageMembershipViewController.swift; sourceTree = "<group>"; };
 		436C75A32387C38900902F08 /* ManageMembershipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageMembershipViewModel.swift; sourceTree = "<group>"; };
 		436C75A62387C39300902F08 /* ManageMembership.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ManageMembership.storyboard; sourceTree = "<group>"; };
-		436C75A92387C55900902F08 /* ManageMembershipViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageMembershipViewCell.swift; sourceTree = "<group>"; };
+		436C75A92387C55900902F08 /* ManageMembershipTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageMembershipTableViewCell.swift; sourceTree = "<group>"; };
 		436C75AD2387C72A00902F08 /* CreateMembershipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMembershipViewController.swift; sourceTree = "<group>"; };
 		436C75B02387C73600902F08 /* CreateMembershipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMembershipViewModel.swift; sourceTree = "<group>"; };
 		436C75B32387C74500902F08 /* CreateMembership.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreateMembership.storyboard; sourceTree = "<group>"; };
@@ -1286,7 +1286,7 @@
 				438E763B2362FD050062D004 /* ManageSeriesTableViewCell.swift */,
 				4323F9DC233A165600243655 /* SeriesPostListTableViewCell.swift */,
 				43F186592342FEAC0050BA67 /* PostFooterSeriesPostListTableViewCell.swift */,
-				436C75A92387C55900902F08 /* ManageMembershipViewCell.swift */,
+				436C75A92387C55900902F08 /* ManageMembershipTableViewCell.swift */,
 				4390292E2383EEBF00A3121B /* MembershipListTableViewCell.swift */,
 				43682B2D23FE28B2006CE717 /* CreatorProfileLinkCollectionViewCell.swift */,
 			);
@@ -2177,7 +2177,7 @@
 				438E764A2366B6650062D004 /* SubscriptionUserTableViewCell.swift in Sources */,
 				4323FA81233A165800243655 /* UICollectionView+Extension.swift in Sources */,
 				4323FA65233A165700243655 /* Container+Extension.swift in Sources */,
-				436C75AB2387C55900902F08 /* ManageMembershipViewCell.swift in Sources */,
+				436C75AB2387C55900902F08 /* ManageMembershipTableViewCell.swift in Sources */,
 				4365571E23FFB39C00F259F9 /* ProjectDetailViewController.swift in Sources */,
 				43682B2623FD3DC9006CE717 /* CreatorProfileHeaderViewController.swift in Sources */,
 				4323FB57233A166100243655 /* TransactionHistoryViewController.swift in Sources */,
@@ -2352,7 +2352,7 @@
 				438E76492366B6650062D004 /* SubscriptionUserTableViewCell.swift in Sources */,
 				4323FA80233A165800243655 /* UICollectionView+Extension.swift in Sources */,
 				4323FA64233A165700243655 /* Container+Extension.swift in Sources */,
-				436C75AA2387C55900902F08 /* ManageMembershipViewCell.swift in Sources */,
+				436C75AA2387C55900902F08 /* ManageMembershipTableViewCell.swift in Sources */,
 				4365571D23FFB39C00F259F9 /* ProjectDetailViewController.swift in Sources */,
 				43682B2523FD3DC9006CE717 /* CreatorProfileHeaderViewController.swift in Sources */,
 				4323FB56233A166100243655 /* TransactionHistoryViewController.swift in Sources */,

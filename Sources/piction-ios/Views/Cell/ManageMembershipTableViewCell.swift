@@ -9,6 +9,7 @@
 import UIKit
 import PictionSDK
 
+// MARK: - ReuseTableViewCell
 class ManageMembershipTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
@@ -18,7 +19,10 @@ class ManageMembershipTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var sponsorshipLimitLabel: UILabel!
 
     typealias Model = MembershipModel
+}
 
+// MARK: - Public Method
+extension ManageMembershipTableViewCell {
     func configure(with model: Model) {
         let (level, title, postCount, sponsorCount, sponsorLimit, price) = (model.level, model.name, model.postCount, model.sponsorCount, model.sponsorLimit, model.price)
 
