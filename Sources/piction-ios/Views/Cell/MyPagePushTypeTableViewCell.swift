@@ -8,14 +8,16 @@
 
 import UIKit
 
+// MARK: - ReuseCollectionViewCell
 final class MyPagePushTypeTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
 
     typealias Model = String
+}
 
-    func configure(with model: Model) {
-        let (title) = (model)
-
+// MARK: - Public Method
+extension MyPagePushTypeTableViewCell {
+    func configure(with title: Model) {
         titleLabel.text = title
     }
 }
