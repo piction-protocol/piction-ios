@@ -9,12 +9,17 @@
 import UIKit
 import PictionSDK
 
+// MARK: - ReuseCollectionViewCell
 class ProjectInfoCategoryCollectionViewCell: ReuseCollectionViewCell {
     @IBOutlet weak var categoryLabel: UILabel!
 
     typealias Model = CategoryModel
+}
 
+// MARK: - Public Method
+extension ProjectInfoCategoryCollectionViewCell {
     func configure(with model: Model) {
-        categoryLabel.text = model.name
+        let (name) = (model.name)
+        categoryLabel.text = name
     }
 }
