@@ -9,14 +9,14 @@
 import UIKit
 
 extension UIColor {
-    static let pictionDarkGrayDM = UIColor(named: "PictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51)
-    static let pictionDarkGray = UIColor(r: 51, g: 51, b: 51)
-    static let pictionBlue = UIColor(r: 26, g: 146, b: 255)
-    static let pictionGray = UIColor(r: 191, g: 191, b: 191)
-    static let pictionLightGray = UIColor(r: 242, g: 242, b: 242)
-    static let pictionRed = UIColor(r: 213, g: 19, b: 21)
-    static let PictionReaderGrayDM = UIColor(named: "PictionReaderGray") ?? UIColor(r: 232, g: 239, b: 244)
-    static let PictionReaderGray = UIColor(r: 232, g: 239, b: 244)
+    static let pictionDarkGrayDM = UIColor(named: "pictionDarkGrayDM") ?? UIColor(r: 51, g: 51, b: 51)
+    static let pictionReaderGrayDM = UIColor(named: "pictionReaderGrayDM") ?? UIColor(r: 232, g: 239, b: 244)
+    static let pictionDarkGray = UIColor(named: "pictionDarkGray") ?? UIColor(r: 51, g: 51, b: 51)
+    static let pictionBlue = UIColor(named: "pictionBlue") ?? UIColor(r: 26, g: 146, b: 255)
+    static let pictionGray = UIColor(named: "pictionGray") ?? UIColor(r: 191, g: 191, b: 191)
+    static let pictionLightGray = UIColor(named: "pictionLightGray") ?? UIColor(r: 242, g: 242, b: 242)
+    static let pictionRed = UIColor(named: "pictionRed") ?? UIColor(r: 213, g: 19, b: 21)
+    static let pictionReaderGray = UIColor(named: "PictionReaderGray") ?? UIColor(r: 232, g: 239, b: 244)
 
     convenience init(red: Int, green: Int, blue: Int) {
         assert(red >= 0 && red <= 255, "Invalid red component")
