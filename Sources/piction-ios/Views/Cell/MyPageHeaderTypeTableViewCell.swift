@@ -8,14 +8,16 @@
 
 import UIKit
 
+// MARK: - ReuseTableViewCell
 final class MyPageHeaderTypeTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
 
     typealias Model = String
+}
 
-    func configure(with model: Model) {
-        let (title) = (model)
-
+// MARK: - Public Method
+extension MyPageHeaderTypeTableViewCell {
+    func configure(with title: Model) {
         titleLabel.text = title
     }
 }
