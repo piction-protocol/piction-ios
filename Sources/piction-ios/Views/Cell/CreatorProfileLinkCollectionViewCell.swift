@@ -9,16 +9,21 @@
 import Foundation
 import PictionSDK
 
-class CreatorProfileLinkCollectionViewCell: ReuseCollectionViewCell {
+// MARK: - ReuseCollectionViewCell
+final class CreatorProfileLinkCollectionViewCell: ReuseCollectionViewCell {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
 
     typealias Model = CreatorLinkModel
+}
 
+// MARK: - Public Method
+extension CreatorProfileLinkCollectionViewCell {
     func configure(with model: Model) {
         nameLabel.text = model.name
 
         if let url = model.url,
+            // http:// 나 https:// 로 파싱해서 각 문자열의 처음이 아래를 포함하고 있으면 이미지 출력
             let domain = url.components(separatedBy: ["http://", "https://"])[safe: 1] {
             switch domain {
             case _ where domain.hasPrefix("facebook.com"):
@@ -45,7 +50,5 @@ class CreatorProfileLinkCollectionViewCell: ReuseCollectionViewCell {
                 break
             }
         }
-
-
     }
 }
