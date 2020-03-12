@@ -9,13 +9,16 @@
 import UIKit
 import PictionSDK
 
+// MARK: - ReuseTableViewCell
 final class TransactionDetailHeaderTypeTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
 
     typealias Model = String
+}
 
-    func configure(with model: Model) {
-
-        titleLabel.text = model
+// MARK: - Public Method
+extension TransactionDetailHeaderTypeTableViewCell {
+    func configure(with title: Model) {
+        titleLabel.text = title
     }
 }
