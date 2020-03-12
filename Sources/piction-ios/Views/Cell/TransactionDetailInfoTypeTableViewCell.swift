@@ -9,13 +9,17 @@
 import UIKit
 import PictionSDK
 
+// MARK: - ReuseTableViewCell
 final class TransactionDetailInfoTypeTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
 
     typealias Model = TransactionModel
+}
 
+// MARK: - Public Method
+extension TransactionDetailInfoTypeTableViewCell {
     func configure(with model: Model) {
         let (createdAt , amount, inOut) = (model.createdAt, model.amount, model.inOut)
 
