@@ -9,12 +9,16 @@
 import UIKit
 import PictionSDK
 
+// MARK: - ReuseTableViewCell
 final class SearchTagTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var tagLabel: UILabel!
     @IBOutlet weak var projectCountLabel: UILabel!
 
     typealias Model = TagModel
+}
 
+// MARK: - Public Method
+extension SearchTagTableViewCell {
     func configure(with model: Model) {
         let (tagName, projectCount) = (model.name, model.taggingCount)
         tagLabel.text = "#\(tagName ?? "")"
