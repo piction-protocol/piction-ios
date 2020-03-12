@@ -12,6 +12,7 @@ import RxCocoa
 import RxDataSources
 import PictionSDK
 
+// MARK: - ReuseTableViewCell
 final class HomeTrendingTableViewCell: ReuseTableViewCell {
     var disposeBag = DisposeBag()
 
@@ -24,13 +25,18 @@ final class HomeTrendingTableViewCell: ReuseTableViewCell {
 
     typealias Model = [ProjectModel]
 
+    // cell이 재사용 될 때
     override func prepareForReuse() {
         super.prepareForReuse()
+        // cell이 재사용될 때 disposeBag
         disposeBag = DisposeBag()
     }
 
+    // subview가 변경될 때
     override func layoutSubviews() {
         super.layoutSubviews()
+
+        // 가로/세로 전환 시 cell 사이즈 조정
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             let viewWidth = UIApplication.topViewController()?.view.frame.size.width ?? 0
             let cellCount: CGFloat = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad && viewWidth == UIScreen.main.bounds.size.width ? 4 : 2
@@ -46,7 +52,10 @@ final class HomeTrendingTableViewCell: ReuseTableViewCell {
             collectionView.layoutIfNeeded()
         }
     }
+}
 
+// MARK: - Data Source
+extension HomeTrendingTableViewCell {
     private func configureDataSource() -> RxCollectionViewSectionedReloadDataSource<SectionModel<String, ProjectModel>> {
         return RxCollectionViewSectionedReloadDataSource<SectionModel<String, ProjectModel>>(
             configureCell: { dataSource, collectionView, indexPath, model in
@@ -55,17 +64,23 @@ final class HomeTrendingTableViewCell: ReuseTableViewCell {
                 return cell
             })
     }
+}
 
+// MARK: - Public Method
+extension HomeTrendingTableViewCell {
     func configure(with model: Model) {
         collectionView.dataSource = nil
         collectionView.delegate = nil
 
         let dataSource = configureDataSource()
+
+        // model을 collectionView에 binding
         Observable.just(model)
             .map { [SectionModel(model: "trending", items: $0) ] }
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
+        // collectionView의 item을 선택할 때
         collectionView.rx.itemSelected.asDriver()
             .drive(onNext: { indexPath in
                 guard let uri = dataSource[indexPath].uri else { return }
