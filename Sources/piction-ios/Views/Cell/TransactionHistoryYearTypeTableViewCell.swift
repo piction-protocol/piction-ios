@@ -8,13 +8,16 @@
 
 import UIKit
 
+// MARK: - ReuseTableViewCell
 final class TransactionHistoryYearTypeTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
 
     typealias Model = String
+}
 
-    func configure(with model: Model) {
-
-        dateLabel.text = LocalizationKey.str_year.localized(with: model)
+// MARK: - Public Method
+extension TransactionHistoryYearTypeTableViewCell {
+    func configure(with date: Model) {
+        dateLabel.text = LocalizationKey.str_year.localized(with: date)
     }
 }
