@@ -9,6 +9,7 @@
 import UIKit
 import PictionSDK
 
+// MARK: - ReuseTableViewCell
 final class MyProjectTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -21,17 +22,22 @@ final class MyProjectTableViewCell: ReuseTableViewCell {
         }
     }
 
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        thumbnailImageView.sd_cancelCurrentImageLoad()
-        thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450")
-    }
-
     typealias Model = ProjectModel
 
+    // cell이 재사용 될 때
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        thumbnailImageView.sd_cancelCurrentImageLoad() // 이미지 로딩 취소
+        thumbnailImageView.image = #imageLiteral(resourceName: "img-dummy-projectcover-1440-x-450") // 이미지를 placeholder 이미지로 교체
+    }
+}
+
+// MARK: - Public Method
+extension MyProjectTableViewCell {
     func configure(with model: Model) {
         let (wideThumbnail, title, sponsorCount, status) = (model.wideThumbnail, model.title, model.sponsorCount, model.status)
 
+        // 썸네일 출력
         if let wideThumbnail = wideThumbnail {
             let wideThumbnailWithIC = "\(wideThumbnail)?w=720&h=360&quality=80&output=webp"
             if let url = URL(string: wideThumbnailWithIC) {
@@ -42,6 +48,7 @@ final class MyProjectTableViewCell: ReuseTableViewCell {
         titleLabel.text = title
         sponsorCountLabel.text = LocalizationKey.str_subs_count_plural.localized(with: sponsorCount?.commaRepresentation ?? "0")
 
+        // status가 hidden이거나 deprecated이면 잠금표시 출력
         if status == "HIDDEN" || status == "DEPRECATED" {
             lockView.isHidden = false
             maskImage.isHidden = false
