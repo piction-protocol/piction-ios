@@ -9,6 +9,7 @@
 import UIKit
 import LocalAuthentication
 
+// MARK: - ReuseTableViewCell
 final class MyPageSwitchTypeTableViewCell: ReuseTableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var switchButton: UISwitch!
@@ -16,18 +17,24 @@ final class MyPageSwitchTypeTableViewCell: ReuseTableViewCell {
     typealias Model = String
 
     var key = ""
+}
 
-    func configure(with model: Model, key: String) {
-        let (title) = (model)
-
+// MARK: - Public Method
+extension MyPageSwitchTypeTableViewCell {
+    func configure(with title: Model, key: String) {
         titleLabel.text = title
 
         let isOn = UserDefaults(suiteName: "group.\(BUNDLEID)")?.bool(forKey: key) ?? false
         switchButton.setOn(isOn, animated: false)
         self.key = key
     }
+}
+
+// MARK: - IBAction
+extension MyPageSwitchTypeTableViewCell {
     @IBAction func switchBtnDidTap(_ sender: UISwitch) {
 
+        // 생체 인증 설정이면
         if key == "isEnabledAuthBio" {
             let authContext = LAContext()
             if authContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) {
@@ -43,6 +50,7 @@ final class MyPageSwitchTypeTableViewCell: ReuseTableViewCell {
                     break
                 }
 
+                // 생채인증을 하여 인증 성공이면 값을 토글
                 authContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: description) { [weak self] (success, error) in
                     guard let `self` = self else { return }
                     DispatchQueue.main.async {
@@ -60,7 +68,5 @@ final class MyPageSwitchTypeTableViewCell: ReuseTableViewCell {
                 }
             }
         }
-
-
     }
 }
