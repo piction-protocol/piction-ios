@@ -8,5 +8,6 @@
 
 import UIKit
 
+// MARK: - ReuseTableViewCell
 final class TransactionHistoryFooterTypeTableViewCell: ReuseTableViewCell {
 }
