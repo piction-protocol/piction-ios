@@ -8,12 +8,16 @@
 
 import UIKit
 
+// MARK: - ReuseCollectionViewCell
 class ProjectInfoTagCollectionViewCell: ReuseCollectionViewCell {
     @IBOutlet weak var tagLabel: UILabel!
 
     typealias Model = String
+}
 
-    func configure(with model: Model) {
-        tagLabel.text = "#\(model)"
+// MARK: - Public Method
+extension ProjectInfoTagCollectionViewCell {
+    func configure(with tag: Model) {
+        tagLabel.text = "#\(tag)"
     }
 }
