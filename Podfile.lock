@@ -194,21 +194,10 @@ DEPENDENCIES:
   - WSTagsField
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
-    - CropViewController
-    - Differentiator
-    - Gridicons
-    - GSKStretchyHeaderView
-    - Kanna
-    - RxCocoa
-    - RxDataSources
-    - RxSwift
-    - Swinject
-    - Toast-Swift
-    - UIScrollView-InfiniteScroll
-    - WordPress-Aztec-iOS
   trunk:
     - Alamofire
+    - CropViewController
+    - Differentiator
     - Firebase
     - FirebaseABTesting
     - FirebaseAnalytics
@@ -225,6 +214,9 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
+    - Gridicons
+    - GSKStretchyHeaderView
+    - Kanna
     - KeychainAccess
     - libwebp
     - ModelMapper
@@ -235,8 +227,15 @@ SPEC REPOS:
     - PromisesObjC
     - Protobuf
     - Result
+    - RxCocoa
+    - RxDataSources
     - RxGesture
+    - RxSwift
     - SDWebImage
+    - Swinject
+    - Toast-Swift
+    - UIScrollView-InfiniteScroll
+    - WordPress-Aztec-iOS
     - WSTagsField
 
 EXTERNAL SOURCES:
@@ -296,4 +295,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: ec56874855c795b9e37b02ed10df47577bdfcd90
 
-COCOAPODS: 1.9.0
+COCOAPODS: 1.9.1

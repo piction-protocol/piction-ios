@@ -1671,7 +1671,7 @@
 			attributes = {
 				LastSwiftMigration = 9999;
 				LastSwiftUpdateCheck = 1120;
-				LastUpgradeCheck = 9999;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Piction Network";
 				TargetAttributes = {
 					4309233B2372B42F00716AF8 = {
@@ -1685,12 +1685,11 @@
 			};
 			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "piction-ios" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
-				ko,
 				en,
+				ko,
 				Base,
 			);
 			mainGroup = OBJ_5;
