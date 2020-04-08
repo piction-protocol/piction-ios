@@ -28,7 +28,7 @@ def util_pods
 end
 
 def sdk_pods
-  pod 'PictionSDK/RxSwift'
+  pod 'PictionSDK/RxSwift', '~> 1.0.2'
 end
 
 target 'piction-ios' do
