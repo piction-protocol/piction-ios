@@ -291,3 +291,20 @@ struct PrivacyDeepLink: DeepLink {
 
     init(values: DeepLinkValues) {}
 }
+
+// 후원 목록 Dynamic Links
+// https://staging.piction.network/project/{project-uri}/memberships
+// https://piction.network/project/{project-uri}/memberships
+struct MembershipListDeepLink: DeepLink {
+    static let template = DeepLinkTemplate()
+    .term(AppInfo.urlDomain)
+    .term("project")
+    .string(named: "uri")
+    .term("memberships")
+    
+    init(values: DeepLinkValues) {
+        uri = values.path["uri"] as? String
+    }
+    
+    let uri: String?
+}

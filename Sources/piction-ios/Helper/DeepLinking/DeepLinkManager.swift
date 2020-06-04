@@ -33,7 +33,8 @@ struct DeepLinkManager {
                 MyinfoDeepLink.self,
                 PasswordDeepLink.self,
                 TermsDeepLink.self,
-                PrivacyDeepLink.self
+                PrivacyDeepLink.self,
+                MembershipListDeepLink.self
             ]
         )
 
@@ -45,9 +46,9 @@ struct DeepLinkManager {
 
         // Try to create a deep link object based on the URL.
         guard let deepLink = recognizer.deepLink(matching: replaceUrl) else {
-//            print("Unable to match URL: \(url.absoluteString)")
+            //print("Unable to match URL: \(url.absoluteString)")
 
-            if replaceUrlString.range(of: "piction://") == nil && replaceUrlString.range(of: "piction-test://") == nil {
+            if replaceUrlString.range(of: "piction://") == nil && replaceUrlString.range(of: "piction-test://") == nil && replaceUrlString.range(of: "applinks://") == nil {
                 UIApplication.shared.open(replaceUrl)
             }
             return false
@@ -76,6 +77,7 @@ struct DeepLinkManager {
         case let link as PasswordDeepLink: return showPassword(with: link)
         case let link as TermsDeepLink: return showTerms(with: link)
         case let link as PrivacyDeepLink: return showPrivacy(with: link)
+        case let link as MembershipListDeepLink: return showMembershipList(with: link)
         default: fatalError("Unsupported DeepLink: \(type(of: deepLink))")
         }
     }
@@ -291,6 +293,15 @@ struct DeepLinkManager {
         if let topViewController = UIApplication.topViewController() {
            let safariViewController = SFSafariViewController(url: url)
             topViewController.present(safariViewController, animated: true)
+            return true
+        }
+        return false
+    }
+    
+    static func showMembershipList(with deepLink: MembershipListDeepLink) -> Bool {
+        let vc = MembershipListViewController.make(uri: deepLink.uri ?? "")
+        if let topViewController = UIApplication.topViewController() {
+            topViewController.openViewController(vc, type: .present)
             return true
         }
         return false

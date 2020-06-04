@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32E50ED724862F1F0081F2DD /* apple-app-site-association in Resources */ = {isa = PBXBuildFile; fileRef = 32E50ED624862F1F0081F2DD /* apple-app-site-association */; };
+		32E50ED824862F1F0081F2DD /* apple-app-site-association in Resources */ = {isa = PBXBuildFile; fileRef = 32E50ED624862F1F0081F2DD /* apple-app-site-association */; };
 		3B15F4CA2407865300B77464 /* CenterAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B15F4C92407865300B77464 /* CenterAlignedCollectionViewFlowLayout.swift */; };
 		3B15F4CB2407865300B77464 /* CenterAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B15F4C92407865300B77464 /* CenterAlignedCollectionViewFlowLayout.swift */; };
 		3B15F4CD2407A92F00B77464 /* HomeSubscribingPostsLargeTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B15F4CC2407A92F00B77464 /* HomeSubscribingPostsLargeTypeTableViewCell.swift */; };
@@ -571,6 +573,7 @@
 
 /* Begin PBXFileReference section */
 		253016FC00AF42FB8CD49BCE /* Pods-piction-ios-test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-piction-ios-test.release.xcconfig"; path = "Target Support Files/Pods-piction-ios-test/Pods-piction-ios-test.release.xcconfig"; sourceTree = "<group>"; };
+		32E50ED624862F1F0081F2DD /* apple-app-site-association */ = {isa = PBXFileReference; lastKnownFileType = text; path = "apple-app-site-association"; sourceTree = "<group>"; };
 		39BA2EF518F7FB530A38CAFD /* Pods_piction_ios_test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_piction_ios_test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B15F4C92407865300B77464 /* CenterAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		3B15F4CC2407A92F00B77464 /* HomeSubscribingPostsLargeTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSubscribingPostsLargeTypeTableViewCell.swift; sourceTree = "<group>"; };
@@ -905,6 +908,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		32E50ED524862EBC0081F2DD /* DynamicLinks */ = {
+			isa = PBXGroup;
+			children = (
+				32E50ED624862F1F0081F2DD /* apple-app-site-association */,
+			);
+			path = DynamicLinks;
+			sourceTree = "<group>";
+		};
 		3B79B2EA2411488200169324 /* SelfSizingCollectionView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1012,6 +1023,7 @@
 		4323F999233A165600243655 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				32E50ED524862EBC0081F2DD /* DynamicLinks */,
 				3B79B2EA2411488200169324 /* SelfSizingCollectionView */,
 				43502A9B238FB81400586098 /* StoreReviewManager */,
 				436CAC6E234C2F3F00C84373 /* Toast */,
@@ -1679,7 +1691,6 @@
 					};
 					432CAC7722B725F00007EE03 = {
 						CreatedOnToolsVersion = 10.2.1;
-						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -1748,6 +1759,7 @@
 				4323FAAD233A165A00243655 /* Search.storyboard in Resources */,
 				43C153C223C72AA700565FC4 /* CategoryList.storyboard in Resources */,
 				4323FB91233A166300243655 /* SignUpComplete.storyboard in Resources */,
+				32E50ED824862F1F0081F2DD /* apple-app-site-association in Resources */,
 				43C153A923C5D00300565FC4 /* CategorizedProject.storyboard in Resources */,
 				4323FAC3233A165B00243655 /* SubscriptionList.storyboard in Resources */,
 				4369F8D623CF0A67008D5825 /* ProjectListCollectionViewCell.xib in Resources */,
@@ -1807,6 +1819,7 @@
 				4323FB12233A165E00243655 /* DynamicInputView.xib in Resources */,
 				4323FAAC233A165A00243655 /* Search.storyboard in Resources */,
 				43C153C123C72AA700565FC4 /* CategoryList.storyboard in Resources */,
+				32E50ED724862F1F0081F2DD /* apple-app-site-association in Resources */,
 				4323FB90233A166300243655 /* SignUpComplete.storyboard in Resources */,
 				4323FAC2233A165B00243655 /* SubscriptionList.storyboard in Resources */,
 				43C153A823C5D00300565FC4 /* CategorizedProject.storyboard in Resources */,

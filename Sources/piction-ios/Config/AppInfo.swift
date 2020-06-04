@@ -34,4 +34,12 @@ final class AppInfo {
             return "piction"
         }
     }
+    
+    static var urlDomain: String {
+        if isStaging {
+            return "staging.piction.network"
+        } else {
+            return "piction.network"
+        }
+    }
 }
